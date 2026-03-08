@@ -316,28 +316,28 @@ export default function HomePage() {
                 const isLife = key === 'lifetime'
                 const isEnt  = key === 'enterprise'
                 return (
-                  <div key={key} style={{ background:isPro||isLife?'rgba(212,162,8,0.04)':'rgba(8,8,24,0.75)', border:isPro||isLife?'1px solid rgba(212,162,8,0.3)':'1px solid rgba(40,40,92,0.5)', borderRadius:14, padding:'28px 24px', backdropFilter:'blur(12px)', position:'relative' }}>
+                  <div key={key} style={{ background:isPro||isLife?'rgba(212,162,8,0.04)':'var(--glass)', border:isPro||isLife?'1px solid rgba(212,162,8,0.3)':'1px solid var(--border)', borderRadius:14, padding:'28px 24px', backdropFilter:'blur(12px)', position:'relative' }}>
                     {isPro && <div style={{ position:'absolute', top:-13, left:'50%', transform:'translateX(-50%)', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontSize:10, fontWeight:700, padding:'4px 18px', borderRadius:100, letterSpacing:1.5, whiteSpace:'nowrap' }}>MOST POPULAR</div>}
                     {isLife && <div style={{ position:'absolute', top:-13, left:'50%', transform:'translateX(-50%)', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontSize:10, fontWeight:700, padding:'4px 18px', borderRadius:100, letterSpacing:1.5, whiteSpace:'nowrap' }}>👑 LAUNCH WEEK</div>}
                     <div style={{ fontSize:11, color:'#D4A208', letterSpacing:2, fontWeight:600, marginBottom:6, fontFamily:'monospace' }}>{plan.name.toUpperCase()}</div>
-                    <div style={{ fontSize:36, fontWeight:800, color:'#EAE8F4', marginBottom:4, lineHeight:1 }}>
+                    <div style={{ fontSize:36, fontWeight:800, color:'var(--text)', marginBottom:4, lineHeight:1 }}>
                       {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
                       {!isEnt && plan.price !== null && (plan.price as number) > 0 && (
-                        <span style={{ fontSize:14, fontWeight:400, color:'#7070A0' }}>{isLife?' once':'/mo'}</span>
+                        <span style={{ fontSize:14, fontWeight:400, color:'var(--text2)' }}>{isLife?' once':'/mo'}</span>
                       )}
                     </div>
-                    <p style={{ fontSize:13, color:'#7070A0', marginBottom:20, lineHeight:1.5 }}>{plan.description}</p>
+                    <p style={{ fontSize:13, color:'var(--text2)', marginBottom:20, lineHeight:1.5 }}>{plan.description}</p>
                     <ul style={{ listStyle:'none', marginBottom:22, display:'flex', flexDirection:'column', gap:9 }}>
                       {plan.features.map(f => (
-                        <li key={f} style={{ display:'flex', alignItems:'flex-start', gap:9, fontSize:13, color:'#C0C0D8' }}>
+                        <li key={f} style={{ display:'flex', alignItems:'flex-start', gap:9, fontSize:13, color:'var(--text2)' }}>
                           <CheckIcon size={13} color="#D4A208" style={{ marginTop:2, flexShrink:0 }} />{f}
                         </li>
                       ))}
                     </ul>
                     <Link href={isEnt?'/enterprise':isLife?'/beta':plan.price===0?'/auth/signup':`/auth/signup?plan=${key}`}
                       style={{ display:'flex', justifyContent:'center', alignItems:'center', padding:'11px 20px', borderRadius:9, textDecoration:'none', fontWeight:600, fontSize:14,
-                        background:isPro||isLife?'linear-gradient(135deg,#C49510,#D4A208)':'rgba(40,40,92,0.5)',
-                        color:isPro||isLife?'#03030D':'#EAE8F4', border:isPro||isLife?'none':'1px solid rgba(40,40,92,0.8)' }}>
+                        background:isPro||isLife?'linear-gradient(135deg,#C49510,#D4A208)':'var(--glass)',
+                        color:isPro||isLife?'#03030D':'var(--text)', border:isPro||isLife?'none':'1px solid var(--border)' }}>
                       {plan.cta}
                     </Link>
                     {isLife && <p style={{ textAlign:'center', fontSize:11, color:'#D4A208', marginTop:10 }}>Launch Week open now → <Link href="/beta" style={{ color:'#D4A208' }}>Claim Gold Standard</Link></p>}

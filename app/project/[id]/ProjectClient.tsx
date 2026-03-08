@@ -23,6 +23,7 @@ import { ProcessSimulation }  from '@/components/simulation/ProcessSimulation'
 import { LiveFloorPanel }     from '@/components/live/LiveFloorPanel'
 import { SOPUpload }          from '@/components/tools/SOPUpload'
 import { PDFExportButton }    from '@/components/export/PDFExport'
+import { ThemeToggle }        from '@/components/ui/ThemeProvider'
 import {
   StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
   PlusIcon, EditIcon, TrashIcon, SOPIcon, SettingsIcon, ZapIcon,
@@ -298,6 +299,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
             style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, cursor:'pointer', background:'none', border:'1px solid var(--border2)', color:'var(--text2)' }}>
             <SettingsIcon size={13} color="currentColor" />
           </button>
+
+          <ThemeToggle size={30} />
 
           {/* Add Step — always visible primary CTA */}
           <button

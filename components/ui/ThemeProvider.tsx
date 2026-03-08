@@ -26,6 +26,7 @@ const LIGHT = `
     --text3:   #9C9890;
     --border:  rgba(180,172,152,0.6);
     --border2: rgba(160,152,132,0.4);
+    --glass:   rgba(232,229,222,0.9);
     --gold-dim: rgba(212,162,8,0.12);
     --gold-glow: rgba(212,162,8,0.3);
   }
