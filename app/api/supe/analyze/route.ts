@@ -6,7 +6,7 @@ import { analyzeSteps }                   from '@/lib/supe-engine'
 export async function POST(request: NextRequest) {
   try {
     const { project_id, steps, question, chat_history } = await request.json()
-    if (!project_id || !steps?.length) return NextResponse.json({ error:'project_id and steps required' }, { status:400 })
+    if (!project_id) return NextResponse.json({ error:'project_id required' }, { status:400 })
 
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
@@ -55,7 +55,7 @@ Your responses:
         const res = await fetch('https://api.anthropic.com/v1/messages', {
           method:'POST',
           headers:{ 'Content-Type':'application/json', 'x-api-key':process.env.ANTHROPIC_API_KEY!, 'anthropic-version':'2023-06-01' },
-          body: JSON.stringify({ model:'claude-haiku-4-5', max_tokens:500, system:systemPrompt, messages }),
+          body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:500, system:systemPrompt, messages }),
         })
 
         if (res.ok) {
