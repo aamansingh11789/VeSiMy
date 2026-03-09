@@ -33,26 +33,10 @@ export function Modal({ title, onClose, onSave, saveLabel = 'Save', width = 560,
   }
 
   return (
-    <div onClick={handleBackdrop} style={{
-      position: 'fixed', inset: 0, zIndex: 1000,
-      background: 'rgba(0,0,0,0.68)', backdropFilter: 'blur(6px)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
-      animation: 'fadeIn 0.15s ease',
-    }}>
-      <div ref={ref} style={{
-        background: 'var(--bg2)', border: '1px solid var(--border2)',
-        borderRadius: 14, boxShadow: '0 20px 60px rgba(0,0,0,0.75)',
-        width: '100%', maxWidth: width, maxHeight: '90vh',
-        display: 'flex', flexDirection: 'column',
-        animation: 'modalIn 0.20s cubic-bezier(0.34,1.56,0.64,1)',
-      }}>
+    <div onClick={handleBackdrop} className="modal-overlay" style={{ animation: 'fadeIn 0.15s ease' }}>
+      <div ref={ref} className="modal" style={{ maxWidth: width, animation: 'modalIn 0.20s cubic-bezier(0.34,1.56,0.64,1)' }}>
         {/* Header */}
-        <div style={{
-          padding: '16px 22px', borderBottom: '1px solid var(--border)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: 'var(--bg3)', borderRadius: '14px 14px 0 0',
-          flexShrink: 0,
-        }}>
+        <div className="modal-header" style={{ borderRadius: '14px 14px 0 0' }}>
           <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 16, fontWeight: 700, color: 'var(--text)' }}>
             {title}
           </h2>
@@ -64,17 +48,13 @@ export function Modal({ title, onClose, onSave, saveLabel = 'Save', width = 560,
         </div>
 
         {/* Body */}
-        <div style={{ padding: noPad ? 0 : '20px 22px', overflowY: 'auto', flex: 1 }}>
+        <div className="modal-body" style={{ padding: noPad ? 0 : '20px 22px' }}>
           {children}
         </div>
 
         {/* Footer */}
         {onSave && (
-          <div style={{
-            padding: '12px 22px', borderTop: '1px solid var(--border)',
-            display: 'flex', justifyContent: 'flex-end', gap: 10,
-            background: 'var(--bg3)', borderRadius: '0 0 14px 14px', flexShrink: 0,
-          }}>
+          <div className="modal-footer" style={{ borderRadius: '0 0 14px 14px' }}>
             <button className="btn btn-ghost" onClick={onClose}>Cancel</button>
             <button className="btn btn-primary" onClick={onSave}>{saveLabel}</button>
           </div>

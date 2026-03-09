@@ -87,6 +87,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [dragIdx,         setDragIdx]         = useState<number | null>(null)
   const [showProjectEdit, setShowProjectEdit] = useState(false)
   const [showSupe,        setShowSupe]        = useState(false)
+  const [supeOpen,        setSupeOpen]        = useState(true)  // desktop collapse
 
   // ── Lazy-load side data ───────────────────────────────────────────────────
   useEffect(() => {
@@ -411,16 +412,33 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
         </div>{/* end content area */}
 
-        {/* ── Supe AI — desktop: permanent right panel ─────────────────── */}
+        {/* ── Supe AI — desktop: collapsible right panel ─────────────────── */}
         <div className="supe-desktop-panel" style={{
-          width: 290, flexShrink: 0,
+          width: supeOpen ? 290 : 40, flexShrink: 0,
           borderLeft: '1px solid rgba(100,38,160,0.2)',
-          overflowY: 'auto',
+          overflowY: supeOpen ? 'auto' : 'hidden',
           background: 'rgba(8,4,20,0.95)',
           display: 'flex', flexDirection: 'column',
+          transition: 'width 0.25s ease',
+          position: 'relative',
         }}>
+          {/* Collapse toggle */}
+          <button
+            onClick={() => setSupeOpen(o => !o)}
+            title={supeOpen ? 'Collapse Supe' : 'Open Supe AI'}
+            style={{
+              position: 'absolute', top: 12, left: supeOpen ? 8 : 4, zIndex: 10,
+              width: 28, height: 28, borderRadius: 7, border: '1px solid rgba(100,38,160,0.35)',
+              background: 'rgba(100,38,160,0.12)', color: '#9B5FE0', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14,
+              flexShrink: 0,
+            }}>
+            {supeOpen ? '›' : '‹'}
+          </button>
+
+          {supeOpen && (<>
           <div style={{
-            padding: '14px 16px 10px',
+            padding: '14px 16px 10px 42px',
             borderBottom: '1px solid rgba(100,38,160,0.15)',
             background: 'linear-gradient(180deg,rgba(100,38,160,0.06),transparent)',
             flexShrink: 0,
@@ -441,6 +459,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           <div style={{ flex:1, overflow:'auto' }}>
             <SupePanel steps={steps} projectId={project.id} />
           </div>
+          </>)}
         </div>
 
       </div>{/* end flex content+supe row */}
@@ -836,84 +855,403 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
 // ── Report Tab ────────────────────────────────────────────────────────────────
 function ReportTab({ steps, branches, project }: { steps:Step[]; branches:Branch[]; project:Project }) {
-  const main      = steps.filter(s => s.is_main_flow !== false)
-  const totalCT   = main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || 0), 0)
-  const totalWait = main.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
-  const totalWIP  = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
-  const allKaizen = steps.flatMap(s => (s.toolData?.kaizen?.items || []).map((i: any) => ({ ...i, stepName:s.name })))
-  const allWastes = steps.flatMap(s => s.toolData?.waste?.selected || [])
-  const allWhys   = steps.filter(s => s.toolData?.fivewhy?.rootCause)
-  const pce       = totalCT + totalWait > 0 ? `${((totalCT / (totalCT + totalWait)) * 100).toFixed(0)}%` : '—'
+  const main       = steps.filter(s => s.is_main_flow !== false).sort((a,b) => a.position - b.position)
+  const totalCT    = main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
+  const totalWait  = main.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
+  const totalLT    = totalCT + totalWait
+  const totalWIP   = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
+  const allKaizen  = steps.flatMap(s => (s.toolData?.kaizen?.items || []).map((i: any) => ({ ...i, stepName:s.name })))
+  const allWastes  = steps.flatMap(s => (s.toolData?.waste?.selected || []).map((w: string) => ({ waste:w, stepName:s.name })))
+  const allWhys    = steps.filter(s => s.toolData?.fivewhy?.rootCause)
+  const allFish    = steps.filter(s => s.toolData?.ishikawa?.problem)
+  const pce        = totalCT + totalWait > 0 ? ((totalCT / (totalCT + totalWait)) * 100).toFixed(1) : '—'
+  const avgCT      = main.length ? (totalCT / main.length).toFixed(0) : '—'
+  const taktTime   = project.takt_time ? Number(project.takt_time) : null
+  const today      = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+
+  const printReport = () => {
+    const w = window.open('', '_blank')
+    if (!w) return
+    w.document.write(`<!DOCTYPE html><html><head><title>VSM Report — ${project.name}</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #111; background: #fff; padding: 40px; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; color: #000; }
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 32px; font-family: Arial, sans-serif; }
+  h2 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #444; border-bottom: 2px solid #000; padding-bottom: 4px; margin: 28px 0 14px; font-family: Arial, sans-serif; }
+  .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .metric { border: 1px solid #ddd; border-radius: 6px; padding: 12px 14px; }
+  .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; font-family: Arial, sans-serif; margin-bottom: 3px; }
+  .metric-value { font-size: 22px; font-weight: 700; color: #000; }
+  .metric-value.gold { color: #B8860B; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: Arial, sans-serif; }
+  th { background: #f5f5f5; text-align: left; padding: 8px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #555; border-bottom: 2px solid #ddd; }
+  td { padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-red { background: #FEE2E2; color: #B91C1C; }
+  .badge-amber { background: #FEF3C7; color: #92400E; }
+  .badge-green { background: #D1FAE5; color: #065F46; }
+  .waste-tag { display: inline-block; background: #FEE2E2; color: #B91C1C; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin: 2px; font-family: Arial; }
+  .rca-box { border: 1px solid #ddd; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+  .rca-title { font-weight: 700; color: #000; margin-bottom: 6px; font-size: 13px; }
+  .rca-cause { background: #f9f9f9; padding: 8px 10px; border-radius: 4px; font-size: 12px; font-family: Arial; margin-bottom: 4px; }
+  .rca-action { color: #065F46; font-size: 12px; font-family: Arial; margin-top: 4px; }
+  .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #ddd; font-size: 11px; color: #999; font-family: Arial; }
+  @media print { body { padding: 20px; } }
+</style></head><body>
+<h1>${project.name}</h1>
+<div class="subtitle">VSM Continuous Improvement Report &nbsp;·&nbsp; ${project.product || project.industry || ''} &nbsp;·&nbsp; Generated ${today} &nbsp;·&nbsp; vesimy.com</div>
+
+<h2>Process KPIs</h2>
+<div class="metric-grid">
+  <div class="metric"><div class="metric-label">Process Steps</div><div class="metric-value gold">${main.length}</div></div>
+  <div class="metric"><div class="metric-label">Total Cycle Time</div><div class="metric-value gold">${totalCT ? fmtS(totalCT) : '—'}</div></div>
+  <div class="metric"><div class="metric-label">Total Wait Time</div><div class="metric-value">${totalWait ? fmtS(totalWait) : '—'}</div></div>
+  <div class="metric"><div class="metric-label">Lead Time</div><div class="metric-value">${totalLT ? fmtS(totalLT) : '—'}</div></div>
+  <div class="metric"><div class="metric-label">PCE (Flow %)</div><div class="metric-value gold">${pce}${pce !== '—' ? '%' : ''}</div></div>
+  <div class="metric"><div class="metric-label">Avg Cycle Time</div><div class="metric-value">${avgCT !== '—' ? fmtS(Number(avgCT)) : '—'}</div></div>
+  <div class="metric"><div class="metric-label">Total WIP</div><div class="metric-value">${totalWIP || '—'}</div></div>
+  <div class="metric"><div class="metric-label">Takt Time</div><div class="metric-value">${taktTime ? fmtS(taktTime) : '—'}</div></div>
+</div>
+${taktTime ? `<p style="font-size:12px;font-family:Arial;color:#666;margin-top:8px">Takt Time = ${fmtS(taktTime)} &nbsp;·&nbsp; Steps above takt: ${main.filter(s=>(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0)>taktTime).map(s=>s.name).join(', ')||'None ✓'}</p>` : ''}
+
+<h2>Process Steps (${main.length})</h2>
+<table>
+  <tr><th>#</th><th>Step Name</th><th>Department</th><th>Cycle Time</th><th>Wait Time</th><th>Operators</th><th>Defect %</th><th>Uptime %</th><th>C&A %</th><th>Wastes</th></tr>
+  ${main.map((s, i) => `
+  <tr>
+    <td>${i+1}</td>
+    <td><strong>${s.name}</strong>${s.description ? `<br><span style="color:#888;font-size:11px">${s.description}</span>` : ''}</td>
+    <td>${s.department || '—'}</td>
+    <td>${s.toolData?.stopwatch?.mean ? fmtS(s.toolData.stopwatch.mean) : s.cycle_time ? fmtS(Number(s.cycle_time)) : '—'}</td>
+    <td>${s.wait_time ? fmtS(Number(s.wait_time)) : '—'}</td>
+    <td>${s.operators || 1}</td>
+    <td>${s.defect_rate || '—'}</td>
+    <td>${s.uptime || '100'}</td>
+    <td>${s.completion_accuracy || '—'}</td>
+    <td>${(s.toolData?.waste?.selected||[]).join(', ') || '—'}</td>
+  </tr>`).join('')}
+</table>
+
+${allWastes.length > 0 ? `
+<h2>Waste Identification (${allWastes.length} items)</h2>
+<table>
+  <tr><th>Waste Type</th><th>Step</th></tr>
+  ${allWastes.map(w => `<tr><td><span class="waste-tag">${w.waste}</span></td><td>${w.stepName}</td></tr>`).join('')}
+</table>` : ''}
+
+${allKaizen.length > 0 ? `
+<h2>Kaizen Events (${allKaizen.length})</h2>
+<table>
+  <tr><th>Title</th><th>Step</th><th>Type</th><th>Priority</th><th>Status</th><th>Owner</th><th>Due Date</th></tr>
+  ${allKaizen.map((k: any) => `<tr>
+    <td>${k.title || '—'}</td>
+    <td>${k.stepName}</td>
+    <td>${k.type || '—'}</td>
+    <td><span class="badge ${k.priority==='high'?'badge-red':k.priority==='medium'?'badge-amber':'badge-green'}">${k.priority||'—'}</span></td>
+    <td><span class="badge ${k.status==='complete'?'badge-green':'badge-amber'}">${k.status||'open'}</span></td>
+    <td>${k.owner || '—'}</td>
+    <td>${k.dueDate || '—'}</td>
+  </tr>`).join('')}
+</table>` : ''}
+
+${allWhys.length > 0 ? `
+<h2>Root Cause Analysis — 5 Whys (${allWhys.length})</h2>
+${allWhys.map(s => `
+<div class="rca-box">
+  <div class="rca-title">${s.name}</div>
+  ${(s.toolData.fivewhy.whys || []).map((w: string, i: number) => w ? `<div class="rca-cause"><strong>Why ${i+1}:</strong> ${w}</div>` : '').join('')}
+  <div class="rca-cause"><strong>Root Cause:</strong> ${s.toolData.fivewhy.rootCause}</div>
+  ${s.toolData.fivewhy.action ? `<div class="rca-action">→ <strong>Countermeasure:</strong> ${s.toolData.fivewhy.action}</div>` : ''}
+</div>`).join('')}` : ''}
+
+${allFish.length > 0 ? `
+<h2>Fishbone (Ishikawa) Analysis (${allFish.length})</h2>
+${allFish.map(s => `
+<div class="rca-box">
+  <div class="rca-title">Problem: ${s.toolData.ishikawa.problem}</div>
+  <div style="font-size:11px;font-family:Arial;color:#555;margin-bottom:6px">Step: ${s.name} &nbsp;·&nbsp; Framework: ${s.toolData.ishikawa.framework || '6M'}</div>
+  ${Object.entries(s.toolData.ishikawa.causes || {}).map(([cat, causes]: [string, any]) =>
+    causes?.length ? `<div style="margin-bottom:4px"><strong style="font-size:11px">${cat}:</strong> <span style="font-size:11px;font-family:Arial">${causes.join(', ')}</span></div>` : ''
+  ).join('')}
+</div>`).join('')}` : ''}
+
+${branches.length > 0 ? `
+<h2>Process Branches (${branches.length})</h2>
+<table>
+  <tr><th>Branch Name</th><th>Color</th><th>Steps</th></tr>
+  ${branches.map(b => {
+    const bSteps = steps.filter(s => s.branch_id === b.id)
+    return `<tr><td>${b.name}</td><td>${b.color || '—'}</td><td>${bSteps.map(s=>s.name).join(', ')||'—'}</td></tr>`
+  }).join('')}
+</table>` : ''}
+
+<div class="footer">Generated by VeSiMy · vesimy.com · ${today} · Confidential</div>
+</body></html>`)
+    w.document.close()
+    setTimeout(() => w.print(), 400)
+  }
+
+  const exportVSM = () => {
+    const w = window.open('', '_blank')
+    if (!w) return
+    // Generate simple text-based VSM
+    const rows = main.map(s => {
+      const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+      const wt = Number(s.wait_time) || 0
+      return { name: s.name, ct, wt, ops: s.operators || 1, defect: s.defect_rate || 0, uptime: s.uptime || 100 }
+    })
+    w.document.write(`<!DOCTYPE html><html><head><title>VSM — ${project.name}</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fff; padding:32px; color:#111; }
+  h1 { font-size:20px; margin-bottom:4px; } .sub { font-size:12px; color:#888; margin-bottom:32px; }
+  .vsm-row { display:flex; align-items:center; gap:0; margin-bottom:32px; overflow-x:auto; }
+  .vsm-box { border:2px solid #333; border-radius:6px; padding:10px 12px; min-width:120px; text-align:center; background:#fff; }
+  .vsm-box .name { font-weight:700; font-size:13px; }
+  .vsm-box .ct { font-size:11px; margin-top:4px; color:#B8860B; }
+  .vsm-box .ops { font-size:10px; color:#666; }
+  .vsm-arrow { font-size:22px; color:#999; padding:0 4px; flex-shrink:0; }
+  .vsm-wait { text-align:center; font-size:10px; color:#CC3300; min-width:40px; flex-shrink:0; }
+  .timeline { display:flex; gap:0; margin-top:8px; border-top:2px solid #333; }
+  .tl-ct { background:#FEF3C7; text-align:center; padding:4px; font-size:10px; font-weight:700; }
+  .tl-wt { background:#FEE2E2; text-align:center; padding:4px; font-size:10px; }
+  table { border-collapse:collapse; width:100%; font-size:12px; margin-top:24px; }
+  th,td { border:1px solid #ddd; padding:6px 10px; text-align:left; }
+  th { background:#f5f5f5; font-size:10px; text-transform:uppercase; letter-spacing:0.8px; }
+</style></head><body>
+<h1>Value Stream Map — ${project.name}</h1>
+<div class="sub">${project.product || ''} · Generated ${today} · vesimy.com</div>
+<div class="vsm-row">
+  <div class="vsm-box" style="background:#E0F2FE;"><div class="name">📦 Supplier</div></div>
+  ${rows.map((s, i) => `
+  <div class="vsm-arrow">→</div>
+  ${s.wt ? `<div class="vsm-wait">▽<br>${fmtS(s.wt)}<br>wait</div><div class="vsm-arrow">→</div>` : ''}
+  <div class="vsm-box">
+    <div class="name">${s.name}</div>
+    <div class="ct">CT: ${fmtS(s.ct)}</div>
+    <div class="ops">${s.ops} ops · ${s.uptime}% uptime</div>
+    ${s.defect ? `<div style="font-size:10px;color:#CC3300">${s.defect}% defects</div>` : ''}
+  </div>`).join('')}
+  <div class="vsm-arrow">→</div>
+  <div class="vsm-box" style="background:#DCFCE7;"><div class="name">🏭 Customer</div></div>
+</div>
+${taktTime ? `<p style="font-size:12px;color:#666">Takt Time: ${fmtS(taktTime)} &nbsp;·&nbsp; Customer Demand: ${project.demand || '—'} units/day &nbsp;·&nbsp; Working Hours: ${project.working_hours || '—'} hrs/day</p>` : ''}
+<table>
+  <tr><th>#</th><th>Step</th><th>Cycle Time</th><th>Wait Time</th><th>Operators</th><th>Uptime %</th><th>Defect %</th><th>vs Takt</th></tr>
+  ${rows.map((s,i) => `<tr>
+    <td>${i+1}</td><td><strong>${s.name}</strong></td>
+    <td>${fmtS(s.ct)}</td><td>${s.wt ? fmtS(s.wt) : '—'}</td>
+    <td>${s.ops}</td><td>${s.uptime}%</td><td>${s.defect || '—'}</td>
+    <td>${taktTime ? (s.ct > taktTime ? `⚠️ +${fmtS(s.ct - taktTime)}` : `✓ -${fmtS(taktTime - s.ct)}`) : '—'}</td>
+  </tr>`).join('')}
+  <tr style="background:#f5f5f5;font-weight:700"><td colspan="2">TOTAL</td><td>${fmtS(totalCT)}</td><td>${fmtS(totalWait)}</td><td colspan="4">PCE: ${pce}%</td></tr>
+</table>
+</body></html>`)
+    w.document.close()
+    setTimeout(() => w.print(), 400)
+  }
 
   return (
-    <div style={{ maxWidth:820, margin:'0 auto' }}>
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24, flexWrap:'wrap', gap:12 }}>
-        <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'#EAE8F4' }}>
-          VSM Report — {project.name}
-        </h2>
-        <button onClick={() => window.print()} style={{ display:'flex', alignItems:'center', gap:6, padding:'7px 14px', borderRadius:8, border:'1px solid #1A1A40', background:'transparent', color:'#7070A0', cursor:'pointer', fontSize:12 }}>
-          🖨 Print
-        </button>
+    <div style={{ maxWidth:860, margin:'0 auto', padding:'0 4px' }}>
+      {/* Header */}
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:24, flexWrap:'wrap', gap:12 }}>
+        <div>
+          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:4 }}>
+            CI Report — {project.name}
+          </h2>
+          <p style={{ fontSize:12, color:'var(--text2)' }}>{project.product || project.industry || ''} · {today}</p>
+        </div>
+        <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
+          <button onClick={exportVSM} style={{ display:'flex', alignItems:'center', gap:6, padding:'8px 14px', borderRadius:8, border:'1px solid rgba(100,160,255,0.4)', background:'rgba(100,160,255,0.08)', color:'#6CA0FF', cursor:'pointer', fontSize:12, fontWeight:600 }}>
+            📊 Export VSM
+          </button>
+          <button onClick={printReport} style={{ display:'flex', alignItems:'center', gap:6, padding:'8px 14px', borderRadius:8, border:'1px solid rgba(212,162,8,0.3)', background:'rgba(212,162,8,0.08)', color:'#D4A208', cursor:'pointer', fontSize:12, fontWeight:600 }}>
+            🖨 Full Report
+          </button>
+        </div>
       </div>
 
-      <ReportSec title="Process Summary">
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(110px,1fr))', gap:10 }}>
-          {([['Steps',main.length],['Branches',branches.length],['Total CT',totalCT?fmtS(totalCT):'—'],['Wait',totalWait?fmtS(totalWait):'—'],['PCE',pce],['WIP',totalWIP||'—'],['Kaizen',allKaizen.length],['Wastes',allWastes.length]] as [string,string|number][]).map(([l,v]) => (
-            <div key={l} style={{ background:'#0D0D22', borderRadius:8, padding:'10px 12px', border:'1px solid #1A1A40' }}>
-              <div style={{ fontSize:8, color:'#38385C', letterSpacing:1.5, fontFamily:'monospace', marginBottom:2 }}>{l}</div>
-              <div style={{ fontSize:18, fontWeight:700, color:'#D4A208' }}>{v}</div>
+      {/* KPI Summary */}
+      <ReportSec title="Process KPIs">
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(100px,1fr))', gap:10 }}>
+          {([
+            ['Steps',      main.length,              false],
+            ['Total CT',   totalCT ? fmtS(totalCT) : '—', true],
+            ['Wait Time',  totalWait ? fmtS(totalWait) : '—', false],
+            ['Lead Time',  totalLT ? fmtS(totalLT) : '—',  false],
+            ['PCE',        pce !== '—' ? pce+'%' : '—',    true],
+            ['Avg CT',     avgCT !== '—' ? fmtS(Number(avgCT)) : '—', false],
+            ['Total WIP',  totalWIP || '—',           false],
+            ['Takt',       taktTime ? fmtS(taktTime) : '—', false],
+          ] as [string, any, boolean][]).map(([l, v, gold]) => (
+            <div key={l} style={{ background:'var(--bg2)', borderRadius:8, padding:'10px 12px', border:'1px solid var(--border)' }}>
+              <div style={{ fontSize:9, color:'var(--text3)', letterSpacing:1.2, fontFamily:'monospace', marginBottom:3, textTransform:'uppercase' }}>{l}</div>
+              <div style={{ fontSize:20, fontWeight:700, color: gold ? '#D4A208' : 'var(--text)' }}>{v}</div>
             </div>
           ))}
         </div>
-      </ReportSec>
-
-      <ReportSec title="Process Steps">
-        {main.map((s, i) => (
-          <div key={s.id} style={{ background:'#0D0D22', borderRadius:8, padding:'10px 12px', border:'1px solid #1A1A40', marginBottom:6, display:'flex', gap:12, alignItems:'center', flexWrap:'wrap' }}>
-            <span style={{ color:'#38385C', fontFamily:'monospace', minWidth:20, fontSize:11 }}>{i+1}.</span>
-            <div style={{ flex:1, minWidth:120 }}>
-              <div style={{ fontWeight:600, color:'#EAE8F4', fontSize:13 }}>{s.name}</div>
-              {s.department && <div style={{ fontSize:11, color:'#7070A0' }}>{s.department}</div>}
-            </div>
-            <div style={{ display:'flex', gap:10, fontSize:11, color:'#7070A0', flexWrap:'wrap' }}>
-              {s.toolData?.stopwatch?.mean && <span>CT:{fmtS(s.toolData.stopwatch.mean)}</span>}
-              {s.completion_accuracy && <span>C&A:{s.completion_accuracy}%</span>}
-              {(s.toolData?.waste?.selected?.length||0)>0 && <span style={{color:'#FF6B6B'}}>{s.toolData.waste.selected.length}W</span>}
-            </div>
+        {taktTime && main.some(s => (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) > taktTime) && (
+          <div style={{ marginTop:10, padding:'8px 12px', borderRadius:7, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.25)', fontSize:12, color:'#FF6B6B' }}>
+            ⚠️ Steps exceeding takt time ({fmtS(taktTime)}): {main.filter(s => (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) > taktTime).map(s => s.name).join(', ')}
           </div>
-        ))}
+        )}
       </ReportSec>
 
+      {/* Step Detail */}
+      <ReportSec title={`Process Steps (${main.length})`}>
+        {main.length === 0 ? (
+          <p style={{ color:'var(--text3)', fontSize:13 }}>No steps added yet.</p>
+        ) : (
+          <div style={{ overflowX:'auto' }}>
+            <table style={{ width:'100%', borderCollapse:'collapse', fontSize:12 }}>
+              <thead>
+                <tr style={{ borderBottom:'2px solid var(--border)' }}>
+                  {['#','Step','Dept','Cycle Time','Wait','Ops','Defect%','Uptime%','C&A%','Wastes'].map(h => (
+                    <th key={h} style={{ padding:'6px 10px', textAlign:'left', fontSize:10, color:'var(--text3)', fontFamily:'monospace', textTransform:'uppercase', letterSpacing:1, whiteSpace:'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {main.map((s, i) => {
+                  const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                  const overTakt = taktTime && ct > taktTime
+                  return (
+                    <tr key={s.id} style={{ borderBottom:'1px solid var(--border)', background: overTakt ? 'rgba(255,107,107,0.04)' : 'transparent' }}>
+                      <td style={{ padding:'8px 10px', color:'var(--text3)', fontFamily:'monospace', fontSize:11 }}>{i+1}</td>
+                      <td style={{ padding:'8px 10px' }}>
+                        <div style={{ fontWeight:600, color:'var(--text)', fontSize:13 }}>{s.name}</div>
+                        {s.description && <div style={{ fontSize:10, color:'var(--text3)', marginTop:2 }}>{s.description}</div>}
+                      </td>
+                      <td style={{ padding:'8px 10px', color:'var(--text2)', fontSize:12 }}>{s.department || '—'}</td>
+                      <td style={{ padding:'8px 10px', color: overTakt ? '#FF6B6B' : '#D4A208', fontWeight:600, fontFamily:'monospace' }}>{ct ? fmtS(ct) : '—'}{overTakt ? ' ⚠️' : ''}</td>
+                      <td style={{ padding:'8px 10px', color:'var(--text2)', fontFamily:'monospace' }}>{s.wait_time ? fmtS(Number(s.wait_time)) : '—'}</td>
+                      <td style={{ padding:'8px 10px', color:'var(--text2)' }}>{s.operators || 1}</td>
+                      <td style={{ padding:'8px 10px', color: Number(s.defect_rate) > 5 ? '#FF6B6B' : 'var(--text2)' }}>{s.defect_rate || '—'}</td>
+                      <td style={{ padding:'8px 10px', color: Number(s.uptime) < 90 ? '#F4A623' : 'var(--text2)' }}>{s.uptime || '100'}</td>
+                      <td style={{ padding:'8px 10px', color:'var(--text2)' }}>{s.completion_accuracy || '—'}</td>
+                      <td style={{ padding:'8px 10px' }}>
+                        {(s.toolData?.waste?.selected || []).map((w: string) => (
+                          <span key={w} style={{ fontSize:9, background:'rgba(255,107,107,0.12)', color:'#FF6B6B', padding:'1px 5px', borderRadius:3, marginRight:3, display:'inline-block', marginBottom:2 }}>{w}</span>
+                        ))}
+                        {!(s.toolData?.waste?.selected?.length) && <span style={{ color:'var(--text3)' }}>—</span>}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </ReportSec>
+
+      {/* Kaizen Events */}
+      {allKaizen.length > 0 && (
+        <ReportSec title={`Kaizen Events (${allKaizen.length})`}>
+          <div style={{ overflowX:'auto' }}>
+            <table style={{ width:'100%', borderCollapse:'collapse', fontSize:12 }}>
+              <thead>
+                <tr style={{ borderBottom:'2px solid var(--border)' }}>
+                  {['Title','Step','Type','Priority','Status','Owner','Due'].map(h => (
+                    <th key={h} style={{ padding:'6px 10px', textAlign:'left', fontSize:10, color:'var(--text3)', fontFamily:'monospace', textTransform:'uppercase', letterSpacing:1 }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {allKaizen.map((k: any, i: number) => (
+                  <tr key={i} style={{ borderBottom:'1px solid var(--border)' }}>
+                    <td style={{ padding:'8px 10px', fontWeight:600, color:'var(--text)' }}>{k.title || '—'}</td>
+                    <td style={{ padding:'8px 10px', color:'var(--text2)', fontSize:11 }}>{k.stepName}</td>
+                    <td style={{ padding:'8px 10px', color:'var(--text2)' }}>{k.type || '—'}</td>
+                    <td style={{ padding:'8px 10px' }}>
+                      <span style={{ fontSize:10, fontWeight:700, padding:'2px 7px', borderRadius:100,
+                        background: k.priority==='high'?'rgba(255,107,107,0.15)':k.priority==='medium'?'rgba(244,166,35,0.15)':'rgba(29,209,161,0.15)',
+                        color: k.priority==='high'?'#FF6B6B':k.priority==='medium'?'#F4A623':'#1DD1A1' }}>
+                        {(k.priority||'—').toUpperCase()}
+                      </span>
+                    </td>
+                    <td style={{ padding:'8px 10px' }}>
+                      <span style={{ fontSize:10, fontWeight:700, padding:'2px 7px', borderRadius:100,
+                        background: k.status==='complete'?'rgba(29,209,161,0.15)':'rgba(244,166,35,0.15)',
+                        color: k.status==='complete'?'#1DD1A1':'#F4A623' }}>
+                        {(k.status||'OPEN').toUpperCase()}
+                      </span>
+                    </td>
+                    <td style={{ padding:'8px 10px', color:'var(--text2)' }}>{k.owner || '—'}</td>
+                    <td style={{ padding:'8px 10px', color:'var(--text2)', fontFamily:'monospace', fontSize:11 }}>{k.dueDate || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ReportSec>
+      )}
+
+      {/* Root Cause Analysis */}
       {allWhys.length > 0 && (
-        <ReportSec title="Root Cause Analysis">
+        <ReportSec title={`5 Whys — Root Cause Analysis (${allWhys.length})`}>
           {allWhys.map(s => (
-            <div key={s.id} style={{ marginBottom:12 }}>
-              <div style={{ fontWeight:600, color:'#D4A208', marginBottom:4, fontSize:13 }}>{s.name}</div>
-              <div style={{ fontSize:12, color:'#EAE8F4', background:'#0D0D22', borderRadius:6, padding:'10px 12px', border:'1px solid #1A1A40' }}>
-                <strong>Root Cause:</strong> {s.toolData.fivewhy.rootCause}
+            <div key={s.id} style={{ border:'1px solid var(--border)', borderRadius:8, padding:'14px 16px', marginBottom:12 }}>
+              <div style={{ fontWeight:700, color:'var(--text)', marginBottom:10, fontSize:14 }}>{s.name}</div>
+              {(s.toolData.fivewhy.whys || []).map((w: string, i: number) => w ? (
+                <div key={i} style={{ display:'flex', gap:10, marginBottom:6 }}>
+                  <span style={{ fontSize:11, fontWeight:700, color:'var(--text3)', fontFamily:'monospace', minWidth:52 }}>Why {i+1}</span>
+                  <span style={{ fontSize:12, color:'var(--text2)' }}>{w}</span>
+                </div>
+              ) : null)}
+              <div style={{ marginTop:10, padding:'8px 12px', borderRadius:6, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)' }}>
+                <span style={{ fontSize:11, fontWeight:700, color:'#FF6B6B' }}>ROOT CAUSE: </span>
+                <span style={{ fontSize:12, color:'var(--text)' }}>{s.toolData.fivewhy.rootCause}</span>
               </div>
               {s.toolData.fivewhy.action && (
-                <div style={{ fontSize:12, color:'#1DD1A1', marginTop:4 }}>→ <strong>Action:</strong> {s.toolData.fivewhy.action}</div>
+                <div style={{ marginTop:6, padding:'8px 12px', borderRadius:6, background:'rgba(29,209,161,0.08)', border:'1px solid rgba(29,209,161,0.2)' }}>
+                  <span style={{ fontSize:11, fontWeight:700, color:'#1DD1A1' }}>COUNTERMEASURE: </span>
+                  <span style={{ fontSize:12, color:'var(--text)' }}>{s.toolData.fivewhy.action}</span>
+                </div>
               )}
             </div>
           ))}
         </ReportSec>
       )}
 
-      {allKaizen.length > 0 && (
-        <ReportSec title={`Kaizen Events (${allKaizen.length})`}>
-          {allKaizen.map((item: any, idx: number) => (
-            <div key={idx} style={{ background:'#0D0D22', borderRadius:8, padding:'9px 12px', border:'1px solid #1A1A40', marginBottom:6, display:'flex', gap:10, alignItems:'center', flexWrap:'wrap' }}>
-              <div style={{ flex:1, minWidth:120 }}>
-                <div style={{ fontWeight:500, color:'#EAE8F4', fontSize:12 }}>{item.title}</div>
-                <div style={{ fontSize:10, color:'#38385C' }}>{item.stepName}</div>
+      {/* Fishbone */}
+      {allFish.length > 0 && (
+        <ReportSec title={`Fishbone Analysis (${allFish.length})`}>
+          {allFish.map(s => (
+            <div key={s.id} style={{ border:'1px solid var(--border)', borderRadius:8, padding:'14px 16px', marginBottom:12 }}>
+              <div style={{ fontWeight:700, color:'var(--text)', marginBottom:4 }}>{s.name}</div>
+              <div style={{ fontSize:12, color:'#FF6B6B', marginBottom:10 }}>Problem: {s.toolData.ishikawa.problem}</div>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:8 }}>
+                {Object.entries(s.toolData.ishikawa.causes || {}).map(([cat, causes]: [string, any]) =>
+                  causes?.length ? (
+                    <div key={cat} style={{ background:'var(--bg2)', borderRadius:6, padding:'8px 10px', border:'1px solid var(--border)' }}>
+                      <div style={{ fontSize:10, fontWeight:700, color:'var(--text2)', marginBottom:5, textTransform:'uppercase', letterSpacing:1, fontFamily:'monospace' }}>{cat}</div>
+                      {causes.map((c: string, i: number) => (
+                        <div key={i} style={{ fontSize:12, color:'var(--text)', marginBottom:3 }}>• {c}</div>
+                      ))}
+                    </div>
+                  ) : null
+                )}
               </div>
-              <span style={{ fontSize:9, fontWeight:700, padding:'2px 7px', borderRadius:100,
-                background: item.status==='complete'?'rgba(29,209,161,0.1)':'rgba(244,166,35,0.1)',
-                color: item.status==='complete'?'#1DD1A1':'#F4A623',
-              }}>{(item.status||'open').toUpperCase()}</span>
             </div>
           ))}
+        </ReportSec>
+      )}
+
+      {/* Waste Summary */}
+      {allWastes.length > 0 && (
+        <ReportSec title={`Waste Register (${allWastes.length})`}>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+            {Array.from(new Set(allWastes.map(w => w.waste))).map(waste => {
+              const count = allWastes.filter(w => w.waste === waste).length
+              return (
+                <div key={waste} style={{ background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)', borderRadius:8, padding:'8px 14px' }}>
+                  <div style={{ fontSize:13, fontWeight:600, color:'#FF6B6B' }}>{waste}</div>
+                  <div style={{ fontSize:10, color:'var(--text3)', marginTop:2 }}>{count} step{count>1?'s':''}</div>
+                </div>
+              )
+            })}
+          </div>
         </ReportSec>
       )}
     </div>
@@ -922,8 +1260,8 @@ function ReportTab({ steps, branches, project }: { steps:Step[]; branches:Branch
 
 function ReportSec({ title, children }: { title:string; children:React.ReactNode }) {
   return (
-    <div style={{ marginBottom:24 }}>
-      <h3 style={{ fontFamily:'Palatino Linotype,serif', fontSize:12, fontWeight:700, color:'#7070A0', textTransform:'uppercase', letterSpacing:2, borderBottom:'1px solid #1A1A40', paddingBottom:6, marginBottom:12 }}>{title}</h3>
+    <div style={{ marginBottom:28 }}>
+      <h3 style={{ fontSize:11, fontWeight:700, color:'var(--text3)', textTransform:'uppercase', letterSpacing:2, borderBottom:'1px solid var(--border)', paddingBottom:6, marginBottom:14, fontFamily:'monospace' }}>{title}</h3>
       {children}
     </div>
   )

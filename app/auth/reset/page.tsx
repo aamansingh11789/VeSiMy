@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import Link         from 'next/link'
 import { createClient } from '@/lib/supabase'
-import { ArrowLeftIcon } from '@/components/ui/Icons'
+import { ArrowLeftIcon, CheckIcon } from '@/components/ui/Icons'
 
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
