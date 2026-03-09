@@ -23,7 +23,6 @@ import { ProcessSimulation }  from '@/components/simulation/ProcessSimulation'
 import { LiveFloorPanel }     from '@/components/live/LiveFloorPanel'
 import { SOPUpload }          from '@/components/tools/SOPUpload'
 import { PDFExportButton }    from '@/components/export/PDFExport'
-import { ThemeToggle }        from '@/components/ui/ThemeProvider'
 import {
   StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
   PlusIcon, EditIcon, TrashIcon, SOPIcon, SettingsIcon, ZapIcon,
@@ -33,14 +32,14 @@ import {
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 const TABS: { id: ProjectTab; label: string; Icon: any }[] = [
-  { id: 'builder',    label: 'Builder',     Icon: PlusIcon       },
-  { id: 'vsm',        label: 'VSM Map',     Icon: VSMIcon        },
-  { id: 'kaizen',     label: 'Kaizen',      Icon: KaizenIcon     },
-  { id: 'kanban',     label: 'Kanban',      Icon: KanbanIcon     },
-  { id: 'simulation', label: 'Simulation',  Icon: SimulationIcon },
-  { id: 'live',       label: 'Live Floor',  Icon: LiveFloorIcon  },
-  { id: 'report',     label: 'Report',      Icon: ReportIcon     },
-  { id: 'branches',   label: 'Branches',    Icon: BranchIcon     },
+  { id: 'builder',    label: 'Builder',     Icon: PlusIcon,        premium: false },
+  { id: 'vsm',        label: 'VSM Map',     Icon: VSMIcon,         premium: false },
+  { id: 'kaizen',     label: 'Kaizen',      Icon: KaizenIcon,      premium: false },
+  { id: 'kanban',     label: 'Kanban',      Icon: KanbanIcon,      premium: false },
+  { id: 'simulation', label: 'Simulation',  Icon: SimulationIcon,  premium: true  },
+  { id: 'live',       label: 'Live Floor',  Icon: LiveFloorIcon,   premium: true  },
+  { id: 'report',     label: 'Report',      Icon: ReportIcon,      premium: false },
+  { id: 'branches',   label: 'Branches',    Icon: BranchIcon,      premium: false },
 ]
 
 // ── CI Tool definitions ───────────────────────────────────────────────────────
@@ -88,6 +87,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [showProjectEdit, setShowProjectEdit] = useState(false)
   const [showSupe,        setShowSupe]        = useState(false)
   const [supeOpen,        setSupeOpen]        = useState(true)  // desktop collapse
+
+  // ── Plan / paywall ────────────────────────────────────────────────────────
+  const isPaid = (profile as any).plan_tier === 'pro'
+    || (profile as any).plan_tier === 'enterprise'
+    || (profile as any).lifetime_access
+    || (profile as any).is_beta
 
   // ── Lazy-load side data ───────────────────────────────────────────────────
   useEffect(() => {
@@ -301,8 +306,6 @@ export function ProjectClient({ initialProject, profile }: Props) {
             <SettingsIcon size={13} color="currentColor" />
           </button>
 
-          <ThemeToggle size={30} />
-
           {/* Add Step — always visible primary CTA */}
           <button
             onClick={() => { setEditingStep(null); setShowStepModal(true) }}
@@ -339,19 +342,21 @@ export function ProjectClient({ initialProject, profile }: Props) {
       {/* ── Tabs ─────────────────────────────────────────────────────────── */}
       <div style={{ display:'flex', padding:'0 20px', background:'var(--bg2)', borderBottom:'1px solid var(--border)', flexShrink:0, overflowX:'auto' }}>
         {TABS.map(t => {
-          const active = tab === t.id
-          const TIcon  = t.Icon
+          const active  = tab === t.id
+          const locked  = t.premium && !isPaid
+          const TIcon   = t.Icon
           return (
             <button key={t.id} onClick={() => setTab(t.id)} style={{
               display:'flex', alignItems:'center', gap:5,
               padding:'9px 14px', fontSize:11, fontWeight:active ? 600 : 400,
               background:'none', border:'none', cursor:'pointer', whiteSpace:'nowrap',
-              color:        active ? '#D4A208' : '#7070A0',
+              color:        active ? '#D4A208' : locked ? '#4A4A6A' : '#7070A0',
               borderBottom: `2px solid ${active ? '#D4A208' : 'transparent'}`,
               marginBottom:-1, transition:'all 0.15s',
             }}>
               <TIcon size={11} color="currentColor" />
               {t.label}
+              {locked && <span style={{ fontSize:9, marginLeft:2 }}>🔒</span>}
             </button>
           )
         })}
@@ -380,9 +385,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
           </div>
         )}
 
-        {tab === 'vsm'        && <div style={{ padding:24 }}><VSMMap steps={steps} branches={branches} project={project} /></div>}
-        {tab === 'kaizen'     && <div style={{ padding:24 }}><KaizenBoardView steps={steps} /></div>}
-        {tab === 'kanban'     && (
+        {tab === 'vsm'      && <div style={{ padding:24 }}><VSMMap steps={steps} branches={branches} project={project} /></div>}
+        {tab === 'kaizen'   && <div style={{ padding:24 }}><KaizenBoardView steps={steps} /></div>}
+        {tab === 'kanban'   && (
           <KanbanBoard
             projectId={project.id}
             steps={steps}
@@ -391,8 +396,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
             showToast={showToast}
           />
         )}
-        {tab === 'report'     && <div style={{ padding:24 }}><ReportTab steps={steps} branches={branches} project={project} /></div>}
-        {tab === 'branches'   && (
+        {tab === 'report'   && <div style={{ padding:24 }}><ReportTab steps={steps} branches={branches} project={project} /></div>}
+        {tab === 'branches' && (
           <div style={{ padding:24 }}>
             <BranchesTab
               steps={steps}
@@ -407,8 +412,18 @@ export function ProjectClient({ initialProject, profile }: Props) {
             />
           </div>
         )}
-        {tab === 'simulation' && <div style={{ padding:24 }}><ProcessSimulation steps={steps} projectId={project.id} /></div>}
-        {tab === 'live'       && <div style={{ padding:24 }}><LiveFloorPanel    steps={steps} projectId={project.id} /></div>}
+
+        {/* ── Premium tabs ── */}
+        {tab === 'simulation' && (
+          isPaid
+            ? <div style={{ padding:24 }}><ProcessSimulation steps={steps} projectId={project.id} /></div>
+            : <PaywallGate feature="Process Simulation" />
+        )}
+        {tab === 'live' && (
+          isPaid
+            ? <div style={{ padding:24 }}><LiveFloorPanel steps={steps} projectId={project.id} /></div>
+            : <PaywallGate feature="Live Floor Monitor" />
+        )}
 
         </div>{/* end content area */}
 
@@ -449,15 +464,28 @@ export function ProjectClient({ initialProject, profile }: Props) {
               </div>
               <div>
                 <div style={{ fontWeight:700, color:'var(--text)', fontSize:13, fontFamily:'Palatino Linotype,serif', lineHeight:1 }}>Supe</div>
-                <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1.5, marginTop:2 }}>AI MENTOR</div>
+                <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1.5, marginTop:2 }}>AI MENTOR {!isPaid && '🔒'}</div>
               </div>
             </div>
-            <p style={{ fontSize:11, color:'var(--text3)', margin:'8px 0 0', lineHeight:1.5 }}>
+            {isPaid && <p style={{ fontSize:11, color:'var(--text3)', margin:'8px 0 0', lineHeight:1.5 }}>
               Real-time lean CI analysis. Ask for AI insights after adding steps.
-            </p>
+            </p>}
           </div>
           <div style={{ flex:1, overflow:'auto' }}>
-            <SupePanel steps={steps} projectId={project.id} />
+            {isPaid
+              ? <SupePanel steps={steps} projectId={project.id} />
+              : (
+                <div style={{ padding:20, textAlign:'center' }}>
+                  <div style={{ fontSize:32, marginBottom:10 }}>🔒</div>
+                  <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.6, marginBottom:14 }}>
+                    Supe AI is a <strong style={{ color:'#D4A208' }}>Pro feature</strong>.
+                  </p>
+                  <a href="/pricing" style={{ display:'inline-block', padding:'8px 16px', borderRadius:8, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:12, textDecoration:'none' }}>
+                    Upgrade →
+                  </a>
+                </div>
+              )
+            }
           </div>
           </>)}
         </div>
@@ -501,7 +529,20 @@ export function ProjectClient({ initialProject, profile }: Props) {
             </div>
             {/* Supe panel content */}
             <div style={{ flex:1, overflow:'auto' }}>
-              <SupePanel steps={steps} projectId={project.id} />
+              {isPaid
+                ? <SupePanel steps={steps} projectId={project.id} />
+                : (
+                  <div style={{ padding:32, textAlign:'center' }}>
+                    <div style={{ fontSize:40, marginBottom:12 }}>🔒</div>
+                    <p style={{ fontSize:14, color:'var(--text2)', lineHeight:1.7, marginBottom:20 }}>
+                      Supe AI is a <strong style={{ color:'#D4A208' }}>Pro feature</strong>.<br/>Upgrade to unlock AI-powered lean coaching.
+                    </p>
+                    <a href="/pricing" style={{ display:'inline-block', padding:'10px 20px', borderRadius:10, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:14, textDecoration:'none' }}>
+                      👑 Upgrade to Pro
+                    </a>
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
@@ -638,6 +679,37 @@ interface BuilderTabProps {
   onDragStart: (idx: number) => void
   onDrop:      (idx: number) => void
   onImportSOP: () => void
+}
+
+// ── Paywall Gate ──────────────────────────────────────────────────────────────
+function PaywallGate({ feature }: { feature: string }) {
+  return (
+    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'80px 24px', textAlign:'center' }}>
+      <div style={{ fontSize:52, marginBottom:16 }}>🔒</div>
+      <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:8 }}>
+        {feature}
+      </h2>
+      <p style={{ fontSize:14, color:'var(--text2)', maxWidth:360, lineHeight:1.7, marginBottom:28 }}>
+        This is a <strong style={{ color:'#D4A208' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
+      </p>
+      <div style={{ display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center' }}>
+        <a href="/pricing" style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'11px 24px', borderRadius:10, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:14, textDecoration:'none' }}>
+          👑 Upgrade to Pro — $29/mo
+        </a>
+        <a href="/pricing" style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'11px 24px', borderRadius:10, border:'1px solid rgba(212,162,8,0.3)', color:'#D4A208', fontSize:14, textDecoration:'none' }}>
+          View all plans
+        </a>
+      </div>
+      <div style={{ marginTop:32, padding:'16px 24px', borderRadius:10, background:'var(--bg2)', border:'1px solid var(--border)', maxWidth:400 }}>
+        <div style={{ fontSize:12, fontWeight:700, color:'var(--text)', marginBottom:10 }}>What's included in Pro:</div>
+        {['Unlimited projects','Supe AI lean mentor','Process Simulation','Live Floor Monitor','PDF export','Priority support'].map(f => (
+          <div key={f} style={{ display:'flex', alignItems:'center', gap:8, fontSize:13, color:'var(--text2)', marginBottom:6 }}>
+            <span style={{ color:'#1DD1A1', fontSize:14 }}>✓</span> {f}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDragStart, onDrop, onImportSOP }: BuilderTabProps) {

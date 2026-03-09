@@ -54,6 +54,7 @@ export function VSMMap({ steps, branches, project }: Props) {
   const LANE_H  = BOX_H + 80   // box + timeline area
   const LANE_GAP = 50
 
+  const STEPS_PER_PAGE = 8  // wrap after 8 steps for multi-page print
   const maxCols = Math.max(mainSteps.length, ...branchIds.map(bid => branchGroups[bid].length))
   const TOTAL_W = MARGIN * 2 + maxCols * (BOX_W + GAP) - GAP + 80
   const SVG_H   = TOP_Y + LANE_H + branchIds.length * (LANE_H + LANE_GAP) + 80
@@ -124,7 +125,159 @@ export function VSMMap({ steps, branches, project }: Props) {
   return (
     <div style={{ overflowX: 'auto' }}>
 
-      {/* KPI bar */}
+      {/* Export button */}
+      <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:12 }}>
+        <button
+          onClick={() => {
+            const w = window.open('', '_blank')
+            if (!w) return
+            const pageSize = STEPS_PER_PAGE
+            const pages = Math.ceil(mainSteps.length / pageSize)
+            const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+            const takt = project.takt_time ? Number(project.takt_time) : null
+            const fmtSec = (s: number) => { if (!s) return '—'; if (s<60) return `${s.toFixed(0)}s`; if (s<3600) return `${(s/60).toFixed(1)}m`; return `${(s/3600).toFixed(2)}h` }
+
+            let html = `<!DOCTYPE html><html><head><title>VSM — ${project.name}</title>
+<style>
+  @page { size: A3 landscape; margin: 15mm; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, sans-serif; background:#fff; color:#111; }
+  .page { width:100%; page-break-after: always; padding: 16px 0; }
+  .page:last-child { page-break-after: auto; }
+  .page-header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #000; padding-bottom:8px; margin-bottom:16px; }
+  .page-title { font-size:18px; font-weight:700; }
+  .page-meta { font-size:11px; color:#666; }
+  .vsm-row { display:flex; align-items:center; gap:0; margin:20px 0; flex-wrap:nowrap; overflow:visible; }
+  .vsm-node { border:2px solid #333; border-radius:6px; padding:10px 8px; min-width:120px; max-width:140px; text-align:center; flex-shrink:0; position:relative; }
+  .vsm-node.bottleneck { border-color:#CC3300; background:#FFF5F5; }
+  .vsm-node .step-num { position:absolute; top:-8px; left:8px; background:#B8860B; color:#fff; font-size:9px; font-weight:700; padding:1px 5px; border-radius:3px; }
+  .vsm-node .name { font-weight:700; font-size:12px; margin-bottom:4px; }
+  .vsm-node .ct { font-size:13px; font-weight:700; color:#B8860B; }
+  .vsm-node .sub { font-size:9px; color:#666; margin-top:2px; }
+  .vsm-node .over-takt { color:#CC3300 !important; }
+  .arrow { font-size:20px; color:#999; padding:0 4px; flex-shrink:0; align-self:center; }
+  .wait-box { text-align:center; flex-shrink:0; align-self:center; }
+  .wait-box .tri { font-size:16px; color:#CC5500; }
+  .wait-box .wt { font-size:10px; color:#CC5500; font-weight:700; }
+  .endpoint { border:2px solid #333; border-radius:6px; padding:10px 12px; text-align:center; flex-shrink:0; min-width:70px; font-size:11px; font-weight:700; }
+  .kpi-bar { display:grid; grid-template-columns:repeat(6,1fr); border:1px solid #ddd; border-radius:6px; margin-bottom:16px; }
+  .kpi { padding:8px 10px; text-align:center; border-right:1px solid #ddd; }
+  .kpi:last-child { border-right:none; }
+  .kpi-label { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#888; margin-bottom:2px; }
+  .kpi-value { font-size:16px; font-weight:700; color:#B8860B; }
+  .timeline { display:flex; margin-top:6px; border-top:2px solid #333; font-size:10px; }
+  .tl-ct { background:#FEF3C7; text-align:center; padding:3px; min-width:20px; }
+  .tl-wt { background:#FEE2E2; text-align:center; padding:3px; min-width:20px; }
+  .footer { font-size:10px; color:#999; text-align:right; margin-top:12px; border-top:1px solid #eee; padding-top:6px; }
+  @media print { .page { padding:0; } }
+</style></head><body>`
+
+            for (let p = 0; p < pages; p++) {
+              const slice = mainSteps.slice(p * pageSize, (p+1) * pageSize)
+              const isFirst = p === 0
+              const isLast = p === pages - 1
+              const pce = mainCT + mainWait > 0 ? ((mainCT/(mainCT+mainWait))*100).toFixed(1)+'%' : '—'
+              html += `<div class="page">
+<div class="page-header">
+  <div>
+    <div class="page-title">Value Stream Map — ${project.name}</div>
+    <div class="page-meta">${project.product || ''} · ${project.industry || ''}</div>
+  </div>
+  <div class="page-meta">Page ${p+1} of ${pages} · Steps ${p*pageSize+1}–${Math.min((p+1)*pageSize, mainSteps.length)} of ${mainSteps.length} · ${today} · vesimy.com</div>
+</div>`
+
+              if (isFirst) {
+                html += `<div class="kpi-bar">
+  <div class="kpi"><div class="kpi-label">Total Steps</div><div class="kpi-value">${mainSteps.length}</div></div>
+  <div class="kpi"><div class="kpi-label">Total CT</div><div class="kpi-value">${fmtSec(mainCT)}</div></div>
+  <div class="kpi"><div class="kpi-label">Wait Time</div><div class="kpi-value">${fmtSec(mainWait)}</div></div>
+  <div class="kpi"><div class="kpi-label">PCE</div><div class="kpi-value">${pce}</div></div>
+  <div class="kpi"><div class="kpi-label">Takt Time</div><div class="kpi-value">${takt ? fmtSec(takt) : '—'}</div></div>
+  <div class="kpi"><div class="kpi-label">Branches</div><div class="kpi-value">${branchIds.length}</div></div>
+</div>`
+              }
+
+              html += `<div class="vsm-row">`
+              if (isFirst) html += `<div class="endpoint" style="background:#E0F2FE;">📦<br>Supplier</div><div class="arrow">→</div>`
+              else html += `<div class="endpoint" style="background:#F5F5F5;">↩<br>Cont.</div><div class="arrow">→</div>`
+
+              slice.forEach((s, i) => {
+                const globalIdx = p * pageSize + i
+                const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                const wt = Number(s.wait_time) || 0
+                const overTakt = takt && ct > takt
+                if (wt > 0) {
+                  html += `<div class="wait-box"><div class="tri">▽</div><div class="wt">${fmtSec(wt)}</div><div style="font-size:8px;color:#999">wait</div></div><div class="arrow">→</div>`
+                }
+                html += `<div class="vsm-node${overTakt?' bottleneck':''}">
+  <div class="step-num">${globalIdx+1}</div>
+  <div class="name">${s.name}</div>
+  ${s.department ? `<div class="sub">${s.department}</div>` : ''}
+  <div class="ct${overTakt?' over-takt':''}">${ct ? fmtSec(ct) : 'No time'}</div>
+  <div class="sub">${s.operators||1} ops · ${s.uptime||100}% up</div>
+  ${s.defect_rate ? `<div style="font-size:9px;color:#CC3300">${s.defect_rate}% defects</div>` : ''}
+  ${overTakt ? `<div style="font-size:9px;color:#CC3300;font-weight:700">⚠ Over takt</div>` : ''}
+</div>`
+                if (i < slice.length - 1) html += `<div class="arrow">→</div>`
+              })
+
+              if (isLast) html += `<div class="arrow">→</div><div class="endpoint" style="background:#DCFCE7;">🏭<br>Customer</div>`
+              else html += `<div class="arrow">→</div><div class="endpoint" style="background:#F5F5F5;">→<br>Cont.</div>`
+              html += `</div>`
+
+              // Timeline bar
+              html += `<div class="timeline">`
+              slice.forEach(s => {
+                const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                const wt = Number(s.wait_time) || 0
+                const flex = Math.max(1, Math.round((ct || 10) / 10))
+                const wflex = Math.max(1, Math.round((wt || 5) / 10))
+                if (wt) html += `<div class="tl-wt" style="flex:${wflex}">${fmtSec(wt)}</div>`
+                html += `<div class="tl-ct" style="flex:${flex}">${ct ? fmtSec(ct) : '—'}</div>`
+              })
+              html += `</div>`
+
+              html += `<div class="footer">VeSiMy · vesimy.com · ${project.name} VSM · Page ${p+1}/${pages}</div></div>`
+            }
+
+            // Branches on separate pages
+            branchIds.forEach((bid, bi) => {
+              const bSteps = branchGroups[bid]
+              const bd = branches.find(b => b.branch_id === bid)
+              const bLabel = bd?.label || `Branch ${bi+1}`
+              const bPages = Math.ceil(bSteps.length / pageSize)
+              for (let p = 0; p < bPages; p++) {
+                const slice = bSteps.slice(p * pageSize, (p+1) * pageSize)
+                html += `<div class="page">
+<div class="page-header">
+  <div><div class="page-title">Branch: ${bLabel}</div><div class="page-meta">${project.name}</div></div>
+  <div class="page-meta">Branch ${bi+1} · Page ${p+1}/${bPages} · ${today}</div>
+</div>
+<div class="vsm-row">
+  <div class="endpoint" style="background:#F3E8FF;">⑂<br>Branch</div><div class="arrow">→</div>
+  ${slice.map((s, i) => {
+    const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+    const wt = Number(s.wait_time) || 0
+    return `${wt > 0 ? `<div class="wait-box"><div class="tri">▽</div><div class="wt">${fmtSec(wt)}</div></div><div class="arrow">→</div>` : ''}
+    <div class="vsm-node"><div class="name">${s.name}</div><div class="ct">${ct ? fmtSec(ct) : '—'}</div><div class="sub">${s.operators||1} ops</div></div>
+    ${i < slice.length-1 ? '<div class="arrow">→</div>' : ''}`
+  }).join('')}
+</div>
+<div class="footer">VeSiMy · ${project.name} · Branch: ${bLabel} · Page ${p+1}/${bPages}</div>
+</div>`
+              }
+            })
+
+            html += `</body></html>`
+            w.document.write(html)
+            w.document.close()
+            setTimeout(() => w.print(), 500)
+          }}
+          style={{ display:'flex', alignItems:'center', gap:6, padding:'7px 14px', borderRadius:8, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(100,160,255,0.08)', border:'1px solid rgba(100,160,255,0.3)', color:'#6CA0FF' }}
+        >
+          📄 Export VSM (multi-page)
+        </button>
+      </div>
       <div style={{ display:'flex', marginBottom:20, background:'#080818', borderRadius:10, overflow:'hidden', border:'1px solid #1A1A40' }}>
         {[
           { l:'PCE',          v: pce ? `${pce.toFixed(0)}%` : '—',   c: pce>25?'#1DD1A1':'#FF6B6B' },
