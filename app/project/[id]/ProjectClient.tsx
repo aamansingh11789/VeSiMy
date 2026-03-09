@@ -31,7 +31,7 @@ import {
 } from '@/components/ui/Icons'
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
-const TABS: { id: ProjectTab; label: string; Icon: any }[] = [
+const TABS: { id: ProjectTab; label: string; Icon: any; premium?: boolean }[] = [
   { id: 'builder',    label: 'Builder',     Icon: PlusIcon,        premium: false },
   { id: 'vsm',        label: 'VSM Map',     Icon: VSMIcon,         premium: false },
   { id: 'kaizen',     label: 'Kaizen',      Icon: KaizenIcon,      premium: false },
@@ -241,7 +241,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
   // ── Summary metrics ───────────────────────────────────────────────────────
   const mainSteps = steps.filter(s => s.is_main_flow !== false)
-  const totalCT   = mainSteps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || 0), 0)
+  const totalCT   = mainSteps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
   const totalWait = mainSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
   const totalWIP  = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
   const openKZ    = steps.reduce((a, s) =>
@@ -801,15 +801,15 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
       onDragLeave={() => setOver(false)}
       onDrop={() => { setOver(false); onDrop() }}
       style={{
-        background: over ? 'rgba(212,162,8,0.03)' : '#080818',
-        border: `1px solid ${over ? 'rgba(212,162,8,0.4)' : '#1A1A40'}`,
+        background: over ? 'rgba(212,162,8,0.03)' : 'var(--bg2)',
+        border: `1px solid ${over ? 'rgba(212,162,8,0.4)' : 'var(--border)'}`,
         borderRadius: 10, overflow:'hidden', transition:'all 0.15s',
       }}
     >
       {/* Header row */}
       <div style={{
         display:'flex', alignItems:'center', gap:10,
-        padding:'11px 14px', background:'#0D0D22', borderBottom:'1px solid #1A1A40',
+        padding:'11px 14px', background:'var(--bg3)', borderBottom:'1px solid #1A1A40',
       }}>
         <span style={{ cursor:'grab', flexShrink:0, color:'#28285C' }}>
           <DragHandleIcon size={14} color="currentColor" />
@@ -818,7 +818,7 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
           {String(index + 1).padStart(2, '0')}
         </span>
         <div style={{ flex:1, minWidth:0 }}>
-          <div style={{ fontWeight:600, color:'#EAE8F4', fontSize:13, display:'flex', alignItems:'center', gap:7, flexWrap:'wrap' }}>
+          <div style={{ fontWeight:600, color:'var(--text)', fontSize:13, display:'flex', alignItems:'center', gap:7, flexWrap:'wrap' }}>
             {step.name}
             {isSM && (
               <span style={{ fontSize:8, padding:'2px 5px', borderRadius:3, background:'rgba(100,38,160,0.15)', color:'#8C44CC', border:'1px solid rgba(100,38,160,0.3)', fontWeight:700, letterSpacing:1 }}>SM</span>
@@ -857,12 +857,12 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
               display:'flex', alignItems:'center', gap:4,
               padding:'4px 10px', fontSize:11, borderRadius:5, cursor:'pointer',
               background: has ? 'rgba(212,162,8,0.10)' : 'transparent',
-              border: `1px solid ${has ? 'rgba(212,162,8,0.25)' : '#1A1A40'}`,
+              border: `1px solid ${has ? 'rgba(212,162,8,0.25)' : 'var(--border)'}`,
               color: has ? '#D4A208' : '#38385C',
               transition:'all 0.15s',
             }}
               onMouseEnter={e => { if (!has) { e.currentTarget.style.borderColor='rgba(212,162,8,0.2)'; e.currentTarget.style.color='#7070A0' }}}
-              onMouseLeave={e => { if (!has) { e.currentTarget.style.borderColor='#1A1A40'; e.currentTarget.style.color='#38385C' }}}
+              onMouseLeave={e => { if (!has) { e.currentTarget.style.borderColor='var(--border)'; e.currentTarget.style.color='#38385C' }}}
             >
               <TIcon size={11} color="currentColor" />
               {t.label}
@@ -886,25 +886,26 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
   return (
     <div>
-      <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:20, fontWeight:700, marginBottom:20, color:'#EAE8F4' }}>Kaizen Board</h2>
+      <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:20, fontWeight:700, marginBottom:20, color:'var(--text)' }}>Kaizen Board</h2>
       {allItems.length === 0 ? (
-        <div style={{ textAlign:'center', padding:60, color:'#38385C' }}>
-          <KaizenIcon size={40} color="#7070A0" style={{ margin:'0 auto 12px', display:'block' }} />
-          <div style={{ color:'#7070A0' }}>No kaizen events yet — open the Kaizen tool on any step.</div>
+        <div style={{ textAlign:'center', padding:60, color:'var(--text3)' }}>
+          <KaizenIcon size={40} color="var(--text3)" style={{ margin:'0 auto 12px', display:'block' }} />
+          <div style={{ color:'var(--text2)' }}>No kaizen events yet — open the Kaizen tool on any step.</div>
         </div>
       ) : (
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:16 }}>
           {statuses.map(st => (
             <div key={st}>
-              <div style={{ fontSize:11, fontWeight:700, letterSpacing:1.5, color:sColor[st], marginBottom:10, padding:'6px 0', borderBottom:`2px solid ${sColor[st]}22` }}>
+              <div style={{ fontSize:11, fontWeight:700, letterSpacing:1.5, color:sColor[st], marginBottom:10, padding:'6px 0', borderBottom:`2px solid ${sColor[st]}33` }}>
                 {sLabel[st]} ({allItems.filter(i => i.status === st).length})
               </div>
               <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
                 {allItems.filter(i => i.status === st).map((item: any, ki: number) => (
-                  <div key={ki} style={{ background:'#080818', border:'1px solid #1A1A40', borderRadius:8, padding:'12px 14px' }}>
-                    <div style={{ fontWeight:600, fontSize:13, color:'#EAE8F4', marginBottom:4 }}>{item.title}</div>
-                    <div style={{ fontSize:11, color:'#7070A0' }}>📍 {item.stepName}</div>
-                    {item.owner && <div style={{ fontSize:11, color:'#7070A0', marginTop:3 }}>👤 {item.owner}</div>}
+                  <div key={ki} style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:8, padding:'12px 14px' }}>
+                    <div style={{ fontWeight:600, fontSize:13, color:'var(--text)', marginBottom:4 }}>{item.title}</div>
+                    <div style={{ fontSize:11, color:'var(--text2)' }}>📍 {item.stepName}</div>
+                    {item.owner && <div style={{ fontSize:11, color:'var(--text2)', marginTop:3 }}>👤 {item.owner}</div>}
+                    {item.dueDate && <div style={{ fontSize:10, color:'var(--text3)', marginTop:3 }}>📅 {item.dueDate}</div>}
                     {item.priority && (
                       <span style={{ display:'inline-block', marginTop:6, fontSize:10, fontWeight:700, padding:'2px 7px', borderRadius:100,
                         background: item.priority==='critical'?'rgba(255,107,107,0.1)':item.priority==='high'?'rgba(244,166,35,0.1)':'rgba(16,144,212,0.1)',
@@ -914,7 +915,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
                   </div>
                 ))}
                 {allItems.filter(i => i.status === st).length === 0 && (
-                  <div style={{ color:'#38385C', fontSize:12, padding:'12px 0', textAlign:'center' }}>None</div>
+                  <div style={{ color:'var(--text3)', fontSize:12, padding:'12px 0', textAlign:'center' }}>None</div>
                 )}
               </div>
             </div>
@@ -1393,13 +1394,13 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
   onTool:(stepId:string,tool:string)=>void
 }) {
   const mainSteps = steps.filter(s => s.is_main_flow !== false)
-  const mainCT    = mainSteps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||0), 0)
+  const mainCT    = mainSteps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0), 0)
 
   return (
     <div>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24 }}>
         <div>
-          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:20, fontWeight:700, color:'#EAE8F4', marginBottom:4 }}>Process Branches</h2>
+          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:20, fontWeight:700, color:'var(--text)', marginBottom:4 }}>Process Branches</h2>
           <p style={{ fontSize:13, color:'#7070A0' }}>Parallel lanes — sub-assemblies, prep flows, quality loops</p>
         </div>
         <button onClick={onNewBranch} style={{ display:'flex', alignItems:'center', gap:6, padding:'8px 16px', borderRadius:8, background:'linear-gradient(135deg,#C49510,#D4A208)', border:'none', color:'#03030D', cursor:'pointer', fontSize:12, fontWeight:700 }}>
@@ -1419,16 +1420,16 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
         <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
           {branches.map(branch => {
             const bSteps = steps.filter(s => s.branch_id===branch.branch_id).sort((a,b)=>(a.branch_position||0)-(b.branch_position||0))
-            const bCT    = bSteps.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||0),0)
+            const bCT    = bSteps.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),0)
             const isCrit = bCT>0 && mainCT>0 && bCT>mainCT
             const parent = mainSteps.find(s=>s.id===branch.parent_step_id)
             const merge  = mainSteps.find(s=>s.id===branch.merge_step_id)
             return (
               <div key={branch.id} style={{ background:'var(--bg2)', border:`1px solid ${branch.color}33`, borderRadius:10, overflow:'hidden' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:10, padding:'11px 14px', background:'#0D0D22', borderBottom:`1px solid ${branch.color}22` }}>
+                <div style={{ display:'flex', alignItems:'center', gap:10, padding:'11px 14px', background:'var(--bg3)', borderBottom:`1px solid ${branch.color}22` }}>
                   <div style={{ width:10, height:10, borderRadius:3, background:branch.color, flexShrink:0 }} />
                   <div style={{ flex:1 }}>
-                    <div style={{ fontWeight:700, color:'#EAE8F4', fontSize:14, display:'flex', gap:8, alignItems:'center', flexWrap:'wrap' }}>
+                    <div style={{ fontWeight:700, color:'var(--text)', fontSize:14, display:'flex', gap:8, alignItems:'center', flexWrap:'wrap' }}>
                       {branch.label}
                       {isCrit && <span style={{ fontSize:9, color:'#FF6B6B', padding:'2px 6px', borderRadius:3, background:'rgba(255,107,107,0.1)', fontWeight:700 }}>⚠ CRITICAL PATH</span>}
                     </div>
@@ -1450,14 +1451,14 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
                       No steps — <button onClick={()=>onAddStep(branch.branch_id)} style={{ background:'none', border:'none', color:branch.color, cursor:'pointer', fontSize:12 }}>add the first</button>
                     </div>
                   ) : bSteps.map((s, si) => {
-                    const ct     = s.toolData?.stopwatch?.mean
+                    const ct     = s.toolData?.stopwatch?.mean || (s.cycle_time ? Number(s.cycle_time) : null)
                     const wastes = s.toolData?.waste?.selected?.length || 0
                     const kzOpen = (s.toolData?.kaizen?.items || []).filter((i: any) => i.status!=='complete').length
                     return (
                       <div key={s.id} style={{ background:'#03030D', border:`1px solid ${branch.color}22`, borderRadius:6, padding:'8px 10px', display:'flex', alignItems:'center', gap:8, flexWrap:'wrap' }}>
                         <span style={{ color:'#38385C', fontFamily:'monospace', fontSize:10, minWidth:16 }}>{si+1}.</span>
                         <div style={{ flex:1, minWidth:80 }}>
-                          <div style={{ fontWeight:600, color:'#EAE8F4', fontSize:12 }}>{s.name}</div>
+                          <div style={{ fontWeight:600, color:'var(--text)', fontSize:12 }}>{s.name}</div>
                           {s.department && <div style={{ fontSize:10, color:'#7070A0' }}>{s.department}</div>}
                         </div>
                         <div style={{ display:'flex', gap:6, fontSize:10 }}>
@@ -1469,7 +1470,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
                           const TMap = { stopwatch:StopwatchIcon, waste:WasteIcon, kaizen:KaizenIcon, fivewhy:FiveWhyIcon }
                           const TIcon = TMap[t]
                           return (
-                            <button key={t} onClick={()=>onTool(s.id,t)} style={{ padding:'3px 6px', fontSize:10, borderRadius:4, cursor:'pointer', background:s.toolData?.[t]?`${branch.color}18`:'transparent', border:`1px solid ${s.toolData?.[t]?`${branch.color}44`:'#1A1A40'}`, color:s.toolData?.[t]?branch.color:'#38385C', display:'flex', alignItems:'center' }}>
+                            <button key={t} onClick={()=>onTool(s.id,t)} style={{ padding:'3px 6px', fontSize:10, borderRadius:4, cursor:'pointer', background:s.toolData?.[t]?`${branch.color}18`:'transparent', border:`1px solid ${s.toolData?.[t]?`${branch.color}44`:'var(--border)'}`, color:s.toolData?.[t]?branch.color:'#38385C', display:'flex', alignItems:'center' }}>
                               <TIcon size={10} color="currentColor" />
                             </button>
                           )

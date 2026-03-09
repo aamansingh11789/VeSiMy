@@ -136,6 +136,9 @@ export async function createStep(projectId: string, form: Partial<Step>): Promis
     flow_type:  form.flow_type || 'push',
   }
 
+  // Cycle time — core field
+  if (form.cycle_time != null && form.cycle_time !== '') insertData.cycle_time = Number(form.cycle_time)
+
   // Optional text fields
   if (form.department) insertData.department = form.department
   if (form.notes)      insertData.notes      = form.notes

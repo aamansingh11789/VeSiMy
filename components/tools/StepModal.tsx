@@ -24,6 +24,7 @@ export function StepModal({ step, onSave, onClose }: Props) {
   const [form, setForm] = useState({
     name:                step?.name                ?? '',
     department:          step?.department          ?? '',
+    cycle_time:          step?.cycle_time          ?? '',
     operators:           step?.operators           ?? 1,
     setup_time:          (step as any)?.setup_time ?? '',
     uptime:              step?.uptime              ?? '',
@@ -62,7 +63,6 @@ export function StepModal({ step, onSave, onClose }: Props) {
     <div
       className="modal-overlay"
       onClick={onClose}
-      style={{ alignItems: 'center' }}
     >
       <div
         className="modal"
@@ -107,6 +107,13 @@ export function StepModal({ step, onSave, onClose }: Props) {
               <label className="label">Department</label>
               <input className="input" placeholder="e.g. Production"
                 value={form.department} onChange={e => set('department', e.target.value)} />
+            </div>
+
+            {/* Cycle Time */}
+            <div>
+              <label className="label">Cycle Time (sec) <span style={{ color:'var(--text3)', fontSize:10 }}>optional</span></label>
+              <input className="input" type="number" min={0} placeholder="e.g. 120"
+                value={form.cycle_time} onChange={e => set('cycle_time', e.target.value)} />
             </div>
 
             {/* Operators */}

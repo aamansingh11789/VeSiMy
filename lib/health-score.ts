@@ -10,10 +10,10 @@ export interface HealthScore {
 export function calcHealth(steps: Step[]): HealthScore {
   if (!steps?.length) return { total:0, label:'No Data', color:'#38385C', lead_time:0, bottleneck:0, waiting:0, defect:0 }
 
-  const totalCT   = steps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||0), 0)
+  const totalCT   = steps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0), 0)
   const totalWait = steps.reduce((a,s) => a+(Number(s.wait_time)||0), 0)
   const avgDefect = steps.reduce((a,s) => a+(Number(s.defect_rate)||0), 0) / steps.length
-  const cts       = steps.map(s => s.toolData?.stopwatch?.mean||0).filter(v=>v>0)
+  const cts       = steps.map(s => s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0).filter(v=>v>0)
   const avgCT     = cts.length ? cts.reduce((a,b)=>a+b,0)/cts.length : 0
   const bottlenecks = cts.filter(ct => ct > avgCT*1.5).length
 

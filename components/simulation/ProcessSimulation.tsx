@@ -17,16 +17,16 @@ export function ProcessSimulation({ steps, projectId }: Props) {
   const [saving, setSaving] = useState(false)
 
   function getA(s: Step) {
-    return adj[s.id] || { fCT: s.toolData?.stopwatch?.mean||0, fWait: Number(s.wait_time)||0 }
+    return adj[s.id] || { fCT: s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0, fWait: Number(s.wait_time)||0 }
   }
   function setA(s: Step, k:'fCT'|'fWait', v: number) {
     setAdj(p => ({ ...p, [s.id]: { ...getA(s), [k]:v } }))
   }
 
-  const curLT = useMemo(() => main.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||0)+(Number(s.wait_time)||0),0), [main])
+  const curLT = useMemo(() => main.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0)+(Number(s.wait_time)||0),0), [main])
   const futLT = useMemo(() => main.reduce((a,s) => { const a_=getA(s); return a+a_.fCT+a_.fWait },0), [main,adj])
   const saved = curLT - futLT
-  const curPCE = curLT>0 ? (main.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||0),0)/curLT*100).toFixed(1) : '0'
+  const curPCE = curLT>0 ? (main.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),0)/curLT*100).toFixed(1) : '0'
   const futPCE = futLT>0 ? (main.reduce((a,s)=>a+getA(s).fCT,0)/futLT*100).toFixed(1)                    : '0'
 
   async function save() {
@@ -47,7 +47,7 @@ export function ProcessSimulation({ steps, projectId }: Props) {
         {[['Current LT',fmt(curLT),'var(--text2)'],['Future LT',fmt(futLT),'#1DD1A1'],
           ['Time Saved',saved>0?fmt(saved):'—','var(--gold2)'],
           ['PCE',`${curPCE}% → ${futPCE}%`,'var(--steel)']].map(([l,v,c]) => (
-          <div key={l as string} style={{ background:'#0D0D22', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)', padding:'12px 14px' }}>
+          <div key={l as string} style={{ background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)', padding:'12px 14px' }}>
             <div style={{ fontSize:9, color:'var(--text3)', letterSpacing:1.5, fontFamily:'var(--font-mono)', marginBottom:4 }}>{l as string}</div>
             <div style={{ fontSize:17, fontWeight:700, color:c as string }}>{v as string}</div>
           </div>
@@ -72,10 +72,10 @@ export function ProcessSimulation({ steps, projectId }: Props) {
 
       {view==='edit' && main.map(s => {
         const a = getA(s)
-        const origCT = s.toolData?.stopwatch?.mean||0
+        const origCT = s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0
         const origW  = Number(s.wait_time)||0
         return (
-          <div key={s.id} style={{ background:'#0D0D22', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)', padding:'14px', marginBottom:10 }}>
+          <div key={s.id} style={{ background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)', padding:'14px', marginBottom:10 }}>
             <div style={{ fontWeight:600, color:'var(--text)', marginBottom:12 }}>{s.name}</div>
             {([['Cycle Time (s)', 'fCT' as const, origCT], ['Wait Time (s)', 'fWait' as const, origW]] as any[]).map(([label,key,orig]) => (
               <div key={key} style={{ marginBottom:8 }}>
@@ -107,7 +107,7 @@ export function ProcessSimulation({ steps, projectId }: Props) {
             <tbody>
               {main.map(s => {
                 const a    = getA(s)
-                const oCT  = s.toolData?.stopwatch?.mean||0
+                const oCT  = s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0
                 const oW   = Number(s.wait_time)||0
                 const dLT  = (a.fCT+a.fWait)-(oCT+oW)
                 return (

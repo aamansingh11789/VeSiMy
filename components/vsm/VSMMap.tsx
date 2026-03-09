@@ -23,9 +23,9 @@ const BRANCH_COLORS = ['#6426A0','#1090D4','#1DD1A1','#F4A623','#E84393','#00BCD
 export function VSMMap({ steps, branches, project }: Props) {
   if (steps.length === 0) {
     return (
-      <div style={{ textAlign: 'center', padding: '80px 0', color: '#38385C' }}>
+      <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text3)' }}>
         <div style={{ fontSize: 48, marginBottom: 16 }}>〜</div>
-        <div style={{ color: '#7070A0', fontSize: 16, marginBottom: 8 }}>No steps to map yet</div>
+        <div style={{ color: 'var(--text2)', fontSize: 16, marginBottom: 8 }}>No steps to map yet</div>
         <div style={{ fontSize: 13 }}>Add process steps in the Builder tab to see your VSM</div>
       </div>
     )
@@ -63,11 +63,11 @@ export function VSMMap({ steps, branches, project }: Props) {
   const laneY = (li: number) => TOP_Y + LANE_H + LANE_GAP + li * (LANE_H + LANE_GAP)
 
   // ── Metrics ─────────────────────────────────────────────────────────────
-  const mainCT   = mainSteps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || 0), 0)
+  const mainCT   = mainSteps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
   const mainWait = mainSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
   const totalWIP = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
   const openKZ   = steps.reduce((a, s) => a + (s.toolData?.kaizen?.items?.filter((i: any) => i.status !== 'complete').length || 0), 0)
-  const branchCTs = branchIds.map(bid => branchGroups[bid].reduce((a, s) => a + (s.toolData?.stopwatch?.mean || 0), 0))
+  const branchCTs = branchIds.map(bid => branchGroups[bid].reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0))
   const criticalCT = branchCTs.length ? Math.max(mainCT, ...branchCTs) : mainCT
   const availSec = project.available_time_sec ? Number(project.available_time_sec) : project.working_hours ? Number(project.working_hours) * 3600 : 0
   const takt = project.takt_time ? Number(project.takt_time) : (project.demand && availSec ? availSec / Number(project.demand) : 0)
@@ -75,7 +75,7 @@ export function VSMMap({ steps, branches, project }: Props) {
 
   // ── Helpers ──────────────────────────────────────────────────────────────
   const renderBox = (step: Step, x: number, y: number, color = '#D4A208') => {
-    const ct     = step.toolData?.stopwatch?.mean
+    const ct     = step.toolData?.stopwatch?.mean || (step.cycle_time ? Number(step.cycle_time) : null)
     const wastes = step.toolData?.waste?.selected?.length || 0
     const kz     = step.toolData?.kaizen?.items?.length || 0
     return (
@@ -92,10 +92,12 @@ export function VSMMap({ steps, branches, project }: Props) {
         {ct != null ? (
           <>
             <text x={x+BOX_W/2} y={y+63} textAnchor="middle" fill={color} fontSize={13} fontWeight={700}>{fmtS(ct)}</text>
-            <text x={x+BOX_W/2} y={y+73} textAnchor="middle" fill="#38385C" fontSize={8} fontFamily="monospace">CT</text>
+            <text x={x+BOX_W/2} y={y+73} textAnchor="middle" fill="#38385C" fontSize={8} fontFamily="monospace">
+              {step.toolData?.stopwatch?.mean ? 'CT' : 'CT*'}
+            </text>
           </>
         ) : (
-          <text x={x+BOX_W/2} y={y+68} textAnchor="middle" fill="#38385C" fontSize={9}>no time study</text>
+          <text x={x+BOX_W/2} y={y+68} textAnchor="middle" fill="#38385C" fontSize={9}>no CT set</text>
         )}
         {wastes > 0 && <g transform={`translate(${x+6},${y+BOX_H-14})`}><rect width={28} height={12} rx={3} fill="rgba(255,107,107,0.15)"/><text x={14} y={9} textAnchor="middle" fill="#FF6B6B" fontSize={8}>{wastes}W</text></g>}
         {kz > 0 && <g transform={`translate(${x+BOX_W-34},${y+BOX_H-14})`}><rect width={28} height={12} rx={3} fill="rgba(244,166,35,0.15)"/><text x={14} y={9} textAnchor="middle" fill="#F4A623" fontSize={8}>⚡{kz}</text></g>}
@@ -109,7 +111,7 @@ export function VSMMap({ steps, branches, project }: Props) {
   }
 
   const renderTimeline = (step: Step, x: number, baseY: number, color = '#D4A208') => {
-    const ct  = step.toolData?.stopwatch?.mean
+    const ct  = step.toolData?.stopwatch?.mean || (step.cycle_time ? Number(step.cycle_time) : null)
     const wt  = Number(step.wait_time) || 0
     const bw  = ct ? Math.max(4, Math.min(BOX_W*0.8, (ct / Math.max(mainCT||1,1)) * BOX_W * mainSteps.length * 0.35)) : 0
     return (
@@ -278,7 +280,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           📄 Export VSM (multi-page)
         </button>
       </div>
-      <div style={{ display:'flex', marginBottom:20, background:'#080818', borderRadius:10, overflow:'hidden', border:'1px solid #1A1A40' }}>
+      <div style={{ display:'flex', marginBottom:20, background:'var(--bg2)', borderRadius:10, overflow:'hidden', border:'1px solid var(--border)' }}>
         {[
           { l:'PCE',          v: pce ? `${pce.toFixed(0)}%` : '—',   c: pce>25?'#1DD1A1':'#FF6B6B' },
           { l:'CRITICAL PATH',v: fmtS(criticalCT),                    c:'#D4A208' },
@@ -289,7 +291,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           { l:'OPEN KAIZEN',  v: openKZ || '—',                       c:'#F4A623' },
         ].map((m,i) => (
           <div key={m.l} style={{ flex:1, padding:'12px 8px', textAlign:'center', borderRight: i<6 ? '1px solid #1A1A40' : 'none', minWidth:80 }}>
-            <div style={{ fontSize:8, color:'#38385C', letterSpacing:1.5, fontFamily:'monospace', marginBottom:4 }}>{m.l}</div>
+            <div style={{ fontSize:8, color:'var(--text3)', letterSpacing:1.5, fontFamily:'monospace', marginBottom:4 }}>{m.l}</div>
             <div style={{ fontSize:17, fontWeight:700, color:m.c }}>{m.v}</div>
           </div>
         ))}
@@ -297,21 +299,21 @@ export function VSMMap({ steps, branches, project }: Props) {
 
       {/* Branch legend */}
       {hasBranches && (
-        <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:14, padding:'10px 16px', background:'#080818', border:'1px solid #1A1A40', borderRadius:8 }}>
+        <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:14, padding:'10px 16px', background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:8 }}>
           <div style={{ display:'flex', alignItems:'center', gap:6, fontSize:12 }}>
             <div style={{ width:10, height:10, borderRadius:2, background:'#D4A208' }}/>
-            <span style={{ color:'#7070A0' }}>Main Flow</span>
+            <span style={{ color:'var(--text2)' }}>Main Flow</span>
           </div>
           {branchIds.map((bid,i) => {
             const bd    = branches.find(b => b.branch_id === bid)
             const color = bd?.color || BRANCH_COLORS[i % BRANCH_COLORS.length]
             const label = bd?.label || branchGroups[bid][0]?.branch_label || `Branch ${i+1}`
-            const bct   = branchGroups[bid].reduce((a,s) => a+(s.toolData?.stopwatch?.mean||0),0)
+            const bct   = branchGroups[bid].reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),0)
             return (
               <div key={bid} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12 }}>
                 <div style={{ width:10, height:10, borderRadius:2, background:color }}/>
-                <span style={{ color:'#7070A0' }}>{label}</span>
-                <span style={{ color:'#38385C', fontSize:10 }}>({branchGroups[bid].length} steps · {fmtS(bct)})</span>
+                <span style={{ color:'var(--text2)' }}>{label}</span>
+                <span style={{ color:'var(--text3)', fontSize:10 }}>({branchGroups[bid].length} steps · {fmtS(bct)})</span>
               </div>
             )
           })}
@@ -469,7 +471,7 @@ export function VSMMap({ steps, branches, project }: Props) {
                 {/* Branch CT total */}
                 <text x={sx+ls.length*(BOX_W+GAP)-GAP+8} y={ly+BOX_H/2+4}
                   fill={color} fontSize={10} fontWeight={700}>
-                  {fmtS(ls.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||0),0))}
+                  {fmtS(ls.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),0))}
                 </text>
 
                 {/* Merge line back to main */}
@@ -496,10 +498,10 @@ export function VSMMap({ steps, branches, project }: Props) {
       </div>
 
       {/* Legend */}
-      <div style={{ display:'flex', gap:20, flexWrap:'wrap', marginTop:14, fontSize:11, color:'#7070A0' }}>
+      <div style={{ display:'flex', gap:20, flexWrap:'wrap', marginTop:14, fontSize:11, color:'var(--text2)' }}>
         {[
           { c:'#D4A208', l:'Cycle Time' },
-          { c:'#7070A0', l:'Wait / Queue' },
+          { c:'var(--text2)', l:'Wait / Queue' },
           { c:'#8C44CC', l:'WIP' },
           { c:'#FF6B6B', l:'Wastes' },
           { c:'#6CB9FC', l:'Takt Line' },

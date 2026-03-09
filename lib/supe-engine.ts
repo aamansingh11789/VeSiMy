@@ -34,11 +34,11 @@ export function analyzeSteps(steps: Step[]): SupeRec[] {
     recs.push({ ...r, key })
   }
 
-  const cts   = steps.map(s => s.toolData?.stopwatch?.mean || 0).filter(v => v > 0)
+  const cts   = steps.map(s => s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0).filter(v => v > 0)
   const avgCT = cts.length ? cts.reduce((a,b) => a+b,0) / cts.length : 0
 
   steps.forEach(s => {
-    const ct     = s.toolData?.stopwatch?.mean || 0
+    const ct     = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
     const wait   = Number(s.wait_time)   || 0
     const setup  = Number((s as any).setup_time) || 0
     const defect = Number(s.defect_rate) || 0
@@ -82,7 +82,7 @@ export function analyzeSteps(steps: Step[]): SupeRec[] {
         principle: 'Kaizen Event' })
   })
 
-  const totalCT   = steps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||0), 0)
+  const totalCT   = steps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0), 0)
   const totalWait = steps.reduce((a,s) => a+(Number(s.wait_time)||0), 0)
   if (totalCT > 0 && totalWait > 0 && totalCT/(totalCT+totalWait) < 0.10)
     add({ issue_type:'waiting', severity:'high',
