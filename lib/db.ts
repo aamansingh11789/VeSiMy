@@ -47,7 +47,7 @@ export async function fetchProject(id: string): Promise<Project> {
     .map((step: any) => ({
       ...step,
       toolData: Object.fromEntries(
-        (step.tool_data || []).map((td: any) => [td.tool_type, td.data])
+        (step.tool_data || []).map((td: any) => [td.tool, td.data])
       ),
       tool_data: undefined,
     }))
@@ -209,18 +209,27 @@ export async function saveToolData(
   const { data: { user } } = await db.auth.getUser()
   if (!user) throw new Error('Not authenticated')
 
+  // Look up project_id from the step (required NOT NULL in schema)
+  const { data: stepRow, error: stepErr } = await db
+    .from('steps')
+    .select('project_id')
+    .eq('id', stepId)
+    .single()
+  if (stepErr || !stepRow) throw new Error('Step not found')
+
   const { error } = await db
     .from('tool_data')
     .upsert(
       {
-        step_id:   stepId,
-        user_id:   user.id,
-        tool_type: toolType,
-        data:      data,
-        saved_at:  new Date().toISOString(),
+        step_id:    stepId,
+        project_id: stepRow.project_id,
+        user_id:    user.id,
+        tool:       toolType,           // column is 'tool', not 'tool_type'
+        data:       data,
+        saved_at:   new Date().toISOString(),
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'step_id,tool_type' }
+      { onConflict: 'step_id,tool' }   // unique constraint is (step_id, tool)
     )
 
   if (error) throw error
@@ -235,7 +244,7 @@ export async function getToolData(
     .from('tool_data')
     .select('data')
     .eq('step_id', stepId)
-    .eq('tool_type', toolType)
+    .eq('tool', toolType)        // column is 'tool', not 'tool_type'
     .maybeSingle()
 
   if (error) throw error
