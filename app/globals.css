@@ -47,9 +47,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  font-family:      var(--font-sans);
+  font-family: var(--font-sans);
   background-color: var(--bg);
-  color:            var(--text);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -83,9 +83,9 @@ body::before {
 #__next, main { position: relative; z-index: 1; }
 
 /* ── Scrollbar ────────────────────────────────────────────────────────── */
-::-webkit-scrollbar         { width: 5px; height: 5px; }
-::-webkit-scrollbar-track   { background: transparent; }
-::-webkit-scrollbar-thumb   { background: var(--border2); border-radius: 10px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
 /* ── Selection ────────────────────────────────────────────────────────── */
@@ -96,7 +96,6 @@ body::before {
 
 /* ── Utility classes ──────────────────────────────────────────────────── */
 @layer components {
-  /* ── Glass Card ─────────────────────────────────────────────────── */
   .card {
     @apply rounded-[10px] border;
     background: rgba(8,8,24,0.75);
@@ -104,81 +103,85 @@ body::before {
     backdrop-filter: blur(16px);
   }
 
-  /* ── Buttons ─────────────────────────────────────────────────────── */
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[8px]
            text-sm font-medium cursor-pointer transition-all duration-200
            border select-none whitespace-nowrap;
   }
+
   .btn-primary {
     @apply btn;
-    background:   linear-gradient(135deg, #C49510, #D4A208, #F4A623);
-    color:        #03030D;
+    background: linear-gradient(135deg, #C49510, #D4A208, #F4A623);
+    color: #03030D;
     border-color: rgba(212,162,8,0.3);
-    box-shadow:   0 2px 14px rgba(212,162,8,0.25);
-    font-weight:  700;
+    box-shadow: 0 2px 14px rgba(212,162,8,0.25);
+    font-weight: 700;
   }
+
   .btn-primary:hover {
-    transform:  translateY(-1px);
+    transform: translateY(-1px);
     box-shadow: 0 4px 22px rgba(212,162,8,0.38);
-    filter:     brightness(1.05);
+    filter: brightness(1.05);
   }
+
   .btn-secondary {
     @apply btn;
-    background:   rgba(212,162,8,0.08);
-    color:        var(--gold2);
+    background: rgba(212,162,8,0.08);
+    color: var(--gold2);
     border-color: rgba(212,162,8,0.20);
   }
+
   .btn-secondary:hover { background: rgba(212,162,8,0.14); }
 
   .btn-ghost {
     @apply btn;
-    background:   transparent;
-    color:        var(--text2);
+    background: transparent;
+    color: var(--text2);
     border-color: var(--border2);
   }
+
   .btn-ghost:hover { background: rgba(255,255,255,0.04); color: var(--text); }
 
   .btn-danger {
     @apply btn;
-    background:   rgba(255,107,107,0.08);
-    color:        #FF6B6B;
+    background: rgba(255,107,107,0.08);
+    color: #FF6B6B;
     border-color: rgba(255,107,107,0.20);
   }
+
   .btn-danger:hover { background: rgba(255,107,107,0.15); }
 
-  /* ── Form inputs ──────────────────────────────────────────────────── */
   .input {
     @apply w-full px-3 py-2 rounded-[8px] text-sm border transition-all duration-200;
-    background:   rgba(8,8,24,0.8);
-    color:        var(--text);
+    background: rgba(8,8,24,0.8);
+    color: var(--text);
     border-color: var(--border2);
-    font-family:  var(--font-sans);
+    font-family: var(--font-sans);
   }
+
   .input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
   .input::placeholder { color: var(--text3); }
 
   .label {
     @apply block text-xs font-medium mb-1;
-    color:        var(--text2);
+    color: var(--text2);
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
 
-  /* ── Badge ────────────────────────────────────────────────────────── */
   .badge {
     @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold;
   }
-  .badge-gold    { background: var(--gold-dim);   color: var(--gold2);  }
-  .badge-violet  { background: var(--violet-dim); color: var(--violet2);}
-  .badge-steel   { background: var(--steel-dim);  color: var(--steel);  }
-  .badge-red     { background: var(--red-dim);    color: var(--red);    }
 
-  /* ── Page title (serif branded) ─────────────────────────────────── */
+  .badge-gold { background: var(--gold-dim); color: var(--gold2); }
+  .badge-violet { background: var(--violet-dim); color: var(--violet2); }
+  .badge-steel { background: var(--steel-dim); color: var(--steel); }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+
   .page-title {
     font-family: var(--font-serif);
     font-weight: 700;
-    color:       var(--text);
+    color: var(--text);
     letter-spacing: 0.5px;
   }
 }
@@ -192,10 +195,11 @@ body::before {
     background: rgba(0, 0, 0, 0.72);
     backdrop-filter: blur(6px);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 24px 16px;
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .modal {
@@ -210,6 +214,7 @@ body::before {
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 48px);
+    overflow: hidden;
   }
 
   .modal-header {
@@ -235,6 +240,7 @@ body::before {
     overflow-x: hidden;
     flex: 1;
     overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal-footer {
@@ -245,128 +251,146 @@ body::before {
     padding: 14px 22px 18px;
     border-top: 1px solid rgba(26,26,64,0.7);
     flex-shrink: 0;
-    background: rgba(8,8,24,0.5);
+    background: rgba(8,8,24,0.92);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
   }
 
-  /* ── Button size variants ─────────────────────────────────────────── */
-  .btn-sm  { @apply btn; padding: 5px 12px; font-size: 11px; }
-  .btn-lg  { @apply btn; padding: 10px 20px; font-size: 15px; }
-  .btn-xs  { @apply btn; padding: 3px 8px; font-size: 10px; }
+  .btn-sm { @apply btn; padding: 5px 12px; font-size: 11px; }
+  .btn-lg { @apply btn; padding: 10px 20px; font-size: 15px; }
+  .btn-xs { @apply btn; padding: 3px 8px; font-size: 10px; }
 
-  /* ── Select input variant ─────────────────────────────────────────── */
-  select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237070A0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+  select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237070A0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+  }
 
-  /* ── Textarea variant ─────────────────────────────────────────────── */
-  textarea.input { resize: vertical; min-height: 80px; line-height: 1.6; }
+  textarea.input {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.6;
+  }
 }
 
-/* ── Spin animation (used by PDF export loader) ─────────────────────────────── */
+/* ── Spin animation ───────────────────────────────────────────────────── */
 @keyframes spin {
   from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   MOBILE RESPONSIVE — Comprehensive phone-first overhaul
+   MOBILE RESPONSIVE
    ══════════════════════════════════════════════════════════════════ */
-
-/* ── Always hide sidebar on mobile ─────────────────────────────── */
 @media (max-width: 768px) {
-
-  /* Hide desktop sidebar */
   aside { display: none !important; }
 
-  /* Show bottom nav */
   .bottom-nav { display: flex !important; }
 
-  /* ── Layout: remove sidebar offset, add bottom-nav clearance ── */
   main {
     margin-left: 0 !important;
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* ── Wrapper pages that use flex + Sidebar ─────────────────── */
   .app-page-wrapper {
     padding: 16px !important;
   }
 
-  /* ── Modals: full-screen on phones ─────────────────────────── */
   .modal-overlay {
     padding: 0 !important;
     align-items: flex-end !important;
+    justify-content: stretch !important;
   }
+
   .modal {
     max-width: 100% !important;
     width: 100% !important;
     margin: 0 !important;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+    border-radius: 18px 18px 0 0 !important;
     max-height: 92vh !important;
+    min-height: 0;
   }
 
-  /* ── Homepage nav ───────────────────────────────────────────── */
+  .modal-header {
+    padding: 16px 16px 12px !important;
+  }
+
+  .modal-body {
+    padding: 16px !important;
+    max-height: calc(92vh - 128px);
+    padding-bottom: 24px !important;
+  }
+
+  .modal-footer {
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(8,8,24,0.97) !important;
+  }
+
   .home-nav { padding: 0 16px !important; }
   .home-nav-links { display: none !important; }
   .home-nav-cta .demo-link { display: none !important; }
   .home-nav-cta { gap: 6px !important; }
 
-  /* ── Homepage hero buttons stack on tiny screens ────────────── */
   .hero-cta-row {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 10px !important;
   }
 
-  /* ── Homepage feature grids → single column ────────────────── */
-  .feature-grid-3 {
+  .feature-grid-3,
+  .feature-grid-2,
+  .pricing-grid {
     grid-template-columns: 1fr !important;
   }
-  .feature-grid-2 {
-    grid-template-columns: 1fr !important;
-  }
+
   .stats-strip {
     padding: 16px !important;
   }
 
-  /* ── Pricing: stack cards ───────────────────────────────────── */
   .pricing-grid {
-    grid-template-columns: 1fr !important;
     max-width: 420px !important;
   }
+
   .pricing-header h1 {
     font-size: 32px !important;
   }
 
-  /* ── Project workspace ──────────────────────────────────────── */
   .project-header {
     padding: 10px 14px !important;
     flex-wrap: wrap !important;
     gap: 8px !important;
   }
-  /* Hide ALL action buttons in project top bar on mobile — FABs handle everything */
+
   .project-header-actions {
     display: none !important;
   }
-  /* Allow scroll on mobile (desktop uses overflow:hidden for VSM canvas) */
+
   .project-main {
     overflow: auto !important;
+    margin-left: 0 !important;
+    min-width: 0 !important;
   }
 
-  /* Hide desktop Supe panel on mobile — show FABs instead */
   .supe-desktop-panel { display: none !important; }
-  .mobile-fabs        { display: flex !important; }
-  .supe-toggle-btn    { display: flex !important; }
+  .mobile-fabs { display: flex !important; }
+  .supe-toggle-btn { display: flex !important; }
 
-  /* Keep FABs above bottom nav */
-  .mobile-fabs { bottom: calc(72px + 8px + env(safe-area-inset-bottom, 0px)) !important; }
+  .mobile-fabs {
+    bottom: calc(72px + 8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 
-  /* ── Tab bars: scroll horizontally with bigger touch targets ── */
   .tab-bar {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
   }
+
   .tab-bar::-webkit-scrollbar { display: none; }
+
   .tab-bar .tab-item {
     padding: 10px 14px !important;
     font-size: 12px !important;
@@ -374,67 +398,58 @@ body::before {
     white-space: nowrap !important;
   }
 
-  /* ── CI tool button strip ───────────────────────────────────── */
   .ci-tool-strip {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
     padding: 0 12px !important;
   }
+
   .ci-tool-strip::-webkit-scrollbar { display: none; }
 
-  /* ── Step cards: better mobile layout ──────────────────────── */
   .step-card-meta {
     flex-wrap: wrap !important;
     gap: 4px !important;
   }
 
-  /* ── VSM map: horizontal scroll container ───────────────────── */
   .vsm-scroll-container {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
 
-  /* ── Supe panel: full height on mobile ─────────────────────── */
   .supe-panel {
     min-height: 60vh !important;
   }
 
-  /* ── Settings page padding ──────────────────────────────────── */
   .settings-main {
     padding: 20px 16px !important;
   }
+
   .settings-inner {
     padding: 0 !important;
     max-width: 100% !important;
   }
 
-  /* ── Card padding reduction on mobile ───────────────────────── */
   .card { padding: 16px !important; }
 
-  /* ── Dashboard health overview ──────────────────────────────── */
   .health-overview-stats {
     gap: 16px !important;
   }
 
-  /* ── Buttons: ensure minimum tap target ─────────────────────── */
   .btn, button {
     min-height: 40px;
   }
 
-  /* ── Form inputs: prevent iOS zoom (font-size must be ≥16px) ── */
   input, select, textarea {
     font-size: 16px !important;
   }
 
-  /* ── Toast: full width on mobile ───────────────────────────── */
   .go2072408551 {
     width: calc(100vw - 32px) !important;
     max-width: 100% !important;
   }
 }
 
-/* ── Show bottom-nav only on mobile ────────────────────────────── */
 @media (min-width: 769px) {
   .bottom-nav { display: none !important; }
 }
@@ -484,33 +499,33 @@ body::before {
 
 /* ── Light Theme ──────────────────────────────────────────────────────── */
 html.light {
-  --bg:          #F5F4F0;
-  --bg2:         #ECEAE4;
-  --bg3:         #E2DFD8;
-  --bg4:         #D8D4CC;
-  --border:      #D0CCC4;
-  --border2:     #B8B4AC;
-  --glass:       rgba(245,244,240,0.92);
+  --bg: #F5F4F0;
+  --bg2: #ECEAE4;
+  --bg3: #E2DFD8;
+  --bg4: #D8D4CC;
+  --border: #D0CCC4;
+  --border2: #B8B4AC;
+  --glass: rgba(245,244,240,0.92);
 
-  --gold:        #B8860B;
-  --gold2:       #D4A208;
-  --gold-dim:    rgba(184,134,11,0.10);
-  --gold-glow:   rgba(184,134,11,0.20);
+  --gold: #B8860B;
+  --gold2: #D4A208;
+  --gold-dim: rgba(184,134,11,0.10);
+  --gold-glow: rgba(184,134,11,0.20);
 
-  --violet:      #5B2D8C;
-  --violet2:     #7C3AAD;
-  --violet-dim:  rgba(91,45,140,0.10);
+  --violet: #5B2D8C;
+  --violet2: #7C3AAD;
+  --violet-dim: rgba(91,45,140,0.10);
 
-  --steel:       #2871C4;
-  --steel2:      #1A5FA0;
-  --steel-dim:   rgba(40,113,196,0.10);
+  --steel: #2871C4;
+  --steel2: #1A5FA0;
+  --steel-dim: rgba(40,113,196,0.10);
 
-  --red:         #DC2626;
-  --red-dim:     rgba(220,38,38,0.08);
+  --red: #DC2626;
+  --red-dim: rgba(220,38,38,0.08);
 
-  --text:        #1A1814;
-  --text2:       #5C5850;
-  --text3:       #8C8880;
+  --text: #1A1814;
+  --text2: #5C5850;
+  --text3: #8C8880;
 }
 
 html.light body {
@@ -543,50 +558,51 @@ html.light .btn-ghost:hover {
   background: rgba(255,255,255,0.9);
 }
 
-/* ── Light mode: modal backgrounds ────────────────────────────────── */
 html.light .modal {
   background: #EAE7E0 !important;
   border-color: rgba(180,172,152,0.6) !important;
 }
+
 html.light .modal-header {
   background: #E2DED6 !important;
   border-bottom-color: rgba(180,172,152,0.4) !important;
 }
+
 html.light .modal-body { background: #EAE7E0 !important; }
+
 html.light .modal-footer {
   background: #E2DED6 !important;
   border-top-color: rgba(180,172,152,0.4) !important;
 }
 
-/* ── Light mode: project workspace ────────────────────────────────── */
 html.light .supe-desktop-panel {
   background: rgba(240,237,230,0.97) !important;
   border-color: rgba(180,172,152,0.5) !important;
 }
+
 html.light .bottom-nav {
   background: rgba(240,237,230,0.97) !important;
   border-top-color: rgba(180,172,152,0.5) !important;
 }
+
 html.light .bottom-nav-item { color: #5C5850 !important; }
 html.light .bottom-nav-item.active { color: #B8860B !important; }
 
-/* ── Light mode: sidebar ───────────────────────────────────────────── */
 html.light aside {
   background: rgba(240,237,230,0.98) !important;
   border-right-color: rgba(180,172,152,0.5) !important;
 }
 
-/* ── Light mode: homepage sections ────────────────────────────────── */
 html.light .home-nav {
   background: rgba(245,244,240,0.95) !important;
   border-bottom-color: rgba(180,172,152,0.4) !important;
 }
+
 html.light footer {
   background: rgba(240,237,230,0.98) !important;
   border-top-color: rgba(180,172,152,0.4) !important;
 }
 
-/* ── Light mode: toast ─────────────────────────────────────────────── */
 html.light [style*="background:'rgba(8,8,24,0.95)"],
 html.light [style*="background: rgba(8,8,24,0.95)"] {
   background: rgba(50,45,40,0.95) !important;
