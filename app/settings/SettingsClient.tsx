@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
-import { PLANS } from '@/lib/stripe'
+import { PLANS } from '@/lib/plans'
 import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/components/ui/Icons'
 
 

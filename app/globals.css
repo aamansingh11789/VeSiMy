@@ -343,12 +343,9 @@ body::before {
     flex-wrap: wrap !important;
     gap: 8px !important;
   }
+  /* Hide ALL action buttons in project top bar on mobile — FABs handle everything */
   .project-header-actions {
-    flex-wrap: wrap !important;
-    gap: 4px !important;
-  }
-  .project-header-actions .action-btn-label {
-    display: none !important;  /* icon-only on mobile */
+    display: none !important;
   }
   /* Allow scroll on mobile (desktop uses overflow:hidden for VSM canvas) */
   .project-main {
@@ -544,4 +541,53 @@ html.light .btn-ghost {
 
 html.light .btn-ghost:hover {
   background: rgba(255,255,255,0.9);
+}
+
+/* ── Light mode: modal backgrounds ────────────────────────────────── */
+html.light .modal {
+  background: #EAE7E0 !important;
+  border-color: rgba(180,172,152,0.6) !important;
+}
+html.light .modal-header {
+  background: #E2DED6 !important;
+  border-bottom-color: rgba(180,172,152,0.4) !important;
+}
+html.light .modal-body { background: #EAE7E0 !important; }
+html.light .modal-footer {
+  background: #E2DED6 !important;
+  border-top-color: rgba(180,172,152,0.4) !important;
+}
+
+/* ── Light mode: project workspace ────────────────────────────────── */
+html.light .supe-desktop-panel {
+  background: rgba(240,237,230,0.97) !important;
+  border-color: rgba(180,172,152,0.5) !important;
+}
+html.light .bottom-nav {
+  background: rgba(240,237,230,0.97) !important;
+  border-top-color: rgba(180,172,152,0.5) !important;
+}
+html.light .bottom-nav-item { color: #5C5850 !important; }
+html.light .bottom-nav-item.active { color: #B8860B !important; }
+
+/* ── Light mode: sidebar ───────────────────────────────────────────── */
+html.light aside {
+  background: rgba(240,237,230,0.98) !important;
+  border-right-color: rgba(180,172,152,0.5) !important;
+}
+
+/* ── Light mode: homepage sections ────────────────────────────────── */
+html.light .home-nav {
+  background: rgba(245,244,240,0.95) !important;
+  border-bottom-color: rgba(180,172,152,0.4) !important;
+}
+html.light footer {
+  background: rgba(240,237,230,0.98) !important;
+  border-top-color: rgba(180,172,152,0.4) !important;
+}
+
+/* ── Light mode: toast ─────────────────────────────────────────────── */
+html.light [style*="background:'rgba(8,8,24,0.95)"],
+html.light [style*="background: rgba(8,8,24,0.95)"] {
+  background: rgba(50,45,40,0.95) !important;
 }
