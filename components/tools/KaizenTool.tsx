@@ -3,7 +3,6 @@
 // ── components/tools/KaizenTool.tsx ─────────────────────────────────────────
 
 import { useState } from 'react'
-import { saveToolData } from '@/lib/db'
 import { useStore } from '@/lib/store'
 import { Modal, Badge } from '@/components/ui'
 
@@ -21,13 +20,14 @@ function uid() { return Math.random().toString(36).slice(2,9) }
 interface KaizenItem { id:string; kzId:string; title:string; description:string; category:string; priority:string; status:string; owner:string; dueDate:string; actions:string[]; created:number }
 interface Props { stepId:string; stepName:string; data?:any; onSave:(data:Record<string,any>)=>Promise<void>; onClose:()=>void }
 
-export default function KaizenTool({ stepId, stepName, data, onClose }: Props) {
-  const { setStepToolData, showToast } = useStore()
+export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: Props) {
+  const { showToast } = useStore()
   const [items,    setItems]    = useState<KaizenItem[]>(data?.items || [])
   const [editId,   setEditId]   = useState<string|null>(null)
   const [form,     setForm]     = useState({ ...BLANK })
   const [newAct,   setNewAct]   = useState('')
   const [expanded, setExpanded] = useState<string|null>(null)
+  const [saving,   setSaving]   = useState(false)
 
   const openNew = () => { setForm({ ...BLANK }); setEditId('new') }
   const openEdit = (item: KaizenItem) => { setForm({ ...item } as any); setEditId(item.id) }
@@ -53,137 +53,132 @@ export default function KaizenTool({ stepId, stepName, data, onClose }: Props) {
   }
 
   const handleSave = async () => {
+    setSaving(true)
     const payload = { items, savedAt: Date.now() }
-    setStepToolData(stepId, 'kaizen', payload)
-    try { await saveToolData(stepId, 'kaizen', payload); showToast('Kaizen events saved', 'success') }
-    catch { showToast('Save failed', 'error') }
-    onClose()
+    try {
+      await onSave(payload)
+      showToast(`Kaizen saved (${items.length} event${items.length!==1?'s':''})`, 'success')
+      onClose()
+    } catch {
+      showToast('Save failed — please try again', 'error')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  return (
-    <Modal title={`⚡ Kaizen Tracker — ${stepName}`} onClose={onClose} onSave={handleSave}
-      saveLabel={`Save (${items.length} event${items.length!==1?'s':''})`} width={720}>
+  const sLabel = { open:'Open','in-progress':'In Progress',complete:'Complete',verified:'Verified' }
 
-      {/* Toolbar */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
+  return (
+    <Modal title={`⚡ Kaizen Tracker — ${stepName}`} onClose={onClose}
+      onSave={handleSave} saveLabel={saving ? 'Saving…' : `Save (${items.length} event${items.length!==1?'s':''})`} width={720}>
+      <div style={{ marginBottom:16, display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:8 }}>
         <div style={{ display:'flex', gap:8 }}>
-          {STATUSES.map(s => {
-            const count = items.filter(i=>i.status===s).length
-            return count > 0 ? (
-              <div key={s} style={{ fontSize:11, color: STATUS_COLOR[s], background: `${STATUS_COLOR[s]}15`, border:`1px solid ${STATUS_COLOR[s]}40`, borderRadius:100, padding:'2px 10px', fontWeight:600 }}>
-                {count} {s}
-              </div>
-            ) : null
-          })}
+          {STATUSES.map(s => (
+            <span key={s} style={{ fontSize:11, padding:'2px 8px', borderRadius:100, background:`${STATUS_COLOR[s]}18`, color:STATUS_COLOR[s], border:`1px solid ${STATUS_COLOR[s]}33` }}>
+              {sLabel[s]} ({items.filter(i=>i.status===s).length})
+            </span>
+          ))}
         </div>
-        <button className="btn btn-primary btn-sm" onClick={openNew}>＋ New Event</button>
+        <button onClick={openNew} className="btn btn-primary btn-sm">+ New Event</button>
       </div>
 
-      {/* Edit form */}
       {editId && (
-        <div style={{ background:'var(--bg3)', border:'1px solid var(--border2)', borderRadius:10, padding:16, marginBottom:16 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:12 }}>
+        <div style={{ background:'rgba(212,162,8,0.04)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:10, padding:16, marginBottom:16 }}>
+          <div style={{ fontWeight:700, color:'var(--text)', marginBottom:12, fontSize:13 }}>
+            {editId==='new' ? '+ New Kaizen Event' : `Editing: ${items.find(i=>i.id===editId)?.kzId}`}
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
             <div style={{ gridColumn:'1/-1' }}>
-              <label className="label">Title</label>
-              <input className="input" placeholder="What needs to be improved?" value={form.title} onChange={e => setForm(f=>({...f,title:e.target.value}))} />
+              <label className="label">Title *</label>
+              <input className="input" placeholder="Kaizen event title" value={form.title} onChange={e=>setForm(f=>({...f,title:e.target.value}))} />
+            </div>
+            <div style={{ gridColumn:'1/-1' }}>
+              <label className="label">Description</label>
+              <textarea className="input" rows={2} placeholder="What needs to be improved?" value={form.description} onChange={e=>setForm(f=>({...f,description:e.target.value}))} style={{ resize:'none' }} />
             </div>
             <div>
               <label className="label">Category</label>
-              <select className="input" value={form.category} onChange={e => setForm(f=>({...f,category:e.target.value}))}>
-                {CATEGORIES.map(c => <option key={c}>{c}</option>)}
+              <select className="input" value={form.category} onChange={e=>setForm(f=>({...f,category:e.target.value}))}>
+                {CATEGORIES.map(c=><option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="label">Priority</label>
-              <select className="input" value={form.priority} onChange={e => setForm(f=>({...f,priority:e.target.value}))}>
-                {PRIORITIES.map(p => <option key={p}>{p}</option>)}
+              <select className="input" value={form.priority} onChange={e=>setForm(f=>({...f,priority:e.target.value}))}>
+                {PRIORITIES.map(p=><option key={p}>{p}</option>)}
               </select>
             </div>
             <div>
               <label className="label">Status</label>
-              <select className="input" value={form.status} onChange={e => setForm(f=>({...f,status:e.target.value}))}>
-                {STATUSES.map(s => <option key={s}>{s}</option>)}
+              <select className="input" value={form.status} onChange={e=>setForm(f=>({...f,status:e.target.value}))}>
+                {STATUSES.map(s=><option key={s} value={s}>{sLabel[s]}</option>)}
               </select>
             </div>
             <div>
               <label className="label">Owner</label>
-              <input className="input" placeholder="Responsible person" value={form.owner} onChange={e => setForm(f=>({...f,owner:e.target.value}))} />
-            </div>
-            <div style={{ gridColumn:'1/-1' }}>
-              <label className="label">Description</label>
-              <textarea className="input" rows={2} placeholder="Describe the improvement…" value={form.description} onChange={e => setForm(f=>({...f,description:e.target.value}))} />
+              <input className="input" placeholder="Team member name" value={form.owner} onChange={e=>setForm(f=>({...f,owner:e.target.value}))} />
             </div>
             <div>
               <label className="label">Due Date</label>
-              <input className="input" type="date" value={form.dueDate} onChange={e => setForm(f=>({...f,dueDate:e.target.value}))} />
+              <input className="input" type="date" value={form.dueDate} onChange={e=>setForm(f=>({...f,dueDate:e.target.value}))} />
+            </div>
+            <div>
+              <label className="label">Actions</label>
+              <div style={{ display:'flex', gap:6 }}>
+                <input className="input" placeholder="Add action item" value={newAct} onChange={e=>setNewAct(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addAction()} style={{ flex:1 }} />
+                <button onClick={addAction} className="btn btn-ghost btn-sm" style={{ flexShrink:0 }}>+</button>
+              </div>
+              {form.actions.map((a,i)=>(
+                <div key={i} style={{ display:'flex', alignItems:'center', gap:6, marginTop:4, fontSize:12, color:'var(--text2)' }}>
+                  <span style={{ flex:1 }}>• {a}</span>
+                  <button onClick={()=>setForm(f=>({...f,actions:f.actions.filter((_,j)=>j!==i)}))} style={{ background:'none', border:'none', color:'#7070A0', cursor:'pointer', fontSize:14 }}>×</button>
+                </div>
+              ))}
             </div>
           </div>
-          {/* Actions */}
-          <label className="label">Action Items</label>
-          {form.actions.map((a,i) => (
-            <div key={i} style={{ display:'flex', alignItems:'center', gap:6, marginBottom:5 }}>
-              <div style={{ flex:1, fontSize:12, color:'var(--text)', background:'var(--bg4)', padding:'5px 8px', borderRadius:5 }}>✓ {a}</div>
-              <button onClick={() => setForm(f=>({...f,actions:f.actions.filter((_,j)=>j!==i)}))}
-                style={{ background:'none',border:'none',cursor:'pointer',color:'var(--text3)',fontSize:14 }}>×</button>
-            </div>
-          ))}
-          <div style={{ display:'flex', gap:8, marginTop:6 }}>
-            <input className="input" style={{ flex:1,fontSize:12 }} placeholder="Add action item…" value={newAct}
-              onChange={e => setNewAct(e.target.value)} onKeyDown={e => e.key==='Enter' && addAction()} />
-            <button className="btn btn-ghost btn-sm" onClick={addAction}>Add</button>
-          </div>
-          <div style={{ display:'flex', justifyContent:'flex-end', gap:8, marginTop:14 }}>
-            <button className="btn btn-ghost btn-sm" onClick={() => setEditId(null)}>Cancel</button>
-            <button className="btn btn-primary btn-sm" onClick={saveItem}>
-              {editId === 'new' ? 'Create Event' : 'Update Event'}
-            </button>
+          <div style={{ display:'flex', gap:8, marginTop:12 }}>
+            <button onClick={saveItem} disabled={!form.title.trim()} className="btn btn-primary btn-sm">{editId==='new'?'Add Event':'Update Event'}</button>
+            <button onClick={()=>setEditId(null)} className="btn btn-ghost btn-sm">Cancel</button>
           </div>
         </div>
       )}
 
-      {/* Event list */}
-      {items.length === 0 && !editId && (
-        <div style={{ textAlign:'center', padding:'32px 0', color:'var(--text3)' }}>
-          <div style={{ fontSize:28, marginBottom:8 }}>⚡</div>
-          No kaizen events yet — click New Event to add one
+      {items.length === 0 ? (
+        <div style={{ textAlign:'center', padding:'40px 20px', color:'var(--text3)' }}>
+          <div style={{ fontSize:32, marginBottom:8 }}>⚡</div>
+          <p style={{ fontSize:13 }}>No kaizen events yet. Add one to track improvement activities.</p>
+        </div>
+      ) : (
+        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+          {items.map(item=>(
+            <div key={item.id} style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:8, overflow:'hidden' }}>
+              <div style={{ padding:'10px 14px', display:'flex', alignItems:'center', gap:10, cursor:'pointer' }} onClick={()=>setExpanded(expanded===item.id?null:item.id)}>
+                <span style={{ fontSize:10, color:'#7070A0', fontFamily:'monospace', flexShrink:0 }}>{item.kzId}</span>
+                <span style={{ flex:1, fontWeight:600, fontSize:13, color:'var(--text)' }}>{item.title}</span>
+                <span style={{ fontSize:10, padding:'2px 7px', borderRadius:100, background:`${STATUS_COLOR[item.status]}18`, color:STATUS_COLOR[item.status], border:`1px solid ${STATUS_COLOR[item.status]}33`, flexShrink:0 }}>{sLabel[item.status]}</span>
+                <span style={{ fontSize:10, padding:'2px 7px', borderRadius:100, background:'var(--bg)', border:'1px solid var(--border)', color:'var(--text2)', flexShrink:0 }}>{item.priority}</span>
+                <button onClick={e=>{e.stopPropagation();openEdit(item)}} style={{ background:'none', border:'none', color:'#7070A0', cursor:'pointer', fontSize:12, padding:'2px 6px' }}>✎</button>
+                <button onClick={e=>{e.stopPropagation();deleteItem(item.id)}} style={{ background:'none', border:'none', color:'#FF6B6B', cursor:'pointer', fontSize:14, padding:'2px 6px' }}>×</button>
+              </div>
+              {expanded===item.id && (
+                <div style={{ padding:'0 14px 12px', borderTop:'1px solid var(--border)' }}>
+                  {item.description && <p style={{ fontSize:12, color:'var(--text2)', margin:'8px 0', lineHeight:1.6 }}>{item.description}</p>}
+                  <div style={{ display:'flex', gap:12, flexWrap:'wrap', fontSize:11, color:'var(--text3)', marginTop:6 }}>
+                    {item.category && <span>📁 {item.category}</span>}
+                    {item.owner    && <span>👤 {item.owner}</span>}
+                    {item.dueDate  && <span>📅 {item.dueDate}</span>}
+                  </div>
+                  {item.actions.length > 0 && (
+                    <div style={{ marginTop:8 }}>
+                      {item.actions.map((a,i)=><div key={i} style={{ fontSize:12, color:'var(--text2)', padding:'2px 0' }}>• {a}</div>)}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
-      <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-        {items.map(item => (
-          <div key={item.id} style={{
-            background:'var(--bg3)', border:`1px solid ${expanded===item.id ? 'rgba(212,162,8,0.25)' : 'var(--border)'}`,
-            borderRadius:10, overflow:'hidden', transition:'border-color 0.15s',
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:12, padding:'10px 14px', cursor:'pointer' }}
-              onClick={() => setExpanded(ex => ex===item.id ? null : item.id)}>
-              <div style={{ fontSize:10, fontFamily:'var(--font-mono)', color:'var(--text3)', flexShrink:0, minWidth:48 }}>{item.kzId}</div>
-              <div style={{ flex:1 }}>
-                <div style={{ fontWeight:600, fontSize:13, color:'var(--text)' }}>{item.title}</div>
-                <div style={{ fontSize:11, color:'var(--text3)', marginTop:2 }}>{item.category} · {item.owner || 'Unassigned'}</div>
-              </div>
-              <div style={{ fontSize:11, fontWeight:600, color: STATUS_COLOR[item.status], background:`${STATUS_COLOR[item.status]}15`, border:`1px solid ${STATUS_COLOR[item.status]}40`, padding:'2px 8px', borderRadius:100, flexShrink:0 }}>
-                {item.status}
-              </div>
-              <div style={{ display:'flex', gap:6 }}>
-                <button className="btn btn-ghost" style={{ padding:'4px 8px', fontSize:11 }} onClick={e=>{e.stopPropagation();openEdit(item)}}>Edit</button>
-                <button className="btn btn-danger" style={{ padding:'4px 8px', fontSize:11 }} onClick={e=>{e.stopPropagation();deleteItem(item.id)}}>✕</button>
-              </div>
-            </div>
-            {expanded===item.id && item.description && (
-              <div style={{ padding:'0 14px 12px', borderTop:'1px solid var(--border)', paddingTop:10 }}>
-                <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.5 }}>{item.description}</p>
-                {item.actions.length > 0 && (
-                  <div style={{ marginTop:8 }}>
-                    {item.actions.map((a,i)=>(
-                      <div key={i} style={{ fontSize:12, color:'var(--text2)', padding:'3px 0' }}>✓ {a}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
     </Modal>
   )
 }

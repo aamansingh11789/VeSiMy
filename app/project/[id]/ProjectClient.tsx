@@ -140,12 +140,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
   }
 
   const handleSaveToolData = async (stepId: string, tool: string, data: Record<string, any>) => {
-    try {
-      await saveToolData(stepId, tool, data)
-      setSteps(ss => ss.map(s =>
-        s.id === stepId ? { ...s, toolData: { ...(s.toolData || {}), [tool]: data } } : s
-      ))
-    } catch { showToast('Failed to save tool data', 'error') }
+    await saveToolData(stepId, tool, data)
+    setSteps(ss => ss.map(s =>
+      s.id === stepId ? { ...s, toolData: { ...(s.toolData || {}), [tool]: data } } : s
+    ))
   }
 
   // ── Branch CRUD ───────────────────────────────────────────────────────────

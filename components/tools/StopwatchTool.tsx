@@ -1,155 +1,156 @@
 // @ts-nocheck
 'use client'
 // ── components/tools/StopwatchTool.tsx ──────────────────────────────────────
-// Time Study tool — ported from LeanStream v1 with cloud save
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { saveToolData } from '@/lib/db'
+import { useState, useEffect, useRef } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui'
 
-interface Lap { id: string; time: number; note: string; date: string; ts: number }
+interface Lap { t: number; excluded?: boolean }
 interface Props { stepId: string; stepName: string; data?: any; onSave: (data: Record<string, any>) => Promise<void>; onClose: () => void }
 
-function uid() { return Math.random().toString(36).slice(2, 9) }
-function fmtMs(ms: number) {
-  const s = Math.floor(ms / 1000), m = Math.floor(s / 60)
-  return `${m}:${String(s % 60).padStart(2,'0')}.${String(Math.floor((ms%1000)/10)).padStart(2,'0')}`
+const fmtMs = (ms: number) => {
+  if (!ms) return '0s'
+  const s = ms / 1000
+  if (s < 60) return `${s.toFixed(1)}s`
+  return `${Math.floor(s/60)}m ${(s%60).toFixed(0)}s`
 }
 
-export default function StopwatchTool({ stepId, stepName, data, onClose }: Props) {
-  const { setStepToolData, showToast } = useStore()
+export default function StopwatchTool({ stepId, stepName, data, onSave, onClose }: Props) {
+  const { showToast } = useStore()
   const [running,  setRunning]  = useState(false)
   const [elapsed,  setElapsed]  = useState(0)
   const [laps,     setLaps]     = useState<Lap[]>(data?.laps || [])
-  const [note,     setNote]     = useState('')
-  const [excluded, setExcluded] = useState<string[]>(data?.excluded || [])
-  const [manualInput, setManualInput] = useState('')
-  const [baseline, setBaseline] = useState<number | null>(data?.baseline ?? null)
-  const startRef = useRef<number | null>(null)
-  const rafRef   = useRef<number | null>(null)
-  const saving   = useRef(false)
+  const [excluded, setExcluded] = useState<Set<number>>(new Set(data?.excluded || []))
+  const [baseline, setBaseline] = useState(data?.baseline ?? '')
+  const [manualCT, setManualCT] = useState(data?.mean ? String(Math.round(data.mean / 10) / 100) : '')
+  const [saving,   setSaving]   = useState(false)
+  const startRef = useRef<number>(0)
+  const rafRef   = useRef<number>(0)
 
   useEffect(() => {
     if (running) {
       startRef.current = Date.now() - elapsed
-      const tick = () => { setElapsed(Date.now() - startRef.current!); rafRef.current = requestAnimationFrame(tick) }
+      const tick = () => { setElapsed(Date.now() - startRef.current); rafRef.current = requestAnimationFrame(tick) }
       rafRef.current = requestAnimationFrame(tick)
     } else {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      cancelAnimationFrame(rafRef.current)
     }
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+    return () => cancelAnimationFrame(rafRef.current)
   }, [running])
 
   const lap = () => {
     if (!running) return
-    const l: Lap = { id: uid(), time: elapsed, note, date: new Date().toLocaleDateString(), ts: Date.now() }
-    setLaps(prev => [...prev, l])
-    setNote('')
-    setElapsed(0)
+    setLaps(prev => [...prev, { t: elapsed }])
     startRef.current = Date.now()
+    setElapsed(0)
   }
 
-  const reset = () => { setRunning(false); setElapsed(0) }
+  const reset = () => { setRunning(false); setElapsed(0); setLaps([]); setExcluded(new Set()) }
 
-  const addManual = () => {
-    const ms = parseFloat(manualInput)
-    if (isNaN(ms) || ms <= 0) return
-    setLaps(prev => [...prev, { id: uid(), time: ms * 1000, note, date: new Date().toLocaleDateString(), ts: Date.now() }])
-    setManualInput('')
-    setNote('')
-  }
+  const toggleExclude = (i: number) => setExcluded(prev => {
+    const n = new Set(prev)
+    n.has(i) ? n.delete(i) : n.add(i)
+    return n
+  })
 
-  const valid = laps.filter(l => !excluded.includes(l.id))
-  const times = valid.map(l => l.time)
-  const mean  = times.length ? Math.round(times.reduce((a,b)=>a+b,0)/times.length) : 0
-  const minT  = times.length ? Math.min(...times) : 0
-  const maxT  = times.length ? Math.max(...times) : 0
+  const validTimes = laps.filter((_, i) => !excluded.has(i)).map(l => l.t)
+  const mean  = validTimes.length ? Math.round(validTimes.reduce((a,b)=>a+b,0) / validTimes.length) : 0
+  const minT  = validTimes.length ? Math.min(...validTimes) : 0
+  const maxT  = validTimes.length ? Math.max(...validTimes) : 0
+
+  // If no laps, use manual CT (in seconds → convert to ms)
+  const effectiveMean = mean || (manualCT ? Math.round(parseFloat(manualCT) * 1000) : 0)
 
   const handleSave = async () => {
-    if (saving.current) return
-    saving.current = true
-    const payload = { laps, excluded, baseline, mean, min: minT, max: maxT, savedAt: Date.now() }
-    setStepToolData(stepId, 'stopwatch', payload)
-    try { await saveToolData(stepId, 'stopwatch', payload); showToast('Time study saved', 'success') }
-    catch { showToast('Save failed', 'error') }
-    finally { saving.current = false }
-    onClose()
+    setSaving(true)
+    const payload = {
+      laps,
+      excluded: [...excluded],
+      baseline: baseline ? Number(baseline) * 1000 : null,
+      mean: effectiveMean,
+      min: minT,
+      max: maxT,
+      savedAt: Date.now(),
+    }
+    try {
+      await onSave(payload)
+      showToast('Time study saved', 'success')
+      onClose()
+    } catch {
+      showToast('Save failed — please try again', 'error')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
-    <Modal title={`⏱ Time Study — ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel="Save Study" width={620}>
-      {/* Display */}
-      <div style={{ textAlign: 'center', padding: '20px 0 16px', borderBottom: '1px solid var(--border)', marginBottom: 20 }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 52, fontWeight: 700, color: running ? '#D4A208' : 'var(--text)', letterSpacing: 2 }}>
+    <Modal title={`⏱ Time Study — ${stepName}`} onClose={onClose} onSave={handleSave}
+      saveLabel={saving ? 'Saving…' : 'Save Study'} width={620}>
+
+      {/* Timer display */}
+      <div style={{ textAlign:'center', padding:'20px 0', background:'var(--bg)', borderRadius:10, marginBottom:16, border:'1px solid var(--border)' }}>
+        <div style={{ fontSize:52, fontFamily:'monospace', fontWeight:700, color: running ? '#D4A208' : 'var(--text)', letterSpacing:2 }}>
           {fmtMs(elapsed)}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginTop: 16 }}>
-          <button className="btn btn-primary" style={{ minWidth: 100 }} onClick={() => setRunning(r => !r)}>
-            {running ? '⏸ Pause' : '▶ Start'}
+        <div style={{ display:'flex', gap:10, justifyContent:'center', marginTop:14 }}>
+          <button onClick={() => setRunning(r => !r)} className={`btn btn-sm ${running ? 'btn-danger' : 'btn-primary'}`} style={{ minWidth:80 }}>
+            {running ? '⏹ Stop' : '▶ Start'}
           </button>
-          {running && (
-            <button className="btn btn-ghost" onClick={lap}>⏲ Lap</button>
-          )}
-          <button className="btn btn-ghost" onClick={reset} disabled={running}>↺ Reset</button>
+          {running && <button onClick={lap} className="btn btn-ghost btn-sm">⏱ Lap</button>}
+          {laps.length > 0 && !running && <button onClick={reset} className="btn btn-ghost btn-sm">↺ Reset</button>}
         </div>
-        {running && (
-          <input className="input" placeholder="Note for this observation…" value={note}
-            onChange={e => setNote(e.target.value)}
-            style={{ marginTop: 12, maxWidth: 360 }} />
-        )}
       </div>
 
-      {/* Stats */}
-      {valid.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 20 }}>
-          {[['Mean CT', fmtMs(mean)],['Min', fmtMs(minT)],['Max', fmtMs(maxT)]].map(([label, val]) => (
-            <div key={label} style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 8, padding: '10px 14px', textAlign: 'center' }}>
-              <div style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 1, marginBottom: 4 }}>{label}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: '#D4A208' }}>{val}</div>
+      {/* Stats row */}
+      {effectiveMean > 0 && (
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:8, marginBottom:16 }}>
+          {[['Mean CT', fmtMs(mean||effectiveMean)],['Min', fmtMs(minT||effectiveMean)],['Max', fmtMs(maxT||effectiveMean)]].map(([label, val]) => (
+            <div key={label} style={{ background:'var(--bg)', border:'1px solid var(--border)', borderRadius:8, padding:'10px', textAlign:'center' }}>
+              <div style={{ fontSize:9, color:'var(--text3)', letterSpacing:1.5, fontFamily:'monospace', marginBottom:4 }}>{label}</div>
+              <div style={{ fontSize:17, fontWeight:700, color:'#D4A208' }}>{val}</div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Manual entry */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-        <input className="input" placeholder="Add manual obs. (seconds)" type="number" value={manualInput}
-          onChange={e => setManualInput(e.target.value)} style={{ flex: 1 }} />
-        <button className="btn btn-ghost" onClick={addManual}>Add</button>
-      </div>
-
-      {/* Laps table */}
+      {/* Lap list */}
       {laps.length > 0 && (
-        <div style={{ background: 'var(--bg3)', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                {['#','Time','Note','Date','Excl.'].map(h => (
-                  <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontSize: 10, letterSpacing: 1, color: 'var(--text3)', fontWeight: 600 }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {laps.map((l, i) => {
-                const isExcluded = excluded.includes(l.id)
-                return (
-                  <tr key={l.id} style={{ borderBottom: '1px solid var(--border)', opacity: isExcluded ? 0.4 : 1 }}>
-                    <td style={{ padding: '7px 12px', color: 'var(--text3)' }}>#{i+1}</td>
-                    <td style={{ padding: '7px 12px', fontFamily: 'var(--font-mono)', color: '#D4A208', fontWeight: 600 }}>{fmtMs(l.time)}</td>
-                    <td style={{ padding: '7px 12px', color: 'var(--text2)' }}>{l.note || '—'}</td>
-                    <td style={{ padding: '7px 12px', color: 'var(--text3)', fontSize: 11 }}>{l.date}</td>
-                    <td style={{ padding: '7px 12px' }}>
-                      <input type="checkbox" checked={isExcluded}
-                        onChange={() => setExcluded(prev => isExcluded ? prev.filter(x=>x!==l.id) : [...prev, l.id])} />
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+        <div style={{ marginBottom:16 }}>
+          <div style={{ fontSize:11, color:'var(--text3)', fontFamily:'monospace', letterSpacing:1, marginBottom:8 }}>
+            OBSERVATIONS ({validTimes.length} valid / {laps.length} total)
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {laps.map((l, i) => (
+              <button key={i} onClick={() => toggleExclude(i)} style={{
+                padding:'4px 10px', borderRadius:6, fontSize:12, fontFamily:'monospace', cursor:'pointer',
+                background: excluded.has(i) ? 'rgba(255,107,107,0.08)' : 'var(--bg)',
+                border: `1px solid ${excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'}`,
+                color: excluded.has(i) ? '#FF6B6B' : 'var(--text2)',
+                textDecoration: excluded.has(i) ? 'line-through' : 'none',
+              }}>
+                #{i+1} {fmtMs(l.t)}
+              </button>
+            ))}
+          </div>
+          <p style={{ fontSize:11, color:'var(--text3)', marginTop:6 }}>Click any lap to toggle exclude from mean</p>
         </div>
       )}
+
+      {/* Manual entry */}
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:8 }}>
+        <div>
+          <label className="label">Manual Cycle Time (sec) <span style={{ color:'var(--text3)', fontSize:10 }}>if no stopwatch</span></label>
+          <input className="input" type="number" min={0} placeholder="e.g. 120"
+            value={manualCT} onChange={e => setManualCT(e.target.value)} />
+        </div>
+        <div>
+          <label className="label">Baseline CT (sec) <span style={{ color:'var(--text3)', fontSize:10 }}>current state</span></label>
+          <input className="input" type="number" min={0} placeholder="e.g. 180"
+            value={baseline} onChange={e => setBaseline(e.target.value)} />
+        </div>
+      </div>
+
     </Modal>
   )
 }
