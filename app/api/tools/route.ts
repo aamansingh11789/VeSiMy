@@ -1,56 +1,98 @@
 // @ts-nocheck
 // ── app/api/tools/route.ts ───────────────────────────────────────────────────
-// Upsert tool data for a step
-// POST /api/tools  { stepId, toolType, data }
-
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const supabase = await createServerSupabase()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  const body = await request.json()
-  const { stepId, toolType, data } = body
-
-  if (!stepId || !toolType) {
-    return NextResponse.json({ error: 'stepId and toolType are required' }, { status: 400 })
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Verify the user owns this step
-  const { data: step } = await supabase
+  const body = await request.json()
+  const { stepId, toolType, data } = body || {}
+
+  if (!stepId || !toolType) {
+    return NextResponse.json(
+      { error: 'stepId and toolType are required' },
+      { status: 400 }
+    )
+  }
+
+  const { data: step, error: stepError } = await supabase
     .from('steps')
-    .select('id, project_id')
+    .select('id, project_id, user_id')
     .eq('id', stepId)
     .eq('user_id', user.id)
     .single()
 
-  if (!step) return NextResponse.json({ error: 'Step not found' }, { status: 404 })
+  if (stepError || !step) {
+    return NextResponse.json({ error: 'Step not found' }, { status: 404 })
+  }
 
-  const { data: result, error } = await supabase
+  const { data: existing, error: existingError } = await supabase
     .from('tool_data')
-    .upsert(
-      {
-        step_id:    stepId,
-        user_id:    user.id,
-        tool_type:  toolType,
-        data:       data || {},
-        saved_at:   new Date().toISOString(),
+    .select('id')
+    .eq('step_id', stepId)
+    .eq('tool', toolType)
+    .eq('user_id', user.id)
+    .maybeSingle()
+
+  if (existingError) {
+    return NextResponse.json({ error: existingError.message }, { status: 500 })
+  }
+
+  let result: any = null
+
+  if (existing?.id) {
+    const { data: updated, error } = await supabase
+      .from('tool_data')
+      .update({
+        data: data || {},
+        saved_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'step_id,tool_type' }
-    )
-    .select()
-    .single()
+      })
+      .eq('id', existing.id)
+      .eq('user_id', user.id)
+      .select()
+      .single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
 
-  // Touch project updated_at
+    result = updated
+  } else {
+    const { data: inserted, error } = await supabase
+      .from('tool_data')
+      .insert({
+        step_id: stepId,
+        project_id: step.project_id,
+        user_id: user.id,
+        tool: toolType,
+        data: data || {},
+        saved_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .single()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    result = inserted
+  }
+
   await supabase
     .from('projects')
     .update({ updated_at: new Date().toISOString() })
     .eq('id', step.project_id)
+    .eq('user_id', user.id)
 
   return NextResponse.json({ toolData: result })
 }

@@ -12,7 +12,6 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const supabase = await createServerSupabase()
-
   const { data } = await supabase
     .from('projects')
     .select('name')
@@ -26,7 +25,6 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ProjectPage({ params }: Props) {
   const supabase = await createServerSupabase()
-
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -62,27 +60,17 @@ export default async function ProjectPage({ params }: Props) {
       tool_data: undefined,
     }))
 
-  const initialProject = {
-    ...project,
-    steps,
-  }
+  const initialProject = { ...project, steps }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#03030D' }}>
       <Sidebar profile={profile} />
-
       <main
-        style={{
-          marginLeft: 240,
-          flex: 1,
-          minWidth: 0,
-          overflow: 'hidden',
-        }}
+        style={{ marginLeft: 240, flex: 1, minWidth: 0, overflow: 'hidden' }}
         className="project-main"
       >
         <ProjectClient initialProject={initialProject} profile={profile} />
       </main>
-
       <BottomNav />
     </div>
   )
