@@ -909,3 +909,97 @@ html.light [style*="background:'rgba(8,8,24,0.95)"],
 html.light [style*="background: rgba(8,8,24,0.95)"] {
   background: rgba(50, 45, 40, 0.95) !important;
 }
+/* VESIMY MOBILE MODAL */
+
+.vesimy-modal-overlay{
+position:fixed;
+inset:0;
+z-index:9999;
+background:rgba(0,0,0,0.75);
+backdrop-filter:blur(6px);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:24px;
+}
+
+.vesimy-modal{
+width:100%;
+max-width:640px;
+background:#080818;
+border:1px solid rgba(40,40,92,0.7);
+border-radius:16px;
+display:flex;
+flex-direction:column;
+max-height:90vh;
+overflow:hidden;
+}
+
+.vesimy-modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 20px;
+border-bottom:1px solid rgba(40,40,92,0.6);
+}
+
+.vesimy-modal-title{
+font-weight:700;
+font-size:16px;
+color:white;
+}
+
+.vesimy-modal-close{
+background:none;
+border:none;
+color:#888;
+font-size:16px;
+cursor:pointer;
+}
+
+.vesimy-modal-body{
+padding:20px;
+overflow-y:auto;
+flex:1;
+}
+
+.vesimy-modal-footer{
+display:flex;
+justify-content:flex-end;
+gap:10px;
+padding:14px 20px;
+border-top:1px solid rgba(40,40,92,0.6);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.vesimy-modal-overlay{
+align-items:flex-end;
+padding:0;
+}
+
+.vesimy-modal{
+border-radius:18px 18px 0 0;
+max-width:100%;
+max-height:92vh;
+}
+
+.vesimy-modal-handle{
+width:42px;
+height:5px;
+background:rgba(255,255,255,0.2);
+border-radius:999px;
+margin:10px auto;
+}
+
+.vesimy-modal-footer{
+position:sticky;
+bottom:0;
+background:#080818;
+display:grid;
+grid-template-columns:1fr 1fr;
+}
+
+}
