@@ -74,7 +74,15 @@ const PLAN_META: Record<
   },
 }
 
-function SectionTitle({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
+function SectionTitle({
+  eyebrow,
+  title,
+  subtitle,
+}: {
+  eyebrow: string
+  title: React.ReactNode
+  subtitle?: string
+}) {
   return (
     <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto' }}>
       <div
@@ -152,7 +160,13 @@ function PricingToggle({
         boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
       }}
     >
-      <span style={{ fontSize: 13, color: annual ? 'var(--text2)' : '#EAE8F4', transition: 'color 0.2s' }}>
+      <span
+        style={{
+          fontSize: 13,
+          color: annual ? 'var(--text2)' : '#EAE8F4',
+          transition: 'color 0.2s',
+        }}
+      >
         Monthly
       </span>
 
@@ -186,7 +200,13 @@ function PricingToggle({
         />
       </button>
 
-      <span style={{ fontSize: 13, color: annual ? '#EAE8F4' : 'var(--text2)', transition: 'color 0.2s' }}>
+      <span
+        style={{
+          fontSize: 13,
+          color: annual ? '#EAE8F4' : 'var(--text2)',
+          transition: 'color 0.2s',
+        }}
+      >
         Annual
       </span>
 
@@ -275,7 +295,6 @@ export default function PricingPage() {
           'radial-gradient(ellipse 80% 50% at 20% 0%, rgba(212,162,8,0.08) 0%, transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100,38,160,0.06) 0%, transparent 55%)',
       }}
     >
-      {/* Top Nav */}
       <nav
         style={{
           borderBottom: '1px solid rgba(26,26,64,0.55)',
@@ -312,7 +331,6 @@ export default function PricingPage() {
         </div>
       </nav>
 
-      {/* Hero */}
       <div style={{ padding: '72px 24px 52px' }}>
         <SectionTitle
           eyebrow="Pricing"
@@ -331,12 +349,11 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* Plan cards */}
       <div
         style={{
           maxWidth: 1180,
           margin: '0 auto',
-          padding: '0 16px 78px',
+          padding: '18px 16px 78px',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,280px),1fr))',
           gap: 22,
@@ -364,11 +381,22 @@ export default function PricingPage() {
                       : meta.bg,
                 border: `1px solid ${meta.border}`,
                 borderRadius: 20,
-                padding: 30,
+                padding: '30px 30px 28px',
+                paddingTop: 36,
                 position: 'relative',
                 transform: meta.highlight ? 'translateY(-6px)' : 'none',
                 boxShadow: meta.glow,
-                overflow: 'hidden',
+                overflow: 'visible',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = meta.highlight
+                  ? 'translateY(-10px)'
+                  : 'translateY(-6px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = meta.highlight
+                  ? 'translateY(-6px)'
+                  : 'translateY(0)'
               }}
             >
               {(meta.highlight || meta.gold) && (
@@ -377,6 +405,7 @@ export default function PricingPage() {
                     position: 'absolute',
                     inset: 0,
                     pointerEvents: 'none',
+                    borderRadius: 20,
                     background:
                       meta.highlight
                         ? 'radial-gradient(circle at top left, rgba(212,162,8,0.08), transparent 36%)'
@@ -385,12 +414,11 @@ export default function PricingPage() {
                 />
               )}
 
-              {/* Badge */}
               {meta.badge && (
                 <div
                   style={{
                     position: 'absolute',
-                    top: -13,
+                    top: -16,
                     left: '50%',
                     transform: 'translateX(-50%)',
                     fontSize: 11,
@@ -412,13 +440,13 @@ export default function PricingPage() {
                       meta.highlight || meta.gold
                         ? '0 6px 16px rgba(212,162,8,0.18)'
                         : 'none',
+                    zIndex: 3,
                   }}
                 >
                   {meta.badge}
                 </div>
               )}
 
-              {/* Plan header */}
               <div style={{ marginBottom: 24, position: 'relative' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
                   <div
@@ -558,7 +586,6 @@ export default function PricingPage() {
                 )}
               </div>
 
-              {/* CTA */}
               <button
                 onClick={() => handleCheckout(key)}
                 disabled={isLoad}
@@ -618,7 +645,6 @@ export default function PricingPage() {
                 </p>
               )}
 
-              {/* Features */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {plan.features.map((f: string, i: number) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
@@ -670,7 +696,6 @@ export default function PricingPage() {
         })}
       </div>
 
-      {/* Beta CTA strip */}
       <div style={{ maxWidth: 920, margin: '0 auto', padding: '0 24px 52px' }}>
         <div
           style={{
@@ -731,7 +756,6 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* Trust strip */}
       <div
         style={{
           borderTop: '1px solid rgba(26,26,64,0.55)',
@@ -774,7 +798,6 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* FAQ */}
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '56px 24px 84px' }}>
         <h2
           style={{
@@ -838,7 +861,6 @@ export default function PricingPage() {
         ))}
       </div>
 
-      {/* Footer */}
       <div
         style={{
           borderTop: '1px solid rgba(26,26,64,0.4)',
