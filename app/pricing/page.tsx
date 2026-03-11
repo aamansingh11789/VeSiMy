@@ -382,7 +382,6 @@ export default function PricingPage() {
                 border: `1px solid ${meta.border}`,
                 borderRadius: 20,
                 padding: '30px 30px 28px',
-                paddingTop: 36,
                 position: 'relative',
                 transform: meta.highlight ? 'translateY(-6px)' : 'none',
                 boxShadow: meta.glow,
@@ -414,39 +413,39 @@ export default function PricingPage() {
                 />
               )}
 
+              
               {meta.badge && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: -16,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    fontSize: 11,
-                    fontWeight: 700,
-                    padding: '4px 14px',
-                    borderRadius: 999,
-                    whiteSpace: 'nowrap',
-                    letterSpacing: 0.5,
-                    background:
-                      meta.highlight || meta.gold
-                        ? 'linear-gradient(135deg,#C49510,#D4A208)'
-                        : 'rgba(108,185,252,0.15)',
-                    border:
-                      meta.highlight || meta.gold
-                        ? 'none'
-                        : '1px solid rgba(108,185,252,0.3)',
-                    color: meta.highlight || meta.gold ? '#03030D' : '#6CB9FC',
-                    boxShadow:
-                      meta.highlight || meta.gold
-                        ? '0 6px 16px rgba(212,162,8,0.18)'
-                        : 'none',
-                    zIndex: 3,
-                  }}
-                >
-                  {meta.badge}
-                </div>
-              )}
-
+  <div
+    style={{
+      position: 'absolute',
+      top: 14,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      fontSize: 11,
+      fontWeight: 700,
+      padding: '5px 14px',
+      borderRadius: 999,
+      whiteSpace: 'nowrap',
+      letterSpacing: 0.8,
+      background:
+        meta.highlight || meta.gold
+          ? 'linear-gradient(135deg,#C49510,#D4A208)'
+          : 'rgba(108,185,252,0.15)',
+      border:
+        meta.highlight || meta.gold
+          ? 'none'
+          : '1px solid rgba(108,185,252,0.3)',
+      color: meta.highlight || meta.gold ? '#03030D' : '#6CB9FC',
+      boxShadow:
+        meta.highlight || meta.gold
+          ? '0 6px 16px rgba(212,162,8,0.18)'
+          : 'none',
+      zIndex: 3,
+    }}
+  >
+    {meta.badge}
+  </div>
+)}
               <div style={{ marginBottom: 24, position: 'relative' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
                   <div
