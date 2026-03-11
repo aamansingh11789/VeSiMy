@@ -1,7 +1,5 @@
 // @ts-nocheck
 'use client'
-// ── components/tools/ToolModal.tsx ───────────────────────────────────────────
-// Routes to the correct CI tool component based on tool ID
 
 import StopwatchTool from './StopwatchTool'
 import FiveWhyTool from './FiveWhyTool'
@@ -12,7 +10,11 @@ import ImprovementTool from './ImprovementTool'
 
 export interface ToolModalProps {
   tool: string
-  step: { id: string; name: string; toolData?: Record<string, any> }
+  step: {
+    id: string
+    name: string
+    toolData?: Record<string, any>
+  }
   onSave: (data: Record<string, any>) => Promise<void>
   onClose: () => void
 }
@@ -28,10 +30,15 @@ const TOOL_COMPONENTS: Record<string, any> = {
 
 export function ToolModal({ tool, step, onSave, onClose }: ToolModalProps) {
   const ToolComponent = TOOL_COMPONENTS[tool]
-  if (!ToolComponent) return null
+
+  if (!ToolComponent) {
+    console.warn(`Unknown tool modal requested: ${tool}`)
+    return null
+  }
 
   return (
     <ToolComponent
+      key={`${tool}-${step.id}`}
       stepId={step.id}
       stepName={step.name}
       data={step.toolData?.[tool] || {}}
@@ -40,3 +47,5 @@ export function ToolModal({ tool, step, onSave, onClose }: ToolModalProps) {
     />
   )
 }
+
+export default ToolModal

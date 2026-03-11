@@ -1,9 +1,8 @@
-/* ── app/globals.css — Vesimy Global Styles ───────────────────────────── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS Variables — Tempered Metal Theme, Premium Pass ───────────────── */
+/* ── CSS Variables ────────────────────────────────────────────────────── */
 :root {
   --bg: #03030d;
   --bg2: #080818;
@@ -90,7 +89,6 @@ body {
   color: var(--text);
 }
 
-/* ── Animated scan-line overlay ───────────────────────────────────────── */
 body::before {
   content: "";
   position: fixed;
@@ -106,7 +104,6 @@ body::before {
   );
 }
 
-/* ── Soft ambient glow overlay ───────────────────────────────────────── */
 body::after {
   content: "";
   position: fixed;
@@ -118,11 +115,36 @@ body::after {
     radial-gradient(circle at 82% 82%, rgba(100, 38, 160, 0.05), transparent 22%);
 }
 
-/* ── Content above overlays ───────────────────────────────────────────── */
 #__next,
 main {
   position: relative;
   z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+  letter-spacing: 0.1px;
+}
+
+p {
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+::selection {
+  background: rgba(212, 162, 8, 0.18);
+  color: #ffe9b1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 /* ── Scrollbar ────────────────────────────────────────────────────────── */
@@ -144,36 +166,7 @@ main {
   background: linear-gradient(180deg, #3a3a72, #66639b);
 }
 
-/* ── Selection ────────────────────────────────────────────────────────── */
-::selection {
-  background: rgba(212, 162, 8, 0.18);
-  color: #ffe9b1;
-}
-
-/* ── Focus rings ──────────────────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* ── Base text polish ─────────────────────────────────────────────────── */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--text);
-  letter-spacing: 0.1px;
-}
-
-p {
-  color: var(--text2);
-  line-height: 1.65;
-}
-
-/* ── Utility classes ──────────────────────────────────────────────────── */
+/* ── Component utilities ──────────────────────────────────────────────── */
 @layer components {
   .card {
     @apply border;
@@ -279,6 +272,24 @@ p {
     color: #ff9a9a;
   }
 
+  .btn-sm {
+    @apply btn;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .btn-lg {
+    @apply btn;
+    padding: 11px 20px;
+    font-size: 15px;
+  }
+
+  .btn-xs {
+    @apply btn;
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
   .input {
     @apply w-full text-sm border;
     padding: 11px 13px;
@@ -356,124 +367,125 @@ p {
     color: var(--text);
     letter-spacing: 0.35px;
   }
-}
 
-/* ── Modal System ─────────────────────────────────────────────────────── */
-@layer components {
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9000;
-    background: rgba(1, 1, 6, 0.72);
-    backdrop-filter: blur(10px) saturate(120%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 16px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .modal {
-    position: relative;
-    width: 100%;
-    max-width: 560px;
-    margin: auto;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)),
-      rgba(13, 13, 34, 0.92);
-    border: 1px solid rgba(44, 44, 92, 0.86);
-    border-radius: var(--radius-xl);
-    box-shadow:
-      0 32px 100px rgba(0, 0, 0, 0.62),
-      0 0 0 1px rgba(212, 162, 8, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100vh - 48px);
-    overflow: hidden;
-  }
-
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 22px 14px;
-    border-bottom: 1px solid rgba(42, 42, 90, 0.72);
-    flex-shrink: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
-  }
-
-  .modal-title {
-    font-family: var(--font-serif);
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.2px;
-  }
-
-  .modal-body {
-    padding: 22px 22px 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    flex: 1;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 15px 22px 18px;
-    border-top: 1px solid rgba(42, 42, 90, 0.72);
-    flex-shrink: 0;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
-      rgba(8, 8, 24, 0.96);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    position: sticky;
-    bottom: 0;
-    z-index: 2;
-  }
-
-  .btn-sm {
-    @apply btn;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-
-  .btn-lg {
-    @apply btn;
-    padding: 11px 20px;
-    font-size: 15px;
-  }
-
-  .btn-xs {
-    @apply btn;
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-
-  select.input {
-    appearance: none;
-    background-image:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B88B3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat, no-repeat;
-    background-position: 0 0, right 12px center;
-    padding-right: 34px;
-  }
-
-  textarea.input {
-    resize: vertical;
-    min-height: 88px;
-    line-height: 1.65;
+  .vesimy-mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 }
 
-/* ── Subtle premium loading shimmer ───────────────────────────────────── */
+/* ── Select + textarea polish ─────────────────────────────────────────── */
+select.input {
+  appearance: none;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B88B3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 0 0, right 12px center;
+  padding-right: 34px;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.65;
+}
+
+/* ── Shared modal system only ─────────────────────────────────────────── */
+.vesimy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(1, 1, 6, 0.76);
+  backdrop-filter: blur(10px) saturate(120%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.vesimy-modal {
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)),
+    rgba(13, 13, 34, 0.94);
+  border: 1px solid rgba(44, 44, 92, 0.86);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(212, 162, 8, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+}
+
+.vesimy-modal-handle {
+  display: none;
+}
+
+.vesimy-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid rgba(42, 42, 90, 0.72);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.vesimy-modal-title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  line-height: 1.3;
+}
+
+.vesimy-modal-close {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.vesimy-modal-body {
+  padding: 22px 22px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vesimy-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px 22px 18px;
+  border-top: 1px solid rgba(42, 42, 90, 0.72);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
+    rgba(8, 8, 24, 0.96);
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* ── Loading polish ───────────────────────────────────────────────────── */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -501,20 +513,12 @@ p {
   }
 }
 
-/* ── Spin animation ───────────────────────────────────────────────────── */
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   MOBILE RESPONSIVE
-   ══════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   aside {
     display: none !important;
@@ -531,39 +535,6 @@ p {
 
   .app-page-wrapper {
     padding: 16px !important;
-  }
-
-  .modal-overlay {
-    padding: 0 !important;
-    align-items: flex-end !important;
-    justify-content: stretch !important;
-  }
-
-  .modal {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border-radius: 20px 20px 0 0 !important;
-    max-height: 92vh !important;
-    min-height: 0;
-    box-shadow:
-      0 -14px 48px rgba(0, 0, 0, 0.48),
-      0 0 0 1px rgba(212, 162, 8, 0.04);
-  }
-
-  .modal-header {
-    padding: 16px 16px 12px !important;
-  }
-
-  .modal-body {
-    padding: 16px !important;
-    max-height: calc(92vh - 128px);
-    padding-bottom: 24px !important;
-  }
-
-  .modal-footer {
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-    background: rgba(8, 8, 24, 0.98) !important;
   }
 
   .home-nav {
@@ -594,26 +565,12 @@ p {
     grid-template-columns: 1fr !important;
   }
 
-  .stats-strip {
-    padding: 16px !important;
-  }
-
   .pricing-grid {
     max-width: 420px !important;
   }
 
   .pricing-header h1 {
     font-size: 32px !important;
-  }
-
-  .project-header {
-    padding: 10px 14px !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-
-  .project-header-actions {
-    display: none !important;
   }
 
   .project-main {
@@ -628,56 +585,26 @@ p {
 
   .mobile-fabs {
     display: flex !important;
-  }
-
-  .supe-toggle-btn {
-    display: flex !important;
-  }
-
-  .mobile-fabs {
     bottom: calc(72px + 8px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  .tab-bar {
+  .tab-bar,
+  .ci-tool-strip,
+  .vsm-scroll-container {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
   }
 
-  .tab-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .tab-bar .tab-item {
-    padding: 10px 14px !important;
-    font-size: 12px !important;
-    min-width: 64px !important;
-    white-space: nowrap !important;
-  }
-
-  .ci-tool-strip {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    padding: 0 12px !important;
-  }
-
+  .tab-bar::-webkit-scrollbar,
   .ci-tool-strip::-webkit-scrollbar {
     display: none;
   }
 
-  .step-card-meta {
+  .step-card-meta,
+  .health-overview-stats {
     flex-wrap: wrap !important;
-    gap: 4px !important;
-  }
-
-  .vsm-scroll-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  .supe-panel {
-    min-height: 60vh !important;
+    gap: 6px !important;
   }
 
   .settings-main {
@@ -693,10 +620,6 @@ p {
     padding: 16px !important;
   }
 
-  .health-overview-stats {
-    gap: 16px !important;
-  }
-
   .btn,
   button {
     min-height: 42px;
@@ -706,6 +629,62 @@ p {
   select,
   textarea {
     font-size: 16px !important;
+  }
+
+  .vesimy-mobile-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .vesimy-modal-overlay {
+    align-items: flex-end;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .vesimy-modal {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    max-height: 92vh;
+    min-height: 0;
+    box-shadow:
+      0 -14px 48px rgba(0, 0, 0, 0.48),
+      0 0 0 1px rgba(212, 162, 8, 0.04);
+  }
+
+  .vesimy-modal-handle {
+    display: block;
+    width: 42px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  .vesimy-modal-header {
+    padding: 14px 16px 10px;
+  }
+
+  .vesimy-modal-title {
+    font-size: 15px;
+  }
+
+  .vesimy-modal-body {
+    padding: 16px;
+    padding-bottom: 24px;
+  }
+
+  .vesimy-modal-footer {
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgba(8, 8, 24, 0.98);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vesimy-modal-footer .btn {
+    width: 100%;
   }
 
   .go2072408551 {
@@ -770,7 +749,7 @@ p {
   margin-bottom: 1px;
 }
 
-/* ── Light Theme ──────────────────────────────────────────────────────── */
+/* ── Light theme ──────────────────────────────────────────────────────── */
 html.light {
   --bg: #f5f4f0;
   --bg2: #eceae4;
@@ -851,25 +830,21 @@ html.light .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.88);
 }
 
-html.light .modal {
+html.light .vesimy-modal {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.18)),
-    #eae7e0 !important;
-  border-color: rgba(180, 172, 152, 0.58) !important;
+    #eae7e0;
+  border-color: rgba(180, 172, 152, 0.58);
 }
 
-html.light .modal-header {
-  background: rgba(255, 255, 255, 0.28) !important;
-  border-bottom-color: rgba(180, 172, 152, 0.38) !important;
+html.light .vesimy-modal-header {
+  background: rgba(255, 255, 255, 0.28);
+  border-bottom-color: rgba(180, 172, 152, 0.38);
 }
 
-html.light .modal-body {
-  background: transparent !important;
-}
-
-html.light .modal-footer {
-  background: rgba(245, 242, 236, 0.88) !important;
-  border-top-color: rgba(180, 172, 152, 0.38) !important;
+html.light .vesimy-modal-footer {
+  background: rgba(245, 242, 236, 0.88);
+  border-top-color: rgba(180, 172, 152, 0.38);
 }
 
 html.light .supe-desktop-panel {
@@ -903,103 +878,4 @@ html.light .home-nav {
 html.light footer {
   background: rgba(240, 237, 230, 0.98) !important;
   border-top-color: rgba(180, 172, 152, 0.4) !important;
-}
-
-html.light [style*="background:'rgba(8,8,24,0.95)"],
-html.light [style*="background: rgba(8,8,24,0.95)"] {
-  background: rgba(50, 45, 40, 0.95) !important;
-}
-/* VESIMY MOBILE MODAL */
-
-.vesimy-modal-overlay{
-position:fixed;
-inset:0;
-z-index:9999;
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(6px);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:24px;
-}
-
-.vesimy-modal{
-width:100%;
-max-width:640px;
-background:#080818;
-border:1px solid rgba(40,40,92,0.7);
-border-radius:16px;
-display:flex;
-flex-direction:column;
-max-height:90vh;
-overflow:hidden;
-}
-
-.vesimy-modal-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 20px;
-border-bottom:1px solid rgba(40,40,92,0.6);
-}
-
-.vesimy-modal-title{
-font-weight:700;
-font-size:16px;
-color:white;
-}
-
-.vesimy-modal-close{
-background:none;
-border:none;
-color:#888;
-font-size:16px;
-cursor:pointer;
-}
-
-.vesimy-modal-body{
-padding:20px;
-overflow-y:auto;
-flex:1;
-}
-
-.vesimy-modal-footer{
-display:flex;
-justify-content:flex-end;
-gap:10px;
-padding:14px 20px;
-border-top:1px solid rgba(40,40,92,0.6);
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.vesimy-modal-overlay{
-align-items:flex-end;
-padding:0;
-}
-
-.vesimy-modal{
-border-radius:18px 18px 0 0;
-max-width:100%;
-max-height:92vh;
-}
-
-.vesimy-modal-handle{
-width:42px;
-height:5px;
-background:rgba(255,255,255,0.2);
-border-radius:999px;
-margin:10px auto;
-}
-
-.vesimy-modal-footer{
-position:sticky;
-bottom:0;
-background:#080818;
-display:grid;
-grid-template-columns:1fr 1fr;
-}
-
 }
