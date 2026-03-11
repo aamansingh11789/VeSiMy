@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import type { Project, Step, KanbanCard, KanbanColumn } from './store'
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  HELPERS
+// HELPERS
 // ══════════════════════════════════════════════════════════════════════════════
 
 const NUMERIC_STEP_FIELDS = new Set([
@@ -32,6 +32,12 @@ function toNullableNumber(value: any) {
   return Number.isNaN(num) ? null : num
 }
 
+function toNumberOrDefault(value: any, fallback: number) {
+  if (value === '' || value === null || value === undefined) return fallback
+  const num = Number(value)
+  return Number.isNaN(num) ? fallback : num
+}
+
 function cleanStepUpdatePayload(updates: Record<string, any>) {
   const cleaned: Record<string, any> = {
     updated_at: new Date().toISOString(),
@@ -50,24 +56,39 @@ function cleanStepUpdatePayload(updates: Record<string, any>) {
   return cleaned
 }
 
+async function getCurrentUser(db: any) {
+  const {
+    data: { user },
+    error,
+  } = await db.auth.getUser()
+
+  if (error) throw error
+  if (!user) throw new Error('Not authenticated')
+  return user
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
-//  PROJECTS
+// PROJECTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function fetchProjects(): Promise<Project[]> {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { data, error } = await db
     .from('projects')
     .select('*')
+    .eq('user_id', user.id)
     .eq('status', 'active')
     .order('updated_at', { ascending: false })
 
   if (error) throw error
-  return data as Project[]
+  return (data || []) as Project[]
 }
 
 export async function fetchProject(id: string): Promise<Project> {
   const db = createClient()
+  const user = await getCurrentUser(db)
 
   const { data, error } = await db
     .from('projects')
@@ -79,6 +100,7 @@ export async function fetchProject(id: string): Promise<Project> {
       )
     `)
     .eq('id', id)
+    .eq('user_id', user.id)
     .single()
 
   if (error) throw error
@@ -99,28 +121,31 @@ export async function fetchProject(id: string): Promise<Project> {
 
 export async function createProject(form: Partial<Project>): Promise<Project> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
-
-  if (!user) throw new Error('Not authenticated')
+  const user = await getCurrentUser(db)
 
   const { data, error } = await db
     .from('projects')
     .insert({
       user_id: user.id,
       name: form.name || 'New Project',
-      description: form.description,
-      industry: form.industry,
+      description: form.description || null,
+      industry: form.industry || null,
       state: form.state || 'current',
-      product: form.product,
-      customer: form.customer,
-      supplier: form.supplier,
-      demand: form.demand ? Number(form.demand) : null,
-      working_hours: form.working_hours ? Number(form.working_hours) : null,
-      available_time_sec: form.available_time_sec ? Number(form.available_time_sec) : null,
-      takt_time: form.takt_time ? Number(form.takt_time) : null,
-      shifts: form.shifts ? Number(form.shifts) : 1,
+      product: form.product || null,
+      customer: form.customer || null,
+      supplier: form.supplier || null,
+      demand: form.demand !== '' && form.demand != null ? Number(form.demand) : null,
+      working_hours:
+        form.working_hours !== '' && form.working_hours != null
+          ? Number(form.working_hours)
+          : null,
+      available_time_sec:
+        form.available_time_sec !== '' && form.available_time_sec != null
+          ? Number(form.available_time_sec)
+          : null,
+      takt_time:
+        form.takt_time !== '' && form.takt_time != null ? Number(form.takt_time) : null,
+      shifts: form.shifts !== '' && form.shifts != null ? Number(form.shifts) : 1,
     })
     .select()
     .single()
@@ -131,10 +156,13 @@ export async function createProject(form: Partial<Project>): Promise<Project> {
 
 export async function updateProject(id: string, updates: Partial<Project>): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { error } = await db
     .from('projects')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
+    .eq('user_id', user.id)
 
   if (error) throw error
 }
@@ -145,28 +173,42 @@ export async function archiveProject(id: string): Promise<void> {
 
 export async function deleteProject(id: string): Promise<void> {
   const db = createClient()
-  const { error } = await db.from('projects').delete().eq('id', id)
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('projects')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  STEPS
+// STEPS
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function createStep(projectId: string, form: Partial<Step>): Promise<Step> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
+  const user = await getCurrentUser(db)
 
-  if (!user) throw new Error('Not authenticated')
+  const { data: projectRow, error: projectErr } = await db
+    .from('projects')
+    .select('id')
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+    .single()
 
-  const { data: existing } = await db
+  if (projectErr || !projectRow) throw new Error('Project not found')
+
+  const { data: existing, error: posErr } = await db
     .from('steps')
     .select('position')
     .eq('project_id', projectId)
     .order('position', { ascending: false })
     .limit(1)
+
+  if (posErr) throw posErr
 
   const position = existing?.length ? (existing[0].position ?? 0) + 1 : 0
 
@@ -175,52 +217,31 @@ export async function createStep(projectId: string, form: Partial<Step>): Promis
     user_id: user.id,
     position,
     name: form.name || 'New Step',
-    operators: form.operators ? Number(form.operators) : 1,
-    wait_time: form.wait_time ? Number(form.wait_time) : 0,
-    trans_time: form.trans_time ? Number(form.trans_time) : 0,
-    wip: form.wip ? Number(form.wip) : 0,
+    department: form.department || null,
+    operators: toNumberOrDefault(form.operators, 1),
+    cycle_time: toNullableNumber(form.cycle_time),
+    setup_time: toNumberOrDefault((form as any).setup_time, 0),
+    wait_time: toNumberOrDefault(form.wait_time, 0),
+    trans_time: toNumberOrDefault(form.trans_time, 0),
+    wip: toNumberOrDefault(form.wip, 0),
+    uptime: toNullableNumber(form.uptime),
+    defect_rate: toNullableNumber(form.defect_rate),
+    completion_accuracy: toNullableNumber(form.completion_accuracy),
     flow_type: form.flow_type || 'push',
+    sm_min: toNullableNumber(form.sm_min),
+    sm_max: toNullableNumber(form.sm_max),
+    notes: form.notes || null,
+    is_main_flow:
+      (form as any).is_main_flow !== undefined ? (form as any).is_main_flow : true,
   }
 
-  if (form.cycle_time != null && form.cycle_time !== '') {
-    insertData.cycle_time = Number(form.cycle_time)
+  if ((form as any).branch_id) {
+    insertData.branch_id = (form as any).branch_id
   }
 
-  if (form.department) insertData.department = form.department
-  if (form.notes) insertData.notes = form.notes
-
-  if (form.uptime != null && form.uptime !== '') insertData.uptime = Number(form.uptime)
-  if (form.defect_rate != null && form.defect_rate !== '') insertData.defect_rate = Number(form.defect_rate)
-  if (form.sm_min != null && form.sm_min !== '') insertData.sm_min = Number(form.sm_min)
-  if (form.sm_max != null && form.sm_max !== '') insertData.sm_max = Number(form.sm_max)
-
-  try {
-    if (form.completion_accuracy != null && form.completion_accuracy !== '') {
-      insertData.completion_accuracy = Number(form.completion_accuracy)
-    }
-  } catch {}
-
-  try {
-    insertData.setup_time =
-      form.setup_time != null && form.setup_time !== ''
-        ? Number((form as any).setup_time)
-        : 0
-  } catch {}
-
-  try {
-    insertData.is_main_flow =
-      (form as any).is_main_flow !== undefined ? (form as any).is_main_flow : true
-  } catch {}
-
-  try {
-    if ((form as any).branch_id) insertData.branch_id = (form as any).branch_id
-  } catch {}
-
-  try {
-    if ((form as any).branch_position != null && (form as any).branch_position !== '') {
-      insertData.branch_position = Number((form as any).branch_position)
-    }
-  } catch {}
+  if ((form as any).branch_position !== undefined) {
+    insertData.branch_position = toNullableNumber((form as any).branch_position)
+  }
 
   const { data, error } = await db
     .from('steps')
@@ -234,37 +255,55 @@ export async function createStep(projectId: string, form: Partial<Step>): Promis
 
 export async function updateStep(stepId: string, updates: Partial<Step>): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
   const payload = cleanStepUpdatePayload(updates as any)
 
   const { error } = await db
     .from('steps')
     .update(payload)
     .eq('id', stepId)
+    .eq('user_id', user.id)
 
   if (error) throw error
 }
 
 export async function deleteStep(stepId: string): Promise<void> {
   const db = createClient()
-  const { error } = await db.from('steps').delete().eq('id', stepId)
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('steps')
+    .delete()
+    .eq('id', stepId)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
-export async function reorderSteps(
-  projectId: string,
-  orderedIds: string[]
-): Promise<void> {
+export async function reorderSteps(projectId: string, orderedIds: string[]): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
 
-  await Promise.all(
+  const results = await Promise.all(
     orderedIds.map((id, position) =>
-      db.from('steps').update({ position }).eq('id', id).eq('project_id', projectId)
+      db
+        .from('steps')
+        .update({
+          position,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', id)
+        .eq('project_id', projectId)
+        .eq('user_id', user.id)
     )
   )
+
+  const failed = results.find((r: any) => r.error)
+  if (failed?.error) throw failed.error
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  TOOL DATA
+// TOOL DATA
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function saveToolData(
@@ -273,16 +312,13 @@ export async function saveToolData(
   data: Record<string, any>
 ): Promise<void> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
-
-  if (!user) throw new Error('Not authenticated')
+  const user = await getCurrentUser(db)
 
   const { data: stepRow, error: stepErr } = await db
     .from('steps')
-    .select('project_id')
+    .select('id, project_id, user_id')
     .eq('id', stepId)
+    .eq('user_id', user.id)
     .single()
 
   if (stepErr || !stepRow) throw new Error('Step not found')
@@ -292,6 +328,7 @@ export async function saveToolData(
     .select('id')
     .eq('step_id', stepId)
     .eq('tool', toolType)
+    .eq('user_id', user.id)
     .maybeSingle()
 
   if (existingErr) throw existingErr
@@ -305,6 +342,7 @@ export async function saveToolData(
         saved_at: new Date().toISOString(),
       })
       .eq('id', existing.id)
+      .eq('user_id', user.id)
 
     if (error) throw error
     return
@@ -330,11 +368,14 @@ export async function getToolData(
   toolType: string
 ): Promise<Record<string, any> | null> {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { data, error } = await db
     .from('tool_data')
     .select('data')
     .eq('step_id', stepId)
     .eq('tool', toolType)
+    .eq('user_id', user.id)
     .maybeSingle()
 
   if (error) throw error
@@ -342,16 +383,12 @@ export async function getToolData(
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  PROFILE
+// PROFILE
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function fetchProfile() {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
-
-  if (!user) return null
+  const user = await getCurrentUser(db)
 
   const { data, error } = await db
     .from('profiles')
@@ -365,11 +402,7 @@ export async function fetchProfile() {
 
 export async function updateProfile(updates: Record<string, any>) {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
-
-  if (!user) throw new Error('Not authenticated')
+  const user = await getCurrentUser(db)
 
   const { data, error } = await db
     .from('profiles')
@@ -383,15 +416,18 @@ export async function updateProfile(updates: Record<string, any>) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  BRANCHES
+// BRANCHES
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function fetchBranches(projectId: string) {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { data, error } = await db
     .from('branches')
     .select('*')
     .eq('project_id', projectId)
+    .eq('user_id', user.id)
     .order('position')
 
   if (error) throw error
@@ -405,20 +441,28 @@ export async function createBranch(projectId: string, form: {
   merge_step_id: string | null
 }) {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
+  const user = await getCurrentUser(db)
 
-  if (!user) throw new Error('Not authenticated')
+  const { data: projectRow, error: projectErr } = await db
+    .from('projects')
+    .select('id')
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+    .single()
+
+  if (projectErr || !projectRow) throw new Error('Project not found')
 
   const branchId = `branch-${Date.now()}`
 
-  const { data: existing } = await db
+  const { data: existing, error: posErr } = await db
     .from('branches')
     .select('position')
     .eq('project_id', projectId)
+    .eq('user_id', user.id)
     .order('position', { ascending: false })
     .limit(1)
+
+  if (posErr) throw posErr
 
   const position = existing?.length ? (existing[0].position ?? 0) + 1 : 0
 
@@ -443,16 +487,35 @@ export async function createBranch(projectId: string, form: {
 
 export async function updateBranch(id: string, updates: Record<string, any>) {
   const db = createClient()
-  const { error } = await db.from('branches').update(updates).eq('id', id)
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('branches')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
 export async function deleteBranch(id: string, branchId: string) {
   const db = createClient()
+  const user = await getCurrentUser(db)
 
-  await db.from('steps').delete().eq('branch_id', branchId)
+  const { error: stepDeleteErr } = await db
+    .from('steps')
+    .delete()
+    .eq('branch_id', branchId)
+    .eq('user_id', user.id)
 
-  const { error } = await db.from('branches').delete().eq('id', id)
+  if (stepDeleteErr) throw stepDeleteErr
+
+  const { error } = await db
+    .from('branches')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
@@ -464,18 +527,17 @@ export async function createBranchStep(
   form: Record<string, any>
 ) {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
+  const user = await getCurrentUser(db)
 
-  if (!user) throw new Error('Not authenticated')
-
-  const { data: existing } = await db
+  const { data: existing, error: posErr } = await db
     .from('steps')
     .select('branch_position')
     .eq('branch_id', branchId)
+    .eq('user_id', user.id)
     .order('branch_position', { ascending: false })
     .limit(1)
+
+  if (posErr) throw posErr
 
   const branchPosition = existing?.length ? ((existing[0].branch_position || 0) + 1) : 0
 
@@ -491,21 +553,18 @@ export async function createBranchStep(
       branch_position: branchPosition,
       is_main_flow: false,
       name: form.name || 'New Step',
-      department: form.department,
-      operators: form.operators ? Number(form.operators) : 1,
-      uptime: form.uptime !== '' && form.uptime != null ? Number(form.uptime) : null,
-      defect_rate: form.defect_rate !== '' && form.defect_rate != null ? Number(form.defect_rate) : null,
-      completion_accuracy:
-        form.completion_accuracy !== '' && form.completion_accuracy != null
-          ? Number(form.completion_accuracy)
-          : null,
-      cycle_time: form.cycle_time !== '' && form.cycle_time != null ? Number(form.cycle_time) : null,
-      setup_time: form.setup_time !== '' && form.setup_time != null ? Number(form.setup_time) : 0,
-      wait_time: form.wait_time ? Number(form.wait_time) : 0,
-      trans_time: form.trans_time ? Number(form.trans_time) : 0,
-      wip: form.wip ? Number(form.wip) : 0,
+      department: form.department || null,
+      operators: toNumberOrDefault(form.operators, 1),
+      uptime: toNullableNumber(form.uptime),
+      defect_rate: toNullableNumber(form.defect_rate),
+      completion_accuracy: toNullableNumber(form.completion_accuracy),
+      cycle_time: toNullableNumber(form.cycle_time),
+      setup_time: toNumberOrDefault(form.setup_time, 0),
+      wait_time: toNumberOrDefault(form.wait_time, 0),
+      trans_time: toNumberOrDefault(form.trans_time, 0),
+      wip: toNumberOrDefault(form.wip, 0),
       flow_type: form.flow_type || 'push',
-      notes: form.notes,
+      notes: form.notes || null,
     })
     .select()
     .single()
@@ -515,18 +574,21 @@ export async function createBranchStep(
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  KANBAN
+// KANBAN
 // ══════════════════════════════════════════════════════════════════════════════
 
 export async function fetchKanbanBoard(projectId: string): Promise<KanbanColumn[]> {
   const db = createClient()
-  const { data: cols, error: ce } = await db
+  const user = await getCurrentUser(db)
+
+  const { data: cols, error } = await db
     .from('kanban_columns')
     .select('*, kanban_cards(*)')
     .eq('project_id', projectId)
+    .eq('user_id', user.id)
     .order('position')
 
-  if (ce) throw ce
+  if (error) throw error
 
   return (cols || []).map((col: any) => ({
     ...col,
@@ -540,18 +602,17 @@ export async function createKanbanColumn(
   form: { title: string; color: string; wip_limit: number | null; step_id?: string }
 ): Promise<KanbanColumn> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
+  const user = await getCurrentUser(db)
 
-  if (!user) throw new Error('Not authenticated')
-
-  const { data: existing } = await db
+  const { data: existing, error: posErr } = await db
     .from('kanban_columns')
     .select('position')
     .eq('project_id', projectId)
+    .eq('user_id', user.id)
     .order('position', { ascending: false })
     .limit(1)
+
+  if (posErr) throw posErr
 
   const position = existing?.length ? (existing[0].position ?? 0) + 1 : 0
 
@@ -575,19 +636,28 @@ export async function createKanbanColumn(
 
 export async function updateKanbanColumn(id: string, updates: Partial<KanbanColumn>): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
   const { cards, ...rest } = updates as any
 
   const { error } = await db
     .from('kanban_columns')
     .update({ ...rest, updated_at: new Date().toISOString() })
     .eq('id', id)
+    .eq('user_id', user.id)
 
   if (error) throw error
 }
 
 export async function deleteKanbanColumn(id: string): Promise<void> {
   const db = createClient()
-  const { error } = await db.from('kanban_columns').delete().eq('id', id)
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('kanban_columns')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
@@ -597,18 +667,17 @@ export async function createKanbanCard(
   form: Partial<KanbanCard>
 ): Promise<KanbanCard> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
+  const user = await getCurrentUser(db)
 
-  if (!user) throw new Error('Not authenticated')
-
-  const { data: existing } = await db
+  const { data: existing, error: posErr } = await db
     .from('kanban_cards')
     .select('position')
     .eq('column_id', columnId)
+    .eq('user_id', user.id)
     .order('position', { ascending: false })
     .limit(1)
+
+  if (posErr) throw posErr
 
   const position = existing?.length ? (existing[0].position ?? 0) + 1 : 0
 
@@ -619,13 +688,13 @@ export async function createKanbanCard(
       column_id: columnId,
       user_id: user.id,
       title: form.title || 'New Card',
-      description: form.description,
+      description: form.description || null,
       priority: form.priority || 'normal',
-      assignee: form.assignee,
-      due_date: form.due_date,
-      step_id: form.step_id,
+      assignee: form.assignee || null,
+      due_date: form.due_date || null,
+      step_id: form.step_id || null,
       tags: form.tags || [],
-      blocked_reason: form.blocked_reason,
+      blocked_reason: form.blocked_reason || null,
       position,
     })
     .select()
@@ -637,10 +706,13 @@ export async function createKanbanCard(
 
 export async function updateKanbanCard(id: string, updates: Partial<KanbanCard>): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { error } = await db
     .from('kanban_cards')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
+    .eq('user_id', user.id)
 
   if (error) throw error
 }
@@ -651,6 +723,8 @@ export async function moveKanbanCard(
   toPosition: number
 ): Promise<void> {
   const db = createClient()
+  const user = await getCurrentUser(db)
+
   const { error } = await db
     .from('kanban_cards')
     .update({
@@ -659,13 +733,21 @@ export async function moveKanbanCard(
       updated_at: new Date().toISOString(),
     })
     .eq('id', cardId)
+    .eq('user_id', user.id)
 
   if (error) throw error
 }
 
 export async function deleteKanbanCard(id: string): Promise<void> {
   const db = createClient()
-  const { error } = await db.from('kanban_cards').delete().eq('id', id)
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('kanban_cards')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id)
+
   if (error) throw error
 }
 
@@ -674,11 +756,7 @@ export async function seedDefaultKanbanColumns(
   steps: Array<{ id: string; name: string }>
 ): Promise<KanbanColumn[]> {
   const db = createClient()
-  const {
-    data: { user },
-  } = await db.auth.getUser()
-
-  if (!user) throw new Error('Not authenticated')
+  const user = await getCurrentUser(db)
 
   const COLORS = ['#38385C', '#1090D4', '#D4A208', '#6426A0', '#1DD1A1', '#F4A623', '#E84393', '#00BCD4']
 
@@ -700,5 +778,5 @@ export async function seedDefaultKanbanColumns(
     .select()
 
   if (error) throw error
-  return (data || []).map(c => ({ ...c, cards: [] })) as KanbanColumn[]
+  return (data || []).map((c: any) => ({ ...c, cards: [] })) as KanbanColumn[]
 }
