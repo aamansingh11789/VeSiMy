@@ -11,7 +11,6 @@ import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
-// ── Watermark background pattern ──────────────────────────────────────────────
 function WatermarkBg() {
   return (
     <div
@@ -31,10 +30,10 @@ function WatermarkBg() {
           top: '8%',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: 860,
-          height: 620,
+          width: 900,
+          height: 640,
           background:
-            'radial-gradient(ellipse, rgba(212,162,8,0.10) 0%, transparent 70%)',
+            'radial-gradient(ellipse, rgba(212,162,8,0.11) 0%, transparent 70%)',
         }}
       />
 
@@ -43,8 +42,8 @@ function WatermarkBg() {
           position: 'absolute',
           bottom: '-10%',
           right: '-8%',
-          width: 500,
-          height: 500,
+          width: 520,
+          height: 520,
           background:
             'radial-gradient(circle, rgba(100,38,160,0.10) 0%, transparent 70%)',
         }}
@@ -53,41 +52,46 @@ function WatermarkBg() {
       <svg
         width="100%"
         height="100%"
-        style={{ position: 'absolute', inset: 0, opacity: 0.05 }}
+        style={{ position: 'absolute', inset: 0, opacity: 0.12 }}
       >
         <defs>
           <pattern
-            id="wmpattern"
+            id="vesimy-watermark"
             x="0"
             y="0"
-            width="220"
-            height="80"
+            width="260"
+            height="120"
             patternUnits="userSpaceOnUse"
           >
             <text
-              x="10"
-              y="28"
+              x="24"
+              y="38"
               fontFamily="Palatino Linotype,serif"
-              fontSize="13"
+              fontSize="16"
               fontWeight="700"
               fill="#D4A208"
+              fillOpacity="0.22"
               letterSpacing="4"
             >
               VESIMY
             </text>
+
             <text
-              x="28"
-              y="56"
+              x="122"
+              y="88"
+              textAnchor="middle"
               fontFamily="Palatino Linotype,serif"
-              fontSize="22"
+              fontSize="34"
               fontWeight="700"
               fill="#D4A208"
+              fillOpacity="0.16"
             >
               V
             </text>
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#wmpattern)" />
+
+        <rect width="100%" height="100%" fill="url(#vesimy-watermark)" />
       </svg>
 
       <div
@@ -96,7 +100,7 @@ function WatermarkBg() {
           top: '4%',
           left: '50%',
           transform: 'translateX(-50%)',
-          opacity: 0.045,
+          opacity: 0.055,
         }}
       >
         <VLogoMark size={620} />
@@ -105,7 +109,6 @@ function WatermarkBg() {
   )
 }
 
-// ── Animated counter ──────────────────────────────────────────────────────────
 function Stat({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [display, setDisplay] = useState('0')
@@ -228,7 +231,6 @@ export default function HomePage() {
       <WatermarkBg />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* ── Navbar ───────────────────────────────────────────────────────── */}
         <nav
           className="home-nav"
           style={{
@@ -298,7 +300,6 @@ export default function HomePage() {
           </div>
         </nav>
 
-        {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section
           style={{
             minHeight: '92vh',
@@ -465,7 +466,6 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* ── Industries ───────────────────────────────────────────────────── */}
         <section
           style={{
             padding: '18px clamp(16px,5vw,40px)',
@@ -513,7 +513,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Six Tools ────────────────────────────────────────────────────── */}
         <section id="tools" style={{ padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)' }}>
           <div style={{ maxWidth: 1060, margin: '0 auto' }}>
             <SectionIntro
@@ -636,7 +635,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── VESIMY Acronym ───────────────────────────────────────────────── */}
         <section
           id="why"
           style={{
@@ -799,7 +797,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Market Compare ───────────────────────────────────────────────── */}
         <section
           id="compare"
           style={{
@@ -907,7 +904,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Stats ────────────────────────────────────────────────────────── */}
         <section
           style={{
             padding: '74px 40px',
@@ -935,7 +931,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Pricing ──────────────────────────────────────────────────────── */}
         <section id="pricing" style={{ padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)' }}>
           <div style={{ maxWidth: 1060, margin: '0 auto' }}>
             <SectionIntro
@@ -979,10 +974,7 @@ export default function HomePage() {
                       {isPro && (
                         <div
                           style={{
-                            position: 'absolute',
-                            top: -13,
-                            left: '50%',
-                            transform: 'translateX(-50%)',
+                            display: 'inline-flex',
                             background: 'linear-gradient(135deg,#C49510,#D4A208)',
                             color: '#03030D',
                             fontSize: 10,
@@ -992,6 +984,7 @@ export default function HomePage() {
                             letterSpacing: 1.5,
                             whiteSpace: 'nowrap',
                             boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
+                            marginBottom: 14,
                           }}
                         >
                           MOST POPULAR
@@ -1001,10 +994,7 @@ export default function HomePage() {
                       {isLife && (
                         <div
                           style={{
-                            position: 'absolute',
-                            top: -13,
-                            left: '50%',
-                            transform: 'translateX(-50%)',
+                            display: 'inline-flex',
                             background: 'linear-gradient(135deg,#C49510,#D4A208)',
                             color: '#03030D',
                             fontSize: 10,
@@ -1014,61 +1004,27 @@ export default function HomePage() {
                             letterSpacing: 1.5,
                             whiteSpace: 'nowrap',
                             boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
+                            marginBottom: 14,
                           }}
                         >
                           👑 LAUNCH WEEK
                         </div>
                       )}
 
-                      <div
-                        style={{
-                          fontSize: 11,
-                          color: '#D4A208',
-                          letterSpacing: 2,
-                          fontWeight: 700,
-                          marginBottom: 8,
-                          fontFamily: 'monospace',
-                          textTransform: 'uppercase',
-                        }}
-                      >
+                      <div style={{ fontSize: 11, color: '#D4A208', letterSpacing: 2, fontWeight: 700, marginBottom: 8, fontFamily: 'monospace', textTransform: 'uppercase' }}>
                         {plan.name}
                       </div>
 
-                      <div
-                        style={{
-                          fontSize: 40,
-                          fontWeight: 800,
-                          color: '#F3F1FB',
-                          marginBottom: 6,
-                          lineHeight: 1,
-                          fontFamily: serif,
-                        }}
-                      >
+                      <div style={{ fontSize: 40, fontWeight: 800, color: '#F3F1FB', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
                         {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
                         {!isEnt && plan.price !== null && Number(plan.price) > 0 && (
-                          <span
-                            style={{
-                              fontSize: 14,
-                              fontWeight: 400,
-                              color: '#8B88B3',
-                              marginLeft: 4,
-                              fontFamily: 'Inter, sans-serif',
-                            }}
-                          >
-                            {isLife ? 'once' : '/mo'}
+                          <span style={{ fontSize: 14, fontWeight: 400, color: '#8B88B3', marginLeft: 4, fontFamily: 'Inter, sans-serif' }}>
+                            {isLife ? ' once' : '/mo'}
                           </span>
                         )}
                       </div>
 
-                      <p
-                        style={{
-                          fontSize: 13,
-                          color: '#8B88B3',
-                          marginBottom: 22,
-                          lineHeight: 1.65,
-                          minHeight: 42,
-                        }}
-                      >
+                      <p style={{ fontSize: 13, color: '#8B88B3', marginBottom: 22, lineHeight: 1.65, minHeight: 42 }}>
                         {plan.description}
                       </p>
 
@@ -1166,7 +1122,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Final CTA ────────────────────────────────────────────────────── */}
         <section
           style={{
             padding: '104px 24px',
@@ -1224,7 +1179,6 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* ── Footer ───────────────────────────────────────────────────────── */}
         <footer
           style={{
             borderTop: '1px solid rgba(26,26,64,0.45)',

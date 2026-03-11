@@ -29,48 +29,43 @@ const PLAN_META: Record<
     highlight: boolean
     gold: boolean
     accent: string
-    glow: string
   }
 > = {
   free: {
     icon: SparkleIcon,
-    border: 'rgba(40,40,92,0.5)',
-    bg: 'rgba(8,8,24,0.75)',
+    border: 'rgba(40,40,92,0.50)',
+    bg: 'rgba(8,8,24,0.74)',
     badge: null,
     highlight: false,
     gold: false,
     accent: '#8B88B3',
-    glow: 'none',
   },
   pro: {
     icon: ZapIcon,
-    border: 'rgba(212,162,8,0.35)',
+    border: 'rgba(212,162,8,0.34)',
     bg: 'rgba(212,162,8,0.04)',
-    badge: 'Most Popular',
+    badge: 'MOST POPULAR',
     highlight: true,
     gold: false,
     accent: '#D4A208',
-    glow: '0 18px 42px rgba(212,162,8,0.12)',
   },
   lifetime: {
     icon: CrownIcon,
-    border: 'rgba(212,162,8,0.5)',
+    border: 'rgba(212,162,8,0.42)',
     bg: 'rgba(212,162,8,0.06)',
-    badge: 'Beta Exclusive',
+    badge: '👑 LAUNCH WEEK',
     highlight: false,
     gold: true,
     accent: '#D4A208',
-    glow: '0 16px 34px rgba(212,162,8,0.10)',
   },
   enterprise: {
     icon: BuildingIcon,
-    border: 'rgba(108,185,252,0.25)',
+    border: 'rgba(108,185,252,0.24)',
     bg: 'rgba(108,185,252,0.03)',
-    badge: 'For Teams',
+    badge: 'FOR TEAMS',
     highlight: false,
     gold: false,
     accent: '#6CB9FC',
-    glow: 'none',
   },
 }
 
@@ -228,6 +223,353 @@ function PricingToggle({
   )
 }
 
+function PlanCard({
+  planKey,
+  plan,
+  meta,
+  annual,
+  loading,
+  onCheckout,
+}: {
+  planKey: string
+  plan: any
+  meta: any
+  annual: boolean
+  loading: string | null
+  onCheckout: (key: string) => void
+}) {
+  const Icon = meta.icon
+  const isLoad = loading === planKey
+  const isEnterprise = planKey === 'enterprise'
+  const isLifetime = planKey === 'lifetime'
+
+  let price: number | null = null
+  if (plan.price === null || plan.price === undefined) {
+    price = null
+  } else if (plan.price === 0) {
+    price = 0
+  } else if (planKey === 'lifetime') {
+    price = plan.price
+  } else {
+    price = annual ? Math.round(plan.price * 0.8) : plan.price
+  }
+
+  const savings =
+    !plan.price || planKey === 'lifetime'
+      ? 0
+      : (plan.price - (annual ? Math.round(plan.price * 0.8) : plan.price)) * 12
+
+  return (
+    <div
+      key={planKey}
+      id={planKey}
+      style={{
+        position: 'relative',
+        borderRadius: 20,
+        padding: 26,
+        background:
+          meta.highlight
+            ? 'linear-gradient(180deg, rgba(212,162,8,0.05), rgba(8,8,24,0.88) 70%)'
+            : meta.gold
+              ? 'linear-gradient(180deg, rgba(212,162,8,0.06), rgba(8,8,24,0.88) 70%)'
+              : `linear-gradient(180deg, rgba(255,255,255,0.02), ${meta.bg})`,
+        border: `1px solid ${meta.border}`,
+        boxShadow: meta.highlight
+          ? '0 0 0 1px rgba(212,162,8,0.18), 0 18px 60px rgba(0,0,0,0.42)'
+          : meta.gold
+            ? '0 0 0 1px rgba(212,162,8,0.10), 0 14px 40px rgba(0,0,0,0.34)'
+            : '0 12px 32px rgba(0,0,0,0.32)',
+        backdropFilter: 'blur(14px)',
+        transition: 'transform .25s ease, box-shadow .25s ease',
+        transform: meta.highlight ? 'translateY(-4px)' : 'none',
+        overflow: 'hidden',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = meta.highlight ? 'translateY(-8px)' : 'translateY(-6px)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = meta.highlight ? 'translateY(-4px)' : 'translateY(0)'
+      }}
+    >
+      {meta.badge && (
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 18,
+            fontSize: 11,
+            fontWeight: 800,
+            padding: '5px 14px',
+            borderRadius: 999,
+            letterSpacing: 1.2,
+            background:
+              meta.highlight || meta.gold
+                ? 'linear-gradient(135deg,#C49510,#D4A208)'
+                : 'rgba(108,185,252,0.15)',
+            border:
+              meta.highlight || meta.gold
+                ? 'none'
+                : '1px solid rgba(108,185,252,0.3)',
+            color: meta.highlight || meta.gold ? '#03030D' : '#6CB9FC',
+            boxShadow:
+              meta.highlight || meta.gold
+                ? '0 6px 16px rgba(212,162,8,0.18)'
+                : 'none',
+          }}
+        >
+          {meta.badge}
+        </div>
+      )}
+
+      <div style={{ marginBottom: 22 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 12,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background:
+                meta.highlight || meta.gold
+                  ? 'rgba(212,162,8,0.12)'
+                  : isEnterprise
+                    ? 'rgba(108,185,252,0.10)'
+                    : 'rgba(40,40,92,0.4)',
+              border:
+                meta.highlight || meta.gold
+                  ? '1px solid rgba(212,162,8,0.18)'
+                  : isEnterprise
+                    ? '1px solid rgba(108,185,252,0.18)'
+                    : '1px solid rgba(255,255,255,0.04)',
+            }}
+          >
+            <Icon
+              size={18}
+              color={
+                meta.highlight || meta.gold
+                  ? '#D4A208'
+                  : isEnterprise
+                    ? '#6CB9FC'
+                    : '#8B88B3'
+              }
+            />
+          </div>
+
+          <div>
+            <div
+              style={{
+                fontSize: 20,
+                fontWeight: 700,
+                color: '#F3F1FB',
+                fontFamily: serif,
+                lineHeight: 1.1,
+              }}
+            >
+              {plan.name}
+            </div>
+
+            {isLifetime && (
+              <div
+                style={{
+                  fontSize: 10,
+                  color: '#D4A208',
+                  fontFamily: 'monospace',
+                  letterSpacing: 1.2,
+                  marginTop: 3,
+                  textTransform: 'uppercase',
+                }}
+              >
+                One-time access
+              </div>
+            )}
+          </div>
+        </div>
+
+        <p
+          style={{
+            fontSize: 13,
+            color: 'var(--text2)',
+            marginBottom: 18,
+            lineHeight: 1.6,
+            minHeight: 42,
+          }}
+        >
+          {plan.description}
+        </p>
+
+        {isEnterprise ? (
+          <div>
+            <div
+              style={{
+                fontSize: 34,
+                fontWeight: 700,
+                color: '#6CB9FC',
+                fontFamily: serif,
+                lineHeight: 1,
+              }}
+            >
+              Custom
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 8 }}>
+              Based on users, deployment needs, and support requirements
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                gap: 6,
+                flexWrap: 'wrap',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 46,
+                  fontWeight: 700,
+                  fontFamily: serif,
+                  color: meta.highlight || meta.gold ? '#D4A208' : '#F3F1FB',
+                  lineHeight: 1,
+                }}
+              >
+                {price === 0 ? 'Free' : `$${price}`}
+              </span>
+
+              {price !== null && price > 0 && (
+                <span style={{ fontSize: 14, color: 'var(--text2)' }}>
+                  {isLifetime ? 'once' : `/mo${annual ? ' · billed annually' : ''}`}
+                </span>
+              )}
+            </div>
+
+            {!isLifetime && price !== null && price > 0 && annual && savings > 0 && (
+              <p style={{ fontSize: 12, color: '#1DD1A1', marginTop: 8, fontWeight: 600 }}>
+                Save ${savings}/year vs monthly billing
+              </p>
+            )}
+
+            {isLifetime && (
+              <p style={{ fontSize: 12, color: '#1DD1A1', marginTop: 8, fontWeight: 600 }}>
+                No recurring fees. One payment. Lifetime access.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      <button
+        onClick={() => onCheckout(planKey)}
+        disabled={isLoad}
+        style={{
+          width: '100%',
+          padding: '12px 20px',
+          borderRadius: 12,
+          fontSize: 14,
+          fontWeight: 700,
+          cursor: isLoad ? 'wait' : 'pointer',
+          marginBottom: 20,
+          border: isEnterprise ? '1px solid rgba(108,185,252,0.22)' : 'none',
+          transition: 'all 0.2s',
+          opacity: isLoad ? 0.7 : 1,
+          background:
+            meta.highlight || meta.gold
+              ? 'linear-gradient(135deg,#C49510,#D4A208,#F4A623)'
+              : isEnterprise
+                ? 'rgba(108,185,252,0.10)'
+                : 'rgba(40,40,92,0.5)',
+          color:
+            meta.highlight || meta.gold
+              ? '#03030D'
+              : isEnterprise
+                ? '#6CB9FC'
+                : '#EAE8F4',
+          boxShadow:
+            meta.highlight || meta.gold
+              ? '0 8px 22px rgba(212,162,8,0.18)'
+              : 'none',
+        }}
+      >
+        {isLoad
+          ? '⟳ Redirecting…'
+          : isEnterprise
+            ? 'Get a Quote →'
+            : price === 0
+              ? 'Get Started Free'
+              : plan.cta}
+      </button>
+
+      {isLifetime && (
+        <p
+          style={{
+            fontSize: 11,
+            color: 'var(--text2)',
+            textAlign: 'center',
+            marginBottom: 16,
+            marginTop: -10,
+            lineHeight: 1.5,
+          }}
+        >
+          Available during Launch Week only ·{' '}
+          <Link href="/beta" style={{ color: '#D4A208', textDecoration: 'none', fontWeight: 700 }}>
+            Join Launch Week →
+          </Link>
+        </p>
+      )}
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+        {plan.features.map((f: string, i: number) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+            <div
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                marginTop: 1,
+                background:
+                  meta.highlight || meta.gold
+                    ? 'rgba(212,162,8,0.12)'
+                    : isEnterprise
+                      ? 'rgba(108,185,252,0.10)'
+                      : 'rgba(40,40,92,0.5)',
+                border:
+                  meta.highlight || meta.gold
+                    ? '1px solid rgba(212,162,8,0.18)'
+                    : isEnterprise
+                      ? '1px solid rgba(108,185,252,0.16)'
+                      : '1px solid rgba(255,255,255,0.03)',
+              }}
+            >
+              <CheckIcon
+                size={10}
+                color={
+                  meta.highlight || meta.gold
+                    ? '#D4A208'
+                    : isEnterprise
+                      ? '#6CB9FC'
+                      : '#8B88B3'
+                }
+                strokeWidth={3}
+              />
+            </div>
+
+            <span style={{ fontSize: 13, color: '#B8B5D1', lineHeight: 1.5 }}>
+              {f}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function PricingPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<string | null>(null)
@@ -270,20 +612,6 @@ export default function PricingPage() {
     } finally {
       setLoading(null)
     }
-  }
-
-  function getDisplayPrice(plan: typeof PLANS[keyof typeof PLANS], key: string): number | null {
-    if (plan.price === null || plan.price === undefined) return null
-    if (plan.price === 0) return 0
-    if (key === 'lifetime') return plan.price
-    return annual ? Math.round((plan.price as number) * 0.8) : (plan.price as number)
-  }
-
-  function getSavings(plan: typeof PLANS[keyof typeof PLANS], key: string): number {
-    if (!plan.price || key === 'lifetime') return 0
-    const monthly = plan.price as number
-    const disc = annual ? Math.round(monthly * 0.8) : monthly
-    return (monthly - disc) * 12
   }
 
   return (
@@ -353,346 +681,24 @@ export default function PricingPage() {
         style={{
           maxWidth: 1180,
           margin: '0 auto',
-          padding: '18px 16px 78px',
+          padding: '0 16px 78px',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,280px),1fr))',
           gap: 22,
           alignItems: 'start',
         }}
       >
-        {(Object.entries(PLANS) as [string, typeof PLANS[keyof typeof PLANS]][]).map(([key, plan]) => {
-          const meta = PLAN_META[key] || PLAN_META.free
-          const Icon = meta.icon
-          const price = getDisplayPrice(plan, key)
-          const isLoad = loading === key
-          const isEnterprise = key === 'enterprise'
-          const isLifetime = key === 'lifetime'
-
-          return (
-            <div
-              key={key}
-              id={key}
-              style={{
-                background:
-                  meta.highlight
-                    ? 'linear-gradient(180deg, rgba(212,162,8,0.06), rgba(8,8,24,0.84) 65%)'
-                    : meta.gold
-                      ? 'linear-gradient(180deg, rgba(212,162,8,0.08), rgba(8,8,24,0.84) 62%)'
-                      : meta.bg,
-                border: `1px solid ${meta.border}`,
-                borderRadius: 20,
-                padding: '30px 30px 28px',
-                position: 'relative',
-                transform: meta.highlight ? 'translateY(-6px)' : 'none',
-                boxShadow: meta.glow,
-                overflow: 'visible',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = meta.highlight
-                  ? 'translateY(-10px)'
-                  : 'translateY(-6px)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = meta.highlight
-                  ? 'translateY(-6px)'
-                  : 'translateY(0)'
-              }}
-            >
-              {(meta.highlight || meta.gold) && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    borderRadius: 20,
-                    background:
-                      meta.highlight
-                        ? 'radial-gradient(circle at top left, rgba(212,162,8,0.08), transparent 36%)'
-                        : 'radial-gradient(circle at top left, rgba(212,162,8,0.06), transparent 34%)',
-                  }}
-                />
-              )}
-
-              
-              {meta.badge && (
-  <div
-    style={{
-      position: 'absolute',
-      top: 14,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      fontSize: 11,
-      fontWeight: 700,
-      padding: '5px 14px',
-      borderRadius: 999,
-      whiteSpace: 'nowrap',
-      letterSpacing: 0.8,
-      background:
-        meta.highlight || meta.gold
-          ? 'linear-gradient(135deg,#C49510,#D4A208)'
-          : 'rgba(108,185,252,0.15)',
-      border:
-        meta.highlight || meta.gold
-          ? 'none'
-          : '1px solid rgba(108,185,252,0.3)',
-      color: meta.highlight || meta.gold ? '#03030D' : '#6CB9FC',
-      boxShadow:
-        meta.highlight || meta.gold
-          ? '0 6px 16px rgba(212,162,8,0.18)'
-          : 'none',
-      zIndex: 3,
-    }}
-  >
-    {meta.badge}
-  </div>
-)}
-              <div style={{ marginBottom: 24, position: 'relative' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 12,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background:
-                        meta.highlight || meta.gold
-                          ? 'rgba(212,162,8,0.12)'
-                          : isEnterprise
-                            ? 'rgba(108,185,252,0.10)'
-                            : 'rgba(40,40,92,0.4)',
-                      border:
-                        meta.highlight || meta.gold
-                          ? '1px solid rgba(212,162,8,0.18)'
-                          : isEnterprise
-                            ? '1px solid rgba(108,185,252,0.18)'
-                            : '1px solid rgba(255,255,255,0.04)',
-                    }}
-                  >
-                    <Icon
-                      size={18}
-                      color={
-                        meta.highlight || meta.gold
-                          ? '#D4A208'
-                          : isEnterprise
-                            ? '#6CB9FC'
-                            : '#8B88B3'
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div
-                      style={{
-                        fontSize: 20,
-                        fontWeight: 700,
-                        color: '#F3F1FB',
-                        fontFamily: serif,
-                        lineHeight: 1.1,
-                      }}
-                    >
-                      {plan.name}
-                    </div>
-
-                    {isLifetime && (
-                      <div
-                        style={{
-                          fontSize: 10,
-                          color: '#D4A208',
-                          fontFamily: 'monospace',
-                          letterSpacing: 1.2,
-                          marginTop: 3,
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        One-time access
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: 'var(--text2)',
-                    marginBottom: 18,
-                    lineHeight: 1.6,
-                    minHeight: 42,
-                  }}
-                >
-                  {plan.description}
-                </p>
-
-                {isEnterprise ? (
-                  <div>
-                    <div
-                      style={{
-                        fontSize: 34,
-                        fontWeight: 700,
-                        color: '#6CB9FC',
-                        fontFamily: serif,
-                        lineHeight: 1,
-                      }}
-                    >
-                      Custom
-                    </div>
-                    <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 8 }}>
-                      Based on users, deployment needs, and support requirements
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'baseline',
-                        gap: 6,
-                        flexWrap: 'wrap',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: 46,
-                          fontWeight: 700,
-                          fontFamily: serif,
-                          color: meta.highlight || meta.gold ? '#D4A208' : '#F3F1FB',
-                          lineHeight: 1,
-                        }}
-                      >
-                        {price === 0 ? 'Free' : `$${price}`}
-                      </span>
-
-                      {price !== null && price > 0 && (
-                        <span style={{ fontSize: 14, color: 'var(--text2)' }}>
-                          {isLifetime ? 'one-time' : `/mo${annual ? ' · billed annually' : ''}`}
-                        </span>
-                      )}
-                    </div>
-
-                    {!isLifetime && price !== null && price > 0 && annual && getSavings(plan, key) > 0 && (
-                      <p style={{ fontSize: 12, color: '#1DD1A1', marginTop: 8, fontWeight: 600 }}>
-                        Save ${getSavings(plan, key)}/year vs monthly billing
-                      </p>
-                    )}
-
-                    {isLifetime && (
-                      <p style={{ fontSize: 12, color: '#1DD1A1', marginTop: 8, fontWeight: 600 }}>
-                        No recurring fees. One payment. Lifetime access.
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <button
-                onClick={() => handleCheckout(key)}
-                disabled={isLoad}
-                style={{
-                  width: '100%',
-                  padding: '12px 20px',
-                  borderRadius: 12,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  cursor: isLoad ? 'wait' : 'pointer',
-                  marginBottom: 20,
-                  border: isEnterprise ? '1px solid rgba(108,185,252,0.22)' : 'none',
-                  transition: 'all 0.2s',
-                  opacity: isLoad ? 0.7 : 1,
-                  background:
-                    meta.highlight || meta.gold
-                      ? 'linear-gradient(135deg,#C49510,#D4A208,#F4A623)'
-                      : isEnterprise
-                        ? 'rgba(108,185,252,0.10)'
-                        : 'rgba(40,40,92,0.5)',
-                  color:
-                    meta.highlight || meta.gold
-                      ? '#03030D'
-                      : isEnterprise
-                        ? '#6CB9FC'
-                        : '#EAE8F4',
-                  boxShadow:
-                    meta.highlight || meta.gold
-                      ? '0 8px 22px rgba(212,162,8,0.18)'
-                      : 'none',
-                }}
-              >
-                {isLoad
-                  ? '⟳ Redirecting…'
-                  : isEnterprise
-                    ? 'Get a Quote →'
-                    : price === 0
-                      ? 'Get Started Free'
-                      : plan.cta}
-              </button>
-
-              {isLifetime && (
-                <p
-                  style={{
-                    fontSize: 11,
-                    color: 'var(--text2)',
-                    textAlign: 'center',
-                    marginBottom: 16,
-                    marginTop: -10,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  Available during Launch Week only ·{' '}
-                  <Link href="/beta" style={{ color: '#D4A208', textDecoration: 'none', fontWeight: 700 }}>
-                    Join Launch Week →
-                  </Link>
-                </p>
-              )}
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
-                {plan.features.map((f: string, i: number) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <div
-                      style={{
-                        width: 18,
-                        height: 18,
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
-                        marginTop: 1,
-                        background:
-                          meta.highlight || meta.gold
-                            ? 'rgba(212,162,8,0.12)'
-                            : isEnterprise
-                              ? 'rgba(108,185,252,0.10)'
-                              : 'rgba(40,40,92,0.5)',
-                        border:
-                          meta.highlight || meta.gold
-                            ? '1px solid rgba(212,162,8,0.18)'
-                            : isEnterprise
-                              ? '1px solid rgba(108,185,252,0.16)'
-                              : '1px solid rgba(255,255,255,0.03)',
-                      }}
-                    >
-                      <CheckIcon
-                        size={10}
-                        color={
-                          meta.highlight || meta.gold
-                            ? '#D4A208'
-                            : isEnterprise
-                              ? '#6CB9FC'
-                              : '#8B88B3'
-                        }
-                        strokeWidth={3}
-                      />
-                    </div>
-
-                    <span style={{ fontSize: 13, color: '#B8B5D1', lineHeight: 1.5 }}>
-                      {f}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-        })}
+        {(Object.entries(PLANS) as [string, typeof PLANS[keyof typeof PLANS]][]).map(([key, plan]) => (
+          <PlanCard
+            key={key}
+            planKey={key}
+            plan={plan}
+            meta={PLAN_META[key] || PLAN_META.free}
+            annual={annual}
+            loading={loading}
+            onCheckout={handleCheckout}
+          />
+        ))}
       </div>
 
       <div style={{ maxWidth: 920, margin: '0 auto', padding: '0 24px 52px' }}>
