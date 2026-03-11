@@ -1,5 +1,4 @@
 // @ts-nocheck
-// ── app/project/[id]/page.tsx ────────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { redirect, notFound } from 'next/navigation'
 import { Sidebar } from '@/components/layout/Sidebar'
@@ -63,14 +62,29 @@ export default async function ProjectPage({ params }: Props) {
   const initialProject = { ...project, steps }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#03030D' }}>
+    <div
+      style={{
+        display: 'flex',
+        minHeight: '100dvh',
+        background: '#03030D',
+      }}
+    >
       <Sidebar profile={profile} />
+
       <main
-        style={{ marginLeft: 240, flex: 1, minWidth: 0, overflow: 'hidden' }}
         className="project-main"
+        style={{
+          marginLeft: 240,
+          flex: 1,
+          minWidth: 0,
+          minHeight: '100dvh',
+          overflow: 'visible',
+          position: 'relative',
+        }}
       >
         <ProjectClient initialProject={initialProject} profile={profile} />
       </main>
+
       <BottomNav />
     </div>
   )
