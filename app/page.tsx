@@ -20,20 +20,62 @@ function WatermarkBg() {
         zIndex: 0,
         pointerEvents: 'none',
         overflow: 'hidden',
-        background:
-          'linear-gradient(160deg, #04040F 0%, #080620 50%, #04040F 100%)',
+        background: 'linear-gradient(160deg, #04040F 0%, #080620 50%, #04040F 100%)',
       }}
     >
+      <style>{`
+        @keyframes vesimyGlowDriftA {
+          0%   { transform: translate(-50%, 0px) scale(1); opacity: 0.75; }
+          50%  { transform: translate(-50%, 18px) scale(1.04); opacity: 1; }
+          100% { transform: translate(-50%, 0px) scale(1); opacity: 0.75; }
+        }
+
+        @keyframes vesimyGlowDriftB {
+          0%   { transform: translate(0, 0) scale(1); opacity: 0.65; }
+          50%  { transform: translate(-16px, -10px) scale(1.06); opacity: 0.95; }
+          100% { transform: translate(0, 0) scale(1); opacity: 0.65; }
+        }
+
+        @keyframes vesimyPatternDrift {
+          0%   { transform: translate3d(0, 0, 0); }
+          50%  { transform: translate3d(-18px, -10px, 0); }
+          100% { transform: translate3d(0, 0, 0); }
+        }
+
+        @keyframes vesimyHeroFloat {
+          0%   { transform: translateY(0px); }
+          50%  { transform: translateY(-6px); }
+          100% { transform: translateY(0px); }
+        }
+
+        @keyframes vesimyShimmerSweep {
+          0%   { transform: translateX(-170%) skewX(-18deg); opacity: 0; }
+          8%   { opacity: 0.28; }
+          18%  { transform: translateX(170%) skewX(-18deg); opacity: 0; }
+          100% { transform: translateX(170%) skewX(-18deg); opacity: 0; }
+        }
+
+        @keyframes vesimyRevealUp {
+          0%   { opacity: 0; transform: translateY(16px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .vesimy-reveal-1 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .05s; }
+        .vesimy-reveal-2 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .16s; }
+        .vesimy-reveal-3 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .28s; }
+        .vesimy-reveal-4 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .40s; }
+        .vesimy-reveal-5 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .52s; }
+      `}</style>
+
       <div
         style={{
           position: 'absolute',
           top: '8%',
           left: '50%',
-          transform: 'translateX(-50%)',
-          width: 900,
-          height: 640,
-          background:
-            'radial-gradient(ellipse, rgba(212,162,8,0.11) 0%, transparent 70%)',
+          width: 920,
+          height: 650,
+          background: 'radial-gradient(ellipse, rgba(212,162,8,0.11) 0%, transparent 70%)',
+          animation: 'vesimyGlowDriftA 16s ease-in-out infinite',
         }}
       />
 
@@ -42,57 +84,62 @@ function WatermarkBg() {
           position: 'absolute',
           bottom: '-10%',
           right: '-8%',
-          width: 520,
-          height: 520,
-          background:
-            'radial-gradient(circle, rgba(100,38,160,0.10) 0%, transparent 70%)',
+          width: 540,
+          height: 540,
+          background: 'radial-gradient(circle, rgba(100,38,160,0.10) 0%, transparent 70%)',
+          animation: 'vesimyGlowDriftB 20s ease-in-out infinite',
         }}
       />
 
-      <svg
-        width="100%"
-        height="100%"
-        style={{ position: 'absolute', inset: 0, opacity: 0.12 }}
+      <div
+        style={{
+          position: 'absolute',
+          inset: '-5%',
+          opacity: 0.15,
+          animation: 'vesimyPatternDrift 32s ease-in-out infinite',
+        }}
       >
-        <defs>
-          <pattern
-            id="vesimy-watermark"
-            x="0"
-            y="0"
-            width="260"
-            height="120"
-            patternUnits="userSpaceOnUse"
-          >
-            <text
-              x="24"
-              y="38"
-              fontFamily="Palatino Linotype,serif"
-              fontSize="16"
-              fontWeight="700"
-              fill="#D4A208"
-              fillOpacity="0.22"
-              letterSpacing="4"
+        <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+          <defs>
+            <pattern
+              id="vesimy-watermark"
+              x="0"
+              y="0"
+              width="260"
+              height="120"
+              patternUnits="userSpaceOnUse"
             >
-              VESIMY
-            </text>
+              <text
+                x="24"
+                y="38"
+                fontFamily="Palatino Linotype,serif"
+                fontSize="16"
+                fontWeight="700"
+                fill="#D4A208"
+                fillOpacity="0.22"
+                letterSpacing="4"
+              >
+                VESIMY
+              </text>
 
-            <text
-              x="122"
-              y="88"
-              textAnchor="middle"
-              fontFamily="Palatino Linotype,serif"
-              fontSize="34"
-              fontWeight="700"
-              fill="#D4A208"
-              fillOpacity="0.16"
-            >
-              V
-            </text>
-          </pattern>
-        </defs>
+              <text
+                x="122"
+                y="88"
+                textAnchor="middle"
+                fontFamily="Palatino Linotype,serif"
+                fontSize="34"
+                fontWeight="700"
+                fill="#D4A208"
+                fillOpacity="0.14"
+              >
+                V
+              </text>
+            </pattern>
+          </defs>
 
-        <rect width="100%" height="100%" fill="url(#vesimy-watermark)" />
-      </svg>
+          <rect width="100%" height="100%" fill="url(#vesimy-watermark)" />
+        </svg>
+      </div>
 
       <div
         style={{
@@ -100,10 +147,62 @@ function WatermarkBg() {
           top: '4%',
           left: '50%',
           transform: 'translateX(-50%)',
-          opacity: 0.055,
+          opacity: 0.06,
+          animation: 'vesimyHeroFloat 14s ease-in-out infinite',
         }}
       >
         <VLogoMark size={620} />
+      </div>
+    </div>
+  )
+}
+
+function HeroLogo() {
+  return (
+    <div
+      className="vesimy-reveal-1"
+      style={{
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        animation: 'vesimyRevealUp .75s ease forwards, vesimyHeroFloat 9s ease-in-out 1.1s infinite',
+        opacity: 0,
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          width: 180,
+          height: 180,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(212,162,8,0.12) 0%, transparent 70%)',
+          filter: 'blur(16px)',
+        }}
+      />
+      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 20 }}>
+        <VLogoMark size={122} />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: -10,
+              bottom: -10,
+              width: 44,
+              background:
+                'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,244,214,0.28) 48%, rgba(255,255,255,0) 100%)',
+              filter: 'blur(2px)',
+              animation: 'vesimyShimmerSweep 8.5s ease-in-out infinite',
+            }}
+          />
+        </div>
       </div>
     </div>
   )
@@ -312,18 +411,17 @@ export default function HomePage() {
           }}
         >
           <div style={{ marginBottom: 26 }}>
-            <VLogoMark size={122} />
+            <HeroLogo />
           </div>
 
-          <div style={{ marginBottom: 10 }}>
+          <div className="vesimy-reveal-2" style={{ marginBottom: 10 }}>
             <span
               style={{
                 fontFamily: serif,
                 fontWeight: 800,
                 fontSize: 'clamp(40px,6vw,76px)',
                 lineHeight: 1,
-                background:
-                  'linear-gradient(135deg, #F7DF8A 0%, #D4A208 55%, #B87A06 100%)',
+                background: 'linear-gradient(135deg, #F7DF8A 0%, #D4A208 55%, #B87A06 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -335,6 +433,7 @@ export default function HomePage() {
           </div>
 
           <div
+            className="vesimy-reveal-3"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -373,6 +472,7 @@ export default function HomePage() {
           </div>
 
           <h1
+            className="vesimy-reveal-4"
             style={{
               fontFamily: serif,
               fontSize: 'clamp(42px,6.5vw,82px)',
@@ -389,6 +489,7 @@ export default function HomePage() {
           </h1>
 
           <p
+            className="vesimy-reveal-4"
             style={{
               fontSize: 'clamp(16px,2vw,20px)',
               color: '#B8B5D1',
@@ -403,7 +504,7 @@ export default function HomePage() {
           </p>
 
           <div
-            className="hero-cta-row"
+            className="hero-cta-row vesimy-reveal-5"
             style={{
               display: 'flex',
               gap: 14,
@@ -461,7 +562,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p style={{ fontSize: 12, color: '#7070A0', marginTop: 16 }}>
+          <p className="vesimy-reveal-5" style={{ fontSize: 12, color: '#7070A0', marginTop: 16 }}>
             Free forever · No credit card · Works on any device
           </p>
         </section>
