@@ -35,10 +35,10 @@ export function Modal({
   width = 560,
   children,
   noPad,
-}: ModalProps) {
-  const isMobile = useIsMobile()
-  const modalRef = useRef<HTMLDivElement>(null)
-  const dragState = useRef({
+}) {
+  const [isMobile, setIsMobile] = useState(false)
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const dragRef = useRef({
     dragging: false,
     startX: 0,
     startY: 0,
@@ -46,66 +46,32 @@ export function Modal({
     originY: 0,
   })
 
-  const [pos, setPos] = useState({ x: 0, y: 0 })
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const onKey = (e) => {
       if (e.key === 'Escape') onClose()
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  const modalStyle = useMemo(() => {
-    if (isMobile) {
-      return {
-        width: '100%',
-        maxWidth: '100%',
-        maxHeight: '92vh',
-        transform: 'none',
-        margin: 0,
-        borderRadius: '18px 18px 0 0',
-      }
-    }
-
-    return {
-      width: '100%',
-      maxWidth: width,
-      maxHeight: '90vh',
-      transform: `translate(${pos.x}px, ${pos.y}px)`,
-      margin: 'auto',
-      borderRadius: 14,
-    }
-  }, [isMobile, pos.x, pos.y, width])
-
-  const onBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) onClose()
-  }
-
-  const onDragStart = (e: React.MouseEvent) => {
-    if (isMobile) return
-    dragState.current = {
-      dragging: true,
-      startX: e.clientX,
-      startY: e.clientY,
-      originX: pos.x,
-      originY: pos.y,
-    }
-    document.body.style.userSelect = 'none'
-  }
-
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!dragState.current.dragging || isMobile) return
-
-      const nextX = dragState.current.originX + (e.clientX - dragState.current.startX)
-      const nextY = dragState.current.originY + (e.clientY - dragState.current.startY)
-
-      setPos({ x: nextX, y: nextY })
+    const onMove = (e) => {
+      if (!dragRef.current.dragging || isMobile) return
+      setPos({
+        x: dragRef.current.originX + (e.clientX - dragRef.current.startX),
+        y: dragRef.current.originY + (e.clientY - dragRef.current.startY),
+      })
     }
 
     const onUp = () => {
-      dragState.current.dragging = false
+      dragRef.current.dragging = false
       document.body.style.userSelect = ''
     }
 
@@ -115,14 +81,27 @@ export function Modal({
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
-      document.body.style.userSelect = ''
     }
   }, [isMobile])
 
+  const startDrag = (e) => {
+    if (isMobile) return
+    dragRef.current = {
+      dragging: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: pos.x,
+      originY: pos.y,
+    }
+    document.body.style.userSelect = 'none'
+  }
+
   return (
     <div
-      onClick={onBackdropClick}
       className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
       style={{
         position: 'fixed',
         inset: 0,
@@ -136,33 +115,36 @@ export function Modal({
       }}
     >
       <div
-        ref={modalRef}
         className="modal"
         style={{
+          width: '100%',
+          maxWidth: isMobile ? '100%' : width,
+          maxHeight: isMobile ? '92vh' : '88vh',
           background: 'var(--bg2)',
           border: '1px solid var(--border2)',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.75)',
+          borderRadius: isMobile ? '18px 18px 0 0' : 14,
+          overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          ...modalStyle,
+          boxShadow: '0 20px 60px rgba(0,0,0,0.7)',
+          transform: isMobile ? 'none' : `translate(${pos.x}px, ${pos.y}px)`,
         }}
       >
         <div
           className="modal-header"
-          onMouseDown={onDragStart}
+          onMouseDown={startDrag}
           style={{
-            padding: '16px 22px',
+            padding: isMobile ? '14px 16px' : '16px 22px',
             borderBottom: '1px solid var(--border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: 'var(--bg3)',
-            flexShrink: 0,
             cursor: isMobile ? 'default' : 'grab',
+            flexShrink: 0,
+            background: 'var(--bg3)',
           }}
         >
-          <h2
+          <div
             style={{
               fontFamily: 'Palatino Linotype,serif',
               fontSize: 16,
@@ -171,34 +153,27 @@ export function Modal({
             }}
           >
             {title}
-          </h2>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {!isMobile && (
-              <span style={{ fontSize: 11, color: 'var(--text3)' }}>drag</span>
-            )}
-            <button
-              onClick={onClose}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                color: 'var(--text3)',
-                fontSize: 20,
-                lineHeight: 1,
-                padding: '2px 6px',
-                borderRadius: 6,
-              }}
-            >
-              ×
-            </button>
           </div>
+
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--text2)',
+              fontSize: 20,
+              cursor: 'pointer',
+              padding: '2px 6px',
+            }}
+          >
+            ×
+          </button>
         </div>
 
         <div
           className="modal-body"
           style={{
-            padding: noPad ? 0 : isMobile ? '16px' : '20px 22px',
+            padding: noPad ? 0 : isMobile ? 16 : 22,
             overflowY: 'auto',
             flex: 1,
             WebkitOverflowScrolling: 'touch',
@@ -211,7 +186,7 @@ export function Modal({
           <div
             className="modal-footer"
             style={{
-              padding: isMobile ? '12px 16px 16px' : '12px 22px',
+              padding: isMobile ? '12px 16px calc(12px + env(safe-area-inset-bottom))' : '12px 22px',
               borderTop: '1px solid var(--border)',
               display: 'flex',
               justifyContent: 'flex-end',
