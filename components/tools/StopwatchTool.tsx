@@ -116,27 +116,25 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Study'}
-      width={620}
     >
       <div
         style={{
           textAlign: 'center',
-          padding: '18px 14px',
+          padding: '14px 12px',
           background: 'var(--bg)',
           borderRadius: 12,
-          marginBottom: 14,
+          marginBottom: 12,
           border: '1px solid var(--border)',
         }}
       >
         <div
           style={{
-            fontSize: 'clamp(38px, 9vw, 52px)',
+            fontSize: 'clamp(34px, 8vw, 46px)',
             fontFamily: 'monospace',
             fontWeight: 700,
             color: running ? '#D4A208' : 'var(--text)',
             letterSpacing: 1,
             lineHeight: 1.1,
-            wordBreak: 'break-word',
           }}
         >
           {fmtMs(elapsed)}
@@ -145,28 +143,28 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <div
           style={{
             display: 'flex',
-            gap: 10,
+            gap: 8,
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginTop: 14,
+            marginTop: 12,
           }}
         >
           <button
             onClick={() => setRunning((r) => !r)}
             className={`btn btn-sm ${running ? 'btn-danger' : 'btn-primary'}`}
-            style={{ minWidth: 100 }}
+            style={{ minWidth: 92 }}
           >
             {running ? '⏹ Stop' : '▶ Start'}
           </button>
 
           {running && (
-            <button onClick={lap} className="btn btn-ghost btn-sm" style={{ minWidth: 90 }}>
+            <button onClick={lap} className="btn btn-ghost btn-sm" style={{ minWidth: 82 }}>
               ⏱ Lap
             </button>
           )}
 
           {laps.length > 0 && !running && (
-            <button onClick={reset} className="btn btn-ghost btn-sm" style={{ minWidth: 90 }}>
+            <button onClick={reset} className="btn btn-ghost btn-sm" style={{ minWidth: 82 }}>
               ↺ Reset
             </button>
           )}
@@ -177,9 +175,9 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))',
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
             gap: 8,
-            marginBottom: 14,
+            marginBottom: 12,
           }}
         >
           {statCards.map(([label, val]) => (
@@ -189,22 +187,38 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 background: 'var(--bg)',
                 border: '1px solid var(--border)',
                 borderRadius: 10,
-                padding: '10px',
+                padding: '10px 8px',
                 textAlign: 'center',
               }}
             >
-              <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.3, fontFamily: 'monospace', marginBottom: 4 }}>
+              <div
+                style={{
+                  fontSize: 9,
+                  color: 'var(--text3)',
+                  letterSpacing: 1.1,
+                  fontFamily: 'monospace',
+                  marginBottom: 4,
+                }}
+              >
                 {label}
               </div>
-              <div style={{ fontSize: 16, fontWeight: 700, color: '#D4A208' }}>{val}</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#D4A208' }}>{val}</div>
             </div>
           ))}
         </div>
       )}
 
       {laps.length > 0 && (
-        <div style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 8 }}>
+        <div style={{ marginBottom: 12 }}>
+          <div
+            style={{
+              fontSize: 11,
+              color: 'var(--text3)',
+              fontFamily: 'monospace',
+              letterSpacing: 1,
+              marginBottom: 8,
+            }}
+          >
             OBSERVATIONS ({validTimes.length} valid / {laps.length} total)
           </div>
 
@@ -214,12 +228,12 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 key={i}
                 onClick={() => toggleExclude(i)}
                 style={{
-                  padding: '8px 12px',
+                  padding: '8px 10px',
                   borderRadius: 8,
                   fontSize: 12,
                   fontFamily: 'monospace',
                   cursor: 'pointer',
-                  minHeight: 40,
+                  minHeight: 38,
                   background: excluded.has(i) ? 'rgba(255,107,107,0.08)' : 'var(--bg)',
                   border: `1px solid ${excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'}`,
                   color: excluded.has(i) ? '#FF6B6B' : 'var(--text2)',
@@ -240,9 +254,9 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: '1fr',
           gap: 10,
-          marginBottom: 8,
+          marginBottom: 4,
         }}
       >
         <div>
@@ -273,8 +287,6 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
           />
         </div>
       </div>
-
-      <div style={{ height: 8 }} />
     </Modal>
   )
 }
