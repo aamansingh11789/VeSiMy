@@ -1,8 +1,7 @@
 // @ts-nocheck
 'use client'
-// ── components/tools/StopwatchTool.tsx ──────────────────────────────────────
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui'
 
@@ -26,16 +25,14 @@ const fmtMs = (ms: number) => {
   return `${Math.floor(s / 60)}m ${(s % 60).toFixed(0)}s`
 }
 
-export default function StopwatchTool({ stepId, stepName, data, onSave, onClose }: Props) {
+export default function StopwatchTool({ stepName, data, onSave, onClose }: Props) {
   const { showToast } = useStore()
   const [running, setRunning] = useState(false)
   const [elapsed, setElapsed] = useState(0)
   const [laps, setLaps] = useState<Lap[]>(data?.laps || [])
   const [excluded, setExcluded] = useState<Set<number>>(new Set(data?.excluded || []))
   const [baseline, setBaseline] = useState(data?.baseline ?? '')
-  const [manualCT, setManualCT] = useState(
-    data?.mean ? String(Math.round(data.mean / 10) / 100) : ''
-  )
+  const [manualCT, setManualCT] = useState(data?.mean ? String(Math.round(data.mean / 10) / 100) : '')
   const [saving, setSaving] = useState(false)
 
   const startRef = useRef<number>(0)
@@ -70,25 +67,22 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
     setExcluded(new Set())
   }
 
-  const toggleExclude = (i: number) =>
+  const toggleExclude = (i: number) => {
     setExcluded((prev) => {
       const next = new Set(prev)
       next.has(i) ? next.delete(i) : next.add(i)
       return next
     })
+  }
 
   const validTimes = laps.filter((_, i) => !excluded.has(i)).map((l) => l.t)
-  const mean = validTimes.length
-    ? Math.round(validTimes.reduce((a, b) => a + b, 0) / validTimes.length)
-    : 0
+  const mean = validTimes.length ? Math.round(validTimes.reduce((a, b) => a + b, 0) / validTimes.length) : 0
   const minT = validTimes.length ? Math.min(...validTimes) : 0
   const maxT = validTimes.length ? Math.max(...validTimes) : 0
-
   const effectiveMean = mean || (manualCT ? Math.round(parseFloat(manualCT) * 1000) : 0)
 
   const handleSave = async () => {
     setSaving(true)
-
     const payload = {
       laps,
       excluded: [...excluded],
@@ -110,6 +104,12 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
     }
   }
 
+  const statCards = [
+    ['Mean CT', fmtMs(mean || effectiveMean)],
+    ['Min', fmtMs(minT || effectiveMean)],
+    ['Max', fmtMs(maxT || effectiveMean)],
+  ]
+
   return (
     <Modal
       title={`⏱ Time Study — ${stepName}`}
@@ -121,21 +121,22 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
       <div
         style={{
           textAlign: 'center',
-          padding: '20px 0',
+          padding: '18px 14px',
           background: 'var(--bg)',
-          borderRadius: 10,
-          marginBottom: 16,
+          borderRadius: 12,
+          marginBottom: 14,
           border: '1px solid var(--border)',
         }}
       >
         <div
           style={{
-            fontSize: 52,
+            fontSize: 'clamp(38px, 9vw, 52px)',
             fontFamily: 'monospace',
             fontWeight: 700,
             color: running ? '#D4A208' : 'var(--text)',
-            letterSpacing: 2,
+            letterSpacing: 1,
             lineHeight: 1.1,
+            wordBreak: 'break-word',
           }}
         >
           {fmtMs(elapsed)}
@@ -153,19 +154,19 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
           <button
             onClick={() => setRunning((r) => !r)}
             className={`btn btn-sm ${running ? 'btn-danger' : 'btn-primary'}`}
-            style={{ minWidth: 90 }}
+            style={{ minWidth: 100 }}
           >
             {running ? '⏹ Stop' : '▶ Start'}
           </button>
 
           {running && (
-            <button onClick={lap} className="btn btn-ghost btn-sm">
+            <button onClick={lap} className="btn btn-ghost btn-sm" style={{ minWidth: 90 }}>
               ⏱ Lap
             </button>
           )}
 
           {laps.length > 0 && !running && (
-            <button onClick={reset} className="btn btn-ghost btn-sm">
+            <button onClick={reset} className="btn btn-ghost btn-sm" style={{ minWidth: 90 }}>
               ↺ Reset
             </button>
           )}
@@ -176,54 +177,34 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))',
             gap: 8,
-            marginBottom: 16,
+            marginBottom: 14,
           }}
         >
-          {[
-            ['Mean CT', fmtMs(mean || effectiveMean)],
-            ['Min', fmtMs(minT || effectiveMean)],
-            ['Max', fmtMs(maxT || effectiveMean)],
-          ].map(([label, val]) => (
+          {statCards.map(([label, val]) => (
             <div
               key={label}
               style={{
                 background: 'var(--bg)',
                 border: '1px solid var(--border)',
-                borderRadius: 8,
+                borderRadius: 10,
                 padding: '10px',
                 textAlign: 'center',
               }}
             >
-              <div
-                style={{
-                  fontSize: 9,
-                  color: 'var(--text3)',
-                  letterSpacing: 1.5,
-                  fontFamily: 'monospace',
-                  marginBottom: 4,
-                }}
-              >
+              <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.3, fontFamily: 'monospace', marginBottom: 4 }}>
                 {label}
               </div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: '#D4A208' }}>{val}</div>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#D4A208' }}>{val}</div>
             </div>
           ))}
         </div>
       )}
 
       {laps.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
-          <div
-            style={{
-              fontSize: 11,
-              color: 'var(--text3)',
-              fontFamily: 'monospace',
-              letterSpacing: 1,
-              marginBottom: 8,
-            }}
-          >
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 8 }}>
             OBSERVATIONS ({validTimes.length} valid / {laps.length} total)
           </div>
 
@@ -240,9 +221,7 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
                   cursor: 'pointer',
                   minHeight: 40,
                   background: excluded.has(i) ? 'rgba(255,107,107,0.08)' : 'var(--bg)',
-                  border: `1px solid ${
-                    excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'
-                  }`,
+                  border: `1px solid ${excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'}`,
                   color: excluded.has(i) ? '#FF6B6B' : 'var(--text2)',
                   textDecoration: excluded.has(i) ? 'line-through' : 'none',
                 }}
@@ -253,7 +232,7 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
           </div>
 
           <p style={{ fontSize: 11, color: 'var(--text3)', marginTop: 6 }}>
-            Click any lap to toggle exclude from mean
+            Tap any lap to exclude it from the average.
           </p>
         </div>
       )}
@@ -268,8 +247,7 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
       >
         <div>
           <label className="label">
-            Manual Cycle Time (sec){' '}
-            <span style={{ color: 'var(--text3)', fontSize: 10 }}>if no stopwatch</span>
+            Manual Cycle Time (sec) <span style={{ color: 'var(--text3)', fontSize: 10 }}>if no stopwatch</span>
           </label>
           <input
             className="input"
@@ -283,8 +261,7 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
 
         <div>
           <label className="label">
-            Baseline CT (sec){' '}
-            <span style={{ color: 'var(--text3)', fontSize: 10 }}>current state</span>
+            Baseline CT (sec) <span style={{ color: 'var(--text3)', fontSize: 10 }}>current state</span>
           </label>
           <input
             className="input"
@@ -296,6 +273,8 @@ export default function StopwatchTool({ stepId, stepName, data, onSave, onClose 
           />
         </div>
       </div>
+
+      <div style={{ height: 8 }} />
     </Modal>
   )
 }
