@@ -4,120 +4,85 @@
 import { useEffect } from 'react'
 
 interface ModalProps {
-title: string
-children: React.ReactNode
-onClose: () => void
-onSave?: () => void
-saveLabel?: string
-disableSave?: boolean
+  title: string
+  children: React.ReactNode
+  onClose: () => void
+  onSave?: () => void
+  saveLabel?: string
+  disableSave?: boolean
 }
-
-/* ───────────────────────────────────────────────────────────── */
 
 export function Modal({
-title,
-children,
-onClose,
-onSave,
-saveLabel = 'Save',
-disableSave = false,
+  title,
+  children,
+  onClose,
+  onSave,
+  saveLabel = 'Save',
+  disableSave = false,
 }: ModalProps) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
 
-/* ESC key closes modal */
+    document.addEventListener('keydown', handler)
+    document.body.classList.add('modal-open')
+    document.body.style.overflow = 'hidden'
 
-useEffect(() => {
+    return () => {
+      document.removeEventListener('keydown', handler)
+      document.body.classList.remove('modal-open')
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
 
-const handler = (e: KeyboardEvent) => {
-if (e.key === 'Escape') onClose()
-}
+  return (
+    <div className="vesimy-modal-overlay" onClick={onClose}>
+      <div
+        className="vesimy-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="vesimy-modal-handle" />
 
-document.addEventListener('keydown', handler)
+        <div className="vesimy-modal-header">
+          <div className="vesimy-modal-title">{title}</div>
 
-return () => document.removeEventListener('keydown', handler)
+          <button
+            className="vesimy-modal-close"
+            onClick={onClose}
+            type="button"
+          >
+            ✕
+          </button>
+        </div>
 
-}, [])
+        <div className="vesimy-modal-body">
+          {children}
+        </div>
 
-/* prevent body scroll */
+        <div className="vesimy-modal-footer">
+          <button
+            className="btn btn-ghost"
+            onClick={onClose}
+            type="button"
+          >
+            Cancel
+          </button>
 
-useEffect(() => {
-
-document.body.style.overflow = 'hidden'
-
-return () => {
-document.body.style.overflow = ''
-}
-
-}, [])
-
-return (
-
-<div className="vesimy-modal-overlay" onClick={onClose}>
-
-<div
-className="vesimy-modal"
-onClick={(e) => e.stopPropagation()}
->
-
-{/* Mobile drag handle */}
-
-<div className="vesimy-modal-handle" />
-
-{/* Header */}
-
-<div className="vesimy-modal-header">
-
-<div className="vesimy-modal-title">
-{title}
-</div>
-
-<button
-className="vesimy-modal-close"
-onClick={onClose}
->
-✕
-</button>
-
-</div>
-
-{/* Body */}
-
-<div className="vesimy-modal-body">
-
-{children}
-
-</div>
-
-{/* Footer */}
-
-<div className="vesimy-modal-footer">
-
-<button
-className="btn btn-ghost"
-onClick={onClose}
->
-Cancel
-</button>
-
-{onSave && (
-
-<button
-className="btn btn-primary"
-onClick={onSave}
-disabled={disableSave}
->
-{saveLabel}
-</button>
-
-)}
-
-</div>
-
-</div>
-
-</div>
-
-)
-
+          {onSave && (
+            <button
+              className="btn btn-primary"
+              onClick={onSave}
+              disabled={disableSave}
+              type="button"
+            >
+              {saveLabel}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Modal

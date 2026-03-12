@@ -81,9 +81,9 @@ html {
 body {
   background: var(--bg);
   background-image:
-    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(212, 162, 8, 0.11) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 90% 110%, rgba(100, 38, 160, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(16, 144, 212, 0.02) 0%, transparent 60%),
+    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(212, 162, 8, 0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 90% 110%, rgba(100, 38, 160, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(16, 144, 212, 0.025) 0%, transparent 60%),
     linear-gradient(180deg, #02020a 0%, #050512 45%, #03030d 100%);
   min-height: 100vh;
   color: var(--text);
@@ -187,7 +187,7 @@ p {
   }
 
   .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     border-color: rgba(212, 162, 8, 0.18);
     box-shadow:
       0 20px 52px rgba(0, 0, 0, 0.34),
@@ -224,7 +224,7 @@ p {
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow:
       0 14px 34px rgba(212, 162, 8, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.34);
@@ -673,17 +673,14 @@ textarea.input {
 
   .vesimy-modal-body {
     padding: 16px;
-    padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    padding-bottom: 24px;
   }
 
   .vesimy-modal-footer {
-    padding: 12px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
     background: rgba(8, 8, 24, 0.98);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
   }
 
   .vesimy-modal-footer .btn {
@@ -881,4 +878,105 @@ html.light .home-nav {
 html.light footer {
   background: rgba(240, 237, 230, 0.98) !important;
   border-top-color: rgba(180, 172, 152, 0.4) !important;
+}
+/* Hide bottom nav when modal is open */
+body.modal-open .bottom-nav {
+  transform: translateY(120%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vesimy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+}
+
+.vesimy-modal {
+  width: min(100%, 720px);
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0d1220;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.vesimy-modal-handle {
+  width: 46px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 10px auto 0;
+  flex: 0 0 auto;
+}
+
+.vesimy-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.vesimy-modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.vesimy-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+}
+
+.vesimy-modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px;
+  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vesimy-modal-footer {
+  flex: 0 0 auto;
+  position: sticky;
+  bottom: 0;
+  padding: 12px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+  background: rgba(8, 8, 24, 0.98);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .vesimy-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .vesimy-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: 90dvh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
