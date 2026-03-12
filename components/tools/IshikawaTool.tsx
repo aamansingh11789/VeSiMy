@@ -33,7 +33,12 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
   const addCause = (cat: string) => {
     const value = (newCause[cat] || '').trim()
     if (!value) return
-    setCauses((prev) => ({ ...prev, [cat]: [...(prev[cat] || []), value] }))
+
+    setCauses((prev) => ({
+      ...prev,
+      [cat]: [...(prev[cat] || []), value],
+    }))
+
     setNewCause((prev) => ({ ...prev, [cat]: '' }))
   }
 
@@ -67,139 +72,168 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Diagram'}
-      width={700}
     >
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10, marginBottom: 14 }}>
-        <div>
-          <label className="label">Problem / Effect Statement *</label>
-          <input
-            className="input"
-            placeholder="What is the problem being analyzed?"
-            value={problem}
-            onChange={(e) => setProblem(e.target.value)}
-          />
+      <div style={{ display: 'grid', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+          <div>
+            <label className="label">Problem / Effect Statement *</label>
+            <input
+              className="input"
+              placeholder="What is the problem being analyzed?"
+              value={problem}
+              onChange={(e) => setProblem(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="label">Framework</label>
+            <select
+              className="input"
+              value={framework}
+              onChange={(e) => setFramework(e.target.value)}
+            >
+              {Object.keys(FRAMEWORKS).map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label className="label">Framework</label>
-          <select className="input" value={framework} onChange={(e) => setFramework(e.target.value)}>
-            {Object.keys(FRAMEWORKS).map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {problem && (
-        <div
-          style={{
-            background: 'rgba(212,162,8,0.04)',
-            border: '1px solid rgba(212,162,8,0.2)',
-            borderRadius: 10,
-            padding: '10px 14px',
-            marginBottom: 12,
-            fontSize: 12,
-            color: 'var(--text2)',
-          }}
-        >
-          🎯 Effect: <strong style={{ color: 'var(--text)' }}>{problem}</strong>
-        </div>
-      )}
-
-      <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 12 }}>
-        {totalCauses} cause{totalCauses !== 1 ? 's' : ''} added
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
-        {categories.map((cat) => (
+        {problem && (
           <div
-            key={cat}
             style={{
-              background: 'var(--bg)',
-              border: '1px solid var(--border)',
-              borderRadius: 12,
-              padding: 12,
-              minWidth: 0,
+              background: 'rgba(212,162,8,0.04)',
+              border: '1px solid rgba(212,162,8,0.2)',
+              borderRadius: 10,
+              padding: '10px 12px',
+              fontSize: 12,
+              color: 'var(--text2)',
             }}
           >
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#D4A208', marginBottom: 8, letterSpacing: 0.5 }}>
-              {cat}
-            </div>
+            🎯 Effect: <strong style={{ color: 'var(--text)' }}>{problem}</strong>
+          </div>
+        )}
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 10 }}>
-              {(causes[cat] || []).map((cause, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 32px',
-                    gap: 8,
-                    alignItems: 'start',
-                    padding: '8px 10px',
-                    borderRadius: 10,
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid var(--border)',
-                  }}
-                >
-                  <span style={{ fontSize: 12, color: 'var(--text2)', overflowWrap: 'anywhere', lineHeight: 1.45 }}>
-                    {cause}
-                  </span>
-                  <button
-                    onClick={() => removeCause(cat, index)}
-                    type="button"
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: '#7070A0',
-                      cursor: 'pointer',
-                      fontSize: 16,
-                      minWidth: 32,
-                      minHeight: 32,
-                      lineHeight: 1,
-                    }}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+        <div style={{ fontSize: 11, color: 'var(--text3)' }}>
+          {totalCauses} cause{totalCauses !== 1 ? 's' : ''} added
+        </div>
 
-              {(causes[cat] || []).length === 0 && (
-                <span style={{ fontSize: 11, color: 'var(--text3)', fontStyle: 'italic' }}>No causes added</span>
-              )}
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 42px', gap: 8, alignItems: 'stretch' }}>
-              <input
-                className="input"
-                style={{ fontSize: 12, minWidth: 0 }}
-                placeholder="Add cause…"
-                value={newCause[cat] || ''}
-                onChange={(e) => setNewCause((prev) => ({ ...prev, [cat]: e.target.value }))}
-                onKeyDown={(e) => e.key === 'Enter' && addCause(cat)}
-              />
-
-              <button
-                onClick={() => addCause(cat)}
-                type="button"
+        <div style={{ display: 'grid', gap: 10 }}>
+          {categories.map((cat) => (
+            <div
+              key={cat}
+              style={{
+                background: 'var(--bg)',
+                border: '1px solid var(--border)',
+                borderRadius: 12,
+                padding: 10,
+                minWidth: 0,
+              }}
+            >
+              <div
                 style={{
-                  background: 'rgba(212,162,8,0.15)',
-                  border: '1px solid rgba(212,162,8,0.3)',
+                  fontSize: 11,
+                  fontWeight: 700,
                   color: '#D4A208',
-                  borderRadius: 8,
-                  cursor: 'pointer',
-                  fontSize: 18,
-                  minWidth: 42,
-                  minHeight: 42,
+                  marginBottom: 8,
+                  letterSpacing: 0.5,
                 }}
               >
-                +
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+                {cat}
+              </div>
 
-      <div style={{ height: 8 }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 10 }}>
+                {(causes[cat] || []).map((cause, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 32px',
+                      gap: 8,
+                      alignItems: 'start',
+                      padding: '8px 10px',
+                      borderRadius: 10,
+                      background: 'rgba(255,255,255,0.02)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: 'var(--text2)',
+                        overflowWrap: 'anywhere',
+                        lineHeight: 1.45,
+                      }}
+                    >
+                      {cause}
+                    </span>
+
+                    <button
+                      onClick={() => removeCause(cat, index)}
+                      type="button"
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#7070A0',
+                        cursor: 'pointer',
+                        fontSize: 16,
+                        minWidth: 32,
+                        minHeight: 32,
+                        lineHeight: 1,
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+
+                {(causes[cat] || []).length === 0 && (
+                  <span style={{ fontSize: 11, color: 'var(--text3)', fontStyle: 'italic' }}>
+                    No causes added
+                  </span>
+                )}
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 42px',
+                  gap: 8,
+                  alignItems: 'stretch',
+                }}
+              >
+                <input
+                  className="input"
+                  style={{ fontSize: 12, minWidth: 0 }}
+                  placeholder="Add cause…"
+                  value={newCause[cat] || ''}
+                  onChange={(e) =>
+                    setNewCause((prev) => ({ ...prev, [cat]: e.target.value }))
+                  }
+                  onKeyDown={(e) => e.key === 'Enter' && addCause(cat)}
+                />
+
+                <button
+                  onClick={() => addCause(cat)}
+                  type="button"
+                  style={{
+                    background: 'rgba(212,162,8,0.15)',
+                    border: '1px solid rgba(212,162,8,0.3)',
+                    color: '#D4A208',
+                    borderRadius: 8,
+                    cursor: 'pointer',
+                    fontSize: 18,
+                    minWidth: 42,
+                    minHeight: 42,
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </Modal>
   )
 }
