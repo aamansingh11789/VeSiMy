@@ -52,14 +52,14 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
     >
-      <div style={{ display: 'grid', gap: 12 }}>
+      <div style={{ display: 'grid', gap: 10 }}>
         <div>
           <label className="label">Problem Statement *</label>
           <textarea
             className="input"
-            rows={3}
-            placeholder="Describe the problem clearly. What went wrong? When? Where?"
-            style={{ resize: 'vertical', minHeight: 82 }}
+            rows={2}
+            placeholder="Describe the problem clearly."
+            style={{ resize: 'vertical', minHeight: 64 }}
             value={problem}
             onChange={(e) => setProblem(e.target.value)}
           />
@@ -71,7 +71,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
               key={i}
               style={{
                 display: 'grid',
-                gridTemplateColumns: '32px 1fr',
+                gridTemplateColumns: '28px 1fr',
                 gap: 8,
                 alignItems: 'start',
                 background: 'rgba(255,255,255,0.02)',
@@ -82,15 +82,15 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
             >
               <div
                 style={{
-                  width: 32,
-                  height: 32,
+                  width: 28,
+                  height: 28,
                   borderRadius: 8,
                   background: 'rgba(212,162,8,0.1)',
                   border: '1px solid rgba(212,162,8,0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: 700,
                   color: '#D4A208',
                   marginTop: 2,
@@ -99,27 +99,14 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                 {i + 1}
               </div>
 
-              <div>
-                <div
-                  style={{
-                    fontSize: 10,
-                    color: 'var(--text3)',
-                    fontFamily: 'monospace',
-                    letterSpacing: 1,
-                    marginBottom: 4,
-                  }}
-                >
-                  WHY {i + 1}
-                </div>
-                <textarea
-                  className="input"
-                  rows={2}
-                  placeholder={`Why ${i + 1}…`}
-                  style={{ resize: 'vertical', minHeight: 64 }}
-                  value={w}
-                  onChange={(e) => setWhy(i, e.target.value)}
-                />
-              </div>
+              <textarea
+                className="input"
+                rows={2}
+                placeholder={`Why ${i + 1}…`}
+                style={{ resize: 'vertical', minHeight: 56 }}
+                value={w}
+                onChange={(e) => setWhy(i, e.target.value)}
+              />
             </div>
           ))}
         </div>
@@ -129,17 +116,16 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
             background: 'rgba(29,209,161,0.04)',
             border: '1px solid rgba(29,209,161,0.2)',
             borderRadius: 10,
-            padding: 12,
+            padding: 10,
           }}
         >
           <label className="label" style={{ color: '#1DD1A1' }}>
-            ✓ Root Cause
+            Root Cause
           </label>
           <textarea
             className="input"
-            rows={3}
-            placeholder="The root cause identified from the 5 Why chain…"
-            style={{ resize: 'vertical', minHeight: 78 }}
+            rows={2}
+            style={{ resize: 'vertical', minHeight: 60 }}
             value={rootCause}
             onChange={(e) => setRootCause(e.target.value)}
           />
@@ -149,33 +135,22 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           <label className="label">Countermeasure / Action</label>
           <textarea
             className="input"
-            rows={3}
-            placeholder="What action will prevent this root cause from recurring?"
-            style={{ resize: 'vertical', minHeight: 78 }}
+            rows={2}
+            style={{ resize: 'vertical', minHeight: 60 }}
             value={action}
             onChange={(e) => setAction(e.target.value)}
           />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+        <div style={{ display: 'grid', gap: 10 }}>
           <div>
             <label className="label">Owner</label>
-            <input
-              className="input"
-              placeholder="Who is responsible?"
-              value={owner}
-              onChange={(e) => setOwner(e.target.value)}
-            />
+            <input className="input" value={owner} onChange={(e) => setOwner(e.target.value)} />
           </div>
 
           <div>
             <label className="label">Due Date</label>
-            <input
-              className="input"
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-            />
+            <input className="input" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
           </div>
         </div>
       </div>
