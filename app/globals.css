@@ -81,9 +81,9 @@ html {
 body {
   background: var(--bg);
   background-image:
-    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(212, 162, 8, 0.09) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 90% 110%, rgba(100, 38, 160, 0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(16, 144, 212, 0.025) 0%, transparent 60%),
+    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(212, 162, 8, 0.11) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 90% 110%, rgba(100, 38, 160, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(16, 144, 212, 0.02) 0%, transparent 60%),
     linear-gradient(180deg, #02020a 0%, #050512 45%, #03030d 100%);
   min-height: 100vh;
   color: var(--text);
@@ -187,7 +187,7 @@ p {
   }
 
   .card:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     border-color: rgba(212, 162, 8, 0.18);
     box-shadow:
       0 20px 52px rgba(0, 0, 0, 0.34),
@@ -224,7 +224,7 @@ p {
   }
 
   .btn-primary:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow:
       0 14px 34px rgba(212, 162, 8, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.34);
@@ -673,14 +673,17 @@ textarea.input {
 
   .vesimy-modal-body {
     padding: 16px;
-    padding-bottom: 24px;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .vesimy-modal-footer {
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: 12px 16px calc(18px + env(safe-area-inset-bottom, 0px));
     background: rgba(8, 8, 24, 0.98);
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .vesimy-modal-footer .btn {
