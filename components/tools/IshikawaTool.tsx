@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
-import { Modal } from '@/components/ui'
+import { Modal } from '@/components/ui/Modal'
 
 const FRAMEWORKS: Record<string, string[]> = {
   '6M Manufacturing': ['Machine', 'Method', 'Material', 'Manpower', 'Measurement', 'Mother Nature'],

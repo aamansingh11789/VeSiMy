@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
-import { Modal } from '@/components/ui'
+import { Modal } from '@/components/ui/Modal'
 import { openISOReport } from '@/lib/isoReport'
 
 interface Props {
