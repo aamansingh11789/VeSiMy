@@ -57,7 +57,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="6. Your Rights">
-          <p>You have the right to: access all data we hold about you; export your process data at any time from the dashboard; correct inaccurate personal information; delete your account and associated data; opt out of marketing emails (unsubscribe link in every email). To exercise any of these rights, email <a href="mailto:privacy@vesimy.com" style={{ color: '#D4A208' }}>privacy@vesimy.com</a>.</p>
+          <p>You have the right to: access all data we hold about you; export your process data at any time from the dashboard; correct inaccurate personal information; delete your account and associated data; opt out of marketing emails (unsubscribe link in every email). To exercise any of these rights, email <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a>.</p>
         </Section>
 
         <Section title="7. Data Retention">
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="8. GDPR (EU Users)">
-          <p>If you are in the European Union, you have additional rights under GDPR including the right to data portability and the right to lodge a complaint with a supervisory authority. Our legal basis for processing your data is contract performance (to provide the service you signed up for). Contact <a href="mailto:privacy@vesimy.com" style={{ color: '#D4A208' }}>privacy@vesimy.com</a> for GDPR requests.</p>
+          <p>If you are in the European Union, you have additional rights under GDPR including the right to data portability and the right to lodge a complaint with a supervisory authority. Our legal basis for processing your data is contract performance (to provide the service you signed up for). Contact <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a> for GDPR requests.</p>
         </Section>
 
         <Section title="9. Children's Privacy">
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For privacy questions or requests: <a href="mailto:privacy@vesimy.com" style={{ color: '#D4A208' }}>privacy@vesimy.com</a><br />VeSiMy Inc., Delaware, United States.</p>
+          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a><br />VeSiMy, United Kingdom.</p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>

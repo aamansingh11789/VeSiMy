@@ -15,6 +15,11 @@ import { StepModal } from '@/components/tools/StepModal'
 import { BranchModal } from '@/components/tools/BranchModal'
 import { ToolModal } from '@/components/tools/ToolModal'
 import { KanbanBoard } from '@/components/tools/KanbanBoard'
+import YamazumiTool from '@/components/tools/YamazumiTool'
+import StandardWorkTool from '@/components/tools/StandardWorkTool'
+import VSMCoachingTool from '@/components/tools/VSMCoachingTool'
+import PDCATool from '@/components/tools/PDCATool'
+import KaizenRoadmap from '@/components/tools/KaizenRoadmap'
 import { VSMMap } from '@/components/vsm/VSMMap'
 import { SupePanel } from '@/components/supe/SupePanel'
 import { ProcessHealthScore } from '@/components/health/ProcessHealthScore'
@@ -28,18 +33,20 @@ import {
   StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
   PlusIcon, EditIcon, TrashIcon, SOPIcon, SettingsIcon, ZapIcon,
   DragHandleIcon, ReportIcon, BranchIcon, KanbanIcon, SimulationIcon,
-  LiveFloorIcon, VSMIcon,
+  LiveFloorIcon, VSMIcon, PDCAIcon, RoadmapIcon,
 } from '@/components/ui/Icons'
 
 const TABS: { id: ProjectTab; label: string; Icon: any; premium?: boolean }[] = [
-  { id: 'builder', label: 'Builder', Icon: PlusIcon, premium: false },
-  { id: 'vsm', label: 'VSM Map', Icon: VSMIcon, premium: false },
-  { id: 'kaizen', label: 'Kaizen', Icon: KaizenIcon, premium: false },
-  { id: 'kanban', label: 'Kanban', Icon: KanbanIcon, premium: false },
-  { id: 'simulation', label: 'Simulation', Icon: SimulationIcon, premium: true },
-  { id: 'live', label: 'Live Floor', Icon: LiveFloorIcon, premium: true },
-  { id: 'report', label: 'Report', Icon: ReportIcon, premium: false },
-  { id: 'branches', label: 'Branches', Icon: BranchIcon, premium: false },
+  { id: 'builder',  label: 'Builder',    Icon: PlusIcon,        premium: false },
+  { id: 'vsm',      label: 'VSM Map',    Icon: VSMIcon,         premium: false },
+  { id: 'roadmap',  label: 'Roadmap',    Icon: RoadmapIcon,     premium: false },
+  { id: 'pdca',     label: 'PDCA',       Icon: PDCAIcon,        premium: false },
+  { id: 'kaizen',   label: 'Kaizen',     Icon: KaizenIcon,      premium: false },
+  { id: 'kanban',   label: 'Kanban',     Icon: KanbanIcon,      premium: false },
+  { id: 'simulation',label: 'Simulation',Icon: SimulationIcon,  premium: true  },
+  { id: 'live',     label: 'Live Floor', Icon: LiveFloorIcon,   premium: true  },
+  { id: 'report',   label: 'Report',     Icon: ReportIcon,      premium: false },
+  { id: 'branches', label: 'Branches',   Icon: BranchIcon,      premium: false },
 ]
 
 const CI_TOOLS = [
@@ -66,6 +73,11 @@ interface Props {
 export function ProjectClient({ initialProject, profile }: Props) {
   const router = useRouter()
   const [showJournal, setShowJournal] = useState(false)
+  const [showYamazumi,    setShowYamazumi]    = useState(false)
+  const [showStandardWork, setShowStandardWork] = useState(false)
+  const [showVSMCoaching,  setShowVSMCoaching]  = useState(false)
+  const [showPDCA,         setShowPDCA]         = useState(false)
+  const [pdcaData,         setPdcaData]         = useState<any>(null)
   const {
     showToast, setActiveTool, activeTool,
     setShowStepModal, showStepModal,
@@ -266,9 +278,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const takt = project.takt_time
     ? Number(project.takt_time)
     : (project.demand && availSec ? availSec / Number(project.demand) : 0)
-  const pce = totalCT + totalWait > 0
-    ? `${Math.min(100, (totalCT / (totalCT + totalWait)) * 100).toFixed(0)}%`
-    : '—'
+  const pceNum = totalCT + totalWait > 0
+    ? Math.min(100, (totalCT / (totalCT + totalWait)) * 100)
+    : null
+  const pce = pceNum !== null ? `${pceNum.toFixed(0)}%` : '—'
+  const pceColor = pceNum === null ? '#D4A208'
+    : pceNum >= 90 ? '#1DD1A1'
+    : pceNum >= 60 ? '#D4A208'
+    : '#FF6B6B'
 
   return (
     <div
@@ -437,15 +454,15 @@ export function ProjectClient({ initialProject, profile }: Props) {
         }}
       >
         {([
-          { label: 'STEPS', value: mainSteps.length },
-          { label: 'BRANCHES', value: branches.length },
-          { label: 'TOTAL CT', value: fmtS(totalCT) },
-          { label: 'WAIT', value: fmtS(totalWait) },
-          { label: 'TAKT', value: takt ? fmtS(takt) : '—' },
-          { label: 'PCE', value: pce },
-          { label: 'WIP', value: totalWIP || '—' },
-          { label: 'OPEN KZ', value: openKZ || '—' },
-        ] as { label: string; value: string | number }[]).map(m => (
+          { label: 'STEPS',    value: mainSteps.length,            color: '#D4A208' },
+          { label: 'BRANCHES', value: branches.length,             color: '#D4A208' },
+          { label: 'TOTAL CT', value: fmtS(totalCT),               color: '#D4A208' },
+          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : '#D4A208' },
+          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: '#D4A208' },
+          { label: 'PCE',      value: pce,                          color: pceColor },
+          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? '#D4A208' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? '#D4A208' : '#1DD1A1' },
+        ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
             style={{
@@ -459,7 +476,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             <div style={{ fontSize: 8, color: '#38385C', letterSpacing: 1.5, fontFamily: 'monospace' }}>
               {m.label}
             </div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#D4A208', marginTop: 2 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: m.color, marginTop: 2 }}>
               {m.value}
             </div>
           </div>
@@ -546,7 +563,91 @@ export function ProjectClient({ initialProject, profile }: Props) {
             </div>
           )}
 
-          {tab === 'vsm' && <div style={{ padding: 24 }}><VSMMap steps={steps} branches={branches} project={project} /></div>}
+          {tab === 'vsm' && (
+            <div>
+              {/* VSM Analysis Toolbar */}
+              <div style={{ display: 'flex', gap: 8, padding: '12px 24px 0', flexWrap: 'wrap', alignItems: 'center' }}>
+                <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', marginRight: 4 }}>VSM TOOLS:</span>
+                <button
+                  onClick={() => setShowVSMCoaching(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.25)', color: '#FF6B6B', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                >
+                  🎯 Gap Analysis & AI Coaching
+                </button>
+                <button
+                  onClick={() => setShowYamazumi(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(29,209,161,0.08)', border: '1px solid rgba(29,209,161,0.25)', color: '#1DD1A1', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                >
+                  📊 Yamazumi Chart
+                </button>
+                <button
+                  onClick={() => setShowStandardWork(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(108,185,252,0.08)', border: '1px solid rgba(108,185,252,0.25)', color: '#6CB9FC', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                >
+                  📋 Standard Work Sheet
+                </button>
+              </div>
+              <div style={{ padding: 24 }}>
+                <VSMMap steps={steps} branches={branches} project={project} />
+              </div>
+            </div>
+          )}
+          {tab === 'roadmap' && (
+            <div style={{ padding: 24 }}>
+              <KaizenRoadmap
+                steps={steps}
+                project={project}
+                takt={takt}
+                pce={pceNum}
+              />
+            </div>
+          )}
+
+          {tab === 'pdca' && (
+            <div style={{ padding: 24 }}>
+              {/* PDCA project list / launcher */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>🔄 PDCA Projects</div>
+                    <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>One data model — export as PDCA, A3, 8D, DMAIC, or OODA</div>
+                  </div>
+                  <button
+                    onClick={() => { setPdcaData(null); setShowPDCA(true) }}
+                    className="btn btn-primary"
+                    style={{ gap: 6, display: 'flex', alignItems: 'center' }}
+                  >
+                    + New PDCA Project
+                  </button>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
+                  {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
+                    const colors = ['#D4A208', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
+                    const descs = [
+                      'Plan-Do-Check-Act — standard lean cycle',
+                      'Toyota one-page problem-solving report',
+                      'Ford 8-Disciplines customer-facing report',
+                      'Six Sigma structured project methodology',
+                      'Observe-Orient-Decide-Act rapid decision cycle',
+                    ]
+                    return (
+                      <div key={fmt} style={{ background: 'var(--bg2)', border: `1px solid ${colors[i]}44`, borderRadius: 12, padding: '16px 18px' }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: colors[i], marginBottom: 6 }}>{fmt}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5, marginBottom: 12 }}>{descs[i]}</div>
+                        <button
+                          onClick={() => { setPdcaData(null); setShowPDCA(true) }}
+                          style={{ fontSize: 11, padding: '6px 12px', borderRadius: 7, background: `${colors[i]}15`, border: `1px solid ${colors[i]}44`, color: colors[i], cursor: 'pointer', fontWeight: 700 }}
+                        >
+                          Start project → export as {fmt}
+                        </button>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
           {tab === 'kaizen' && <div style={{ padding: 24 }}><KaizenBoardView steps={steps} /></div>}
           {tab === 'kanban' && (
             <KanbanBoard
@@ -921,6 +1022,43 @@ export function ProjectClient({ initialProject, profile }: Props) {
             setActiveBranchId(null)
           }}
           onClose={() => setActiveBranchId(null)}
+        />
+      )}
+
+      {showPDCA && (
+        <PDCATool
+          steps={steps}
+          project={project}
+          initialData={pdcaData}
+          onSave={(data) => { setPdcaData(data); setShowPDCA(false) }}
+          onClose={() => setShowPDCA(false)}
+        />
+      )}
+
+      {showYamazumi && (
+        <YamazumiTool
+          steps={steps}
+          takt={takt}
+          onClose={() => setShowYamazumi(false)}
+        />
+      )}
+
+      {showStandardWork && (
+        <StandardWorkTool
+          steps={steps}
+          takt={takt}
+          projectName={project.name}
+          onClose={() => setShowStandardWork(false)}
+        />
+      )}
+
+      {showVSMCoaching && (
+        <VSMCoachingTool
+          steps={steps}
+          project={project}
+          takt={takt}
+          pce={pceNum ?? 0}
+          onClose={() => setShowVSMCoaching(false)}
         />
       )}
 

@@ -13,15 +13,21 @@ export async function GET(request: NextRequest) {
     const supabase = await createServerSupabase()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      // Check if user has completed onboarding
       const { data: { user } } = await supabase.auth.getUser()
-      if (user && !next) {
+      if (user) {
+        // next param overrides everything (e.g. from a specific redirect)
+        if (next) return NextResponse.redirect(`${origin}${next}`)
+
+        // Check onboarding status — new users won't have a profile yet
         const { data: profile } = await supabase
           .from('profiles').select('onboarded').eq('id', user.id).single()
-        const dest = profile?.onboarded ? '/dashboard' : '/onboarding'
+
+        // No profile = brand new user, send to onboarding
+        // Has profile but not onboarded = send to onboarding
+        // Fully onboarded = send to dashboard
+        const dest = (!profile || !profile.onboarded) ? '/onboarding' : '/dashboard'
         return NextResponse.redirect(`${origin}${dest}`)
       }
-      return NextResponse.redirect(`${origin}${next || '/dashboard'}`)
     }
   }
 

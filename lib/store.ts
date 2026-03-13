@@ -91,7 +91,7 @@ export interface KanbanColumn {
   cards?:     KanbanCard[]
 }
 
-export type ProjectTab = 'builder' | 'vsm' | 'kaizen' | 'kanban' | 'report' | 'branches' | 'simulation' | 'live'
+export type ProjectTab = 'builder' | 'vsm' | 'kaizen' | 'kanban' | 'report' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca'
 
 export interface Project {
   id: string

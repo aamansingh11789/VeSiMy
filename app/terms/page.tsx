@@ -29,7 +29,7 @@ export default function TermsPage() {
         </div>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy Inc., a Delaware corporation.</p>
+          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy, a registered business.</p>
         </Section>
 
         <Section title="2. Description of Service">
@@ -41,7 +41,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="4. Subscriptions and Billing">
-          <p>Paid plans are billed monthly or annually depending on your selection. All subscriptions include a 14-day free trial. You will not be charged until the trial period ends. Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact support@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
+          <p>Paid plans are billed monthly or annually depending on your selection. All subscriptions include a 14-day free trial. You will not be charged until the trial period ends. Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
         </Section>
 
         <Section title="5. Your Data">
@@ -53,7 +53,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="7. Intellectual Property">
-          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy Inc. and are protected by international copyright, trademark, and other intellectual property laws. The VeSiMy name, logo, and associated marks are trademarks of VeSiMy Inc.</p>
+          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy and are protected by international copyright, trademark, and other intellectual property laws. The VeSiMy name, logo, and associated marks are trademarks of VeSiMy.</p>
         </Section>
 
         <Section title="8. Limitation of Liability">
@@ -69,7 +69,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For questions about these Terms, contact us at: <a href="mailto:legal@vesimy.com" style={{ color: '#D4A208' }}>legal@vesimy.com</a> or VeSiMy Inc., Delaware, United States.</p>
+          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a></p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>

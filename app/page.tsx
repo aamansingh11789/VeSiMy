@@ -1307,7 +1307,7 @@ export default function HomePage() {
               ['Pricing', '/pricing'],
               ['Privacy', '/privacy'],
               ['Terms', '/terms'],
-              ['Contact', 'mailto:hello@vesimy.com'],
+              ['Contact', 'mailto:founder@vesimy.com'],
             ].map(([label, href]) => (
               <Link
                 key={label}

@@ -27,15 +27,29 @@ function SignupForm() {
     } catch { router.push('/dashboard') }
   }
 
+  const [done,    setDone]    = useState(false)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setLoading(true); setError('')
-    const { error: err } = await createClient().auth.signUp({
+    const { data, error: err } = await createClient().auth.signUp({
       email: form.email, password: form.password,
-      options: { data: { full_name: form.name } },
+      options: {
+        data: { full_name: form.name },
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
+      },
     })
     if (err) { setError(err.message); setLoading(false); return }
-    if (planKey && planKey !== 'free') await redirectToCheckout(planKey)
-    else router.push('/onboarding')
+
+    // If Supabase returns a session immediately (email confirmation disabled),
+    // go straight to onboarding. Otherwise show the confirm-email screen.
+    if (data?.session) {
+      if (planKey && planKey !== 'free') await redirectToCheckout(planKey)
+      else router.push('/onboarding')
+    } else {
+      // Email confirmation required — show instructions instead of redirecting
+      setDone(true)
+      setLoading(false)
+    }
   }
 
   const handleGoogle = async () => {
@@ -43,6 +57,41 @@ function SignupForm() {
       provider: 'google',
       options: { redirectTo: `${location.origin}/api/auth/callback` },
     })
+  }
+
+  // ── Email confirmation sent screen ─────────────────────────────────────────
+  if (done) {
+    return (
+      <div style={{ minHeight:'100vh', background:'#03030D', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+        <div style={{ width:'100%', maxWidth:420, textAlign:'center' }}>
+          <div style={{ fontSize:56, marginBottom:16 }}>📧</div>
+          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'#EAE8F4', marginBottom:12 }}>
+            Check your email
+          </h2>
+          <p style={{ color:'#8B88B3', fontSize:14, lineHeight:1.7, marginBottom:8 }}>
+            We sent a confirmation link to
+          </p>
+          <p style={{ color:'#D4A208', fontWeight:700, fontSize:15, marginBottom:20 }}>
+            {form.email}
+          </p>
+          <p style={{ color:'#7070A0', fontSize:13, lineHeight:1.7, marginBottom:28 }}>
+            Click the link in the email to activate your account.
+            If you don't see it, check your spam folder.
+          </p>
+          <div style={{ background:'rgba(212,162,8,0.06)', border:'1px solid rgba(212,162,8,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
+            <strong style={{ color:'#D4A208' }}>On Android?</strong> Open Gmail or your email app,
+            find the VeSiMy email, and tap the confirmation link.
+            It will open VeSiMy and log you in automatically.
+          </div>
+          <button
+            onClick={() => router.push('/auth/login')}
+            style={{ marginTop:24, background:'none', border:'1px solid rgba(212,162,8,0.3)', color:'#D4A208', borderRadius:10, padding:'10px 24px', cursor:'pointer', fontSize:14 }}
+          >
+            Back to Sign In
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (

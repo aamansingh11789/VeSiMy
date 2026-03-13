@@ -51,6 +51,33 @@ const posts = [
     readTime: '5 min read',
     date: 'March 12, 2026',
   },
+  {
+    slug: 'pdca-in-manufacturing',
+    tag: 'Guide',
+    tagColor: '#8C44CC',
+    title: 'PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act',
+    excerpt: 'PDCA is the backbone of ISO 9001 and lean manufacturing. Learn how to run it correctly, how it connects to A3, 8D, and DMAIC — and why the Check phase is the one everyone skips.',
+    readTime: '9 min read',
+    date: 'March 2026',
+  },
+  {
+    slug: 'yamazumi-chart-guide',
+    tag: 'Guide',
+    tagColor: '#1DD1A1',
+    title: 'Yamazumi Chart: The Operator Balance Chart That Makes Waste Impossible to Ignore',
+    excerpt: 'A Yamazumi chart shows exactly how much of each operator\'s time is value-adding vs waste, compared to takt time. The most powerful tool for line balancing and operator-level improvement.',
+    readTime: '7 min read',
+    date: 'March 2026',
+  },
+  {
+    slug: 'standard-work-manufacturing',
+    tag: 'Guide',
+    tagColor: '#6CB9FC',
+    title: 'Standard Work: The Foundation of All Lean Improvement',
+    excerpt: 'Standard Work is not a procedure manual in a binder. It is the current best method — the baseline that makes every future improvement measurable. Without it, you cannot improve. You can only change.',
+    readTime: '6 min read',
+    date: 'March 2026',
+  },
 ]
 
 export default function BlogPageClient() {

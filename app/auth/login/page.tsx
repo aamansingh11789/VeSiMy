@@ -35,12 +35,18 @@ function LoginForm() {
     setLoading(true)
     try {
       if (mode === 'signup') {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email, password,
-          options: { data: { full_name: name }, emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${redirect}` },
+          options: { data: { full_name: name }, emailRedirectTo: `${window.location.origin}/api/auth/callback` },
         })
         if (error) throw error
-        toast.success('Check your email to confirm your account')
+        // If session returned immediately (email confirm disabled) go to onboarding
+        // Otherwise show toast and stay on page so user knows to check email
+        if (data?.session) {
+          router.push('/onboarding')
+        } else {
+          toast.success('✉️ Check your email — click the link to confirm your account', { duration: 8000 })
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error

@@ -3,7 +3,7 @@
 // Handles: offline caching, background sync, push notifications (future)
 // Strategy: Cache-first for static assets, Network-first for API calls
 
-const CACHE_NAME    = 'vesimy-v1'
+const CACHE_NAME    = 'vesimy-v3'
 const OFFLINE_URL   = '/offline'
 
 // Static assets to pre-cache on install
@@ -47,10 +47,15 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url)
 
   // Never intercept: auth, API calls, Supabase, Stripe, non-GET
+  // Also never cache auth-dependent pages — they must always hit the network
   if (
     request.method !== 'GET' ||
     url.pathname.startsWith('/api/') ||
     url.pathname.startsWith('/auth/') ||
+    url.pathname.startsWith('/dashboard') ||
+    url.pathname.startsWith('/project') ||
+    url.pathname.startsWith('/onboarding') ||
+    url.pathname.startsWith('/settings') ||
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('stripe.com') ||
     url.hostname.includes('googleapis.com')

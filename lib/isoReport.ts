@@ -6,7 +6,7 @@
 export interface ISODocMeta {
   title: string
   subtitle?: string
-  toolType: 'VSM' | 'KAIZEN' | 'FIVEWHY' | 'FISHBONE' | 'KANBAN' | 'TIMESTUDY' | 'SMED' | 'GEMBA' | 'WASTE' | 'IMPROVEMENT'
+  toolType: 'VSM' | 'KAIZEN' | 'FIVEWHY' | 'FISHBONE' | 'KANBAN' | 'TIMESTUDY' | 'SMED' | 'GEMBA' | 'WASTE' | 'IMPROVEMENT' | 'PDCA' | 'STANDARD_WORK' | 'YAMAZUMI'
   projectName: string
   stepName?: string
   industry?: string
@@ -29,6 +29,9 @@ export function getISOStandards(toolType: ISODocMeta['toolType']): string[] {
     GEMBA:       ['ISO 9001:2015 §9.1 (Monitoring & Measurement)', 'ISO 45001:2018 §9.1.1 (Workplace Observation)', 'ISO 14001:2015 §9.1 (Environmental Monitoring)'],
     WASTE:       ['ISO 9001:2015 §10.1 (Improvement — Muda Elimination)', 'ISO 22468:2020 §5.4 (Waste Identification)', 'ISO 14001:2015 §6.1 (Waste Risk Planning)'],
     IMPROVEMENT: ['ISO 9001:2015 §10.3 (Continual Improvement)', 'ISO 9001:2015 §6.2 (Quality Objectives)', 'ISO 9004:2018 §9.3 (Improvement Actions)'],
+    PDCA:          ['ISO 9001:2015 §10.3 (Continual Improvement — PDCA Cycle)', 'ISO 9000:2015 §3.3.5 (Improvement)', 'ISO 9004:2018 §8.4 (Learning)', 'ISO 31000:2018 §6.7 (Monitoring & Learning)'],
+    STANDARD_WORK: ['ISO 9001:2015 §8.5.1 (Controlled Conditions)', 'ISO 22468:2020 §5.2.3 (Standardised Work)', 'ILO Work Study §4 (Standard Work Documentation)'],
+    YAMAZUMI:      ['ISO 22468:2020 §5.2.4 (Operator Balance Chart)', 'ISO 9001:2015 §8.5.1 (Production Control)', 'ISO 22468:2020 §5.3.2 (Line Balancing)'],
   }
   return standards[toolType] || []
 }
@@ -37,7 +40,7 @@ export function generateDocId(toolType: ISODocMeta['toolType'], seed?: string): 
   const prefix: Record<ISODocMeta['toolType'], string> = {
     VSM: 'VSM', KAIZEN: 'KZN', FIVEWHY: '5WY', FISHBONE: 'FSH',
     KANBAN: 'KBN', TIMESTUDY: 'TST', SMED: 'SMD', GEMBA: 'GMB',
-    WASTE: 'WST', IMPROVEMENT: 'IMP',
+    WASTE: 'WST', IMPROVEMENT: 'IMP', PDCA: 'PDA', STANDARD_WORK: 'SWS', YAMAZUMI: 'YMZ',
   }
   const ts = seed || Date.now().toString(36).toUpperCase().slice(-4)
   return `${prefix[toolType]}-${ts}-001`

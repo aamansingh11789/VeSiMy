@@ -251,7 +251,7 @@ export default function EnterprisePage() {
                   </div>
                   <div style={{ marginTop:16, display:'flex', gap:10, flexWrap:'wrap' }}>
                     <a
-                      href={`mailto:hello@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
+                      href={`mailto:founder@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
                       style={{ padding:'10px 20px', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
                     >
                       Email us directly →

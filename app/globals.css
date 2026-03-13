@@ -403,10 +403,10 @@ textarea.input {
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  /* Must be hidden — overflow-y:auto lets iOS scroll the overlay instead of
-     the modal body, which is the root cause of the background-scroll bug */
   overflow: hidden;
   overscroll-behavior: contain;
+  /* Prevent iOS rubber-band scroll on the overlay itself */
+  touch-action: none;
 }
 
 .vesimy-modal {

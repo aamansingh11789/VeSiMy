@@ -27,8 +27,7 @@ const entries = [
       'Supabase authentication with Google and email',
       'Stripe payment integration for Pro and Lifetime plans',
       'GDPR-compliant privacy policy',
-      'Delaware incorporation',
-    ],
+          ],
   },
   {
     date: 'March 12, 2026',

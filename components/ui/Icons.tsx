@@ -560,3 +560,27 @@ export const InfinityIcon = (p: IconProps) => (
     <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4Zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4Z" />
   </I>
 )
+
+// PDCA cycle icon
+export const PDCAIcon = (p: IconProps) => (
+  <I {...def(p.size, p.color, p.stroke)} style={p.style} className={p.className}>
+    <path d="M12 2a10 10 0 0 1 7.39 16.74" />
+    <path d="M12 2a10 10 0 0 0-9.95 10.74" />
+    <path d="M22 12a10 10 0 0 1-10 10" />
+    <path d="M2 12a10 10 0 0 0 10 10" />
+    <polyline points="16 8 12 12 8 8" />
+    <line x1="12" y1="12" x2="12" y2="17" />
+  </I>
+)
+
+// Roadmap icon
+export const RoadmapIcon = (p: IconProps) => (
+  <I {...def(p.size, p.color, p.stroke)} style={p.style} className={p.className}>
+    <path d="M3 17l4-10 4 6 3-4 4 8" />
+    <line x1="3" y1="17" x2="21" y2="17" />
+    <circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none" />
+    <circle cx="11" cy="13" r="1.5" fill="currentColor" stroke="none" />
+    <circle cx="14" cy="9" r="1.5" fill="currentColor" stroke="none" />
+    <circle cx="18" cy="17" r="1.5" fill="currentColor" stroke="none" />
+  </I>
+)

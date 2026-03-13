@@ -54,6 +54,12 @@ const TruckIcon = ({ x, y, w = 52, h = 28 }: any) => (
 )
 
 // ── Process box + data box ─────────────────────────────────────────────────
+const VA_BOX_STYLES: Record<string, { fill: string; stroke: string; header: string }> = {
+  va:   { fill: '#CCFBF1', stroke: '#0D9488', header: '#0D9488' },
+  nnva: { fill: '#FEF9C3', stroke: '#CA8A04', header: '#CA8A04' },
+  nva:  { fill: '#FEE2E2', stroke: '#DC2626', header: '#DC2626' },
+}
+
 const ProcessBox = ({ x, y, step, takt }: any) => {
   const PW = 96, PH = 64, DH = 64
   const ct  = step.toolData?.stopwatch?.mean || Number(step.cycle_time) || 0
@@ -61,21 +67,35 @@ const ProcessBox = ({ x, y, step, takt }: any) => {
   const up  = step.uptime != null ? `${step.uptime}%` : '—'
   const ops = step.operators || 1
   const isBN = takt > 0 && ct > 0 && ct > takt * 1.05
-  const fill   = isBN ? '#FEE2E2' : '#CCFBF1'
-  const stroke = isBN ? '#DC2626' : '#0D9488'
-  const ctCol  = isBN ? '#DC2626' : '#0D9488'
+
+  // VA type overrides bottleneck coloring
+  const vaStyle = VA_BOX_STYLES[step.va_type as string] || VA_BOX_STYLES.va
+  const fill   = isBN ? '#FEE2E2' : vaStyle.fill
+  const stroke = isBN ? '#DC2626' : vaStyle.stroke
+  const header = isBN ? '#DC2626' : vaStyle.header
+  const ctCol  = isBN ? '#DC2626' : vaStyle.stroke
+
+  // Queue step styling
+  const isQueue = step.flow_type === 'queue'
 
   return (
     <g>
       {/* Process rectangle */}
-      <rect x={x} y={y} width={PW} height={PH} fill={fill} stroke={stroke} strokeWidth={1.5} rx={3} />
-      <rect x={x} y={y} width={PW} height={8}  fill={isBN ? '#DC2626' : '#0D9488'} rx={3} />
-      <rect x={x} y={y+5} width={PW} height={3} fill={isBN ? '#DC2626' : '#0D9488'} />
+      <rect x={x} y={y} width={PW} height={PH} fill={fill} stroke={stroke} strokeWidth={1.5} rx={3}
+        strokeDasharray={isQueue ? '4,2' : undefined} />
+      <rect x={x} y={y} width={PW} height={8}  fill={header} rx={3} />
+      <rect x={x} y={y+5} width={PW} height={3} fill={header} />
       <text x={x + PW/2} y={y+22} textAnchor="middle" fill="#1F2937" fontSize={9} fontWeight={700} fontFamily="sans-serif">
-        {step.name.length > 14 ? step.name.slice(0, 13) + '…' : step.name}
+        {isQueue ? '⏳ ' : ''}{step.name.length > 14 ? step.name.slice(0, 13) + '…' : step.name}
       </text>
       {step.department && (
         <text x={x + PW/2} y={y+33} textAnchor="middle" fill="#6B7280" fontSize={7.5} fontFamily="sans-serif">{step.department}</text>
+      )}
+      {/* VA type badge */}
+      {step.va_type && step.va_type !== 'va' && (
+        <text x={x+4} y={y+PH-4} fill={header} fontSize={7} fontWeight={700} fontFamily="monospace">
+          {step.va_type === 'nnva' ? 'NNVA' : 'NVA'}
+        </text>
       )}
       {/* Operator stick figures */}
       {[...Array(Math.min(ops, 4))].map((_,o) => (
@@ -680,6 +700,22 @@ export function VSMMap({ steps, branches, project }: Props) {
     <line x1={flowX} y1={TL_BASE} x2={sx(n-1)+PW} y2={TL_BASE} stroke="#D1D5DB" strokeWidth={1.5} />
     <text x={flowX-4} y={TL_BASE-10} textAnchor="end" fill="#6B7280" fontSize={8} fontFamily="monospace">VA</text>
     <text x={flowX-4} y={TL_BASE+12} textAnchor="end" fill="#9CA3AF" fontSize={8} fontFamily="monospace">NVA</text>
+
+    {/* Takt line on timeline */}
+    {takt > 0 && (() => {
+      const maxCT = Math.max(...mainSteps.map(s => s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0), 1)
+      const taktH = Math.max(6, Math.min(36, (takt/maxCT)*36))
+      return (
+        <g>
+          <line
+            x1={flowX} y1={TL_BASE - taktH}
+            x2={sx(n-1)+PW} y2={TL_BASE - taktH}
+            stroke="#EF4444" strokeWidth={1.5} strokeDasharray="6,3" opacity={0.8}
+          />
+          <text x={flowX-4} y={TL_BASE - taktH + 3} textAnchor="end" fill="#EF4444" fontSize={7.5} fontFamily="monospace" fontWeight={700}>TAKT</text>
+        </g>
+      )
+    })()}
 
     {mainSteps.map((step, i) => {
       const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0

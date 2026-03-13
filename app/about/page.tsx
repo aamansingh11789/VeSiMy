@@ -90,7 +90,7 @@ export default function AboutPage() {
         {/* Company facts */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, marginBottom: 56 }}>
           {[
-            { label: 'Incorporated', value: 'Delaware, USA' },
+            { label: 'Registration', value: 'United Kingdom' },
             { label: 'Founded', value: '2026' },
             { label: 'Stage', value: 'Pre-Seed' },
             { label: 'Users', value: 'Growing daily' },
@@ -112,9 +112,9 @@ export default function AboutPage() {
             and investors who believe manufacturing is the next AI frontier.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="mailto:hello@vesimy.com"
+            <a href="mailto:founder@vesimy.com"
               style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: '#03030D', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
-              hello@vesimy.com
+              founder@vesimy.com
             </a>
             <Link href="/enterprise"
               style={{ padding: '12px 28px', border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>

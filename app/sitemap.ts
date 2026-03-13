@@ -17,6 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/free-vsm-tool`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/blog/kaizen-event-template`,             lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/blog/5-why-analysis-examples`,           lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/blog/takt-time-calculator`,              lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/blog/pdca-in-manufacturing`,             lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/blog/yamazumi-chart-guide`,              lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/blog/standard-work-manufacturing`,       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/privacy`,             lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${base}/terms`,               lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
   ]
