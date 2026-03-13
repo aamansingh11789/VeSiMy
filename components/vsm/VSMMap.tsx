@@ -1,7 +1,8 @@
 // @ts-nocheck
 'use client'
-// ── components/vsm/VSMMap.tsx ────────────────────────────────────────────────
-// Industrial-grade Value Stream Map with branch lane support
+// ── components/vsm/VSMMap.tsx ─────────────────────────────────────────────────
+// Lean-standard Value Stream Map  ·  ISO 22468:2020
+// Proper symbols: factory, truck, push arrows, data boxes, WIP triangles, timeline
 
 import type { Step, Branch, Project } from '@/lib/store'
 
@@ -18,8 +19,426 @@ const fmtS = (s: number) => {
   return `${(s / 3600).toFixed(2)}h`
 }
 
-const BRANCH_COLORS = ['#7C3AED', '#0EA5E9', '#10B981', '#F59E0B', '#EC4899', '#06B6D4']
+// ── SVG factory icon (building silhouette) ─────────────────────────────────
+const FactoryIcon = ({ x, y, w = 64, h = 56, label = '' }: any) => (
+  <g>
+    <rect x={x} y={y + 12} width={w} height={h - 12} fill="#5B7FA6" stroke="#3A5A7C" strokeWidth={1.2} rx={2} />
+    <polygon points={`${x},${y + 14} ${x + w/2},${y} ${x + w},${y + 14}`} fill="#4A6A8F" stroke="#3A5A7C" strokeWidth={1.2} />
+    <rect x={x + 8}      y={y + 20} width={10} height={10} fill="#C8DCF0" rx={1} />
+    <rect x={x + 24}     y={y + 20} width={10} height={10} fill="#C8DCF0" rx={1} />
+    <rect x={x + 40}     y={y + 20} width={10} height={10} fill="#C8DCF0" rx={1} />
+    <rect x={x + w/2 - 6} y={y + h - 16} width={12} height={16} fill="#3A5A7C" rx={1} />
+    <rect x={x + w - 14}  y={y + 2}  width={7}  height={14} fill="#4A6A8F" />
+    <path d={`M${x+w-10},${y+1} q3,-4 -2,-7`} stroke="#A0A8B8" strokeWidth={1} fill="none" opacity={0.6} />
+    {label && (
+      <text x={x + w/2} y={y + h + 14} textAnchor="middle" fill="#1F2937" fontSize={10} fontWeight={700} fontFamily="sans-serif">{label}</text>
+    )}
+  </g>
+)
 
+// ── Truck icon ─────────────────────────────────────────────────────────────
+const TruckIcon = ({ x, y, w = 52, h = 28 }: any) => (
+  <g>
+    <rect x={x}              y={y}     width={w * 0.62} height={h}     fill="#F97316" stroke="#C05621" strokeWidth={1} rx={2} />
+    <rect x={x + w * 0.62}   y={y + 4} width={w * 0.38} height={h - 4} fill="#FB923C" stroke="#C05621" strokeWidth={1} rx={2} />
+    <rect x={x + w * 0.66}   y={y + 7} width={w * 0.22} height={h * 0.38} fill="#DBEAFE" rx={1} />
+    <circle cx={x + w * 0.18} cy={y + h + 4} r={5} fill="#374151" />
+    <circle cx={x + w * 0.42} cy={y + h + 4} r={5} fill="#374151" />
+    <circle cx={x + w * 0.78} cy={y + h + 4} r={5} fill="#374151" />
+    <circle cx={x + w * 0.18} cy={y + h + 4} r={2} fill="#6B7280" />
+    <circle cx={x + w * 0.42} cy={y + h + 4} r={2} fill="#6B7280" />
+    <circle cx={x + w * 0.78} cy={y + h + 4} r={2} fill="#6B7280" />
+    <text x={x + w/2} y={y + h + 19} textAnchor="middle" fill="#374151" fontSize={8} fontFamily="sans-serif">Shipment (Daily)</text>
+  </g>
+)
+
+// ── Process box + data box ─────────────────────────────────────────────────
+const ProcessBox = ({ x, y, step, takt }: any) => {
+  const PW = 96, PH = 64, DH = 64
+  const ct  = step.toolData?.stopwatch?.mean || Number(step.cycle_time) || 0
+  const co  = step.change_over_time || 0
+  const up  = step.uptime != null ? `${step.uptime}%` : '—'
+  const ops = step.operators || 1
+  const isBN = takt > 0 && ct > 0 && ct > takt * 1.05
+  const fill   = isBN ? '#FEE2E2' : '#CCFBF1'
+  const stroke = isBN ? '#DC2626' : '#0D9488'
+  const ctCol  = isBN ? '#DC2626' : '#0D9488'
+
+  return (
+    <g>
+      {/* Process rectangle */}
+      <rect x={x} y={y} width={PW} height={PH} fill={fill} stroke={stroke} strokeWidth={1.5} rx={3} />
+      <rect x={x} y={y} width={PW} height={8}  fill={isBN ? '#DC2626' : '#0D9488'} rx={3} />
+      <rect x={x} y={y+5} width={PW} height={3} fill={isBN ? '#DC2626' : '#0D9488'} />
+      <text x={x + PW/2} y={y+22} textAnchor="middle" fill="#1F2937" fontSize={9} fontWeight={700} fontFamily="sans-serif">
+        {step.name.length > 14 ? step.name.slice(0, 13) + '…' : step.name}
+      </text>
+      {step.department && (
+        <text x={x + PW/2} y={y+33} textAnchor="middle" fill="#6B7280" fontSize={7.5} fontFamily="sans-serif">{step.department}</text>
+      )}
+      {/* Operator stick figures */}
+      {[...Array(Math.min(ops, 4))].map((_,o) => (
+        <g key={o}>
+          <circle cx={x + 10 + o*14} cy={y + PH - 12} r={6}   fill="#FFFFFF" stroke={stroke} strokeWidth={1} />
+          <circle cx={x + 10 + o*14} cy={y + PH - 18} r={3.5} fill={stroke} />
+        </g>
+      ))}
+      {ops > 4 && <text x={x + 10 + 4*14} y={y + PH - 8} fill="#374151" fontSize={8} fontFamily="sans-serif">+{ops-4}</text>}
+      {isBN && <text x={x + PW - 4} y={y+20} textAnchor="end" fill="#DC2626" fontSize={7.5} fontWeight={700} fontFamily="sans-serif">▲TAKT</text>}
+
+      {/* Data box */}
+      <rect x={x} y={y+PH} width={PW} height={DH} fill="#FFFFFF" stroke={stroke} strokeWidth={1} />
+      <line x1={x} y1={y+PH+DH/3}     x2={x+PW} y2={y+PH+DH/3}     stroke="#E5E7EB" strokeWidth={0.8} />
+      <line x1={x} y1={y+PH+DH*2/3}   x2={x+PW} y2={y+PH+DH*2/3}   stroke="#E5E7EB" strokeWidth={0.8} />
+      <text x={x+6}  y={y+PH+14}          fill="#6B7280" fontSize={8}  fontFamily="monospace">C/T =</text>
+      <text x={x+36} y={y+PH+14}          fill={ctCol}   fontSize={9}  fontWeight={700} fontFamily="monospace">{ct ? fmtS(ct) : '—'}</text>
+      <text x={x+6}  y={y+PH+DH/3+14}    fill="#6B7280" fontSize={8}  fontFamily="monospace">C/O =</text>
+      <text x={x+36} y={y+PH+DH/3+14}    fill="#374151" fontSize={9}  fontFamily="monospace">{co ? fmtS(co) : '0s'}</text>
+      <text x={x+6}  y={y+PH+DH*2/3+14}  fill="#6B7280" fontSize={8}  fontFamily="monospace">Uptime</text>
+      <text x={x+44} y={y+PH+DH*2/3+14}  fill="#374151" fontSize={9}  fontFamily="monospace">{up}</text>
+    </g>
+  )
+}
+
+// ── WIP inventory triangle ─────────────────────────────────────────────────
+const WIPTriangle = ({ x, y, wip }: any) => (
+  <g>
+    <polygon points={`${x},${y+20} ${x+14},${y} ${x+28},${y+20}`} fill="#FEF3C7" stroke="#D97706" strokeWidth={1.5} />
+    <text x={x+14} y={y+16} textAnchor="middle" fill="#92400E" fontSize={8} fontWeight={700} fontFamily="sans-serif">{wip}</text>
+  </g>
+)
+
+// ── Build VSM SVG as an HTML string (for export embed) ────────────────────
+function buildVSMString(steps: Step[], project: Project): string {
+  const main = steps.filter(s => s.is_main_flow !== false).sort((a,b) => a.position - b.position)
+  const PW=96, PH=64, DH=64, GAP=60
+  const ML=60, MR=60
+  const FACT_W=64, FACT_H=56
+  const TRUCK_W=52, TRUCK_H=28
+  const PCTRL_W=130, PCTRL_H=44
+  const PCTRL_Y=24
+  const SUPPLIER_Y=84
+  const TRUCK_Y=162
+  const PROC_Y=212
+  const TIMELINE_Y = PROC_Y + PH + DH + 24
+  const TL_BASE = TIMELINE_Y + 36
+  const TOTAL_H = TL_BASE + 70
+
+  const n = main.length
+  const totalFlowW = n * PW + (n-1) * GAP
+  const W = Math.max(ML + FACT_W + TRUCK_W + totalFlowW + TRUCK_W + FACT_W + MR + 40, 750)
+  const flowX = (W - totalFlowW) / 2
+  const sx = (i: number) => flowX + i * (PW + GAP)
+  const supX = ML, custX = W - MR - FACT_W, pctX = (W - PCTRL_W) / 2
+
+  const takt = project.takt_time ? Number(project.takt_time)
+    : project.demand && project.available_time_sec ? Number(project.available_time_sec) / Number(project.demand)
+    : project.demand && project.working_hours ? (Number(project.working_hours) * 3600) / Number(project.demand)
+    : 0
+  const mainCT = main.reduce((a,s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0), 0)
+  const mainWT = main.reduce((a,s) => a + (Number(s.wait_time)||0), 0)
+  const lt = mainCT + mainWT
+  const pce = lt > 0 ? (mainCT/lt)*100 : 0
+  const totalWIP = steps.reduce((a,s) => a + (Number(s.wip)||0), 0)
+
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${TOTAL_H}" viewBox="0 0 ${W} ${TOTAL_H}" style="background:#FFFFFF;font-family:sans-serif;">`
+  s += `<defs>
+    <marker id="ma" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#374151"/></marker>
+    <marker id="ia" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#0EA5E9"/></marker>
+  </defs>`
+
+  // Title
+  s += `<text x="${W/2}" y="16" text-anchor="middle" fill="#1F2937" font-size="13" font-weight="700">Current-State Value Stream Map — ${project.name}</text>`
+
+  // Production Control
+  s += `<rect x="${pctX}" y="${PCTRL_Y}" width="${PCTRL_W}" height="${PCTRL_H}" fill="#A7F3D0" stroke="#059669" stroke-width="1.5" rx="4"/>`
+  s += `<text x="${pctX+PCTRL_W/2}" y="${PCTRL_Y+17}" text-anchor="middle" fill="#065F46" font-size="10" font-weight="700">Production</text>`
+  s += `<text x="${pctX+PCTRL_W/2}" y="${PCTRL_Y+31}" text-anchor="middle" fill="#065F46" font-size="10" font-weight="700">Control</text>`
+
+  // Info arrows
+  s += `<polyline points="${pctX},${PCTRL_Y+PCTRL_H/2} ${pctX-14},${PCTRL_Y+PCTRL_H/2+10} ${supX+FACT_W+4},${SUPPLIER_Y+FACT_H/2}" stroke="#0EA5E9" stroke-width="1.5" fill="none" stroke-dasharray="5,3" opacity="0.8" marker-end="url(#ia)"/>`
+  s += `<polyline points="${pctX+PCTRL_W},${PCTRL_Y+PCTRL_H/2} ${pctX+PCTRL_W+14},${PCTRL_Y+PCTRL_H/2+10} ${custX-4},${SUPPLIER_Y+FACT_H/2}" stroke="#0EA5E9" stroke-width="1.5" fill="none" stroke-dasharray="5,3" opacity="0.8" marker-end="url(#ia)"/>`
+  s += `<text x="${pctX-60}" y="${SUPPLIER_Y-4}" fill="#0EA5E9" font-size="8" opacity="0.9">Weekly delivery</text>`
+  s += `<text x="${custX-24}" y="${SUPPLIER_Y-4}" fill="#0EA5E9" font-size="8" opacity="0.9">Weekly delivery</text>`
+  main.forEach((_, i) => {
+    const px = sx(i) + PW/2
+    const mx = pctX + PCTRL_W/2 + (px - pctX - PCTRL_W/2)*0.4
+    s += `<polyline points="${pctX+PCTRL_W/2},${PCTRL_Y+PCTRL_H} ${mx},${PROC_Y-24} ${px},${PROC_Y}" stroke="#0EA5E9" stroke-width="1.2" fill="none" stroke-dasharray="4,3" opacity="0.55" marker-end="url(#ia)"/>`
+  })
+
+  // Supplier & Customer factories
+  const esc = (t: string) => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  const factory = (fx: number, fy: number, fw: number, fh: number, lbl: string) => {
+    let f = `<rect x="${fx}" y="${fy+12}" width="${fw}" height="${fh-12}" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1.2" rx="2"/>`
+    f += `<polygon points="${fx},${fy+14} ${fx+fw/2},${fy} ${fx+fw},${fy+14}" fill="#4A6A8F" stroke="#3A5A7C" stroke-width="1.2"/>`
+    f += `<rect x="${fx+8}" y="${fy+20}" width="10" height="10" fill="#C8DCF0" rx="1"/>`
+    f += `<rect x="${fx+24}" y="${fy+20}" width="10" height="10" fill="#C8DCF0" rx="1"/>`
+    f += `<rect x="${fx+40}" y="${fy+20}" width="10" height="10" fill="#C8DCF0" rx="1"/>`
+    f += `<rect x="${fx+fw/2-6}" y="${fy+fh-16}" width="12" height="16" fill="#3A5A7C" rx="1"/>`
+    f += `<rect x="${fx+fw-14}" y="${fy+2}" width="7" height="14" fill="#4A6A8F"/>`
+    f += `<text x="${fx+fw/2}" y="${fy+fh+14}" text-anchor="middle" fill="#1F2937" font-size="10" font-weight="700">${esc(lbl)}</text>`
+    return f
+  }
+  s += factory(supX, SUPPLIER_Y, FACT_W, FACT_H, project.supplier || 'Supplier')
+  s += factory(custX, SUPPLIER_Y, FACT_W, FACT_H, project.customer || 'Customer')
+  if (project.demand) {
+    s += `<text x="${custX+FACT_W/2}" y="${SUPPLIER_Y+FACT_H+28}" text-anchor="middle" fill="#6B7280" font-size="8">${project.demand}/day</text>`
+  }
+
+  // Trucks
+  const truck = (tx: number, ty: number) => {
+    let t = `<rect x="${tx}" y="${ty}" width="${TRUCK_W*0.62}" height="${TRUCK_H}" fill="#F97316" stroke="#C05621" stroke-width="1" rx="2"/>`
+    t += `<rect x="${tx+TRUCK_W*0.62}" y="${ty+4}" width="${TRUCK_W*0.38}" height="${TRUCK_H-4}" fill="#FB923C" stroke="#C05621" stroke-width="1" rx="2"/>`
+    t += `<rect x="${tx+TRUCK_W*0.66}" y="${ty+7}" width="${TRUCK_W*0.22}" height="${TRUCK_H*0.38}" fill="#DBEAFE" rx="1"/>`
+    ;[0.18,0.42,0.78].forEach(r => {
+      t += `<circle cx="${tx+TRUCK_W*r}" cy="${ty+TRUCK_H+4}" r="5" fill="#374151"/>`
+      t += `<circle cx="${tx+TRUCK_W*r}" cy="${ty+TRUCK_H+4}" r="2" fill="#6B7280"/>`
+    })
+    t += `<text x="${tx+TRUCK_W/2}" y="${ty+TRUCK_H+19}" text-anchor="middle" fill="#374151" font-size="8">Shipment (Daily)</text>`
+    return t
+  }
+  const t1x = supX + FACT_W + 10, t2x = custX - TRUCK_W - 10, ty = TRUCK_Y - TRUCK_H/2
+  s += truck(t1x, ty)
+  s += truck(t2x, ty)
+  s += `<line x1="${t1x+TRUCK_W+4}" y1="${TRUCK_Y}" x2="${sx(0)}" y2="${PROC_Y+PH/2}" stroke="#374151" stroke-width="2" marker-end="url(#ma)"/>`
+  s += `<line x1="${sx(n-1)+PW+4}" y1="${PROC_Y+PH/2}" x2="${t2x}" y2="${TRUCK_Y}" stroke="#374151" stroke-width="2" marker-end="url(#ma)"/>`
+
+  // Process boxes
+  main.forEach((step, i) => {
+    const x = sx(i)
+    const ct  = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+    const co  = step.change_over_time || 0
+    const up  = step.uptime != null ? `${step.uptime}%` : '—'
+    const ops = step.operators || 1
+    const wip = Number(step.wip) || 0
+    const isBN = takt > 0 && ct > 0 && ct > takt * 1.05
+    const fill   = isBN ? '#FEE2E2' : '#CCFBF1'
+    const stroke = isBN ? '#DC2626' : '#0D9488'
+    const ctCol  = isBN ? '#DC2626' : '#0D9488'
+
+    if (i > 0) {
+      const ax = sx(i-1)+PW+4, ay = PROC_Y+PH/2
+      s += `<line x1="${ax}" y1="${ay}" x2="${x-10}" y2="${ay}" stroke="#374151" stroke-width="2"/>`
+      s += `<polygon points="${x-10},${ay-5} ${x},${ay} ${x-10},${ay+5}" fill="#374151"/>`
+      s += `<text x="${sx(i-1)+PW+GAP/2}" y="${ay-8}" text-anchor="middle" fill="#9CA3AF" font-size="7.5">PUSH</text>`
+      if (wip > 0) {
+        const tx2 = sx(i-1)+PW+GAP/2-14, ty2 = ay+6
+        s += `<polygon points="${tx2},${ty2+18} ${tx2+14},${ty2} ${tx2+28},${ty2+18}" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>`
+        s += `<text x="${tx2+14}" y="${ty2+14}" text-anchor="middle" fill="#92400E" font-size="8" font-weight="700">${wip}</text>`
+      }
+    }
+
+    // Process box
+    s += `<rect x="${x}" y="${PROC_Y}" width="${PW}" height="${PH}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" rx="3"/>`
+    s += `<rect x="${x}" y="${PROC_Y}" width="${PW}" height="8" fill="${isBN?'#DC2626':'#0D9488'}" rx="3"/>`
+    s += `<rect x="${x}" y="${PROC_Y+5}" width="${PW}" height="3" fill="${isBN?'#DC2626':'#0D9488'}"/>`
+    const nm = step.name.length > 14 ? step.name.slice(0,13)+'…' : step.name
+    s += `<text x="${x+PW/2}" y="${PROC_Y+22}" text-anchor="middle" fill="#1F2937" font-size="9" font-weight="700">${esc(nm)}</text>`
+    if (step.department) {
+      s += `<text x="${x+PW/2}" y="${PROC_Y+33}" text-anchor="middle" fill="#6B7280" font-size="7.5">${esc(step.department)}</text>`
+    }
+    for (let o = 0; o < Math.min(ops,4); o++) {
+      s += `<circle cx="${x+10+o*14}" cy="${PROC_Y+PH-12}" r="6" fill="#FFFFFF" stroke="${stroke}" stroke-width="1"/>`
+      s += `<circle cx="${x+10+o*14}" cy="${PROC_Y+PH-18}" r="3.5" fill="${stroke}"/>`
+    }
+    if (isBN) s += `<text x="${x+PW-4}" y="${PROC_Y+20}" text-anchor="end" fill="#DC2626" font-size="7.5" font-weight="700">▲TAKT</text>`
+
+    // Data box
+    s += `<rect x="${x}" y="${PROC_Y+PH}" width="${PW}" height="${DH}" fill="#FFFFFF" stroke="${stroke}" stroke-width="1"/>`
+    s += `<line x1="${x}" y1="${PROC_Y+PH+DH/3}" x2="${x+PW}" y2="${PROC_Y+PH+DH/3}" stroke="#E5E7EB" stroke-width="0.8"/>`
+    s += `<line x1="${x}" y1="${PROC_Y+PH+DH*2/3}" x2="${x+PW}" y2="${PROC_Y+PH+DH*2/3}" stroke="#E5E7EB" stroke-width="0.8"/>`
+    s += `<text x="${x+6}"  y="${PROC_Y+PH+14}"        fill="#6B7280" font-size="8" font-family="monospace">C/T =</text>`
+    s += `<text x="${x+36}" y="${PROC_Y+PH+14}"        fill="${ctCol}" font-size="9" font-weight="700" font-family="monospace">${ct?fmtS(ct):'—'}</text>`
+    s += `<text x="${x+6}"  y="${PROC_Y+PH+DH/3+14}"  fill="#6B7280" font-size="8" font-family="monospace">C/O =</text>`
+    s += `<text x="${x+36}" y="${PROC_Y+PH+DH/3+14}"  fill="#374151" font-size="9" font-family="monospace">${co?fmtS(co):'0s'}</text>`
+    s += `<text x="${x+6}"  y="${PROC_Y+PH+DH*2/3+14}" fill="#6B7280" font-size="8" font-family="monospace">Uptime</text>`
+    s += `<text x="${x+44}" y="${PROC_Y+PH+DH*2/3+14}" fill="#374151" font-size="9" font-family="monospace">${up}</text>`
+
+    // Kaizen burst if bottleneck
+    if (isBN) {
+      const bpts = Array.from({length:16},(_,k)=>{const a=(k/16)*Math.PI*2-Math.PI/2;const r=k%2===0?14:8;return `${x+PW-2+Math.cos(a)*r},${PROC_Y-2+Math.sin(a)*r}`}).join(' ')
+      s += `<polygon points="${bpts}" fill="#FEF9C3" stroke="#EAB308" stroke-width="1.2"/>`
+    }
+  })
+
+  // Timeline
+  s += `<line x1="${flowX}" y1="${TL_BASE}" x2="${sx(n-1)+PW}" y2="${TL_BASE}" stroke="#D1D5DB" stroke-width="1.5"/>`
+  main.forEach((step, i) => {
+    const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+    const wt = Number(step.wait_time)||0
+    const isBN = takt > 0 && ct > takt * 1.05
+    const ph = ct > 0 ? Math.max(6, Math.min(36, (ct/Math.max(mainCT||1,1))*36)) : 4
+    const bx = sx(i)
+
+    if (wt > 0 && i > 0) {
+      const vh = Math.max(4, Math.min(18, (wt/Math.max(mainWT||1,1))*18))
+      s += `<rect x="${sx(i-1)+PW+4}" y="${TL_BASE}" width="${GAP-8}" height="${vh}" fill="#FCA5A5" rx="2" opacity="0.7"/>`
+      s += `<text x="${sx(i-1)+PW+GAP/2}" y="${TL_BASE+vh+10}" text-anchor="middle" fill="#9CA3AF" font-size="7.5" font-family="monospace">${fmtS(wt)}</text>`
+    }
+    s += `<rect x="${bx+4}" y="${TL_BASE-ph}" width="${PW-8}" height="${ph}" fill="${isBN?'#FCA5A5':'#6EE7B7'}" rx="2" opacity="0.9"/>`
+    s += `<text x="${bx+PW/2}" y="${TL_BASE-ph-3}" text-anchor="middle" fill="${isBN?'#DC2626':'#059669'}" font-size="8" font-weight="700" font-family="monospace">${ct?fmtS(ct):'—'}</text>`
+  })
+
+  // Footer KPIs
+  const ky = TL_BASE + 42
+  s += `<text x="${flowX}" y="${ky}" fill="#6B7280" font-size="9" font-family="monospace">Lead Time: ${fmtS(lt)}   ·   VA: ${fmtS(mainCT)}   ·   NVA: ${fmtS(mainWT)}   ·   PCE: ${pce?pce.toFixed(1)+'%':'—'}   ·   Takt: ${takt?fmtS(takt):'—'}   ·   WIP: ${totalWIP||'—'}</text>`
+
+  s += `</svg>`
+  return s
+}
+
+// ── Export to HTML with embedded SVM diagram ──────────────────────────────
+function exportVSMReport(steps: Step[], project: Project, branches: Branch[]) {
+  const main = steps.filter(s => s.is_main_flow !== false).sort((a,b) => a.position - b.position)
+  const takt = project.takt_time ? Number(project.takt_time)
+    : project.demand && project.available_time_sec ? Number(project.available_time_sec) / Number(project.demand)
+    : project.demand && project.working_hours ? (Number(project.working_hours) * 3600) / Number(project.demand)
+    : 0
+  const mainCT = main.reduce((a,s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0), 0)
+  const mainWT = main.reduce((a,s) => a + (Number(s.wait_time)||0), 0)
+  const totalWIP = steps.reduce((a,s) => a + (Number(s.wip)||0), 0)
+  const lt = mainCT + mainWT
+  const pce = lt > 0 ? (mainCT/lt)*100 : 0
+  const bottlenecks = main.filter(s => { const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0; return takt>0&&ct>takt*1.05 })
+
+  const svgStr = buildVSMString(steps, project)
+  const b64 = typeof btoa !== 'undefined' ? btoa(unescape(encodeURIComponent(svgStr))) : Buffer.from(svgStr).toString('base64')
+
+  const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  const docNum = `VSM-${(project.name||'MAP').replace(/\s+/g,'-').toUpperCase().slice(0,8)}-${Date.now().toString(36).toUpperCase().slice(-4)}`
+
+  const stepRows = main.map((s, i) => {
+    const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0
+    const wt = Number(s.wait_time)||0
+    const isBN = takt > 0 && ct > takt*1.05
+    return `<tr>
+      <td style="text-align:center;font-weight:700">${i+1}</td>
+      <td style="font-weight:600">${s.name}</td>
+      <td>${s.department||'—'}</td>
+      <td style="${isBN?'color:#DC2626;font-weight:700':''}">${ct?fmtS(ct):'—'}${isBN?' ▲':''}</td>
+      <td>${wt?fmtS(wt):'—'}</td>
+      <td style="text-align:center">${s.operators||1}</td>
+      <td style="text-align:center">${s.wip||'—'}</td>
+      <td style="text-align:center">${s.uptime!=null?s.uptime+'%':'—'}</td>
+      <td style="text-align:center">${s.defect_rate!=null?s.defect_rate+'%':'—'}</td>
+    </tr>`
+  }).join('')
+
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/>
+<title>VSM Report — ${project.name}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#1F2937;background:#FFF;padding:28px 40px;max-width:1100px;margin:0 auto}
+@media print{body{padding:12px 18px}.no-print{display:none!important}@page{size:A3 landscape;margin:12mm}}
+.hdr{border:2px solid #1E3A5F;border-radius:4px;overflow:hidden;margin-bottom:24px}
+.hdr-top{background:#1E3A5F;color:#FFF;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.hdr-top h1{font-size:14pt;font-weight:700}
+.meta{font-size:9pt;opacity:.85;text-align:right;line-height:1.6}
+.hdr-sub{background:#F8FAFC;padding:10px 18px;display:flex;gap:28px;font-size:9.5pt;color:#475569}
+.hdr-sub strong{color:#1F2937}
+h2{font-size:11pt;font-weight:700;color:#1E3A5F;margin:22px 0 10px;padding-bottom:5px;border-bottom:1.5px solid #CBD5E1;text-transform:uppercase;letter-spacing:.5px}
+.vsm{width:100%;overflow:auto;border:1px solid #E5E7EB;border-radius:6px;padding:12px;background:#FAFAFA;margin-bottom:16px}
+.vsm img{max-width:100%;display:block}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 18px}
+.kpi{border:1px solid #CBD5E1;border-radius:6px;padding:10px 14px;background:#F8FAFC}
+.kpi-l{font-size:8.5pt;color:#64748B;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
+.kpi-v{font-size:18pt;font-weight:700;color:#1E3A5F;font-family:"Courier New",monospace}
+.kpi-s{font-size:8pt;color:#94A3B8;margin-top:3px}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:10pt}
+th{background:#1E3A5F;color:#FFF;padding:7px 10px;text-align:left;font-size:9pt}
+td{padding:7px 10px;border:1px solid #CBD5E1;vertical-align:top}
+tr:nth-child(even) td{background:#F8FAFC}
+.bn{border-left:4px solid #DC2626;padding:10px 14px;background:#FFF5F5;margin:8px 0;border-radius:0 4px 4px 0}
+.bn-l{font-size:8.5pt;font-weight:700;color:#DC2626;text-transform:uppercase;margin-bottom:5px}
+.ok{border-left:4px solid #059669;padding:10px 14px;background:#F0FDF4;margin:8px 0;border-radius:0 4px 4px 0}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;font-size:9pt}
+.leg{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:2px}
+.footer{margin-top:32px;border-top:1px solid #CBD5E1;padding-top:10px;font-size:8.5pt;color:#94A3B8;display:flex;justify-content:space-between}
+.no-print{position:fixed;top:16px;right:16px;display:flex;gap:8px}
+.bp{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:11pt;font-weight:600;background:#1E3A5F;color:#FFF}
+.bc{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:11pt;background:#F1F5F9;color:#475569}
+</style>
+</head><body>
+<div class="no-print">
+  <button class="bp" onclick="window.print()">🖨 Print / Save PDF</button>
+  <button class="bc" onclick="window.close()">✕ Close</button>
+</div>
+<div class="hdr">
+  <div class="hdr-top"><h1>Current-State Value Stream Map</h1><div class="meta">Doc: ${docNum}<br>Rev. A · ${date}<br>ISO 22468:2020</div></div>
+  <div class="hdr-sub">
+    <span><strong>Project:</strong> ${project.name}</span>
+    <span><strong>Industry:</strong> ${project.industry||'—'}</span>
+    <span><strong>Supplier:</strong> ${project.supplier||'—'}</span>
+    <span><strong>Customer:</strong> ${project.customer||'—'}</span>
+  </div>
+</div>
+
+<h2>1. Value Stream Map Diagram</h2>
+<div class="vsm"><img src="data:image/svg+xml;base64,${b64}" alt="VSM Diagram" style="width:100%;min-width:600px"/></div>
+<div class="legend">
+  <div class="leg"><div class="dot" style="background:#CCFBF1;border:1px solid #0D9488"></div>Process Step</div>
+  <div class="leg"><div class="dot" style="background:#FEE2E2;border:1px solid #DC2626"></div>Bottleneck</div>
+  <div class="leg"><div class="dot" style="background:#F97316;border:1px solid #C05621"></div>Truck / Shipment</div>
+  <div class="leg"><div class="dot" style="background:#FEF3C7;border:1px solid #D97706"></div>WIP Triangle</div>
+  <div class="leg"><div class="dot" style="background:#A7F3D0;border:1px solid #059669"></div>Production Control</div>
+  <div class="leg"><div class="dot" style="background:#DBEAFE;border:1px solid #0EA5E9"></div>Information Flow (dashed)</div>
+  <div class="leg"><div class="dot" style="background:#FEF9C3;border:1px solid #EAB308"></div>Kaizen Opportunity</div>
+</div>
+
+<h2>2. Key Performance Indicators</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-l">Lead Time</div><div class="kpi-v">${fmtS(lt)}</div><div class="kpi-s">Total span</div></div>
+  <div class="kpi"><div class="kpi-l">Value-Added CT</div><div class="kpi-v">${fmtS(mainCT)}</div><div class="kpi-s">Process time</div></div>
+  <div class="kpi"><div class="kpi-l">NVA / Wait</div><div class="kpi-v">${fmtS(mainWT)}</div><div class="kpi-s">${lt>0?((mainWT/lt)*100).toFixed(0):0}% of lead time</div></div>
+  <div class="kpi"><div class="kpi-l">PCE</div><div class="kpi-v" style="color:${pce>25?'#059669':pce>10?'#D97706':'#DC2626'}">${pce?pce.toFixed(1)+'%':'—'}</div><div class="kpi-s">Process Cycle Efficiency</div></div>
+  <div class="kpi"><div class="kpi-l">Takt Time</div><div class="kpi-v">${takt?fmtS(takt):'—'}</div><div class="kpi-s">Customer demand rate</div></div>
+  <div class="kpi"><div class="kpi-l">Total WIP</div><div class="kpi-v">${totalWIP||'—'}</div><div class="kpi-s">In-process units</div></div>
+  <div class="kpi"><div class="kpi-l">Steps</div><div class="kpi-v">${main.length}</div><div class="kpi-s">Main flow</div></div>
+  <div class="kpi"><div class="kpi-l">Bottlenecks</div><div class="kpi-v" style="color:${bottlenecks.length>0?'#DC2626':'#059669'}">${bottlenecks.length}</div><div class="kpi-s">Over takt</div></div>
+</div>
+
+<h2>3. Process Step Data</h2>
+<table>
+  <thead><tr><th>#</th><th>Process Step</th><th>Department</th><th>Cycle Time</th><th>Wait Time</th><th>Operators</th><th>WIP</th><th>Uptime</th><th>Defect %</th></tr></thead>
+  <tbody>${stepRows}
+    <tr style="background:#F0F0F0;font-weight:700">
+      <td colspan="3">TOTALS</td>
+      <td>${fmtS(mainCT)}</td><td>${fmtS(mainWT)}</td>
+      <td>${main.reduce((a,s)=>a+(s.operators||1),0)}</td>
+      <td>${totalWIP||'—'}</td>
+      <td colspan="2">Lead Time: ${fmtS(lt)}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. Bottleneck & Waste Analysis</h2>
+${bottlenecks.length>0 ? bottlenecks.map(s=>{
+  const ct=s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0
+  return `<div class="bn"><div class="bn-l">⚠ Bottleneck — ${s.name}</div><p>CT = <strong>${fmtS(ct)}</strong> exceeds Takt = <strong>${fmtS(takt)}</strong> by <strong>${fmtS(ct-takt)}</strong> (+${(((ct-takt)/takt)*100).toFixed(0)}%). Apply capacity balancing per ISO 22468 §5.2.4.</p></div>`
+}).join('') : '<div class="ok"><strong>✓ No bottlenecks detected.</strong> All steps within takt time.</div>'}
+
+<h2>5. Improvement Actions</h2>
+<table>
+  <thead><tr><th>#</th><th>Action</th><th>ISO Reference</th><th>Priority</th><th>Benefit</th></tr></thead>
+  <tbody>
+    ${bottlenecks.map((s,i)=>`<tr><td>${i+1}</td><td>Capacity balance <strong>${s.name}</strong></td><td>ISO 22468 §5.2.4</td><td style="color:#DC2626;font-weight:700">CRITICAL</td><td>Restore takt compliance</td></tr>`).join('')}
+    ${mainWT>0?`<tr><td>${bottlenecks.length+1}</td><td>Reduce queue time (${fmtS(mainWT)}) via pull scheduling</td><td>ISO 22468 §5.3</td><td style="color:#D97706;font-weight:700">HIGH</td><td>PCE: ${pce.toFixed(1)}% → ${Math.min(100,pce*1.5).toFixed(0)}%</td></tr>`:''}
+    <tr><td>${bottlenecks.length+2}</td><td>Document future-state VSM with kaizen opportunities</td><td>ISO 22468 §6</td><td style="color:#0D9488;font-weight:700">MEDIUM</td><td>Future-state target map</td></tr>
+  </tbody>
+</table>
+
+<div class="footer"><span>${docNum} · Rev. A · Generated ${date}</span><span>VeSiMy CI Platform — vesimy.com</span></div>
+</body></html>`
+
+  const w = window.open('', '_blank')
+  if (!w) return
+  w.document.write(html)
+  w.document.close()
+}
+
+// ── React component ────────────────────────────────────────────────────────
 export function VSMMap({ steps, branches, project }: Props) {
   if (!steps.length) {
     return (
@@ -31,676 +450,203 @@ export function VSMMap({ steps, branches, project }: Props) {
     )
   }
 
-  const mainSteps = steps.filter((s) => s.is_main_flow !== false).sort((a, b) => a.position - b.position)
-  const branchSteps = steps.filter((s) => s.is_main_flow === false)
+  const mainSteps = steps.filter(s => s.is_main_flow !== false).sort((a,b) => a.position - b.position)
 
-  const branchGroups: Record<string, Step[]> = {}
-  branchSteps.forEach((s) => {
-    if (!s.branch_id) return
-    if (!branchGroups[s.branch_id]) branchGroups[s.branch_id] = []
-    branchGroups[s.branch_id].push(s)
-  })
-  Object.values(branchGroups).forEach((g) =>
-    g.sort((a, b) => (a.branch_position || 0) - (b.branch_position || 0))
-  )
+  const takt = project.takt_time ? Number(project.takt_time)
+    : project.demand && project.available_time_sec ? Number(project.available_time_sec) / Number(project.demand)
+    : project.demand && project.working_hours ? (Number(project.working_hours)*3600) / Number(project.demand)
+    : 0
 
-  const branchIds = Object.keys(branchGroups)
-  const hasBranches = branchIds.length > 0
+  const mainCT = mainSteps.reduce((a,s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time)||0), 0)
+  const mainWT = mainSteps.reduce((a,s) => a + (Number(s.wait_time)||0), 0)
+  const lt = mainCT + mainWT
+  const pce = lt > 0 ? (mainCT/lt)*100 : 0
 
-  const BOX_W = 156
-  const BOX_H = 104
-  const GAP = 74
-  const MARGIN = 64
-  const TOP_Y = 164
-  const DATA_STRIP_Y = TOP_Y + BOX_H + 12
-  const LANE_H = BOX_H + 92
-  const LANE_GAP = 56
+  const PW=96, PH=64, DH=64, GAP=60
+  const ML=60, MR=60
+  const FACT_W=64, FACT_H=56
+  const TRUCK_W=52, TRUCK_H=28
+  const PCTRL_W=130, PCTRL_H=44
+  const PCTRL_Y=24
+  const SUPPLIER_Y=84
+  const TRUCK_Y=162
+  const PROC_Y=212
+  const TIMELINE_Y = PROC_Y + PH + DH + 24
+  const TL_BASE = TIMELINE_Y + 36
+  const TOTAL_H = TL_BASE + 72
 
-  const maxCols = Math.max(mainSteps.length, ...branchIds.map((bid) => branchGroups[bid].length))
-  const TOTAL_W = MARGIN * 2 + maxCols * (BOX_W + GAP) - GAP + 90
-  const SVG_H = TOP_Y + LANE_H + branchIds.length * (LANE_H + LANE_GAP) + 120
-
-  const boxX = (i: number) => MARGIN + i * (BOX_W + GAP)
-  const laneY = (li: number) => TOP_Y + LANE_H + LANE_GAP + li * (LANE_H + LANE_GAP)
-
-  const mainCT = mainSteps.reduce(
-    (a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0),
-    0
-  )
-  const mainWait = mainSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
-  const totalWIP = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
-
-  const branchCTs = branchIds.map((bid) =>
-    branchGroups[bid].reduce(
-      (a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0),
-      0
-    )
-  )
-
-  const criticalCT = branchCTs.length ? Math.max(mainCT, ...branchCTs) : mainCT
-  const availSec = project.available_time_sec
-    ? Number(project.available_time_sec)
-    : project.working_hours
-      ? Number(project.working_hours) * 3600
-      : 0
-
-  const takt = project.takt_time
-    ? Number(project.takt_time)
-    : project.demand && availSec
-      ? availSec / Number(project.demand)
-      : 0
-
-  const leadTime = criticalCT + mainWait
-  const pce = leadTime > 0 ? (criticalCT / leadTime) * 100 : 0
-
-  const renderDataBox = (step: Step, x: number, y: number, color = '#D4A208') => {
-    const ct = step.toolData?.stopwatch?.mean || (step.cycle_time ? Number(step.cycle_time) : null)
-    const wt = Number(step.wait_time) || 0
-    const operators = step.operators || 1
-    const wip = Number(step.wip) || 0
-    const defects = step.defect_rate != null ? `${step.defect_rate}%` : '—'
-    const uptime = step.uptime != null ? `${step.uptime}%` : '—'
-    const overTakt = takt > 0 && ct != null && ct > takt
-
-    return (
-      <g key={step.id}>
-        <rect
-          x={x}
-          y={y}
-          width={BOX_W}
-          height={BOX_H}
-          rx={8}
-          fill="url(#vsmBox)"
-          stroke={overTakt ? 'rgba(255,107,107,0.55)' : `${color}40`}
-          strokeWidth={1.5}
-        />
-        <rect x={x} y={y} width={BOX_W} height={5} rx={3} fill={color} opacity={0.8} />
-
-        <text
-          x={x + BOX_W / 2}
-          y={y + 18}
-          textAnchor="middle"
-          fill="#F5F7FB"
-          fontSize={11}
-          fontWeight={700}
-        >
-          {step.name.length > 18 ? `${step.name.slice(0, 17)}…` : step.name}
-        </text>
-
-        {step.department && (
-          <text
-            x={x + BOX_W / 2}
-            y={y + 31}
-            textAnchor="middle"
-            fill="#8F98AD"
-            fontSize={8.5}
-          >
-            {step.department}
-          </text>
-        )}
-
-        <line x1={x + 8} y1={y + 38} x2={x + BOX_W - 8} y2={y + 38} stroke="rgba(255,255,255,0.07)" />
-
-        <text x={x + 10} y={y + 52} fill="#8F98AD" fontSize={8}>CT</text>
-        <text x={x + 44} y={y + 52} fill={overTakt ? '#FF6B6B' : '#D4A208'} fontSize={10} fontWeight={700}>
-          {ct != null ? fmtS(ct) : '—'}
-        </text>
-
-        <text x={x + 10} y={y + 66} fill="#8F98AD" fontSize={8}>WT</text>
-        <text x={x + 44} y={y + 66} fill="#C8CFDD" fontSize={9}>{fmtS(wt)}</text>
-
-        <text x={x + 86} y={y + 52} fill="#8F98AD" fontSize={8}>OPS</text>
-        <text x={x + 118} y={y + 52} fill="#C8CFDD" fontSize={9}>{operators}</text>
-
-        <text x={x + 86} y={y + 66} fill="#8F98AD" fontSize={8}>WIP</text>
-        <text x={x + 118} y={y + 66} fill="#C8CFDD" fontSize={9}>{wip || '—'}</text>
-
-        <text x={x + 10} y={y + 82} fill="#8F98AD" fontSize={8}>UP</text>
-        <text x={x + 44} y={y + 82} fill="#10B981" fontSize={9}>{uptime}</text>
-
-        <text x={x + 86} y={y + 82} fill="#8F98AD" fontSize={8}>DF</text>
-        <text x={x + 118} y={y + 82} fill="#F59E0B" fontSize={9}>{defects}</text>
-
-        {overTakt && (
-          <text x={x + BOX_W - 8} y={y + 16} textAnchor="end" fill="#FF6B6B" fontSize={8.5} fontWeight={700}>
-            OVER TAKT
-          </text>
-        )}
-      </g>
-    )
-  }
-
-  const renderTimeline = (step: Step, x: number, y: number, color = '#D4A208') => {
-    const ct = step.toolData?.stopwatch?.mean || (step.cycle_time ? Number(step.cycle_time) : null)
-    const wt = Number(step.wait_time) || 0
-    const barW = ct
-      ? Math.max(8, Math.min(BOX_W * 0.82, (ct / Math.max(criticalCT || 1, 1)) * BOX_W * 1.8))
-      : 0
-
-    return (
-      <g key={`tl-${step.id}`}>
-        {wt > 0 && (
-          <>
-            <line x1={x} y1={y + 10} x2={x + BOX_W * 0.7} y2={y + 10} stroke="#7C859C" strokeDasharray="4,2" opacity={0.55} />
-            <text x={x + 2} y={y + 8} fill="#8F98AD" fontSize={8} fontFamily="monospace">
-              WAIT {fmtS(wt)}
-            </text>
-          </>
-        )}
-
-        {barW > 0 && (
-          <>
-            <rect x={x} y={y + 20} width={barW} height={9} rx={3} fill={color} opacity={0.5} />
-            <text x={x + 2} y={y + 42} fill={color} fontSize={8.5} fontFamily="monospace">
-              VA {fmtS(ct)}
-            </text>
-          </>
-        )}
-      </g>
-    )
-  }
-
-  const exportIndustrialVSM = () => {
-    const w = window.open('', '_blank')
-    if (!w) return
-
-    const today = new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-
-    const fmtSec = (s: number) => {
-      if (!s && s !== 0) return '—'
-      if (s < 60) return `${s.toFixed(0)}s`
-      if (s < 3600) return `${(s / 60).toFixed(1)}m`
-      return `${(s / 3600).toFixed(2)}h`
-    }
-
-    const rows = mainSteps.map((s, i) => {
-      const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
-      const wt = Number(s.wait_time) || 0
-      return `
-        <tr>
-          <td>${i + 1}</td>
-          <td>${s.name}</td>
-          <td>${s.department || '—'}</td>
-          <td>${fmtSec(ct)}</td>
-          <td>${fmtSec(wt)}</td>
-          <td>${s.operators || 1}</td>
-          <td>${s.wip || '—'}</td>
-          <td>${s.uptime != null ? `${s.uptime}%` : '—'}</td>
-          <td>${s.defect_rate != null ? `${s.defect_rate}%` : '—'}</td>
-        </tr>
-      `
-    }).join('')
-
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Value Stream Report — ${project.name}</title>
-  <style>
-    @page { size: A4 landscape; margin: 16mm; }
-    * { box-sizing: border-box; }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      color: #111;
-      background: #fff;
-      margin: 0;
-      padding: 0;
-    }
-    .doc {
-      width: 100%;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 2px solid #222;
-      padding-bottom: 10px;
-      margin-bottom: 16px;
-    }
-    .title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .sub {
-      font-size: 12px;
-      color: #666;
-    }
-    .doc-control {
-      width: 320px;
-      border: 1px solid #ccc;
-      border-collapse: collapse;
-      font-size: 11px;
-    }
-    .doc-control td {
-      border: 1px solid #ccc;
-      padding: 6px 8px;
-    }
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .kpi {
-      border: 1px solid #ddd;
-      padding: 10px;
-      background: #fafafa;
-    }
-    .kpi-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #666;
-      margin-bottom: 4px;
-    }
-    .kpi-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: #8B6A00;
-    }
-    h2 {
-      font-size: 14px;
-      margin: 18px 0 8px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 4px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      margin-bottom: 14px;
-    }
-    th, td {
-      border: 1px solid #d9d9d9;
-      padding: 7px 8px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      background: #f2f2f2;
-      font-weight: 700;
-    }
-    .notice {
-      margin-top: 18px;
-      font-size: 11px;
-      color: #555;
-      border-top: 1px solid #ddd;
-      padding-top: 10px;
-      line-height: 1.5;
-    }
-  </style>
-</head>
-<body>
-  <div class="doc">
-    <div class="header">
-      <div>
-        <div class="title">Process Analysis Report — Value Stream Map</div>
-        <div class="sub">${project.name} · ${project.industry || 'Industrial Process'} · ${today}</div>
-      </div>
-
-      <table class="doc-control">
-        <tr><td><strong>Document ID</strong></td><td>VSM-${project.id || '001'}</td></tr>
-        <tr><td><strong>Revision</strong></td><td>1.0</td></tr>
-        <tr><td><strong>Prepared By</strong></td><td>Vesimy</td></tr>
-        <tr><td><strong>Date</strong></td><td>${today}</td></tr>
-      </table>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">Lead Time</div><div class="kpi-value">${fmtSec(leadTime)}</div></div>
-      <div class="kpi"><div class="kpi-label">Value Added Time</div><div class="kpi-value">${fmtSec(criticalCT)}</div></div>
-      <div class="kpi"><div class="kpi-label">Main Flow CT</div><div class="kpi-value">${fmtSec(mainCT)}</div></div>
-      <div class="kpi"><div class="kpi-label">Takt Time</div><div class="kpi-value">${takt ? fmtSec(takt) : '—'}</div></div>
-      <div class="kpi"><div class="kpi-label">PCE</div><div class="kpi-value">${pce ? `${pce.toFixed(1)}%` : '—'}</div></div>
-    </div>
-
-    <h2>1. Current-State Process Overview</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Process Step</th>
-          <th>Department</th>
-          <th>Cycle Time</th>
-          <th>Wait Time</th>
-          <th>Operators</th>
-          <th>WIP</th>
-          <th>Uptime</th>
-          <th>Defect Rate</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${rows}
-      </tbody>
-    </table>
-
-    <h2>2. Standards Notice</h2>
-    <div class="notice">
-      This document was generated using the Vesimy Process Intelligence Platform.
-      The document structure is designed to align with widely recognized industrial process analysis practices
-      and relevant standards guidance, including ISO 9001 process-documentation principles and ISO 22468
-      value stream management concepts, where applicable.
-      <br /><br />
-      This document is intended to support operational analysis, continuous improvement, and internal decision-making.
-      It does not by itself certify organizational compliance with any ISO standard.
-    </div>
-  </div>
-</body>
-</html>
-    `
-
-    w.document.write(html)
-    w.document.close()
-    setTimeout(() => w.print(), 500)
-  }
+  const n = mainSteps.length
+  const totalFlowW = n * PW + (n-1) * GAP
+  const TOTAL_W = Math.max(ML + FACT_W + TRUCK_W + totalFlowW + TRUCK_W + FACT_W + MR + 40, 750)
+  const flowX = (TOTAL_W - totalFlowW) / 2
+  const sx = (i: number) => flowX + i * (PW + GAP)
+  const supX = ML, custX = TOTAL_W - MR - FACT_W, pctX = (TOTAL_W - PCTRL_W) / 2
+  const t1x = supX + FACT_W + 10, t2x = custX - TRUCK_W - 10, tyTruck = TRUCK_Y - TRUCK_H/2
 
   return (
-    <div style={{ overflowX: 'auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', marginBottom: 14, flexWrap: 'wrap' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(5, minmax(120px, 1fr))',
-            gap: 8,
-            flex: 1,
-            minWidth: 620,
-          }}
-        >
-          {[
-            { l: 'Lead Time', v: fmtS(leadTime), c: '#D4A208' },
-            { l: 'Value Added', v: fmtS(criticalCT), c: '#10B981' },
-            { l: 'Main Flow CT', v: fmtS(mainCT), c: '#C8CFDD' },
-            { l: 'Takt Time', v: takt ? fmtS(takt) : '—', c: '#0EA5E9' },
-            { l: 'PCE', v: pce ? `${pce.toFixed(1)}%` : '—', c: pce > 25 ? '#10B981' : '#F59E0B' },
-          ].map((m) => (
-            <div
-              key={m.l}
-              style={{
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))',
-                border: '1px solid var(--border)',
-                borderRadius: 12,
-                padding: '10px 12px',
-              }}
-            >
-              <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.2, fontFamily: 'monospace', marginBottom: 5 }}>
-                {m.l}
-              </div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: m.c }}>{m.v}</div>
-            </div>
-          ))}
-        </div>
-
+    <div>
+      {/* KPI strip + export button */}
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14, alignItems: 'stretch' }}>
+        {[
+          { l: 'Lead Time',  v: fmtS(lt),                           c: '#D4A208' },
+          { l: 'Value Added', v: fmtS(mainCT),                       c: '#10B981' },
+          { l: 'NVA / Wait',  v: fmtS(mainWT),                       c: '#6B7280' },
+          { l: 'Takt Time',   v: takt ? fmtS(takt) : '—',            c: '#0EA5E9' },
+          { l: 'PCE',         v: pce ? `${pce.toFixed(1)}%` : '—',   c: pce > 25 ? '#10B981' : '#F59E0B' },
+        ].map(m => (
+          <div key={m.l} style={{ flex: '1 1 110px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', borderRadius: 10, padding: '8px 12px' }}>
+            <div style={{ fontSize: 8, color: 'var(--text3)', letterSpacing: 1.2, fontFamily: 'monospace', marginBottom: 4 }}>{m.l}</div>
+            <div style={{ fontSize: 17, fontWeight: 700, color: m.c }}>{m.v}</div>
+          </div>
+        ))}
         <button
-          onClick={exportIndustrialVSM}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            padding: '10px 14px',
-            borderRadius: 10,
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: 'pointer',
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid var(--border)',
-            color: 'var(--text)',
-            minWidth: 190,
-            justifyContent: 'center',
-          }}
+          onClick={() => exportVSMReport(steps, project, branches)}
+          style={{ padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.12)', border: '1px solid rgba(212,162,8,0.35)', color: '#D4A208', alignSelf: 'stretch', minWidth: 160 }}
         >
-          📄 Export Industrial VSM
+          📄 Export VSM Report
         </button>
       </div>
 
-      {hasBranches && (
-        <div
-          style={{
-            display: 'flex',
-            gap: 12,
-            flexWrap: 'wrap',
-            marginBottom: 14,
-            padding: '10px 14px',
-            background: 'var(--bg2)',
-            border: '1px solid var(--border)',
-            borderRadius: 10,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
-            <div style={{ width: 10, height: 10, borderRadius: 2, background: '#D4A208' }} />
-            <span style={{ color: 'var(--text2)' }}>Main Flow</span>
-          </div>
-          {branchIds.map((bid, i) => {
-            const bd = branches.find((b) => b.branch_id === bid)
-            const color = bd?.color || BRANCH_COLORS[i % BRANCH_COLORS.length]
-            const label = bd?.label || branchGroups[bid][0]?.branch_label || `Branch ${i + 1}`
-
-            return (
-              <div key={bid} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
-                <div style={{ width: 10, height: 10, borderRadius: 2, background: color }} />
-                <span style={{ color: 'var(--text2)' }}>{label}</span>
-              </div>
-            )
-          })}
-        </div>
-      )}
-
-      <div
-        style={{
-          background: '#050712',
-          border: '1px solid #1A1D31',
-          borderRadius: 12,
-          overflow: 'auto',
-          padding: 20,
-        }}
-      >
-        <svg width={Math.max(TOTAL_W, 800)} height={SVG_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+      {/* VSM Diagram */}
+      <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 10, overflowX: 'auto', padding: 16 }}>
+        <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
           <defs>
-            <linearGradient id="vsmBox" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#14192B" />
-              <stop offset="100%" stopColor="#0D1020" />
-            </linearGradient>
-
-            <marker id="mainArrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <polygon points="0 0,8 3,0 6" fill="#D4A208" opacity="0.7" />
+            <marker id="infoArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0 0,7 2.5,0 5" fill="#0EA5E9" />
             </marker>
-
-            {branchIds.map((bid, i) => {
-              const color = branches.find((b) => b.branch_id === bid)?.color || BRANCH_COLORS[i % BRANCH_COLORS.length]
-              return (
-                <marker key={bid} id={`branchArrow-${bid}`} markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                  <polygon points="0 0,8 3,0 6" fill={color} opacity="0.8" />
-                </marker>
-              )
-            })}
+            <marker id="matArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0 0,7 2.5,0 5" fill="#374151" />
+            </marker>
           </defs>
 
-          <text x={MARGIN} y={38} fill="#F5F7FB" fontSize={18} fontWeight={700}>
+          <rect width={TOTAL_W} height={TOTAL_H} fill="#F9FAFB" />
+
+          {/* Title */}
+          <text x={TOTAL_W/2} y={16} textAnchor="middle" fill="#1F2937" fontSize={13} fontWeight={700} fontFamily="sans-serif">
             Current-State Value Stream Map
           </text>
-          <text x={MARGIN} y={56} fill="#8F98AD" fontSize={11}>
-            {project.name} · {project.industry || 'Operational Process'} · Material Flow and Information Flow Overview
+          <text x={TOTAL_W/2} y={30} textAnchor="middle" fill="#6B7280" fontSize={9} fontFamily="sans-serif">
+            {project.name} · {project.industry || 'Manufacturing / Operations'} · ISO 22468:2020
           </text>
 
-          <g transform={`translate(${MARGIN},84)`}>
-            <rect width={120} height={40} rx={8} fill="#12162A" stroke="#2A2F4A" />
-            <text x={12} y={16} fill="#8F98AD" fontSize={8} fontFamily="monospace">SUPPLIER</text>
-            <text x={12} y={30} fill="#F5F7FB" fontSize={11} fontWeight={700}>{project.supplier || 'Supplier'}</text>
-          </g>
+          {/* Production Control box */}
+          <ProdCtrl x={pctX} y={PCTRL_Y} w={PCTRL_W} h={PCTRL_H} />
 
-          <g transform={`translate(${TOTAL_W - MARGIN - 140},84)`}>
-            <rect width={140} height={40} rx={8} fill="#12162A" stroke="#2A2F4A" />
-            <text x={12} y={16} fill="#8F98AD" fontSize={8} fontFamily="monospace">CUSTOMER / DEMAND</text>
-            <text x={12} y={30} fill="#F5F7FB" fontSize={11} fontWeight={700}>
-              {project.customer || 'Customer'}{project.demand ? ` · ${project.demand}/day` : ''}
-            </text>
-          </g>
-
-          <text x={MARGIN - 10} y={TOP_Y - 24} fill="#8F98AD" fontSize={9} fontFamily="monospace">
-            INFORMATION FLOW
-          </text>
-          <line
-            x1={MARGIN + 60}
-            y1={TOP_Y - 28}
-            x2={TOTAL_W - MARGIN - 70}
-            y2={TOP_Y - 28}
-            stroke="#6CB9FC"
-            strokeDasharray="6,4"
-            opacity={0.45}
+          {/* Info arrows */}
+          <polyline
+            points={`${pctX},${PCTRL_Y+PCTRL_H/2} ${pctX-14},${PCTRL_Y+PCTRL_H/2+10} ${supX+FACT_W+4},${SUPPLIER_Y+FACT_H/2}`}
+            stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
           />
+          <polyline
+            points={`${pctX+PCTRL_W},${PCTRL_Y+PCTRL_H/2} ${pctX+PCTRL_W+14},${PCTRL_Y+PCTRL_H/2+10} ${custX-4},${SUPPLIER_Y+FACT_H/2}`}
+            stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
+          />
+          <text x={pctX - 58} y={SUPPLIER_Y - 4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
+          <text x={custX - 22} y={SUPPLIER_Y - 4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
 
-          <text x={MARGIN - 10} y={TOP_Y + BOX_H / 2 + 4} fill="#D4A208" fontSize={9} fontFamily="monospace" textAnchor="end">
-            MAIN
-          </text>
+          {mainSteps.map((_, i) => {
+            const px = sx(i) + PW/2
+            const mx = pctX + PCTRL_W/2 + (px - pctX - PCTRL_W/2) * 0.4
+            return (
+              <polyline key={i}
+                points={`${pctX+PCTRL_W/2},${PCTRL_Y+PCTRL_H} ${mx},${PROC_Y-24} ${px},${PROC_Y}`}
+                stroke="#0EA5E9" strokeWidth={1.2} fill="none" strokeDasharray="4,3" opacity={0.5} markerEnd="url(#infoArrow)"
+              />
+            )
+          })}
 
+          {/* Supplier & Customer factories */}
+          <FactoryIcon x={supX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.supplier || 'Supplier'} />
+          <FactoryIcon x={custX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.customer || 'Customer'} />
+          {project.demand && (
+            <text x={custX+FACT_W/2} y={SUPPLIER_Y+FACT_H+28} textAnchor="middle" fill="#6B7280" fontSize={8} fontFamily="sans-serif">
+              {project.demand}/day
+            </text>
+          )}
+
+          {/* Trucks */}
+          <TruckIcon x={t1x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
+          <TruckIcon x={t2x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
+
+          {/* Material flow arrows */}
+          <line x1={t1x+TRUCK_W+4} y1={TRUCK_Y} x2={sx(0)} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
+          <line x1={sx(n-1)+PW+4} y1={PROC_Y+PH/2} x2={t2x} y2={TRUCK_Y} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
+
+          {/* Process steps */}
           {mainSteps.map((step, i) => {
-            const x = boxX(i)
-
+            const x = sx(i)
+            const wip = Number(step.wip) || 0
             return (
               <g key={step.id}>
                 {i > 0 && (
-                  <line
-                    x1={boxX(i - 1) + BOX_W}
-                    y1={TOP_Y + BOX_H / 2}
-                    x2={x}
-                    y2={TOP_Y + BOX_H / 2}
-                    stroke="#D4A208"
-                    strokeWidth={1.6}
-                    opacity={0.65}
-                    markerEnd="url(#mainArrow)"
-                  />
-                )}
-
-                {Number(step.wip) > 0 && i > 0 && (
-                  <g transform={`translate(${boxX(i - 1) + BOX_W + GAP / 2 - 12},${TOP_Y + BOX_H / 2 - 18})`}>
-                    <polygon points="12,0 24,22 0,22" fill="none" stroke="#8C44CC" strokeWidth={1.4} opacity={0.75} />
-                    <text x={12} y={17} textAnchor="middle" fill="#8C44CC" fontSize={9}>{step.wip}</text>
+                  <g>
+                    <line x1={sx(i-1)+PW+4} y1={PROC_Y+PH/2} x2={x-10} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} />
+                    <polygon points={`${x-10},${PROC_Y+PH/2-5} ${x},${PROC_Y+PH/2} ${x-10},${PROC_Y+PH/2+5}`} fill="#374151" />
+                    <text x={sx(i-1)+PW+GAP/2} y={PROC_Y+PH/2-8} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
+                    {wip > 0 && <WIPTriangle x={sx(i-1)+PW+GAP/2-14} y={PROC_Y+PH/2+6} wip={wip} />}
                   </g>
                 )}
-
-                {renderDataBox(step, x, TOP_Y)}
-                {renderTimeline(step, x, DATA_STRIP_Y)}
+                <ProcessBox x={x} y={PROC_Y} step={step} takt={takt} />
               </g>
             )
           })}
 
-          <line
-            x1={MARGIN}
-            y1={DATA_STRIP_Y + 20}
-            x2={MARGIN + mainSteps.length * (BOX_W + GAP) - GAP}
-            y2={DATA_STRIP_Y + 20}
-            stroke="#232842"
-            strokeWidth={1.5}
-          />
-
-          {branchIds.map((bid, bi) => {
-            const bd = branches.find((b) => b.branch_id === bid)
-            const color = bd?.color || BRANCH_COLORS[bi % BRANCH_COLORS.length]
-            const label = bd?.label || branchGroups[bid][0]?.branch_label || `Branch ${bi + 1}`
-            const ly = laneY(bi)
-            const ls = branchGroups[bid]
-            const pid = bd?.parent_step_id || ls[0]?.branch_parent_id
-            const pi = mainSteps.findIndex((s) => s.id === pid)
-            const sx = pi >= 0 ? boxX(pi) : MARGIN
-            const mid = bd?.merge_step_id
-            const mi = mid ? mainSteps.findIndex((s) => s.id === mid) : -1
-
+          {/* Timeline */}
+          <line x1={flowX} y1={TL_BASE} x2={sx(n-1)+PW} y2={TL_BASE} stroke="#D1D5DB" strokeWidth={1.5} />
+          {mainSteps.map((step, i) => {
+            const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+            const wt = Number(step.wait_time)||0
+            const isBN2 = takt > 0 && ct > takt*1.05
+            const ph = ct > 0 ? Math.max(6, Math.min(36, (ct/Math.max(mainCT||1,1))*36)) : 4
+            const bx = sx(i)
             return (
-              <g key={bid}>
-                <text x={MARGIN - 10} y={ly + BOX_H / 2 + 4} fill={color} fontSize={9} fontFamily="monospace" textAnchor="end">
-                  {label.toUpperCase()}
-                </text>
-
-                <rect
-                  x={sx - 10}
-                  y={ly - 8}
-                  width={ls.length * (BOX_W + GAP) - GAP + 20}
-                  height={BOX_H + 52}
-                  rx={10}
-                  fill={`${color}08`}
-                  stroke={`${color}25`}
-                />
-
-                {ls.map((step, si) => {
-                  const x = sx + si * (BOX_W + GAP)
-                  return (
-                    <g key={step.id}>
-                      {si > 0 && (
-                        <line
-                          x1={sx + (si - 1) * (BOX_W + GAP) + BOX_W}
-                          y1={ly + BOX_H / 2}
-                          x2={x}
-                          y2={ly + BOX_H / 2}
-                          stroke={color}
-                          strokeWidth={1.5}
-                          opacity={0.65}
-                          markerEnd={`url(#branchArrow-${bid})`}
-                        />
-                      )}
-
-                      {renderDataBox(step, x, ly, color)}
-                      {renderTimeline(step, x, ly + BOX_H + 10, color)}
-                    </g>
-                  )
-                })}
-
-                {mi >= 0 && (
-                  <path
-                    d={`M${sx + ls.length * (BOX_W + GAP) - GAP + BOX_W / 2},${ly} L${boxX(mi) + BOX_W / 2},${TOP_Y + BOX_H}`}
-                    stroke={color}
-                    strokeWidth={1.5}
-                    fill="none"
-                    strokeDasharray="5,3"
-                    opacity={0.55}
-                    markerEnd={`url(#branchArrow-${bid})`}
-                  />
+              <g key={`tl-${step.id}`}>
+                {wt > 0 && i > 0 && (
+                  <g>
+                    <rect x={sx(i-1)+PW+4} y={TL_BASE} width={GAP-8} height={Math.max(4,Math.min(18,(wt/Math.max(mainWT||1,1))*18))} fill="#FCA5A5" rx={2} opacity={0.7} />
+                    <text x={sx(i-1)+PW+GAP/2} y={TL_BASE+Math.max(4,Math.min(18,(wt/Math.max(mainWT||1,1))*18))+10} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="monospace">{fmtS(wt)}</text>
+                  </g>
                 )}
+                <rect x={bx+4} y={TL_BASE-ph} width={PW-8} height={ph} fill={isBN2?'#FCA5A5':'#6EE7B7'} rx={2} opacity={0.9} />
+                <text x={bx+PW/2} y={TL_BASE-ph-3} textAnchor="middle" fill={isBN2?'#DC2626':'#059669'} fontSize={8} fontWeight={700} fontFamily="monospace">{ct?fmtS(ct):'—'}</text>
               </g>
             )
           })}
 
-          <text x={MARGIN} y={SVG_H - 18} fill="#8F98AD" fontSize={10} fontFamily="monospace">
-            {`Lead Time: ${fmtS(leadTime)} · Value Added: ${fmtS(criticalCT)} · PCE: ${pce ? `${pce.toFixed(1)}%` : '—'} · Takt: ${takt ? fmtS(takt) : '—'} · WIP: ${totalWIP || '—'}`}
+          {/* Footer summary */}
+          <text x={flowX} y={TOTAL_H - 12} fill="#6B7280" fontSize={9} fontFamily="monospace">
+            {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':'—'}  ·  Takt: ${takt?fmtS(takt):'—'}`}
           </text>
         </svg>
       </div>
 
-      <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginTop: 14, fontSize: 11, color: 'var(--text2)' }}>
+      {/* Legend */}
+      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12, fontSize: 11, color: 'var(--text2)' }}>
         {[
-          { c: '#D4A208', l: 'Material Flow / Value Added' },
-          { c: '#6CB9FC', l: 'Information Flow' },
-          { c: '#8C44CC', l: 'WIP / Inventory' },
-          { c: '#10B981', l: 'Uptime / Availability' },
-          { c: '#F59E0B', l: 'Quality / Defect Signal' },
-          ...(hasBranches ? [{ c: '#7C3AED', l: 'Branch Flow' }] : []),
-        ].map(({ c, l }) => (
+          { c: '#CCFBF1', s: '#0D9488', l: 'Process Step' },
+          { c: '#FEE2E2', s: '#DC2626', l: 'Bottleneck (Over Takt)' },
+          { c: '#F97316', s: '#C05621', l: 'Shipment / Truck' },
+          { c: '#FEF3C7', s: '#D97706', l: 'WIP / Inventory' },
+          { c: '#A7F3D0', s: '#059669', l: 'Production Control' },
+          { c: '#DBEAFE', s: '#0EA5E9', l: 'Information Flow (dashed)' },
+        ].map(({ c, s, l }) => (
           <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 10, height: 10, borderRadius: 2, background: c, opacity: 0.85 }} />
+            <div style={{ width: 12, height: 12, borderRadius: 2, background: c, border: `1.5px solid ${s}` }} />
             {l}
           </div>
         ))}
       </div>
-
-      <div
-        style={{
-          marginTop: 14,
-          padding: '12px 14px',
-          borderRadius: 10,
-          border: '1px solid var(--border)',
-          background: 'rgba(255,255,255,0.02)',
-          color: 'var(--text2)',
-          fontSize: 11,
-          lineHeight: 1.55,
-        }}
-      >
-        This map is structured to support recognized industrial process-analysis practices and references concepts used in
-        value stream management and quality process documentation. It is intended to support operational analysis and
-        continuous improvement activity.
-      </div>
     </div>
   )
 }
+
+// ── Production Control box ─────────────────────────────────────────────────
+const ProdCtrl = ({ x, y, w, h }: any) => (
+  <g>
+    <rect x={x} y={y} width={w} height={h} fill="#A7F3D0" stroke="#059669" strokeWidth={1.5} rx={4} />
+    <text x={x+w/2} y={y+17} textAnchor="middle" fill="#065F46" fontSize={10} fontWeight={700} fontFamily="sans-serif">Production</text>
+    <text x={x+w/2} y={y+31} textAnchor="middle" fill="#065F46" fontSize={10} fontWeight={700} fontFamily="sans-serif">Control</text>
+  </g>
+)
+
+export default VSMMap
