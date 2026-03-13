@@ -270,7 +270,6 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
     : `<p style="font-size:11px;color:#94A3B8;font-style:italic">No fishbone diagram data recorded. Use the Ishikawa (Fishbone) tool in each process step.</p>`
 
   // ── VSM Flow ───────────────────────────────────────────────────────────────
-  const SERIF = 'Georgia,"Times New Roman",serif'
   const flowSteps = steps.slice(0, 9).map((s, i) => {
     const ct  = s.cycle_time || 0
     const isBN = takt > 0 && ct > takt * 1.05
