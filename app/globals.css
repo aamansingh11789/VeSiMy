@@ -468,7 +468,9 @@ textarea.input {
   flex: 1;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+  /* Ensure last element scrolls above the sticky footer */
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  scroll-padding-bottom: 80px;
 }
 
 .vesimy-modal-footer {
@@ -674,7 +676,10 @@ textarea.input {
 
   .vesimy-modal-body {
     padding: 16px;
-    padding-bottom: 24px;
+    /* Must exceed sticky footer height (~68px) + safe area so bottom inputs
+       can scroll fully above the Cancel/Save bar */
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
   }
 
   .vesimy-modal-footer {
@@ -904,7 +909,9 @@ body.modal-open main {
 
   .vesimy-modal-body {
     padding: 16px !important;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px) !important;
+    /* Footer is ~68px tall — pad enough so the last input scrolls fully above it */
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
     -webkit-overflow-scrolling: touch !important;
   }
 

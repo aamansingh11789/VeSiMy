@@ -178,7 +178,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
                   <span style={{ fontSize: 11, color: 'var(--text3)', fontStyle: 'italic' }}>No causes added</span>
                 )}
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gap: 8 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gap: 8, marginBottom: 4 }}>
                   <input
                     className="input"
                     style={{ fontSize: 12, minWidth: 0 }}
