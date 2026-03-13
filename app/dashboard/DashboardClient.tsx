@@ -749,6 +749,39 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
         </div>
 
+        {/* AI Monitor widget — coming soon teaser */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(100,38,160,0.06))',
+          border: '1px solid rgba(212,162,8,0.2)',
+          borderRadius: 16,
+          padding: '18px 22px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 18,
+          flexWrap: 'wrap',
+        }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+            background: 'rgba(212,162,8,0.1)', border: '1px solid rgba(212,162,8,0.2)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
+          }}>
+            🧠
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>VeSiMy AI Monitor</span>
+              <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 8px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>COMING SOON</span>
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
+              The AI layer that watches every metric in your projects 24/7 — detects anomalies, predicts problems, and tells you exactly what to fix before it costs money. <span style={{ color: '#D4A208' }}>Monitor → Record → Analyze → Suggest.</span>
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end', flexShrink: 0 }}>
+            <span style={{ fontSize: 11, color: '#D4A208', whiteSpace: 'nowrap', opacity: 0.7 }}>Launching M1-3 2026</span>
+            <span style={{ fontSize: 10, color: '#52507A', whiteSpace: 'nowrap' }}>Pre-seed raise open</span>
+          </div>
+        </div>
+
         {/* Health overview */}
         {projects.length > 0 && <HealthOverview projects={projects} />}
 

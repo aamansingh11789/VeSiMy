@@ -8,12 +8,12 @@ import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title:       { default: 'VeSiMy', template: '%s — Vesimy' },
-  description: 'VeSiMy — Continuous improvement platform for every industry. Map value streams, identify waste, and track improvements.',
-  keywords:    ['continuous improvement', 'VSM', 'value stream mapping', 'lean', 'kaizen', 'process improvement', 'productivity'],
+  title:       { default: 'VeSiMy — AI Operations Intelligence Platform', template: '%s — VeSiMy' },
+  description: 'VeSiMy is the AI platform that monitors your manufacturing processes, detects inefficiencies automatically, and tells your team exactly what to fix. Free VSM, Kaizen, 5 Why, Fishbone, SMED and Gemba Walk tools — all in one platform.',
+  keywords:    ['continuous improvement', 'VSM', 'value stream mapping', 'lean manufacturing software', 'kaizen tracking', 'AI process optimization', '5 why analysis', 'fishbone diagram', 'free VSM tool', 'manufacturing AI', 'process improvement software'],
   authors:     [{ name: 'VeSiMy' }],
   creator:     'VeSiMy',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://vesimy.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.vesimy.com'),
 
   // ── PWA manifest ───────────────────────────────────────────────────────────
   manifest: '/manifest.json',
@@ -29,8 +29,18 @@ export const metadata: Metadata = {
   openGraph: {
     type:        'website',
     siteName:    'VeSiMy',
-    title:       'Vesimy — Continuous Improvement, Simplified',
-    description: 'CI · VSM · Kaizen for every team',
+    title:       'VeSiMy — AI Operations Intelligence Platform for Manufacturing',
+    description: 'Monitor, record, analyze and suggest process improvements automatically. Free VSM, Kaizen, 5 Why, Fishbone tools — with AI that never clocks out.',
+    url:         'https://www.vesimy.com',
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — AI Operations Intelligence Platform' }],
+  },
+
+  // ── Twitter Card ───────────────────────────────────────────────────────────
+  twitter: {
+    card:        'summary_large_image',
+    title:       'VeSiMy — AI Operations Intelligence Platform',
+    description: 'The AI platform that monitors your manufacturing processes and tells you what to fix. Free forever.',
+    images:      ['/api/og'],
   },
 
   // ── Icons ──────────────────────────────────────────────────────────────────

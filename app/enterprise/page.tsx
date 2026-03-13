@@ -231,6 +231,43 @@ export default function EnterprisePage() {
                 </div>
               )}
 
+              {quote && (
+                <div style={{ marginTop:20, background:'rgba(29,209,161,0.07)', border:'1px solid rgba(29,209,161,0.22)', borderRadius:12, padding:'18px 20px' }}>
+                  <div style={{ fontWeight:700, fontSize:14, color:'#1DD1A1', marginBottom:10 }}>✓ What happens next</div>
+                  <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                    {[
+                      ['Within 24 hours','Our team reviews your quote and contacts you to confirm details'],
+                      ['Kick-off call','30-minute call to align on rollout plan, integrations, and success metrics'],
+                      ['90-day pilot','Start with a free pilot on one site or one product line — no risk'],
+                    ].map(([step, desc]) => (
+                      <div key={step} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
+                        <span style={{ color:'#1DD1A1', fontWeight:700, fontSize:13, flexShrink:0 }}>→</span>
+                        <div>
+                          <span style={{ color:'#F3F1FB', fontWeight:600, fontSize:13 }}>{step}: </span>
+                          <span style={{ color:'#8B88B3', fontSize:13 }}>{desc}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop:16, display:'flex', gap:10, flexWrap:'wrap' }}>
+                    <a
+                      href={`mailto:hello@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
+                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
+                    >
+                      Email us directly →
+                    </a>
+                    <a
+                      href="https://calendly.com/vesimy/enterprise"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ padding:'10px 20px', border:'1px solid rgba(29,209,161,0.3)', color:'#1DD1A1', fontWeight:600, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
+                    >
+                      Book a call
+                    </a>
+                  </div>
+                </div>
+              )}
+
               <p style={{ fontSize:11, color:'#28285C', textAlign:'center', marginTop:14 }}>
                 * Estimate. Official quote locks your price for 30 days.
               </p>

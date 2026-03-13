@@ -536,7 +536,7 @@ export function Sidebar({ profile }: SidebarProps) {
             textTransform: 'uppercase',
           }}
         >
-          Vesimy v1.0 · Continuous Improvement
+          VeSiMy v1.1 · AI Operations Intelligence
         </div>
       </div>
     </aside>

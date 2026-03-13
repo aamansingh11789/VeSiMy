@@ -18,10 +18,12 @@ import { KanbanBoard } from '@/components/tools/KanbanBoard'
 import { VSMMap } from '@/components/vsm/VSMMap'
 import { SupePanel } from '@/components/supe/SupePanel'
 import { ProcessHealthScore } from '@/components/health/ProcessHealthScore'
+import { ProcessJournal } from '@/components/journal/ProcessJournal'
 import { ProcessSimulation } from '@/components/simulation/ProcessSimulation'
 import { LiveFloorPanel } from '@/components/live/LiveFloorPanel'
 import { SOPUpload } from '@/components/tools/SOPUpload'
 import { PDFExportButton } from '@/components/export/PDFExport'
+import { ProcessJournal } from '@/components/journal/ProcessJournal'
 import { Modal } from '@/components/ui/Modal'
 import {
   StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
@@ -64,6 +66,7 @@ interface Props {
 
 export function ProjectClient({ initialProject, profile }: Props) {
   const router = useRouter()
+  const [showJournal, setShowJournal] = useState(false)
   const {
     showToast, setActiveTool, activeTool,
     setShowStepModal, showStepModal,
@@ -360,6 +363,27 @@ export function ProjectClient({ initialProject, profile }: Props) {
             steps={steps}
             isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
           />
+
+          <button
+            onClick={() => setShowJournal(true)}
+            title="Process Journal"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              padding: '6px 10px',
+              borderRadius: 7,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              background: 'rgba(212,162,8,0.06)',
+              border: '1px solid rgba(212,162,8,0.2)',
+              color: '#D4A208',
+            }}
+          >
+            📓
+            <span className="action-btn-label">Journal</span>
+          </button>
 
           <button
             onClick={() => setShowProjectEdit(true)}
@@ -679,6 +703,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
           )}
         </div>
       </div>
+
+      {showJournal && (
+        <ProcessJournal
+          projectId={project.id}
+          open={showJournal}
+          onClose={() => setShowJournal(false)}
+        />
+      )}
 
       {showSupe && (
         <div
@@ -1353,6 +1385,14 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           })}
         </div>
       )}
+
+      {/* Process Journal side panel */}
+      <ProcessJournal
+        projectId={project.id}
+        userId={(profile as any).id}
+        isOpen={showJournal}
+        onClose={() => setShowJournal(false)}
+      />
     </div>
   )
 }

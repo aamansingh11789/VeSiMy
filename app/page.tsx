@@ -467,7 +467,7 @@ export default function HomePage() {
                 textTransform: 'uppercase',
               }}
             >
-              Continuous Improvement Platform
+              AI Operations Intelligence Platform
             </span>
           </div>
 
@@ -483,9 +483,9 @@ export default function HomePage() {
               color: '#F3F1FB',
             }}
           >
-            Every great team
+            Manufacturing that watches itself.
             <br />
-            <span style={{ color: '#D4A208' }}>keeps getting better.</span>
+            <span style={{ color: '#D4A208' }}>Fixes itself. Gets better.</span>
           </h1>
 
           <p
@@ -498,9 +498,9 @@ export default function HomePage() {
               marginBottom: 42,
             }}
           >
-            VeSiMy gives your team one premium workspace to map value streams, run
-            kaizen events, track improvements, and build a culture of continuous
-            excellence.
+            VeSiMy is the AI platform that monitors your processes continuously,
+            detects inefficiencies before they cost you money, and tells your team
+            exactly what to fix — automatically.
           </p>
 
           <div
@@ -620,11 +620,11 @@ export default function HomePage() {
               eyebrow="Tools"
               title={
                 <>
-                  Six tools.
-                  <span style={{ color: '#D4A208' }}> One platform.</span>
+                  Eight tools.
+                  <span style={{ color: '#D4A208' }}> One AI brain.</span>
                 </>
               }
-              subtitle="Everything your team needs to drive continuous improvement, built into one coherent system."
+              subtitle="Every CI tool your team needs — connected to an AI that monitors, analyzes, and suggests improvements automatically."
             />
 
             <div
@@ -671,6 +671,20 @@ export default function HomePage() {
                   desc: 'Map cause-and-effect relationships visually with Ishikawa analysis.',
                   color: '#8C44CC',
                 },
+                {
+                  icon: '⟳',
+                  title: 'SMED Calculator',
+                  desc: 'Analyze changeover steps, classify internal vs external, and calculate potential time savings instantly.',
+                  color: '#1DD1A1',
+                  badge: 'NEW',
+                },
+                {
+                  icon: '📋',
+                  title: 'Gemba Walk Checklist',
+                  desc: 'Mobile-first floor inspection tool. Capture photos, flag issues, and auto-create kaizen events on the spot.',
+                  color: '#6CB9FC',
+                  badge: 'NEW',
+                },
               ].map((tool) => (
                 <div
                   key={tool.title}
@@ -679,55 +693,35 @@ export default function HomePage() {
                     padding: '30px 26px',
                     borderRadius: 18,
                     minHeight: 220,
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
                 >
+                  {tool.badge && (
+                    <div style={{
+                      position: 'absolute', top: 16, right: 16,
+                      background: 'linear-gradient(135deg,#C49510,#D4A208)',
+                      color: '#03030D', fontSize: 9, fontWeight: 800,
+                      padding: '3px 10px', borderRadius: 999, letterSpacing: 1.5,
+                    }}>
+                      {tool.badge}
+                    </div>
+                  )}
                   <div
                     style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 14,
-                      background:
-                        tool.color === '#D4A208'
-                          ? 'rgba(212,162,8,0.12)'
-                          : tool.color === '#6CB9FC'
-                            ? 'rgba(108,185,252,0.12)'
-                            : tool.color === '#1DD1A1'
-                              ? 'rgba(29,209,161,0.12)'
-                              : tool.color === '#F4A623'
-                                ? 'rgba(244,166,35,0.12)'
-                                : tool.color === '#FF6B6B'
-                                  ? 'rgba(255,107,107,0.12)'
-                                  : 'rgba(140,68,204,0.12)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: 18,
-                      fontSize: 20,
-                      color: tool.color,
+                      width: 50, height: 50, borderRadius: 14,
+                      background: `${tool.color}1a`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      marginBottom: 18, fontSize: 20, color: tool.color,
                       border: `1px solid ${tool.color}26`,
                     }}
                   >
                     {tool.icon}
                   </div>
-
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: 17,
-                      color: '#F3F1FB',
-                      marginBottom: 10,
-                    }}
-                  >
+                  <div style={{ fontWeight: 700, fontSize: 17, color: '#F3F1FB', marginBottom: 10 }}>
                     {tool.title}
                   </div>
-
-                  <div
-                    style={{
-                      fontSize: 13,
-                      color: '#8B88B3',
-                      lineHeight: 1.7,
-                    }}
-                  >
+                  <div style={{ fontSize: 13, color: '#8B88B3', lineHeight: 1.7 }}>
                     {tool.desc}
                   </div>
                 </div>
@@ -959,6 +953,8 @@ export default function HomePage() {
                 <tbody>
                   {[
                     ['VSM Mapping', '✓', '✓', '✓', '✓', 'Manual'],
+                    ['AI Process Monitor', '✓', '✗', '✗', '✗', '✗'],
+                    ['Anomaly Detection', '✓', '✗', '✗', '✗', '✗'],
                     ['AI Analysis (Supe)', '✓', '✗', '✗', '✗', '✗'],
                     ['SOP → VSM in 60s', '✓', '✗', '✗', '✗', '✗'],
                     ['Kaizen Tracking', '✓', '✗', 'Addon', '✗', '✗'],
@@ -1243,7 +1239,7 @@ export default function HomePage() {
           >
             The factories that win the next decade
             <br />
-            <span style={{ color: '#D4A208' }}>are mapping their processes today.</span>
+            <span style={{ color: '#D4A208' }}>are optimizing with AI today.</span>
           </p>
 
           <p
@@ -1254,8 +1250,8 @@ export default function HomePage() {
               lineHeight: 1.8,
             }}
           >
-            Join the teams who stopped talking about improvement and started
-            tracking it — with AI that never clocks out.
+            Join manufacturers who replaced spreadsheets, sticky notes, and
+            consultants with one AI platform that never clocks out.
           </p>
 
           <Link
@@ -1305,9 +1301,12 @@ export default function HomePage() {
             }}
           >
             {[
+              ['About', '/about'],
+              ['Blog', '/blog'],
+              ['Changelog', '/changelog'],
+              ['Pricing', '/pricing'],
               ['Privacy', '/privacy'],
               ['Terms', '/terms'],
-              ['Pricing', '/pricing'],
               ['Contact', 'mailto:hello@vesimy.com'],
             ].map(([label, href]) => (
               <Link
