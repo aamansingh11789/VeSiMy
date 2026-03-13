@@ -4,6 +4,7 @@
 // Lean-standard Value Stream Map  ·  ISO 22468:2020
 // Proper symbols: factory, truck, push arrows, data boxes, WIP triangles, timeline
 
+import { useState, useEffect } from 'react'
 import type { Step, Branch, Project } from '@/lib/store'
 
 interface Props {
@@ -462,6 +463,21 @@ export function VSMMap({ steps, branches, project }: Props) {
   const lt = mainCT + mainWT
   const pce = lt > 0 ? (mainCT/lt)*100 : 0
 
+  const [fullscreen, setFullscreen] = useState(false)
+
+  useEffect(() => {
+    if (!fullscreen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setFullscreen(false) }
+    document.addEventListener('keydown', onKey)
+    // Hide bottom nav while fullscreen
+    const nav = document.querySelector('.bottom-nav') as HTMLElement | null
+    if (nav) nav.style.setProperty('display', 'none', 'important')
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      if (nav) nav.style.removeProperty('display')
+    }
+  }, [fullscreen])
+
   const PW=96, PH=64, DH=64, GAP=60
   const ML=60, MR=60
   const FACT_W=64, FACT_H=56
@@ -505,11 +521,18 @@ export function VSMMap({ steps, branches, project }: Props) {
         >
           📄 Export VSM Report
         </button>
+        <button
+          onClick={() => setFullscreen(true)}
+          style={{ padding: '8px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', color: 'var(--text2)', alignSelf: 'stretch' }}
+          title="Fullscreen (Esc to exit)"
+        >
+          ⛶
+        </button>
       </div>
 
       {/* VSM Diagram */}
-      <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 10, overflowX: 'auto', padding: 16 }}>
-        <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+      {(() => {
+        const svgContent = (<>
           <defs>
             <marker id="infoArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
               <polygon points="0 0,7 2.5,0 5" fill="#0EA5E9" />
@@ -617,8 +640,42 @@ export function VSMMap({ steps, branches, project }: Props) {
           <text x={flowX} y={TOTAL_H - 12} fill="#6B7280" fontSize={9} fontFamily="monospace">
             {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':'—'}  ·  Takt: ${takt?fmtS(takt):'—'}`}
           </text>
-        </svg>
-      </div>
+        </>)
+
+        return (
+          <>
+            {/* Fullscreen overlay */}
+            {fullscreen && (
+              <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: '#F9FAFB', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: '#1E3A5F', color: '#FFFFFF', flexShrink: 0 }}>
+                  <span style={{ fontSize: 13, fontWeight: 700 }}>{project.name} — Value Stream Map</span>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <span style={{ fontSize: 11, opacity: 0.7 }}>Press Esc to exit</span>
+                    <button onClick={() => exportVSMReport(steps, project, branches)} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.2)', border: '1px solid rgba(212,162,8,0.5)', color: '#D4A208' }}>
+                      📄 Export
+                    </button>
+                    <button onClick={() => setFullscreen(false)} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}>
+                      ✕ Close
+                    </button>
+                  </div>
+                </div>
+                <div style={{ flex: 1, overflow: 'auto', padding: 24, display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+                  <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+                    {svgContent}
+                  </svg>
+                </div>
+              </div>
+            )}
+
+            {/* Normal view */}
+            <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 10, overflowX: 'auto', padding: 16 }}>
+              <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+                {svgContent}
+              </svg>
+            </div>
+          </>
+        )
+      })()}
 
       {/* Legend */}
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12, fontSize: 11, color: 'var(--text2)' }}>
