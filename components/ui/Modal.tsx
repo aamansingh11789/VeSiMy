@@ -25,6 +25,13 @@ export function Modal({
       if (e.key === 'Escape') onClose()
     }
 
+    // Hide bottom nav directly — CSS class alone has timing gaps on mobile
+    const bottomNav = document.querySelector('.bottom-nav') as HTMLElement | null
+    if (bottomNav) {
+      bottomNav.style.setProperty('display', 'none', 'important')
+      bottomNav.style.setProperty('visibility', 'hidden', 'important')
+    }
+
     document.addEventListener('keydown', handler)
     document.body.classList.add('modal-open')
     document.body.style.overflow = 'hidden'
@@ -33,6 +40,12 @@ export function Modal({
       document.removeEventListener('keydown', handler)
       document.body.classList.remove('modal-open')
       document.body.style.overflow = ''
+
+      // Restore bottom nav
+      if (bottomNav) {
+        bottomNav.style.removeProperty('display')
+        bottomNav.style.removeProperty('visibility')
+      }
     }
   }, [onClose])
 

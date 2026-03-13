@@ -903,8 +903,8 @@ body.modal-open main {
 
 @media (max-width: 768px) {
   .vesimy-modal {
-    max-height: calc(100dvh - 80px) !important;
-    margin-bottom: env(safe-area-inset-bottom, 0px) !important;
+    max-height: calc(100dvh - 56px) !important;
+    margin-bottom: 0 !important;
   }
 
   .vesimy-modal-body {
