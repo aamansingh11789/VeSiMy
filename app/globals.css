@@ -649,7 +649,8 @@ textarea.input {
     width: 100%;
     margin: 0;
     border-radius: 20px 20px 0 0;
-    max-height: 92vh;
+    max-height: 92dvh;
+    height: 92dvh;
     min-height: 0;
     box-shadow:
       0 -14px 48px rgba(0, 0, 0, 0.48),
@@ -676,10 +677,19 @@ textarea.input {
 
   .vesimy-modal-body {
     padding: 16px;
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     /* Must exceed sticky footer height (~68px) + safe area so bottom inputs
        can scroll fully above the Cancel/Save bar */
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
     scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .vesimy-modal-body textarea {
+    resize: none;
+    min-height: 72px;
   }
 
   .vesimy-modal-footer {
@@ -904,15 +914,28 @@ body.modal-open main {
 @media (max-width: 768px) {
   .vesimy-modal {
     max-height: calc(100dvh - 56px) !important;
+    /* Safari REQUIRES an explicit height (not just max-height) to make
+       overflow-y:auto work correctly inside a flex child */
+    height: calc(100dvh - 56px) !important;
     margin-bottom: 0 !important;
   }
 
+  /* min-height:0 lets the flex body actually shrink so footer stays pinned */
   .vesimy-modal-body {
+    min-height: 0 !important;
     padding: 16px !important;
-    /* Footer is ~68px tall — pad enough so the last input scrolls fully above it */
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
     scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
     -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+    flex: 1 !important;
+  }
+
+  /* Disable textarea resize inside modal on mobile — resize:vertical breaks
+     iOS Safari's scroll height calculation in flex containers */
+  .vesimy-modal-body textarea {
+    resize: none !important;
+    min-height: 72px !important;
   }
 
   .vesimy-modal-footer {
@@ -925,5 +948,6 @@ body.modal-open main {
     position: sticky !important;
     bottom: 0 !important;
     z-index: 10 !important;
+    flex-shrink: 0 !important;
   }
 }

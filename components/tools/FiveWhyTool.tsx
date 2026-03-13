@@ -148,7 +148,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           className="input"
           rows={2}
           placeholder="Describe the problem clearly."
-          style={{ resize: 'vertical', minHeight: 64 }}
+          style={{ minHeight: 64 }}
           value={problem}
           onChange={(e) => setProblem(e.target.value)}
         />
@@ -190,7 +190,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                 className="input"
                 rows={2}
                 placeholder={`Why ${i + 1}…`}
-                style={{ resize: 'vertical', minHeight: 56 }}
+                style={{ minHeight: 64 }}
                 value={w}
                 onChange={(e) => setWhy(i, e.target.value)}
               />
@@ -210,7 +210,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           <textarea
             className="input"
             rows={2}
-            style={{ resize: 'vertical', minHeight: 60 }}
+            style={{ minHeight: 64 }}
             value={rootCause}
             onChange={(e) => setRootCause(e.target.value)}
           />
@@ -221,7 +221,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           <textarea
             className="input"
             rows={2}
-            style={{ resize: 'vertical', minHeight: 60 }}
+            style={{ minHeight: 64 }}
             value={action}
             onChange={(e) => setAction(e.target.value)}
           />
