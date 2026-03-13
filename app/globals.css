@@ -897,6 +897,7 @@ html.light footer {
 }
 
 /* Modal + bottom-nav safety overrides */
+/* Portal-rendered modal sits above everything — bottom-nav is hidden via CSS only */
 body.modal-open .bottom-nav {
   display: none !important;
   visibility: hidden !important;
@@ -912,32 +913,28 @@ body.modal-open main {
 }
 
 @media (max-width: 768px) {
+  /* ── Modal shell: fixed height so body calc works ── */
   .vesimy-modal {
-    max-height: calc(100dvh - 56px) !important;
-    /* Safari REQUIRES an explicit height (not just max-height) to make
-       overflow-y:auto work correctly inside a flex child */
-    height: calc(100dvh - 56px) !important;
+    /* Use dvh (dynamic) so Safari's browser toolbar is excluded */
+    height: 92dvh !important;
+    max-height: 92dvh !important;
     margin-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
-  /* min-height:0 lets the flex body actually shrink so footer stays pinned */
-  .vesimy-modal-body {
-    min-height: 0 !important;
-    padding: 16px !important;
-    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
-    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
-    -webkit-overflow-scrolling: touch !important;
-    overflow-y: auto !important;
-    flex: 1 !important;
+  /* ── Handle: 25px total (5px bar + 10px margin + padding) ── */
+  .vesimy-modal-handle {
+    flex-shrink: 0 !important;
   }
 
-  /* Disable textarea resize inside modal on mobile — resize:vertical breaks
-     iOS Safari's scroll height calculation in flex containers */
-  .vesimy-modal-body textarea {
-    resize: none !important;
-    min-height: 72px !important;
+  /* ── Header: fixed ~56px ── */
+  .vesimy-modal-header {
+    flex-shrink: 0 !important;
   }
 
+  /* ── Footer: fixed ~68px ── */
   .vesimy-modal-footer {
     padding: 12px 16px !important;
     padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)) !important;
@@ -945,9 +942,38 @@ body.modal-open main {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 10px !important;
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 10 !important;
     flex-shrink: 0 !important;
+    /* NOT sticky — footer is a flex child of a fixed-height parent,
+       so it naturally pins at the bottom without sticky hacks */
+    position: relative !important;
+    bottom: auto !important;
+    z-index: 2 !important;
+  }
+
+  /* ── Body: EXPLICITLY calculated height — no flex magic, no Safari bugs ──
+     92dvh  = modal height
+     - 25px = handle
+     - 56px = header  
+     - 68px = footer
+     = the remaining space the body gets                                    */
+  .vesimy-modal-body {
+    height: calc(92dvh - 149px) !important;
+    max-height: calc(92dvh - 149px) !important;
+    min-height: 0 !important;
+    flex: none !important;          /* don't use flex sizing at all */
+    overflow-y: scroll !important;  /* scroll (not auto) forces Safari to honour height */
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    padding: 16px !important;
+    /* Extra bottom padding so last field clears the footer */
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)) !important;
+    scroll-padding-bottom: 32px !important;
+  }
+
+  /* Disable resize on textareas — resize:vertical breaks iOS scroll height */
+  .vesimy-modal-body textarea {
+    resize: none !important;
+    min-height: 72px !important;
   }
 }
