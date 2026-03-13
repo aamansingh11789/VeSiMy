@@ -403,7 +403,9 @@ textarea.input {
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  overflow-y: auto;
+  /* Must be hidden — overflow-y:auto lets iOS scroll the overlay instead of
+     the modal body, which is the root cause of the background-scroll bug */
+  overflow: hidden;
   overscroll-behavior: contain;
 }
 
