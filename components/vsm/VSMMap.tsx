@@ -439,6 +439,56 @@ ${bottlenecks.length>0 ? bottlenecks.map(s=>{
   w.document.close()
 }
 
+// ── ISO lean symbols (React SVG components) ────────────────────────────────
+
+/** Supermarket — ISO lean: striped shelf rectangle */
+const Supermarket = ({ x, y, w = 40, h = 30, label = 'S/M' }: any) => (
+  <g>
+    <rect x={x} y={y} width={w} height={h} fill="#EDE9FE" stroke="#7C3AED" strokeWidth={1.5} rx={2} />
+    {/* Shelf stripes */}
+    {[1,2,3].map(i => (
+      <line key={i} x1={x} y1={y + i*(h/4)} x2={x+w} y2={y + i*(h/4)} stroke="#7C3AED" strokeWidth={0.6} opacity={0.5} />
+    ))}
+    <text x={x+w/2} y={y+h/2+4} textAnchor="middle" fill="#5B21B6" fontSize={8} fontWeight={700} fontFamily="sans-serif">{label}</text>
+  </g>
+)
+
+/** Pull arrow — ISO lean: curved arrow with hollow head */
+const PullArrow = ({ x, y, dir = 'right' }: any) => {
+  const W = 50
+  return (
+    <g>
+      <path d={`M${x},${y} C${x+W*0.4},${y-14} ${x+W*0.6},${y-14} ${x+W},${y}`}
+        stroke="#7C3AED" strokeWidth={2} fill="none" />
+      <polygon points={`${x+W},${y-5} ${x+W+10},${y} ${x+W},${y+5}`}
+        fill="none" stroke="#7C3AED" strokeWidth={1.5} />
+      <text x={x+W/2} y={y-8} textAnchor="middle" fill="#7C3AED" fontSize={7} fontFamily="sans-serif">PULL</text>
+    </g>
+  )
+}
+
+/** Kanban card — small rectangle with K */
+const KanbanCard = ({ x, y }: any) => (
+  <g>
+    <rect x={x} y={y} width={20} height={14} fill="#FEF3C7" stroke="#D97706" strokeWidth={1} rx={2} />
+    <text x={x+10} y={y+10} textAnchor="middle" fill="#92400E" fontSize={8} fontWeight={700} fontFamily="sans-serif">K</text>
+  </g>
+)
+
+/** Kaizen burst on React SVG */
+const KaizenBurstR = ({ x, y, r = 16 }: any) => {
+  const pts = Array.from({length:16}, (_,i) => {
+    const a = (i/16)*Math.PI*2 - Math.PI/2
+    return `${x+Math.cos(a)*(i%2===0?r:r*0.6)},${y+Math.sin(a)*(i%2===0?r:r*0.6)}`
+  }).join(' ')
+  return (
+    <g>
+      <polygon points={pts} fill="#FEF9C3" stroke="#EAB308" strokeWidth={1.2} />
+      <text x={x} y={y+4} textAnchor="middle" fill="#92400E" fontSize={7} fontWeight={700} fontFamily="sans-serif">改善</text>
+    </g>
+  )
+}
+
 // ── React component ────────────────────────────────────────────────────────
 export function VSMMap({ steps, branches, project }: Props) {
   if (!steps.length) {
@@ -452,6 +502,18 @@ export function VSMMap({ steps, branches, project }: Props) {
   }
 
   const mainSteps = steps.filter(s => s.is_main_flow !== false).sort((a,b) => a.position - b.position)
+
+  // Branch groups
+  const branchSteps = steps.filter(s => s.is_main_flow === false)
+  const branchGroups: Record<string, Step[]> = {}
+  branchSteps.forEach(s => {
+    if (!s.branch_id) return
+    if (!branchGroups[s.branch_id]) branchGroups[s.branch_id] = []
+    branchGroups[s.branch_id].push(s)
+  })
+  Object.values(branchGroups).forEach(g => g.sort((a,b) => (a.branch_position||0)-(b.branch_position||0)))
+  const branchIds = Object.keys(branchGroups)
+  const BRANCH_COLORS = ['#7C3AED','#0EA5E9','#10B981','#F59E0B','#EC4899','#06B6D4']
 
   const takt = project.takt_time ? Number(project.takt_time)
     : project.demand && project.available_time_sec ? Number(project.available_time_sec) / Number(project.demand)
@@ -469,39 +531,283 @@ export function VSMMap({ steps, branches, project }: Props) {
     if (!fullscreen) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setFullscreen(false) }
     document.addEventListener('keydown', onKey)
-    // Hide bottom nav while fullscreen
-    const nav = document.querySelector('.bottom-nav') as HTMLElement | null
-    if (nav) nav.style.setProperty('display', 'none', 'important')
+    const nav     = document.querySelector('.bottom-nav') as HTMLElement | null
+    const sidebar = document.querySelector('aside') as HTMLElement | null
+    if (nav)     nav.style.setProperty('display', 'none', 'important')
+    if (sidebar) sidebar.style.setProperty('display', 'none', 'important')
+    document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
-      if (nav) nav.style.removeProperty('display')
+      if (nav)     nav.style.removeProperty('display')
+      if (sidebar) sidebar.style.removeProperty('display')
+      document.body.style.overflow = ''
     }
   }, [fullscreen])
 
+  // ── Layout constants ──
   const PW=96, PH=64, DH=64, GAP=60
-  const ML=60, MR=60
+  const ML=70, MR=70
   const FACT_W=64, FACT_H=56
   const TRUCK_W=52, TRUCK_H=28
   const PCTRL_W=130, PCTRL_H=44
-  const PCTRL_Y=24
-  const SUPPLIER_Y=84
-  const TRUCK_Y=162
-  const PROC_Y=212
+  const TOP_PAD = 48          // extra top space so title never clips
+  const PCTRL_Y = TOP_PAD + 8
+  const SUPPLIER_Y = TOP_PAD + 68
+  const TRUCK_Y    = TOP_PAD + 148
+  const PROC_Y     = TOP_PAD + 196
   const TIMELINE_Y = PROC_Y + PH + DH + 24
-  const TL_BASE = TIMELINE_Y + 36
-  const TOTAL_H = TL_BASE + 72
+  const TL_BASE    = TIMELINE_Y + 36
+  const BRANCH_LANE_H = PH + DH + 48
+  const BRANCH_GAP    = 40
+  const BRANCH_START_Y = TL_BASE + 56
+  const TOTAL_H = BRANCH_START_Y + branchIds.length * (BRANCH_LANE_H + BRANCH_GAP) + 60
 
   const n = mainSteps.length
-  const totalFlowW = n * PW + (n-1) * GAP
-  const TOTAL_W = Math.max(ML + FACT_W + TRUCK_W + totalFlowW + TRUCK_W + FACT_W + MR + 40, 750)
+  const maxBranchCols = branchIds.length ? Math.max(...branchIds.map(bid => branchGroups[bid].length)) : 0
+  const totalFlowW = Math.max(n, maxBranchCols) * PW + (Math.max(n, maxBranchCols)-1) * GAP
+  const TOTAL_W = Math.max(ML + FACT_W + TRUCK_W + totalFlowW + TRUCK_W + FACT_W + MR + 40, 800)
   const flowX = (TOTAL_W - totalFlowW) / 2
-  const sx = (i: number) => flowX + i * (PW + GAP)
+  const sx  = (i: number) => flowX + i * (PW + GAP)
   const supX = ML, custX = TOTAL_W - MR - FACT_W, pctX = (TOTAL_W - PCTRL_W) / 2
   const t1x = supX + FACT_W + 10, t2x = custX - TRUCK_W - 10, tyTruck = TRUCK_Y - TRUCK_H/2
 
+  const renderSVGContent = (bgFill = '#F9FAFB') => (<>
+    <defs>
+      <marker id="infoArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+        <polygon points="0 0,7 2.5,0 5" fill="#0EA5E9" />
+      </marker>
+      <marker id="matArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+        <polygon points="0 0,7 2.5,0 5" fill="#374151" />
+      </marker>
+      {branchIds.map((bid,i) => (
+        <marker key={bid} id={`bArr-${bid}`} markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+          <polygon points="0 0,7 2.5,0 5" fill={branches.find(b=>b.branch_id===bid)?.color||BRANCH_COLORS[i%BRANCH_COLORS.length]} />
+        </marker>
+      ))}
+    </defs>
+
+    <rect width={TOTAL_W} height={TOTAL_H} fill={bgFill} />
+
+    {/* Title bar — opaque background so it never gets hidden */}
+    <rect x={0} y={0} width={TOTAL_W} height={TOP_PAD} fill={bgFill} />
+    <text x={TOTAL_W/2} y={18} textAnchor="middle" fill="#1F2937" fontSize={13} fontWeight={700} fontFamily="sans-serif">
+      Current-State Value Stream Map
+    </text>
+    <text x={TOTAL_W/2} y={34} textAnchor="middle" fill="#6B7280" fontSize={9} fontFamily="sans-serif">
+      {project.name} · {project.industry || 'Manufacturing / Operations'} · ISO 22468:2020
+    </text>
+
+    {/* Production Control */}
+    <ProdCtrl x={pctX} y={PCTRL_Y} w={PCTRL_W} h={PCTRL_H} />
+
+    {/* Info flow: prod ctrl → supplier */}
+    <polyline
+      points={`${pctX},${PCTRL_Y+PCTRL_H/2} ${pctX-16},${PCTRL_Y+PCTRL_H/2+10} ${supX+FACT_W+4},${SUPPLIER_Y+FACT_H/2}`}
+      stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
+    />
+    {/* Info flow: prod ctrl → customer */}
+    <polyline
+      points={`${pctX+PCTRL_W},${PCTRL_Y+PCTRL_H/2} ${pctX+PCTRL_W+16},${PCTRL_Y+PCTRL_H/2+10} ${custX-4},${SUPPLIER_Y+FACT_H/2}`}
+      stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
+    />
+    <text x={pctX-60} y={SUPPLIER_Y-4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
+    <text x={custX-22} y={SUPPLIER_Y-4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
+
+    {/* Info arrows: prod ctrl → each step */}
+    {mainSteps.map((_,i) => {
+      const px = sx(i) + PW/2
+      const mx = pctX + PCTRL_W/2 + (px - pctX - PCTRL_W/2)*0.4
+      return (
+        <polyline key={i}
+          points={`${pctX+PCTRL_W/2},${PCTRL_Y+PCTRL_H} ${mx},${PROC_Y-24} ${px},${PROC_Y}`}
+          stroke="#0EA5E9" strokeWidth={1.2} fill="none" strokeDasharray="4,3" opacity={0.5} markerEnd="url(#infoArrow)"
+        />
+      )
+    })}
+
+    {/* Supplier & Customer factories */}
+    <FactoryIcon x={supX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.supplier || 'Supplier'} />
+    <FactoryIcon x={custX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.customer || 'Customer'} />
+    {project.demand && (
+      <text x={custX+FACT_W/2} y={SUPPLIER_Y+FACT_H+28} textAnchor="middle" fill="#6B7280" fontSize={8} fontFamily="sans-serif">
+        {project.demand}/day
+      </text>
+    )}
+
+    {/* Trucks */}
+    <TruckIcon x={t1x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
+    <TruckIcon x={t2x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
+
+    {/* Material flow arrows */}
+    <line x1={t1x+TRUCK_W+4} y1={TRUCK_Y} x2={sx(0)} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
+    <line x1={sx(n-1)+PW+4} y1={PROC_Y+PH/2} x2={t2x} y2={TRUCK_Y} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
+
+    {/* Main process steps */}
+    {mainSteps.map((step, i) => {
+      const x = sx(i)
+      const wip = Number(step.wip) || 0
+      const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+      const isBN = takt > 0 && ct > takt*1.05
+
+      return (
+        <g key={step.id}>
+          {i > 0 && (
+            <g>
+              {/* Push arrow */}
+              <line x1={sx(i-1)+PW+4} y1={PROC_Y+PH/2} x2={x-10} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} />
+              <polygon points={`${x-10},${PROC_Y+PH/2-5} ${x},${PROC_Y+PH/2} ${x-10},${PROC_Y+PH/2+5}`} fill="#374151" />
+              <text x={sx(i-1)+PW+GAP/2} y={PROC_Y+PH/2-8} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
+              {/* WIP inventory triangle */}
+              {wip > 0 && (
+                <g>
+                  <WIPTriangle x={sx(i-1)+PW+GAP/2-14} y={PROC_Y+PH/2+6} wip={wip} />
+                  {/* Supermarket if >20 WIP */}
+                  {wip > 20 && <Supermarket x={sx(i-1)+PW+GAP/2-20} y={PROC_Y+PH/2+34} w={40} h={22} label={`${wip}`} />}
+                </g>
+              )}
+              {/* Kanban card if step has kanban data */}
+              {step.kanban_qty > 0 && <KanbanCard x={sx(i-1)+PW+GAP/2+8} y={PROC_Y+PH/2-30} />}
+            </g>
+          )}
+          <ProcessBox x={x} y={PROC_Y} step={step} takt={takt} />
+          {/* Kaizen burst on bottleneck */}
+          {isBN && <KaizenBurstR x={x+PW-2} y={PROC_Y-2} r={14} />}
+        </g>
+      )
+    })}
+
+    {/* ── Timeline ── */}
+    <line x1={flowX} y1={TL_BASE} x2={sx(n-1)+PW} y2={TL_BASE} stroke="#D1D5DB" strokeWidth={1.5} />
+    <text x={flowX-4} y={TL_BASE-10} textAnchor="end" fill="#6B7280" fontSize={8} fontFamily="monospace">VA</text>
+    <text x={flowX-4} y={TL_BASE+12} textAnchor="end" fill="#9CA3AF" fontSize={8} fontFamily="monospace">NVA</text>
+
+    {mainSteps.map((step, i) => {
+      const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+      const wt = Number(step.wait_time)||0
+      const isBN2 = takt > 0 && ct > takt*1.05
+      const ph = ct > 0 ? Math.max(6, Math.min(36, (ct/Math.max(mainCT||1,1))*36)) : 4
+      const vh = wt > 0 ? Math.max(4, Math.min(18, (wt/Math.max(mainWT||1,1))*18)) : 0
+      const bx = sx(i)
+      return (
+        <g key={`tl-${step.id}`}>
+          {wt > 0 && i > 0 && (
+            <g>
+              <rect x={sx(i-1)+PW+4} y={TL_BASE} width={GAP-8} height={vh} fill="#FCA5A5" rx={2} opacity={0.7} />
+              <text x={sx(i-1)+PW+GAP/2} y={TL_BASE+vh+10} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="monospace">{fmtS(wt)}</text>
+            </g>
+          )}
+          <rect x={bx+4} y={TL_BASE-ph} width={PW-8} height={ph} fill={isBN2?'#FCA5A5':'#6EE7B7'} rx={2} opacity={0.9} />
+          <text x={bx+PW/2} y={TL_BASE-ph-3} textAnchor="middle" fill={isBN2?'#DC2626':'#059669'} fontSize={8} fontWeight={700} fontFamily="monospace">{ct?fmtS(ct):'—'}</text>
+        </g>
+      )
+    })}
+
+    {/* ── Branch lanes ── */}
+    {branchIds.map((bid, bi) => {
+      const bd = branches.find(b => b.branch_id === bid)
+      const color = bd?.color || BRANCH_COLORS[bi % BRANCH_COLORS.length]
+      const label = bd?.label || branchGroups[bid][0]?.branch_label || `Branch ${bi+1}`
+      const ls = branchGroups[bid]
+      const laneY = BRANCH_START_Y + bi * (BRANCH_LANE_H + BRANCH_GAP)
+      const brCT = ls.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0), 0)
+
+      // Connect from parent step on main flow
+      const pid = bd?.parent_step_id || ls[0]?.branch_parent_id
+      const pi = mainSteps.findIndex(s => s.id === pid)
+      const branchFlowX = pi >= 0 ? sx(pi) : flowX
+
+      return (
+        <g key={bid}>
+          {/* Lane label */}
+          <text x={branchFlowX - 10} y={laneY + PH/2 + 4} textAnchor="end" fill={color} fontSize={9} fontFamily="monospace" fontWeight={700}>
+            {label.toUpperCase()}
+          </text>
+
+          {/* Lane background */}
+          <rect
+            x={branchFlowX - 12}
+            y={laneY - 10}
+            width={ls.length * (PW + GAP) - GAP + 24}
+            height={BRANCH_LANE_H - 12}
+            rx={8}
+            fill={`${color}08`}
+            stroke={`${color}30`}
+            strokeWidth={1.2}
+            strokeDasharray="6,3"
+          />
+
+          {/* Vertical connector from main flow to branch lane */}
+          {pi >= 0 && (
+            <g>
+              <line
+                x1={sx(pi)+PW/2} y1={PROC_Y+PH+DH}
+                x2={branchFlowX+PW/2} y2={laneY}
+                stroke={color} strokeWidth={1.5} strokeDasharray="5,3" opacity={0.6}
+                markerEnd={`url(#bArr-${bid})`}
+              />
+              {/* Supermarket at branch entry if present */}
+              {bd?.has_supermarket && (
+                <Supermarket x={branchFlowX+PW/2-20} y={laneY-38} w={40} h={24} label="S/M" />
+              )}
+            </g>
+          )}
+
+          {/* Branch steps */}
+          {ls.map((step, si) => {
+            const bx = branchFlowX + si * (PW + GAP)
+            const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+            const wip = Number(step.wip)||0
+            const isBN = takt > 0 && ct > takt*1.05
+
+            return (
+              <g key={step.id}>
+                {si > 0 && (
+                  <g>
+                    <line x1={branchFlowX+(si-1)*(PW+GAP)+PW+4} y1={laneY+PH/2} x2={bx-10} y2={laneY+PH/2} stroke={color} strokeWidth={1.8} />
+                    <polygon
+                      points={`${bx-10},${laneY+PH/2-5} ${bx},${laneY+PH/2} ${bx-10},${laneY+PH/2+5}`}
+                      fill={color}
+                    />
+                    <text x={branchFlowX+(si-1)*(PW+GAP)+PW+GAP/2} y={laneY+PH/2-8} textAnchor="middle" fill={color} fontSize={7} opacity={0.8} fontFamily="sans-serif">PUSH</text>
+                    {wip > 0 && <WIPTriangle x={branchFlowX+(si-1)*(PW+GAP)+PW+GAP/2-14} y={laneY+PH/2+4} wip={wip} />}
+                  </g>
+                )}
+                <ProcessBox x={bx} y={laneY} step={step} takt={takt} />
+                {isBN && <KaizenBurstR x={bx+PW-2} y={laneY-2} r={14} />}
+              </g>
+            )
+          })}
+
+          {/* Branch CT summary */}
+          <text x={branchFlowX} y={laneY+BRANCH_LANE_H-18} fill={color} fontSize={8} fontFamily="monospace" opacity={0.8}>
+            Branch CT: {fmtS(brCT)}
+          </text>
+
+          {/* Pull arrow back to main if merge step exists */}
+          {bd?.merge_step_id && (() => {
+            const mi = mainSteps.findIndex(s => s.id === bd.merge_step_id)
+            if (mi < 0) return null
+            return (
+              <path
+                d={`M${branchFlowX + ls.length*(PW+GAP) - GAP + PW/2},${laneY} L${sx(mi)+PW/2},${PROC_Y+PH+DH}`}
+                stroke={color} strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.55}
+                markerEnd={`url(#bArr-${bid})`}
+              />
+            )
+          })()}
+        </g>
+      )
+    })}
+
+    {/* ── Footer KPI row ── */}
+    <text x={flowX} y={TOTAL_H - 12} fill="#6B7280" fontSize={9} fontFamily="monospace">
+      {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':'—'}  ·  Takt: ${takt?fmtS(takt):'—'}`}
+    </text>
+  </>)
+
   return (
     <div>
-      {/* KPI strip + export button */}
+      {/* KPI strip */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14, alignItems: 'stretch' }}>
         {[
           { l: 'Lead Time',  v: fmtS(lt),                           c: '#D4A208' },
@@ -523,172 +829,62 @@ export function VSMMap({ steps, branches, project }: Props) {
         </button>
         <button
           onClick={() => setFullscreen(true)}
-          style={{ padding: '8px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', color: 'var(--text2)', alignSelf: 'stretch' }}
+          style={{ padding: '8px 14px', borderRadius: 10, fontSize: 16, cursor: 'pointer', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', color: 'var(--text2)', alignSelf: 'stretch' }}
           title="Fullscreen (Esc to exit)"
         >
           ⛶
         </button>
       </div>
 
-      {/* VSM Diagram */}
-      {(() => {
-        const svgContent = (<>
-          <defs>
-            <marker id="infoArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
-              <polygon points="0 0,7 2.5,0 5" fill="#0EA5E9" />
-            </marker>
-            <marker id="matArrow" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
-              <polygon points="0 0,7 2.5,0 5" fill="#374151" />
-            </marker>
-          </defs>
-
-          <rect width={TOTAL_W} height={TOTAL_H} fill="#F9FAFB" />
-
-          {/* Title */}
-          <text x={TOTAL_W/2} y={16} textAnchor="middle" fill="#1F2937" fontSize={13} fontWeight={700} fontFamily="sans-serif">
-            Current-State Value Stream Map
-          </text>
-          <text x={TOTAL_W/2} y={30} textAnchor="middle" fill="#6B7280" fontSize={9} fontFamily="sans-serif">
-            {project.name} · {project.industry || 'Manufacturing / Operations'} · ISO 22468:2020
-          </text>
-
-          {/* Production Control box */}
-          <ProdCtrl x={pctX} y={PCTRL_Y} w={PCTRL_W} h={PCTRL_H} />
-
-          {/* Info arrows */}
-          <polyline
-            points={`${pctX},${PCTRL_Y+PCTRL_H/2} ${pctX-14},${PCTRL_Y+PCTRL_H/2+10} ${supX+FACT_W+4},${SUPPLIER_Y+FACT_H/2}`}
-            stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
-          />
-          <polyline
-            points={`${pctX+PCTRL_W},${PCTRL_Y+PCTRL_H/2} ${pctX+PCTRL_W+14},${PCTRL_Y+PCTRL_H/2+10} ${custX-4},${SUPPLIER_Y+FACT_H/2}`}
-            stroke="#0EA5E9" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.85} markerEnd="url(#infoArrow)"
-          />
-          <text x={pctX - 58} y={SUPPLIER_Y - 4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
-          <text x={custX - 22} y={SUPPLIER_Y - 4} fill="#0EA5E9" fontSize={8} fontFamily="sans-serif" opacity={0.9}>Weekly delivery</text>
-
-          {mainSteps.map((_, i) => {
-            const px = sx(i) + PW/2
-            const mx = pctX + PCTRL_W/2 + (px - pctX - PCTRL_W/2) * 0.4
-            return (
-              <polyline key={i}
-                points={`${pctX+PCTRL_W/2},${PCTRL_Y+PCTRL_H} ${mx},${PROC_Y-24} ${px},${PROC_Y}`}
-                stroke="#0EA5E9" strokeWidth={1.2} fill="none" strokeDasharray="4,3" opacity={0.5} markerEnd="url(#infoArrow)"
-              />
-            )
-          })}
-
-          {/* Supplier & Customer factories */}
-          <FactoryIcon x={supX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.supplier || 'Supplier'} />
-          <FactoryIcon x={custX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.customer || 'Customer'} />
-          {project.demand && (
-            <text x={custX+FACT_W/2} y={SUPPLIER_Y+FACT_H+28} textAnchor="middle" fill="#6B7280" fontSize={8} fontFamily="sans-serif">
-              {project.demand}/day
-            </text>
-          )}
-
-          {/* Trucks */}
-          <TruckIcon x={t1x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
-          <TruckIcon x={t2x} y={tyTruck} w={TRUCK_W} h={TRUCK_H} />
-
-          {/* Material flow arrows */}
-          <line x1={t1x+TRUCK_W+4} y1={TRUCK_Y} x2={sx(0)} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
-          <line x1={sx(n-1)+PW+4} y1={PROC_Y+PH/2} x2={t2x} y2={TRUCK_Y} stroke="#374151" strokeWidth={2} markerEnd="url(#matArrow)" />
-
-          {/* Process steps */}
-          {mainSteps.map((step, i) => {
-            const x = sx(i)
-            const wip = Number(step.wip) || 0
-            return (
-              <g key={step.id}>
-                {i > 0 && (
-                  <g>
-                    <line x1={sx(i-1)+PW+4} y1={PROC_Y+PH/2} x2={x-10} y2={PROC_Y+PH/2} stroke="#374151" strokeWidth={2} />
-                    <polygon points={`${x-10},${PROC_Y+PH/2-5} ${x},${PROC_Y+PH/2} ${x-10},${PROC_Y+PH/2+5}`} fill="#374151" />
-                    <text x={sx(i-1)+PW+GAP/2} y={PROC_Y+PH/2-8} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
-                    {wip > 0 && <WIPTriangle x={sx(i-1)+PW+GAP/2-14} y={PROC_Y+PH/2+6} wip={wip} />}
-                  </g>
-                )}
-                <ProcessBox x={x} y={PROC_Y} step={step} takt={takt} />
-              </g>
-            )
-          })}
-
-          {/* Timeline */}
-          <line x1={flowX} y1={TL_BASE} x2={sx(n-1)+PW} y2={TL_BASE} stroke="#D1D5DB" strokeWidth={1.5} />
-          {mainSteps.map((step, i) => {
-            const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
-            const wt = Number(step.wait_time)||0
-            const isBN2 = takt > 0 && ct > takt*1.05
-            const ph = ct > 0 ? Math.max(6, Math.min(36, (ct/Math.max(mainCT||1,1))*36)) : 4
-            const bx = sx(i)
-            return (
-              <g key={`tl-${step.id}`}>
-                {wt > 0 && i > 0 && (
-                  <g>
-                    <rect x={sx(i-1)+PW+4} y={TL_BASE} width={GAP-8} height={Math.max(4,Math.min(18,(wt/Math.max(mainWT||1,1))*18))} fill="#FCA5A5" rx={2} opacity={0.7} />
-                    <text x={sx(i-1)+PW+GAP/2} y={TL_BASE+Math.max(4,Math.min(18,(wt/Math.max(mainWT||1,1))*18))+10} textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="monospace">{fmtS(wt)}</text>
-                  </g>
-                )}
-                <rect x={bx+4} y={TL_BASE-ph} width={PW-8} height={ph} fill={isBN2?'#FCA5A5':'#6EE7B7'} rx={2} opacity={0.9} />
-                <text x={bx+PW/2} y={TL_BASE-ph-3} textAnchor="middle" fill={isBN2?'#DC2626':'#059669'} fontSize={8} fontWeight={700} fontFamily="monospace">{ct?fmtS(ct):'—'}</text>
-              </g>
-            )
-          })}
-
-          {/* Footer summary */}
-          <text x={flowX} y={TOTAL_H - 12} fill="#6B7280" fontSize={9} fontFamily="monospace">
-            {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':'—'}  ·  Takt: ${takt?fmtS(takt):'—'}`}
-          </text>
-        </>)
-
-        return (
-          <>
-            {/* Fullscreen overlay */}
-            {fullscreen && (
-              <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: '#F9FAFB', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: '#1E3A5F', color: '#FFFFFF', flexShrink: 0 }}>
-                  <span style={{ fontSize: 13, fontWeight: 700 }}>{project.name} — Value Stream Map</span>
-                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    <span style={{ fontSize: 11, opacity: 0.7 }}>Press Esc to exit</span>
-                    <button onClick={() => exportVSMReport(steps, project, branches)} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.2)', border: '1px solid rgba(212,162,8,0.5)', color: '#D4A208' }}>
-                      📄 Export
-                    </button>
-                    <button onClick={() => setFullscreen(false)} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}>
-                      ✕ Close
-                    </button>
-                  </div>
-                </div>
-                <div style={{ flex: 1, overflow: 'auto', padding: 24, display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
-                  <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
-                    {svgContent}
-                  </svg>
-                </div>
-              </div>
-            )}
-
-            {/* Normal view */}
-            <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 10, overflowX: 'auto', padding: 16 }}>
-              <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
-                {svgContent}
-              </svg>
+      {/* Fullscreen overlay */}
+      {fullscreen && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2147483647, background: '#F9FAFB', display: 'flex', flexDirection: 'column' }}>
+          {/* Toolbar */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px', background: '#1E3A5F', color: '#FFF', flexShrink: 0, height: 48 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 14, fontWeight: 700 }}>{project.name}</span>
+              <span style={{ fontSize: 11, opacity: 0.6 }}>Current-State VSM · ISO 22468:2020</span>
             </div>
-          </>
-        )
-      })()}
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <span style={{ fontSize: 11, opacity: 0.55 }}>Esc to exit</span>
+              <button onClick={() => exportVSMReport(steps, project, branches)} style={{ padding: '6px 14px', borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.2)', border: '1px solid rgba(212,162,8,0.5)', color: '#D4A208' }}>
+                📄 Export
+              </button>
+              <button onClick={() => setFullscreen(false)} style={{ padding: '6px 14px', borderRadius: 7, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: '#FFF' }}>
+                ✕
+              </button>
+            </div>
+          </div>
+          {/* Scrollable diagram */}
+          <div style={{ flex: 1, overflow: 'auto', padding: 20, background: '#F9FAFB' }}>
+            <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+              {renderSVGContent('#F9FAFB')}
+            </svg>
+          </div>
+        </div>
+      )}
+
+      {/* Normal view */}
+      <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 10, overflowX: 'auto', padding: 16 }}>
+        <svg width={TOTAL_W} height={TOTAL_H} style={{ display: 'block', minWidth: TOTAL_W }}>
+          {renderSVGContent('#F9FAFB')}
+        </svg>
+      </div>
 
       {/* Legend */}
-      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12, fontSize: 11, color: 'var(--text2)' }}>
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 12, fontSize: 11, color: 'var(--text2)' }}>
         {[
           { c: '#CCFBF1', s: '#0D9488', l: 'Process Step' },
-          { c: '#FEE2E2', s: '#DC2626', l: 'Bottleneck (Over Takt)' },
-          { c: '#F97316', s: '#C05621', l: 'Shipment / Truck' },
-          { c: '#FEF3C7', s: '#D97706', l: 'WIP / Inventory' },
-          { c: '#A7F3D0', s: '#059669', l: 'Production Control' },
-          { c: '#DBEAFE', s: '#0EA5E9', l: 'Information Flow (dashed)' },
+          { c: '#FEE2E2', s: '#DC2626', l: 'Bottleneck' },
+          { c: '#F97316', s: '#C05621', l: 'Shipment' },
+          { c: '#FEF3C7', s: '#D97706', l: 'WIP ▲' },
+          { c: '#EDE9FE', s: '#7C3AED', l: 'Supermarket ▦' },
+          { c: '#FEF9C3', s: '#EAB308', l: 'Kaizen 改善' },
+          { c: '#A7F3D0', s: '#059669', l: 'Prod. Control' },
+          { c: '#DBEAFE', s: '#0EA5E9', l: 'Info Flow' },
         ].map(({ c, s, l }) => (
-          <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 12, height: 12, borderRadius: 2, background: c, border: `1.5px solid ${s}` }} />
+          <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <div style={{ width: 12, height: 12, borderRadius: 2, background: c, border: `1.5px solid ${s}`, flexShrink: 0 }} />
             {l}
           </div>
         ))}
