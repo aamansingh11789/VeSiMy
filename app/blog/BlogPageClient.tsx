@@ -42,6 +42,15 @@ const posts = [
     readTime: '6 min read',
     date: 'March 12, 2026',
   },
+  {
+    slug: 'takt-time-calculator',
+    tag: 'Calculator',
+    tagColor: '#1DD1A1',
+    title: 'Takt Time Calculator: Formula, Examples & Free Tool',
+    excerpt: 'Takt time is the heartbeat of lean manufacturing — the pace customer demand requires. Learn the formula, see 4 worked examples, and find out what to do once you have the number.',
+    readTime: '5 min read',
+    date: 'March 12, 2026',
+  },
 ]
 
 export default function BlogPageClient() {

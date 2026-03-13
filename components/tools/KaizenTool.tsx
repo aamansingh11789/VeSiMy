@@ -4,6 +4,7 @@
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { openISOReport } from '@/lib/isoReport'
 
 const CATEGORIES = ['Safety', 'Quality', 'Delivery', 'Cost', 'Morale', 'Environment', 'Productivity', '5S']
 const PRIORITIES = ['low', 'medium', 'high', 'critical'] as const
@@ -68,6 +69,102 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
     'in-progress': 'In Progress',
     complete: 'Complete',
     verified: 'Verified',
+  }
+
+  const exportKaizenISO = () => {
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    const open = items.filter(i => i.status === 'open').length
+    const inProgress = items.filter(i => i.status === 'in-progress').length
+    const complete = items.filter(i => i.status === 'complete' || i.status === 'verified').length
+    const critical = items.filter(i => i.priority === 'critical').length
+    const high = items.filter(i => i.priority === 'high').length
+
+    const body = `
+      <h2>1. Executive Summary</h2>
+      <p>This Kaizen Event Log documents continuous improvement activities for process step
+      <strong>${stepName}</strong>. A total of <strong>${items.length}</strong> improvement items have been recorded,
+      of which <strong>${complete}</strong> are complete or verified,
+      <strong>${inProgress}</strong> are in progress, and <strong>${open}</strong> remain open.
+      ${critical > 0 ? `<strong style="color:#c00;">${critical} critical priority item(s) require immediate attention.</strong>` : ''}
+      This log is maintained in accordance with ISO 9001:2015 §10.3 (Continual Improvement) and
+      ISO 45001:2018 §10.2 requirements.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Total Items</div><div class="kpi-value">${items.length}</div></div>
+        <div class="kpi-card"><div class="kpi-label">Open</div><div class="kpi-value" style="color:#666;">${open}</div></div>
+        <div class="kpi-card"><div class="kpi-label">In Progress</div><div class="kpi-value" style="color:#a06000;">${inProgress}</div></div>
+        <div class="kpi-card"><div class="kpi-label">Complete / Verified</div><div class="kpi-value" style="color:#0a5;">${complete}</div></div>
+        <div class="kpi-card"><div class="kpi-label">Critical Priority</div><div class="kpi-value" style="color:#c00;">${critical}</div><div class="kpi-sub">Requires immediate action</div></div>
+        <div class="kpi-card"><div class="kpi-label">High Priority</div><div class="kpi-value" style="color:#a06000;">${high}</div></div>
+      </div>
+
+      <h2>2. Kaizen Item Register</h2>
+      <p>All improvement items are categorized by type, priority, and current status. Items are assigned
+      unique Kaizen IDs for traceability per ISO 9001 §7.5.3 (Control of Documented Information).</p>
+      <table class="data-table">
+        <thead><tr>
+          <th>KZ-ID</th><th>Title</th><th>Category</th><th>Priority</th>
+          <th>Status</th><th>Owner</th><th>Due Date</th><th>Actions / Description</th>
+        </tr></thead>
+        <tbody>
+          ${items.map(item => `
+            <tr>
+              <td style="font-family:monospace;font-size:8.5pt;">${item.kzId || item.id.slice(0,6).toUpperCase()}</td>
+              <td style="font-weight:600;">${item.title}</td>
+              <td>${item.category}</td>
+              <td><span class="badge badge-${item.priority === 'critical' ? 'critical' : item.priority === 'high' ? 'high' : item.priority === 'medium' ? 'medium' : 'low'}">${item.priority.toUpperCase()}</span></td>
+              <td><span class="badge badge-${item.status === 'complete' || item.status === 'verified' ? 'complete' : 'open'}">${item.status.replace('-', ' ').toUpperCase()}</span></td>
+              <td>${item.owner || '—'}</td>
+              <td>${item.dueDate || '—'}</td>
+              <td style="font-size:9pt;">${item.description ? item.description + '<br>' : ''}${item.actions.length ? '<strong>Actions:</strong> ' + item.actions.join(' · ') : ''}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <h2>3. Category Distribution Analysis</h2>
+      <table class="data-table">
+        <thead><tr><th>Category</th><th>Count</th><th>% of Total</th><th>Open Items</th></tr></thead>
+        <tbody>
+          ${['Safety','Quality','Delivery','Cost','Morale','Environment','Productivity','5S'].map(cat => {
+            const catItems = items.filter(i => i.category === cat)
+            if (!catItems.length) return ''
+            const catOpen = catItems.filter(i => i.status === 'open' || i.status === 'in-progress').length
+            return `<tr>
+              <td>${cat}</td>
+              <td>${catItems.length}</td>
+              <td>${((catItems.length / Math.max(items.length,1)) * 100).toFixed(0)}%</td>
+              <td>${catOpen}</td>
+            </tr>`
+          }).join('')}
+        </tbody>
+      </table>
+
+      <h2>4. Improvement Traceability</h2>
+      <p>Per ISO 9001:2015 §10.2.2, evidence of improvement actions shall be retained as documented
+      information. This register serves as the primary traceability record for all Kaizen activities
+      at this process step. Actions marked "Verified" have been independently confirmed effective.</p>
+
+      ${items.filter(i => i.priority === 'critical' || i.priority === 'high').length > 0 ? `
+      <h2>5. Escalation Register — High Priority Items</h2>
+      <div class="obs-box waste">
+        <div class="obs-label">⚠ Items Requiring Management Attention</div>
+        ${items.filter(i => i.priority === 'critical' || i.priority === 'high').map(item => `
+          <p><strong>[${item.kzId || item.id.slice(0,6).toUpperCase()}] ${item.title}</strong>
+          — Priority: ${item.priority.toUpperCase()} | Status: ${item.status.toUpperCase()} | Owner: ${item.owner || 'Unassigned'} | Due: ${item.dueDate || 'Not set'}
+          ${item.description ? '<br>' + item.description : ''}</p>
+        `).join('')}
+      </div>` : ''}
+    `
+
+    openISOReport(body, {
+      title: 'Kaizen Event Log — Continuous Improvement Register',
+      toolType: 'KAIZEN',
+      projectName: stepName,
+      stepName: 'Process Step Analysis',
+      revision: 'Rev. A',
+      preparedBy: 'VeSiMy CI Platform',
+    })
   }
 
   const counts = useMemo(
@@ -200,6 +297,14 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
           <button onClick={openNew} className="btn btn-primary btn-sm">
             + New Event
           </button>
+          {items.length > 0 && (
+            <button
+              onClick={exportKaizenISO}
+              style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+            >
+              📄 ISO Report
+            </button>
+          )}
         </div>
 
         {editId && (
