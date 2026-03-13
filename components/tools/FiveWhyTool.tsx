@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui'
+import { openISOReport } from '@/lib/isoReport'
 
 interface Props {
   stepId: string
@@ -33,7 +34,6 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
   const handleSave = async () => {
     setSaving(true)
     const payload = { problem, whys, rootCause, action, owner, dueDate, savedAt: Date.now() }
-
     try {
       await onSave(payload)
       showToast('5 Why analysis saved', 'success')
@@ -45,6 +45,86 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
     }
   }
 
+  const exportFiveWhyISO = () => {
+    const filledWhys = whys.filter(w => w.trim())
+    const body = `
+      <h2>1. Problem Statement</h2>
+      <div class="obs-box finding">
+        <div class="obs-label">Documented Problem — ISO 9001:2015 §10.2.1(a)</div>
+        <p style="font-size:12pt;font-weight:600;">${problem || '(Not documented)'}</p>
+        <p style="font-size:9pt;color:#666;margin-top:4pt;">Process Step: <strong>${stepName}</strong> · Documented: ${new Date().toLocaleDateString()}</p>
+      </div>
+
+      <h2>2. Five Why Interrogation Chain</h2>
+      <p>The 5 Why method is a structured root cause analysis technique aligned with ISO 9001:2015 §10.2.1
+      and ISO 31000:2018 §6.4. Each iterative question drills deeper into the causal chain until the root
+      system cause is identified — not a symptom.</p>
+      <table class="data-table">
+        <thead><tr><th style="width:30pt;">Level</th><th>Interrogation Question</th><th>Response / Cause Statement</th><th>Evidence / Data</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff8e1;">
+            <td style="font-size:10pt;font-weight:700;text-align:center;">P</td>
+            <td style="font-weight:600;">Problem Statement</td>
+            <td>${problem || '—'}</td>
+            <td>Observed / Reported</td>
+          </tr>
+          ${whys.map((w, i) => `
+            <tr style="${i === filledWhys.length - 1 && rootCause ? 'background:#e8f5e9;' : ''}">
+              <td style="font-size:11pt;font-weight:700;text-align:center;color:#8B6A00;">W${i+1}</td>
+              <td style="font-style:italic;">Why does this occur?</td>
+              <td style="${!w ? 'color:#aaa;font-style:italic;' : ''}">${w || '(Not documented)'}</td>
+              <td>${w ? 'Documented' : '—'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <h2>3. Root Cause Determination</h2>
+      <div class="obs-box ${rootCause ? 'finding' : ''}">
+        <div class="obs-label">Verified Root Cause — ISO 9001:2015 §10.2.1(b)</div>
+        <p style="font-size:12pt;font-weight:600;">${rootCause || '(Root cause not yet determined — complete the 5 Why chain above)'}</p>
+      </div>
+      <p>The root cause represents the deepest systemic cause that, if addressed, will prevent recurrence.
+      A root cause is distinguished from a contributing cause by the fact that removing it eliminates the problem.</p>
+
+      <h2>4. Corrective Action Plan</h2>
+      <p>Per ISO 9001:2015 §10.2.1(e), corrective actions shall be appropriate to the effects of the
+      nonconformities encountered. The action below is linked to the root cause above.</p>
+      <table class="data-table">
+        <thead><tr><th>Countermeasure / Corrective Action</th><th>Responsible Owner</th><th>Target Date</th><th>Verification Method</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">${action || '(Action not yet defined)'}</td>
+            <td>${owner || '—'}</td>
+            <td>${dueDate || '—'}</td>
+            <td>Post-implementation review; monitor KPI for 30 days</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>5. Effectiveness Criteria</h2>
+      <table class="data-table">
+        <thead><tr><th>Criterion</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Problem clearly stated</td><td>${problem ? '✓ Complete' : '✗ Incomplete'}</td><td>${problem ? 'Documented above' : 'Document the observable problem with data'}</td></tr>
+          <tr><td>5 Why chain completed</td><td>${filledWhys.length >= 5 ? '✓ Complete' : filledWhys.length + '/5 Complete'}</td><td>${filledWhys.length >= 3 ? 'Sufficient depth achieved' : 'Continue interrogation to reach systemic root cause'}</td></tr>
+          <tr><td>Root cause identified</td><td>${rootCause ? '✓ Complete' : '✗ Incomplete'}</td><td>${rootCause ? 'Root cause documented' : 'Required for corrective action'}</td></tr>
+          <tr><td>Corrective action defined</td><td>${action ? '✓ Complete' : '✗ Incomplete'}</td><td>${action ? 'Action defined' : 'Must address root cause, not symptom'}</td></tr>
+          <tr><td>Owner assigned</td><td>${owner ? '✓ ' + owner : '✗ Not assigned'}</td><td>ISO 9001 §5.3 requires clear responsibility</td></tr>
+          <tr><td>Target date set</td><td>${dueDate ? '✓ ' + dueDate : '✗ Not set'}</td><td>Required for follow-up per §10.2.2</td></tr>
+        </tbody>
+      </table>
+    `
+    openISOReport(body, {
+      title: '5 Why Root Cause Analysis Report',
+      toolType: 'FIVEWHY',
+      projectName: stepName,
+      stepName: 'Root Cause Analysis',
+      revision: 'Rev. A',
+      preparedBy: 'VeSiMy CI Platform',
+    })
+  }
+
   return (
     <Modal
       title={`❓ 5 Why Analysis — ${stepName}`}
@@ -52,18 +132,26 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
     >
-      <div style={{ display: 'grid', gap: 10 }}>
-        <div>
-          <label className="label">Problem Statement *</label>
-          <textarea
-            className="input"
-            rows={2}
-            placeholder="Describe the problem clearly."
-            style={{ resize: 'vertical', minHeight: 64 }}
-            value={problem}
-            onChange={(e) => setProblem(e.target.value)}
-          />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label className="label" style={{ margin: 0 }}>Problem Statement *</label>
+          {(problem || whys.some(w => w)) && (
+            <button
+              onClick={exportFiveWhyISO}
+              style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+            >
+              📄 ISO Report
+            </button>
+          )}
         </div>
+        <textarea
+          className="input"
+          rows={2}
+          placeholder="Describe the problem clearly."
+          style={{ resize: 'vertical', minHeight: 64 }}
+          value={problem}
+          onChange={(e) => setProblem(e.target.value)}
+        />
 
         <div style={{ display: 'grid', gap: 8 }}>
           {whys.map((w, i) => (
@@ -98,7 +186,6 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
               >
                 {i + 1}
               </div>
-
               <textarea
                 className="input"
                 rows={2}
@@ -119,9 +206,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
             padding: 10,
           }}
         >
-          <label className="label" style={{ color: '#1DD1A1' }}>
-            Root Cause
-          </label>
+          <label className="label" style={{ color: '#1DD1A1' }}>Root Cause</label>
           <textarea
             className="input"
             rows={2}
@@ -142,12 +227,11 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           />
         </div>
 
-        <div style={{ display: 'grid', gap: 10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
             <label className="label">Owner</label>
             <input className="input" value={owner} onChange={(e) => setOwner(e.target.value)} />
           </div>
-
           <div>
             <label className="label">Due Date</label>
             <input className="input" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />

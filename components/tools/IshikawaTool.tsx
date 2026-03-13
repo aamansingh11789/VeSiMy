@@ -64,7 +64,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Diagram'}
     >
-      <div style={{ display: 'grid', gap: 10 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
           <label className="label" style={{ margin: 0 }}>Problem / Effect Statement *</label>
         </div>
