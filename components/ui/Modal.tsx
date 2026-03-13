@@ -21,85 +21,173 @@ export function Modal({
   saveLabel = 'Save',
   disableSave = false,
 }: ModalProps) {
-  // Stable ref so the effect never re-runs due to onClose identity changes
   const onCloseRef = useRef(onClose)
+  const bodyRef    = useRef<HTMLDivElement>(null)
   useEffect(() => { onCloseRef.current = onClose }, [onClose])
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    // ── Keyboard ──────────────────────────────────────────────────────────
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onCloseRef.current()
     }
-    document.addEventListener('keydown', handler)
+    document.addEventListener('keydown', onKey)
 
-    // iOS Safari requires position:fixed on body to truly stop background scroll.
-    // overflow:hidden alone is ignored by iOS. We store scrollY to restore position on close.
+    // ── iOS scroll lock ───────────────────────────────────────────────────
+    // overflow:hidden on body does NOTHING on iOS Safari.
+    // position:fixed is the only thing that works.
     const scrollY = window.scrollY
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${scrollY}px`
-    document.body.style.width = '100%'
-    document.body.style.overflow = 'hidden'
+    document.body.style.position   = 'fixed'
+    document.body.style.top        = `-${scrollY}px`
+    document.body.style.left       = '0'
+    document.body.style.right      = '0'
+    document.body.style.overflow   = 'hidden'
     document.body.classList.add('modal-open')
 
-    // Hide bottom nav + sidebar instantly (no CSS timing gap)
+    // ── Block touchmove on overlay, allow it only in the scrollable body ──
+    // Non-passive so preventDefault() actually works.
+    const blockBgScroll = (e: TouchEvent) => {
+      if (bodyRef.current && bodyRef.current.contains(e.target as Node)) {
+        // Inside the scroll body — let iOS scroll it naturally, don't prevent
+        return
+      }
+      // Outside modal body — block background scroll
+      e.preventDefault()
+    }
+    document.addEventListener('touchmove', blockBgScroll, { passive: false })
+
+    // ── Hide bottom nav + sidebar ─────────────────────────────────────────
     const nav     = document.querySelector('.bottom-nav') as HTMLElement | null
     const sidebar = document.querySelector('aside')       as HTMLElement | null
     if (nav)     nav.style.setProperty('display', 'none', 'important')
-    if (sidebar) sidebar.style.setProperty('zIndex', '-1', 'important')
+    if (sidebar) sidebar.style.setProperty('display', 'none', 'important')
 
     return () => {
-      document.removeEventListener('keydown', handler)
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('touchmove', blockBgScroll)
       document.body.classList.remove('modal-open')
       document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
+      document.body.style.top      = ''
+      document.body.style.left     = ''
+      document.body.style.right    = ''
       document.body.style.overflow = ''
-      // Restore scroll position that was locked
       window.scrollTo(0, scrollY)
-
       if (nav)     nav.style.removeProperty('display')
-      if (sidebar) sidebar.style.removeProperty('zIndex')
+      if (sidebar) sidebar.style.removeProperty('display')
     }
-  }, []) // runs once on mount, cleans up on unmount
+  }, [])
+
+  // ── NO isMobile state — detect synchronously via matchMedia ─────────────
+  // Using state caused a false first-render with desktop styles; iOS locked
+  // onto that layout before useEffect could correct it.
+  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
 
   const content = (
-    <div className="vesimy-modal-overlay" onClick={() => onCloseRef.current()}>
+    <div
+      onClick={() => onCloseRef.current()}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 2147483647,
+        background: 'rgba(1,1,6,0.76)',
+        backdropFilter: 'blur(10px)',
+        // NEVER scrollable — iOS would scroll this instead of the modal body
+        overflow: 'hidden',
+        // Prevent any touch scroll on the overlay itself
+        touchAction: 'none',
+        // Bottom-sheet layout on mobile, centred on desktop
+        display: 'flex',
+        alignItems: isMobile ? 'flex-end' : 'center',
+        justifyContent: 'center',
+        padding: isMobile ? 0 : '24px 16px',
+      }}
+    >
+      {/* ── Modal shell ── */}
       <div
-        className="vesimy-modal"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          // On mobile: position:fixed so iOS never treats it as a flex child
+          // that needs flex layout before it can scroll
+          position: isMobile ? 'fixed' : 'relative',
+          bottom: isMobile ? 0 : undefined,
+          left:   isMobile ? 0 : undefined,
+          right:  isMobile ? 0 : undefined,
+          // Explicit height — not max-height — so iOS knows the exact boundary
+          height:    isMobile ? '92svh' : undefined,
+          maxHeight: isMobile ? '92svh' : 'calc(100dvh - 60px)',
+          width: '100%',
+          maxWidth: isMobile ? '100%' : 640,
+          background: 'linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.008)),rgba(13,13,34,0.94)',
+          border: '1px solid rgba(44,44,92,0.86)',
+          borderRadius: isMobile ? '20px 20px 0 0' : 20,
+          boxShadow: '0 32px 100px rgba(0,0,0,0.62)',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
       >
-        <div className="vesimy-modal-handle" />
+        {/* drag handle */}
+        {isMobile && (
+          <div style={{ width: 42, height: 5, background: 'rgba(255,255,255,0.2)', borderRadius: 999, margin: '10px auto 0', flexShrink: 0 }} />
+        )}
 
-        <div className="vesimy-modal-header">
-          <div className="vesimy-modal-title">{title}</div>
+        {/* header */}
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: isMobile ? '12px 16px 10px' : '18px 22px 14px',
+          borderBottom: '1px solid rgba(42,42,90,0.72)',
+          flexShrink: 0,
+        }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: isMobile ? 15 : 17, fontWeight: 700, color: 'var(--text)' }}>
+            {title}
+          </div>
           <button
-            className="vesimy-modal-close"
+            style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px', flexShrink: 0 }}
             onClick={() => onCloseRef.current()}
             type="button"
-          >
-            ✕
-          </button>
+          >✕</button>
         </div>
 
-        <div className="vesimy-modal-body">
+        {/* ── scrollable body ── */}
+        {/* 
+          svh = Small Viewport Height (excludes Safari toolbar) — more reliable than dvh for position calculations.
+          Heights:  handle 25px + header ~52px + footer ~68px = 145px
+          Body = 92svh - 145px
+          overflow-y:scroll (not auto) — iOS Safari sometimes ignores auto on non-body elements
+        */}
+        <div
+          ref={bodyRef}
+          style={{
+            // Explicit calculated height — no flex:1, no min-height tricks
+            // iOS Safari only reliably scrolls elements with an explicit height
+            flex: 1,
+            minHeight: 0,
+            height: isMobile ? 'calc(92svh - 145px)' : undefined,
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain',
+            padding: isMobile ? '16px 16px 40px' : '22px 22px 20px',
+          }}
+        >
           {children}
         </div>
 
-        <div className="vesimy-modal-footer">
-          <button
-            className="btn btn-ghost"
-            onClick={() => onCloseRef.current()}
-            type="button"
-          >
+        {/* footer */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr 1fr' : undefined,
+          justifyContent: isMobile ? undefined : 'flex-end',
+          gap: 10,
+          padding: isMobile ? `12px 16px max(16px, env(safe-area-inset-bottom, 0px))` : '15px 22px 18px',
+          borderTop: '1px solid rgba(42,42,90,0.72)',
+          background: 'rgba(8,8,24,0.98)',
+          flexShrink: 0,
+        }}>
+          <button className="btn btn-ghost" onClick={() => onCloseRef.current()} type="button">
             Cancel
           </button>
-
           {onSave && (
-            <button
-              className="btn btn-primary"
-              onClick={onSave}
-              disabled={disableSave}
-              type="button"
-            >
+            <button className="btn btn-primary" onClick={onSave} disabled={disableSave} type="button">
               {saveLabel}
             </button>
           )}
@@ -108,8 +196,6 @@ export function Modal({
     </div>
   )
 
-  // Portal renders directly into document.body — completely above BottomNav,
-  // Sidebar, and every other fixed element regardless of z-index stacking contexts.
   if (typeof document === 'undefined') return null
   return createPortal(content, document.body)
 }
