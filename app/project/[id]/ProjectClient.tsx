@@ -18,7 +18,6 @@ import { KanbanBoard } from '@/components/tools/KanbanBoard'
 import { VSMMap } from '@/components/vsm/VSMMap'
 import { SupePanel } from '@/components/supe/SupePanel'
 import { ProcessHealthScore } from '@/components/health/ProcessHealthScore'
-import { ProcessJournal } from '@/components/journal/ProcessJournal'
 import { ProcessSimulation } from '@/components/simulation/ProcessSimulation'
 import { LiveFloorPanel } from '@/components/live/LiveFloorPanel'
 import { SOPUpload } from '@/components/tools/SOPUpload'
@@ -704,13 +703,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
         </div>
       </div>
 
-      {showJournal && (
-        <ProcessJournal
-          projectId={project.id}
-          open={showJournal}
-          onClose={() => setShowJournal(false)}
-        />
-      )}
+
 
       {showSupe && (
         <div
