@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /onboarding/
+
+Sitemap: https://www.vesimy.com/sitemap.xml
