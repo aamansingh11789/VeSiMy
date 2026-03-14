@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 // ── components/learn/LearningCenter.tsx ──────────────────────────────────────
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 interface Props { userId: string }
 
 const MANUAL = [
@@ -164,167 +164,246 @@ const FAQS = [
 ]
 
 export function LearningCenter({ userId }: Props) {
-  const [activeTab,     setActiveTab]     = useState<'manual'|'glossary'|'faqs'>('manual')
-  const [activeSection, setActiveSection] = useState('getting-started')
-  const [expandedStep,  setExpandedStep]  = useState<string|null>(null)
-  const [expandedFAQ,   setExpandedFAQ]   = useState<number|null>(null)
+  const [activeTab,      setActiveTab]      = useState<'manual'|'glossary'|'faqs'>('manual')
+  const [activeSection,  setActiveSection]  = useState('getting-started')
+  const [expandedStep,   setExpandedStep]   = useState<string|null>(null)
+  const [expandedFAQ,    setExpandedFAQ]    = useState<number|null>(null)
   const [glossarySearch, setGlossarySearch] = useState('')
+  const [showMobilePicker, setShowMobilePicker] = useState(false)
+
   const section = MANUAL.find(s => s.id === activeSection) || MANUAL[0]
+
+  function pickSection(id: string) {
+    setActiveSection(id)
+    setExpandedStep(null)
+    setShowMobilePicker(false)
+  }
 
   const GLOSSARY = [
     { term:'5S', def:'Workplace organisation methodology: Sort (remove unneeded items), Set in Order (arrange needed items), Shine (clean), Standardise (document the standard), Sustain (maintain). Foundation for any visual management or lean implementation.', std:'ISO 9001:2015 §6.4 (Work Environment)' },
     { term:'5 Why', def:'Root cause analysis technique: ask "Why?" iteratively (typically 5 times) to get from symptom to root cause. Developed by Sakichi Toyoda. Always ends at a systemic failure — never at an individual person.', std:'ISO 9001:2015 §10.2.1' },
     { term:'8D (Eight Disciplines)', def:'Ford Motor Company problem-solving methodology. Eight structured steps from team formation through root cause, corrective action, verification, and prevention of recurrence. Required by many automotive customers for quality escapes.', std:'IATF 16949 §10.2' },
-    { term:'A3 Report', def:'Toyota\'s one-page problem-solving format (named for A3 paper). Contains background, current condition, goal, root cause, countermeasures, implementation plan, results, and follow-up — all on one sheet. Forces concise thinking.', std:'ISO 22468:2020' },
-    { term:'Bottleneck', def:'The process step with cycle time greater than takt time. It constrains throughput for the entire value stream — all other steps can only produce as fast as the bottleneck. Goldratt\'s Theory of Constraints focuses entirely on identifying and elevating bottlenecks.', std:'ISO 22468:2020 §5.2.4' },
+    { term:'A3 Report', def:"Toyota's one-page problem-solving format (named for A3 paper). Contains background, current condition, goal, root cause, countermeasures, implementation plan, results, and follow-up — all on one sheet. Forces concise thinking.", std:'ISO 22468:2020' },
+    { term:'Bottleneck', def:"The process step with cycle time greater than takt time. It constrains throughput for the entire value stream — all other steps can only produce as fast as the bottleneck. Goldratt's Theory of Constraints focuses entirely on identifying and elevating bottlenecks.", std:'ISO 22468:2020 §5.2.4' },
     { term:'Changeover Time (C/O)', def:'Time to switch a machine or workstation from producing one product to another. SMED (Single-Minute Exchange of Die) methodology targets <10 minutes. Key VSM data point — long C/O forces large batches which create WIP and inventory waste.', std:'ISO 9001:2015 §8.5.1' },
     { term:'Cycle Time (CT)', def:'The actual elapsed time to complete one unit at a single process step, measured by direct observation (stopwatch). The average of multiple observations after outlier removal. Compare to Takt Time: if CT > Takt, the step is a bottleneck.', std:'ISO 22468:2020 §5.2.3, ILO §3' },
     { term:'DMAIC', def:'Six Sigma improvement framework: Define (problem), Measure (current performance), Analyse (root cause), Improve (implement solution), Control (sustain). Used for statistically complex problems requiring months of data. Compare to PDCA which is faster and simpler.', std:'ISO 13053:2011' },
     { term:'DOWNTIME', def:'Acronym for the 8 wastes: Defects, Overproduction, Waiting, Non-utilised talent, Transport, Inventory, Motion, Extra-processing. Every waste makes a process slower, more expensive, or less reliable. Lean aims to eliminate all 8.', std:'ISO 22468:2020 §5.4' },
     { term:'FIFO Lane', def:'First-In-First-Out queue between two process steps. Limits WIP to a controlled maximum, maintains sequence, and makes flow interruptions visible immediately. Preferred over push scheduling when pure one-piece flow is not yet achievable.', std:'ISO 22468:2020 §5.3' },
     { term:'Future State Map', def:'The target VSM showing what the process will look like after improvements are implemented. Drawn after the current state map. The gap between current and future state is the kaizen roadmap.', std:'ISO 22468:2020 §6' },
-    { term:'Gemba Walk', def:'Going to the actual workplace (gemba = "real place" in Japanese) to observe the process directly. The cornerstone of Toyota management — go see, don\'t assume. Data gathered on a gemba walk is more accurate than any report.', std:'ISO 9001:2015 §9.1' },
+    { term:'Gemba Walk', def:"Going to the actual workplace (gemba = 'real place' in Japanese) to observe the process directly. The cornerstone of Toyota management — go see, don't assume. Data gathered on a gemba walk is more accurate than any report.", std:'ISO 9001:2015 §9.1' },
     { term:'Kaizen', def:'Japanese: "change for better." Continuous improvement through small, incremental changes made by the people doing the work. In lean practice, kaizen events are focused 3–5 day improvement sprints delivering measurable results before the week ends.', std:'ISO 9001:2015 §10.3' },
     { term:'Lead Time', def:'Total elapsed time from raw material (or customer order) to delivery. = Sum of all cycle times + all wait/queue times. Reducing lead time is the primary VSM goal. Shorter lead time = more responsive to customers = less working capital tied up in WIP.', std:'ISO 22468:2020 §4.2' },
-    { term:'NNVA (Necessary Non-Value Add)', def:'Activities required by the current process but that add no value from the customer\'s perspective — setup, inspection, transport between steps. Cannot be eliminated immediately (unlike NVA) but should be minimised. Target for medium-term improvement.', std:'ISO 22468:2020 §5.4' },
+    { term:'NNVA (Necessary Non-Value Add)', def:"Activities required by the current process but that add no value from the customer's perspective — setup, inspection, transport between steps. Cannot be eliminated immediately (unlike NVA) but should be minimised.", std:'ISO 22468:2020 §5.4' },
     { term:'NVA (Non-Value Add)', def:'Pure waste — activities that consume time, space, or resources but add no value and are not required by the current process. Motion waste (searching for tools), waiting, rework, unnecessary processing. Target for immediate elimination.', std:'ISO 22468:2020 §5.4' },
     { term:'One-Piece Flow', def:'Ideal lean flow state: one unit moves through each process step without batching or waiting. Exposes quality defects immediately (after 1 unit, not 500), minimises lead time, eliminates most WIP waste. The goal of every VSM future state.', std:'ISO 22468:2020 §5.3' },
-    { term:'OODA Loop', def:'Observe-Orient-Decide-Act. Rapid decision cycle developed by military strategist John Boyd. In manufacturing: observe the current situation with data, orient understanding of the cause, decide on a response, act and observe again. Useful for fast-moving operational decisions.', std:'Operational strategy' },
-    { term:'PCE (Process Cycle Efficiency)', def:'= Total VA Time ÷ Lead Time × 100%. Measures what percentage of lead time is genuinely value-adding. World class: >90%. Most processes start at 10–30%. VeSiMy colour-codes: green (≥90%), amber (≥60%), red (<60%). Improving PCE = eliminating wait and NVA time.', std:'ISO 22468:2020 §5.2.2' },
-    { term:'PDCA', def:'Plan-Do-Check-Act. The fundamental improvement cycle. Plan: define problem, identify root cause, set target. Do: implement countermeasure (small scale). Check: measure result against target. Act: standardise if successful, adjust if not. Repeat. All ISO 9001 improvement is based on PDCA.', std:'ISO 9001:2015 §10, ISO 9000:2015 §3.3.5' },
+    { term:'OODA Loop', def:'Observe-Orient-Decide-Act. Rapid decision cycle developed by military strategist John Boyd. In manufacturing: observe the current situation with data, orient understanding of the cause, decide on a response, act and observe again.', std:'Operational strategy' },
+    { term:'PCE (Process Cycle Efficiency)', def:'= Total VA Time ÷ Lead Time × 100%. Measures what percentage of lead time is genuinely value-adding. World class: >90%. Most processes start at 10–30%. VeSiMy colour-codes: green (≥90%), amber (≥60%), red (<60%).', std:'ISO 22468:2020 §5.2.2' },
+    { term:'PDCA', def:'Plan-Do-Check-Act. The fundamental improvement cycle. Plan: define problem, identify root cause, set target. Do: implement countermeasure (small scale). Check: measure result against target. Act: standardise if successful, adjust if not. Repeat.', std:'ISO 9001:2015 §10, ISO 9000:2015 §3.3.5' },
     { term:'Poka-Yoke', def:'Error-proofing: designing the process so a mistake cannot be made, or is detected immediately if made. A jig that only accepts a part in the correct orientation is a poka-yoke. The goal is making quality automatic rather than inspected.', std:'ISO 9001:2015 §8.3.3' },
     { term:'Pull System', def:'Production triggered by downstream demand — a step only produces when the next step signals it needs more. Eliminates overproduction (the worst of the 8 wastes). Kanban cards are the classic pull signal mechanism.', std:'ISO 22468:2020 §5.3.1' },
     { term:'Push System', def:'Production driven by schedule or forecast regardless of downstream demand. Creates inventory and WIP accumulation between steps. Most traditional manufacturing operates in push mode. VSM shows push arrows between steps that should be converted to pull or FIFO.', std:'ISO 22468:2020 §5.3' },
-    { term:'Standard Work', def:'The documented current best method for performing a process task — the safest, highest quality, lowest waste repeatable method. Updated every time the process improves. Standard Work is the baseline that makes continuous improvement possible.', std:'ISO 22468:2020 §5.2.3, ISO 9001:2015 §8.5.1' },
+    { term:'Standard Work', def:"The documented current best method for performing a process task — the safest, highest quality, lowest waste repeatable method. Updated every time the process improves. Standard Work is the baseline that makes continuous improvement possible.", std:'ISO 22468:2020 §5.2.3, ISO 9001:2015 §8.5.1' },
     { term:'Supermarket', def:'A controlled inventory buffer between two process steps with defined min/max quantities. Used where one-piece flow is not yet achievable — particularly before bottleneck steps. The supermarket prevents the bottleneck from ever starving while controlling total WIP.', std:'ISO 22468:2020 §5.3.2' },
     { term:'Takt Time', def:'= Available Production Time ÷ Customer Demand. The rate at which you must complete products to satisfy customer demand. Not a target for speed — a pace setter. If Takt = 120s, one unit must leave every 2 minutes. Steps above Takt are bottlenecks.', std:'ISO 22468:2020 §5.2.1' },
     { term:'TPS (Toyota Production System)', def:'The operating system developed at Toyota over decades, combining just-in-time production, jidoka (quality at source), standard work, kaizen, and respect for people. The foundation from which Lean Manufacturing, Six Sigma, and all modern CI methodologies derive.', std:'ISO 22468:2020' },
-    { term:'VA (Value Add)', def:'Activities that physically transform the product or service in a way the customer recognises as valuable and would pay for. Machining, welding, assembly, painting. VA activities are what the customer is buying — everything else is a cost to be minimised.', std:'ISO 22468:2020 §5.4' },
-    { term:'VSM (Value Stream Mapping)', def:'A lean tool for visualising every step, delay, and information flow in a process from raw material to customer. Shows VA time, NVA time, WIP, cycle times, and operator counts. The VSM is the most important lean planning tool — the foundation for all improvement work.', std:'ISO 22468:2020' },
-    { term:'WIP (Work In Progress)', def:'Units that have been started but not yet completed — sitting between process steps. WIP = Lead Time × Throughput Rate (Little\'s Law). High WIP means long lead time. The WIP triangles on a VSM show exactly where inventory is accumulating and how much.', std:'ISO 22468:2020 §5.2.5' },
-    { term:'Yamazumi Chart', def:'Operator balance chart (Japanese: "stacking"). Stacked bars showing each operator\'s work content broken into VA, NNVA, and NVA time, compared to a Takt Time line. The primary tool for line balancing and operator-level waste elimination. Bars above takt = bottleneck operators.', std:'ISO 22468:2020 §5.2.4' },
+    { term:'VA (Value Add)', def:"Activities that physically transform the product or service in a way the customer recognises as valuable and would pay for. Machining, welding, assembly, painting. VA activities are what the customer is buying — everything else is a cost to be minimised.", std:'ISO 22468:2020 §5.4' },
+    { term:'VSM (Value Stream Mapping)', def:'A lean tool for visualising every step, delay, and information flow in a process from raw material to customer. Shows VA time, NVA time, WIP, cycle times, and operator counts. The VSM is the most important lean planning tool.', std:'ISO 22468:2020' },
+    { term:'WIP (Work In Progress)', def:"Units that have been started but not yet completed — sitting between process steps. WIP = Lead Time × Throughput Rate (Little's Law). High WIP means long lead time. The WIP triangles on a VSM show exactly where inventory is accumulating and how much.", std:'ISO 22468:2020 §5.2.5' },
+    { term:'Yamazumi Chart', def:'Operator balance chart (Japanese: "stacking"). Stacked bars showing each operator\'s work content broken into VA, NNVA, and NVA time, compared to a Takt Time line. The primary tool for line balancing and operator-level waste elimination.', std:'ISO 22468:2020 §5.2.4' },
   ].filter(g => !glossarySearch || g.term.toLowerCase().includes(glossarySearch.toLowerCase()) || g.def.toLowerCase().includes(glossarySearch.toLowerCase()))
+
+  // ── Shared: step accordion (used in manual tab) ───────────────────────────
+  function StepAccordion({ sec }: { sec: typeof section }) {
+    return (
+      <>
+        {sec.pro && (
+          <div style={{ background:'rgba(100,38,160,0.06)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:10, padding:'12px 16px', marginBottom:16 }}>
+            <p style={{ fontSize:13, color:'#8C44CC', margin:0 }}>
+              This feature requires a <strong>Pro or Enterprise plan</strong>.{' '}
+              <a href="/pricing" style={{ color:'var(--gold)', textDecoration:'none' }}>View Pricing →</a>
+            </p>
+          </div>
+        )}
+        <p style={{ fontSize:12, color:'var(--text3)', marginBottom:14, lineHeight:1.7 }}>
+          {sec.steps.length} topic{sec.steps.length!==1?'s':''} — tap any to expand.
+        </p>
+        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+          {sec.steps.map((step: any, i: number) => {
+            const key=`${sec.id}-${i}`; const open=expandedStep===key
+            return (
+              <div key={key} style={{ background:'#FFFFFF', border:`1px solid ${open?'var(--gold)':'var(--border)'}`, borderRadius:10, overflow:'hidden' }}>
+                <button onClick={() => setExpandedStep(open?null:key)}
+                  style={{ width:'100%', textAlign:'left', padding:'13px 16px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:10 }}>
+                  <span style={{ width:22, height:22, borderRadius:6, flexShrink:0,
+                    background:open?'rgba(196,155,46,0.12)':'var(--sl-100)',
+                    border:`1px solid ${open?'var(--gold)':'var(--border)'}`,
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontSize:10, fontWeight:700, color:open?'var(--gold)':'var(--text3)' }}>{i+1}</span>
+                  <span style={{ flex:1, fontSize:13, fontWeight:600, color:open?'var(--gold)':'var(--text)', lineHeight:1.4 }}>{step.title}</span>
+                  <span style={{ color:'var(--text3)', fontSize:16, transition:'transform 0.2s', transform:open?'rotate(90deg)':'none', flexShrink:0 }}>›</span>
+                </button>
+                {open && (
+                  <div style={{ padding:'0 16px 14px 48px', borderTop:'1px solid var(--border)' }}>
+                    <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{step.body}</p>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+        {(() => {
+          const idx=MANUAL.findIndex(s=>s.id===sec.id); const next=MANUAL[idx+1]
+          return next ? (
+            <div style={{ marginTop:20, paddingTop:16, borderTop:'1px solid var(--border)' }}>
+              <button onClick={() => pickSection(next.id)} style={{
+                display:'flex', alignItems:'center', gap:8, padding:'10px 14px', borderRadius:8,
+                background:'rgba(196,155,46,0.06)', border:'1px solid rgba(196,155,46,0.2)',
+                color:'var(--gold)', cursor:'pointer', fontSize:13, fontWeight:600,
+              }}>Next: {next.icon} {next.title} →</button>
+            </div>
+          ) : null
+        })()}
+      </>
+    )
+  }
 
   return (
     <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:'100vh', background:'var(--bg)' }}>
-      {/* Header */}
-      <div style={{ padding:'24px 32px 20px', borderBottom:'1px solid var(--border)', background:'var(--bg2)', flexShrink:0 }}>
-        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:4 }}>📚 Learning Center</h1>
-        <p style={{ fontSize:13, color:'var(--text2)', margin:0 }}>Master lean CI — from PDCA and VSM to Yamazumi charts and 8D reports.</p>
-        <div style={{ display:'flex', gap:4, marginTop:16 }}>
-          {([['manual','📖 App Manual'],['glossary','📗 Glossary'],['faqs','❓ FAQs']] as const).map(([t,label]) => (
-            <button key={t} onClick={() => setActiveTab(t)} style={{
-              padding:'7px 18px', borderRadius:8, fontSize:13, fontWeight:activeTab===t?700:400,
-              background:activeTab===t?'rgba(212,162,8,0.12)':'transparent',
-              border:`1px solid ${activeTab===t?'rgba(212,162,8,0.35)':'var(--border)'}`,
-              color:activeTab===t?'#D4A208':'var(--text2)', cursor:'pointer',
+
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      <div style={{ padding:'18px 20px 14px', borderBottom:'1px solid var(--border)', background:'#FFFFFF', flexShrink:0 }}>
+        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:3 }}>📚 Learning Center</h1>
+        <p style={{ fontSize:12, color:'var(--text3)', margin:'0 0 12px' }}>Master lean CI — PDCA, VSM, Yamazumi, 8D and more.</p>
+        <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
+          {([['manual','📖 Manual'],['glossary','📗 Glossary'],['faqs','❓ FAQs']] as const).map(([t,label]) => (
+            <button key={t} onClick={() => { setActiveTab(t); setShowMobilePicker(false) }} style={{
+              padding:'7px 14px', borderRadius:8, fontSize:12, fontWeight:activeTab===t?700:400,
+              background:activeTab===t?'rgba(196,155,46,0.10)':'transparent',
+              border:`1px solid ${activeTab===t?'rgba(196,155,46,0.4)':'var(--border)'}`,
+              color:activeTab===t?'var(--gold)':'var(--text3)', cursor:'pointer',
             }}>{label}</button>
           ))}
         </div>
       </div>
 
-      {/* Manual Tab */}
+      {/* ── MANUAL TAB ─────────────────────────────────────────────────────── */}
       {activeTab==='manual' && (
         <div style={{ display:'flex', flex:1, overflow:'hidden' }}>
-          <div style={{ width:220, flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', padding:'12px 0' }}>
+
+          {/* Desktop sidebar — hidden on mobile via CSS */}
+          <div className="learn-sidebar">
             {MANUAL.map(s => (
-              <button key={s.id} onClick={() => { setActiveSection(s.id); setExpandedStep(null) }} style={{
-                width:'100%', textAlign:'left', padding:'9px 16px',
-                background:activeSection===s.id?'rgba(212,162,8,0.08)':'transparent',
-                border:'none', borderLeft:`3px solid ${activeSection===s.id?'#D4A208':'transparent'}`,
+              <button key={s.id} onClick={() => pickSection(s.id)} style={{
+                width:'100%', textAlign:'left', padding:'9px 14px',
+                background:activeSection===s.id?'rgba(196,155,46,0.08)':'transparent',
+                border:'none', borderLeft:`3px solid ${activeSection===s.id?'var(--gold)':'transparent'}`,
                 cursor:'pointer', display:'flex', alignItems:'center', gap:8,
               }}>
-                <span style={{ fontSize:14 }}>{s.icon}</span>
+                <span style={{ fontSize:14, flexShrink:0 }}>{s.icon}</span>
                 <span style={{ fontSize:12, fontWeight:activeSection===s.id?700:400,
-                  color:activeSection===s.id?'#D4A208':'var(--text2)', lineHeight:1.3, flex:1 }}>{s.title}</span>
+                  color:activeSection===s.id?'var(--gold)':'var(--sl-600)', lineHeight:1.3, flex:1 }}>{s.title}</span>
                 {s.pro && <span style={{ fontSize:8, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1,
-                  background:'rgba(100,38,160,0.12)', border:'1px solid rgba(100,38,160,0.25)',
+                  background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)',
                   borderRadius:4, padding:'1px 4px', flexShrink:0 }}>PRO</span>}
               </button>
             ))}
           </div>
-          <div style={{ flex:1, overflowY:'auto', padding:'24px 28px' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-              <span style={{ fontSize:24 }}>{section.icon}</span>
-              <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:20, fontWeight:700, color:'var(--text)', margin:0 }}>{section.title}</h2>
-              {section.pro && <span style={{ fontSize:10, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1.5,
-                background:'rgba(100,38,160,0.12)', border:'1px solid rgba(100,38,160,0.25)', borderRadius:6, padding:'3px 8px' }}>🔒 PRO</span>}
-            </div>
-            {section.pro && (
-              <div style={{ background:'rgba(100,38,160,0.06)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:10, padding:'12px 16px', marginBottom:20 }}>
-                <p style={{ fontSize:13, color:'#8C44CC', margin:0 }}>
-                  This feature requires a <strong>Pro or Enterprise plan</strong>.{' '}
-                  <a href="/pricing" style={{ color:'#D4A208', textDecoration:'none' }}>View Pricing →</a>
-                </p>
-              </div>
-            )}
-            <p style={{ fontSize:13, color:'var(--text2)', marginBottom:20, lineHeight:1.7 }}>
-              {section.steps.length} topic{section.steps.length!==1?'s':''} — click any to expand.
-            </p>
-            <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-              {section.steps.map((step, i) => {
-                const key=`${section.id}-${i}`; const open=expandedStep===key
-                return (
-                  <div key={key} style={{ background:'var(--bg2)', border:`1px solid ${open?'rgba(212,162,8,0.3)':'var(--border)'}`, borderRadius:10, overflow:'hidden' }}>
-                    <button onClick={() => setExpandedStep(open?null:key)}
-                      style={{ width:'100%', textAlign:'left', padding:'14px 18px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:12 }}>
-                      <span style={{ width:24, height:24, borderRadius:6, flexShrink:0,
-                        background:open?'rgba(212,162,8,0.15)':'rgba(112,112,160,0.1)',
-                        border:`1px solid ${open?'rgba(212,162,8,0.3)':'var(--border)'}`,
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        fontSize:11, fontWeight:700, color:open?'#D4A208':'var(--text3)' }}>{i+1}</span>
-                      <span style={{ flex:1, fontSize:14, fontWeight:600, color:open?'#D4A208':'var(--text)', lineHeight:1.4 }}>{step.title}</span>
-                      <span style={{ color:'var(--text3)', fontSize:16, transition:'transform 0.2s', transform:open?'rotate(90deg)':'none', flexShrink:0 }}>›</span>
-                    </button>
-                    {open && (
-                      <div style={{ padding:'0 18px 16px 54px', borderTop:'1px solid var(--border)' }}>
-                        <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.8, margin:'12px 0 0' }}>{step.body}</p>
-                      </div>
-                    )}
+
+          {/* Content area */}
+          <div style={{ flex:1, overflowY:'auto', minWidth:0, paddingBottom:80 }}>
+
+            {/* Mobile section picker — shown only on mobile via CSS */}
+            <div className="learn-mobile-picker">
+              <button
+                onClick={() => setShowMobilePicker(v => !v)}
+                style={{
+                  width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between',
+                  padding:'12px 16px', background:'#FFFFFF', border:'none',
+                  borderBottom:'1px solid var(--border)', cursor:'pointer', gap:10,
+                }}
+              >
+                <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                  <span style={{ fontSize:18 }}>{section.icon}</span>
+                  <div>
+                    <div style={{ fontSize:13, fontWeight:700, color:'var(--text)', textAlign:'left' }}>{section.title}</div>
+                    <div style={{ fontSize:10, color:'var(--text3)', textAlign:'left' }}>{section.steps.length} topics</div>
                   </div>
-                )
-              })}
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:8, flexShrink:0 }}>
+                  <span style={{ fontSize:10, color:'var(--text3)' }}>Change section</span>
+                  <span style={{ color:'var(--gold)', fontSize:16, transform: showMobilePicker ? 'rotate(180deg)' : 'none', transition:'transform 0.2s', display:'inline-block' }}>⌄</span>
+                </div>
+              </button>
+
+              {/* Dropdown */}
+              {showMobilePicker && (
+                <div style={{
+                  position:'absolute', left:0, right:0, zIndex:50,
+                  background:'#FFFFFF', border:'1px solid var(--border)',
+                  borderTop:'none', boxShadow:'0 8px 24px rgba(0,0,0,0.12)',
+                  maxHeight:'60vh', overflowY:'auto',
+                }}>
+                  {MANUAL.map(s => (
+                    <button key={s.id} onClick={() => pickSection(s.id)} style={{
+                      width:'100%', textAlign:'left', padding:'11px 16px',
+                      background:activeSection===s.id?'rgba(196,155,46,0.08)':'transparent',
+                      border:'none', borderBottom:'1px solid var(--border)',
+                      cursor:'pointer', display:'flex', alignItems:'center', gap:10,
+                    }}>
+                      <span style={{ fontSize:16 }}>{s.icon}</span>
+                      <span style={{ flex:1, fontSize:13, fontWeight:activeSection===s.id?700:400,
+                        color:activeSection===s.id?'var(--gold)':'var(--text)' }}>{s.title}</span>
+                      {s.pro && <span style={{ fontSize:9, color:'#8C44CC', background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:4, padding:'2px 5px' }}>PRO</span>}
+                      {activeSection===s.id && <span style={{ color:'var(--gold)' }}>✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-            {(() => { const idx=MANUAL.findIndex(s=>s.id===activeSection); const next=MANUAL[idx+1]; return next?(
-              <div style={{ marginTop:24, paddingTop:20, borderTop:'1px solid var(--border)' }}>
-                <button onClick={() => { setActiveSection(next.id); setExpandedStep(null) }} style={{
-                  display:'flex', alignItems:'center', gap:8, padding:'10px 16px', borderRadius:8,
-                  background:'rgba(212,162,8,0.06)', border:'1px solid rgba(212,162,8,0.2)',
-                  color:'#D4A208', cursor:'pointer', fontSize:13, fontWeight:600,
-                }}>Next: {next.icon} {next.title} →</button>
+
+            {/* Section content */}
+            <div style={{ padding:'20px 18px' }}>
+              {/* Desktop header — hidden on mobile */}
+              <div className="learn-section-header" style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
+                <span style={{ fontSize:24 }}>{section.icon}</span>
+                <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:19, fontWeight:700, color:'var(--text)', margin:0 }}>{section.title}</h2>
+                {section.pro && <span style={{ fontSize:10, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1.5,
+                  background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)', borderRadius:6, padding:'3px 8px' }}>🔒 PRO</span>}
               </div>
-            ):null })()}
+              <StepAccordion sec={section} />
+            </div>
           </div>
         </div>
       )}
 
-      {/* Glossary Tab */}
+      {/* ── GLOSSARY TAB ──────────────────────────────────────────────────── */}
       {activeTab==='glossary' && (
-        <div style={{ flex:1, overflowY:'auto', padding:'24px 32px', maxWidth:900 }}>
-          <p style={{ fontSize:13, color:'var(--text2)', marginBottom:12, lineHeight:1.7 }}>
-            {GLOSSARY.length} lean CI terms — with ISO standard references. Click any term to expand.
+        <div style={{ flex:1, overflowY:'auto', padding:'16px 18px', paddingBottom:80 }}>
+          <p style={{ fontSize:12, color:'var(--text3)', marginBottom:10, lineHeight:1.7 }}>
+            {GLOSSARY.length} lean CI terms with ISO references. Tap to expand.
           </p>
           <input
             className="input"
             placeholder="Search terms…"
             value={glossarySearch}
             onChange={e => setGlossarySearch(e.target.value)}
-            style={{ marginBottom:16, fontSize:13 }}
+            style={{ marginBottom:12, fontSize:13 }}
           />
           <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
             {GLOSSARY.map((g, i) => (
-              <div key={i} style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:10, overflow:'hidden' }}>
+              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:10, overflow:'hidden' }}>
                 <button onClick={() => setExpandedFAQ(expandedFAQ===i?null:i)}
-                  style={{ width:'100%', textAlign:'left', padding:'12px 18px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
-                  <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                    <span style={{ fontSize:14, fontWeight:700, color:'#D4A208' }}>{g.term}</span>
-                    <span style={{ fontSize:9, fontFamily:'monospace', color:'var(--text3)', background:'transparent', padding:'2px 6px', borderRadius:4 }}>{g.std}</span>
+                  style={{ width:'100%', textAlign:'left', padding:'11px 14px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+                  <div style={{ minWidth:0 }}>
+                    <span style={{ fontSize:13, fontWeight:700, color:'var(--gold)', display:'block' }}>{g.term}</span>
+                    <span style={{ fontSize:9, fontFamily:'monospace', color:'var(--text3)' }}>{g.std}</span>
                   </div>
-                  <span style={{ color:'var(--text3)', fontSize:18, flexShrink:0, transition:'transform 0.2s', transform:expandedFAQ===i?'rotate(90deg)':'none' }}>›</span>
+                  <span style={{ color:'var(--text3)', fontSize:16, flexShrink:0, transition:'transform 0.2s', transform:expandedFAQ===i?'rotate(90deg)':'none' }}>›</span>
                 </button>
                 {expandedFAQ===i && (
-                  <div style={{ padding:'0 18px 14px', borderTop:'1px solid var(--border)' }}>
-                    <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.8, margin:'10px 0 0' }}>{g.def}</p>
+                  <div style={{ padding:'0 14px 12px', borderTop:'1px solid var(--border)' }}>
+                    <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{g.def}</p>
                   </div>
                 )}
               </div>
@@ -333,21 +412,21 @@ export function LearningCenter({ userId }: Props) {
         </div>
       )}
 
-      {/* FAQs Tab */}
+      {/* ── FAQS TAB ──────────────────────────────────────────────────────── */}
       {activeTab==='faqs' && (
-        <div style={{ flex:1, overflowY:'auto', padding:'24px 32px', maxWidth:820 }}>
-          <p style={{ fontSize:13, color:'var(--text2)', marginBottom:20, lineHeight:1.7 }}>{FAQS.length} questions — click to expand.</p>
+        <div style={{ flex:1, overflowY:'auto', padding:'16px 18px', paddingBottom:80 }}>
+          <p style={{ fontSize:12, color:'var(--text3)', marginBottom:14, lineHeight:1.7 }}>{FAQS.length} frequently asked questions — tap to expand.</p>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
             {FAQS.map((faq,i) => (
-              <div key={i} style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:12, overflow:'hidden' }}>
+              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:12, overflow:'hidden' }}>
                 <button onClick={() => setExpandedFAQ(expandedFAQ===i?null:i)}
-                  style={{ width:'100%', textAlign:'left', padding:'14px 18px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
-                  <span style={{ fontSize:14, fontWeight:600, color:'var(--text)', lineHeight:1.4, flex:1 }}>{faq.q}</span>
-                  <span style={{ color:'var(--text3)', fontSize:18, flexShrink:0, transition:'transform 0.2s', transform:expandedFAQ===i?'rotate(90deg)':'none' }}>›</span>
+                  style={{ width:'100%', textAlign:'left', padding:'13px 14px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+                  <span style={{ fontSize:13, fontWeight:600, color:'var(--text)', lineHeight:1.5, flex:1 }}>{faq.q}</span>
+                  <span style={{ color:'var(--text3)', fontSize:16, flexShrink:0, transition:'transform 0.2s', transform:expandedFAQ===i?'rotate(90deg)':'none' }}>›</span>
                 </button>
                 {expandedFAQ===i && (
-                  <div style={{ padding:'0 18px 16px', borderTop:'1px solid var(--border)' }}>
-                    <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.8, margin:'12px 0 0' }}>{faq.a}</p>
+                  <div style={{ padding:'0 14px 14px', borderTop:'1px solid var(--border)' }}>
+                    <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{faq.a}</p>
                   </div>
                 )}
               </div>

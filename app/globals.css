@@ -989,3 +989,67 @@ body.modal-open main {
   border: 0.5px solid var(--border) !important;
   color: var(--text) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LEARNING CENTER — responsive sidebar
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Desktop sidebar */
+.learn-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 10px 0;
+  background: #FFFFFF;
+}
+
+/* Mobile picker — hidden on desktop */
+.learn-mobile-picker {
+  display: none;
+  position: relative;
+}
+
+/* Section header — always shown on desktop, hidden on mobile (picker replaces it) */
+.learn-section-header {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  /* Hide sidebar on mobile */
+  .learn-sidebar {
+    display: none !important;
+  }
+
+  /* Show mobile picker */
+  .learn-mobile-picker {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Hide desktop section header on mobile (picker shows title) */
+  .learn-section-header {
+    display: none !important;
+  }
+
+  /* Full-width content, tighter padding */
+  .learn-content {
+    padding: 14px !important;
+  }
+
+  /* Header tighter on mobile */
+  .learn-header h1 {
+    font-size: 19px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Desktop: hide mobile picker */
+  .learn-mobile-picker {
+    display: none !important;
+  }
+}
