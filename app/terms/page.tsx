@@ -29,7 +29,7 @@ export default function TermsPage() {
         </div>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy, a company based in the United States.</p>
+          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy, a registered business.</p>
         </Section>
 
         <Section title="2. Description of Service">
@@ -66,10 +66,6 @@ export default function TermsPage() {
 
         <Section title="10. Changes to Terms">
           <p>We may update these Terms from time to time. We will notify you of significant changes by email or in-app notification. Continued use of the Service after changes constitutes acceptance of the new Terms.</p>
-        </Section>
-
-        <Section title="10b. Governing Law">
-          <p>These Terms are governed by the laws of the United States. Any disputes shall be resolved in the courts of the United States. If you are accessing VeSiMy from outside the United States, you are responsible for compliance with local laws.</p>
         </Section>
 
         <Section title="11. Contact">

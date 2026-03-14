@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 
 function SignupForm() {
   const router       = useRouter()

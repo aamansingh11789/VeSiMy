@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { VLogoMark, VeSiMyWordmark, VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
@@ -82,6 +82,37 @@ export default function HomePage() {
         .r1 { animation-delay:0.05s } .r2 { animation-delay:0.18s }
         .r3 { animation-delay:0.30s } .r4 { animation-delay:0.44s }
         .r5 { animation-delay:0.56s }
+        @keyframes logoFloat {
+          0%,100% { transform: translateY(0px) rotate(-1deg); }
+          50%      { transform: translateY(-7px) rotate(1deg); }
+        }
+        @keyframes logoGlow {
+          0%,100% { filter: drop-shadow(0 4px 18px rgba(196,155,46,0.22)) drop-shadow(0 0 0px rgba(140,68,204,0)); }
+          50%     { filter: drop-shadow(0 8px 32px rgba(196,155,46,0.45)) drop-shadow(0 0 18px rgba(140,68,204,0.25)); }
+        }
+        @keyframes wordmarkIn {
+          from { opacity:0; transform: translateX(-12px) skewX(-4deg); }
+          to   { opacity:1; transform: translateX(0)     skewX(0deg); }
+        }
+        @keyframes taglineIn {
+          from { opacity:0; letter-spacing: 6px; }
+          to   { opacity:1; letter-spacing: 3px; }
+        }
+        @keyframes shimmerSweep {
+          0%   { background-position: -200% center; }
+          100% { background-position: 300% center; }
+        }
+        .logo-mark-anim {
+          animation: logoFloat 4.2s ease-in-out infinite, logoGlow 4.2s ease-in-out infinite;
+        }
+        .wordmark-anim {
+          opacity:0;
+          animation: wordmarkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.25s forwards;
+        }
+        .tagline-anim {
+          opacity:0;
+          animation: taglineIn 0.9s ease 0.6s forwards;
+        }
         .nav-link { color:#6B6760; text-decoration:none; font-size:13px; transition:color 0.15s; }
         .nav-link:hover { color:#242220; }
         @media(max-width:768px){
@@ -123,10 +154,22 @@ export default function HomePage() {
 
         <div className="hero-text" style={{ paddingRight: 24 }}>
 
-          {/* Eyebrow */}
-          <div className="reveal r1" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 600, letterSpacing: 1.4, textTransform: 'uppercase', color: '#C49B2E', border: '1px solid rgba(196,155,46,0.3)', borderRadius: 999, padding: '5px 14px', marginBottom: 22, background: 'rgba(196,155,46,0.06)' }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#C49B2E', animation: 'blink 2s infinite' }} />
-            Lean CI Platform · ISO 22468:2020
+          {/* Hero Logo */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
+            <div className="logo-mark-anim" style={{ flexShrink: 0 }}>
+              <VLogoMark size={88} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div className="wordmark-anim">
+                <VeSiMyWordmark size={52} />
+              </div>
+              <span className="tagline-anim" style={{
+                fontSize: 11, letterSpacing: 3, fontFamily: 'monospace',
+                textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600,
+              }}>
+                Continuous Improvement Platform
+              </span>
+            </div>
           </div>
 
           {/* Headline */}

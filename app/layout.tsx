@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title:       { default: 'VeSiMy — AI Operations Intelligence Platform', template: '%s — VeSiMy' },
   description: 'VeSiMy is the AI platform that monitors your manufacturing processes, detects inefficiencies automatically, and tells your team exactly what to fix. Free VSM, Kaizen, 5 Why, Fishbone, SMED and Gemba Walk tools — all in one platform.',
   keywords:    ['continuous improvement', 'VSM', 'value stream mapping', 'lean manufacturing software', 'kaizen tracking', 'AI process optimization', '5 why analysis', 'fishbone diagram', 'free VSM tool', 'manufacturing AI', 'process improvement software'],
-  authors:     [{ name: 'Max Singh' }],
-  creator:     'Max Singh',
+  authors:     [{ name: 'VeSiMy' }],
+  creator:     'VeSiMy',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.vesimy.com'),
 
   // ── PWA manifest ───────────────────────────────────────────────────────────
