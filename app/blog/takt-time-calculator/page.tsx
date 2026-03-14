@@ -133,7 +133,7 @@ export default function TaktTimePost() {
                   ['Customer Demand', ex.demand],
                   ['Takt Time', ex.takt],
                 ].map(([label, val]) => (
-                  <div key={label} style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: '10px 12px' }}>
+                  <div key={label} style={{ background: 'transparent', borderRadius: 8, padding: '10px 12px' }}>
                     <div style={{ fontSize: 10, color: '#52507A', fontFamily: 'monospace', marginBottom: 4 }}>{label}</div>
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#1DD1A1' }}>{val}</div>
                   </div>

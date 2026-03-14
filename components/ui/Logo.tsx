@@ -150,7 +150,7 @@ export function VLogoMark({ size = 40 }: { size?: number }) {
         {/* Right subtle highlight */}
         <path
           d="M73.5 8 H82 L65.2 68.5 H61.8 Z"
-          fill="rgba(255,255,255,0.06)"
+          fill="transparent"
         />
       </g>
 

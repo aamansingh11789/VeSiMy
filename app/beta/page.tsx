@@ -105,7 +105,7 @@ export default function BetaPage() {
               ? `Your Gold Standard beta access is confirmed. Log in to claim your 30-day Pro trial — and your permanent Gold Standard badge.`
               : `Your application is under review. We'll reach out within 48 hours.`}
           </p>
-          <div style={{ background:'rgba(8,8,24,0.75)', border:`1px solid rgba(212,162,8,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
+          <div style={{ background:'#FFFFFF', border:`1px solid rgba(212,162,8,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
             <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>WHAT HAPPENS NEXT</p>
             {(isApproved ? [
               '✅ Head to the app — your Gold Standard badge is waiting',
@@ -169,7 +169,7 @@ export default function BetaPage() {
 
           {/* Countdown */}
           {closeDate && !countdown.expired && (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'rgba(8,8,24,0.8)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'#FFFFFF', border:'1px solid rgba(212,162,8,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
               <ClockIcon size={14} color={GOLD} />
               <span style={{ fontSize:12, color:'var(--text3)', fontFamily:'monospace' }}>CLOSES IN</span>
               {[
@@ -197,14 +197,14 @@ export default function BetaPage() {
               Join Gold Standard <ArrowRightIcon size={16} />
             </button>
             <a href="#perks" style={{ padding:'14px 24px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
-              background:'rgba(8,8,24,0.75)', color:'var(--text3)', border:'1px solid rgba(40,40,92,0.5)', textDecoration:'none' }}>
+              background:'#FFFFFF', color:'var(--text3)', border:'1px solid rgba(40,40,92,0.5)', textDecoration:'none' }}>
               See what you get ↓
             </a>
           </div>
         </div>
 
         {/* What you get */}
-        <div id="perks" style={{ background:'rgba(8,8,24,0.75)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:16, padding:'32px 36px', marginBottom:48 }}>
+        <div id="perks" style={{ background:'#FFFFFF', border:'1px solid rgba(212,162,8,0.2)', borderRadius:16, padding:'32px 36px', marginBottom:48 }}>
           <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:20 }}>WHAT GOLD STANDARD GETS YOU — FOREVER</p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))', gap:24 }}>
             {[
@@ -311,7 +311,7 @@ export default function BetaPage() {
               <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
                 {TEAM_SIZES.map(s=>(
                   <button key={s} type="button" onClick={()=>set('team_size',s)} style={{ padding:'7px 16px', borderRadius:8, fontSize:13, cursor:'pointer', border:'1px solid',
-                    background: form.team_size===s?'rgba(212,162,8,0.1)':'rgba(8,8,24,0.75)',
+                    background: form.team_size===s?'rgba(212,162,8,0.1)':'#FFFFFF',
                     borderColor: form.team_size===s?'rgba(212,162,8,0.4)':'rgba(40,40,92,0.5)',
                     color: form.team_size===s?'var(--text)':'var(--text3)' }}>{s} people</button>
                 ))}
@@ -325,7 +325,7 @@ export default function BetaPage() {
               <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
                 {LEAN_EXP.map(opt=>(
                   <button key={opt.id} type="button" onClick={()=>set('lean_experience',opt.id)} style={{ padding:'11px 16px', borderRadius:10, fontSize:13, cursor:'pointer', border:'1px solid', textAlign:'left',
-                    background: form.lean_experience===opt.id?'rgba(212,162,8,0.08)':'rgba(8,8,24,0.75)',
+                    background: form.lean_experience===opt.id?'rgba(212,162,8,0.08)':'#FFFFFF',
                     borderColor: form.lean_experience===opt.id?'rgba(212,162,8,0.4)':'rgba(40,40,92,0.5)',
                     color: form.lean_experience===opt.id?'var(--text)':'var(--text3)' }}>
                     <span style={{ color: form.lean_experience===opt.id?GOLD:'var(--border2)', marginRight:8 }}>
@@ -340,7 +340,7 @@ export default function BetaPage() {
               <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                 {TOOLS.map(t=>(
                   <button key={t} type="button" onClick={()=>toggleTool(t)} style={{ padding:'7px 14px', borderRadius:100, fontSize:12, cursor:'pointer', border:'1px solid',
-                    background: form.current_tools.includes(t)?'rgba(140,68,204,0.1)':'rgba(8,8,24,0.75)',
+                    background: form.current_tools.includes(t)?'rgba(140,68,204,0.1)':'#FFFFFF',
                     borderColor: form.current_tools.includes(t)?'rgba(140,68,204,0.4)':'rgba(40,40,92,0.5)',
                     color: form.current_tools.includes(t)?'var(--text)':'var(--text3)' }}>{t}</button>
                 ))}
@@ -394,7 +394,7 @@ export default function BetaPage() {
 
 function Section({ title, children }: { title:string; children:any }) {
   return (
-    <div style={{ background:'rgba(8,8,24,0.75)', border:'1px solid rgba(40,40,92,0.4)', borderRadius:14, padding:'22px 24px' }}>
+    <div style={{ background:'#FFFFFF', border:'1px solid rgba(40,40,92,0.4)', borderRadius:14, padding:'22px 24px' }}>
       <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>
       <div style={{ display:'flex', flexDirection:'column', gap:16 }}>{children}</div>
     </div>

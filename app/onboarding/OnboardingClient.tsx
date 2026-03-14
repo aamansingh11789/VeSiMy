@@ -166,7 +166,7 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))', gap:10, marginBottom:32 }}>
                 {ROLES.map(r => (
                   <button key={r.id} onClick={() => setRole(r.id)} style={{ padding:'14px 16px', borderRadius:12, textAlign:'left', cursor:'pointer', transition:'all 0.15s',
-                    background: role===r.id ? 'rgba(212,162,8,0.08)' : 'rgba(8,8,24,0.75)',
+                    background: role===r.id ? 'rgba(212,162,8,0.08)' : '#FFFFFF',
                     border:     role===r.id ? '1.5px solid rgba(212,162,8,0.5)' : '1.5px solid rgba(40,40,92,0.5)',
                   }}>
                     <div style={{ fontSize:22, marginBottom:6 }}>{r.icon}</div>
@@ -179,7 +179,7 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:40 }}>
                 {INDUSTRIES.map(ind => (
                   <button key={ind.id} onClick={() => setIndustry(ind.id)} style={{ padding:'8px 14px', borderRadius:100, fontSize:13, cursor:'pointer', transition:'all 0.15s', display:'flex', alignItems:'center', gap:6,
-                    background: industry===ind.id ? 'rgba(212,162,8,0.1)' : 'rgba(8,8,24,0.75)',
+                    background: industry===ind.id ? 'rgba(212,162,8,0.1)' : '#FFFFFF',
                     border:     industry===ind.id ? '1px solid rgba(212,162,8,0.4)' : '1px solid rgba(40,40,92,0.5)',
                     color:      industry===ind.id ? 'var(--text)' : 'var(--text3)',
                   }}>
@@ -217,7 +217,7 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:40 }}>
                 {FIRST_PROCESS_TEMPLATES.map(t => (
                   <button key={t.id} onClick={() => setTemplate(t.id)} style={{ padding:'16px', borderRadius:12, textAlign:'left', cursor:'pointer', transition:'all 0.15s',
-                    background: template===t.id ? 'rgba(140,68,204,0.08)' : 'rgba(8,8,24,0.75)',
+                    background: template===t.id ? 'rgba(140,68,204,0.08)' : '#FFFFFF',
                     border:     template===t.id ? '1.5px solid rgba(140,68,204,0.4)' : '1.5px solid rgba(40,40,92,0.5)',
                   }}>
                     <div style={{ fontWeight:600, fontSize:14, color: template===t.id?'var(--text)':'#B0B0C8', marginBottom:t.steps.length?6:0 }}>{t.label}</div>
@@ -256,7 +256,7 @@ export function OnboardingClient({ profile }: Props) {
               </p>
 
               {/* Summary card */}
-              <div style={{ background:'rgba(8,8,24,0.8)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:16, padding:28, marginBottom:36 }}>
+              <div style={{ background:'#FFFFFF', border:'1px solid rgba(212,162,8,0.2)', borderRadius:16, padding:28, marginBottom:36 }}>
                 <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
                   {[
                     ['Your Role',     ROLES.find(r=>r.id===role)?.label || role,     '👤'],
@@ -281,7 +281,7 @@ export function OnboardingClient({ profile }: Props) {
                   { icon:'🤖', label:'Supe AI analyzes your process immediately' },
                   { icon:'📊', label:'Process Health Score starts tracking' },
                 ].map(item => (
-                  <div key={item.label} style={{ background:'rgba(8,8,24,0.6)', border:'1px solid rgba(40,40,92,0.4)', borderRadius:10, padding:'14px 12px', textAlign:'center' }}>
+                  <div key={item.label} style={{ background:'#FFFFFF', border:'1px solid rgba(40,40,92,0.4)', borderRadius:10, padding:'14px 12px', textAlign:'center' }}>
                     <div style={{ fontSize:22, marginBottom:8 }}>{item.icon}</div>
                     <div style={{ fontSize:11, color:'var(--text3)', lineHeight:1.5 }}>{item.label}</div>
                   </div>

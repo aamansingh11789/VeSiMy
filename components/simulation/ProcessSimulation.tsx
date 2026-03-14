@@ -111,7 +111,7 @@ export function ProcessSimulation({ steps, projectId }: Props) {
                 const oW   = Number(s.wait_time)||0
                 const dLT  = (a.fCT+a.fWait)-(oCT+oW)
                 return (
-                  <tr key={s.id} style={{ borderBottom:'1px solid rgba(26,26,64,0.3)' }}>
+                  <tr key={s.id} style={{ borderBottom:'1px solid rgba(215,213,206,0.9)' }}>
                     <td style={{ padding:'8px 10px', color:'var(--text)', fontWeight:500 }}>{s.name}</td>
                     <td style={{ padding:'8px 10px', color:'var(--text2)' }}>{oCT?fmt(oCT):'—'}</td>
                     <td style={{ padding:'8px 10px', color:a.fCT<oCT?'#1DD1A1':'var(--text2)' }}>{fmt(a.fCT)}</td>

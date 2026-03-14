@@ -852,7 +852,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           { l: 'Takt Time',   v: takt ? fmtS(takt) : '—',            c: '#0EA5E9' },
           { l: 'PCE',         v: pce ? `${pce.toFixed(1)}%` : '—',   c: pce > 25 ? '#10B981' : '#F59E0B' },
         ].map(m => (
-          <div key={m.l} style={{ flex: '1 1 110px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', borderRadius: 10, padding: '8px 12px' }}>
+          <div key={m.l} style={{ flex: '1 1 110px', background: 'transparent', border: '1px solid var(--border)', borderRadius: 10, padding: '8px 12px' }}>
             <div style={{ fontSize: 8, color: 'var(--text3)', letterSpacing: 1.2, fontFamily: 'monospace', marginBottom: 4 }}>{m.l}</div>
             <div style={{ fontSize: 17, fontWeight: 700, color: m.c }}>{m.v}</div>
           </div>
@@ -865,7 +865,7 @@ export function VSMMap({ steps, branches, project }: Props) {
         </button>
         <button
           onClick={() => setFullscreen(true)}
-          style={{ padding: '8px 14px', borderRadius: 10, fontSize: 16, cursor: 'pointer', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', color: 'var(--text2)', alignSelf: 'stretch' }}
+          style={{ padding: '8px 14px', borderRadius: 10, fontSize: 16, cursor: 'pointer', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', alignSelf: 'stretch' }}
           title="Fullscreen (Esc to exit)"
         >
           ⛶

@@ -273,7 +273,7 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
               {opSteps.map((s, i) => {
                 const vc = VA_TYPES.find(v => v.value === s.va_type)?.color || 'var(--text3)'
                 return (
-                  <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)' }}>
+                  <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)' }}>
                     <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20 }}>{i+1}</span>
                     <span style={{ fontSize: 11, padding: '2px 6px', borderRadius: 4, background: `${vc}22`, color: vc, fontWeight: 700, fontSize: 9, minWidth: 36, textAlign: 'center' }}>{s.va_type.toUpperCase()}</span>
                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>

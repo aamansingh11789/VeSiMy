@@ -99,7 +99,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
         <div className="card" style={{ padding:14 }}>
           <div style={{ fontSize:10, color:'var(--text3)', letterSpacing:1.5, marginBottom:8, fontFamily:'var(--font-mono)' }}>RECENT ENTRIES</div>
           {recent.map(m => (
-            <div key={m.id} style={{ display:'flex', justifyContent:'space-between', fontSize:11, color:'var(--text2)', padding:'5px 0', borderBottom:'1px solid rgba(26,26,64,0.3)' }}>
+            <div key={m.id} style={{ display:'flex', justifyContent:'space-between', fontSize:11, color:'var(--text2)', padding:'5px 0', borderBottom:'1px solid rgba(215,213,206,0.9)' }}>
               <span style={{ color:'var(--text3)' }}>{sName(m.step_id)}</span>
               <span>{m.metric_type.replace('_',' ')}: <strong style={{ color:'var(--steel)' }}>{m.value}</strong></span>
             </div>

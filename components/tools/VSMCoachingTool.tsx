@@ -223,7 +223,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
 
         {/* AI insight */}
         {aiInsight && (
-          <div style={{ background: 'rgba(108,185,252,0.06)', border: '1px solid rgba(108,185,252,0.2)', borderRadius: 10, padding: '14px' }}>
+          <div style={{ background: '#EEF4FB', border: '1px solid #85AEDD', borderRadius: 10, padding: '14px' }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: '#6CB9FC', marginBottom: 8 }}>🤖 AI COACHING — CLAUDE ANALYSIS</div>
             <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{aiInsight}</div>
           </div>

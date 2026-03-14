@@ -300,7 +300,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
         style={{
           padding: '10px 20px',
           background: 'var(--bg2)',
-          borderBottom: '1px solid rgba(212,162,8,0.12)',
+          borderBottom: '1px solid var(--border)',
           display: 'flex',
           alignItems: 'center',
           gap: 10,
@@ -512,7 +512,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 border: 'none',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                color: active ? '#D4A208' : locked ? '#4A4A6A' : 'var(--text3)',
+                color: active ? 'var(--gold)' : locked ? 'var(--sl-300)' : 'var(--sl-500)',
                 borderBottom: `2px solid ${active ? '#D4A208' : 'transparent'}`,
                 marginBottom: -1,
               }}
@@ -567,22 +567,22 @@ export function ProjectClient({ initialProject, profile }: Props) {
             <div>
               {/* VSM Analysis Toolbar */}
               <div style={{ display: 'flex', gap: 8, padding: '12px 24px 0', flexWrap: 'wrap', alignItems: 'center' }}>
-                <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', marginRight: 4 }}>VSM TOOLS:</span>
+                <span style={{ fontSize: 9, color: 'var(--sl-400)', fontFamily: 'monospace', marginRight: 4, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>VSM Tools</span>
                 <button
                   onClick={() => setShowVSMCoaching(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.25)', color: '#FF6B6B', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                  className="vsm-tool-btn vsm-tool-btn--red"
                 >
                   🎯 Gap Analysis & AI Coaching
                 </button>
                 <button
                   onClick={() => setShowYamazumi(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(29,209,161,0.08)', border: '1px solid rgba(29,209,161,0.25)', color: '#1DD1A1', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                  className="vsm-tool-btn vsm-tool-btn--teal"
                 >
                   📊 Yamazumi Chart
                 </button>
                 <button
                   onClick={() => setShowStandardWork(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'rgba(108,185,252,0.08)', border: '1px solid rgba(108,185,252,0.25)', color: '#6CB9FC', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                  className="vsm-tool-btn vsm-tool-btn--blue"
                 >
                   📋 Standard Work Sheet
                 </button>
@@ -1310,7 +1310,8 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
                 borderRadius: 6,
                 cursor: 'pointer',
                 background: has ? 'rgba(212,162,8,0.10)' : 'transparent',
-                border: `1px solid ${has ? 'rgba(212,162,8,0.25)' : 'var(--border)'}`,
+                border: `1px solid ${has ? 'var(--gold)' : 'var(--border)'}`,
+                background: has ? 'rgba(196,155,46,0.08)' : 'var(--bg2)',
                 color: has ? '#D4A208' : 'var(--sl-400)',
               }}
             >

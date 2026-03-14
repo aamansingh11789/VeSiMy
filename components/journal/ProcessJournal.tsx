@@ -104,7 +104,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 10001,
         width: 'min(420px, 100vw)',
-        background: 'linear-gradient(180deg, rgba(13,13,34,0.98), rgba(248,247,245,0.97))',
+        background: 'linear-gradient(180deg, var(--sl-50), rgba(248,247,245,0.97))',
         border: '1px solid rgba(44,44,92,0.86)',
         borderRight: 'none',
         display: 'flex', flexDirection: 'column',
@@ -143,7 +143,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           WebkitOverflowScrolling: 'touch',
         }}>
           {loading && (
-            <div style={{ textAlign: 'center', color: '#52507A', fontSize: 13, padding: '40px 0' }}>
+            <div style={{ textAlign: 'center', color: 'var(--sl-400)', fontSize: 13, padding: '40px 0' }}>
               Loading journal…
             </div>
           )}
@@ -151,14 +151,14 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           {!loading && entries.length === 0 && (
             <div style={{
               textAlign: 'center', padding: '48px 24px',
-              background: 'rgba(255,255,255,0.015)', borderRadius: 12,
+              background: 'transparent', borderRadius: 12,
               border: '1px dashed rgba(44,44,92,0.6)',
             }}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>📝</div>
               <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>
                 Nothing recorded yet
               </div>
-              <p style={{ fontSize: 12, color: '#52507A', lineHeight: 1.7 }}>
+              <p style={{ fontSize: 12, color: 'var(--sl-400)', lineHeight: 1.7 }}>
                 Add your first note below. As you use your CI tools, VeSiMy will start
                 auto-logging changes here automatically.
               </p>
@@ -185,7 +185,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
                   }}>
                     {tag.label}
                   </span>
-                  <span style={{ fontSize: 11, color: '#52507A', fontFamily: 'monospace', flexShrink: 0 }}>
+                  <span style={{ fontSize: 11, color: 'var(--sl-400)', fontFamily: 'monospace', flexShrink: 0 }}>
                     {formatDate(entry.created_at)}
                   </span>
                 </div>
@@ -195,7 +195,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
                 {entry.metadata && Object.keys(entry.metadata).length > 0 && (
                   <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                     {Object.entries(entry.metadata).map(([k, v]) => (
-                      <span key={k} style={{ fontSize: 10, color: '#52507A', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(44,44,92,0.4)', borderRadius: 6, padding: '2px 8px' }}>
+                      <span key={k} style={{ fontSize: 10, color: 'var(--sl-400)', background: 'transparent', border: '1px solid rgba(44,44,92,0.4)', borderRadius: 6, padding: '2px 8px' }}>
                         {k}: {String(v)}
                       </span>
                     ))}
@@ -223,7 +223,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               placeholder="Add a note, observation, or decision…"
               rows={2}
               style={{
-                flex: 1, background: 'rgba(255,255,255,0.04)',
+                flex: 1, background: 'transparent',
                 border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10,
                 color: 'var(--text)', fontSize: 13, padding: '10px 12px',
                 fontFamily: 'Inter, sans-serif', resize: 'none', lineHeight: 1.5,
@@ -235,8 +235,8 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               disabled={saving || !note.trim()}
               style={{
                 padding: '0 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                background: note.trim() ? 'linear-gradient(135deg,#C49510,#D4A208)' : 'rgba(255,255,255,0.06)',
-                color: note.trim() ? 'var(--bg)' : '#52507A',
+                background: note.trim() ? 'linear-gradient(135deg,#C49510,#D4A208)' : 'transparent',
+                color: note.trim() ? 'var(--bg)' : 'var(--sl-400)',
                 fontWeight: 700, fontSize: 18, transition: 'all 0.2s',
                 flexShrink: 0,
               }}
@@ -244,7 +244,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               {saving ? '…' : '↑'}
             </button>
           </div>
-          <p style={{ fontSize: 10, color: '#52507A', marginTop: 6 }}>
+          <p style={{ fontSize: 10, color: 'var(--sl-400)', marginTop: 6 }}>
             ⌘ + Enter to save · Auto-logging coming in next update
           </p>
         </div>

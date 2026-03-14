@@ -165,11 +165,11 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
 
                 {/* Task table */}
                 <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', background: 'rgba(255,255,255,0.04)', padding: '6px 10px', fontSize: 10, color: 'var(--text3)', fontWeight: 700 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', background: 'transparent', padding: '6px 10px', fontSize: 10, color: 'var(--text3)', fontWeight: 700 }}>
                     <span>#</span><span>Task</span><span style={{ textAlign: 'center' }}>Type</span><span style={{ textAlign: 'right' }}>Time</span>
                   </div>
                   {opSteps.map((s: any, i: number) => (
-                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'rgba(255,255,255,0.01)' : 'transparent', alignItems: 'center' }}>
+                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'transparent', alignItems: 'center' }}>
                       <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace' }}>{i + 1}</span>
                       <span style={{ fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                       <span style={{ textAlign: 'center' }}>

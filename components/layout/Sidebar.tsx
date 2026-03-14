@@ -192,7 +192,7 @@ export function Sidebar({ profile }: SidebarProps) {
                 <div style={{
                   width: 26, height: 26, borderRadius: 7, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: active ? 'rgba(196,155,46,0.18)' : 'rgba(255,255,255,0.04)',
+                  background: active ? 'rgba(196,155,46,0.18)' : 'transparent',
                 }}>
                   <Icon size={14} color={active ? GOLD : SL[400]} />
                 </div>

@@ -138,7 +138,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           {(problem || whys.some(w => w)) && (
             <button
               onClick={exportFiveWhyISO}
-              style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+              style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
             >
               📄 ISO Report
             </button>
@@ -162,7 +162,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                 gridTemplateColumns: '28px 1fr',
                 gap: 8,
                 alignItems: 'start',
-                background: 'rgba(255,255,255,0.02)',
+                background: 'transparent',
                 border: '1px solid var(--border)',
                 borderRadius: 10,
                 padding: 8,

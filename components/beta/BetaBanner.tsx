@@ -104,7 +104,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
       background:'rgba(212,162,8,0.05)', border:'1px solid rgba(212,162,8,0.22)', borderRadius:12,
       display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
       <button onClick={() => setDismissed(true)} style={{ position:'absolute', top:8, right:10,
-        background:'none', border:'none', cursor:'pointer', color:'#28285C', fontSize:14 }}>✕</button>
+        background:'none', border:'none', cursor:'pointer', color:'var(--border2)', fontSize:14 }}>✕</button>
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
         <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>

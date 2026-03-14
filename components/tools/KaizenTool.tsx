@@ -300,7 +300,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
           {items.length > 0 && (
             <button
               onClick={exportKaizenISO}
-              style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+              style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
             >
               📄 ISO Report
             </button>

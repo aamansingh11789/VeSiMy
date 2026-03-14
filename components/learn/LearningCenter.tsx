@@ -318,7 +318,7 @@ export function LearningCenter({ userId }: Props) {
                   style={{ width:'100%', textAlign:'left', padding:'12px 18px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:14, fontWeight:700, color:'#D4A208' }}>{g.term}</span>
-                    <span style={{ fontSize:9, fontFamily:'monospace', color:'var(--text3)', background:'rgba(255,255,255,0.04)', padding:'2px 6px', borderRadius:4 }}>{g.std}</span>
+                    <span style={{ fontSize:9, fontFamily:'monospace', color:'var(--text3)', background:'transparent', padding:'2px 6px', borderRadius:4 }}>{g.std}</span>
                   </div>
                   <span style={{ color:'var(--text3)', fontSize:18, flexShrink:0, transition:'transform 0.2s', transform:expandedFAQ===i?'rotate(90deg)':'none' }}>›</span>
                 </button>

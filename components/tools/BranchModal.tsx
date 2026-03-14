@@ -137,7 +137,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
                   outline:
                     color === c.value
                       ? '3px solid white'
-                      : '1px solid rgba(255,255,255,0.08)',
+                      : '1px solid transparent',
                   outlineOffset: 2,
                 }}
                 title={c.label}

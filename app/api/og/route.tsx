@@ -9,7 +9,7 @@ export async function GET() {
         style={{
           width: '1200px',
           height: '630px',
-          background: 'linear-gradient(135deg, #04040F 0%, #0D0D22 50%, #04040F 100%)',
+          background: 'linear-gradient(135deg, #04040F 0%, var(--bg3) 50%, #04040F 100%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -52,7 +52,7 @@ export async function GET() {
         </div>
 
         {/* Description */}
-        <div style={{ fontSize: '20px', color: '#8B88B3', maxWidth: '760px', lineHeight: 1.6, display: 'flex' }}>
+        <div style={{ fontSize: '20px', color: 'var(--text2)', maxWidth: '760px', lineHeight: 1.6, display: 'flex' }}>
           The AI platform that watches your manufacturing processes, detects inefficiencies, and tells your team exactly what to fix.
         </div>
 

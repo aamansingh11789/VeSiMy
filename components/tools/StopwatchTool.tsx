@@ -327,7 +327,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               {laps.length >= 1 && (
                 <button
                   onClick={exportTimeStudyISO}
-                  style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+                  style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
                 >
                   📄 ISO Report
                 </button>
@@ -345,7 +345,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                     borderRadius: 8,
                     fontSize: 12,
                     fontFamily: 'monospace',
-                    background: excluded.has(i) ? 'rgba(255,107,107,0.08)' : 'var(--bg)',
+                    background: excluded.has(i) ? 'rgba(192,64,42,0.06)' : 'var(--bg2)',
                     border: `1px solid ${
                       excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'
                     }`,

@@ -224,8 +224,8 @@ function ProjectHealthCard({ project }: { project: Project }) {
                     color: 'var(--text2)',
                     padding: '3px 8px',
                     borderRadius: 999,
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.04)',
+                    background: 'transparent',
+                    border: '1px solid transparent',
                   }}
                 >
                   {project.industry}
@@ -257,7 +257,7 @@ function ProjectHealthCard({ project }: { project: Project }) {
               height: 34,
               borderRadius: 10,
               background: 'rgba(255,255,255,0.025)',
-              border: '1px solid rgba(255,255,255,0.04)',
+              border: '1px solid transparent',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -354,8 +354,8 @@ function HealthOverview({ projects }: { projects: Project[] }) {
                 minWidth: 96,
                 padding: '12px 14px',
                 borderRadius: 14,
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.04)',
+                background: 'transparent',
+                border: '1px solid transparent',
                 textAlign: 'center',
               }}
             >
@@ -394,7 +394,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
               background: 'rgba(40,40,92,0.34)',
               overflow: 'hidden',
               display: 'flex',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+              boxShadow: 'inset 0 1px 0 transparent',
             }}
           >
             {high > 0 && <div style={{ flex: high, background: '#1DD1A1' }} />}
@@ -623,7 +623,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   border: '1px solid rgba(40,40,92,0.45)',
                   borderRadius: 12,
                   overflow: 'hidden',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+                  boxShadow: 'inset 0 1px 0 transparent',
                 }}
               >
                 {(['cards', 'list'] as const).map((v) => (
@@ -930,8 +930,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'rgba(255,255,255,0.02)',
-                        border: '1px solid rgba(255,255,255,0.04)',
+                        background: 'transparent',
+                        border: '1px solid transparent',
                       }}
                     >
                       <PlusIcon size={20} color="#6A678F" />
@@ -976,7 +976,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 padding: 30,
                 borderRadius: 20,
                 background:
-                  'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008)), rgba(13,13,34,0.95)',
+                  'linear-gradient(180deg, transparent, rgba(255,255,255,0.008)), var(--sl-50)',
               }}
             >
               <div

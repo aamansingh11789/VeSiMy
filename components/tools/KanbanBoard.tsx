@@ -60,7 +60,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
 
   return (
     <div style={{
-      background: 'var(--bg)', border: '1px solid rgba(212,162,8,0.25)',
+      background: 'var(--sl-50)', border: '1px solid rgba(212,162,8,0.25)',
       borderRadius: 8, padding: 12, marginBottom: 8,
     }}>
       <textarea
@@ -147,7 +147,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           value={title}
           onChange={e => setTitle(e.target.value)}
           style={{
-            width: '100%', background: 'var(--bg)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
             fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 14,
           }}
@@ -174,7 +174,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           onChange={e => setWipLimit(e.target.value)}
           placeholder="e.g. 5"
           style={{
-            width: '100%', background: 'var(--bg)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
             fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 20,
           }}
@@ -229,7 +229,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
       padding: 24,
     }} onClick={onClose}>
       <div style={{
-        background: 'var(--bg3)', border: '1px solid var(--border2)', borderRadius: 12,
+        background: 'var(--sl-50)', border: '1px solid var(--border2)', borderRadius: 12,
         padding: 24, width: 540, maxWidth: '100%', maxHeight: '90vh',
         overflowY: 'auto',
       }} onClick={e => e.stopPropagation()}>
@@ -640,7 +640,7 @@ export function KanbanBoard({
 
               {/* Column header */}
               <div style={{
-                background: isDrop ? `${col.color}18` : 'var(--bg3)',
+                background: isDrop ? `${col.color}12` : 'var(--sl-50)',
                 border: `1px solid ${isDrop ? col.color : over ? '#F4A623' : 'var(--border)'}`,
                 borderRadius: '10px 10px 0 0',
                 padding: '10px 12px',

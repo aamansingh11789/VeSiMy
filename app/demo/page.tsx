@@ -160,7 +160,7 @@ export default function DemoPage() {
               {running ? '⟳ Running…' : stage === -1 ? '▶  Run Demo' : '▶  Run Again'}
             </button>
             {stage >= 0 && (
-              <button onClick={reset} style={{ padding: '11px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', color: '#7A84A0', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>↺ Reset</button>
+              <button onClick={reset} style={{ padding: '11px 18px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: '#7A84A0', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>↺ Reset</button>
             )}
             <Link href="/auth/login" style={{ padding: '11px 18px', borderRadius: 12, border: `1px solid ${TEAL}44`, background: `${TEAL}0A`, color: TEAL, fontWeight: 700, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
               Try Free →
@@ -169,7 +169,7 @@ export default function DemoPage() {
         </div>
 
         {/* ═════════════ PIPELINE FLOWCHART ═════════════ */}
-        <div style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 18, padding: '20px 16px 16px', marginBottom: 22, overflowX: 'auto' }}>
+        <div style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid transparent', borderRadius: 18, padding: '20px 16px 16px', marginBottom: 22, overflowX: 'auto' }}>
           <div style={{ fontSize: 9, letterSpacing: 2, color: '#3A4060', marginBottom: 14, fontFamily: 'monospace', textTransform: 'uppercase' }}>SOP → VSM Pipeline · 7 stages</div>
           <div style={{ display: 'flex', alignItems: 'stretch', gap: 0, minWidth: 700 }}>
             {PIPELINE.map((p, i) => {
@@ -181,14 +181,14 @@ export default function DemoPage() {
                     onMouseLeave={() => setHoveredPipeline(null)}
                     style={{
                       flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 6px',
-                      borderRadius: 12, border: `1.5px solid ${isActive ? p.color : isDone ? p.color + '55' : 'rgba(255,255,255,0.06)'}`,
+                      borderRadius: 12, border: `1.5px solid ${isActive ? p.color : isDone ? p.color + '55' : 'transparent'}`,
                       background: isActive ? `radial-gradient(circle at 50% 0%,${p.color}18,transparent 70%)` : isDone ? `${p.color}07` : 'transparent',
                       transition: 'all 0.4s', cursor: isDone ? 'pointer' : 'default', position: 'relative', overflow: 'hidden',
                       boxShadow: isActive ? `0 0 18px ${p.color}30` : 'none',
                     }}
                   >
                     {isActive && <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(90deg,transparent,${p.color}12,transparent)`, animation: 'shimmer 1.4s ease-in-out infinite', borderRadius: 12 }} />}
-                    <div style={{ width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, marginBottom: 7, background: isDone ? `${p.color}20` : isActive ? `${p.color}28` : 'rgba(255,255,255,0.03)', border: `1.5px solid ${isDone || isActive ? p.color + '55' : 'rgba(255,255,255,0.07)'}`, animation: isActive ? 'iconPulse 1s ease-in-out infinite' : 'none', transition: 'all 0.3s' }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, marginBottom: 7, background: isDone ? `${p.color}20` : isActive ? `${p.color}28` : 'transparent', border: `1.5px solid ${isDone || isActive ? p.color + '55' : 'transparent'}`, animation: isActive ? 'iconPulse 1s ease-in-out infinite' : 'none', transition: 'all 0.3s' }}>
                       {isDone ? '✓' : p.icon}
                     </div>
                     <div style={{ fontSize: 8.5, letterSpacing: 1.5, color: isDone ? p.color : isActive ? p.color : '#3A4060', fontFamily: 'monospace', marginBottom: 3 }}>S{i + 1}</div>
@@ -213,7 +213,7 @@ export default function DemoPage() {
             })}
           </div>
           {hoveredPipeline !== null && stage > hoveredPipeline && (
-            <div style={{ marginTop: 10, padding: '9px 12px', borderRadius: 9, background: 'rgba(255,255,255,0.03)', border: `1px solid ${PIPELINE[hoveredPipeline].color}33`, fontSize: 11, color: '#C8CFDD', display: 'flex', gap: 10, alignItems: 'center' }}>
+            <div style={{ marginTop: 10, padding: '9px 12px', borderRadius: 9, background: 'transparent', border: `1px solid ${PIPELINE[hoveredPipeline].color}33`, fontSize: 11, color: '#C8CFDD', display: 'flex', gap: 10, alignItems: 'center' }}>
               <span style={{ color: PIPELINE[hoveredPipeline].color, fontWeight: 700 }}>{PIPELINE[hoveredPipeline].icon} {PIPELINE[hoveredPipeline].label}</span>
               <span style={{ color: '#5A6480' }}>·</span>
               <span>{PIPELINE[hoveredPipeline].detail}</span>
@@ -226,8 +226,8 @@ export default function DemoPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,280px) 1fr', gap: 16, alignItems: 'start' }}>
 
           {/* ── SOP Panel ── */}
-          <div style={{ background: 'rgba(255,255,255,0.015)', border: `1px solid ${stage >= 0 ? BLUE + '44' : 'rgba(255,255,255,0.07)'}`, borderRadius: 14, overflow: 'hidden', transition: 'border-color 0.5s' }}>
-            <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: stage >= 0 ? `${BLUE}10` : 'transparent', transition: 'background 0.5s' }}>
+          <div style={{ background: 'rgba(255,255,255,0.015)', border: `1px solid ${stage >= 0 ? BLUE + '44' : 'transparent'}`, borderRadius: 14, overflow: 'hidden', transition: 'border-color 0.5s' }}>
+            <div style={{ padding: '10px 14px', borderBottom: '1px solid transparent', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: stage >= 0 ? `${BLUE}10` : 'transparent', transition: 'background 0.5s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                 <span style={{ fontSize: 13 }}>📄</span>
                 <span style={{ fontSize: 10, fontWeight: 700, color: stage >= 0 ? BLUE : '#5A6480' }}>SOP-DOOR-001.pdf</span>
@@ -237,7 +237,7 @@ export default function DemoPage() {
             </div>
             <div style={{ padding: 10, fontFamily: 'monospace', fontSize: 9, lineHeight: 1.75, maxHeight: 480, overflowY: 'auto' }}>
               {stage === -1 && (
-                <div style={{ height: 180, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, color: '#3A4060', border: '2px dashed rgba(255,255,255,0.05)', borderRadius: 10, cursor: 'pointer' }} onClick={runPipeline}>
+                <div style={{ height: 180, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, color: '#3A4060', border: '2px dashed transparent', borderRadius: 10, cursor: 'pointer' }} onClick={runPipeline}>
                   <span style={{ fontSize: 24, opacity: 0.3 }}>📄</span>
                   <div style={{ fontSize: 10, color: '#5A6480' }}>Drop SOP here</div>
                   <div style={{ fontSize: 9, color: '#3A4060' }}>or click ▶ Run Demo</div>
@@ -256,8 +256,8 @@ export default function DemoPage() {
           <div style={{ display: 'grid', gap: 16 }}>
 
             {/* Step Cards */}
-            <div style={{ background: 'rgba(255,255,255,0.015)', border: `1px solid ${stage >= 2 ? GOLD + '44' : 'rgba(255,255,255,0.07)'}`, borderRadius: 14, overflow: 'hidden', transition: 'border-color 0.5s' }}>
-              <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: stage >= 2 ? `${GOLD}08` : 'transparent' }}>
+            <div style={{ background: 'rgba(255,255,255,0.015)', border: `1px solid ${stage >= 2 ? GOLD + '44' : 'transparent'}`, borderRadius: 14, overflow: 'hidden', transition: 'border-color 0.5s' }}>
+              <div style={{ padding: '10px 14px', borderBottom: '1px solid transparent', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: stage >= 2 ? `${GOLD}08` : 'transparent' }}>
                 <div style={{ fontSize: 11, fontWeight: 700, color: stage >= 2 ? GOLD : '#3A4060' }}>⚙ Extracted Process Steps</div>
                 <div style={{ fontSize: 10, color: '#5A6480' }}>{stepsRevealed}/{STEPS.length} steps</div>
               </div>
@@ -269,7 +269,7 @@ export default function DemoPage() {
                     <div key={i}
                       onMouseEnter={() => setActiveStep(i)}
                       onMouseLeave={() => setActiveStep(null)}
-                      style={{ width: 116, borderRadius: 10, border: `1px solid ${!revealed ? 'rgba(255,255,255,0.04)' : isOver ? RED + '55' : GOLD + '33'}`, background: !revealed ? 'rgba(255,255,255,0.02)' : isOver ? `${RED}09` : `${GOLD}07`, padding: '9px 9px 7px', opacity: revealed ? 1 : 0.2, transition: 'all 0.35s ease', transform: revealed ? 'translateY(0)' : 'translateY(8px)', cursor: revealed ? 'pointer' : 'default', position: 'relative', overflow: 'hidden' }}>
+                      style={{ width: 116, borderRadius: 10, border: `1px solid ${!revealed ? 'transparent' : isOver ? RED + '55' : GOLD + '33'}`, background: !revealed ? 'transparent' : isOver ? `${RED}09` : `${GOLD}07`, padding: '9px 9px 7px', opacity: revealed ? 1 : 0.2, transition: 'all 0.35s ease', transform: revealed ? 'translateY(0)' : 'translateY(8px)', cursor: revealed ? 'pointer' : 'default', position: 'relative', overflow: 'hidden' }}>
                       {revealed && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: isOver ? RED : GOLD, animation: i === stepsRevealed - 1 ? 'slideIn 0.3s ease-out' : 'none' }} />}
                       <div style={{ fontSize: 8.5, fontWeight: 700, color: isOver ? RED : GOLD, marginBottom: 4, lineHeight: 1.3, whiteSpace: 'pre-line' }}>{i+1}. {step.name}</div>
                       <div style={{ fontSize: 8, fontFamily: 'monospace', color: TEAL }}>CT: {fmtS(step.ct)}</div>
@@ -293,7 +293,7 @@ export default function DemoPage() {
                   { l: 'Takt Time',  v: fmtS(TAKT),    c: BLUE,      sub: '120/day demand' },
                   { l: 'Bottleneck', v: '1 step',       c: RED,       sub: 'E-Coat 15×' },
                 ].map((m, i) => (
-                  <div key={m.l} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${m.c}33`, borderRadius: 12, padding: '10px 12px', animation: `fadeUp 0.4s ease-out ${i * 0.07}s both` }}>
+                  <div key={m.l} style={{ background: 'transparent', border: `1px solid ${m.c}33`, borderRadius: 12, padding: '10px 12px', animation: `fadeUp 0.4s ease-out ${i * 0.07}s both` }}>
                     <div style={{ fontSize: 8.5, color: '#5A6480', letterSpacing: 1.2, fontFamily: 'monospace', marginBottom: 4 }}>{m.l}</div>
                     <div style={{ fontSize: 19, fontWeight: 700, color: m.c, lineHeight: 1 }}>{m.v}</div>
                     <div style={{ fontSize: 8.5, color: '#3A4060', marginTop: 3 }}>{m.sub}</div>
@@ -307,7 +307,7 @@ export default function DemoPage() {
         {/* ═════════════ VSM MAP ═════════════ */}
         {stage >= 4 && (
           <div style={{ marginTop: 16, background: 'rgba(255,255,255,0.015)', border: `1px solid ${GOLD}33`, borderRadius: 16, overflow: 'hidden', animation: 'fadeUp 0.6s ease-out' }}>
-            <div style={{ padding: '11px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: `${GOLD}08` }}>
+            <div style={{ padding: '11px 16px', borderBottom: '1px solid transparent', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: `${GOLD}08` }}>
               <div>
                 <span style={{ fontSize: 11, fontWeight: 700, color: GOLD }}>🗺 Current-State Value Stream Map</span>
                 <span style={{ fontSize: 10, color: '#5A6480', marginLeft: 12 }}>ISO 22468:2020 · Door Assembly · 7 steps</span>
@@ -369,7 +369,7 @@ export default function DemoPage() {
                       <rect x={x} y={y} width={BOX_W} height={3.5} rx={3} fill={col} opacity={0.75} />
                       <text x={x+BOX_W/2} y={y+15} textAnchor="middle" fill="#F5F7FB" fontSize={8} fontWeight={700}>{step.name.split('\n')[0]}</text>
                       {step.name.split('\n')[1] && <text x={x+BOX_W/2} y={y+24} textAnchor="middle" fill="#F5F7FB" fontSize={8} fontWeight={700}>{step.name.split('\n')[1]}</text>}
-                      <line x1={x+5} y1={y+30} x2={x+BOX_W-5} y2={y+30} stroke="rgba(255,255,255,0.05)" />
+                      <line x1={x+5} y1={y+30} x2={x+BOX_W-5} y2={y+30} stroke="transparent" />
                       <text x={x+6} y={y+41} fill="#7A84A0" fontSize={7}>CT</text>
                       <text x={x+22} y={y+41} fill={isOver ? RED : GOLD} fontSize={8.5} fontWeight={700}>{fmtS(step.ct)}</text>
                       <text x={x+56} y={y+41} fill="#7A84A0" fontSize={7}>OPS</text>
@@ -410,7 +410,7 @@ export default function DemoPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16, marginTop: 16, animation: 'fadeUp 0.5s ease-out' }}>
             {/* Waste */}
             <div style={{ background: 'rgba(255,255,255,0.015)', border: `1px solid ${RED}30`, borderRadius: 14, overflow: 'hidden' }}>
-              <div style={{ padding: '11px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', background: `${RED}08`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ padding: '11px 14px', borderBottom: '1px solid transparent', background: `${RED}08`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 11, fontWeight: 700, color: RED }}>⚠ Waste & Constraint Analysis</span>
                 <span style={{ fontSize: 9.5, color: '#5A6480' }}>ISO 22468 §5.4 · 4 findings</span>
               </div>
@@ -433,7 +433,7 @@ export default function DemoPage() {
             {/* Report */}
             {stage >= 6 && (
               <div style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: 14, overflow: 'hidden', animation: 'fadeUp 0.5s ease-out' }}>
-                <div style={{ padding: '11px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(16,185,129,0.06)' }}>
+                <div style={{ padding: '11px 14px', borderBottom: '1px solid transparent', background: 'rgba(16,185,129,0.06)' }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#10B981' }}>📋 ISO Report Ready</div>
                 </div>
                 <div style={{ padding: 14 }}>
@@ -444,7 +444,7 @@ export default function DemoPage() {
                       </div>
                     ))}
                   </div>
-                  <div style={{ padding: '9px 11px', borderRadius: 9, background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', marginBottom: 13 }}>
+                  <div style={{ padding: '9px 11px', borderRadius: 9, background: 'rgba(255,255,255,0.025)', border: '1px solid transparent', marginBottom: 13 }}>
                     <div style={{ fontSize: 8.5, color: '#5A6480', marginBottom: 3, fontFamily: 'monospace', letterSpacing: 0.5 }}>WHITE PAPER · A4 · PRINT READY</div>
                     <div style={{ fontSize: 10, color: '#8F98AD', lineHeight: 1.5 }}>No background color. ISO-structured sections. Clean for physical filing.</div>
                   </div>

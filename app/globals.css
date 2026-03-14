@@ -803,3 +803,189 @@ body.modal-open main {
     min-height: 72px !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   VSM TOOL BUTTONS — slate-friendly, works light and dark
+   ═══════════════════════════════════════════════════════════════ */
+.vsm-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.vsm-tool-btn--red  { background: #FEF2F0; border-color: #E8A49A; color: #A83222; }
+.vsm-tool-btn--teal { background: #EDF9F5; border-color: #7DCAB5; color: #1A7860; }
+.vsm-tool-btn--blue { background: #EEF4FB; border-color: #85AEDD; color: #1A4F8A; }
+.vsm-tool-btn--red:hover  { background: #FCDBD8; border-color: #C0402A; }
+.vsm-tool-btn--teal:hover { background: #D4F0E8; border-color: #2A9E82; }
+.vsm-tool-btn--blue:hover { background: #D8E8F6; border-color: #3070B8; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE PROJECT VIEW — full responsive treatment
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Top bar — compact on mobile */
+  .project-topbar {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .project-topbar .project-title {
+    font-size: 14px !important;
+  }
+  .action-btn-label {
+    display: none;
+  }
+
+  /* KPI strip — smaller cells */
+  .kpi-strip-cell {
+    padding: 6px 10px !important;
+    min-width: 56px !important;
+  }
+  .kpi-strip-cell .kpi-label {
+    font-size: 7px !important;
+  }
+  .kpi-strip-cell .kpi-val {
+    font-size: 12px !important;
+  }
+
+  /* Tab bar — smaller text, no icons on narrow */
+  .project-tab-btn {
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+    gap: 3px !important;
+  }
+
+  /* Builder content area */
+  .builder-content {
+    padding: 12px !important;
+  }
+
+  /* Step card — stack tools below on narrow */
+  .step-card-tools {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    padding: 8px 10px !important;
+  }
+  .step-card-tools button {
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+    min-height: 32px;
+  }
+
+  /* VSM toolbar */
+  .vsm-toolbar {
+    padding: 8px 12px 0 !important;
+    gap: 6px !important;
+  }
+  .vsm-tool-btn {
+    padding: 6px 10px !important;
+    font-size: 10px !important;
+  }
+
+  /* Tab content padding */
+  .tab-content-pad {
+    padding: 12px !important;
+  }
+
+  /* PDCA phase tabs */
+  .pdca-phase-tab {
+    padding: 7px 3px !important;
+    font-size: 9px !important;
+  }
+
+  /* Yamazumi chart */
+  .yamazumi-bar {
+    min-width: 44px !important;
+  }
+
+  /* Roadmap phase header */
+  .roadmap-phase-header {
+    padding: 10px 12px !important;
+  }
+
+  /* Gap analysis score */
+  .gap-score-block {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STEP CARD — slate-correct colors
+   ═══════════════════════════════════════════════════════════════ */
+.step-ci-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--sl-500);
+  transition: all 0.12s;
+  min-height: 30px;
+}
+.step-ci-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(196,155,46,0.06);
+}
+.step-ci-btn.active {
+  border-color: var(--gold);
+  background: rgba(196,155,46,0.10);
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL — force white bg on all tool modals
+   ═══════════════════════════════════════════════════════════════ */
+.vesimy-modal,
+.vesimy-modal-header,
+.vesimy-modal-body {
+  background: #FFFFFF !important;
+  color: var(--text) !important;
+}
+.vesimy-modal {
+  border: 0.5px solid var(--border) !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.14) !important;
+}
+.vesimy-modal-header {
+  background: var(--sl-50) !important;
+  border-bottom: 0.5px solid var(--border) !important;
+}
+.vesimy-modal-footer {
+  background: var(--sl-50) !important;
+  border-top: 0.5px solid var(--border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROCESS HEALTH SCORE compact badge — slate
+   ═══════════════════════════════════════════════════════════════ */
+.health-score-badge {
+  background: var(--sl-100) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   KANBAN — slate cards
+   ═══════════════════════════════════════════════════════════════ */
+.kanban-column {
+  background: var(--sl-50) !important;
+  border: 1px solid var(--border) !important;
+}
+.kanban-card {
+  background: #FFFFFF !important;
+  border: 0.5px solid var(--border) !important;
+  color: var(--text) !important;
+}

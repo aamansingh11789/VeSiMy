@@ -26,7 +26,7 @@ export default function NotFound() {
       <div style={{ fontSize: 80, fontFamily: serif, fontWeight: 800, color: '#D4A208', lineHeight: 1 }}>
         404
       </div>
-      <h1 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: '#F3F1FB', margin: '16px 0 12px' }}>
+      <h1 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', margin: '16px 0 12px' }}>
         This process step doesn't exist.
       </h1>
       <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 420, lineHeight: 1.75, marginBottom: 36 }}>

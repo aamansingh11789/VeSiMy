@@ -92,7 +92,7 @@ export function SupePanel({ steps, projectId }: Props) {
     <div className="card" style={{ overflow:'hidden', display:'flex', flexDirection:'column' }}>
 
       {/* ── Header ── */}
-      <div style={{ padding:'12px 16px', background:'rgba(212,162,8,0.03)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+      <div style={{ padding:'12px 16px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <span style={{ fontSize:15 }}>⚡</span>
           <span style={{ fontWeight:700, color:'var(--text)', fontSize:14, fontFamily:'var(--font-serif)' }}>Supe</span>
@@ -134,7 +134,7 @@ export function SupePanel({ steps, projectId }: Props) {
       {tab === 'findings' && (
         <div style={{ flex:1, overflowY:'auto', maxHeight:400 }}>
           {isDemo && (
-            <div style={{ padding:'8px 14px', background:'rgba(212,162,8,0.04)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', gap:8 }}>
+            <div style={{ padding:'8px 14px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', gap:8 }}>
               <span style={{ fontSize:11 }}>💡</span>
               <span style={{ fontSize:11, color:'var(--text2)' }}>Demo data. Add real steps with cycle times for live analysis.</span>
             </div>
@@ -148,10 +148,10 @@ export function SupePanel({ steps, projectId }: Props) {
           {open.map(rec => {
             const isOpen = expanded === rec.key
             return (
-              <div key={rec.key} style={{ borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
+              <div key={rec.key} style={{ borderBottom:'1px solid rgba(215,213,206,0.9)' }}>
                 <div style={{ padding:'11px 14px', cursor:'pointer', display:'flex', gap:10, alignItems:'flex-start' }}
                      onClick={() => setExpanded(isOpen ? null : rec.key)}
-                     onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background='rgba(255,255,255,0.02)'}
+                     onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background='transparent'}
                      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background='transparent'}>
                   <div style={{ width:7, height:7, borderRadius:'50%', background:SEV_COLOR[rec.severity], marginTop:5, flexShrink:0 }} />
                   <div style={{ flex:1, minWidth:0 }}>
@@ -206,7 +206,7 @@ export function SupePanel({ steps, projectId }: Props) {
               <div key={i} style={{ display:'flex', flexDirection:'column', alignItems: msg.role==='user' ? 'flex-end' : 'flex-start' }}>
                 <div style={{
                   maxWidth:'88%', padding:'9px 12px', borderRadius: msg.role==='user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
-                  background: msg.role==='user' ? 'rgba(100,38,160,0.18)' : 'rgba(26,26,64,0.6)',
+                  background: msg.role==='user' ? 'rgba(100,38,160,0.10)' : 'var(--sl-100)',
                   border: msg.role==='user' ? '1px solid rgba(100,38,160,0.3)' : '1px solid var(--border)',
                   fontSize:12, color:'var(--text)', lineHeight:1.65,
                 }}>
@@ -220,7 +220,7 @@ export function SupePanel({ steps, projectId }: Props) {
 
             {loading && (
               <div style={{ display:'flex', alignItems:'flex-start' }}>
-                <div style={{ padding:'9px 14px', borderRadius:'12px 12px 12px 2px', background:'rgba(26,26,64,0.6)', border:'1px solid var(--border)' }}>
+                <div style={{ padding:'9px 14px', borderRadius:'12px 12px 12px 2px', background:'var(--sl-100)', border:'1px solid var(--border)' }}>
                   <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>⚡ SUPE</div>
                   <div style={{ display:'flex', gap:4, alignItems:'center' }}>
                     {[0,1,2].map(i => (
@@ -259,7 +259,7 @@ export function SupePanel({ steps, projectId }: Props) {
               placeholder="Ask Supe anything about your process…"
               disabled={loading}
               style={{
-                flex:1, background:'rgba(248,247,245,0.97)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)',
+                flex:1, background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)',
                 padding:'8px 12px', fontSize:12, color:'var(--text)', outline:'none',
                 fontFamily:'inherit', transition:'border 0.15s',
               }}

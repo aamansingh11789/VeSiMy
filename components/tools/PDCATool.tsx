@@ -426,7 +426,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
             <div>
               <label className="label">Countermeasures / Actions ({completedCMs}/{data.countermeasures.length} done)</label>
               {data.countermeasures.map(cm => (
-                <div key={cm.id} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 8, background: cm.status === 'done' ? 'rgba(29,209,161,0.06)' : 'rgba(255,255,255,0.02)', border: `1px solid ${cm.status === 'done' ? 'rgba(29,209,161,0.2)' : 'var(--border)'}` }}>
+                <div key={cm.id} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 8, background: cm.status === 'done' ? 'rgba(29,209,161,0.06)' : 'transparent', border: `1px solid ${cm.status === 'done' ? 'rgba(29,209,161,0.2)' : 'var(--border)'}` }}>
                   <button type="button" onClick={() => toggleCM(cm.id)} style={{ background: 'none', border: `2px solid ${cm.status === 'done' ? '#1DD1A1' : 'var(--text3)'}`, borderRadius: 4, width: 18, height: 18, cursor: 'pointer', flexShrink: 0, marginTop: 1, color: cm.status === 'done' ? '#1DD1A1' : 'transparent', fontSize: 12, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {cm.status === 'done' ? '✓' : ''}
                   </button>

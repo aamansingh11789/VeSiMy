@@ -16,7 +16,7 @@ interface Props {
   user:    { email?: string }
 }
 
-const PLAN_COLOR = { free:'#7070A0', pro:'#D4A208', enterprise:'#6CB9FC' }
+const PLAN_COLOR = { free:'var(--text3)', pro:'#D4A208', enterprise:'#6CB9FC' }
 
 export function SettingsClient({ profile, user }: Props) {
   const router   = useRouter()
@@ -54,19 +54,19 @@ export function SettingsClient({ profile, user }: Props) {
     <div>
       {/* Header */}
       <div style={{ marginBottom:40 }}>
-        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:32, fontWeight:700, color:'#EAE8F4', marginBottom:6 }}>Settings</h1>
-        <p style={{ color:'#7070A0', fontSize:14 }}>Manage your account, subscription, and preferences.</p>
+        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:32, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Settings</h1>
+        <p style={{ color:'var(--text3)', fontSize:14 }}>Manage your account, subscription, and preferences.</p>
       </div>
 
       {/* ── Subscription ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'#7070A0', marginBottom:16, textTransform:'uppercase' }}>Subscription</h2>
+        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Subscription</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16, flexWrap:'wrap' }}>
             <div>
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-                <CrownIcon size={18} color={PLAN_COLOR[planKey] || '#7070A0'} />
-                <span style={{ fontSize:20, fontWeight:700, color:PLAN_COLOR[planKey] || '#EAE8F4', fontFamily:'Palatino Linotype,serif' }}>
+                <CrownIcon size={18} color={PLAN_COLOR[planKey] || 'var(--text3)'} />
+                <span style={{ fontSize:20, fontWeight:700, color:PLAN_COLOR[planKey] || 'var(--text)', fontFamily:'Palatino Linotype,serif' }}>
                   {isBeta ? 'Lifetime Beta Access' : plan.name}
                 </span>
                 {(subStatus === 'trialing') && (
@@ -81,13 +81,13 @@ export function SettingsClient({ profile, user }: Props) {
                 {plan.features.slice(0,3).map((f,i) => (
                   <div key={i} style={{ display:'flex', alignItems:'center', gap:8 }}>
                     <CheckIcon size={12} color='#1DD1A1' strokeWidth={3} />
-                    <span style={{ fontSize:13, color:'#7070A0' }}>{f}</span>
+                    <span style={{ fontSize:13, color:'var(--text3)' }}>{f}</span>
                   </div>
                 ))}
               </div>
 
               {periodEnd && (
-                <p style={{ fontSize:12, color:'#38385C', marginTop:12 }}>
+                <p style={{ fontSize:12, color:'var(--sl-400)', marginTop:12 }}>
                   {subStatus === 'trialing' ? `Trial ends ${periodEnd}` : `Renews ${periodEnd}`}
                 </p>
               )}
@@ -121,7 +121,7 @@ export function SettingsClient({ profile, user }: Props) {
           {subStatus === 'past_due' && (
             <div style={{ marginTop:16, padding:'12px 16px', background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)', borderRadius:8 }}>
               <p style={{ fontSize:13, color:'#FF6B6B', marginBottom:6, fontWeight:600 }}>⚠ Payment failed</p>
-              <p style={{ fontSize:12, color:'#7070A0' }}>Your last payment didn't go through. Update your payment method to keep your Pro access.</p>
+              <p style={{ fontSize:12, color:'var(--text3)' }}>Your last payment didn't go through. Update your payment method to keep your Pro access.</p>
               <button onClick={openPortal} style={{ marginTop:10, fontSize:12, color:'#FF6B6B', background:'none', border:'1px solid rgba(255,107,107,0.3)', borderRadius:6, padding:'6px 14px', cursor:'pointer' }}>
                 Update Payment Method
               </button>
@@ -137,7 +137,7 @@ export function SettingsClient({ profile, user }: Props) {
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
               <CrownIcon size={16} color='#D4A208' />
               <span style={{ fontSize:15, fontWeight:700, color:'#D4A208' }}>Upgrade to Pro</span>
-              <span style={{ fontSize:12, color:'#7070A0' }}>— $29/month · 14-day free trial</span>
+              <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day free trial</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:20 }}>
               {PLANS.pro.features.map((f,i) => (
@@ -156,7 +156,7 @@ export function SettingsClient({ profile, user }: Props) {
 
       {/* ── Account ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'#7070A0', marginBottom:16, textTransform:'uppercase' }}>Account</h2>
+        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Account</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
             <div>
@@ -171,7 +171,7 @@ export function SettingsClient({ profile, user }: Props) {
             <div>
               <label className="label">Email Address</label>
               <input className="input" value={user.email || ''} disabled style={{ opacity:0.6, cursor:'not-allowed' }} />
-              <p style={{ fontSize:11, color:'#38385C', marginTop:4 }}>Email cannot be changed here. Contact support if needed.</p>
+              <p style={{ fontSize:11, color:'var(--sl-400)', marginTop:4 }}>Email cannot be changed here. Contact support if needed.</p>
             </div>
           </div>
         </div>
@@ -179,17 +179,17 @@ export function SettingsClient({ profile, user }: Props) {
 
       {/* ── Usage ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'#7070A0', marginBottom:16, textTransform:'uppercase' }}>Usage</h2>
+        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Usage</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
             {[
               ['Projects', `${profile?.projects_count || 0} / ${isPaid || isBeta ? '∞' : profile?.projects_limit || 3}`, '#D4A208'],
-              ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || '#7070A0'],
-              ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : '#7070A0'],
+              ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || 'var(--text3)'],
+              ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (
               <div key={label} style={{ textAlign:'center' }}>
                 <div style={{ fontSize:22, fontWeight:700, color, fontFamily:'Palatino Linotype,serif' }}>{val}</div>
-                <div style={{ fontSize:11, color:'#38385C', fontFamily:'monospace', letterSpacing:1, textTransform:'uppercase', marginTop:2 }}>{label}</div>
+                <div style={{ fontSize:11, color:'var(--sl-400)', fontFamily:'monospace', letterSpacing:1, textTransform:'uppercase', marginTop:2 }}>{label}</div>
               </div>
             ))}
           </div>
@@ -200,7 +200,7 @@ export function SettingsClient({ profile, user }: Props) {
       <section>
         <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'#FF6B6B', marginBottom:16, textTransform:'uppercase' }}>Danger Zone</h2>
         <div className="card" style={{ padding:24, borderColor:'rgba(255,107,107,0.15)' }}>
-          <p style={{ fontSize:13, color:'#7070A0', marginBottom:16 }}>
+          <p style={{ fontSize:13, color:'var(--text3)', marginBottom:16 }}>
             These actions are permanent and cannot be undone.
           </p>
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>

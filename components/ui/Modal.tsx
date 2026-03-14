@@ -116,7 +116,7 @@ export function Modal({
           maxHeight: isMobile ? '92svh' : 'calc(100dvh - 60px)',
           width: '100%',
           maxWidth: isMobile ? '100%' : 640,
-          background: 'linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.008)),rgba(13,13,34,0.94)',
+          background: 'linear-gradient(180deg,transparent,rgba(255,255,255,0.008)),var(--sl-50)',
           border: '1px solid rgba(44,44,92,0.86)',
           borderRadius: isMobile ? '20px 20px 0 0' : 20,
           boxShadow: '0 32px 100px rgba(0,0,0,0.62)',
