@@ -100,7 +100,7 @@ export default function YamazumiPost() {
               Build your Yamazumi chart free
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy generates Yamazumi charts automatically from your operator task data. Add tasks to any process step, classify them VA/NNVA/NVA, and the chart builds itself — with takt line, imbalance warnings, and kaizen targets. Free forever.
+              VeSiMy generates Yamazumi charts automatically from your operator task data. Add tasks to any process step, classify them VA/NNVA/NVA, and the chart builds itself — with takt line, imbalance warnings, and kaizen targets. 14-day free trial.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Build your Yamazumi chart free →

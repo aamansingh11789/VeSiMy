@@ -149,7 +149,7 @@ export default function HomePage() {
 
           <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <Link href="/auth/signup" style={{ padding: '13px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              Map your first process free <ArrowRightIcon size={14} color="#fff" />
+              Start your 14-day free trial <ArrowRightIcon size={14} color="#fff" />
             </Link>
             <Link href="/auth/signup" style={{ padding: '13px 20px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
               See reference project →
@@ -157,7 +157,7 @@ export default function HomePage() {
           </div>
 
           <p className="reveal r5" style={{ fontSize: 11, color: '#8E8A82', marginTop: 14 }}>
-            No credit card · No setup · Your VSM in under 5 minutes
+            14-day free trial · No credit card · Cancel anytime
           </p>
         </div>
 
@@ -253,7 +253,7 @@ export default function HomePage() {
         {[
           { icon: '📊', bg: '#EDF9F5', title: 'Value Stream Mapping', body: 'ISO 22468:2020 notation. Bottlenecks flagged automatically. Export A3 maps and full ISO improvement reports in one click.' },
           { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool connected', body: 'Time Study, Fishbone, 5 Why, Waste ID, Kaizen, PDCA, Yamazumi, Standard Work — all linked to your steps, all feeding one report.' },
-          { icon: '🛡', bg: '#EEEDFE', title: 'Free. No credit card.', body: 'Full VSM, all CI tools, ISO reports, PDCA with A3 / 8D / DMAIC export. Free forever. No trial. No paywall on core tools.' },
+          { icon: '🛡', bg: '#EEEDFE', title: '14-day free trial.', body: 'Start today — no credit card required. Get full access to every tool for 14 days with up to 3 projects. Then choose the plan that fits.' },
         ].map(f => (
           <div key={f.title} style={{ background: '#FFFFFF', padding: '28px 24px' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
@@ -272,18 +272,18 @@ export default function HomePage() {
 
           <div className="tools-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 12 }}>
             {[
-              { icon: '⏱', name: 'Time Study',       desc: '10-lap stopwatch, outlier exclusion, baseline vs target',              badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '🐟', name: 'Fishbone',         desc: '6M, 8P, 4S frameworks — structured cause-and-effect mapping',          badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '❓', name: '5 Why',            desc: 'Root cause to countermeasure, linked to PDCA action',                  badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '⚠️', name: 'Waste ID',         desc: 'DOWNTIME 8-waste identification per step with notes',                  badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '⚡', name: 'Kaizen Events',   desc: 'Track events with owners, due dates, status and VSM burst markers',    badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '⏱', name: 'Time Study',       desc: '10-lap stopwatch, outlier exclusion, baseline vs target',              badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '🐟', name: 'Fishbone',         desc: '6M, 8P, 4S frameworks — structured cause-and-effect mapping',          badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '❓', name: '5 Why',            desc: 'Root cause to countermeasure, linked to PDCA action',                  badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '⚠️', name: 'Waste ID',         desc: 'DOWNTIME 8-waste identification per step with notes',                  badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '⚡', name: 'Kaizen Events',   desc: 'Track events with owners, due dates, status and VSM burst markers',    badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
               { icon: '🔄', name: 'PDCA',             desc: 'Export as PDCA, A3, 8D, DMAIC or OODA — one dataset, five formats',   badge: 'ISO 9001',   bc: '#EEF4FB', btc: '#1A4F8A' },
               { icon: '📊', name: 'Yamazumi Chart',  desc: 'Operator balance — VA / NNVA / NVA stacked vs takt time',              badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
               { icon: '📋', name: 'Standard Work',   desc: 'Task-level breakdown with VA classification and ISO export',           badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
               { icon: '🗺', name: 'VSM Export',      desc: 'A3 landscape map — auto-paginates, nothing truncated',                 badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
               { icon: '🎯', name: 'Gap Analysis',    desc: 'Finds every gap between your VSM and world-class lean flow',           badge: 'AI',         bc: '#EEEDFE', btc: '#534AB7' },
-              { icon: '🗺️', name: 'Kaizen Roadmap', desc: 'Current → future state PCE journey with phase tracking',               badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '📈', name: 'Improvement',     desc: 'Before/after measurement goals per step feeding the report',           badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '🗺️', name: 'Kaizen Roadmap', desc: 'Current → future state PCE journey with phase tracking',               badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '📈', name: 'Improvement',     desc: 'Before/after measurement goals per step feeding the report',           badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
             ].map(t => (
               <div key={t.name} style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 12, padding: '16px 15px' }}>
                 <span style={{ fontSize: 20, display: 'block', marginBottom: 8 }}>{t.icon}</span>
@@ -311,8 +311,8 @@ export default function HomePage() {
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Pricing</div>
-            <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Upgrade when VeSiMy earns it.</h2>
-            <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto' }}>No artificial limits on the free experience. We'd rather earn your upgrade than force it.</p>
+            <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Simple, honest pricing.</h2>
+            <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto' }}>Try everything free for 14 days — no credit card required. Upgrade when you're ready.</p>
           </div>
 
           <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
@@ -371,10 +371,10 @@ export default function HomePage() {
         <h2 style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
           Stop describing waste.<br />Start <span style={{ color: '#C49B2E' }}>eliminating</span> it.
         </h2>
-        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', marginBottom: 28 }}>Free forever. No credit card. No setup. Your first VSM in under 5 minutes.</p>
+        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', marginBottom: 28 }}>Start your 14-day free trial today. No credit card. Cancel anytime.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
-            Start mapping free
+            Start free trial
           </Link>
           <Link href="/auth/signup" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
             Load reference project →

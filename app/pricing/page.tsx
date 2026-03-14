@@ -498,7 +498,7 @@ function PlanCard({
           : isEnterprise
             ? 'Get a Quote →'
             : price === 0
-              ? 'Get Started Free'
+              ? 'Start Free Trial'
               : plan.cta}
       </button>
 
@@ -669,7 +669,7 @@ export default function PricingPage() {
               priced for real operators.
             </>
           }
-          subtitle="Start free. Upgrade only when Vesimy starts delivering measurable value to your team."
+          subtitle="Start free trial. Upgrade only when Vesimy starts delivering measurable value to your team."
         />
 
         <div style={{ marginTop: 34, textAlign: 'center' }}>

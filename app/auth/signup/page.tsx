@@ -43,7 +43,7 @@ function SignupForm() {
     // If Supabase returns a session immediately (email confirmation disabled),
     // go straight to onboarding. Otherwise show the confirm-email screen.
     if (data?.session) {
-      if (planKey && planKey !== 'free') await redirectToCheckout(planKey)
+      if (planKey && planKey !== 'trial') await redirectToCheckout(planKey)
       else router.push('/onboarding')
     } else {
       // Email confirmation required — show instructions instead of redirecting
@@ -133,7 +133,7 @@ function SignupForm() {
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
                 ? (planKey && planKey !== 'free' ? 'Setting up your trial…' : 'Creating account…')
-                : (planKey && planKey !== 'free' ? `Start ${plan?.name} Free Trial` : 'Create Free Account')}
+                : (planKey && planKey !== 'trial' ? `Start ${plan?.name} — 14-Day Trial` : 'Start Free Trial')}
             </button>
           </form>
         </div>

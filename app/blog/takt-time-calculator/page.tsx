@@ -184,7 +184,7 @@ export default function TaktTimePost() {
               See takt time live on your VSM
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy calculates takt time automatically from your project settings and displays it on your value stream map alongside cycle time — so you can instantly see which steps are bottlenecks. Free forever.
+              VeSiMy calculates takt time automatically from your project settings and displays it on your value stream map alongside cycle time — so you can instantly see which steps are bottlenecks. 14-day free trial.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Calculate takt time on your VSM →

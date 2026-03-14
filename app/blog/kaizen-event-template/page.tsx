@@ -191,7 +191,7 @@ export default function KaizenEventPost() {
               Track your kaizen events digitally
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy's Kaizen Tracker links improvement events directly to your VSM process steps — so you always know what's been changed, what's pending, and what the result was. Free forever.
+              VeSiMy's Kaizen Tracker links improvement events directly to your VSM process steps — so you always know what's been changed, what's pending, and what the result was. 14-day free trial.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#4A9EDA,#6CB9FC)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start tracking kaizen events free →

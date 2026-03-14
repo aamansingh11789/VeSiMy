@@ -7,32 +7,44 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   typescript: true,
 })
 
-// ── Pricing ────────────────────────────────────────────────────────────────
+// ── Plans ───────────────────────────────────────────────────────────────────
+// Trial:    14 days · 3 projects · no card required at signup
+// Pro:      $29/mo  · 10 projects · all tools + exports
+// Lifetime: $99 once · 30 projects · everything
+// Enterprise: custom
+
 export const PLANS = {
-  free: {
-    name:        'Free',
+  trial: {
+    name:        'Free Trial',
     price:       0,
-    description: 'For individuals exploring CI tools',
+    description: '14 days to explore every tool. No credit card required.',
     features: [
+      '14-day full access trial',
       'Up to 3 projects',
-      'All 6 CI tools (VSM, Kaizen, Fishbone, 5 Why, Waste, Time Study)',
-      'Local data storage',
-      'Basic PDF export',
+      'All CI tools — VSM, Kaizen, Fishbone, 5 Why, Waste ID, Time Study',
+      'PDCA, Yamazumi, Standard Work',
+      'VSM map view',
+      'No credit card required to start',
     ],
-    cta: 'Get Started Free',
+    cta: 'Start Free Trial',
     priceId: null,
+    isTrial: true,
   },
   pro: {
     name:        'Pro',
     price:       29,
-    description: 'For serious CI practitioners',
+    description: 'Everything you need to run a serious CI programme.',
     features: [
-      'Unlimited projects',
+      'Up to 10 projects',
+      'All CI tools + AI Gap Analysis',
+      'VSM export — A3 landscape PDF',
+      'Full ISO improvement report export',
+      'PDCA export — A3, 8D, DMAIC, OODA',
+      'Yamazumi + Standard Work export',
+      'Kaizen Roadmap — mission control',
+      'Branches — parallel sub-assembly flows',
       'Cloud sync & backup',
-      'Full PDF & VSM export',
-      'Shareable project links',
       'Priority support',
-      'Advanced analytics',
     ],
     cta: 'Start Pro — $29/mo',
     priceId: process.env.STRIPE_PRO_MONTHLY_PRICE_ID,
@@ -40,41 +52,42 @@ export const PLANS = {
   lifetime: {
     name:        'Lifetime',
     price:       99,
-    description: 'Pay once. Use forever. (Beta exclusive)',
+    description: 'Pay once. Use forever. Lock in launch pricing now.',
     features: [
-      '99 projects',
+      'Up to 30 projects',
       'Everything in Pro',
-      'Gold Standard badge',
+      'Gold Standard founder badge',
       'No recurring fees — ever',
-      'Priority beta feedback channel',
+      'All future tool releases included',
       '33% enterprise discount for your company',
+      'Priority feedback channel — shape the roadmap',
     ],
-    cta: 'Upgrade for Life — $99',
+    cta: 'Get Lifetime Access — $99',
     priceId:  process.env.STRIPE_LIFETIME_PRICE_ID,
     oneTime:  true,
   },
   enterprise: {
     name:        'Enterprise',
-    price:       null,                  // dynamic — quote-based
-    description: 'For teams and organizations',
+    price:       null,
+    description: 'For manufacturing teams and multi-site organisations.',
     features: [
+      'Unlimited projects',
       'Everything in Pro',
-      'Team collaboration',
-      'Organization dashboard',
-      'API access',
-      'Custom integrations',
+      'Team collaboration & shared projects',
+      'Organisation dashboard',
+      'API access + custom integrations',
       'SSO / SAML',
       'SLA guarantee',
-      'Dedicated onboarding',
+      'Dedicated onboarding & training',
     ],
     cta: 'Get a Quote',
-    priceId: null,                      // quotes are generated, not fixed
+    priceId: null,
   },
 } as const
 
 export type PlanKey = keyof typeof PLANS
 
-// ── Create Checkout Session ────────────────────────────────────────────────
+// ── Create Checkout Session ─────────────────────────────────────────────────
 export async function createCheckoutSession({
   customerId,
   priceId,
@@ -90,7 +103,6 @@ export async function createCheckoutSession({
   plan:        string
   returnUrl:   string
 }) {
-  // FIX Bug#9: lifetime is a one-time payment; must use mode:'payment' not 'subscription'
   const isOneTime = (PLANS[plan as keyof typeof PLANS] as any)?.oneTime === true
 
   const baseParams: any = {
@@ -106,7 +118,6 @@ export async function createCheckoutSession({
 
   if (isOneTime) {
     baseParams.mode = 'payment'
-    // No subscription_data for one-time payments
   } else {
     baseParams.mode = 'subscription'
     baseParams.subscription_data = {
@@ -115,8 +126,7 @@ export async function createCheckoutSession({
     }
   }
 
-  const session = await stripe.checkout.sessions.create(baseParams)
-  return session
+  return await stripe.checkout.sessions.create(baseParams)
 }
 
 // ── Create Customer Portal Session ─────────────────────────────────────────

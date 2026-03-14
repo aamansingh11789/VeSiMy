@@ -115,7 +115,7 @@ export default function StandardWorkPost() {
               Generate Standard Work Sheets from your VSM
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy generates ISO 22468:2020 compliant Standard Work Sheets from your process step data. Add operator tasks, classify them as VA/NNVA/NVA, and export a print-ready document for any step. Free forever.
+              VeSiMy generates ISO 22468:2020 compliant Standard Work Sheets from your process step data. Add operator tasks, classify them as VA/NNVA/NVA, and export a print-ready document for any step. 14-day free trial.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#4A9EDA,#6CB9FC)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Generate Standard Work Sheets free →

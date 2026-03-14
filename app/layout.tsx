@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card:        'summary_large_image',
     title:       'VeSiMy — AI Operations Intelligence Platform',
-    description: 'The AI platform that monitors your manufacturing processes and tells you what to fix. Free forever.',
+    description: 'The AI platform that monitors your manufacturing processes and tells you what to fix. 14-day free trial, no credit card required.',
     images:      ['/api/og'],
   },
 

@@ -495,8 +495,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   const [view, setView] = useState<'cards' | 'list'>('cards')
   const [seedingRef, setSeedingRef] = useState(false)
 
-  const isPro = profile.plan_tier !== 'free'
-  const atLimit = !isPro && profile.projects_count >= profile.projects_limit
+  const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
+  const atLimit = !isPro && profile.projects_count >= (profile.projects_limit || 3)
 
   async function createProject() {
     if (!form.name.trim()) {
@@ -517,7 +517,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
       if (!res.ok) {
         if (data.code === 'LIMIT_REACHED') {
-          toast.error('Upgrade to Pro for unlimited projects')
+          toast.error('Upgrade to Pro — up to 10 projects')
           router.push('/pricing')
         } else {
           throw new Error(data.error)
@@ -715,7 +715,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   You’ve reached your free project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
-                  Upgrade to Pro for unlimited projects, advanced tools, and premium workflows.
+                  Upgrade to Pro — up to 10 projects, advanced tools, and premium workflows.
                 </div>
               </div>
             </div>

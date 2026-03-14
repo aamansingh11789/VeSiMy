@@ -125,7 +125,7 @@ export default function FreeVSMPost() {
               No download. No Visio. No setup. Build your first VSM map in under 5 minutes.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
-              Start free — no credit card →
+              Start free trial — no credit card →
             </Link>
           </div>
         </div>

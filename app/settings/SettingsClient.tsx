@@ -24,7 +24,7 @@ export function SettingsClient({ profile, user }: Props) {
   const [saving,        setSaving]        = useState(false)
   const [name,          setName]          = useState(profile?.full_name || '')
 
-  const planKey    = (profile?.plan_tier || 'free') as keyof typeof PLANS
+  const planKey    = (profile?.plan_tier || 'trial') as keyof typeof PLANS
   const plan       = PLANS[planKey] || PLANS.free
   const isPaid     = planKey !== 'free'
   const isBeta     = profile?.is_beta || profile?.lifetime_access

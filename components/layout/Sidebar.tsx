@@ -50,7 +50,7 @@ export function Sidebar({ profile }: SidebarProps) {
     router.refresh()
   }
 
-  const isPro      = profile.plan_tier !== 'free'
+  const isPro      = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
   const isGold     = (profile as any).beta_tier === 'gold_standard'
   const isLifetime = (profile as any).lifetime_access === true
   const usagePct   = Math.min(100,

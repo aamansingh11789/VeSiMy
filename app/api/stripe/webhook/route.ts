@@ -34,8 +34,8 @@ export async function POST(request: NextRequest) {
       subscription_id:         sub.id,
       subscription_status:     status,
       subscription_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-      plan_tier:               status === 'active' || status === 'trialing' ? plan : 'free',
-      projects_limit:          status === 'active' || status === 'trialing' ? 999999 : 3,
+      plan_tier:               status === 'active' || status === 'trialing' ? plan : 'trial_expired',
+      projects_limit:          status === 'active' ? (plan === 'pro' ? 10 : 999999) : status === 'trialing' ? 3 : 0,
       stripe_customer_id:      sub.customer as string,
     }).eq('id', userId)
   }
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
           lifetime_activated_at: new Date().toISOString(),
           beta_tier:             'gold_standard',
           plan_tier:             'lifetime',
-          projects_limit:        99,
+          projects_limit:        30,
           stripe_customer_id:    session.customer as string,
         }).eq('id', userId)
       }

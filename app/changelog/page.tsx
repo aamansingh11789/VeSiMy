@@ -18,7 +18,7 @@ const entries = [
     items: [
       'All 6 core CI tools live: VSM, Kaizen, 5 Why, Fishbone, Time Study, Kanban',
       'Supe AI — convert any SOP to a VSM map in under 60 seconds',
-      'Free tier available — no credit card, no time limit',
+      '14-day free trial — no credit card required',
       'Pro plan at $29/mo with cloud sync, unlimited projects, and full PDF export',
       'Lifetime plan at $99 — available during Launch Week only',
       'Enterprise pricing page with live quote builder',
