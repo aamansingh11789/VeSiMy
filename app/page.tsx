@@ -1,1339 +1,407 @@
 // @ts-nocheck
-// ── app/page.tsx — VeSiMy Landing Page ───────────────────────────────────────
+// ── app/page.tsx — VeSiMy Homepage ───────────────────────────────────────────
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useRef } from 'react'
-import { VesimyLogo, VLogoMark } from '@/components/ui/Logo'
-import { ThemeToggle } from '@/components/ui/ThemeProvider'
+import { useEffect, useRef, useState } from 'react'
+import { VLogoMark, VeSiMyWordmark, VesimyLogo } from '@/components/ui/Logo'
 import { PLANS } from '@/lib/stripe'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
-function WatermarkBg() {
+// ── Inline 3D VSM step box ────────────────────────────────────────────────────
+function IsoStep({ name, sub, ct, type, isBn = false }: any) {
+  const colors: Record<string, { fill: string; top: string; side: string; text: string; badge: string; badgeText: string }> = {
+    va:   { fill: '#EDF9F5', top: '#D4F0E8', side: '#7DCAB5', text: '#0A4535', badge: '#EDF9F5', badgeText: '#0F6E56' },
+    nnva: { fill: '#FEF9EE', top: '#FEF0CC', side: '#DEB96A', text: '#5A3A00', badge: '#FEF9EE', badgeText: '#854F0B' },
+    bn:   { fill: '#FEF2F0', top: '#FDDDD9', side: '#E8735A', text: '#7A1A0A', badge: '#FEF2F0', badgeText: '#A83222' },
+  }
+  const c = colors[isBn ? 'bn' : type] || colors.va
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-        background: 'linear-gradient(160deg, #F0EDE6 0%, #EAE7E0 50%, #F0EDE6 100%)',
-      }}
-    >
-      <style>{`
-        @keyframes vesimyGlowDriftA {
-          0%   { transform: translate(-50%, 0px) scale(1); opacity: 0.75; }
-          50%  { transform: translate(-50%, 18px) scale(1.04); opacity: 1; }
-          100% { transform: translate(-50%, 0px) scale(1); opacity: 0.75; }
-        }
-
-        @keyframes vesimyGlowDriftB {
-          0%   { transform: translate(0, 0) scale(1); opacity: 0.65; }
-          50%  { transform: translate(-16px, -10px) scale(1.06); opacity: 0.95; }
-          100% { transform: translate(0, 0) scale(1); opacity: 0.65; }
-        }
-
-        @keyframes vesimyPatternDrift {
-          0%   { transform: translate3d(0, 0, 0); }
-          50%  { transform: translate3d(-18px, -10px, 0); }
-          100% { transform: translate3d(0, 0, 0); }
-        }
-
-        @keyframes vesimyHeroFloat {
-          0%   { transform: translateY(0px); }
-          50%  { transform: translateY(-6px); }
-          100% { transform: translateY(0px); }
-        }
-
-        @keyframes vesimyShimmerSweep {
-          0%   { transform: translateX(-170%) skewX(-18deg); opacity: 0; }
-          8%   { opacity: 0.28; }
-          18%  { transform: translateX(170%) skewX(-18deg); opacity: 0; }
-          100% { transform: translateX(170%) skewX(-18deg); opacity: 0; }
-        }
-
-        @keyframes vesimyRevealUp {
-          0%   { opacity: 0; transform: translateY(16px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .vesimy-reveal-1 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .05s; }
-        .vesimy-reveal-2 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .16s; }
-        .vesimy-reveal-3 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .28s; }
-        .vesimy-reveal-4 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .40s; }
-        .vesimy-reveal-5 { opacity: 0; animation: vesimyRevealUp .75s ease forwards; animation-delay: .52s; }
-      `}</style>
-
-      <div
-        style={{
-          position: 'absolute',
-          top: '8%',
-          left: '50%',
-          width: 920,
-          height: 650,
-          background: 'radial-gradient(ellipse, rgba(196,155,46,0.12) 0%, transparent 70%)',
-          animation: 'vesimyGlowDriftA 16s ease-in-out infinite',
-        }}
-      />
-
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '-10%',
-          right: '-8%',
-          width: 540,
-          height: 540,
-          background: 'radial-gradient(circle, rgba(140,68,204,0.08) 0%, transparent 70%)',
-          animation: 'vesimyGlowDriftB 20s ease-in-out infinite',
-        }}
-      />
-
-      <div
-        style={{
-          position: 'absolute',
-          inset: '-5%',
-          opacity: 0.15,
-          animation: 'vesimyPatternDrift 32s ease-in-out infinite',
-        }}
-      >
-        <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
-          <defs>
-            <pattern
-              id="vesimy-watermark"
-              x="0"
-              y="0"
-              width="260"
-              height="120"
-              patternUnits="userSpaceOnUse"
-            >
-              <text
-                x="24"
-                y="38"
-                fontFamily="Palatino Linotype,serif"
-                fontSize="16"
-                fontWeight="700"
-                fill="#D4A208"
-                fillOpacity="0.22"
-                letterSpacing="4"
-              >
-                VESIMY
-              </text>
-
-              <text
-                x="122"
-                y="88"
-                textAnchor="middle"
-                fontFamily="Palatino Linotype,serif"
-                fontSize="34"
-                fontWeight="700"
-                fill="#D4A208"
-                fillOpacity="0.14"
-              >
-                V
-              </text>
-            </pattern>
-          </defs>
-
-          <rect width="100%" height="100%" fill="url(#vesimy-watermark)" />
-        </svg>
-      </div>
-
-      <div
-        style={{
-          position: 'absolute',
-          top: '4%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          opacity: 0.06,
-          animation: 'vesimyHeroFloat 14s ease-in-out infinite',
-        }}
-      >
-        <VLogoMark size={620} />
-      </div>
-    </div>
+    <svg width="82" height="62" viewBox="0 0 82 62" fill="none" style={{ flexShrink: 0 }}>
+      {/* depth */}
+      <path d={`M14 16 H68 L74 10 H20 Z`} fill={c.side} opacity="0.42" />
+      <path d={`M68 16 L74 10 L74 50 L68 56 Z`} fill={c.side} opacity="0.55" />
+      {/* front */}
+      <rect x="14" y="16" width="54" height="40" rx="2" fill={c.fill} stroke={isBn ? '#C0402A' : c.side} strokeWidth={isBn ? 1.5 : 1} />
+      {/* top bevel */}
+      <path d={`M14 16 L20 10 L74 10 L68 16 Z`} fill={c.top} stroke={c.side} strokeWidth="0.8" />
+      {/* right face */}
+      <path d={`M68 16 L74 10 L74 50 L68 56 Z`} fill={c.top} stroke={c.side} strokeWidth="0.8" opacity="0.7" />
+      {/* burst on bottleneck */}
+      {isBn && (
+        <polygon points="12,8 13.4,12 18,12 14.2,14.6 15.4,19 12,16.4 8.6,19 9.8,14.6 6,12 10.6,12"
+                 fill="#C0402A" opacity="0.9" />
+      )}
+      {/* name */}
+      <text x="41" y="31" textAnchor="middle" fontSize="7.5" fontWeight="600" fill={c.text} fontFamily="sans-serif">{name}</text>
+      {sub && <text x="41" y="40" textAnchor="middle" fontSize="7" fill={c.text} fontFamily="sans-serif">{sub}</text>}
+      {/* ct badge */}
+      <rect x="20" y="48" width="42" height="9" rx="2" fill={c.badge} stroke={isBn ? '#C0402A' : c.side} strokeWidth="0.6" />
+      <text x="41" y="54.5" textAnchor="middle" fontSize="6.5" fontWeight="700" fill={isBn ? '#A83222' : c.badgeText} fontFamily="monospace">{ct}</text>
+    </svg>
   )
 }
 
-function HeroLogo() {
+function WipCoins({ n, color = '#DEB96A', bg = '#FEF9EE' }: any) {
   return (
-    <div
-      className="vesimy-reveal-1"
-      style={{
-        position: 'relative',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        animation: 'vesimyRevealUp .75s ease forwards, vesimyHeroFloat 9s ease-in-out 1.1s infinite',
-        opacity: 0,
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          width: 180,
-          height: 180,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(196,155,46,0.12) 0%, transparent 70%)',
-          filter: 'blur(16px)',
-        }}
-      />
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 20 }}>
-        <VLogoMark size={122} />
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            overflow: 'hidden',
-            pointerEvents: 'none',
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              top: -10,
-              bottom: -10,
-              width: 44,
-              background:
-                'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,244,214,0.28) 48%, rgba(255,255,255,0) 100%)',
-              filter: 'blur(2px)',
-              animation: 'vesimyShimmerSweep 8.5s ease-in-out infinite',
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [display, setDisplay] = useState('0')
-  const [fired, setFired] = useState(false)
-
-  useEffect(() => {
-    const raw = value.replace(/[^0-9.]/g, '')
-    const num = parseFloat(raw)
-    if (isNaN(num) || fired) return
-
-    const observer = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) return
-        setFired(true)
-        const suffix = value.replace(/[0-9.]/g, '')
-        let start = 0
-        const steps = 40
-        const inc = num / steps
-
-        const tick = () => {
-          start += inc
-          if (start >= num) {
-            setDisplay(value)
-            return
-          }
-          setDisplay(Math.round(start) + suffix)
-          requestAnimationFrame(tick)
-        }
-
-        tick()
-      },
-      { threshold: 0.3 }
-    )
-
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [value, fired])
-
-  return (
-    <div ref={ref} style={{ textAlign: 'center' }}>
-      <div
-        style={{
-          fontFamily: serif,
-          fontSize: 'clamp(28px,4vw,48px)',
-          fontWeight: 800,
-          color: '#D4A208',
-          lineHeight: 1,
-        }}
-      >
-        {display || value}
-      </div>
-      <div
-        style={{
-          fontSize: 10,
-          color: 'var(--text3)',
-          letterSpacing: 2.5,
-          marginTop: 8,
-          fontFamily: 'monospace',
-        }}
-      >
-        {label}
-      </div>
-    </div>
-  )
-}
-
-function SectionIntro({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow: string
-  title: React.ReactNode
-  subtitle: string
-}) {
-  return (
-    <div style={{ textAlign: 'center', marginBottom: 56 }}>
-      <p
-        style={{
-          fontSize: 11,
-          color: '#D4A208',
-          letterSpacing: 3,
-          fontFamily: 'monospace',
-          marginBottom: 12,
-          textTransform: 'uppercase',
-        }}
-      >
-        {eyebrow}
-      </p>
-      <h2
-        style={{
-          fontFamily: serif,
-          fontSize: 'clamp(28px,4vw,52px)',
-          fontWeight: 700,
-          marginBottom: 14,
-          color: 'var(--text)',
-          lineHeight: 1.12,
-        }}
-      >
-        {title}
-      </h2>
-      <p
-        style={{
-          fontSize: 16,
-          color: 'var(--text2)',
-          maxWidth: 560,
-          margin: '0 auto',
-          lineHeight: 1.75,
-        }}
-      >
-        {subtitle}
-      </p>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+      {Array.from({ length: Math.min(n, 3) }).map((_, i) => (
+        <div key={i} style={{ width: 16, height: 5, borderRadius: '50%', border: `1px solid ${color}`, background: bg, opacity: 1 - i * 0.25 }} />
+      ))}
+      <span style={{ fontSize: 6, color: '#8E8A82', fontFamily: 'monospace' }}>{n}</span>
     </div>
   )
 }
 
 export default function HomePage() {
+  const [pce, setPce] = useState(36)
+  const [bnVis, setBnVis] = useState(true)
+  const dir = useRef(1)
+
+  useEffect(() => {
+    const t1 = setInterval(() => {
+      setPce(p => {
+        const next = p + dir.current * 0.4
+        if (next > 40 || next < 33) dir.current *= -1
+        return next
+      })
+    }, 100)
+    const t2 = setInterval(() => setBnVis(v => !v), 950)
+    return () => { clearInterval(t1); clearInterval(t2) }
+  }, [])
+
   return (
-    <div style={{ position: 'relative', color: 'var(--text)', minHeight: '100vh' }}>
-      <WatermarkBg />
+    <div style={{ background: '#F8F7F5', color: '#242220', fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', overflowX: 'hidden' }}>
+      <style>{`
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .reveal { opacity:0; animation: fadeUp 0.7s ease forwards; }
+        .r1 { animation-delay:0.05s } .r2 { animation-delay:0.18s }
+        .r3 { animation-delay:0.30s } .r4 { animation-delay:0.44s }
+        .r5 { animation-delay:0.56s }
+        .nav-link { color:#6B6760; text-decoration:none; font-size:13px; transition:color 0.15s; }
+        .nav-link:hover { color:#242220; }
+        @media(max-width:768px){
+          .hero-grid{grid-template-columns:1fr!important;padding:40px 20px 0!important;}
+          .hero-text{padding-right:0!important;}
+          .vsm-card{display:none!important;}
+          .feat-grid{grid-template-columns:1fr!important;}
+          .tools-grid{grid-template-columns:1fr 1fr!important;}
+          .plan-grid{grid-template-columns:1fr!important;}
+          .hide-mobile{display:none!important;}
+          .nav-pad{padding:0 20px!important;}
+          .sec-pad{padding:40px 20px!important;}
+        }
+      `}</style>
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <nav
-          className="home-nav"
-          style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 50,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 40px',
-            height: 64,
-            borderBottom: '1px solid rgba(26,26,64,0.45)',
-            background: 'rgba(248,247,245,0.97)',
-            backdropFilter: 'blur(16px)',
-          }}
-        >
-          <VesimyLogo size={32} showText />
+      {/* ── NAV ─────────────────────────────────────────────────────────────── */}
+      <nav className="nav-pad" style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 60, background: '#FFFFFF', borderBottom: '0.5px solid #D8D5CE' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <VLogoMark size={30} />
+          <VeSiMyWordmark size={19} />
+        </div>
+        <div className="hide-mobile" style={{ display: 'flex', gap: 28 }}>
+          {[['Tools', '#tools'], ['Pricing', '#pricing'], ['Blog', '/blog'], ['Learn', '/learn']].map(([l, h]) => (
+            <a key={l} href={h} className="nav-link">{l}</a>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <Link href="/auth/login" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid #D8D5CE', borderRadius: 8, fontSize: 13, color: '#4E4B45', textDecoration: 'none' }}>
+            Sign in
+          </Link>
+          <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#C49B2E', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#fff', textDecoration: 'none' }}>
+            Start free
+          </Link>
+        </div>
+      </nav>
 
-          <div
-            className="home-nav-links"
-            style={{ display: 'flex', gap: 28, fontSize: 13, color: 'var(--text2)' }}
-          >
-            {[
-              ['Why VeSiMy', '#why'],
-              ['Tools', '#tools'],
-              ['Compare', '#compare'],
-              ['Pricing', '#pricing'],
-            ].map(([l, h]) => (
-              <a
-                key={l}
-                href={h}
-                style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.18s' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
-              >
-                {l}
-              </a>
-            ))}
+      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.12fr', minHeight: 620, alignItems: 'center', padding: '56px 48px 0', gap: 32, background: '#F8F7F5', overflow: 'hidden' }}>
+
+        <div className="hero-text" style={{ paddingRight: 24 }}>
+
+          {/* Eyebrow */}
+          <div className="reveal r1" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 600, letterSpacing: 1.4, textTransform: 'uppercase', color: '#C49B2E', border: '1px solid rgba(196,155,46,0.3)', borderRadius: 999, padding: '5px 14px', marginBottom: 22, background: 'rgba(196,155,46,0.06)' }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#C49B2E', animation: 'blink 2s infinite' }} />
+            Lean CI Platform · ISO 22468:2020
           </div>
 
-          <div
-            className="home-nav-cta"
-            style={{ display: 'flex', gap: 10, alignItems: 'center' }}
-          >
-            <ThemeToggle />
-            <Link
-              href="/demo"
-              className="demo-link btn-ghost"
-              style={{ padding: '8px 16px', textDecoration: 'none', fontSize: 13 }}
-            >
-              Live Demo
-            </Link>
-            <Link
-              href="/auth/login"
-              className="btn-ghost"
-              style={{ padding: '8px 16px', textDecoration: 'none', fontSize: 13 }}
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/signup"
-              className="btn-primary"
-              style={{ padding: '8px 18px', textDecoration: 'none', fontSize: 13 }}
-            >
-              Get Started
-            </Link>
-          </div>
-        </nav>
-
-        <section
-          style={{
-            minHeight: '92vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '88px 24px 64px',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ marginBottom: 26 }}>
-            <HeroLogo />
-          </div>
-
-          <div className="vesimy-reveal-2" style={{ marginBottom: 10 }}>
-            <span
-              style={{
-                fontFamily: serif,
-                fontWeight: 800,
-                fontSize: 'clamp(40px,6vw,76px)',
-                lineHeight: 1,
-                background: 'linear-gradient(135deg, #F7DF8A 0%, #D4A208 55%, #B87A06 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                letterSpacing: 4,
-              }}
-            >
-              VeSiMy
-            </span>
-          </div>
-
-          <div
-            className="vesimy-reveal-3"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              background: 'rgba(248,247,245,0.97)',
-              border: '1px solid rgba(196,155,46,0.12)',
-              borderRadius: 999,
-              padding: '7px 18px',
-              marginBottom: 34,
-              backdropFilter: 'blur(8px)',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-            }}
-          >
-            <span
-              style={{
-                fontSize: 10,
-                color: 'var(--text3)',
-                letterSpacing: 2,
-                fontFamily: 'monospace',
-              }}
-            >
-              ©
-            </span>
-            <span
-              style={{
-                fontSize: 12,
-                color: '#D4A208',
-                fontWeight: 700,
-                letterSpacing: 3,
-                fontFamily: 'monospace',
-                textTransform: 'uppercase',
-              }}
-            >
-              AI Operations Intelligence Platform
-            </span>
-          </div>
-
-          <h1
-            className="vesimy-reveal-4"
-            style={{
-              fontFamily: serif,
-              fontSize: 'clamp(42px,6.5vw,82px)',
-              fontWeight: 700,
-              lineHeight: 1.08,
-              marginBottom: 24,
-              maxWidth: 860,
-              color: 'var(--text)',
-            }}
-          >
-            Manufacturing that watches itself.
-            <br />
-            <span style={{ color: '#D4A208' }}>Fixes itself. Gets better.</span>
+          {/* Headline */}
+          <h1 className="reveal r2" style={{ fontSize: 'clamp(36px,4vw,54px)', lineHeight: 1.08, fontWeight: 700, color: '#242220', marginBottom: 18, letterSpacing: -0.5, fontFamily: serif }}>
+            Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
           </h1>
 
-          <p
-            className="vesimy-reveal-4"
-            style={{
-              fontSize: 'clamp(16px,2vw,20px)',
-              color: '#B8B5D1',
-              maxWidth: 620,
-              lineHeight: 1.78,
-              marginBottom: 42,
-            }}
-          >
-            VeSiMy is the AI platform that monitors your processes continuously,
-            detects inefficiencies before they cost you money, and tells your team
-            exactly what to fix — automatically.
+          {/* V Trade Statement */}
+          <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 24, padding: '14px 16px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0' }}>
+            <span style={{ fontSize: 32, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1 }}>V</span>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#242220', lineHeight: 1.3 }}>Add Value to your process and yourself</div>
+              <div style={{ fontSize: 12, color: '#8E8A82', marginTop: 3, lineHeight: 1.5 }}>Value Stream · Value Add · Value for your team</div>
+            </div>
+          </div>
+
+          <p className="reveal r3" style={{ fontSize: 15, color: '#6B6760', lineHeight: 1.8, marginBottom: 30, maxWidth: 420 }}>
+            A complete lean CI toolkit — VSM, time study, fishbone, 5&nbsp;Why, kaizen, PDCA — all connected, all free.
           </p>
 
-          <div
-            className="hero-cta-row vesimy-reveal-5"
-            style={{
-              display: 'flex',
-              gap: 14,
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-            }}
-          >
-            <Link
-              href="/auth/signup"
-              className="btn-primary"
-              style={{
-                padding: '14px 34px',
-                fontSize: 16,
-                fontWeight: 700,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                boxShadow: '0 10px 30px rgba(196,155,46,0.12)',
-              }}
-            >
-              Start Free <ArrowRightIcon size={16} color="currentColor" />
+          <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <Link href="/auth/signup" style={{ padding: '13px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              Map your first process free <ArrowRightIcon size={14} color="#fff" />
             </Link>
-
-            <Link
-              href="/demo"
-              className="btn-ghost"
-              style={{
-                padding: '14px 26px',
-                fontSize: 15,
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
-            >
-              ▶ See Live Demo
-            </Link>
-
-            <Link
-              href="/beta"
-              className="btn-secondary"
-              style={{
-                padding: '14px 26px',
-                fontSize: 15,
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
-            >
-              👑 Join Launch Week
+            <Link href="/auth/signup" style={{ padding: '13px 20px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
+              See reference project →
             </Link>
           </div>
 
-          <p className="vesimy-reveal-5" style={{ fontSize: 12, color: 'var(--text3)', marginTop: 16 }}>
-            Free forever · No credit card · Works on any device
+          <p className="reveal r5" style={{ fontSize: 11, color: '#8E8A82', marginTop: 14 }}>
+            No credit card · No setup · Your VSM in under 5 minutes
           </p>
-        </section>
+        </div>
 
-        <section
-          style={{
-            padding: '18px clamp(16px,5vw,40px)',
-            borderTop: '1px solid rgba(26,26,64,0.35)',
-            borderBottom: '1px solid rgba(26,26,64,0.35)',
-            background: 'rgba(236,234,230,0.95)',
-            backdropFilter: 'blur(8px)',
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 960,
-              margin: '0 auto',
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 12,
-              justifyContent: 'center',
-            }}
-          >
+        {/* ── VSM PREVIEW CARD ── */}
+        <div className="vsm-card" style={{ background: '#fff', borderRadius: '16px 16px 0 0', border: '1px solid #D8D5CE', borderBottom: 'none', padding: '16px 16px 0', boxShadow: '0 -4px 32px rgba(0,0,0,0.08)', transform: 'perspective(900px) rotateX(2deg)', transformOrigin: 'bottom center' }}>
+
+          {/* Card top bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 12, paddingBottom: 11, borderBottom: '0.5px solid #ECEAE6' }}>
+            <div style={{ display: 'flex', gap: 5 }}>
+              {['#E8A49A', '#DEB96A', '#7DCAB5'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}
+            </div>
+            <span style={{ fontSize: 10, color: '#8E8A82', flex: 1, marginLeft: 5 }}>Seat Assembly Line 4 — Current State VSM</span>
+            <span style={{ fontSize: 8, padding: '2px 7px', borderRadius: 999, fontWeight: 700, background: '#EEF4FB', color: '#1A4F8A' }}>ISO 22468:2020</span>
+          </div>
+
+          {/* KPIs */}
+          <div style={{ display: 'flex', border: '0.5px solid #D8D5CE', borderRadius: 7, overflow: 'hidden', marginBottom: 12 }}>
             {[
-              'Automotive',
-              'Electronics',
-              'Aerospace',
-              'Food & Beverage',
-              'Healthcare',
-              'Logistics',
-              'Oil & Gas',
-              'Industrial Mfg',
-            ].map((ind) => (
-              <span
-                key={ind}
-                style={{
-                  fontSize: 12,
-                  color: 'var(--text2)',
-                  border: '1px solid rgba(70,70,120,0.42)',
-                  borderRadius: 999,
-                  padding: '6px 14px',
-                  letterSpacing: 0.4,
-                  background: 'rgba(255,255,255,0.9)',
-                }}
-              >
-                {ind}
-              </span>
+              { label: 'Total CT', val: '8m 20s', color: '#C49B2E' },
+              { label: 'Takt', val: '2m 00s', color: '#C49B2E' },
+              { label: 'PCE', val: `${Math.round(pce)}%`, color: '#C0402A' },
+              { label: 'WIP', val: '47', color: '#C49B2E' },
+              { label: 'Open KZ', val: '4', color: '#C49B2E' },
+            ].map((k, i) => (
+              <div key={i} style={{ flex: 1, padding: '6px 8px', textAlign: 'center', borderRight: i < 4 ? '0.5px solid #D8D5CE' : 'none' }}>
+                <div style={{ fontSize: 7, color: '#8E8A82', letterSpacing: 1.2, textTransform: 'uppercase' }}>{k.label}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: k.color, marginTop: 1 }}>{k.val}</div>
+              </div>
             ))}
           </div>
-        </section>
 
-        <section id="tools" style={{ padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)' }}>
-          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-            <SectionIntro
-              eyebrow="Tools"
-              title={
-                <>
-                  Eight tools.
-                  <span style={{ color: '#D4A208' }}> One AI brain.</span>
-                </>
-              }
-              subtitle="Every CI tool your team needs — connected to an AI that monitors, analyzes, and suggests improvements automatically."
-            />
+          {/* 3D ISO Steps */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, overflowX: 'auto', paddingBottom: 2 }}>
+            <IsoStep name="Material" sub="Staging" ct="NNVA · 45s" type="nnva" />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <WipCoins n={12} />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <IsoStep name="Frame" sub="Sub-Asm" ct="VA · 98s" type="va" />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <WipCoins n={6} />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <div style={{ opacity: bnVis ? 1 : 0.7, transition: 'opacity 0.4s' }}>
+              <IsoStep name="Foam &amp; Fabric" sub="" ct="NVA · 145s" type="va" isBn />
+            </div>
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <WipCoins n={8} color="#E8A49A" bg="#FEF2F0" />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <IsoStep name="Electrical" sub="Integr." ct="VA · 88s" type="va" />
+            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
+            <IsoStep name="Final" sub="QC" ct="NNVA · 72s" type="nnva" />
+          </div>
 
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))',
-                gap: 20,
-              }}
-            >
+          {/* Sawtooth timeline */}
+          <div style={{ marginTop: 10 }}>
+            <div style={{ display: 'flex', gap: 14, fontSize: 7, color: '#8E8A82', marginBottom: 4, fontFamily: 'monospace' }}>
+              <span style={{ color: '#2A9E82' }}>▲ value-add</span>
+              <span style={{ color: '#E8A49A' }}>▼ wait/queue</span>
+              <span style={{ color: '#C0402A' }}>— — takt 120s</span>
+            </div>
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', height: 40, gap: 2, borderBottom: '1px solid #D8D5CE' }}>
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 20, borderTop: '1.5px dashed #C0402A' }}>
+                <span style={{ position: 'absolute', right: 0, fontSize: 7, color: '#C0402A', fontWeight: 700, fontFamily: 'monospace', bottom: 2 }}>TAKT</span>
+              </div>
               {[
-                {
-                  icon: '~→',
-                  title: 'Value Stream Map',
-                  desc: 'Visualize your entire process flow and identify waste at every step.',
-                  color: '#D4A208',
-                },
-                {
-                  icon: '⊞',
-                  title: 'Kanban Board',
-                  desc: 'Manage work in progress with visual WIP limits and drag-drop cards.',
-                  color: '#6CB9FC',
-                },
-                {
-                  icon: '◎',
-                  title: 'Kaizen Events',
-                  desc: 'Track improvement initiatives from idea to completion with full history.',
-                  color: '#1DD1A1',
-                },
-                {
-                  icon: '⏱',
-                  title: 'Time Study',
-                  desc: 'Measure cycle times with precision and calculate takt time automatically.',
-                  color: '#F4A623',
-                },
-                {
-                  icon: '◆',
-                  title: '5 Why Analysis',
-                  desc: 'Drill down to root causes with structured problem-solving methodology.',
-                  color: '#FF6B6B',
-                },
-                {
-                  icon: '⊳⊲',
-                  title: 'Fishbone Diagram',
-                  desc: 'Map cause-and-effect relationships visually with Ishikawa analysis.',
-                  color: '#8C44CC',
-                },
-                {
-                  icon: '⟳',
-                  title: 'SMED Calculator',
-                  desc: 'Analyze changeover steps, classify internal vs external, and calculate potential time savings instantly.',
-                  color: '#1DD1A1',
-                  badge: 'NEW',
-                },
-                {
-                  icon: '📋',
-                  title: 'Gemba Walk Checklist',
-                  desc: 'Mobile-first floor inspection tool. Capture photos, flag issues, and auto-create kaizen events on the spot.',
-                  color: '#6CB9FC',
-                  badge: 'NEW',
-                },
-              ].map((tool) => (
-                <div
-                  key={tool.title}
-                  className="card"
-                  style={{
-                    padding: '30px 26px',
-                    borderRadius: 18,
-                    minHeight: 220,
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {tool.badge && (
-                    <div style={{
-                      position: 'absolute', top: 16, right: 16,
-                      background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                      color: 'var(--bg)', fontSize: 9, fontWeight: 800,
-                      padding: '3px 10px', borderRadius: 999, letterSpacing: 1.5,
-                    }}>
-                      {tool.badge}
+                { h: 9,  bg: '#DEB96A' }, { h: 20, bg: '#E8A49A', top: true }, { h: 18, bg: '#7DCAB5' },
+                { h: 11, bg: '#E8A49A', top: true }, { h: 34, bg: '#C0402A' },
+                { h: 16, bg: '#E8A49A', top: true }, { h: 16, bg: '#7DCAB5' },
+                { h: 9,  bg: '#E8A49A', top: true }, { h: 13, bg: '#DEB96A' },
+              ].map((b, i) => (
+                <div key={i} style={{ width: 18, height: b.h, background: b.bg, opacity: b.top ? 0.45 : 0.82, borderRadius: '2px 2px 0 0', alignSelf: b.top ? 'flex-start' : 'flex-end', flexShrink: 0 }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── INDUSTRY MARQUEE ─────────────────────────────────────────────────── */}
+      <div style={{ padding: '22px 48px', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE', overflow: 'hidden' }}>
+        <div style={{ fontSize: 10, color: '#8E8A82', textAlign: 'center', letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>
+          Built for lean teams across manufacturing industries
+        </div>
+        <div style={{ overflow: 'hidden' }}>
+          <div style={{ display: 'flex', gap: 56, alignItems: 'center', animation: 'mq 22s linear infinite', width: 'max-content' }}>
+            {['Automotive', 'Aerospace', 'Food & Beverage', 'Medical Devices', 'Logistics', 'Electronics', 'Pharmaceuticals', 'Industrial', 'Automotive', 'Aerospace', 'Food & Beverage', 'Medical Devices', 'Logistics', 'Electronics', 'Pharmaceuticals', 'Industrial'].map((n, i) => (
+              <span key={i} style={{ fontSize: 12, fontWeight: 700, color: '#C8C5BC', whiteSpace: 'nowrap', letterSpacing: 0.5, textTransform: 'uppercase' }}>{n}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── FEATURES ────────────────────────────────────────────────────────── */}
+      <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: '#D8D5CE' }}>
+        {[
+          { icon: '📊', bg: '#EDF9F5', title: 'Value Stream Mapping', body: 'ISO 22468:2020 notation. Bottlenecks flagged automatically. Export A3 maps and full ISO improvement reports in one click.' },
+          { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool connected', body: 'Time Study, Fishbone, 5 Why, Waste ID, Kaizen, PDCA, Yamazumi, Standard Work — all linked to your steps, all feeding one report.' },
+          { icon: '🛡', bg: '#EEEDFE', title: 'Free. No credit card.', body: 'Full VSM, all CI tools, ISO reports, PDCA with A3 / 8D / DMAIC export. Free forever. No trial. No paywall on core tools.' },
+        ].map(f => (
+          <div key={f.title} style={{ background: '#FFFFFF', padding: '28px 24px' }}>
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: '#242220', marginBottom: 7 }}>{f.title}</div>
+            <div style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.7 }}>{f.body}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── TOOLS ───────────────────────────────────────────────────────────── */}
+      <section id="tools" className="sec-pad" style={{ padding: '64px 48px', background: '#F8F7F5' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
+          <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean engineer needs</h2>
+          <p style={{ fontSize: 15, color: '#6B6760', marginBottom: 36, maxWidth: 520, lineHeight: 1.75 }}>All your CI tools connected to your value stream — the work you do feeds the reports you need.</p>
+
+          <div className="tools-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 12 }}>
+            {[
+              { icon: '⏱', name: 'Time Study',       desc: '10-lap stopwatch, outlier exclusion, baseline vs target',              badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '🐟', name: 'Fishbone',         desc: '6M, 8P, 4S frameworks — structured cause-and-effect mapping',          badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '❓', name: '5 Why',            desc: 'Root cause to countermeasure, linked to PDCA action',                  badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '⚠️', name: 'Waste ID',         desc: 'DOWNTIME 8-waste identification per step with notes',                  badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '⚡', name: 'Kaizen Events',   desc: 'Track events with owners, due dates, status and VSM burst markers',    badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '🔄', name: 'PDCA',             desc: 'Export as PDCA, A3, 8D, DMAIC or OODA — one dataset, five formats',   badge: 'ISO 9001',   bc: '#EEF4FB', btc: '#1A4F8A' },
+              { icon: '📊', name: 'Yamazumi Chart',  desc: 'Operator balance — VA / NNVA / NVA stacked vs takt time',              badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
+              { icon: '📋', name: 'Standard Work',   desc: 'Task-level breakdown with VA classification and ISO export',           badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
+              { icon: '🗺', name: 'VSM Export',      desc: 'A3 landscape map — auto-paginates, nothing truncated',                 badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
+              { icon: '🎯', name: 'Gap Analysis',    desc: 'Finds every gap between your VSM and world-class lean flow',           badge: 'AI',         bc: '#EEEDFE', btc: '#534AB7' },
+              { icon: '🗺️', name: 'Kaizen Roadmap', desc: 'Current → future state PCE journey with phase tracking',               badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+              { icon: '📈', name: 'Improvement',     desc: 'Before/after measurement goals per step feeding the report',           badge: 'Free',       bc: '#EDF9F5', btc: '#0F6E56' },
+            ].map(t => (
+              <div key={t.name} style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 12, padding: '16px 15px' }}>
+                <span style={{ fontSize: 20, display: 'block', marginBottom: 8 }}>{t.icon}</span>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#242220', marginBottom: 4 }}>{t.name}</div>
+                <div style={{ fontSize: 11, color: '#8E8A82', lineHeight: 1.6 }}>{t.desc}</div>
+                <span style={{ display: 'inline-block', fontSize: 8, fontWeight: 700, padding: '2px 6px', borderRadius: 4, marginTop: 8, background: t.bc, color: t.btc, letterSpacing: 0.5 }}>{t.badge}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
+      <div style={{ padding: '60px 48px', textAlign: 'center', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE' }}>
+        <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <p style={{ fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 500, color: '#242220', lineHeight: 1.55, marginBottom: 14, fontFamily: serif }}>
+            "This could serve as <em style={{ color: '#C49B2E', fontStyle: 'italic' }}>Mission Control</em> — to drive progress and allow for correction and modification along the way."
+          </p>
+          <p style={{ fontSize: 13, color: '#8E8A82' }}>Max Singh · Creator of VeSiMy</p>
+        </div>
+      </div>
+
+      {/* ── PRICING ─────────────────────────────────────────────────────────── */}
+      <section id="pricing" className="sec-pad" style={{ padding: '64px 48px', background: '#F8F7F5' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Pricing</div>
+            <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Upgrade when VeSiMy earns it.</h2>
+            <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto' }}>No artificial limits on the free experience. We'd rather earn your upgrade than force it.</p>
+          </div>
+
+          <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
+            {(Object.entries(PLANS) as any[]).map(([key, plan]) => {
+              const isPro = key === 'pro'
+              const isLife = key === 'lifetime'
+              const isEnt = key === 'enterprise'
+              return (
+                <div key={key} style={{ background: '#FFFFFF', border: isPro || isLife ? '1.5px solid rgba(196,155,46,0.4)' : '0.5px solid #D8D5CE', borderRadius: 16, padding: '26px 22px', position: 'relative' }}>
+                  {(isPro || isLife) && (
+                    <div style={{ display: 'inline-flex', background: '#C49B2E', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
+                      {isLife ? '👑 LAUNCH WEEK' : 'MOST POPULAR'}
                     </div>
                   )}
-                  <div
-                    style={{
-                      width: 50, height: 50, borderRadius: 14,
-                      background: `${tool.color}1a`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      marginBottom: 18, fontSize: 20, color: tool.color,
-                      border: `1px solid ${tool.color}26`,
-                    }}
-                  >
-                    {tool.icon}
+                  <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, fontWeight: 700, marginBottom: 6, fontFamily: 'monospace', textTransform: 'uppercase' }}>{plan.name}</div>
+                  <div style={{ fontSize: 36, fontWeight: 800, color: '#242220', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
+                    {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
+                    {!isEnt && plan.price !== null && Number(plan.price) > 0 && (
+                      <span style={{ fontSize: 13, fontWeight: 400, color: '#8E8A82', marginLeft: 4 }}>{isLife ? ' once' : '/mo'}</span>
+                    )}
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text)', marginBottom: 10 }}>
-                    {tool.title}
-                  </div>
-                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7 }}>
-                    {tool.desc}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="why"
-          style={{
-            padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)',
-            background: 'rgba(236,234,230,0.95)',
-            backdropFilter: 'blur(8px)',
-            borderTop: '1px solid rgba(26,26,64,0.35)',
-          }}
-        >
-          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-            <SectionIntro
-              eyebrow="The Philosophy"
-              title="Every letter means something."
-              subtitle="VeSiMy is more than a name — it’s a framework for how modern operations teams think, measure, and improve."
-            />
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-                gap: 20,
-              }}
-            >
-              {[
-                {
-                  letter: 'V',
-                  color: '#D4A208',
-                  icon: '◆',
-                  bg: 'rgba(196,155,46,0.12)',
-                  title: 'Value Addition',
-                  sub: 'V is for',
-                  body: 'Every process step must add measurable value to the customer.',
-                  note: "If it doesn't add value, it's waste — and waste is the enemy of excellence.",
-                },
-                {
-                  letter: 'E',
-                  color: '#1DD1A1',
-                  icon: '↻',
-                  bg: 'rgba(29,209,161,0.1)',
-                  title: 'Efficiency Improvement',
-                  sub: 'E is for',
-                  body: 'Do more with less — time, energy, material, and motion.',
-                  note: "Efficiency isn't about working harder; it's about working smarter, always.",
-                },
-                {
-                  letter: 'S',
-                  color: '#6CB9FC',
-                  icon: '→',
-                  bg: 'rgba(108,185,252,0.1)',
-                  title: 'Streamlining Processes',
-                  sub: 'S is for',
-                  body: 'Remove bottlenecks, reduce handoffs, and eliminate unnecessary steps.',
-                  note: 'A streamlined process flows like water — fast, smooth, and unstoppable.',
-                },
-                {
-                  letter: 'I',
-                  color: '#8C44CC',
-                  icon: '⊞',
-                  bg: 'rgba(140,68,204,0.1)',
-                  title: 'Improvement Matrix',
-                  sub: 'I is for',
-                  body: 'Track every improvement initiative across impact, effort, and outcome.',
-                  note: 'The matrix turns scattered ideas into a prioritized roadmap for action.',
-                },
-                {
-                  letter: 'M',
-                  color: '#FF6B6B',
-                  icon: '⊡',
-                  bg: 'rgba(255,107,107,0.1)',
-                  title: 'Mapping Tools',
-                  sub: 'M is for',
-                  body: 'Visualize your entire value stream — from raw material to customer delivery.',
-                  note: "You can't improve what you can't see. Maps make the invisible visible.",
-                },
-                {
-                  letter: 'Y',
-                  color: '#F4A623',
-                  icon: '▲',
-                  bg: 'rgba(244,166,35,0.1)',
-                  title: 'Yield Optimization',
-                  sub: 'Y is for',
-                  body: 'Maximize output quality and quantity while minimizing defects and rework.',
-                  note: 'True yield optimization means the right output, first time, every time.',
-                },
-              ].map((item) => (
-                <div
-                  key={item.letter}
-                  className="card"
-                  style={{ padding: '30px 26px', borderRadius: 18 }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
-                    <div
-                      style={{
-                        width: 46,
-                        height: 46,
-                        borderRadius: 12,
-                        background: item.bg,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 20,
-                        color: item.color,
-                        border: `1px solid ${item.color}22`,
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-
-                    <div>
-                      <div style={{ fontSize: 12, color: 'var(--text2)' }}>{item.sub}</div>
-                      <div
-                        style={{
-                          fontSize: 30,
-                          fontWeight: 800,
-                          color: item.color,
-                          fontFamily: serif,
-                          lineHeight: 1,
-                        }}
-                      >
-                        {item.letter}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: 16,
-                      color: 'var(--text)',
-                      marginBottom: 10,
-                    }}
-                  >
-                    {item.title}
-                  </div>
-
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: '#B8B5D1',
-                      lineHeight: 1.7,
-                      marginBottom: 10,
-                    }}
-                  >
-                    {item.body}
-                  </p>
-
-                  <p
-                    style={{
-                      fontSize: 12,
-                      color: 'var(--text2)',
-                      lineHeight: 1.6,
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    {item.note}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="compare"
-          style={{
-            padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)',
-            background: 'rgba(236,234,230,0.95)',
-            backdropFilter: 'blur(8px)',
-            borderTop: '1px solid rgba(26,26,64,0.35)',
-            borderBottom: '1px solid rgba(26,26,64,0.35)',
-          }}
-        >
-          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-            <SectionIntro
-              eyebrow="How we compare"
-              title="Built for practitioners. Priced for reality."
-              subtitle="VeSiMy replaces scattered tools, consultants, and static diagrams with one operator-ready platform."
-            />
-
-            <div
-              style={{
-                overflowX: 'auto',
-                background: 'rgba(248,247,245,0.97)',
-                border: '1px solid rgba(40,40,92,0.46)',
-                borderRadius: 18,
-                padding: 10,
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 18px 42px rgba(0,0,0,0.16)',
-              }}
-            >
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(196,155,46,0.12)' }}>
-                    {[
-                      'Feature',
-                      'VeSiMy',
-                      'eVSM / ValueStream Guru',
-                      'iGrafx',
-                      'Lucidchart / Visio',
-                      'Excel + Consultant',
-                    ].map((h, i) => (
-                      <th
-                        key={h}
-                        style={{
-                          padding: '14px 16px',
-                          textAlign: i === 0 ? 'left' : 'center',
-                          fontWeight: 700,
-                          fontSize: 11,
-                          letterSpacing: 1,
-                          color: i === 1 ? '#D4A208' : 'var(--sl-400)',
-                          fontFamily: 'monospace',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {h}
-                      </th>
+                  <p style={{ fontSize: 13, color: '#6B6760', marginBottom: 18, lineHeight: 1.65, minHeight: 40 }}>{plan.description}</p>
+                  <ul style={{ listStyle: 'none', marginBottom: 22, display: 'flex', flexDirection: 'column', gap: 9 }}>
+                    {plan.features.map((f: string) => (
+                      <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 13, color: '#4E4B45', lineHeight: 1.5 }}>
+                        <CheckIcon size={13} color="#C49B2E" style={{ marginTop: 3, flexShrink: 0 }} /> {f}
+                      </li>
                     ))}
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {[
-                    ['VSM Mapping', '✓', '✓', '✓', '✓', 'Manual'],
-                    ['AI Process Monitor', '✓', '✗', '✗', '✗', '✗'],
-                    ['Anomaly Detection', '✓', '✗', '✗', '✗', '✗'],
-                    ['AI Analysis (Supe)', '✓', '✗', '✗', '✗', '✗'],
-                    ['SOP → VSM in 60s', '✓', '✗', '✗', '✗', '✗'],
-                    ['Kaizen Tracking', '✓', '✗', 'Addon', '✗', '✗'],
-                    ['5 Why / Fishbone', '✓', '✗', '✗', 'Templates', '✗'],
-                    ['Live Floor Metrics', '✓', '✗', '✗', '✗', '✗'],
-                    ['Process Simulation', '✓', 'Addon', '✓', '✗', '✗'],
-                    ['Price / user / mo', '$0–$29', '$200–500', '$150+', '$10+', '$150–500/hr'],
-                    ['Setup time', '5 min', 'Days', 'Days', 'Hours', 'Weeks'],
-                    ['Works on mobile', '✓', '✗', '✗', 'Partial', '✗'],
-                  ].map((row) => (
-                    <tr
-                      key={row[0]}
-                      style={{ borderBottom: '1px solid rgba(26,26,64,0.34)' }}
-                    >
-                      {row.map((cell, i) => (
-                        <td
-                          key={i}
-                          style={{
-                            padding: '14px 16px',
-                            textAlign: i === 0 ? 'left' : 'center',
-                            color:
-                              i === 1
-                                ? cell === '✓'
-                                  ? '#1DD1A1'
-                                  : cell === '✗'
-                                    ? '#FF6B6B'
-                                    : '#D4A208'
-                                : cell === '✓'
-                                  ? '#1DD1A1'
-                                  : cell === '✗'
-                                    ? 'var(--sl-400)'
-                                    : 'var(--text2)',
-                            fontWeight: i === 1 ? 700 : 400,
-                          }}
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </ul>
+                  <Link
+                    href={isEnt ? '/enterprise' : isLife ? '/beta' : plan.price === 0 ? '/auth/signup' : `/auth/signup?plan=${key}`}
+                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '11px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', background: isPro || isLife ? '#C49B2E' : 'transparent', color: isPro || isLife ? '#fff' : '#4E4B45', border: isPro || isLife ? 'none' : '1px solid #D8D5CE' }}
+                  >
+                    {plan.cta}
+                  </Link>
+                  {isLife && (
+                    <p style={{ textAlign: 'center', fontSize: 11, color: '#C49B2E', marginTop: 10 }}>
+                      Launch Week open → <Link href="/beta" style={{ color: '#C49B2E' }}>Claim Gold Standard</Link>
+                    </p>
+                  )}
+                </div>
+              )
+            })}
           </div>
-        </section>
 
-        <section
-          style={{
-            padding: '74px 40px',
-            background: 'rgba(236,234,230,0.95)',
-            backdropFilter: 'blur(6px)',
-            borderTop: '1px solid rgba(26,26,64,0.35)',
-            borderBottom: '1px solid rgba(26,26,64,0.35)',
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 860,
-              margin: '0 auto',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))',
-              gap: 40,
-              textAlign: 'center',
-            }}
-          >
-            <Stat value="6" label="CI TOOLS BUILT IN" />
-            <Stat value="∞" label="STEPS PER PROJECT" />
-            <Stat value="100%" label="FREE TO START" />
-            <Stat value="60s" label="SOP TO VSM MAP" />
-            <Stat value="$0" label="SETUP REQUIRED" />
+          <div style={{ textAlign: 'center', marginTop: 20 }}>
+            <Link href="/pricing" style={{ fontSize: 13, color: '#8E8A82', textDecoration: 'none', borderBottom: '1px solid #D8D5CE', paddingBottom: 2 }}>
+              View full pricing details →
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="pricing" style={{ padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)' }}>
-          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-            <SectionIntro
-              eyebrow="Pricing"
-              title="Upgrade when VeSiMy earns it."
-              subtitle="No pressure. No artificial limits on the free experience. We would rather earn your upgrade than force it."
-            />
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-                gap: 20,
-              }}
-            >
-              {(Object.entries(PLANS) as [string, typeof PLANS[keyof typeof PLANS]][]).map(
-                ([key, plan]) => {
-                  const isPro = key === 'pro'
-                  const isLife = key === 'lifetime'
-                  const isEnt = key === 'enterprise'
-
-                  return (
-                    <div
-                      key={key}
-                      className="card"
-                      style={{
-                        background:
-                          isPro || isLife
-                            ? 'linear-gradient(180deg, rgba(196,155,46,0.12), rgba(248,247,245,0.97) 70%)'
-                            : 'var(--glass)',
-                        border:
-                          isPro || isLife
-                            ? '1px solid rgba(196,155,46,0.12)'
-                            : '1px solid var(--border)',
-                        borderRadius: 18,
-                        padding: '30px 26px',
-                        position: 'relative',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {isPro && (
-                        <div
-                          style={{
-                            display: 'inline-flex',
-                            background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                            color: 'var(--bg)',
-                            fontSize: 10,
-                            fontWeight: 700,
-                            padding: '4px 18px',
-                            borderRadius: 999,
-                            letterSpacing: 1.5,
-                            whiteSpace: 'nowrap',
-                            boxShadow: '0 8px 18px rgba(196,155,46,0.12)',
-                            marginBottom: 14,
-                          }}
-                        >
-                          MOST POPULAR
-                        </div>
-                      )}
-
-                      {isLife && (
-                        <div
-                          style={{
-                            display: 'inline-flex',
-                            background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                            color: 'var(--bg)',
-                            fontSize: 10,
-                            fontWeight: 700,
-                            padding: '4px 18px',
-                            borderRadius: 999,
-                            letterSpacing: 1.5,
-                            whiteSpace: 'nowrap',
-                            boxShadow: '0 8px 18px rgba(196,155,46,0.12)',
-                            marginBottom: 14,
-                          }}
-                        >
-                          👑 LAUNCH WEEK
-                        </div>
-                      )}
-
-                      <div style={{ fontSize: 11, color: '#D4A208', letterSpacing: 2, fontWeight: 700, marginBottom: 8, fontFamily: 'monospace', textTransform: 'uppercase' }}>
-                        {plan.name}
-                      </div>
-
-                      <div style={{ fontSize: 40, fontWeight: 800, color: 'var(--text)', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
-                        {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
-                        {!isEnt && plan.price !== null && Number(plan.price) > 0 && (
-                          <span style={{ fontSize: 14, fontWeight: 400, color: 'var(--text2)', marginLeft: 4, fontFamily: 'Inter, sans-serif' }}>
-                            {isLife ? ' once' : '/mo'}
-                          </span>
-                        )}
-                      </div>
-
-                      <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 22, lineHeight: 1.65, minHeight: 42 }}>
-                        {plan.description}
-                      </p>
-
-                      <ul
-                        style={{
-                          listStyle: 'none',
-                          marginBottom: 24,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: 10,
-                        }}
-                      >
-                        {plan.features.map((f) => (
-                          <li
-                            key={f}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'flex-start',
-                              gap: 10,
-                              fontSize: 13,
-                              color: '#B8B5D1',
-                              lineHeight: 1.6,
-                            }}
-                          >
-                            <CheckIcon
-                              size={13}
-                              color="#D4A208"
-                              style={{ marginTop: 3, flexShrink: 0 }}
-                            />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-
-                      <Link
-                        href={
-                          isEnt
-                            ? '/enterprise'
-                            : isLife
-                              ? '/beta'
-                              : plan.price === 0
-                                ? '/auth/signup'
-                                : `/auth/signup?plan=${key}`
-                        }
-                        className={isPro || isLife ? 'btn-primary' : 'btn-ghost'}
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          padding: '12px 20px',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          fontSize: 14,
-                        }}
-                      >
-                        {plan.cta}
-                      </Link>
-
-                      {isLife && (
-                        <p
-                          style={{
-                            textAlign: 'center',
-                            fontSize: 11,
-                            color: '#D4A208',
-                            marginTop: 12,
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          Launch Week open now →{' '}
-                          <Link href="/beta" style={{ color: '#D4A208' }}>
-                            Claim Gold Standard
-                          </Link>
-                        </p>
-                      )}
-                    </div>
-                  )
-                }
-              )}
-            </div>
-
-            <div style={{ textAlign: 'center', marginTop: 24 }}>
-              <Link
-                href="/pricing"
-                style={{
-                  fontSize: 13,
-                  color: 'var(--text2)',
-                  textDecoration: 'none',
-                  borderBottom: '1px solid rgba(40,40,92,0.6)',
-                  paddingBottom: 2,
-                }}
-              >
-                View full pricing details →
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section
-          style={{
-            padding: '104px 24px',
-            textAlign: 'center',
-            maxWidth: 720,
-            margin: '0 auto',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: serif,
-              fontSize: 'clamp(24px,3vw,42px)',
-              fontWeight: 700,
-              lineHeight: 1.35,
-              marginBottom: 18,
-              color: 'var(--text)',
-            }}
-          >
-            The factories that win the next decade
-            <br />
-            <span style={{ color: '#D4A208' }}>are optimizing with AI today.</span>
-          </p>
-
-          <p
-            style={{
-              fontSize: 15,
-              color: 'var(--text2)',
-              marginBottom: 38,
-              lineHeight: 1.8,
-            }}
-          >
-            Join manufacturers who replaced spreadsheets, sticky notes, and
-            consultants with one AI platform that never clocks out.
-          </p>
-
-          <Link
-            href="/auth/signup"
-            className="btn-primary"
-            style={{
-              fontSize: 16,
-              fontWeight: 700,
-              padding: '15px 34px',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              boxShadow: '0 10px 28px rgba(196,155,46,0.12)',
-            }}
-          >
-            Start Free Today <ArrowRightIcon size={16} color="currentColor" />
+      {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
+      <div style={{ background: '#242220', padding: '72px 48px', textAlign: 'center' }}>
+        <h2 style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
+          Stop describing waste.<br />Start <span style={{ color: '#C49B2E' }}>eliminating</span> it.
+        </h2>
+        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', marginBottom: 28 }}>Free forever. No credit card. No setup. Your first VSM in under 5 minutes.</p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+            Start mapping free
           </Link>
-
-          <p style={{ fontSize: 12, color: 'var(--text3)', marginTop: 16 }}>
-            Free forever · No credit card · Works on any device
-          </p>
-        </section>
-
-        <footer
-          style={{
-            borderTop: '1px solid rgba(26,26,64,0.45)',
-            padding: '32px 40px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 16,
-            background: 'rgba(248,247,245,0.97)',
-            backdropFilter: 'blur(16px)',
-          }}
-        >
-          <VesimyLogo size={28} showText />
-
-          <div
-            style={{
-              display: 'flex',
-              gap: 24,
-              fontSize: 12,
-              color: 'var(--text2)',
-              flexWrap: 'wrap',
-            }}
-          >
-            {[
-              ['About', '/about'],
-              ['Blog', '/blog'],
-              ['Changelog', '/changelog'],
-              ['Pricing', '/pricing'],
-              ['Privacy', '/privacy'],
-              ['Terms', '/terms'],
-              ['Contact', 'mailto:founder@vesimy.com'],
-            ].map(([label, href]) => (
-              <Link
-                key={label}
-                href={href}
-                style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.18s' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#D4A208')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          <span
-            style={{
-              fontSize: 11,
-              color: 'var(--text3)',
-              letterSpacing: 2,
-              fontFamily: 'monospace',
-              textTransform: 'uppercase',
-            }}
-          >
-            © 2026 VeSiMy
-          </span>
-        </footer>
+          <Link href="/auth/signup" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
+            Load reference project →
+          </Link>
+        </div>
+        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', marginTop: 16 }}>
+          ISO 9001:2015 · ISO 22468:2020 · IATF 16949 aligned
+        </p>
       </div>
+
+      {/* ── FOOTER ──────────────────────────────────────────────────────────── */}
+      <footer style={{ borderTop: '0.5px solid #D8D5CE', padding: '28px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#FFFFFF' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <VLogoMark size={28} />
+          <VeSiMyWordmark size={16} />
+        </div>
+        <div style={{ display: 'flex', gap: 22, fontSize: 12, color: '#8E8A82', flexWrap: 'wrap' }}>
+          {[['About', '/about'], ['Blog', '/blog'], ['Changelog', '/changelog'], ['Pricing', '/pricing'], ['Privacy', '/privacy'], ['Terms', '/terms'], ['Contact', 'mailto:founder@vesimy.com']].map(([l, h]) => (
+            <Link key={l} href={h} style={{ color: 'inherit', textDecoration: 'none' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#C49B2E')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#8E8A82')}>
+              {l}
+            </Link>
+          ))}
+        </div>
+        <span style={{ fontSize: 11, color: '#B8B4AC', letterSpacing: 1.5, fontFamily: 'monospace', textTransform: 'uppercase' }}>© 2026 VeSiMy</span>
+      </footer>
     </div>
   )
 }
