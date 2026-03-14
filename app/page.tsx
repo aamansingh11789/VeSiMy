@@ -1,6 +1,6 @@
+'use client'
 // @ts-nocheck
 // ── app/page.tsx — VeSiMy Homepage ───────────────────────────────────────────
-'use client'
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'

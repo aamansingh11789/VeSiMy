@@ -4,7 +4,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { VesimyLogo } from '@/components/ui/Logo'
+import { VesimyLogo, VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase'
 import {
   DashboardIcon, FolderIcon, ZapIcon, SettingsIcon,
@@ -71,7 +71,15 @@ export function Sidebar({ profile }: SidebarProps) {
         padding: '22px 20px 16px',
         borderBottom: `1px solid ${isGold ? 'rgba(196,155,46,0.3)' : SL[700]}`,
       }}>
-        <VesimyLogo size={40} showText />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <VLogoMark size={36} />
+          <div>
+            <VeSiMyWordmark size={18} onDark />
+            <div style={{ fontSize: 9, letterSpacing: 2, color: '#6B6760', fontFamily: 'monospace', textTransform: 'uppercase', marginTop: 2 }}>
+              Lean CI Platform
+            </div>
+          </div>
+        </div>
         <div style={{
           marginTop: 10, fontSize: 9, letterSpacing: 2.2,
           color: isGold ? GOLD : SL[500],
