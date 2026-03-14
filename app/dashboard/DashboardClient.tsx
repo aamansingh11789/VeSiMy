@@ -493,6 +493,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   const [showNew, setShowNew] = useState(false)
   const [form, setForm] = useState({ name: '', industry: '', customer: '' })
   const [view, setView] = useState<'cards' | 'list'>('cards')
+  const [seedingRef, setSeedingRef] = useState(false)
 
   const isPro = profile.plan_tier !== 'free'
   const atLimit = !isPro && profile.projects_count >= profile.projects_limit
@@ -530,6 +531,25 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       toast.error(e.message)
     } finally {
       setCreating(false)
+    }
+  }
+
+  async function seedReferenceProject() {
+    setSeedingRef(true)
+    try {
+      const res = await fetch('/api/projects/seed-reference', { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to create reference project')
+      if (data.already_exists) {
+        toast.success('Opening your reference project…')
+      } else {
+        toast.success('Reference project created — exploring now!')
+      }
+      router.push(`/project/${data.id}`)
+    } catch (e: any) {
+      toast.error(e.message)
+    } finally {
+      setSeedingRef(false)
     }
   }
 
@@ -749,37 +769,46 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
         </div>
 
-        {/* AI Monitor widget — coming soon teaser */}
+        {/* ── Reference Project card ── */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(100,38,160,0.06))',
-          border: '1px solid rgba(212,162,8,0.2)',
-          borderRadius: 16,
-          padding: '18px 22px',
+          background: '#FFFFFF',
+          border: '1px solid var(--border)',
+          borderRadius: 14,
+          padding: '18px 20px',
           display: 'flex',
           alignItems: 'center',
-          gap: 18,
+          gap: 16,
           flexWrap: 'wrap',
         }}>
           <div style={{
             width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-            background: 'rgba(212,162,8,0.1)', border: '1px solid rgba(212,162,8,0.2)',
+            background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
           }}>
-            🧠
+            ⭐
           </div>
           <div style={{ flex: 1, minWidth: 200 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>VeSiMy AI Monitor</span>
-              <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 8px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>COMING SOON</span>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
+              Reference Project — Automotive Seat Assembly
             </div>
-            <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
-              The AI layer that watches every metric in your projects 24/7 — detects anomalies, predicts problems, and tells you exactly what to fix before it costs money. <span style={{ color: '#D4A208' }}>Monitor → Record → Analyze → Suggest.</span>
+            <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
+              A fully-built example project showing every tool in action — time studies, fishbone, 5 Why, waste ID, kaizen events, PDCA, standard work, Yamazumi, 2 branches, and a complete VSM. Load it as a guide when building your own projects.
             </p>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end', flexShrink: 0 }}>
-            <span style={{ fontSize: 11, color: '#D4A208', whiteSpace: 'nowrap', opacity: 0.7 }}>Launching M1-3 2026</span>
-            <span style={{ fontSize: 10, color: 'var(--sl-400)', whiteSpace: 'nowrap' }}>Pre-seed raise open</span>
-          </div>
+          <button
+            onClick={seedReferenceProject}
+            disabled={seedingRef}
+            style={{
+              padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12,
+              cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap',
+              background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#C49510,#D4A208)',
+              color: seedingRef ? 'var(--text3)' : '#FFFFFF',
+              border: 'none', flexShrink: 0,
+              opacity: seedingRef ? 0.7 : 1,
+            }}
+          >
+            {seedingRef ? 'Loading…' : 'Load Reference Project →'}
+          </button>
         </div>
 
         {/* Health overview */}
