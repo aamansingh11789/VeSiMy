@@ -1,46 +1,40 @@
 // @ts-nocheck
 // ── app/api/projects/seed-reference/route.ts ─────────────────────────────────
 // Creates a fully-populated reference project demonstrating every VeSiMy feature.
-// Idempotent — if a reference project already exists for this user it returns it.
+// Idempotent — returns existing project if one already exists for this user.
 
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    // ── Idempotency check ─────────────────────────────────────────────────────
+    // ── Idempotency ───────────────────────────────────────────────────────────
     const { data: existing } = await supabase
       .from('projects')
       .select('id')
       .eq('user_id', user.id)
-      .eq('name', '⭐ Reference — Automotive Seat Assembly Line 4')
+      .eq('name', '⭐ Reference — Automotive Seat Assembly')
       .maybeSingle()
 
     if (existing?.id) {
       return NextResponse.json({ id: existing.id, already_exists: true })
     }
 
-    // ── 1. Create project ─────────────────────────────────────────────────────
+    // ── 1. Project (only real columns) ────────────────────────────────────────
     const { data: project, error: projErr } = await supabase
       .from('projects')
       .insert({
-        user_id: user.id,
-        name: '⭐ Reference — Automotive Seat Assembly Line 4',
-        description: 'Fully-populated reference project. Every tool, every feature, branches included. Use this as a guide when building your own value stream maps.',
-        industry: 'Automotive',
-        product: 'Front Seat Assembly — Model X',
-        customer: 'OEM Assembly Plant',
-        supplier: 'Foam & Fabric Tier-2',
-        demand: 240,
-        working_hours: 8,
-        available_time_sec: 28800,
-        takt_time: 120,
-        shifts: 1,
-        state: 'current',
+        user_id:     user.id,
+        name:        '⭐ Reference — Automotive Seat Assembly',
+        description: 'Fully-built reference project — every tool populated. 6 main steps, 2 branches, time studies, fishbone, 5 Why, waste ID, kaizen events, improvement goals. Use this as your guide.',
+        industry:    'Automotive',
+        customer:    'OEM Assembly Plant',
+        state:       'current',
+        status:      'active',
       })
       .select()
       .single()
@@ -48,8 +42,8 @@ export async function POST(request: NextRequest) {
     if (projErr) throw projErr
     const pid = project.id
 
-    // ── Helper ────────────────────────────────────────────────────────────────
-    async function addStep(pos: number, fields: any) {
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    async function step(pos: number, fields: Record<string, any>) {
       const { data, error } = await supabase
         .from('steps')
         .insert({ project_id: pid, user_id: user.id, position: pos, is_main_flow: true, ...fields })
@@ -58,357 +52,291 @@ export async function POST(request: NextRequest) {
       return data
     }
 
-    async function addBranchStep(pos: number, branchId: string, fields: any) {
+    async function bStep(pos: number, bid: string, fields: Record<string, any>) {
       const { data, error } = await supabase
         .from('steps')
-        .insert({ project_id: pid, user_id: user.id, position: pos, is_main_flow: false, branch_id: branchId, ...fields })
+        .insert({ project_id: pid, user_id: user.id, position: pos, is_main_flow: false, branch_id: bid, ...fields })
         .select().single()
       if (error) throw error
       return data
     }
 
-    async function addTool(stepId: string, tool: string, data: any) {
-      await supabase.from('tool_data').insert({
+    async function tool(stepId: string, toolName: string, data: any) {
+      const { error } = await supabase.from('tool_data').insert({
         step_id: stepId, project_id: pid, user_id: user.id,
-        tool, data, saved_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+        tool: toolName, data,
+        saved_at: new Date().toISOString(), updated_at: new Date().toISOString(),
       })
+      if (error) console.error(`tool_data insert error (${toolName}):`, error.message)
     }
 
-    // ── 2. Main flow steps ────────────────────────────────────────────────────
-    const s1 = await addStep(0, {
-      name: 'Material Staging',
-      department: 'Materials',
+    // ── 2. Main flow (6 steps) ────────────────────────────────────────────────
+    const s1 = await step(0, {
+      name: 'Material Staging', department: 'Materials',
       operators: 1, cycle_time: 45, wait_time: 300, wip: 12,
       flow_type: 'push', uptime: 100, defect_rate: 0,
-      va_type: 'nnva',
-      notes: 'Operator walks 40m round trip to warehouse. Motion waste identified — shadow board being added.',
-      op_steps: [
-        { id: 'ms1', name: 'Scan inbound pallet', time: 8, va_type: 'nnva' },
-        { id: 'ms2', name: 'Walk to warehouse pick face', time: 18, va_type: 'nva' },
-        { id: 'ms3', name: 'Pull components to line side', time: 12, va_type: 'nnva' },
-        { id: 'ms4', name: 'Log into system', time: 7, va_type: 'nva' },
-      ],
+      notes: 'NNVA. Operator walks 40m to warehouse each cycle — motion waste. Shadow board planned.',
     })
 
-    const s2 = await addStep(1, {
-      name: 'Frame Sub-Assembly',
-      department: 'Sub-Asm',
+    const s2 = await step(1, {
+      name: 'Frame Sub-Assembly', department: 'Sub-Assembly',
       operators: 2, cycle_time: 98, wait_time: 60, wip: 6,
       flow_type: 'push', uptime: 92, defect_rate: 1.2,
-      va_type: 'va',
-      notes: 'Key operation. CT target 90s after kaizen. Bottleneck risk if upstream delays.',
-      op_steps: [
-        { id: 'fa1', name: 'Position frame in jig', time: 12, va_type: 'va' },
-        { id: 'fa2', name: 'Torque 4x M8 bolts', time: 24, va_type: 'va' },
-        { id: 'fa3', name: 'Install seat rail LH', time: 18, va_type: 'va' },
-        { id: 'fa4', name: 'Install seat rail RH', time: 18, va_type: 'va' },
-        { id: 'fa5', name: 'Visual check alignment', time: 14, va_type: 'nnva' },
-        { id: 'fa6', name: 'Reach for torque wrench from cart', time: 12, va_type: 'nva' },
-      ],
+      notes: 'VA. Consistent CT. 6s NVA: operator reaches for torque wrench not at point of use.',
     })
 
-    const s3 = await addStep(2, {
-      name: 'Foam & Fabric Install',
-      department: 'Trim',
+    const s3 = await step(2, {
+      name: 'Foam & Fabric Install', department: 'Trim',
       operators: 2, cycle_time: 145, wait_time: 90, wip: 8,
       flow_type: 'push', uptime: 88, defect_rate: 2.1,
-      va_type: 'va',
-      notes: 'BOTTLENECK — CT 145s exceeds takt 120s. NVA: operator walks to foam rack (16s). Kaizen event KZ-003 in progress.',
-      op_steps: [
-        { id: 'ff1', name: 'Retrieve foam cushion from rack', time: 16, va_type: 'nva' },
-        { id: 'ff2', name: 'Position foam on frame', time: 18, va_type: 'va' },
-        { id: 'ff3', name: 'Pull fabric cover over cushion', time: 28, va_type: 'va' },
-        { id: 'ff4', name: 'Clip 8 retention clips', time: 32, va_type: 'va' },
-        { id: 'ff5', name: 'Smooth fabric & visual QC', time: 20, va_type: 'nnva' },
-        { id: 'ff6', name: 'Wait for partner to complete LH side', time: 18, va_type: 'nva' },
-        { id: 'ff7', name: 'Mutual check & sign-off', time: 13, va_type: 'nnva' },
-      ],
+      notes: 'VA — BOTTLENECK. CT 145s exceeds takt 120s. 16s NVA walk to foam rack. KZ-001 in progress.',
     })
 
-    const s4 = await addStep(3, {
-      name: 'Electrical Integration',
-      department: 'Electrical',
+    const s4 = await step(3, {
+      name: 'Electrical Integration', department: 'Electrical',
       operators: 1, cycle_time: 88, wait_time: 45, wip: 4,
       flow_type: 'fifo', uptime: 95, defect_rate: 0.8,
-      va_type: 'va',
-      notes: 'Harness sub-assembly feeds from Branch A. FIFO lane max 5 units between stations.',
-      op_steps: [
-        { id: 'ei1', name: 'Retrieve harness from FIFO lane', time: 6, va_type: 'nnva' },
-        { id: 'ei2', name: 'Route harness under frame', time: 22, va_type: 'va' },
-        { id: 'ei3', name: 'Connect 3x connectors', time: 18, va_type: 'va' },
-        { id: 'ei4', name: 'Clip harness to 6 retention points', time: 20, va_type: 'va' },
-        { id: 'ei5', name: 'Function test seat motors', time: 14, va_type: 'nnva' },
-        { id: 'ei6', name: 'Record test result', time: 8, va_type: 'nva' },
-      ],
+      notes: 'VA. Harness feeds from Branch A via FIFO lane (max 5 units). Stable process.',
     })
 
-    const s5 = await addStep(4, {
-      name: 'Final QC & Audit',
-      department: 'Quality',
+    const s5 = await step(4, {
+      name: 'Final QC & Audit', department: 'Quality',
       operators: 1, cycle_time: 72, wait_time: 120, wip: 5,
       flow_type: 'push', uptime: 100, defect_rate: 0.3,
-      va_type: 'nnva',
-      notes: 'In-station audit per IATF 16949 §8.6.1. Target: eliminate rework loop through poka-yoke upstream.',
-      op_steps: [
-        { id: 'qc1', name: 'Torque audit 6x critical bolts', time: 22, va_type: 'nnva' },
-        { id: 'qc2', name: 'Electrical function re-test', time: 12, va_type: 'nnva' },
-        { id: 'qc3', name: 'Visual audit to standard work sheet', time: 18, va_type: 'nnva' },
-        { id: 'qc4', name: 'Label and scan QR code', time: 8, va_type: 'nnva' },
-        { id: 'qc5', name: 'Log in MES system', time: 12, va_type: 'nva' },
-      ],
+      notes: 'NNVA. In-station audit per IATF 16949 §8.6.1. 12s NVA: manual MES logging (KZ-004 open).',
     })
 
-    const s6 = await addStep(5, {
-      name: 'Packing & Dispatch',
-      department: 'Logistics',
+    const s6 = await step(5, {
+      name: 'Packing & Dispatch', department: 'Logistics',
       operators: 1, cycle_time: 55, wait_time: 180, wip: 15,
       flow_type: 'push', uptime: 100, defect_rate: 0,
-      va_type: 'nnva',
-      notes: 'High WIP due to timed OEM collection runs every 2 hours. FIFO to dispatch bay maintained.',
-      op_steps: [
-        { id: 'pk1', name: 'Place seat in A-frame carrier', time: 18, va_type: 'nnva' },
-        { id: 'pk2', name: 'Apply protective wrap', time: 14, va_type: 'nnva' },
-        { id: 'pk3', name: 'Attach shipping label', time: 8, va_type: 'nnva' },
-        { id: 'pk4', name: 'Move to dispatch bay', time: 15, va_type: 'nva' },
-      ],
+      notes: 'NNVA. High WIP: timed OEM collection every 2 hrs creates batch. 15s NVA: move to dispatch bay.',
     })
 
-    // ── 3. Tool data — Time Studies ───────────────────────────────────────────
-    await addTool(s1.id, 'stopwatch', {
+    // ── 3. Time Studies ───────────────────────────────────────────────────────
+    await tool(s1.id, 'stopwatch', {
       baseline: 50, target: 35, mean: 45,
-      laps: [44, 46, 45, 43, 48, 45, 44, 46, 45, 47],
-      excluded: [],
-      notes: 'Measured over 10 cycles. High variation due to walk distance. Poka-yoke / point-of-use storage being designed.',
+      laps: [44, 46, 45, 43, 48, 45, 44, 46, 45, 47], excluded: [],
+      notes: '10 cycles. High variation due to walk distance. Point-of-use storage being designed.',
     })
 
-    await addTool(s2.id, 'stopwatch', {
+    await tool(s2.id, 'stopwatch', {
       baseline: 110, target: 90, mean: 98,
-      laps: [100, 96, 98, 102, 95, 98, 100, 97, 99, 95],
-      excluded: [],
-      notes: '10 observations. Consistent. CT within takt. Target 90s once NVA removed.',
+      laps: [100, 96, 98, 102, 95, 98, 100, 97, 99, 95], excluded: [],
+      notes: 'Consistent. CT within takt. Target 90s once NVA removed.',
     })
 
-    await addTool(s3.id, 'stopwatch', {
+    await tool(s3.id, 'stopwatch', {
       baseline: 160, target: 110, mean: 145,
-      laps: [142, 148, 145, 150, 143, 146, 144, 149, 145, 147],
-      excluded: [],
-      notes: 'BOTTLENECK. CT 145s > Takt 120s. Primary kaizen target. 16s NVA walk already identified.',
+      laps: [142, 148, 145, 150, 143, 146, 144, 149, 145, 147], excluded: [],
+      notes: 'BOTTLENECK. CT 145s > Takt 120s. 16s NVA walk identified as primary target.',
     })
 
-    await addTool(s4.id, 'stopwatch', {
+    await tool(s4.id, 'stopwatch', {
       baseline: 95, target: 80, mean: 88,
-      laps: [86, 90, 88, 87, 89, 88, 90, 86, 88, 88],
-      excluded: [],
-      notes: 'Stable process. Target 80s by moving harness routing task to sub-assembly branch.',
+      laps: [86, 90, 88, 87, 89, 88, 90, 86, 88, 88], excluded: [],
+      notes: 'Stable. Target 80s by moving harness routing to branch sub-assembly.',
     })
 
-    // ── 4. Tool data — Fishbone (on bottleneck step) ──────────────────────────
-    await addTool(s3.id, 'ishikawa', {
-      problem: 'Foam & Fabric Install cycle time 145s exceeds takt 120s — causing 3 seats/shift shortfall',
+    // ── 4. Fishbone (bottleneck step) ─────────────────────────────────────────
+    await tool(s3.id, 'ishikawa', {
+      problem: 'Foam & Fabric Install CT 145s exceeds takt 120s — 3 seats/shift shortfall',
       framework: '6m',
       causes: {
-        Machine:     ['No powered assist for foam cover pull', 'Jig does not hold fabric taut'],
-        Method:      ['Foam rack located 4m from workstation', 'Two-operator mutual check adds 13s', 'No standard sequence documented'],
-        Material:    ['Fabric cover too tight on winter batches (dimensional variation)', 'Foam density variation affects clip engagement force'],
-        Manpower:    ['New operators take 20% longer — no standard work sheet', 'LH/RH operators must coordinate — creates waiting waste'],
+        Machine:     ['No powered assist for fabric pull', 'Jig does not hold fabric taut automatically'],
+        Method:      ['Foam rack 4m from workstation (16s walk NVA)', 'Mutual check adds 13s', 'No standard work sheet for new operators'],
+        Material:    ['Fabric cover too tight on winter batches — dimensional variation', 'Foam density variation affects clip engagement'],
+        Manpower:    ['New operators 20% slower — no SWS', 'LH/RH operators must coordinate — creates waiting'],
         Measurement: ['No in-process CT tracking — only end-of-shift review'],
-        'Mother Nature': ['Cold ambient temp increases foam stiffness in winter months'],
+        'Mother Nature': ['Cold ambient temp increases foam stiffness in winter'],
       },
     })
 
-    // ── 5. Tool data — 5 Why ─────────────────────────────────────────────────
-    await addTool(s3.id, 'fivewhy', {
-      problem: 'Foam & Fabric Install CT of 145s is 25s over takt time',
+    // ── 5. 5 Why ─────────────────────────────────────────────────────────────
+    await tool(s3.id, 'fivewhy', {
+      problem: 'Foam & Fabric Install CT 145s is 25s over takt time',
       whys: [
-        { q: 'Why is cycle time 25s over takt?',                              a: 'Operator walks 4m round trip to foam rack every cycle (16s) and waits 13s for partner to complete LH side.' },
-        { q: 'Why is the foam rack 4m away?',                                 a: 'The line was laid out 3 years ago when the product mix was different. Foam was less frequently used. Location was never updated.' },
-        { q: 'Why was the location never updated when product mix changed?',   a: 'No formal process exists to review line-side storage locations when takt time changes or product mix changes.' },
-        { q: 'Why is there no formal line layout review process?',             a: 'Manufacturing Engineering owns the layout but is not part of the takt-time review cycle. No standard for material location distance limits.' },
-        { q: 'Why is Manufacturing Engineering excluded from takt reviews?',   a: 'Root cause: the PFMEA review gate does not require a material flow review. This is a gap in the engineering standard.' },
+        { q: 'Why is CT 25s over takt?',
+          a: 'Operator walks 4m to foam rack (16s NVA) and waits 13s for partner every cycle.' },
+        { q: 'Why is the foam rack 4m away?',
+          a: 'Line was laid out 3 years ago when foam was less frequently used. Never updated.' },
+        { q: 'Why was the layout never updated when product mix changed?',
+          a: 'No formal process exists to review line-side storage locations when takt time changes.' },
+        { q: 'Why is there no formal line layout review process?',
+          a: 'Manufacturing Engineering is not part of the takt-time review cycle. No standard for material location distance.' },
+        { q: 'Why is Manufacturing Engineering excluded from takt reviews?',
+          a: 'ROOT CAUSE: PFMEA review gate does not require a material flow audit when takt time is revised.' },
       ],
-      rootCause: 'The PFMEA review gate does not mandate a material flow review when takt time is revised — so foam rack was never relocated when CT/takt ratio changed.',
-      countermeasure: 'Update PFMEA review procedure to include a mandatory material flow audit. Relocate foam rack to within 0.5m of workstation immediately as interim fix. Add line-side foam buffer for 2-hour replenishment cycle.',
+      rootCause: 'PFMEA review gate does not mandate a material flow audit when takt time changes — foam rack was never relocated when CT/takt ratio deteriorated.',
+      countermeasure: '1. Update PFMEA procedure to include mandatory material flow audit on takt revision. 2. Relocate foam rack to within 0.5m of workstation immediately as interim fix. 3. Add 2-hour kanban replenishment cycle.',
       owner: 'Manufacturing Engineering',
       dueDate: '2026-04-15',
     })
 
-    // ── 6. Tool data — Waste ID ───────────────────────────────────────────────
-    await addTool(s3.id, 'waste', {
+    // ── 6. Waste ID ───────────────────────────────────────────────────────────
+    await tool(s3.id, 'waste', {
       wastes: {
-        Motion:           'Operator walks 4m round trip to foam rack every cycle (16s NVA)',
+        Motion:           'Operator walks 4m to foam rack every cycle = 16s NVA per seat',
         Waiting:          'Operator waits 13s for partner to complete LH side before mutual check',
-        'Over-processing':'Dual mutual check adds 13s — single check with poka-yoke would suffice',
-        Defects:          '2.1% defect rate — fabric mis-clip requires rework averaging 8 min per occurrence',
+        'Over-processing': 'Dual mutual check adds 13s — single check + poka-yoke would suffice',
+        Defects:          '2.1% defect rate — fabric mis-clip causes rework averaging 8 min each',
       },
-      notes: 'Top priority: Motion waste (foam rack relocation). Waiting waste can be eliminated by improved work-sharing balance via Yamazumi analysis.',
+      notes: 'Priority order: Motion (foam rack) → Defects (poka-yoke clip guide) → Over-processing (eliminate dual check).',
     })
 
-    await addTool(s1.id, 'waste', {
+    await tool(s1.id, 'waste', {
       wastes: {
         Motion:    'Walk 40m round trip to warehouse each cycle',
         Transport: 'Manual pallet movement — no automated line replenishment',
-        Waiting:   '300s average queue wait before staging begins',
+        Waiting:   '300s average queue before staging begins',
       },
-      notes: 'Point-of-use shadow board and kanban replenishment system planned for Q2 2026.',
+      notes: 'Point-of-use shadow board and kanban replenishment planned Q2 2026.',
     })
 
-    // ── 7. Tool data — Kaizen events ─────────────────────────────────────────
-    await addTool(s3.id, 'kaizen', {
+    // ── 7. Kaizen events ──────────────────────────────────────────────────────
+    await tool(s3.id, 'kaizen', {
       items: [
         {
-          id: 'kz001', kzId: 'KZ-001', title: 'Relocate foam rack to point of use',
-          description: 'Move foam cushion rack from 4m distance to within 0.5m of workstation. Install shadow board. Expected saving: 16s NVA per cycle.',
+          id: 'kz001', kzId: 'KZ-001',
+          title: 'Relocate foam rack to point of use',
+          description: 'Move foam rack from 4m to within 0.5m of workstation. Shadow board. Expected saving: 16s NVA per cycle = 64 minutes/shift.',
           category: 'Productivity', priority: 'critical', status: 'in-progress',
           owner: 'J. Patel', dueDate: '2026-04-01',
-          actions: ['Measure and mark new foam rack location', 'Arrange rack relocation with facilities', 'Update standard work sheet', 'Time study before and after'],
+          actions: ['Mark new foam rack location', 'Arrange facilities relocation', 'Update standard work', 'Before/after time study'],
           created: Date.now() - 604800000,
         },
         {
-          id: 'kz002', kzId: 'KZ-002', title: 'Poka-yoke fabric clip alignment',
-          description: 'Design jig guide pins to locate fabric clips automatically. Eliminates need for mutual visual check (13s NNVA). Quality will be built in.',
+          id: 'kz002', kzId: 'KZ-002',
+          title: 'Poka-yoke fabric clip alignment jig',
+          description: 'Design guide pins to locate clips automatically. Eliminates 13s mutual visual check. Quality built in.',
           category: 'Quality', priority: 'high', status: 'open',
           owner: 'S. Ahmed', dueDate: '2026-05-01',
-          actions: ['Raise ECR with tooling engineering', 'Prototype guide pin design', 'Validate with 30-cycle trial'],
+          actions: ['Raise ECR with tooling engineering', 'Prototype guide pin design', '30-cycle trial validation'],
           created: Date.now() - 259200000,
         },
         {
-          id: 'kz003', kzId: 'KZ-003', title: 'Standard Work Sheet for new operators',
-          description: 'No Standard Work Sheet exists for Foam & Fabric Install. New operators take 20% longer. Create SWS with photos, VA/NNVA/NVA classification and operator task breakdown.',
+          id: 'kz003', kzId: 'KZ-003',
+          title: 'Create Standard Work Sheet for new operators',
+          description: 'No SWS exists — new operators take 20% longer. Create with photos, task breakdown and VA/NNVA/NVA classification.',
           category: 'Morale', priority: 'medium', status: 'complete',
-          owner: 'Team Leader',  dueDate: '2026-03-15',
-          actions: ['Complete Operator Steps breakdown in VeSiMy', 'Print and laminate at workstation', 'Train all 4 operators on new SWS'],
+          owner: 'Team Leader', dueDate: '2026-03-15',
+          actions: ['Complete operator task breakdown in VeSiMy', 'Print and laminate at workstation', 'Train all 4 operators'],
           created: Date.now() - 1209600000,
         },
       ],
     })
 
-    await addTool(s5.id, 'kaizen', {
-      items: [
-        {
-          id: 'kz004', kzId: 'KZ-004', title: 'Eliminate MES system logging — use barcode scan only',
-          description: 'Manual MES entry (12s NVA) can be replaced with automatic scan-to-pass. IT approval received. Implementation scheduled.',
-          category: 'Productivity', priority: 'medium', status: 'open',
-          owner: 'IT / Quality', dueDate: '2026-06-01',
-          actions: ['Configure MES auto-close on scan', 'UAT with quality team'],
-          created: Date.now() - 172800000,
-        },
-      ],
+    await tool(s5.id, 'kaizen', {
+      items: [{
+        id: 'kz004', kzId: 'KZ-004',
+        title: 'Eliminate manual MES entry — auto-close on barcode scan',
+        description: 'Manual MES logging (12s NVA) replaced with automatic scan-to-pass. IT approval received.',
+        category: 'Productivity', priority: 'medium', status: 'open',
+        owner: 'IT / Quality', dueDate: '2026-06-01',
+        actions: ['Configure MES auto-close on scan', 'UAT with quality team'],
+        created: Date.now() - 172800000,
+      }],
     })
 
-    // ── 8. Tool data — Improvement goals ────────────────────────────────────
-    await addTool(s3.id, 'improvement', {
+    // ── 8. Improvement goals ──────────────────────────────────────────────────
+    await tool(s3.id, 'improvement', {
       goals: [
-        { id: 'imp1', metric: 'Cycle Time', baseline: 145, target: 110, actual: null, unit: 'seconds', status: 'in-progress', owner: 'J. Patel', dueDate: '2026-05-01', notes: 'Post foam-rack relocation + poka-yoke installation' },
-        { id: 'imp2', metric: 'Defect Rate', baseline: 2.1, target: 0.5, actual: null, unit: '%', status: 'in-progress', owner: 'S. Ahmed', dueDate: '2026-05-01', notes: 'Clip alignment poka-yoke expected to eliminate 80% of defects' },
+        { id: 'g1', metric: 'Cycle Time', baseline: 145, target: 110, actual: null, unit: 'seconds',
+          status: 'in-progress', owner: 'J. Patel', dueDate: '2026-05-01',
+          notes: 'After foam rack relocation + poka-yoke clip installation' },
+        { id: 'g2', metric: 'Defect Rate', baseline: 2.1, target: 0.5, actual: null, unit: '%',
+          status: 'in-progress', owner: 'S. Ahmed', dueDate: '2026-05-01',
+          notes: 'Clip alignment poka-yoke expected to eliminate 80% of mis-clips' },
       ],
     })
 
-    await addTool(s1.id, 'improvement', {
+    await tool(s1.id, 'improvement', {
       goals: [
-        { id: 'imp3', metric: 'Cycle Time', baseline: 50, target: 32, actual: null, unit: 'seconds', status: 'open', owner: 'Materials Team', dueDate: '2026-06-01', notes: 'Point-of-use foam storage + kanban replenishment' },
+        { id: 'g3', metric: 'Cycle Time', baseline: 50, target: 32, actual: null, unit: 'seconds',
+          status: 'open', owner: 'Materials Team', dueDate: '2026-06-01',
+          notes: 'Point-of-use foam storage + kanban replenishment' },
       ],
     })
 
-    // ── 9. Branches ───────────────────────────────────────────────────────────
-    // Branch A: Electrical Harness Sub-Assembly
-    const branchAId = `branch-${Date.now()}-a`
-    await supabase.from('branches').insert({
-      project_id: pid, user_id: user.id, branch_id: branchAId,
-      label: 'Branch A — Electrical Harness Sub-Asm', color: '#6426A0',
-      parent_step_id: s2.id, merge_step_id: s4.id, position: 0,
+    // ── 9. Branch A — Electrical Harness Sub-Assembly ─────────────────────────
+    const bidA = `branch-${Date.now()}-a`
+    const { error: bErrA } = await supabase.from('branches').insert({
+      project_id: pid, user_id: user.id, branch_id: bidA,
+      label: 'Branch A — Electrical Harness',
+      color: '#6426A0',
+      parent_step_id: s2.id,
+      merge_step_id: s4.id,
+      position: 0,
     })
+    if (bErrA) console.error('branch A error:', bErrA.message)
 
-    const b1 = await addBranchStep(0, branchAId, {
-      name: 'Harness Cut & Strip',
-      department: 'Electrical',
+    const b1 = await bStep(0, bidA, {
+      name: 'Wire Cut & Strip', department: 'Electrical',
       operators: 1, cycle_time: 38, wait_time: 20, wip: 3,
       flow_type: 'push', uptime: 100,
-      va_type: 'va',
-      op_steps: [
-        { id: 'hc1', name: 'Load wire spool', time: 6, va_type: 'nnva' },
-        { id: 'hc2', name: 'Auto-cut to length', time: 14, va_type: 'va' },
-        { id: 'hc3', name: 'Strip 4 terminations', time: 12, va_type: 'va' },
-        { id: 'hc4', name: 'Label each wire', time: 6, va_type: 'nnva' },
-      ],
+      notes: 'VA. Auto-cutter to length + strip 4 terminations. Consistent, no issues.',
     })
 
-    const b2 = await addBranchStep(1, branchAId, {
-      name: 'Connector Crimping',
-      department: 'Electrical',
+    const b2 = await bStep(1, bidA, {
+      name: 'Connector Crimping', department: 'Electrical',
       operators: 1, cycle_time: 52, wait_time: 15, wip: 2,
       flow_type: 'push', uptime: 94, defect_rate: 0.5,
-      va_type: 'va',
-      op_steps: [
-        { id: 'cr1', name: 'Load terminal in crimping tool', time: 8, va_type: 'va' },
-        { id: 'cr2', name: 'Crimp 6 terminals', time: 30, va_type: 'va' },
-        { id: 'cr3', name: 'Pull-test each crimp', time: 14, va_type: 'nnva' },
-      ],
+      notes: 'VA. 6 terminals per harness. Pull-test each crimp. 0.5% crimp failure rate tracked.',
     })
 
-    const b3 = await addBranchStep(2, branchAId, {
-      name: 'Harness Assembly & Test',
-      department: 'Electrical',
+    const b3 = await bStep(2, bidA, {
+      name: 'Harness Assembly & Test', department: 'Electrical',
       operators: 1, cycle_time: 44, wait_time: 10, wip: 2,
       flow_type: 'fifo', uptime: 98,
-      va_type: 'va',
-      op_steps: [
-        { id: 'ha1', name: 'Route wires into protective sleeve', time: 16, va_type: 'va' },
-        { id: 'ha2', name: 'Fit connectors to housing', time: 14, va_type: 'va' },
-        { id: 'ha3', name: 'Continuity test on fixture', time: 10, va_type: 'nnva' },
-        { id: 'ha4', name: 'Place in FIFO output lane', time: 4, va_type: 'nnva' },
-      ],
+      notes: 'VA. Route into protective sleeve, fit connectors, continuity test, place in FIFO output.',
     })
 
-    await addTool(b3.id, 'kaizen', {
+    await tool(b3.id, 'kaizen', {
       items: [{
-        id: 'kzb1', kzId: 'KZ-005', title: 'Combine Harness Assembly & Test into single station',
-        description: 'Two separate operations can be merged. Test fixture can be integrated into assembly jig. Expected CT reduction from 44s to 32s.',
+        id: 'kz005', kzId: 'KZ-005',
+        title: 'Combine Harness Assembly & Test into single station',
+        description: 'Two operations can merge. Integrate test fixture into assembly jig. CT reduction 44s → 32s.',
         category: 'Productivity', priority: 'medium', status: 'open',
         owner: 'Electrical Team Lead', dueDate: '2026-07-01',
-        actions: ['Design integrated jig', 'Approve with Quality', 'Trial on 1 shift'],
+        actions: ['Design integrated jig', 'Quality approval', '1-shift trial'],
         created: Date.now() - 86400000,
       }],
     })
 
-    // Branch B: Foam Preparation Sub-Assembly
-    const branchBId = `branch-${Date.now() + 1}-b`
-    await supabase.from('branches').insert({
-      project_id: pid, user_id: user.id, branch_id: branchBId,
-      label: 'Branch B — Foam Prep & Pre-Cut', color: '#1090D4',
-      parent_step_id: s1.id, merge_step_id: s3.id, position: 1,
+    // ── 10. Branch B — Foam Prep Sub-Assembly ────────────────────────────────
+    const bidB = `branch-${Date.now() + 1}-b`
+    const { error: bErrB } = await supabase.from('branches').insert({
+      project_id: pid, user_id: user.id, branch_id: bidB,
+      label: 'Branch B — Foam & Fabric Prep',
+      color: '#1090D4',
+      parent_step_id: s1.id,
+      merge_step_id: s3.id,
+      position: 1,
     })
+    if (bErrB) console.error('branch B error:', bErrB.message)
 
-    const b4 = await addBranchStep(0, branchBId, {
-      name: 'Foam Pre-Cut',
-      department: 'Materials',
+    await bStep(0, bidB, {
+      name: 'Foam Pre-Cut', department: 'Materials',
       operators: 1, cycle_time: 35, wait_time: 180, wip: 8,
       flow_type: 'push', uptime: 100,
-      va_type: 'va',
-      op_steps: [
-        { id: 'fp1', name: 'Load foam block onto cutter', time: 10, va_type: 'nnva' },
-        { id: 'fp2', name: 'Auto-cut profile', time: 18, va_type: 'va' },
-        { id: 'fp3', name: 'Visual dimension check', time: 7, va_type: 'nnva' },
-      ],
+      notes: 'VA. Auto-cut profile to drawing. Visual dimension check. 180s wait = prep outpaces consumption.',
     })
 
-    const b5 = await addBranchStep(1, branchBId, {
-      name: 'Fabric Pre-Stage',
-      department: 'Trim',
+    await bStep(1, bidB, {
+      name: 'Fabric Pre-Stage', department: 'Trim',
       operators: 1, cycle_time: 28, wait_time: 60, wip: 6,
       flow_type: 'supermarket', uptime: 100, sm_min: 4, sm_max: 10,
-      va_type: 'nnva',
-      op_steps: [
-        { id: 'fs1', name: 'Pull fabric roll from storage', time: 10, va_type: 'nva' },
-        { id: 'fs2', name: 'Cut to pattern', time: 14, va_type: 'va' },
-        { id: 'fs3', name: 'Place in supermarket (max 10)', time: 4, va_type: 'nnva' },
-      ],
+      notes: 'NNVA. Cut fabric to pattern, place in supermarket (min 4, max 10 units). Replenish on kanban signal.',
     })
 
-    // ── 10. Return project id ─────────────────────────────────────────────────
+    // ── Done ──────────────────────────────────────────────────────────────────
     return NextResponse.json({ id: pid, already_exists: false })
 
   } catch (err: any) {
     console.error('[seed-reference]', err)
-    return NextResponse.json({ error: err?.message || 'Failed to create reference project' }, { status: 500 })
+    return NextResponse.json(
+      { error: err?.message || 'Failed to create reference project' },
+      { status: 500 }
+    )
   }
 }
