@@ -2,6 +2,8 @@
 // @ts-nocheck
 // ── components/ui/Logo.tsx ─────────────────────────────────────────────────
 
+const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+
 interface LogoProps {
   size?: number
   showText?: boolean
