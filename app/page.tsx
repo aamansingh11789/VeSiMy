@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { VLogoMark, VeSiMyWordmark, VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/stripe'
+import { PLANS } from '@/lib/plans'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'

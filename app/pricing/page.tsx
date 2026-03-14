@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/stripe'
+import { PLANS } from '@/lib/plans'
 import { ThemeToggle } from '@/components/ui/ThemeProvider'
 import {
   ArrowLeftIcon,

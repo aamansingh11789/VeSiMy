@@ -59,7 +59,7 @@ export default function AboutPage() {
         <div style={{ marginBottom: 56 }}>
           <h2 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>The Team</h2>
           <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 32, lineHeight: 1.7 }}>
-            VeSiMy is an early-stage startup. We're a small, focused team building fast and listening closely to our users.
+            VeSiMy is an early-stage startup based in the United States. We're a small, focused team building fast and listening closely to our users.
           </p>
 
           {/* Founder card */}
@@ -68,10 +68,10 @@ export default function AboutPage() {
               👤
             </div>
             <div style={{ flex: 1, minWidth: 200 }}>
-              <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#D4A208', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY INC. · DELAWARE</div>
+              <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Max Singh — Founder & CEO</div>
+              <div style={{ fontSize: 13, color: '#D4A208', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY · UNITED STATES · PRE-SEED</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
-                Building VeSiMy from the ground up — product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every manufacturer in the world.
+                Operations leader with 12+ years in manufacturing (Tesla, Philips Electronics, LSG Sky Chefs). Lean Six Sigma Green Belt and PMP certified. Building VeSiMy from the ground up — product, engineering, and growth — on a mission to bring AI-powered continuous improvement to every manufacturer in the world.
               </p>
               <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
                 <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
@@ -90,7 +90,7 @@ export default function AboutPage() {
         {/* Company facts */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, marginBottom: 56 }}>
           {[
-            { label: 'Registration', value: 'United Kingdom' },
+            { label: 'Headquarters', value: 'United States' },
             { label: 'Founded', value: '2026' },
             { label: 'Stage', value: 'Pre-Seed' },
             { label: 'Users', value: 'Growing daily' },
@@ -102,14 +102,25 @@ export default function AboutPage() {
           ))}
         </div>
 
+        {/* Investor / Partner CTA */}
+        <div style={{ background: 'rgba(212,162,8,0.04)', border: '1px solid rgba(212,162,8,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 32 }}>
+          <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Investors & Partners</p>
+          <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.4 }}>
+            We're actively raising our Pre-Seed round.
+          </h3>
+          <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75, marginBottom: 0 }}>
+            VeSiMy is targeting the $47B manufacturing operations software market with an AI-first approach. We're looking for seed investors, strategic angels with manufacturing or SaaS backgrounds, and enterprise partners who want early access. If that's you — let's talk.
+          </p>
+        </div>
+
         {/* CTA */}
         <div style={{ textAlign: 'center', padding: '48px 24px', background: 'rgba(248,247,245,0.97)', borderRadius: 20, border: '1px solid rgba(215,213,206,0.95)' }}>
           <h3 style={{ fontFamily: serif, fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>
-            Want to work with us or invest?
+            Want to invest, partner, or pilot?
           </h3>
           <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 28, lineHeight: 1.75 }}>
-            We're actively looking for enterprise pilots, lean consultants who want to partner,<br />
-            and investors who believe manufacturing is the next AI frontier.
+            We're looking for investors who believe manufacturing is the next AI frontier,<br />
+            lean consultants who want to partner, and enterprises ready for an early pilot.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:founder@vesimy.com"

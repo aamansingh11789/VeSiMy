@@ -8,6 +8,7 @@ export const PLANS = {
     name:        'Free',
     price:       0,
     description: 'For individuals exploring lean tools',
+    cta:         'Start Free',
     features: [
       'Up to 3 projects',
       'VSM Builder (unlimited steps)',
@@ -21,6 +22,7 @@ export const PLANS = {
     name:        'Pro',
     price:       29,
     description: 'For lean practitioners and CI teams',
+    cta:         'Start Pro — $29/mo',
     features: [
       'Unlimited projects',
       'Everything in Free',
@@ -35,6 +37,7 @@ export const PLANS = {
     name:        'Enterprise',
     price:       null,
     description: 'For multi-site operations and large teams',
+    cta:         'Get a Quote',
     features: [
       'Everything in Pro',
       'SSO / SAML login',
@@ -48,6 +51,8 @@ export const PLANS = {
     name:        'Lifetime',
     price:       99,
     description: 'One-time payment, all Pro features forever',
+    cta:         'Get Lifetime Access — $99',
+    oneTime:     true,
     features: [
       'All Pro features',
       'All future updates included',

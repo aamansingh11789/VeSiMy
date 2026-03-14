@@ -110,7 +110,7 @@ function LoginForm() {
             {mode === 'signup' && (
               <div>
                 <label className="label">Full Name</label>
-                <input className="input" type="text" placeholder="Max Patel"
+                <input className="input" type="text" placeholder="Your name"
                   value={name} onChange={e => setName(e.target.value)} required />
               </div>
             )}

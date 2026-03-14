@@ -65,7 +65,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="8. GDPR (EU Users)">
-          <p>If you are in the European Union, you have additional rights under GDPR including the right to data portability and the right to lodge a complaint with a supervisory authority. Our legal basis for processing your data is contract performance (to provide the service you signed up for). Contact <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a> for GDPR requests.</p>
+          <p>If you are in the European Union, you have rights under GDPR including data portability and the right to lodge a complaint with a supervisory authority. Contact <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a> for GDPR-related requests.</p>
         </Section>
 
         <Section title="9. Children's Privacy">
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a><br />VeSiMy, United Kingdom.</p>
+          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a><br />VeSiMy — United States.</p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
