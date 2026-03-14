@@ -1516,14 +1516,6 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           })}
         </div>
       )}
-
-      {/* Process Journal side panel */}
-      <ProcessJournal
-        projectId={project.id}
-        userId={(profile as any).id}
-        isOpen={showJournal}
-        onClose={() => setShowJournal(false)}
-      />
     </div>
   )
 }
