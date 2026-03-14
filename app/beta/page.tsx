@@ -90,17 +90,17 @@ export default function BetaPage() {
   if (phase === 'done' && result) {
     const isApproved = result.status === 'approved'
     return (
-      <div style={{ minHeight:'100vh', background:'#03030D', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ maxWidth:520, width:'100%', textAlign:'center' }}>
           <div style={{ width:80, height:80, borderRadius:'50%', margin:'0 auto 28px', display:'flex', alignItems:'center', justifyContent:'center',
             background: isApproved ? 'rgba(29,209,161,0.12)' : 'rgba(212,162,8,0.1)',
             border:`2px solid ${isApproved?'#1DD1A1':'#D4A208'}` }}>
             {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{ fontSize:32 }}>👑</span>}
           </div>
-          <h1 style={{ fontFamily:serif, fontSize:28, fontWeight:700, color:'#EAE8F4', marginBottom:12 }}>
+          <h1 style={{ fontFamily:serif, fontSize:28, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             {isApproved ? "You're In. Welcome to Gold Standard." : 'Application Received'}
           </h1>
-          <p style={{ color:'#7070A0', fontSize:15, lineHeight:1.7, marginBottom:28 }}>
+          <p style={{ color:'var(--text3)', fontSize:15, lineHeight:1.7, marginBottom:28 }}>
             {isApproved
               ? `Your Gold Standard beta access is confirmed. Log in to claim your 30-day Pro trial — and your permanent Gold Standard badge.`
               : `Your application is under review. We'll reach out within 48 hours.`}
@@ -122,12 +122,12 @@ export default function BetaPage() {
           </div>
           {isApproved && (
             <Link href='/auth/signup' style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'13px 28px', borderRadius:10, fontSize:15, fontWeight:700, cursor:'pointer',
-              background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', textDecoration:'none', marginBottom:16 }}>
+              background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', textDecoration:'none', marginBottom:16 }}>
               Claim Your Access <ArrowRightIcon size={16} />
             </Link>
           )}
           <div>
-            <Link href="/" style={{ textDecoration:'none', color:'#38385C', fontSize:13 }}>← Back to VeSiMy</Link>
+            <Link href="/" style={{ textDecoration:'none', color:'var(--sl-400)', fontSize:13 }}>← Back to VeSiMy</Link>
           </div>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function BetaPage() {
 
   // ── LANDING ──────────────────────────────────────────────────────────────────
   if (phase === 'landing') return (
-    <div style={{ minHeight:'100vh', background:'#03030D', color:'#EAE8F4',
+    <div style={{ minHeight:'100vh', background:'var(--bg)', color:'var(--text)',
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212,162,8,0.06) 0%, transparent 60%)' }}>
 
       {/* Nav */}
@@ -146,7 +146,7 @@ export default function BetaPage() {
             <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
-        <Link href="/auth/signup" style={{ fontSize:13, color:'#7070A0', textDecoration:'none' }}>Already a user? Sign in →</Link>
+        <Link href="/auth/signup" style={{ fontSize:13, color:'var(--text3)', textDecoration:'none' }}>Already a user? Sign in →</Link>
       </div>
 
       <div style={{ maxWidth:900, margin:'0 auto', padding:'64px 24px' }}>
@@ -163,7 +163,7 @@ export default function BetaPage() {
               Gold Standard
             </span>{' '}is open to everyone.
           </h1>
-          <p style={{ fontSize:18, color:'#7070A0', maxWidth:560, margin:'0 auto 36px', lineHeight:1.7 }}>
+          <p style={{ fontSize:18, color:'var(--text3)', maxWidth:560, margin:'0 auto 36px', lineHeight:1.7 }}>
             VeSiMy just launched. For launch week, every practitioner who signs up gets the Gold Standard badge — permanently. When the window closes, it's gone.
           </p>
 
@@ -171,7 +171,7 @@ export default function BetaPage() {
           {closeDate && !countdown.expired && (
             <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'rgba(8,8,24,0.8)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
               <ClockIcon size={14} color={GOLD} />
-              <span style={{ fontSize:12, color:'#7070A0', fontFamily:'monospace' }}>CLOSES IN</span>
+              <span style={{ fontSize:12, color:'var(--text3)', fontFamily:'monospace' }}>CLOSES IN</span>
               {[
                 [countdown.days, 'DAYS'],
                 [countdown.hours, 'HRS'],
@@ -179,8 +179,8 @@ export default function BetaPage() {
                 [countdown.secs, 'SEC'],
               ].map(([val, unit]) => (
                 <div key={unit as string} style={{ display:'flex', flexDirection:'column', alignItems:'center', minWidth:44 }}>
-                  <span style={{ fontSize:22, fontWeight:700, color:'#EAE8F4', fontFamily:'monospace' }}>{String(val).padStart(2,'0')}</span>
-                  <span style={{ fontSize:9, color:'#38385C', letterSpacing:1 }}>{unit}</span>
+                  <span style={{ fontSize:22, fontWeight:700, color:'var(--text)', fontFamily:'monospace' }}>{String(val).padStart(2,'0')}</span>
+                  <span style={{ fontSize:9, color:'var(--sl-400)', letterSpacing:1 }}>{unit}</span>
                 </div>
               ))}
             </div>
@@ -193,11 +193,11 @@ export default function BetaPage() {
 
           <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap' }}>
             <button onClick={() => setPhase('form')} style={{ padding:'14px 36px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
-              background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', border:'none', display:'flex', alignItems:'center', gap:8 }}>
+              background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', border:'none', display:'flex', alignItems:'center', gap:8 }}>
               Join Gold Standard <ArrowRightIcon size={16} />
             </button>
             <a href="#perks" style={{ padding:'14px 24px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
-              background:'rgba(8,8,24,0.75)', color:'#7070A0', border:'1px solid rgba(40,40,92,0.5)', textDecoration:'none' }}>
+              background:'rgba(8,8,24,0.75)', color:'var(--text3)', border:'1px solid rgba(40,40,92,0.5)', textDecoration:'none' }}>
               See what you get ↓
             </a>
           </div>
@@ -218,8 +218,8 @@ export default function BetaPage() {
               <div key={item.title} style={{ display:'flex', gap:14 }}>
                 <span style={{ fontSize:26, flexShrink:0 }}>{item.icon}</span>
                 <div>
-                  <div style={{ fontSize:14, fontWeight:700, color:'#EAE8F4', marginBottom:5 }}>{item.title}</div>
-                  <div style={{ fontSize:12, color:'#7070A0', lineHeight:1.55 }}>{item.desc}</div>
+                  <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:5 }}>{item.title}</div>
+                  <div style={{ fontSize:12, color:'var(--text3)', lineHeight:1.55 }}>{item.desc}</div>
                 </div>
               </div>
             ))}
@@ -230,8 +230,8 @@ export default function BetaPage() {
         <div style={{ background:'rgba(212,162,8,0.04)', border:'1px solid rgba(212,162,8,0.15)', borderRadius:14, padding:'24px 28px', marginBottom:48, display:'flex', gap:20, alignItems:'flex-start' }}>
           <span style={{ fontSize:28, flexShrink:0 }}>⏳</span>
           <div>
-            <div style={{ fontSize:15, fontWeight:700, color:'#EAE8F4', marginBottom:6 }}>Why launch week only?</div>
-            <p style={{ fontSize:13, color:'#7070A0', lineHeight:1.7, margin:0 }}>
+            <div style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Why launch week only?</div>
+            <p style={{ fontSize:13, color:'var(--text3)', lineHeight:1.7, margin:0 }}>
               The Gold Standard badge is a founding-tester credential. After launch week, it goes away — new users join on standard pricing. 
               Everyone who gets in during the window keeps their badge, their 33% enterprise discount, and their lifetime upgrade option permanently. 
               This is the only way to get it.
@@ -242,10 +242,10 @@ export default function BetaPage() {
         {/* Final CTA */}
         <div style={{ textAlign:'center' }}>
           <button onClick={() => setPhase('form')} style={{ padding:'15px 44px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
-            background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', border:'none', display:'inline-flex', alignItems:'center', gap:8 }}>
+            background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', border:'none', display:'inline-flex', alignItems:'center', gap:8 }}>
             Join Gold Standard <ArrowRightIcon size={16} />
           </button>
-          <p style={{ fontSize:12, color:'#38385C', marginTop:12 }}>Takes 3 minutes. No credit card required.</p>
+          <p style={{ fontSize:12, color:'var(--sl-400)', marginTop:12 }}>Takes 3 minutes. No credit card required.</p>
         </div>
       </div>
     </div>
@@ -253,7 +253,7 @@ export default function BetaPage() {
 
   // ── APPLICATION FORM ──────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight:'100vh', background:'#03030D', color:'#EAE8F4',
+    <div style={{ minHeight:'100vh', background:'var(--bg)', color:'var(--text)',
       backgroundImage:'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,162,8,0.05) 0%, transparent 55%)' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
@@ -261,7 +261,7 @@ export default function BetaPage() {
             <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
-        <button onClick={() => setPhase('landing')} style={{ background:'none', border:'none', color:'#38385C', cursor:'pointer', fontSize:13 }}>
+        <button onClick={() => setPhase('landing')} style={{ background:'none', border:'none', color:'var(--sl-400)', cursor:'pointer', fontSize:13 }}>
           ← Back
         </button>
       </div>
@@ -270,7 +270,7 @@ export default function BetaPage() {
         <div style={{ textAlign:'center', marginBottom:40 }}>
           <div style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>GOLD STANDARD — LAUNCH WEEK</div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,3.5vw,38px)', fontWeight:700, marginBottom:8 }}>Claim Your Gold Standard Access</h1>
-          <p style={{ fontSize:14, color:'#7070A0' }}>Takes about 3 minutes. Everyone is approved during launch week.</p>
+          <p style={{ fontSize:14, color:'var(--text3)' }}>Takes about 3 minutes. Everyone is approved during launch week.</p>
         </div>
 
         <div style={{ display:'flex', flexDirection:'column', gap:22 }}>
@@ -313,7 +313,7 @@ export default function BetaPage() {
                   <button key={s} type="button" onClick={()=>set('team_size',s)} style={{ padding:'7px 16px', borderRadius:8, fontSize:13, cursor:'pointer', border:'1px solid',
                     background: form.team_size===s?'rgba(212,162,8,0.1)':'rgba(8,8,24,0.75)',
                     borderColor: form.team_size===s?'rgba(212,162,8,0.4)':'rgba(40,40,92,0.5)',
-                    color: form.team_size===s?'#EAE8F4':'#7070A0' }}>{s} people</button>
+                    color: form.team_size===s?'var(--text)':'var(--text3)' }}>{s} people</button>
                 ))}
               </div>
             </Field>
@@ -327,8 +327,8 @@ export default function BetaPage() {
                   <button key={opt.id} type="button" onClick={()=>set('lean_experience',opt.id)} style={{ padding:'11px 16px', borderRadius:10, fontSize:13, cursor:'pointer', border:'1px solid', textAlign:'left',
                     background: form.lean_experience===opt.id?'rgba(212,162,8,0.08)':'rgba(8,8,24,0.75)',
                     borderColor: form.lean_experience===opt.id?'rgba(212,162,8,0.4)':'rgba(40,40,92,0.5)',
-                    color: form.lean_experience===opt.id?'#EAE8F4':'#7070A0' }}>
-                    <span style={{ color: form.lean_experience===opt.id?GOLD:'#28285C', marginRight:8 }}>
+                    color: form.lean_experience===opt.id?'var(--text)':'var(--text3)' }}>
+                    <span style={{ color: form.lean_experience===opt.id?GOLD:'var(--border2)', marginRight:8 }}>
                       {form.lean_experience===opt.id?'◉':'○'}
                     </span>
                     {opt.label}
@@ -342,7 +342,7 @@ export default function BetaPage() {
                   <button key={t} type="button" onClick={()=>toggleTool(t)} style={{ padding:'7px 14px', borderRadius:100, fontSize:12, cursor:'pointer', border:'1px solid',
                     background: form.current_tools.includes(t)?'rgba(140,68,204,0.1)':'rgba(8,8,24,0.75)',
                     borderColor: form.current_tools.includes(t)?'rgba(140,68,204,0.4)':'rgba(40,40,92,0.5)',
-                    color: form.current_tools.includes(t)?'#EAE8F4':'#7070A0' }}>{t}</button>
+                    color: form.current_tools.includes(t)?'var(--text)':'var(--text3)' }}>{t}</button>
                 ))}
               </div>
             </Field>
@@ -353,14 +353,14 @@ export default function BetaPage() {
             <Field label="What's your biggest CI pain point right now? *" hint="Be specific — name the process, the waste, the bottleneck.">
               <textarea className="input" rows={4} value={form.pain_point} onChange={e=>set('pain_point',e.target.value)}
                 placeholder="e.g. Our CNC machining cell has a 47-second changeover nobody has mapped properly. We track it in Excel but the data is stale by the time it reaches me…" />
-              <div style={{ fontSize:11, color: form.pain_point.split(' ').length>=10?'#1DD1A1':'#38385C', marginTop:4, textAlign:'right' }}>
+              <div style={{ fontSize:11, color: form.pain_point.split(' ').length>=10?'#1DD1A1':'var(--sl-400)', marginTop:4, textAlign:'right' }}>
                 {form.pain_point.split(' ').filter(Boolean).length} words
               </div>
             </Field>
             <Field label="How would you use VeSiMy specifically? *" hint="What process would you map first? What decision would it inform?">
               <textarea className="input" rows={4} value={form.use_case} onChange={e=>set('use_case',e.target.value)}
                 placeholder="e.g. I'd map our engine assembly current state first — 22 steps, ~3 operators. Goal is to find where WIP piles up before the inspection station…" />
-              <div style={{ fontSize:11, color: form.use_case.split(' ').length>=10?'#1DD1A1':'#38385C', marginTop:4, textAlign:'right' }}>
+              <div style={{ fontSize:11, color: form.use_case.split(' ').length>=10?'#1DD1A1':'var(--sl-400)', marginTop:4, textAlign:'right' }}>
                 {form.use_case.split(' ').filter(Boolean).length} words
               </div>
             </Field>
@@ -382,10 +382,10 @@ export default function BetaPage() {
           )}
 
           <button onClick={submit} disabled={submitting} style={{ padding:'15px 32px', borderRadius:10, fontSize:16, fontWeight:700, cursor:submitting?'wait':'pointer', width:'100%', border:'none',
-            background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', opacity:submitting?0.8:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+            background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', opacity:submitting?0.8:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
             {submitting ? '⟳ Submitting…' : 'Claim Gold Standard Access'} {!submitting && <ArrowRightIcon size={16} />}
           </button>
-          <p style={{ fontSize:12, color:'#38385C', textAlign:'center' }}>No spam. No cold calls. Cancel the trial anytime.</p>
+          <p style={{ fontSize:12, color:'var(--sl-400)', textAlign:'center' }}>No spam. No cold calls. Cancel the trial anytime.</p>
         </div>
       </div>
     </div>
@@ -407,7 +407,7 @@ function Field({ label, hint, children }: { label:string; hint?:string; children
   return (
     <div>
       <label className="label">{label}</label>
-      {hint && <p style={{ fontSize:11, color:'#38385C', marginBottom:6, marginTop:2 }}>{hint}</p>}
+      {hint && <p style={{ fontSize:11, color:'var(--sl-400)', marginBottom:6, marginTop:2 }}>{hint}</p>}
       {children}
     </div>
   )

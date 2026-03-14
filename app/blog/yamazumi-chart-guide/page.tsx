@@ -17,10 +17,10 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 export default function YamazumiPost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -29,17 +29,17 @@ export default function YamazumiPost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>7 min read · March 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Yamazumi Chart: The Operator Balance Chart That Makes Waste Impossible to Ignore
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             A Yamazumi chart shows exactly how much of each operator's time is value-adding, necessary waste, or pure waste — compared to takt time. It is the most powerful tool for line balancing and operator-level improvement.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What is a Yamazumi chart?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is a Yamazumi chart?</h2>
           <p style={{ marginBottom: 18 }}>
             Yamazumi (山積み) means "stacking" in Japanese. A Yamazumi chart is a stacked bar chart where each bar represents one operator or process step. The bar height is the total cycle time. The bar is divided into three sections: Value Add (VA) in green, Necessary Non-Value Add (NNVA) in amber, and Non-Value Add (NVA) in red.
           </p>
@@ -47,7 +47,7 @@ export default function YamazumiPost() {
             A dashed horizontal line crosses all bars at the Takt Time level. Any bar rising above this line represents a bottleneck — that operator cannot keep pace with customer demand. The chart makes two things immediately visible: where the line is imbalanced, and where waste is hiding inside the work content.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The three categories of work</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The three categories of work</h2>
           {[
             { label: 'Value Add (VA)', color: '#1DD1A1', desc: 'Activities that physically transform the product in a way the customer recognises as valuable and would pay for. Machining, welding, assembly, painting. This is what you are selling. Every second of VA time is justified.' },
             { label: 'Necessary Non-Value Add (NNVA)', color: '#D4A208', desc: 'Activities required by the current process but that add no value from the customer\'s perspective. Setting up a machine, walking to the next station, inspecting output. Cannot be eliminated immediately but should be reduced over time through process redesign.' },
@@ -62,7 +62,7 @@ export default function YamazumiPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>How to build a Yamazumi chart</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to build a Yamazumi chart</h2>
           {[
             ['Step 1: Set your takt time', 'Calculate Takt Time = Available Time ÷ Customer Demand. This becomes the horizontal reference line on your chart. Every operator\'s bar will be compared to this line.'],
             ['Step 2: Break each step into tasks', 'For each process step, list every individual task the operator performs. Include: loading material, operating the machine, unloading, walking to the next station, visual inspection, filling paperwork. Everything — even the 8-second walk counts.'],
@@ -75,13 +75,13 @@ export default function YamazumiPost() {
                 {i + 1}
               </div>
               <div>
-                <strong style={{ color: '#F3F1FB', display: 'block', marginBottom: 6 }}>{title}</strong>
+                <strong style={{ color: 'var(--text)', display: 'block', marginBottom: 6 }}>{title}</strong>
                 {body}
               </div>
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>How to read and act on the chart</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to read and act on the chart</h2>
           {[
             ['Bars above takt line', 'These operators are bottlenecks. They cannot complete their work in the time customer demand requires. First eliminate NVA from their work content. Then redistribute NNVA tasks to under-loaded operators if possible.'],
             ['Large red NVA sections', 'These are your first kaizen targets. NVA tasks can usually be eliminated directly: move tools to point of use (motion waste), fix upstream process to eliminate waiting, implement error-proofing to eliminate inspection.'],
@@ -96,13 +96,13 @@ export default function YamazumiPost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Build your Yamazumi chart free
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy generates Yamazumi charts automatically from your operator task data. Add tasks to any process step, classify them VA/NNVA/NVA, and the chart builds itself — with takt line, imbalance warnings, and kaizen targets. Free forever.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: '#03030D', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Build your Yamazumi chart free →
             </Link>
           </div>

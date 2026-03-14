@@ -130,7 +130,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             </p>
             <div style={{ maxHeight:320, overflowY:'auto', display:'flex', flexDirection:'column', gap:6 }}>
               {preview.map((s,i) => (
-                <div key={i} style={{ padding:'10px 12px', background:'#0D0D22', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)' }}>
+                <div key={i} style={{ padding:'10px 12px', background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:11, color:'var(--text3)', fontFamily:'var(--font-mono)', minWidth:22 }}>{i+1}.</span>
                     <input style={{ flex:1, background:'transparent', border:'none', color:'var(--text)', fontSize:13, outline:'none', fontWeight:600 }}
@@ -147,7 +147,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                       {s.setup_time        && <Chip label={`Setup ${s.setup_time>=60?(s.setup_time/60).toFixed(0)+'min':s.setup_time+'s'}`} color="#9B5FE0" />}
                       {s.defect_rate       && <Chip label={`${s.defect_rate}% defect`} color="#FF6B6B" />}
                       {s.uptime            && <Chip label={`${s.uptime}% uptime`} color="#1DD1A1" />}
-                      {s.wip               && <Chip label={`WIP ${s.wip}`} color="#7070A0" />}
+                      {s.wip               && <Chip label={`WIP ${s.wip}`} color="var(--text3)" />}
                     </div>
                   )}
                   {s.notes && !(s.cycle_time||s.wait_time||s.operators) && (

@@ -55,7 +55,7 @@ export function VesimyLogo({ size = 40, showText = false, className = '' }: Logo
             style={{
               fontSize: Math.max(7, Math.round(size * 0.145)),
               letterSpacing: 1.8,
-              color: 'rgba(166, 163, 197, 0.86)',
+              color: 'rgba(142,138,130,0.9)',
               fontFamily: 'JetBrains Mono, monospace',
               textTransform: 'uppercase',
               marginTop: 3,

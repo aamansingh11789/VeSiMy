@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { CheckIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = '#D4A208'
+const GOLD  = 'var(--gold)'
 
 export default function UpdatePasswordPage() {
   const router = useRouter()
@@ -33,7 +33,7 @@ export default function UpdatePasswordPage() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#03030D', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+    <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
@@ -41,24 +41,24 @@ export default function UpdatePasswordPage() {
           </span>
         </div>
         {done ? (
-          <div style={{ background:'rgba(8,8,24,0.9)', border:'1px solid rgba(29,209,161,0.25)', borderRadius:16, padding:'36px 32px', textAlign:'center' }}>
+          <div style={{ background:'#FFFFFF', border:'1px solid rgba(29,209,161,0.25)', borderRadius:16, padding:'36px 32px', textAlign:'center' }}>
             <div style={{ width:64, height:64, borderRadius:'50%', background:'rgba(29,209,161,0.1)', border:'2px solid #1DD1A1',
               display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 20px' }}>
               <CheckIcon size={28} color='#1DD1A1' />
             </div>
-            <h2 style={{ fontFamily:serif, fontSize:22, fontWeight:700, color:'#EAE8F4', marginBottom:10 }}>Password updated</h2>
-            <p style={{ fontSize:14, color:'#7070A0' }}>Redirecting you to your dashboard…</p>
+            <h2 style={{ fontFamily:serif, fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:10 }}>Password updated</h2>
+            <p style={{ fontSize:14, color:'var(--text3)' }}>Redirecting you to your dashboard…</p>
           </div>
         ) : (
-          <div style={{ background:'rgba(8,8,24,0.9)', border:'1px solid rgba(40,40,92,0.5)', borderRadius:16, padding:'36px 32px' }}>
-            <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'#EAE8F4', marginBottom:8 }}>Set a new password</h2>
-            <p style={{ fontSize:14, color:'#7070A0', marginBottom:28 }}>Choose a strong password for your account.</p>
+          <div style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:16, padding:'36px 32px' }}>
+            <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:8 }}>Set a new password</h2>
+            <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28 }}>Choose a strong password for your account.</p>
             <div style={{ marginBottom:14 }}>
-              <label style={{ fontSize:12, color:'#7070A0', letterSpacing:0.5, display:'block', marginBottom:6 }}>NEW PASSWORD</label>
+              <label style={{ fontSize:12, color:'var(--text3)', letterSpacing:0.5, display:'block', marginBottom:6 }}>NEW PASSWORD</label>
               <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Min. 8 characters" className="input" style={{ width:'100%', boxSizing:'border-box' }} />
             </div>
             <div style={{ marginBottom:16 }}>
-              <label style={{ fontSize:12, color:'#7070A0', letterSpacing:0.5, display:'block', marginBottom:6 }}>CONFIRM PASSWORD</label>
+              <label style={{ fontSize:12, color:'var(--text3)', letterSpacing:0.5, display:'block', marginBottom:6 }}>CONFIRM PASSWORD</label>
               <input type="password" value={confirm} onChange={e=>setConfirm(e.target.value)} onKeyDown={e=>e.key==='Enter'&&handleUpdate()} placeholder="Repeat password" className="input" style={{ width:'100%', boxSizing:'border-box' }} />
             </div>
             {error && (
@@ -67,7 +67,7 @@ export default function UpdatePasswordPage() {
               </div>
             )}
             <button onClick={handleUpdate} disabled={loading} style={{ width:'100%', padding:'13px', borderRadius:10, fontSize:15, fontWeight:700, cursor:loading?'wait':'pointer',
-              background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', border:'none', opacity:loading?0.8:1 }}>
+              background:'linear-gradient(135deg,#B8880A,var(--gold))', color:'var(--bg)', border:'none', opacity:loading?0.8:1 }}>
               {loading ? 'Updating…' : 'Update Password'}
             </button>
           </div>

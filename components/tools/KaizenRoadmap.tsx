@@ -13,7 +13,7 @@ interface Props {
 
 const PHASE_COLORS = ['#D4A208', '#1DD1A1', '#6CB9FC', '#FF6B6B', '#8C44CC']
 const STATUS_CFG = {
-  planned:     { label: 'Planned',     color: '#7070A0', bg: 'rgba(112,112,160,0.1)' },
+  planned:     { label: 'Planned',     color: 'var(--text3)', bg: 'rgba(112,112,160,0.1)' },
   active:      { label: 'Active',      color: '#D4A208', bg: 'rgba(212,162,8,0.1)'   },
   complete:    { label: 'Complete',    color: '#1DD1A1', bg: 'rgba(29,209,161,0.1)'  },
   cancelled:   { label: 'Cancelled',  color: '#FF6B6B', bg: 'rgba(255,107,107,0.1)' },
@@ -142,7 +142,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
               <div style={{ fontSize: 11, fontWeight: 700, color: pce !== null && pce >= 80 ? '#1DD1A1' : '#FF6B6B', marginBottom: 4 }}>
                 {pce !== null ? `${pce.toFixed(0)}%` : '—'}
               </div>
-              <div style={{ height: pce !== null ? Math.max(8, pce * 0.8) : 8, background: '#7070A0', borderRadius: '4px 4px 0 0', width: 40, margin: '0 auto' }} />
+              <div style={{ height: pce !== null ? Math.max(8, pce * 0.8) : 8, background: 'var(--text3)', borderRadius: '4px 4px 0 0', width: 40, margin: '0 auto' }} />
               <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4 }}>Current</div>
             </div>
             {projections.map((proj, i) => {
@@ -190,7 +190,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(212,162,8,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#D4A208' : '#7070A0', fontWeight: 700 }}>
+                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(212,162,8,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#D4A208' : 'var(--text3)', fontWeight: 700 }}>
                   {phaseComplete ? 'COMPLETE' : phaseActive ? 'ACTIVE' : 'PLANNED'}
                 </span>
                 <span style={{ color: 'var(--text3)', fontSize: 12 }}>{isExpanded ? '▲' : '▼'}</span>
@@ -243,7 +243,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                           >
                             {Object.entries(STATUS_CFG).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
                           </select>
-                          <button type="button" onClick={() => deleteEvent(phase.id, event.id)} style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 14 }}>×</button>
+                          <button type="button" onClick={() => deleteEvent(phase.id, event.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                         </div>
                       </div>
                     </div>

@@ -113,7 +113,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
                 {(causes[cat] || []).map((cause, index) => (
                   <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 30px', gap: 8, alignItems: 'start', padding: '8px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)' }}>
                     <span style={{ fontSize: 12, color: 'var(--text2)', overflowWrap: 'anywhere', lineHeight: 1.4 }}>{cause}</span>
-                    <button onClick={() => removeCause(cat, index)} type="button" style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 16, minWidth: 30, minHeight: 30, lineHeight: 1 }}>×</button>
+                    <button onClick={() => removeCause(cat, index)} type="button" style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 16, minWidth: 30, minHeight: 30, lineHeight: 1 }}>×</button>
                   </div>
                 ))}
                 {(causes[cat] || []).length === 0 && (

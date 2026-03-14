@@ -17,10 +17,10 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 export default function KaizenEventPost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -29,25 +29,25 @@ export default function KaizenEventPost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(108,185,252,0.15)', color: '#6CB9FC', fontFamily: 'monospace', letterSpacing: 1.5 }}>TEMPLATE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>7 min read · March 12, 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             How to Run a Kaizen Event: Template, Checklist, and Examples
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             A kaizen event is a focused 3–5 day improvement sprint. Done right, it delivers measurable results in days, not months. Here is the exact template used by the best lean teams.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What is a kaizen event?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is a kaizen event?</h2>
           <p style={{ marginBottom: 18 }}>
             A kaizen event (also called a kaizen blitz or rapid improvement event) is a short, intensive workshop where a cross-functional team focuses all their attention on improving a single process or problem. The team meets every day for 3–5 days, maps the current state, identifies waste, implements changes, and measures the result — all before the week is over.
           </p>
           <p style={{ marginBottom: 18 }}>
-            Unlike traditional improvement projects that drag on for months, a kaizen event creates urgency and momentum. Teams are empowered to <em style={{ color: '#F3F1FB' }}>implement changes immediately</em>, not write reports and wait for approval cycles.
+            Unlike traditional improvement projects that drag on for months, a kaizen event creates urgency and momentum. Teams are empowered to <em style={{ color: 'var(--text)' }}>implement changes immediately</em>, not write reports and wait for approval cycles.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>When to run a kaizen event</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>When to run a kaizen event</h2>
           <p style={{ marginBottom: 14 }}>A kaizen event works best when:</p>
           {[
             'A specific process has a known quality, speed, or cost problem',
@@ -62,7 +62,7 @@ export default function KaizenEventPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>Pre-event checklist (2 weeks before)</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Pre-event checklist (2 weeks before)</h2>
           <p style={{ marginBottom: 16 }}>Poor preparation is the #1 reason kaizen events fail. Complete every item on this list before the event begins:</p>
           {[
             ['Define the target process', 'Which exact process, which shift, which product family. Be specific.'],
@@ -76,11 +76,11 @@ export default function KaizenEventPost() {
           ].map(([title, desc], i) => (
             <div key={i} style={{ background: 'rgba(108,185,252,0.04)', border: '1px solid rgba(108,185,252,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
               <div style={{ fontWeight: 700, color: '#6CB9FC', marginBottom: 4 }}>{title}</div>
-              <div style={{ fontSize: 13, color: '#8B88B3' }}>{desc}</div>
+              <div style={{ fontSize: 13, color: 'var(--text2)' }}>{desc}</div>
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The 5-day kaizen event agenda</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The 5-day kaizen event agenda</h2>
 
           {[
             {
@@ -144,7 +144,7 @@ export default function KaizenEventPost() {
                 <div style={{ background: `${color}22`, border: `1px solid ${color}44`, borderRadius: 8, padding: '6px 14px', fontFamily: 'monospace', fontWeight: 800, color, fontSize: 13 }}>
                   {day}
                 </div>
-                <span style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: '#F3F1FB' }}>{label}</span>
+                <span style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{label}</span>
               </div>
               {items.map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 8, fontSize: 14 }}>
@@ -155,7 +155,7 @@ export default function KaizenEventPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What good results look like</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What good results look like</h2>
           <p style={{ marginBottom: 16 }}>Well-run kaizen events consistently deliver:</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12, marginBottom: 24 }}>
             {[
@@ -164,14 +164,14 @@ export default function KaizenEventPost() {
               ['50–80%', 'reduction in defects'],
               ['25–60%', 'improvement in productivity'],
             ].map(([num, label]) => (
-              <div key={num} style={{ background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '18px', textAlign: 'center' }}>
+              <div key={num} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '18px', textAlign: 'center' }}>
                 <div style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: '#6CB9FC', marginBottom: 6 }}>{num}</div>
-                <div style={{ fontSize: 12, color: '#8B88B3' }}>{label}</div>
+                <div style={{ fontSize: 12, color: 'var(--text2)' }}>{label}</div>
               </div>
             ))}
           </div>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The most common kaizen event mistakes</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The most common kaizen event mistakes</h2>
           {[
             ['Skipping the pre-work', 'Teams show up on Day 1 with no data and spend the whole event figuring out what the problem actually is. Do the gemba walk and data collection before the event starts.'],
             ['No management presence', 'If leadership doesn\'t show up to the Day 1 kickoff and Day 5 presentation, the team feels the project doesn\'t matter. Leadership engagement is non-negotiable.'],
@@ -187,13 +187,13 @@ export default function KaizenEventPost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(108,185,252,0.06)', border: '1px solid rgba(108,185,252,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Track your kaizen events digitally
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's Kaizen Tracker links improvement events directly to your VSM process steps — so you always know what's been changed, what's pending, and what the result was. Free forever.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#4A9EDA,#6CB9FC)', color: '#03030D', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#4A9EDA,#6CB9FC)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start tracking kaizen events free →
             </Link>
           </div>

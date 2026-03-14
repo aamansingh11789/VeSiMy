@@ -404,7 +404,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               {data.team.map(m => (
                 <div key={m.id} style={{ display: 'flex', gap: 8, marginBottom: 6, alignItems: 'center' }}>
                   <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>👤 {m.name}{m.role ? ` — ${m.role}` : ''}</span>
-                  <button type="button" onClick={() => set('team', data.team.filter(t => t.id !== m.id))} style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 14 }}>×</button>
+                  <button type="button" onClick={() => set('team', data.team.filter(t => t.id !== m.id))} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                 </div>
               ))}
               <div style={{ display: 'flex', gap: 6 }}>
@@ -427,7 +427,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               <label className="label">Countermeasures / Actions ({completedCMs}/{data.countermeasures.length} done)</label>
               {data.countermeasures.map(cm => (
                 <div key={cm.id} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 8, background: cm.status === 'done' ? 'rgba(29,209,161,0.06)' : 'rgba(255,255,255,0.02)', border: `1px solid ${cm.status === 'done' ? 'rgba(29,209,161,0.2)' : 'var(--border)'}` }}>
-                  <button type="button" onClick={() => toggleCM(cm.id)} style={{ background: 'none', border: `2px solid ${cm.status === 'done' ? '#1DD1A1' : '#7070A0'}`, borderRadius: 4, width: 18, height: 18, cursor: 'pointer', flexShrink: 0, marginTop: 1, color: cm.status === 'done' ? '#1DD1A1' : 'transparent', fontSize: 12, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <button type="button" onClick={() => toggleCM(cm.id)} style={{ background: 'none', border: `2px solid ${cm.status === 'done' ? '#1DD1A1' : 'var(--text3)'}`, borderRadius: 4, width: 18, height: 18, cursor: 'pointer', flexShrink: 0, marginTop: 1, color: cm.status === 'done' ? '#1DD1A1' : 'transparent', fontSize: 12, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {cm.status === 'done' ? '✓' : ''}
                   </button>
                   <div style={{ flex: 1 }}>
@@ -436,7 +436,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                       {cm.owner && `👤 ${cm.owner}`}{cm.dueDate && ` · 📅 ${cm.dueDate}`}
                     </div>
                   </div>
-                  <button type="button" onClick={() => removeCM(cm.id)} style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 14 }}>×</button>
+                  <button type="button" onClick={() => removeCM(cm.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                 </div>
               ))}
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -475,7 +475,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                     <div style={{ fontSize: 13, fontFamily: 'monospace', color: '#1DD1A1' }}>{m.after || '—'}</div>
                   </div>
                   <div style={{ textAlign: 'center', fontSize: 10, color: 'var(--text3)' }}>{m.unit}</div>
-                  <button type="button" onClick={() => removeMetric(m.id)} style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 14 }}>×</button>
+                  <button type="button" onClick={() => removeMetric(m.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                 </div>
               ))}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 70px 60px 36px', gap: 6 }}>

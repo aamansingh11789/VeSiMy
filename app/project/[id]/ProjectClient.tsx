@@ -293,7 +293,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: 'var(--bg)',
+        background: 'var(--bg2)',
       }}
     >
       <div
@@ -367,7 +367,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               cursor: 'pointer',
               background: 'rgba(212,162,8,0.08)',
               border: '1px solid rgba(212,162,8,0.25)',
-              color: '#D4A208',
+              color: 'var(--gold)',
             }}
           >
             <SOPIcon size={13} color="#D4A208" />
@@ -394,7 +394,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               cursor: 'pointer',
               background: 'rgba(212,162,8,0.06)',
               border: '1px solid rgba(212,162,8,0.2)',
-              color: '#D4A208',
+              color: 'var(--gold)',
             }}
           >
             📓
@@ -434,12 +434,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 700,
               cursor: 'pointer',
               background: 'linear-gradient(135deg,#C49510,#D4A208)',
-              color: '#03030D',
+              color: 'var(--bg)',
               border: 'none',
               boxShadow: '0 2px 12px rgba(212,162,8,0.25)',
             }}
           >
-            <PlusIcon size={14} color="#03030D" />
+            <PlusIcon size={14} color="var(--bg)" />
             <span className="action-btn-label">Add Step</span>
           </button>
         </div>
@@ -448,17 +448,17 @@ export function ProjectClient({ initialProject, profile }: Props) {
       <div
         style={{
           display: 'flex',
-          background: 'var(--bg)',
+          background: 'var(--bg2)',
           borderBottom: '1px solid var(--border)',
           overflowX: 'auto',
         }}
       >
         {([
-          { label: 'STEPS',    value: mainSteps.length,            color: '#D4A208' },
-          { label: 'BRANCHES', value: branches.length,             color: '#D4A208' },
-          { label: 'TOTAL CT', value: fmtS(totalCT),               color: '#D4A208' },
+          { label: 'STEPS',    value: mainSteps.length,            color: 'var(--gold)' },
+          { label: 'BRANCHES', value: branches.length,             color: 'var(--gold)' },
+          { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--gold)' },
           { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : '#D4A208' },
-          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: '#D4A208' },
+          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: 'var(--gold)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
           { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? '#D4A208' : '#1DD1A1' },
           { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? '#D4A208' : '#1DD1A1' },
@@ -467,13 +467,13 @@ export function ProjectClient({ initialProject, profile }: Props) {
             key={m.label}
             style={{
               padding: '8px 14px',
-              borderRight: '1px solid #1A1A40',
+              borderRight: '1px solid var(--border)',
               minWidth: 68,
               textAlign: 'center',
               flexShrink: 0,
             }}
           >
-            <div style={{ fontSize: 8, color: '#38385C', letterSpacing: 1.5, fontFamily: 'monospace' }}>
+            <div style={{ fontSize: 8, color: 'var(--sl-400)', letterSpacing: 1.5, fontFamily: 'monospace' }}>
               {m.label}
             </div>
             <div style={{ fontSize: 14, fontWeight: 700, color: m.color, marginTop: 2 }}>
@@ -512,7 +512,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 border: 'none',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                color: active ? '#D4A208' : locked ? '#4A4A6A' : '#7070A0',
+                color: active ? '#D4A208' : locked ? '#4A4A6A' : 'var(--text3)',
                 borderBottom: `2px solid ${active ? '#D4A208' : 'transparent'}`,
                 marginBottom: -1,
               }}
@@ -704,7 +704,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             flexShrink: 0,
             borderLeft: '1px solid rgba(100,38,160,0.2)',
             overflowY: supeOpen ? 'auto' : 'hidden',
-            background: 'rgba(8,4,20,0.95)',
+            background: '#FFFFFF',
             display: 'flex',
             flexDirection: 'column',
             transition: 'width 0.25s ease',
@@ -779,7 +779,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   <div style={{ padding: 20, textAlign: 'center' }}>
                     <div style={{ fontSize: 32, marginBottom: 10 }}>🔒</div>
                     <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 14 }}>
-                      Supe AI is a <strong style={{ color: '#D4A208' }}>Pro feature</strong>.
+                      Supe AI is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>.
                     </p>
                     <a
                       href="/pricing"
@@ -788,7 +788,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                         padding: '8px 16px',
                         borderRadius: 8,
                         background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                        color: '#03030D',
+                        color: 'var(--bg)',
                         fontWeight: 700,
                         fontSize: 12,
                         textDecoration: 'none',
@@ -874,7 +874,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 <div style={{ padding: 32, textAlign: 'center' }}>
                   <div style={{ fontSize: 40, marginBottom: 12 }}>🔒</div>
                   <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 20 }}>
-                    Supe AI is a <strong style={{ color: '#D4A208' }}>Pro feature</strong>.<br />
+                    Supe AI is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>.<br />
                     Upgrade to unlock AI-powered lean coaching.
                   </p>
                   <a
@@ -884,7 +884,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       padding: '10px 20px',
                       borderRadius: 10,
                       background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                      color: '#03030D',
+                      color: 'var(--bg)',
                       fontWeight: 700,
                       fontSize: 14,
                       textDecoration: 'none',
@@ -931,7 +931,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           }}
           title="Add Step"
         >
-          <PlusIcon size={22} color="#03030D" />
+          <PlusIcon size={22} color="var(--bg)" />
         </button>
 
         <button
@@ -1101,13 +1101,13 @@ function PaywallGate({ feature }: { feature: string }) {
         {feature}
       </h2>
       <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 360, lineHeight: 1.7, marginBottom: 28 }}>
-        This is a <strong style={{ color: '#D4A208' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
+        This is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
       </p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#C49510,#D4A208)', color: '#03030D', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
           👑 Upgrade to Pro — $29/mo
         </a>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', fontSize: 14, textDecoration: 'none' }}>
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(212,162,8,0.3)', color: 'var(--gold)', fontSize: 14, textDecoration: 'none' }}>
           View all plans
         </a>
       </div>
@@ -1120,14 +1120,14 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
 
   if (mainSteps.length === 0) {
     return (
-      <div style={{ textAlign: 'center', padding: '60px 20px', color: '#38385C' }}>
+      <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--sl-400)' }}>
         <div style={{ marginBottom: 20, opacity: 0.3 }}>
           <VSMIcon size={64} color="#D4A208" />
         </div>
-        <div style={{ fontSize: 18, color: '#7070A0', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
+        <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
           No process steps yet
         </div>
-        <div style={{ fontSize: 13, color: '#38385C', marginBottom: 28, lineHeight: 1.6 }}>
+        <div style={{ fontSize: 13, color: 'var(--sl-400)', marginBottom: 28, lineHeight: 1.6 }}>
           Add steps manually or import from a Standard Operating Procedure
         </div>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -1140,14 +1140,14 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
               padding: '10px 24px',
               borderRadius: 9,
               background: 'linear-gradient(135deg,#C49510,#D4A208)',
-              color: '#03030D',
+              color: 'var(--bg)',
               border: 'none',
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 700,
             }}
           >
-            <PlusIcon size={14} color="#03030D" /> Add First Step
+            <PlusIcon size={14} color="var(--bg)" /> Add First Step
           </button>
           <button
             onClick={onImportSOP}
@@ -1159,7 +1159,7 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
               borderRadius: 9,
               background: 'rgba(212,162,8,0.08)',
               border: '1px solid rgba(212,162,8,0.3)',
-              color: '#D4A208',
+              color: 'var(--gold)',
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 600,
@@ -1197,9 +1197,9 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
           padding: '12px',
           borderRadius: 9,
           marginTop: 4,
-          border: '1px dashed rgba(40,40,92,0.6)',
+          border: '1px dashed rgba(184,180,172,0.6)',
           background: 'transparent',
-          color: '#38385C',
+          color: 'var(--sl-400)',
           cursor: 'pointer',
           fontSize: 13,
         }}
@@ -1254,14 +1254,14 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
           gap: 10,
           padding: '11px 14px',
           background: 'var(--bg3)',
-          borderBottom: '1px solid #1A1A40',
+          borderBottom: '1px solid var(--border)',
         }}
       >
-        <span style={{ cursor: 'grab', flexShrink: 0, color: '#28285C' }}>
+        <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--border2)' }}>
           <DragHandleIcon size={14} color="currentColor" />
         </span>
 
-        <span style={{ color: '#38385C', fontSize: 10, fontFamily: 'monospace', minWidth: 22, flexShrink: 0 }}>
+        <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'monospace', minWidth: 22, flexShrink: 0 }}>
           {String(index + 1).padStart(2, '0')}
         </span>
 
@@ -1274,21 +1274,21 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
               </span>
             )}
           </div>
-          {step.department && <div style={{ fontSize: 10, color: '#7070A0', marginTop: 1 }}>{step.department}</div>}
+          {step.department && <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 1 }}>{step.department}</div>}
         </div>
 
-        <div style={{ display: 'flex', gap: 8, fontSize: 10, color: '#7070A0', flexWrap: 'wrap', flexShrink: 0 }}>
-          {sw?.mean && <span style={{ color: '#D4A208' }}>CT:{fmtS(sw.mean)}</span>}
+        <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap', flexShrink: 0 }}>
+          {sw?.mean && <span style={{ color: 'var(--gold)' }}>CT:{fmtS(sw.mean)}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
           {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
           {kzOpen > 0 && <span style={{ color: '#F4A623' }}>⚡{kzOpen}</span>}
         </div>
 
-        <button onClick={onEdit} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7070A0', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
+        <button onClick={onEdit} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
           <EditIcon size={13} color="currentColor" />
         </button>
 
-        <button onClick={onDelete} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7070A0', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
+        <button onClick={onDelete} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
           <TrashIcon size={13} color="currentColor" />
         </button>
       </div>
@@ -1311,7 +1311,7 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
                 cursor: 'pointer',
                 background: has ? 'rgba(212,162,8,0.10)' : 'transparent',
                 border: `1px solid ${has ? 'rgba(212,162,8,0.25)' : 'var(--border)'}`,
-                color: has ? '#D4A208' : '#38385C',
+                color: has ? '#D4A208' : 'var(--sl-400)',
               }}
             >
               <TIcon size={11} color="currentColor" />
@@ -1448,7 +1448,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Process Branches
           </h2>
-          <p style={{ fontSize: 13, color: '#7070A0' }}>Parallel lanes — sub-assemblies, prep flows, quality loops</p>
+          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Parallel lanes — sub-assemblies, prep flows, quality loops</p>
         </div>
 
         <button
@@ -1461,20 +1461,20 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
             borderRadius: 8,
             background: 'linear-gradient(135deg,#C49510,#D4A208)',
             border: 'none',
-            color: '#03030D',
+            color: 'var(--bg)',
             cursor: 'pointer',
             fontSize: 12,
             fontWeight: 700,
           }}
         >
-          <PlusIcon size={13} color="#03030D" /> New Branch
+          <PlusIcon size={13} color="var(--bg)" /> New Branch
         </button>
       </div>
 
       {branches.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '60px 0', color: '#38385C' }}>
-          <BranchIcon size={48} color="#38385C" style={{ margin: '0 auto 16px', display: 'block' }} />
-          <div style={{ color: '#7070A0', fontSize: 15, marginBottom: 24 }}>No branches yet</div>
+        <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--sl-400)' }}>
+          <BranchIcon size={48} color="var(--sl-400)" style={{ margin: '0 auto 16px', display: 'block' }} />
+          <div style={{ color: 'var(--text3)', fontSize: 15, marginBottom: 24 }}>No branches yet</div>
           <button onClick={onNewBranch} className="btn btn-primary">Create First Branch</button>
         </div>
       ) : (
@@ -1497,12 +1497,12 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
 
                 <div style={{ padding: 10, display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {bSteps.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '12px 0', color: '#38385C', fontSize: 12 }}>
+                    <div style={{ textAlign: 'center', padding: '12px 0', color: 'var(--sl-400)', fontSize: 12 }}>
                       No steps in this branch yet.
                     </div>
                   ) : bSteps.map((s, si) => (
-                    <div key={s.id} style={{ background: '#03030D', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                      <span style={{ color: '#38385C', fontFamily: 'monospace', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
+                    <div key={s.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                      <span style={{ color: 'var(--sl-400)', fontFamily: 'monospace', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
                       <div style={{ flex: 1, minWidth: 80 }}>
                         <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 12 }}>{s.name}</div>
                       </div>

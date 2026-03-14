@@ -17,10 +17,10 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 export default function TaktTimePost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -29,17 +29,17 @@ export default function TaktTimePost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>CALCULATOR</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>5 min read · March 12, 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Takt Time Calculator: Formula, Examples, and What to Do With the Number
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             Takt time is the heartbeat of lean manufacturing — the maximum time you have to complete one unit to meet customer demand. Here's the formula, real examples, and exactly how to use it.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What is takt time?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is takt time?</h2>
           <p style={{ marginBottom: 18 }}>
             Takt time is the rate at which you need to complete products to satisfy customer demand — no faster, no slower. The word "takt" comes from the German word for a conductor's baton: it sets the rhythm the whole orchestra plays to.
           </p>
@@ -50,15 +50,15 @@ export default function TaktTimePost() {
           {/* Formula box */}
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.25)', borderRadius: 14, padding: '28px 32px', marginBottom: 32, textAlign: 'center' }}>
             <div style={{ fontSize: 12, color: '#1DD1A1', fontFamily: 'monospace', fontWeight: 800, letterSpacing: 2, marginBottom: 16 }}>THE FORMULA</div>
-            <div style={{ fontFamily: serif, fontSize: 'clamp(18px,3vw,26px)', color: '#F3F1FB', fontWeight: 700, marginBottom: 12 }}>
+            <div style={{ fontFamily: serif, fontSize: 'clamp(18px,3vw,26px)', color: 'var(--text)', fontWeight: 700, marginBottom: 12 }}>
               Takt Time = Available Production Time ÷ Customer Demand
             </div>
-            <div style={{ fontSize: 13, color: '#8B88B3' }}>
+            <div style={{ fontSize: 13, color: 'var(--text2)' }}>
               Result is in seconds, minutes, or hours per unit — whichever unit you use for time
             </div>
           </div>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>Step-by-step: how to calculate takt time</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Step-by-step: how to calculate takt time</h2>
 
           {[
             {
@@ -82,7 +82,7 @@ export default function TaktTimePost() {
                 <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontWeight: 800, fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
                   {i + 1}
                 </div>
-                <strong style={{ color: '#F3F1FB', fontSize: 16 }}>{step}</strong>
+                <strong style={{ color: 'var(--text)', fontSize: 16 }}>{step}</strong>
               </div>
               <div style={{ paddingLeft: 42, fontSize: 14 }}>
                 <p style={{ marginBottom: 10 }}>{body}</p>
@@ -93,7 +93,7 @@ export default function TaktTimePost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>4 worked examples</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>4 worked examples</h2>
 
           {[
             {
@@ -125,8 +125,8 @@ export default function TaktTimePost() {
               note: 'Each inspector must complete one device every 5 minutes. If current inspection takes 7 minutes, you either need more inspectors or a process improvement.',
             },
           ].map((ex, i) => (
-            <div key={i} style={{ background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
-              <div style={{ fontWeight: 700, color: '#F3F1FB', marginBottom: 14 }}>{ex.title}</div>
+            <div key={i} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
+              <div style={{ fontWeight: 700, color: 'var(--text)', marginBottom: 14 }}>{ex.title}</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 10, marginBottom: 14 }}>
                 {[
                   ['Available Time', ex.available],
@@ -139,28 +139,28 @@ export default function TaktTimePost() {
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 13, color: '#8B88B3', fontStyle: 'italic' }}>{ex.note}</div>
+              <div style={{ fontSize: 13, color: 'var(--text2)', fontStyle: 'italic' }}>{ex.note}</div>
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>Takt time vs cycle time vs lead time</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Takt time vs cycle time vs lead time</h2>
           <p style={{ marginBottom: 16 }}>These three numbers are often confused but they measure completely different things:</p>
           {[
             ['Takt Time', 'The pace customer demand requires', 'External — set by the customer'],
             ['Cycle Time', 'How long your process actually takes', 'Internal — set by your process'],
             ['Lead Time', 'Total time from order to delivery', 'Internal — includes all waiting'],
           ].map(([term, def, note]) => (
-            <div key={term} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 1fr', gap: 12, marginBottom: 10, alignItems: 'center', background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 16px', fontSize: 13 }}>
+            <div key={term} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 1fr', gap: 12, marginBottom: 10, alignItems: 'center', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 16px', fontSize: 13 }}>
               <span style={{ fontWeight: 700, color: '#D4A208' }}>{term}</span>
               <span>{def}</span>
-              <span style={{ color: '#8B88B3', fontStyle: 'italic' }}>{note}</span>
+              <span style={{ color: 'var(--text2)', fontStyle: 'italic' }}>{note}</span>
             </div>
           ))}
           <p style={{ marginTop: 16, marginBottom: 18 }}>
             The goal of lean is to get your cycle time close to (but not above) takt time, while reducing lead time as much as possible by eliminating queues and waiting.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What to do once you know your takt time</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What to do once you know your takt time</h2>
           {[
             ['Compare takt to cycle time at every step', 'Any step where cycle time > takt is a bottleneck. It will cause downstream starvation and upstream pileup. That\'s where you focus your kaizen effort.'],
             ['Use it to set staffing levels', 'Takt time tells you how many operators you need. If takt is 300 sec and each operator can do 60 sec of work, you need 5 operators for a balanced line.'],
@@ -172,7 +172,7 @@ export default function TaktTimePost() {
                 {i + 1}
               </div>
               <div>
-                <strong style={{ color: '#F3F1FB', display: 'block', marginBottom: 6 }}>{title}</strong>
+                <strong style={{ color: 'var(--text)', display: 'block', marginBottom: 6 }}>{title}</strong>
                 {body}
               </div>
             </div>
@@ -180,13 +180,13 @@ export default function TaktTimePost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               See takt time live on your VSM
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy calculates takt time automatically from your project settings and displays it on your value stream map alongside cycle time — so you can instantly see which steps are bottlenecks. Free forever.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: '#03030D', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Calculate takt time on your VSM →
             </Link>
           </div>

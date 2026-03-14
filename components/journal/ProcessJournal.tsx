@@ -83,7 +83,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
   function tagStyle(type: string) {
     if (type === 'auto') return { bg: 'rgba(108,185,252,0.12)', color: '#6CB9FC', label: 'AUTO' }
     if (type === 'milestone') return { bg: 'rgba(212,162,8,0.12)', color: '#D4A208', label: 'MILESTONE' }
-    return { bg: 'rgba(139,136,179,0.12)', color: '#8B88B3', label: 'NOTE' }
+    return { bg: 'rgba(139,136,179,0.12)', color: 'var(--text2)', label: 'NOTE' }
   }
 
   if (!open) return null
@@ -104,7 +104,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 10001,
         width: 'min(420px, 100vw)',
-        background: 'linear-gradient(180deg, rgba(13,13,34,0.98), rgba(8,8,24,0.99))',
+        background: 'linear-gradient(180deg, rgba(13,13,34,0.98), rgba(248,247,245,0.97))',
         border: '1px solid rgba(44,44,92,0.86)',
         borderRight: 'none',
         display: 'flex', flexDirection: 'column',
@@ -120,17 +120,17 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 16 }}>📓</span>
-              <span style={{ fontFamily: serif, fontSize: 17, fontWeight: 700, color: '#F3F1FB' }}>
+              <span style={{ fontFamily: serif, fontSize: 17, fontWeight: 700, color: 'var(--text)' }}>
                 Process Journal
               </span>
             </div>
-            <p style={{ fontSize: 11, color: '#8B88B3', marginTop: 3 }}>
+            <p style={{ fontSize: 11, color: 'var(--text2)', marginTop: 3 }}>
               Everything that happens to this process, recorded.
             </p>
           </div>
           <button
             onClick={onClose}
-            style={{ background: 'none', border: 'none', color: '#8B88B3', fontSize: 18, cursor: 'pointer', padding: '4px 6px' }}
+            style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px' }}
           >
             ✕
           </button>
@@ -155,7 +155,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               border: '1px dashed rgba(44,44,92,0.6)',
             }}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>📝</div>
-              <div style={{ fontWeight: 600, color: '#8B88B3', fontSize: 14, marginBottom: 6 }}>
+              <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>
                 Nothing recorded yet
               </div>
               <p style={{ fontSize: 12, color: '#52507A', lineHeight: 1.7 }}>
@@ -171,7 +171,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               <div
                 key={entry.id}
                 style={{
-                  background: 'rgba(8,8,24,0.78)',
+                  background: 'rgba(248,247,245,0.97)',
                   border: '1px solid rgba(44,44,92,0.5)',
                   borderRadius: 10,
                   padding: '12px 14px',
@@ -211,7 +211,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
         <div style={{
           padding: '14px 20px',
           borderTop: '1px solid rgba(44,44,92,0.6)',
-          background: 'rgba(8,8,24,0.96)',
+          background: 'rgba(248,247,245,0.97)',
           flexShrink: 0,
           paddingBottom: 'max(14px, env(safe-area-inset-bottom, 0px))',
         }}>
@@ -225,7 +225,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               style={{
                 flex: 1, background: 'rgba(255,255,255,0.04)',
                 border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10,
-                color: '#F3F1FB', fontSize: 13, padding: '10px 12px',
+                color: 'var(--text)', fontSize: 13, padding: '10px 12px',
                 fontFamily: 'Inter, sans-serif', resize: 'none', lineHeight: 1.5,
                 outline: 'none',
               }}
@@ -236,7 +236,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               style={{
                 padding: '0 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
                 background: note.trim() ? 'linear-gradient(135deg,#C49510,#D4A208)' : 'rgba(255,255,255,0.06)',
-                color: note.trim() ? '#03030D' : '#52507A',
+                color: note.trim() ? 'var(--bg)' : '#52507A',
                 fontWeight: 700, fontSize: 18, transition: 'all 0.2s',
                 flexShrink: 0,
               }}

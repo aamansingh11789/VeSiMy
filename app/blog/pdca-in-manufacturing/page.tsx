@@ -17,10 +17,10 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 export default function PDCAPost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -29,17 +29,17 @@ export default function PDCAPost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>9 min read · March 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             PDCA is the backbone of ISO 9001, lean manufacturing, and Six Sigma. Yet most teams run it wrong — they Plan, Do, skip Check entirely, and never Act. Here is how to use it correctly.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What is PDCA?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is PDCA?</h2>
           <p style={{ marginBottom: 18 }}>
             PDCA (Plan-Do-Check-Act) is a four-phase improvement cycle developed by Walter Shewhart and popularised by W. Edwards Deming. It is the foundation of ISO 9001:2015 §10.3 (Continual Improvement) and the operating framework behind Toyota Production System, Six Sigma, and every modern quality management methodology.
           </p>
@@ -64,7 +64,7 @@ export default function PDCAPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>PDCA vs DMAIC vs A3 vs 8D — which do you use?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>PDCA vs DMAIC vs A3 vs 8D — which do you use?</h2>
           <p style={{ marginBottom: 16 }}>All four frameworks ask the same questions in different orders with different names. Choose based on your audience and problem complexity:</p>
 
           {[
@@ -73,7 +73,7 @@ export default function PDCAPost() {
             { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA — different format and language.' },
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },
           ].map(({ fmt, color, use }) => (
-            <div key={fmt} style={{ display: 'flex', gap: 14, marginBottom: 14, background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '14px 16px' }}>
+            <div key={fmt} style={{ display: 'flex', gap: 14, marginBottom: 14, background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '14px 16px' }}>
               <span style={{ fontSize: 14, fontWeight: 800, color, minWidth: 55, fontFamily: 'monospace' }}>{fmt}</span>
               <span style={{ fontSize: 13, lineHeight: 1.6 }}>{use}</span>
             </div>
@@ -83,7 +83,7 @@ export default function PDCAPost() {
             The key insight: the underlying data is identical across all four. If you run a PDCA project properly — problem statement, root cause, countermeasures, before/after metrics, standardisation — you have everything needed to produce an A3, 8D, or DMAIC report without doing any additional work. VeSiMy generates all four from the same project data.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The most common PDCA failure modes</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The most common PDCA failure modes</h2>
           {[
             ['Skipping the Check phase', 'The improvement gets implemented and declared successful before any measurement is done. Without Check, there is no learning — only assumption. Require before/after data for every PDCA cycle, no exceptions.'],
             ['Corrective actions that address symptoms', 'The countermeasure fixes the visible problem without addressing the root cause. Three weeks later the problem returns. A properly completed 5 Why, attached to the Plan phase, prevents this.'],
@@ -98,10 +98,10 @@ export default function PDCAPost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Run your first PDCA cycle free
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA — whichever format your audience requires. Free forever.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#6B24A8,#8C44CC)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>

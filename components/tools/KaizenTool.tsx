@@ -11,7 +11,7 @@ const PRIORITIES = ['low', 'medium', 'high', 'critical'] as const
 const STATUSES = ['open', 'in-progress', 'complete', 'verified'] as const
 
 const STATUS_COLOR: Record<string, string> = {
-  open: '#7070A0',
+  open: 'var(--text3)',
   'in-progress': '#D4A208',
   complete: '#1DD1A1',
   verified: '#6CB9FC',
@@ -443,7 +443,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                           style={{
                             background: 'none',
                             border: 'none',
-                            color: '#7070A0',
+                            color: 'var(--text3)',
                             cursor: 'pointer',
                             fontSize: 14,
                           }}
@@ -505,7 +505,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                   }}
                   onClick={() => setExpanded(expanded === item.id ? null : item.id)}
                 >
-                  <span style={{ fontSize: 10, color: '#7070A0', fontFamily: 'monospace', flexShrink: 0 }}>
+                  <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', flexShrink: 0 }}>
                     {item.kzId}
                   </span>
 

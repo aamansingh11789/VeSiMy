@@ -19,8 +19,8 @@ export default function NotFound() {
         justifyContent: 'center',
         textAlign: 'center',
         padding: '40px 24px',
-        background: 'linear-gradient(160deg, #04040F 0%, #080620 50%, #04040F 100%)',
-        color: '#EAE8F4',
+        background: 'linear-gradient(160deg, #F0EDE6 0%, #080620 50%, #F0EDE6 100%)',
+        color: 'var(--text)',
       }}
     >
       <div style={{ fontSize: 80, fontFamily: serif, fontWeight: 800, color: '#D4A208', lineHeight: 1 }}>
@@ -29,7 +29,7 @@ export default function NotFound() {
       <h1 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: '#F3F1FB', margin: '16px 0 12px' }}>
         This process step doesn't exist.
       </h1>
-      <p style={{ fontSize: 15, color: '#8B88B3', maxWidth: 420, lineHeight: 1.75, marginBottom: 36 }}>
+      <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 420, lineHeight: 1.75, marginBottom: 36 }}>
         The page you're looking for has been moved, removed, or never existed.
         Let's get you back on the improvement path.
       </p>
@@ -39,7 +39,7 @@ export default function NotFound() {
           style={{
             padding: '12px 28px',
             background: 'linear-gradient(135deg,#C49510,#D4A208)',
-            color: '#03030D',
+            color: '#FFFFFF',
             fontWeight: 700,
             fontSize: 14,
             borderRadius: 10,

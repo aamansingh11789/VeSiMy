@@ -8,24 +8,24 @@ export const metadata = { title: 'Terms of Service — Vesimy' }
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
-    <h2 style={{ fontSize: 18, fontWeight: 700, color: '#EAE8F4', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
-    <div style={{ color: '#7070A0', fontSize: 14, lineHeight: 1.8 }}>{children}</div>
+    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
+    <div style={{ color: 'var(--text3)', fontSize: 14, lineHeight: 1.8 }}>{children}</div>
   </div>
 )
 
 export default function TermsPage() {
   return (
-    <div style={{ minHeight: '100vh', background: '#03030D' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <nav style={{ borderBottom: '1px solid rgba(26,26,64,0.6)', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" style={{ textDecoration: 'none' }}><VesimyLogo size={36} showText /></Link>
-        <div style={{ display:'flex', alignItems:'center', gap:10 }}><ThemeToggle size={28} /><Link href="/dashboard" style={{ fontSize: 13, color: '#7070A0', textDecoration: 'none' }}>← Dashboard</Link></div>
+        <div style={{ display:'flex', alignItems:'center', gap:10 }}><ThemeToggle size={28} /><Link href="/dashboard" style={{ fontSize: 13, color: 'var(--text3)', textDecoration: 'none' }}>← Dashboard</Link></div>
       </nav>
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>
         <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 12, color: '#38385C', fontFamily: 'monospace', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
-          <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: '#EAE8F4', marginBottom: 12 }}>Terms of Service</h1>
-          <p style={{ fontSize: 14, color: '#38385C' }}>Last updated: March 1, 2026</p>
+          <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
+          <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
+          <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>
 
         <Section title="1. Acceptance of Terms">
@@ -73,8 +73,8 @@ export default function TermsPage() {
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-          <Link href="/privacy" style={{ fontSize: 13, color: '#7070A0', textDecoration: 'none' }}>Privacy Policy</Link>
-          <Link href="/" style={{ fontSize: 13, color: '#7070A0', textDecoration: 'none' }}>← Back to VeSiMy</Link>
+          <Link href="/privacy" style={{ fontSize: 13, color: 'var(--text3)', textDecoration: 'none' }}>Privacy Policy</Link>
+          <Link href="/" style={{ fontSize: 13, color: 'var(--text3)', textDecoration: 'none' }}>← Back to VeSiMy</Link>
         </div>
       </div>
     </div>

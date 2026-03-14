@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor:    '#03030D',
+  themeColor:    'var(--bg)',
   width:         'device-width',
   initialScale:  1,
   minimumScale:  1,
@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="VeSiMy" />
         {/* MS Tile for Windows pinned sites */}
-        <meta name="msapplication-TileColor" content="#03030D" />
+        <meta name="msapplication-TileColor" content="var(--bg)" />
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
       </head>
       <body>
@@ -93,15 +93,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           position="top-right"
           toastOptions={{
             style: {
-              background:   '#0D0D22',
-              color:        '#EAE8F4',
+              background:   'var(--bg3)',
+              color:        'var(--text)',
               border:       '1px solid rgba(212,162,8,0.25)',
               borderRadius: '10px',
               fontFamily:   'Inter, sans-serif',
               fontSize:     '14px',
             },
-            success: { iconTheme: { primary: '#D4A208', secondary: '#03030D' } },
-            error:   { iconTheme: { primary: '#FF6B6B', secondary: '#03030D' } },
+            success: { iconTheme: { primary: '#D4A208', secondary: 'var(--bg)' } },
+            error:   { iconTheme: { primary: '#FF6B6B', secondary: 'var(--bg)' } },
           }}
         />
         </ThemeProvider>

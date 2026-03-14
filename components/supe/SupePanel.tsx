@@ -259,7 +259,7 @@ export function SupePanel({ steps, projectId }: Props) {
               placeholder="Ask Supe anything about your process…"
               disabled={loading}
               style={{
-                flex:1, background:'rgba(8,8,24,0.6)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)',
+                flex:1, background:'rgba(248,247,245,0.97)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)',
                 padding:'8px 12px', fontSize:12, color:'var(--text)', outline:'none',
                 fontFamily:'inherit', transition:'border 0.15s',
               }}

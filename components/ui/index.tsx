@@ -80,7 +80,7 @@ export function Badge({
     violet: { background: 'rgba(100,38,160,0.12)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.22)' },
     green: { background: 'rgba(29,209,161,0.10)', color: '#1DD1A1', border: '1px solid rgba(29,209,161,0.22)' },
     red: { background: 'rgba(255,107,107,0.10)', color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.22)' },
-    muted: { background: 'rgba(112,112,160,0.10)', color: '#7070A0', border: '1px solid rgba(112,112,160,0.15)' },
+    muted: { background: 'rgba(112,112,160,0.10)', color: 'var(--text3)', border: '1px solid rgba(112,112,160,0.15)' },
   }
 
   return (

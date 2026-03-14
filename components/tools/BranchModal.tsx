@@ -93,7 +93,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
             padding: '12px 14px',
             fontSize: 13,
             lineHeight: 1.6,
-            color: '#8B88B3',
+            color: 'var(--text2)',
           }}
         >
           A branch represents a **parallel process lane** running alongside your
@@ -166,7 +166,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
           <div
             style={{
               fontSize: 11,
-              color: '#7070A0',
+              color: 'var(--text3)',
               marginTop: 4,
             }}
           >
@@ -194,7 +194,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
           <div
             style={{
               fontSize: 11,
-              color: '#7070A0',
+              color: 'var(--text3)',
               marginTop: 4,
             }}
           >

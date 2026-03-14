@@ -123,7 +123,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                         style={{
                           fontSize: 10,
                           fontFamily: 'monospace',
-                          color: '#7070A0',
+                          color: 'var(--text3)',
                           background: 'var(--bg2)',
                           padding: '1px 5px',
                           borderRadius: 4,

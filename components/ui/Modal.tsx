@@ -180,7 +180,7 @@ export function Modal({
           gap: 10,
           padding: isMobile ? `12px 16px max(16px, env(safe-area-inset-bottom, 0px))` : '15px 22px 18px',
           borderTop: '1px solid rgba(42,42,90,0.72)',
-          background: 'rgba(8,8,24,0.98)',
+          background: 'rgba(248,247,245,0.97)',
           flexShrink: 0,
         }}>
           <button className="btn btn-ghost" onClick={() => onCloseRef.current()} type="button">

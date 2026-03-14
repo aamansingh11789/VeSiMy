@@ -95,20 +95,20 @@ const entries = [
 
 export default function ChangelogPage() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 48 }}>
+        <Link href="/" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 48 }}>
           ← Back to VeSiMy
         </Link>
 
         <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
           What's New
         </p>
-        <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: '#F3F1FB', marginBottom: 12, lineHeight: 1.1 }}>
+        <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
           Changelog
         </h1>
-        <p style={{ fontSize: 15, color: '#8B88B3', marginBottom: 56, lineHeight: 1.75 }}>
+        <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 56, lineHeight: 1.75 }}>
           Every update shipped to VeSiMy — big and small. Updated continuously.
         </p>
 
@@ -133,16 +133,16 @@ export default function ChangelogPage() {
                   }}>
                     {entry.tag}
                   </span>
-                  <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>{entry.date}</span>
+                  <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>{entry.date}</span>
                 </div>
 
-                <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: '#F3F1FB', marginBottom: 14 }}>
+                <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 14 }}>
                   {entry.title}
                 </h3>
 
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {entry.items.map((item, j) => (
-                    <li key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 14, color: '#8B88B3', lineHeight: 1.65 }}>
+                    <li key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 14, color: 'var(--text2)', lineHeight: 1.65 }}>
                       <span style={{ color: entry.color, marginTop: 2, flexShrink: 0 }}>·</span>
                       {item}
                     </li>
@@ -154,8 +154,8 @@ export default function ChangelogPage() {
         </div>
 
         {/* Subscribe notice */}
-        <div style={{ marginTop: 56, padding: '28px 32px', background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 16, textAlign: 'center' }}>
-          <p style={{ fontSize: 14, color: '#8B88B3', lineHeight: 1.75 }}>
+        <div style={{ marginTop: 56, padding: '28px 32px', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 16, textAlign: 'center' }}>
+          <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
             Want updates when we ship? Follow{' '}
             <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#D4A208', textDecoration: 'none' }}>
               VeSiMy on LinkedIn

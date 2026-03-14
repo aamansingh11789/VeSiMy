@@ -20,7 +20,7 @@ function WatermarkBg() {
         zIndex: 0,
         pointerEvents: 'none',
         overflow: 'hidden',
-        background: 'linear-gradient(160deg, #04040F 0%, #080620 50%, #04040F 100%)',
+        background: 'linear-gradient(160deg, #F0EDE6 0%, #EAE7E0 50%, #F0EDE6 100%)',
       }}
     >
       <style>{`
@@ -74,7 +74,7 @@ function WatermarkBg() {
           left: '50%',
           width: 920,
           height: 650,
-          background: 'radial-gradient(ellipse, rgba(212,162,8,0.11) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(196,155,46,0.12) 0%, transparent 70%)',
           animation: 'vesimyGlowDriftA 16s ease-in-out infinite',
         }}
       />
@@ -86,7 +86,7 @@ function WatermarkBg() {
           right: '-8%',
           width: 540,
           height: 540,
-          background: 'radial-gradient(circle, rgba(100,38,160,0.10) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(140,68,204,0.08) 0%, transparent 70%)',
           animation: 'vesimyGlowDriftB 20s ease-in-out infinite',
         }}
       />
@@ -176,7 +176,7 @@ function HeroLogo() {
           width: 180,
           height: 180,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(212,162,8,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(196,155,46,0.12) 0%, transparent 70%)',
           filter: 'blur(16px)',
         }}
       />
@@ -262,7 +262,7 @@ function Stat({ value, label }: { value: string; label: string }) {
       <div
         style={{
           fontSize: 10,
-          color: '#7070A0',
+          color: 'var(--text3)',
           letterSpacing: 2.5,
           marginTop: 8,
           fontFamily: 'monospace',
@@ -303,7 +303,7 @@ function SectionIntro({
           fontSize: 'clamp(28px,4vw,52px)',
           fontWeight: 700,
           marginBottom: 14,
-          color: '#F3F1FB',
+          color: 'var(--text)',
           lineHeight: 1.12,
         }}
       >
@@ -312,7 +312,7 @@ function SectionIntro({
       <p
         style={{
           fontSize: 16,
-          color: '#8B88B3',
+          color: 'var(--text2)',
           maxWidth: 560,
           margin: '0 auto',
           lineHeight: 1.75,
@@ -326,7 +326,7 @@ function SectionIntro({
 
 export default function HomePage() {
   return (
-    <div style={{ position: 'relative', color: '#EAE8F4', minHeight: '100vh' }}>
+    <div style={{ position: 'relative', color: 'var(--text)', minHeight: '100vh' }}>
       <WatermarkBg />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
@@ -342,7 +342,7 @@ export default function HomePage() {
             padding: '0 40px',
             height: 64,
             borderBottom: '1px solid rgba(26,26,64,0.45)',
-            background: 'rgba(3,3,13,0.82)',
+            background: 'rgba(248,247,245,0.97)',
             backdropFilter: 'blur(16px)',
           }}
         >
@@ -350,7 +350,7 @@ export default function HomePage() {
 
           <div
             className="home-nav-links"
-            style={{ display: 'flex', gap: 28, fontSize: 13, color: '#8B88B3' }}
+            style={{ display: 'flex', gap: 28, fontSize: 13, color: 'var(--text2)' }}
           >
             {[
               ['Why VeSiMy', '#why'],
@@ -362,8 +362,8 @@ export default function HomePage() {
                 key={l}
                 href={h}
                 style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.18s' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#F3F1FB')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#8B88B3')}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
               >
                 {l}
               </a>
@@ -438,8 +438,8 @@ export default function HomePage() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
-              background: 'rgba(3,3,13,0.82)',
-              border: '1px solid rgba(212,162,8,0.28)',
+              background: 'rgba(248,247,245,0.97)',
+              border: '1px solid rgba(196,155,46,0.12)',
               borderRadius: 999,
               padding: '7px 18px',
               marginBottom: 34,
@@ -450,7 +450,7 @@ export default function HomePage() {
             <span
               style={{
                 fontSize: 10,
-                color: '#7070A0',
+                color: 'var(--text3)',
                 letterSpacing: 2,
                 fontFamily: 'monospace',
               }}
@@ -480,7 +480,7 @@ export default function HomePage() {
               lineHeight: 1.08,
               marginBottom: 24,
               maxWidth: 860,
-              color: '#F3F1FB',
+              color: 'var(--text)',
             }}
           >
             Manufacturing that watches itself.
@@ -523,7 +523,7 @@ export default function HomePage() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 8,
-                boxShadow: '0 10px 30px rgba(212,162,8,0.22)',
+                boxShadow: '0 10px 30px rgba(196,155,46,0.12)',
               }}
             >
               Start Free <ArrowRightIcon size={16} color="currentColor" />
@@ -562,7 +562,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p className="vesimy-reveal-5" style={{ fontSize: 12, color: '#7070A0', marginTop: 16 }}>
+          <p className="vesimy-reveal-5" style={{ fontSize: 12, color: 'var(--text3)', marginTop: 16 }}>
             Free forever · No credit card · Works on any device
           </p>
         </section>
@@ -572,7 +572,7 @@ export default function HomePage() {
             padding: '18px clamp(16px,5vw,40px)',
             borderTop: '1px solid rgba(26,26,64,0.35)',
             borderBottom: '1px solid rgba(26,26,64,0.35)',
-            background: 'rgba(4,4,14,0.58)',
+            background: 'rgba(236,234,230,0.95)',
             backdropFilter: 'blur(8px)',
           }}
         >
@@ -600,12 +600,12 @@ export default function HomePage() {
                 key={ind}
                 style={{
                   fontSize: 12,
-                  color: '#8B88B3',
+                  color: 'var(--text2)',
                   border: '1px solid rgba(70,70,120,0.42)',
                   borderRadius: 999,
                   padding: '6px 14px',
                   letterSpacing: 0.4,
-                  background: 'rgba(255,255,255,0.015)',
+                  background: 'rgba(255,255,255,0.9)',
                 }}
               >
                 {ind}
@@ -701,7 +701,7 @@ export default function HomePage() {
                     <div style={{
                       position: 'absolute', top: 16, right: 16,
                       background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                      color: '#03030D', fontSize: 9, fontWeight: 800,
+                      color: 'var(--bg)', fontSize: 9, fontWeight: 800,
                       padding: '3px 10px', borderRadius: 999, letterSpacing: 1.5,
                     }}>
                       {tool.badge}
@@ -718,10 +718,10 @@ export default function HomePage() {
                   >
                     {tool.icon}
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: 17, color: '#F3F1FB', marginBottom: 10 }}>
+                  <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text)', marginBottom: 10 }}>
                     {tool.title}
                   </div>
-                  <div style={{ fontSize: 13, color: '#8B88B3', lineHeight: 1.7 }}>
+                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7 }}>
                     {tool.desc}
                   </div>
                 </div>
@@ -734,7 +734,7 @@ export default function HomePage() {
           id="why"
           style={{
             padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)',
-            background: 'rgba(4,4,14,0.56)',
+            background: 'rgba(236,234,230,0.95)',
             backdropFilter: 'blur(8px)',
             borderTop: '1px solid rgba(26,26,64,0.35)',
           }}
@@ -758,7 +758,7 @@ export default function HomePage() {
                   letter: 'V',
                   color: '#D4A208',
                   icon: '◆',
-                  bg: 'rgba(212,162,8,0.1)',
+                  bg: 'rgba(196,155,46,0.12)',
                   title: 'Value Addition',
                   sub: 'V is for',
                   body: 'Every process step must add measurable value to the customer.',
@@ -839,7 +839,7 @@ export default function HomePage() {
                     </div>
 
                     <div>
-                      <div style={{ fontSize: 12, color: '#8B88B3' }}>{item.sub}</div>
+                      <div style={{ fontSize: 12, color: 'var(--text2)' }}>{item.sub}</div>
                       <div
                         style={{
                           fontSize: 30,
@@ -858,7 +858,7 @@ export default function HomePage() {
                     style={{
                       fontWeight: 700,
                       fontSize: 16,
-                      color: '#F3F1FB',
+                      color: 'var(--text)',
                       marginBottom: 10,
                     }}
                   >
@@ -879,7 +879,7 @@ export default function HomePage() {
                   <p
                     style={{
                       fontSize: 12,
-                      color: '#8B88B3',
+                      color: 'var(--text2)',
                       lineHeight: 1.6,
                       fontStyle: 'italic',
                     }}
@@ -896,7 +896,7 @@ export default function HomePage() {
           id="compare"
           style={{
             padding: 'clamp(44px,8vw,98px) clamp(16px,5vw,40px)',
-            background: 'rgba(4,4,14,0.56)',
+            background: 'rgba(236,234,230,0.95)',
             backdropFilter: 'blur(8px)',
             borderTop: '1px solid rgba(26,26,64,0.35)',
             borderBottom: '1px solid rgba(26,26,64,0.35)',
@@ -912,7 +912,7 @@ export default function HomePage() {
             <div
               style={{
                 overflowX: 'auto',
-                background: 'rgba(8,8,24,0.76)',
+                background: 'rgba(248,247,245,0.97)',
                 border: '1px solid rgba(40,40,92,0.46)',
                 borderRadius: 18,
                 padding: 10,
@@ -922,7 +922,7 @@ export default function HomePage() {
             >
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(212,162,8,0.16)' }}>
+                  <tr style={{ borderBottom: '1px solid rgba(196,155,46,0.12)' }}>
                     {[
                       'Feature',
                       'VeSiMy',
@@ -939,7 +939,7 @@ export default function HomePage() {
                           fontWeight: 700,
                           fontSize: 11,
                           letterSpacing: 1,
-                          color: i === 1 ? '#D4A208' : '#52507A',
+                          color: i === 1 ? '#D4A208' : 'var(--sl-400)',
                           fontFamily: 'monospace',
                           whiteSpace: 'nowrap',
                         }}
@@ -985,8 +985,8 @@ export default function HomePage() {
                                 : cell === '✓'
                                   ? '#1DD1A1'
                                   : cell === '✗'
-                                    ? '#52507A'
-                                    : '#8B88B3',
+                                    ? 'var(--sl-400)'
+                                    : 'var(--text2)',
                             fontWeight: i === 1 ? 700 : 400,
                           }}
                         >
@@ -1004,7 +1004,7 @@ export default function HomePage() {
         <section
           style={{
             padding: '74px 40px',
-            background: 'rgba(4,4,14,0.48)',
+            background: 'rgba(236,234,230,0.95)',
             backdropFilter: 'blur(6px)',
             borderTop: '1px solid rgba(26,26,64,0.35)',
             borderBottom: '1px solid rgba(26,26,64,0.35)',
@@ -1056,11 +1056,11 @@ export default function HomePage() {
                       style={{
                         background:
                           isPro || isLife
-                            ? 'linear-gradient(180deg, rgba(212,162,8,0.05), rgba(8,8,24,0.82) 70%)'
+                            ? 'linear-gradient(180deg, rgba(196,155,46,0.12), rgba(248,247,245,0.97) 70%)'
                             : 'var(--glass)',
                         border:
                           isPro || isLife
-                            ? '1px solid rgba(212,162,8,0.24)'
+                            ? '1px solid rgba(196,155,46,0.12)'
                             : '1px solid var(--border)',
                         borderRadius: 18,
                         padding: '30px 26px',
@@ -1073,14 +1073,14 @@ export default function HomePage() {
                           style={{
                             display: 'inline-flex',
                             background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                            color: '#03030D',
+                            color: 'var(--bg)',
                             fontSize: 10,
                             fontWeight: 700,
                             padding: '4px 18px',
                             borderRadius: 999,
                             letterSpacing: 1.5,
                             whiteSpace: 'nowrap',
-                            boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
+                            boxShadow: '0 8px 18px rgba(196,155,46,0.12)',
                             marginBottom: 14,
                           }}
                         >
@@ -1093,14 +1093,14 @@ export default function HomePage() {
                           style={{
                             display: 'inline-flex',
                             background: 'linear-gradient(135deg,#C49510,#D4A208)',
-                            color: '#03030D',
+                            color: 'var(--bg)',
                             fontSize: 10,
                             fontWeight: 700,
                             padding: '4px 18px',
                             borderRadius: 999,
                             letterSpacing: 1.5,
                             whiteSpace: 'nowrap',
-                            boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
+                            boxShadow: '0 8px 18px rgba(196,155,46,0.12)',
                             marginBottom: 14,
                           }}
                         >
@@ -1112,16 +1112,16 @@ export default function HomePage() {
                         {plan.name}
                       </div>
 
-                      <div style={{ fontSize: 40, fontWeight: 800, color: '#F3F1FB', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
+                      <div style={{ fontSize: 40, fontWeight: 800, color: 'var(--text)', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
                         {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
                         {!isEnt && plan.price !== null && Number(plan.price) > 0 && (
-                          <span style={{ fontSize: 14, fontWeight: 400, color: '#8B88B3', marginLeft: 4, fontFamily: 'Inter, sans-serif' }}>
+                          <span style={{ fontSize: 14, fontWeight: 400, color: 'var(--text2)', marginLeft: 4, fontFamily: 'Inter, sans-serif' }}>
                             {isLife ? ' once' : '/mo'}
                           </span>
                         )}
                       </div>
 
-                      <p style={{ fontSize: 13, color: '#8B88B3', marginBottom: 22, lineHeight: 1.65, minHeight: 42 }}>
+                      <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 22, lineHeight: 1.65, minHeight: 42 }}>
                         {plan.description}
                       </p>
 
@@ -1207,7 +1207,7 @@ export default function HomePage() {
                 href="/pricing"
                 style={{
                   fontSize: 13,
-                  color: '#8B88B3',
+                  color: 'var(--text2)',
                   textDecoration: 'none',
                   borderBottom: '1px solid rgba(40,40,92,0.6)',
                   paddingBottom: 2,
@@ -1234,7 +1234,7 @@ export default function HomePage() {
               fontWeight: 700,
               lineHeight: 1.35,
               marginBottom: 18,
-              color: '#F3F1FB',
+              color: 'var(--text)',
             }}
           >
             The factories that win the next decade
@@ -1245,7 +1245,7 @@ export default function HomePage() {
           <p
             style={{
               fontSize: 15,
-              color: '#8B88B3',
+              color: 'var(--text2)',
               marginBottom: 38,
               lineHeight: 1.8,
             }}
@@ -1265,13 +1265,13 @@ export default function HomePage() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: 10,
-              boxShadow: '0 10px 28px rgba(212,162,8,0.20)',
+              boxShadow: '0 10px 28px rgba(196,155,46,0.12)',
             }}
           >
             Start Free Today <ArrowRightIcon size={16} color="currentColor" />
           </Link>
 
-          <p style={{ fontSize: 12, color: '#7070A0', marginTop: 16 }}>
+          <p style={{ fontSize: 12, color: 'var(--text3)', marginTop: 16 }}>
             Free forever · No credit card · Works on any device
           </p>
         </section>
@@ -1285,7 +1285,7 @@ export default function HomePage() {
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: 16,
-            background: 'rgba(3,3,13,0.88)',
+            background: 'rgba(248,247,245,0.97)',
             backdropFilter: 'blur(16px)',
           }}
         >
@@ -1296,7 +1296,7 @@ export default function HomePage() {
               display: 'flex',
               gap: 24,
               fontSize: 12,
-              color: '#8B88B3',
+              color: 'var(--text2)',
               flexWrap: 'wrap',
             }}
           >
@@ -1314,7 +1314,7 @@ export default function HomePage() {
                 href={href}
                 style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.18s' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#D4A208')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#8B88B3')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
               >
                 {label}
               </Link>
@@ -1324,7 +1324,7 @@ export default function HomePage() {
           <span
             style={{
               fontSize: 11,
-              color: '#7070A0',
+              color: 'var(--text3)',
               letterSpacing: 2,
               fontFamily: 'monospace',
               textTransform: 'uppercase',

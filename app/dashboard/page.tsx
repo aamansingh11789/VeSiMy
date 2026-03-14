@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   if (!profile) redirect('/auth/login')
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#03030D' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)' }}>
       <Sidebar profile={profile} />
       <main style={{ marginLeft: 240, flex: 1, padding: 28, minWidth: 0 }}>
         <DashboardClient profile={profile} initialProjects={projects || []} />

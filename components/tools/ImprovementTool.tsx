@@ -57,7 +57,7 @@ const BLANK_GOAL = (): Goal => ({
 })
 
 const STATUS_COL = {
-  open: '#7070A0',
+  open: 'var(--text3)',
   'in-progress': '#D4A208',
   achieved: '#1DD1A1',
   'not-achieved': '#FF6B6B',

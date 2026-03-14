@@ -17,10 +17,10 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 export default function VSMPost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -29,28 +29,28 @@ export default function VSMPost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>8 min read · March 12, 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             What Is Value Stream Mapping? The Complete Guide for 2026
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             Value stream mapping is the most powerful lean tool most teams use wrong — or don't use at all. Here's everything you need to know, including how to build your first map today for free.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>What is a value stream map?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is a value stream map?</h2>
           <p style={{ marginBottom: 18 }}>
             A value stream map (VSM) is a visual diagram that shows every step, every delay, and every handoff your product goes through — from the moment raw materials arrive to the moment a customer receives it.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The key insight of VSM is this: most of the time a product spends in your facility is <em style={{ color: '#F3F1FB' }}>waiting</em>, not moving. Studies consistently show that 80–95% of total lead time in manufacturing is pure waste — queues, transport, storage, rework.
+            The key insight of VSM is this: most of the time a product spends in your facility is <em style={{ color: 'var(--text)' }}>waiting</em>, not moving. Studies consistently show that 80–95% of total lead time in manufacturing is pure waste — queues, transport, storage, rework.
           </p>
           <p style={{ marginBottom: 18 }}>
-            A VSM makes all of that waste <strong style={{ color: '#F3F1FB' }}>visible</strong>. You can't improve what you can't see.
+            A VSM makes all of that waste <strong style={{ color: 'var(--text)' }}>visible</strong>. You can't improve what you can't see.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The two maps: current state vs future state</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The two maps: current state vs future state</h2>
           <p style={{ marginBottom: 18 }}>
             Every VSM project starts with a <strong style={{ color: '#D4A208' }}>current state map</strong> — an honest picture of exactly how your process works today. Not how it's supposed to work. How it actually works.
           </p>
@@ -58,7 +58,7 @@ export default function VSMPost() {
             From there, you build a <strong style={{ color: '#D4A208' }}>future state map</strong> — what the process should look like after you've eliminated the waste you found. The gap between current and future state is your kaizen roadmap.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The 5 key numbers every VSM must show</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The 5 key numbers every VSM must show</h2>
           {[
             ['Cycle Time (CT)', 'How long it actually takes to complete one unit at each step'],
             ['Changeover Time (CO)', 'How long it takes to switch from one product to another'],
@@ -71,7 +71,7 @@ export default function VSMPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The 8 wastes VSM reveals (DOWNTIME)</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The 8 wastes VSM reveals (DOWNTIME)</h2>
           <p style={{ marginBottom: 16 }}>Once you can see your process, you'll find these wastes hiding in it:</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 10, marginBottom: 24 }}>
             {[
@@ -84,14 +84,14 @@ export default function VSMPost() {
               ['M — Motion', 'Unnecessary movement of people'],
               ['E — Extra processing', 'Steps that add cost but not customer value'],
             ].map(([waste, desc]) => (
-              <div key={waste} style={{ background: 'rgba(8,8,24,0.78)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 14px' }}>
-                <div style={{ fontWeight: 700, color: '#F3F1FB', fontSize: 13, marginBottom: 4 }}>{waste}</div>
-                <div style={{ fontSize: 12, color: '#8B88B3' }}>{desc}</div>
+              <div key={waste} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 14px' }}>
+                <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, marginBottom: 4 }}>{waste}</div>
+                <div style={{ fontSize: 12, color: 'var(--text2)' }}>{desc}</div>
               </div>
             ))}
           </div>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>How to build your first VSM in under an hour</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to build your first VSM in under an hour</h2>
           {[
             ['Step 1: Pick one product family', 'Don\'t try to map your entire facility. Pick one product family — ideally the one with the most customer demand or the biggest quality issues.'],
             ['Step 2: Walk the floor', 'Starting from shipping and working backwards to receiving, follow the actual path your product takes. Sketch it on paper as you go. Time each step with a stopwatch.'],
@@ -105,7 +105,7 @@ export default function VSMPost() {
                 {i + 1}
               </div>
               <div>
-                <strong style={{ color: '#F3F1FB', display: 'block', marginBottom: 6 }}>{title}</strong>
+                <strong style={{ color: 'var(--text)', display: 'block', marginBottom: 6 }}>{title}</strong>
                 {body}
               </div>
             </div>
@@ -113,13 +113,13 @@ export default function VSMPost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Ready to build your first VSM?
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's VSM tool is free, browser-based, and works on any device. No download, no setup, no Visio license required.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: '#03030D', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Build your VSM free →
             </Link>
           </div>

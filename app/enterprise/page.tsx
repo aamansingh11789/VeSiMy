@@ -59,16 +59,16 @@ export default function EnterprisePage() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#03030D', color:'#EAE8F4',
+    <div style={{ minHeight:'100vh', background:'var(--bg)', color:'var(--text)',
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(108,185,252,0.04) 0%, transparent 60%)' }}>
       {/* Nav */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(215,213,206,0.95)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
             <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
-        <Link href="/pricing" style={{ fontSize:13, color:'#7070A0', textDecoration:'none' }}>← All Plans</Link>
+        <Link href="/pricing" style={{ fontSize:13, color:'var(--text3)', textDecoration:'none' }}>← All Plans</Link>
       </div>
 
       <div style={{ maxWidth:960, margin:'0 auto', padding:'48px 24px 80px' }}>
@@ -77,7 +77,7 @@ export default function EnterprisePage() {
           <h1 style={{ fontFamily:serif, fontSize:'clamp(28px,4vw,52px)', fontWeight:700, marginBottom:12 }}>
             Build your quote in<br /><span style={{ color:'#6CB9FC' }}>30 seconds.</span>
           </h1>
-          <p style={{ fontSize:16, color:'#7070A0', maxWidth:440, margin:'0 auto' }}>
+          <p style={{ fontSize:16, color:'var(--text3)', maxWidth:440, margin:'0 auto' }}>
             Pricing scales with your team. Volume discounts apply automatically. Beta companies get 33% off.
           </p>
         </div>
@@ -110,14 +110,14 @@ export default function EnterprisePage() {
               <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
                 {ADDONS.map(a => (
                   <button key={a.id} type="button" onClick={()=>set(a.id, !(form as any)[a.id])} style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 16px', borderRadius:10, cursor:'pointer', textAlign:'left', border:'1px solid', transition:'all 0.15s',
-                    background: (form as any)[a.id]?'rgba(108,185,252,0.06)':'rgba(8,8,24,0.75)',
-                    borderColor: (form as any)[a.id]?'rgba(108,185,252,0.35)':'rgba(40,40,92,0.5)' }}>
-                    <div style={{ width:20, height:20, borderRadius:5, border:`2px solid ${(form as any)[a.id]?'#6CB9FC':'#28285C'}`, background:(form as any)[a.id]?'#6CB9FC':'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                      {(form as any)[a.id] && <CheckIcon size={12} color='#03030D' strokeWidth={3} />}
+                    background: (form as any)[a.id]?'rgba(108,185,252,0.06)':'rgba(248,247,245,0.97)',
+                    borderColor: (form as any)[a.id]?'rgba(108,185,252,0.35)':'rgba(184,180,172,0.6)' }}>
+                    <div style={{ width:20, height:20, borderRadius:5, border:`2px solid ${(form as any)[a.id]?'#6CB9FC':'var(--border2)'}`, background:(form as any)[a.id]?'#6CB9FC':'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      {(form as any)[a.id] && <CheckIcon size={12} color='var(--bg)' strokeWidth={3} />}
                     </div>
                     <div style={{ flex:1 }}>
-                      <div style={{ fontSize:13, fontWeight:600, color:'#EAE8F4' }}>{a.label}</div>
-                      <div style={{ fontSize:11, color:'#7070A0' }}>{a.desc}</div>
+                      <div style={{ fontSize:13, fontWeight:600, color:'var(--text)' }}>{a.label}</div>
+                      <div style={{ fontSize:11, color:'var(--text3)' }}>{a.desc}</div>
                     </div>
                     <span style={{ fontSize:12, color:'#6CB9FC', whiteSpace:'nowrap', flexShrink:0 }}>{a.price}</span>
                   </button>
@@ -152,7 +152,7 @@ export default function EnterprisePage() {
                 <div>
                   <label className="label">Beta Discount Code</label>
                   <input className="input" value={form.discount_code} onChange={e=>set('discount_code',e.target.value.toUpperCase())} placeholder="BETA-XXXX-33" style={{ fontFamily:'monospace' }} />
-                  <p style={{ fontSize:11, color:'#38385C', marginTop:4 }}>If you're affiliated with a Gold Standard beta tester</p>
+                  <p style={{ fontSize:11, color:'var(--sl-400)', marginTop:4 }}>If you're affiliated with a Gold Standard beta tester</p>
                 </div>
                 <div>
                   <label className="label">Notes</label>
@@ -164,23 +164,23 @@ export default function EnterprisePage() {
             {error && <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.3)', fontSize:13, color:'#FF6B6B' }}>{error}</div>}
 
             <button onClick={getQuote} disabled={loading} style={{ padding:'14px', borderRadius:10, fontSize:15, fontWeight:700, cursor:'pointer', border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
-              background:'linear-gradient(135deg,#1090D4,#6CB9FC)', color:'#03030D', opacity:loading?0.8:1 }}>
+              background:'linear-gradient(135deg,#1090D4,#6CB9FC)', color:'var(--bg)', opacity:loading?0.8:1 }}>
               {loading ? '⟳ Generating Quote…' : 'Generate My Quote'} <ArrowRightIcon size={16} />
             </button>
           </div>
 
           {/* Right: live price panel */}
           <div style={{ position:'sticky', top:24 }}>
-            <div style={{ background:'rgba(8,8,24,0.9)', border:'1px solid rgba(108,185,252,0.25)', borderRadius:16, padding:'24px', overflow:'hidden' }}>
+            <div style={{ background:'rgba(248,247,245,0.97)', border:'1px solid rgba(108,185,252,0.25)', borderRadius:16, padding:'24px', overflow:'hidden' }}>
               <div style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:16 }}>LIVE ESTIMATE</div>
 
               <div style={{ marginBottom:20 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:4 }}>
-                  <span style={{ fontSize:13, color:'#7070A0' }}>Monthly</span>
-                  <span style={{ fontFamily:serif, fontSize:32, fontWeight:700, color:'#EAE8F4' }}>{fmtMoney(monthly)}</span>
+                  <span style={{ fontSize:13, color:'var(--text3)' }}>Monthly</span>
+                  <span style={{ fontFamily:serif, fontSize:32, fontWeight:700, color:'var(--text)' }}>{fmtMoney(monthly)}</span>
                 </div>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
-                  <span style={{ fontSize:13, color:'#7070A0' }}>Annual (2 months free)</span>
+                  <span style={{ fontSize:13, color:'var(--text3)' }}>Annual (2 months free)</span>
                   <div style={{ textAlign:'right' }}>
                     <span style={{ fontFamily:serif, fontSize:22, fontWeight:700, color:'#6CB9FC' }}>{fmtMoney(annual)}</span>
                     <div style={{ fontSize:11, color:'#1DD1A1' }}>Save {fmtMoney(monthly*12-annual)}/yr</div>
@@ -188,8 +188,8 @@ export default function EnterprisePage() {
                 </div>
               </div>
 
-              <div style={{ borderTop:'1px solid rgba(26,26,64,0.6)', paddingTop:14, marginBottom:14 }}>
-                <div style={{ fontSize:10, color:'#38385C', letterSpacing:1, fontFamily:'monospace', marginBottom:10 }}>BREAKDOWN</div>
+              <div style={{ borderTop:'1px solid rgba(215,213,206,0.95)', paddingTop:14, marginBottom:14 }}>
+                <div style={{ fontSize:10, color:'var(--sl-400)', letterSpacing:1, fontFamily:'monospace', marginBottom:10 }}>BREAKDOWN</div>
                 {[
                   ['Base', `${users} users × $15`, fmtMoney(Math.round(users*15))],
                   volDisc>0 ? ['Volume discount', `-${Math.round(volDisc*100)}%`, `-${fmtMoney(Math.round(users*15*volDisc))}`] : null,
@@ -199,8 +199,8 @@ export default function EnterprisePage() {
                   form.needs_custom_int  ? ['Custom Integrations', '', '$250'] : null,
                 ].filter(Boolean).map((row: any, i) => (
                   <div key={i} style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
-                    <span style={{ fontSize:12, color:'#7070A0' }}>{row[0]}{row[1]?' '+row[1]:''}</span>
-                    <span style={{ fontSize:12, color: row[2].startsWith('-')?'#1DD1A1':'#EAE8F4', fontFamily:'monospace' }}>{row[2]}</span>
+                    <span style={{ fontSize:12, color:'var(--text3)' }}>{row[0]}{row[1]?' '+row[1]:''}</span>
+                    <span style={{ fontSize:12, color: row[2].startsWith('-')?'#1DD1A1':'var(--text)', fontFamily:'monospace' }}>{row[2]}</span>
                   </div>
                 ))}
               </div>
@@ -215,19 +215,19 @@ export default function EnterprisePage() {
               {quote && (
                 <div style={{ background:'rgba(212,162,8,0.06)', border:'1px solid rgba(212,162,8,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
                   <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'monospace', marginBottom:6 }}>OFFICIAL QUOTE</div>
-                  <div style={{ fontSize:13, color:'#EAE8F4', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
+                  <div style={{ fontSize:13, color:'var(--text)', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
                   {quote.breakdown.code_discount && (
                     <div style={{ fontSize:12, color:'#1DD1A1', marginBottom:4 }}>✓ {quote.breakdown.code_discount} applied</div>
                   )}
                   <div style={{ display:'flex', justifyContent:'space-between', marginTop:8 }}>
-                    <span style={{ fontSize:12, color:'#7070A0' }}>Final monthly</span>
+                    <span style={{ fontSize:12, color:'var(--text3)' }}>Final monthly</span>
                     <span style={{ fontFamily:serif, fontSize:20, fontWeight:700, color:GOLD }}>{fmtMoney(quote.breakdown.final_monthly)}</span>
                   </div>
                   <div style={{ display:'flex', justifyContent:'space-between' }}>
-                    <span style={{ fontSize:12, color:'#7070A0' }}>Annual (2 mo free)</span>
+                    <span style={{ fontSize:12, color:'var(--text3)' }}>Annual (2 mo free)</span>
                     <span style={{ fontFamily:serif, fontSize:16, fontWeight:700, color:'#6CB9FC' }}>{fmtMoney(quote.breakdown.annual)}</span>
                   </div>
-                  <p style={{ fontSize:11, color:'#38385C', marginTop:8 }}>Valid 30 days · {quote.quote_ref} · Quote emailed to {form.contact_email}</p>
+                  <p style={{ fontSize:11, color:'var(--sl-400)', marginTop:8 }}>Valid 30 days · {quote.quote_ref} · Quote emailed to {form.contact_email}</p>
                 </div>
               )}
 
@@ -243,8 +243,8 @@ export default function EnterprisePage() {
                       <div key={step} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
                         <span style={{ color:'#1DD1A1', fontWeight:700, fontSize:13, flexShrink:0 }}>→</span>
                         <div>
-                          <span style={{ color:'#F3F1FB', fontWeight:600, fontSize:13 }}>{step}: </span>
-                          <span style={{ color:'#8B88B3', fontSize:13 }}>{desc}</span>
+                          <span style={{ color:'var(--text)', fontWeight:600, fontSize:13 }}>{step}: </span>
+                          <span style={{ color:'var(--text2)', fontSize:13 }}>{desc}</span>
                         </div>
                       </div>
                     ))}
@@ -252,7 +252,7 @@ export default function EnterprisePage() {
                   <div style={{ marginTop:16, display:'flex', gap:10, flexWrap:'wrap' }}>
                     <a
                       href={`mailto:founder@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
-                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
+                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
                     >
                       Email us directly →
                     </a>
@@ -268,7 +268,7 @@ export default function EnterprisePage() {
                 </div>
               )}
 
-              <p style={{ fontSize:11, color:'#28285C', textAlign:'center', marginTop:14 }}>
+              <p style={{ fontSize:11, color:'var(--border2)', textAlign:'center', marginTop:14 }}>
                 * Estimate. Official quote locks your price for 30 days.
               </p>
             </div>
@@ -281,7 +281,7 @@ export default function EnterprisePage() {
 
 function Card({ title, children }: { title:string; children:any }) {
   return (
-    <div style={{ background:'rgba(8,8,24,0.75)', border:'1px solid rgba(40,40,92,0.4)', borderRadius:14, padding:'22px 24px' }}>
+    <div style={{ background:'rgba(248,247,245,0.97)', border:'1px solid rgba(184,180,172,0.6)', borderRadius:14, padding:'22px 24px' }}>
       <p style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>
       {children}
     </div>

@@ -71,7 +71,7 @@ export function InstallPrompt() {
         left:       '50%',
         transform:  'translateX(-50%)',
         zIndex:     9999,
-        background: '#0D0D22',
+        background: 'var(--bg3)',
         border:     '1px solid rgba(212,162,8,0.35)',
         borderRadius: 14,
         padding:    '14px 20px',
@@ -86,7 +86,7 @@ export function InstallPrompt() {
         {/* Logo mark */}
         <div style={{
           width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-          background: 'linear-gradient(135deg, #1A1A40, #28285C)',
+          background: 'linear-gradient(135deg, var(--border), var(--border2))',
           border: '1px solid rgba(212,162,8,0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 22,
@@ -96,10 +96,10 @@ export function InstallPrompt() {
 
         {/* Text */}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: 14, color: '#EAE8F4', marginBottom: 2 }}>
+          <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 2 }}>
             Install Vesimy
           </div>
-          <div style={{ fontSize: 12, color: '#7070A0', lineHeight: 1.4 }}>
+          <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.4 }}>
             Add to your home screen for quick access — works offline too
           </div>
         </div>
@@ -110,7 +110,7 @@ export function InstallPrompt() {
             onClick={handleInstall}
             style={{
               background: 'linear-gradient(135deg, #C49510, #D4A208)',
-              color:      '#03030D',
+              color:      'var(--bg)',
               border:     'none',
               borderRadius: 7,
               padding:    '7px 14px',
@@ -125,7 +125,7 @@ export function InstallPrompt() {
             onClick={handleDismiss}
             style={{
               background: 'none',
-              color:      '#38385C',
+              color:      'var(--sl-400)',
               border:     'none',
               fontSize:   12,
               cursor:     'pointer',
@@ -154,22 +154,22 @@ export function InstallPrompt() {
         left:       0,
         right:      0,
         zIndex:     9999,
-        background: '#0D0D22',
+        background: 'var(--bg3)',
         borderTop:  '1px solid rgba(212,162,8,0.3)',
         padding:    '20px 24px 32px',
         animation:  'slideUpFull 0.3s ease',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 16, color: '#EAE8F4', marginBottom: 4 }}>
+            <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 4 }}>
               Install Vesimy
             </div>
-            <div style={{ fontSize: 13, color: '#7070A0' }}>
+            <div style={{ fontSize: 13, color: 'var(--text3)' }}>
               Add to your iPhone home screen
             </div>
           </div>
           <button onClick={handleDismiss} style={{
-            background: 'none', border: 'none', color: '#7070A0',
+            background: 'none', border: 'none', color: 'var(--text3)',
             fontSize: 20, cursor: 'pointer', padding: '0 4px',
           }}>✕</button>
         </div>
@@ -193,7 +193,7 @@ export function InstallPrompt() {
               display:    'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 13, color: '#D4A208', fontWeight: 700,
             }}>{step.icon}</div>
-            <div style={{ fontSize: 14, color: '#EAE8F4', lineHeight: 1.5, paddingTop: 4 }}>
+            <div style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.5, paddingTop: 4 }}>
               {step.text}
             </div>
           </div>

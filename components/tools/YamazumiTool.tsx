@@ -121,7 +121,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                       <div style={{ width: BAR_W, height: CHART_H, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                         {op.tasks.map((task: any) => {
                           const h = Math.max(2, (task.time / maxTime) * CHART_H)
-                          const color = VA_COLORS[task.va_type as keyof typeof VA_COLORS]?.bar || '#7070A0'
+                          const color = VA_COLORS[task.va_type as keyof typeof VA_COLORS]?.bar || 'var(--text3)'
                           return (
                             <div
                               key={task.id}

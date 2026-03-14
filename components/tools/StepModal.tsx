@@ -96,7 +96,7 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
   const nnvaTime = opSteps.filter(s => s.va_type === 'nnva').reduce((a, s) => a + s.time, 0)
   const nvaTime  = opSteps.filter(s => s.va_type === 'nva').reduce((a, s) => a + s.time, 0)
 
-  const vaColor   = VA_TYPES.find(v => v.value === form.va_type)?.color || '#7070A0'
+  const vaColor   = VA_TYPES.find(v => v.value === form.va_type)?.color || 'var(--text3)'
   const vaBg      = VA_TYPES.find(v => v.value === form.va_type)?.bg    || 'transparent'
 
   async function handleSave() {
@@ -271,14 +271,14 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
               )}
 
               {opSteps.map((s, i) => {
-                const vc = VA_TYPES.find(v => v.value === s.va_type)?.color || '#7070A0'
+                const vc = VA_TYPES.find(v => v.value === s.va_type)?.color || 'var(--text3)'
                 return (
                   <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)' }}>
-                    <span style={{ fontSize: 10, color: '#7070A0', fontFamily: 'monospace', minWidth: 20 }}>{i+1}</span>
+                    <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20 }}>{i+1}</span>
                     <span style={{ fontSize: 11, padding: '2px 6px', borderRadius: 4, background: `${vc}22`, color: vc, fontWeight: 700, fontSize: 9, minWidth: 36, textAlign: 'center' }}>{s.va_type.toUpperCase()}</span>
                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                     <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{s.time}s</span>
-                    <button type="button" onClick={() => removeOpStep(s.id)} style={{ background: 'none', border: 'none', color: '#7070A0', cursor: 'pointer', fontSize: 14, padding: '0 2px' }}>×</button>
+                    <button type="button" onClick={() => removeOpStep(s.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14, padding: '0 2px' }}>×</button>
                   </div>
                 )
               })}

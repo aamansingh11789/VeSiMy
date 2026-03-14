@@ -62,27 +62,27 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4"
-         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(100,38,160,0.08) 0%, transparent 60%), #03030D' }}>
+         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(100,38,160,0.08) 0%, transparent 60%), var(--bg)' }}>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <VesimyLogo size={56} />
           </div>
           <h1 style={{ fontFamily: 'Palatino Linotype,Book Antiqua,Palatino,serif', fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
-              className="text-[#D4A208]">
+              className="text-[var(--gold)]">
             Vesimy
           </h1>
-          <p className="text-sm mt-1" style={{ color: '#7070A0', letterSpacing: 3 }}>CONTINUOUS IMPROVEMENT</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--text3)', letterSpacing: 3 }}>CONTINUOUS IMPROVEMENT</p>
         </div>
 
         <div className="card p-6">
-          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: '#1A1A40', background: '#080818' }}>
+          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: 'var(--border)', background: 'var(--bg2)' }}>
             {(['login', 'signup'] as const).map(m => (
               <button key={m} onClick={() => setMode(m)}
                 className="flex-1 py-2 text-sm font-medium transition-all"
                 style={{
-                  background: mode === m ? 'linear-gradient(135deg,#C49510,#D4A208)' : 'transparent',
-                  color:      mode === m ? '#03030D' : '#7070A0',
+                  background: mode === m ? 'linear-gradient(135deg,#B8880A,var(--gold))' : 'transparent',
+                  color:      mode === m ? 'var(--bg)' : 'var(--text3)',
                   fontWeight: mode === m ? 700 : 400,
                 }}>
                 {m === 'login' ? 'Sign In' : 'Sign Up'}
@@ -101,9 +101,9 @@ function LoginForm() {
           </button>
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex-1 h-px" style={{ background: '#1A1A40' }} />
-            <span className="text-xs" style={{ color: '#38385C' }}>or</span>
-            <div className="flex-1 h-px" style={{ background: '#1A1A40' }} />
+            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+            <span className="text-xs" style={{ color: 'var(--sl-400)' }}>or</span>
+            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
           </div>
 
           <form onSubmit={handleEmailAuth} className="space-y-4">
@@ -130,16 +130,16 @@ function LoginForm() {
           </form>
 
           {mode === 'login' && (
-            <p className="text-center mt-4 text-xs" style={{ color: '#38385C' }}>
-              <Link href="/auth/reset" className="hover:text-[#D4A208] transition-colors">Forgot password?</Link>
+            <p className="text-center mt-4 text-xs" style={{ color: 'var(--sl-400)' }}>
+              <Link href="/auth/reset" className="hover:text-[var(--gold)] transition-colors">Forgot password?</Link>
             </p>
           )}
         </div>
 
-        <p className="text-center mt-4 text-xs" style={{ color: '#38385C' }}>
+        <p className="text-center mt-4 text-xs" style={{ color: 'var(--sl-400)' }}>
           By continuing you agree to our{' '}
-          <Link href="/terms" className="hover:text-[#D4A208]">Terms</Link> and{' '}
-          <Link href="/privacy" className="hover:text-[#D4A208]">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-[var(--gold)]">Terms</Link> and{' '}
+          <Link href="/privacy" className="hover:text-[var(--gold)]">Privacy Policy</Link>
         </p>
       </div>
     </div>

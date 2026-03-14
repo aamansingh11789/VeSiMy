@@ -33,12 +33,12 @@ const PLAN_META: Record<
 > = {
   free: {
     icon: SparkleIcon,
-    border: 'rgba(40,40,92,0.50)',
-    bg: 'rgba(8,8,24,0.74)',
+    border: 'rgba(184,180,172,0.6)',
+    bg: 'rgba(248,247,245,0.97)',
     badge: null,
     highlight: false,
     gold: false,
-    accent: '#8B88B3',
+    accent: 'var(--text2)',
   },
   pro: {
     icon: ZapIcon,
@@ -109,7 +109,7 @@ function SectionTitle({
           fontFamily: serif,
           fontSize: 'clamp(30px,5vw,56px)',
           fontWeight: 700,
-          color: '#F3F1FB',
+          color: 'var(--text)',
           marginBottom: 16,
           lineHeight: 1.08,
           letterSpacing: 0.2,
@@ -148,17 +148,17 @@ function PricingToggle({
         display: 'inline-flex',
         alignItems: 'center',
         gap: 12,
-        background: 'rgba(8,8,24,0.82)',
-        border: '1px solid rgba(26,26,64,0.8)',
+        background: 'rgba(248,247,245,0.97)',
+        border: '1px solid rgba(215,213,206,0.95)',
         borderRadius: 999,
         padding: '6px 6px 6px 16px',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+        boxShadow: '',
       }}
     >
       <span
         style={{
           fontSize: 13,
-          color: annual ? 'var(--text2)' : '#EAE8F4',
+          color: annual ? 'var(--text2)' : 'var(--text)',
           transition: 'color 0.2s',
         }}
       >
@@ -177,7 +177,7 @@ function PricingToggle({
           transition: 'background 0.2s',
           background: annual
             ? 'linear-gradient(135deg,#C49510,#D4A208)'
-            : 'rgba(40,40,92,0.6)',
+            : 'rgba(184,180,172,0.6)',
           boxShadow: annual ? '0 4px 12px rgba(212,162,8,0.18)' : 'none',
         }}
       >
@@ -189,7 +189,7 @@ function PricingToggle({
             width: 18,
             height: 18,
             borderRadius: '50%',
-            background: '#EAE8F4',
+            background: 'var(--text)',
             transition: 'left 0.2s',
           }}
         />
@@ -198,7 +198,7 @@ function PricingToggle({
       <span
         style={{
           fontSize: 13,
-          color: annual ? '#EAE8F4' : 'var(--text2)',
+          color: annual ? 'var(--text)' : 'var(--text2)',
           transition: 'color 0.2s',
         }}
       >
@@ -269,10 +269,10 @@ function PlanCard({
         padding: 26,
         background:
           meta.highlight
-            ? 'linear-gradient(180deg, rgba(212,162,8,0.05), rgba(8,8,24,0.88) 70%)'
+            ? 'linear-gradient(180deg, rgba(212,162,8,0.05), rgba(248,247,245,0.97) 70%)'
             : meta.gold
-              ? 'linear-gradient(180deg, rgba(212,162,8,0.06), rgba(8,8,24,0.88) 70%)'
-              : `linear-gradient(180deg, rgba(255,255,255,0.02), ${meta.bg})`,
+              ? 'linear-gradient(180deg, rgba(212,162,8,0.06), rgba(248,247,245,0.97) 70%)'
+              : `linear-gradient(180deg, rgba(255,255,255,0.0), ${meta.bg})`,
         border: `1px solid ${meta.border}`,
         boxShadow: meta.highlight
           ? '0 0 0 1px rgba(212,162,8,0.18), 0 18px 60px rgba(0,0,0,0.42)'
@@ -311,7 +311,7 @@ function PlanCard({
               meta.highlight || meta.gold
                 ? 'none'
                 : '1px solid rgba(108,185,252,0.3)',
-            color: meta.highlight || meta.gold ? '#03030D' : '#6CB9FC',
+            color: meta.highlight || meta.gold ? 'var(--bg)' : '#6CB9FC',
             boxShadow:
               meta.highlight || meta.gold
                 ? '0 6px 16px rgba(212,162,8,0.18)'
@@ -337,13 +337,13 @@ function PlanCard({
                   ? 'rgba(212,162,8,0.12)'
                   : isEnterprise
                     ? 'rgba(108,185,252,0.10)'
-                    : 'rgba(40,40,92,0.4)',
+                    : 'rgba(184,180,172,0.6)',
               border:
                 meta.highlight || meta.gold
                   ? '1px solid rgba(212,162,8,0.18)'
                   : isEnterprise
                     ? '1px solid rgba(108,185,252,0.18)'
-                    : '1px solid rgba(255,255,255,0.04)',
+                    : '1px solid rgba(255,255,255,0.0)',
             }}
           >
             <Icon
@@ -353,7 +353,7 @@ function PlanCard({
                   ? '#D4A208'
                   : isEnterprise
                     ? '#6CB9FC'
-                    : '#8B88B3'
+                    : 'var(--text2)'
               }
             />
           </div>
@@ -363,7 +363,7 @@ function PlanCard({
               style={{
                 fontSize: 20,
                 fontWeight: 700,
-                color: '#F3F1FB',
+                color: 'var(--text)',
                 fontFamily: serif,
                 lineHeight: 1.1,
               }}
@@ -432,7 +432,7 @@ function PlanCard({
                   fontSize: 46,
                   fontWeight: 700,
                   fontFamily: serif,
-                  color: meta.highlight || meta.gold ? '#D4A208' : '#F3F1FB',
+                  color: meta.highlight || meta.gold ? '#D4A208' : 'var(--text)',
                   lineHeight: 1,
                 }}
               >
@@ -480,13 +480,13 @@ function PlanCard({
               ? 'linear-gradient(135deg,#C49510,#D4A208,#F4A623)'
               : isEnterprise
                 ? 'rgba(108,185,252,0.10)'
-                : 'rgba(40,40,92,0.5)',
+                : 'rgba(215,213,206,0.9)',
           color:
             meta.highlight || meta.gold
-              ? '#03030D'
+              ? 'var(--bg)'
               : isEnterprise
                 ? '#6CB9FC'
-                : '#EAE8F4',
+                : 'var(--text)',
           boxShadow:
             meta.highlight || meta.gold
               ? '0 8px 22px rgba(212,162,8,0.18)'
@@ -538,13 +538,13 @@ function PlanCard({
                     ? 'rgba(212,162,8,0.12)'
                     : isEnterprise
                       ? 'rgba(108,185,252,0.10)'
-                      : 'rgba(40,40,92,0.5)',
+                      : 'rgba(215,213,206,0.9)',
                 border:
                   meta.highlight || meta.gold
                     ? '1px solid rgba(212,162,8,0.18)'
                     : isEnterprise
                       ? '1px solid rgba(108,185,252,0.16)'
-                      : '1px solid rgba(255,255,255,0.03)',
+                      : '1px solid rgba(255,255,255,0.0)',
               }}
             >
               <CheckIcon
@@ -554,7 +554,7 @@ function PlanCard({
                     ? '#D4A208'
                     : isEnterprise
                       ? '#6CB9FC'
-                      : '#8B88B3'
+                      : 'var(--text2)'
                 }
                 strokeWidth={3}
               />
@@ -618,21 +618,21 @@ export default function PricingPage() {
     <div
       style={{
         minHeight: '100vh',
-        background: '#03030D',
+        background: 'var(--bg)',
         backgroundImage:
           'radial-gradient(ellipse 80% 50% at 20% 0%, rgba(212,162,8,0.08) 0%, transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100,38,160,0.06) 0%, transparent 55%)',
       }}
     >
       <nav
         style={{
-          borderBottom: '1px solid rgba(26,26,64,0.55)',
+          borderBottom: '1px solid rgba(215,213,206,0.95)',
           padding: '14px 18px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 14,
           flexWrap: 'wrap',
-          background: 'rgba(3,3,13,0.55)',
+          background: 'rgba(248,247,245,0.97)',
           backdropFilter: 'blur(12px)',
         }}
       >
@@ -705,7 +705,7 @@ export default function PricingPage() {
         <div
           style={{
             background:
-              'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 44%, rgba(8,8,24,0.7))',
+              'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 44%, rgba(248,247,245,0.97))',
             border: '1px solid rgba(212,162,8,0.18)',
             borderRadius: 20,
             padding: '26px 30px',
@@ -732,7 +732,7 @@ export default function PricingPage() {
               Gold Standard Beta
             </div>
 
-            <p style={{ fontSize: 17, fontWeight: 700, color: '#F3F1FB', margin: '0 0 6px' }}>
+            <p style={{ fontSize: 17, fontWeight: 700, color: 'var(--text)', margin: '0 0 6px' }}>
               Want the $99 Lifetime plan?
             </p>
 
@@ -752,7 +752,7 @@ export default function PricingPage() {
               fontSize: 14,
               whiteSpace: 'nowrap',
               background: 'linear-gradient(135deg,#C49510,#D4A208)',
-              color: '#03030D',
+              color: 'var(--bg)',
               boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
             }}
           >
@@ -763,11 +763,11 @@ export default function PricingPage() {
 
       <div
         style={{
-          borderTop: '1px solid rgba(26,26,64,0.55)',
-          borderBottom: '1px solid rgba(26,26,64,0.45)',
+          borderTop: '1px solid rgba(215,213,206,0.95)',
+          borderBottom: '1px solid rgba(215,213,206,0.95)',
           padding: '30px 24px',
           textAlign: 'center',
-          background: 'rgba(255,255,255,0.01)',
+          background: 'rgba(255,255,255,0.0)',
         }}
       >
         <div
@@ -809,7 +809,7 @@ export default function PricingPage() {
             fontFamily: serif,
             fontSize: 32,
             fontWeight: 700,
-            color: '#F3F1FB',
+            color: 'var(--text)',
             textAlign: 'center',
             marginBottom: 42,
           }}
@@ -846,7 +846,7 @@ export default function PricingPage() {
           <div
             key={q}
             style={{
-              borderBottom: '1px solid rgba(26,26,64,0.45)',
+              borderBottom: '1px solid rgba(215,213,206,0.95)',
               paddingBottom: 22,
               marginBottom: 22,
             }}
@@ -855,7 +855,7 @@ export default function PricingPage() {
               style={{
                 fontSize: 16,
                 fontWeight: 650,
-                color: '#F3F1FB',
+                color: 'var(--text)',
                 marginBottom: 8,
               }}
             >
@@ -868,7 +868,7 @@ export default function PricingPage() {
 
       <div
         style={{
-          borderTop: '1px solid rgba(26,26,64,0.4)',
+          borderTop: '1px solid rgba(215,213,206,0.95)',
           padding: '24px',
           textAlign: 'center',
         }}

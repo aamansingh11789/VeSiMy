@@ -49,13 +49,13 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
           <div style={{ fontSize:14, fontWeight:700, color:'#FF6B6B', marginBottom:3 }}>
             Your Gold Standard beta trial has ended
           </div>
-          <p style={{ fontSize:12, color:'#7070A0', margin:0 }}>
+          <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
             Upgrade to <strong style={{ color:'#D4A208' }}>Lifetime access</strong> for a one-time $99 —
             99 projects, no monthly fees. Your Gold Standard badge stays permanently.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'9px 18px', borderRadius:8, fontWeight:700, fontSize:13, cursor:'pointer',
-          background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', border:'none', whiteSpace:'nowrap' }}>
+          background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', border:'none', whiteSpace:'nowrap' }}>
           Upgrade — $99 Lifetime
         </button>
       </div>
@@ -74,18 +74,18 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         <GoldCrown size={36} />
         <div style={{ flex:1, minWidth:200 }}>
           <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:3 }}>
-            <span style={{ fontSize:13, fontWeight:700, color:'#EAE8F4' }}>Gold Standard Beta</span>
-            <span style={{ fontSize:10, fontWeight:700, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', padding:'2px 8px', borderRadius:100 }}>
+            <span style={{ fontSize:13, fontWeight:700, color:'var(--text)' }}>Gold Standard Beta</span>
+            <span style={{ fontSize:10, fontWeight:700, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', padding:'2px 8px', borderRadius:100 }}>
               GOLD STANDARD
             </span>
           </div>
-          <p style={{ fontSize:12, color:'#7070A0', margin:0 }}>
+          <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
             <strong style={{ color:urgencyColor }}>{days} day{days!==1?'s':''} remaining</strong> in your trial.
             {' '}Upgrade to Lifetime for $99 — keeps your badge + 99 projects forever.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer', whiteSpace:'nowrap',
-          background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', border:'none' }}>
+          background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', border:'none' }}>
           Upgrade — $99 Lifetime ⚡
         </button>
       </div>
@@ -107,16 +107,16 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         background:'none', border:'none', cursor:'pointer', color:'#28285C', fontSize:14 }}>✕</button>
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
-        <div style={{ fontSize:14, fontWeight:700, color:'#EAE8F4', marginBottom:2 }}>
+        <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>
           👑 Gold Standard Beta — Launch Week Open
         </div>
-        <p style={{ fontSize:12, color:'#7070A0', margin:0 }}>
+        <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
           Join during launch week and get your permanent Gold Standard badge. 30-day Pro trial,
           then $99 Lifetime. Your company gets a <strong style={{ color:'#D4A208' }}>33% enterprise discount</strong> forever.
         </p>
       </div>
       <Link href="/beta" style={{ textDecoration:'none', padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12,
-        background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#03030D', whiteSpace:'nowrap' }}>
+        background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', whiteSpace:'nowrap' }}>
         Join Launch Week →
       </Link>
     </div>

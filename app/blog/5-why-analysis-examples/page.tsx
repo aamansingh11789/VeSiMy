@@ -98,10 +98,10 @@ const examples = [
 
 export default function FiveWhyPost() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/blog" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
+        <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>
           ← Back to Blog
         </Link>
 
@@ -110,17 +110,17 @@ export default function FiveWhyPost() {
             <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>6 min read · March 12, 2026</span>
           </div>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: '#F3F1FB', lineHeight: 1.15, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             5 Why Analysis: 6 Real Examples From the Shop Floor
           </h1>
-          <p style={{ fontSize: 17, color: '#8B88B3', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
             The 5 Why technique sounds simple but most teams stop too early or ask the wrong questions. Here are 6 real manufacturing examples that show you exactly how deep to dig.
           </p>
         </div>
 
         <div style={{ fontSize: 15, color: '#B8B5D1', lineHeight: 1.9 }}>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>Why most 5 Why analysis fails</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why most 5 Why analysis fails</h2>
           <p style={{ marginBottom: 18 }}>
             The 5 Why technique was developed by Sakichi Toyoda and is the cornerstone of the Toyota Production System. It is deceptively simple: when a problem occurs, ask "why?" five times to get to the root cause instead of the symptom.
           </p>
@@ -131,13 +131,13 @@ export default function FiveWhyPost() {
             A properly completed 5 Why will almost always point to one of three systemic root causes: a missing standard, a standard that isn't followed, or a standard that isn't visible at the point of use.
           </p>
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>6 real examples</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>6 real examples</h2>
 
           {examples.map((ex, idx) => (
             <div key={idx} style={{ marginBottom: 48 }}>
               <div style={{ background: `${ex.color}0d`, border: `1px solid ${ex.color}33`, borderRadius: 14, padding: '20px 22px', marginBottom: 20 }}>
                 <div style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 800, color: ex.color, letterSpacing: 1.5, marginBottom: 8 }}>EXAMPLE {idx + 1}</div>
-                <div style={{ fontWeight: 700, color: '#F3F1FB', fontSize: 15 }}>Problem: {ex.problem}</div>
+                <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 15 }}>Problem: {ex.problem}</div>
               </div>
 
               {ex.whys.map((why, i) => (
@@ -152,7 +152,7 @@ export default function FiveWhyPost() {
                     W{i + 1}
                   </div>
                   <div style={{ paddingTop: 3, fontSize: 14 }}>
-                    <span style={{ color: '#8B88B3', fontSize: 12 }}>Why? → </span>
+                    <span style={{ color: 'var(--text2)', fontSize: 12 }}>Why? → </span>
                     {why}
                   </div>
                 </div>
@@ -170,9 +170,9 @@ export default function FiveWhyPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#F3F1FB', margin: '40px 0 14px' }}>The pattern you'll notice</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The pattern you'll notice</h2>
           <p style={{ marginBottom: 18 }}>
-            Look back at all 6 examples. Every single root cause points to a <strong style={{ color: '#F3F1FB' }}>system or process failure</strong> — not a person's failure. The operator who guessed the tonnage setting wasn't careless; the training system never required them to prove they could do it alone. The picker who selected the wrong SKU wasn't distracted; the warehouse layout made the error almost inevitable.
+            Look back at all 6 examples. Every single root cause points to a <strong style={{ color: 'var(--text)' }}>system or process failure</strong> — not a person's failure. The operator who guessed the tonnage setting wasn't careless; the training system never required them to prove they could do it alone. The picker who selected the wrong SKU wasn't distracted; the warehouse layout made the error almost inevitable.
           </p>
           <p style={{ marginBottom: 18 }}>
             This is the point of 5 Why. When you reach the real root cause, the corrective action becomes obvious — and it changes the system, not just the person.
@@ -183,10 +183,10 @@ export default function FiveWhyPost() {
 
           {/* CTA */}
           <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 16, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#F3F1FB', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Run 5 Why analysis on your next problem
             </h3>
-            <p style={{ fontSize: 14, color: '#8B88B3', marginBottom: 24, lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's 5 Why tool guides your team through the full analysis, generates an ISO-compliant report, and links the corrective action directly to the process step in your value stream map.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C43030,#FF6B6B)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>

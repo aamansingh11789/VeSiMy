@@ -290,7 +290,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
         padding: '24px 28px',
         marginBottom: 28,
         background:
-          'linear-gradient(135deg, rgba(212,162,8,0.045), rgba(100,38,160,0.04) 42%, rgba(8,8,24,0.78) 100%)',
+          'rgba(248,247,245,0.97)',
       }}
     >
       <div
@@ -619,7 +619,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               <div
                 style={{
                   display: 'flex',
-                  background: 'rgba(8,8,24,0.72)',
+                  background: 'rgba(248,247,245,0.97)',
                   border: '1px solid rgba(40,40,92,0.45)',
                   borderRadius: 12,
                   overflow: 'hidden',
@@ -671,7 +671,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               gap: 16,
               flexWrap: 'wrap',
               background:
-                'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 42%, rgba(8,8,24,0.75))',
+                'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 42%, rgba(248,247,245,0.97))',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -778,7 +778,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end', flexShrink: 0 }}>
             <span style={{ fontSize: 11, color: '#D4A208', whiteSpace: 'nowrap', opacity: 0.7 }}>Launching M1-3 2026</span>
-            <span style={{ fontSize: 10, color: '#52507A', whiteSpace: 'nowrap' }}>Pre-seed raise open</span>
+            <span style={{ fontSize: 10, color: 'var(--sl-400)', whiteSpace: 'nowrap' }}>Pre-seed raise open</span>
           </div>
         </div>
 
@@ -793,7 +793,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               padding: 56,
               textAlign: 'center',
               background:
-                'linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)), rgba(8,8,24,0.72)',
+                '#FFFFFF',
             }}
           >
             <div

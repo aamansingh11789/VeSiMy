@@ -66,7 +66,7 @@ export default async function ProjectPage({ params }: Props) {
       style={{
         display: 'flex',
         minHeight: '100dvh',
-        background: '#03030D',
+        background: 'var(--bg)',
       }}
     >
       <Sidebar profile={profile} />

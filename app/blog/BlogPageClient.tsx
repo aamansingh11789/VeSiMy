@@ -82,20 +82,20 @@ const posts = [
 
 export default function BlogPageClient() {
   return (
-    <div style={{ minHeight: '100vh', color: '#EAE8F4' }}>
+    <div style={{ minHeight: '100vh', color: 'var(--text)' }}>
       <div style={{ maxWidth: 920, margin: '0 auto', padding: 'clamp(40px,6vw,88px) clamp(20px,5vw,40px)' }}>
 
-        <Link href="/" style={{ fontSize: 13, color: '#8B88B3', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 48 }}>
+        <Link href="/" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 48 }}>
           ← Back to VeSiMy
         </Link>
 
         <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
           Resources
         </p>
-        <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: '#F3F1FB', marginBottom: 12, lineHeight: 1.1 }}>
+        <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
           Lean Manufacturing Blog
         </h1>
-        <p style={{ fontSize: 15, color: '#8B88B3', marginBottom: 56, lineHeight: 1.75, maxWidth: 580 }}>
+        <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 56, lineHeight: 1.75, maxWidth: 580 }}>
           Practical guides, templates, and deep-dives on VSM, Kaizen, 5 Why, and AI-driven process improvement.
         </p>
 
@@ -103,7 +103,7 @@ export default function BlogPageClient() {
           {posts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
               <article style={{
-                background: 'rgba(8,8,24,0.78)',
+                background: 'rgba(248,247,245,0.97)',
                 border: '1px solid rgba(44,44,92,0.86)',
                 borderRadius: 18,
                 padding: '28px 28px',
@@ -119,19 +119,19 @@ export default function BlogPageClient() {
                   }}>
                     {post.tag}
                   </span>
-                  <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>{post.readTime}</span>
+                  <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>{post.readTime}</span>
                 </div>
 
-                <h2 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: '#F3F1FB', marginBottom: 12, lineHeight: 1.3, flex: 1 }}>
+                <h2 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.3, flex: 1 }}>
                   {post.title}
                 </h2>
 
-                <p style={{ fontSize: 13, color: '#8B88B3', lineHeight: 1.75, marginBottom: 20 }}>
+                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.75, marginBottom: 20 }}>
                   {post.excerpt}
                 </p>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: 12, color: '#52507A' }}>{post.date}</span>
+                  <span style={{ fontSize: 12, color: 'var(--sl-400)' }}>{post.date}</span>
                   <span style={{ fontSize: 13, color: '#D4A208' }}>Read →</span>
                 </div>
               </article>
