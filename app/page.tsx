@@ -11,46 +11,40 @@ import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 // ── Inline 3D VSM step box ────────────────────────────────────────────────────
-function IsoStep({ name, sub, ct, type, isBn = false }: any) {
-  const colors: Record<string, { fill: string; top: string; side: string; text: string; badge: string; badgeText: string }> = {
-    va:   { fill: '#EDF9F5', top: '#D4F0E8', side: '#7DCAB5', text: '#0A4535', badge: '#EDF9F5', badgeText: '#0F6E56' },
-    nnva: { fill: '#FEF9EE', top: '#FEF0CC', side: '#DEB96A', text: '#5A3A00', badge: '#FEF9EE', badgeText: '#854F0B' },
-    bn:   { fill: '#FEF2F0', top: '#FDDDD9', side: '#E8735A', text: '#7A1A0A', badge: '#FEF2F0', badgeText: '#A83222' },
-  }
-  const c = colors[isBn ? 'bn' : type] || colors.va
-  return (
-    <svg width="82" height="62" viewBox="0 0 82 62" fill="none" style={{ flexShrink: 0 }}>
-      {/* depth */}
-      <path d={`M14 16 H68 L74 10 H20 Z`} fill={c.side} opacity="0.42" />
-      <path d={`M68 16 L74 10 L74 50 L68 56 Z`} fill={c.side} opacity="0.55" />
-      {/* front */}
-      <rect x="14" y="16" width="54" height="40" rx="2" fill={c.fill} stroke={isBn ? '#C0402A' : c.side} strokeWidth={isBn ? 1.5 : 1} />
-      {/* top bevel */}
-      <path d={`M14 16 L20 10 L74 10 L68 16 Z`} fill={c.top} stroke={c.side} strokeWidth="0.8" />
-      {/* right face */}
-      <path d={`M68 16 L74 10 L74 50 L68 56 Z`} fill={c.top} stroke={c.side} strokeWidth="0.8" opacity="0.7" />
-      {/* burst on bottleneck */}
-      {isBn && (
-        <polygon points="12,8 13.4,12 18,12 14.2,14.6 15.4,19 12,16.4 8.6,19 9.8,14.6 6,12 10.6,12"
-                 fill="#C0402A" opacity="0.9" />
-      )}
-      {/* name */}
-      <text x="41" y="31" textAnchor="middle" fontSize="7.5" fontWeight="600" fill={c.text} fontFamily="sans-serif">{name}</text>
-      {sub && <text x="41" y="40" textAnchor="middle" fontSize="7" fill={c.text} fontFamily="sans-serif">{sub}</text>}
-      {/* ct badge */}
-      <rect x="20" y="48" width="42" height="9" rx="2" fill={c.badge} stroke={isBn ? '#C0402A' : c.side} strokeWidth="0.6" />
-      <text x="41" y="54.5" textAnchor="middle" fontSize="6.5" fontWeight="700" fill={isBn ? '#A83222' : c.badgeText} fontFamily="monospace">{ct}</text>
-    </svg>
-  )
-}
 
-function WipCoins({ n, color = '#DEB96A', bg = '#FEF9EE' }: any) {
+
+
+// ── IndustryLoop — cycles industries one by one under mission statement ──────
+const INDUSTRIES = ['Automotive','Aerospace','Food & Beverage','Medical Devices','Logistics','Electronics','Pharmaceuticals','Industrial']
+
+function IndustryLoop() {
+  const [idx, setIdx] = useState(0)
+  const [fading, setFading] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFading(true)
+      setTimeout(() => {
+        setIdx(i => (i + 1) % INDUSTRIES.length)
+        setFading(false)
+      }, 300)
+    }, 2000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, flexShrink: 0 }}>
-      {Array.from({ length: Math.min(n, 3) }).map((_, i) => (
-        <div key={i} style={{ width: 16, height: 5, borderRadius: '50%', border: `1px solid ${color}`, background: bg, opacity: 1 - i * 0.25 }} />
-      ))}
-      <span style={{ fontSize: 6, color: '#8E8A82', fontFamily: 'monospace' }}>{n}</span>
+    <div style={{ height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, gap: 8 }}>
+      <span style={{ fontSize: 11, color: '#B8B4AC', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
+      <span style={{
+        fontSize: 13, fontWeight: 700, color: '#C49B2E',
+        letterSpacing: 0.5, textTransform: 'uppercase', fontFamily: 'monospace',
+        opacity: fading ? 0 : 1,
+        transform: fading ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'opacity 0.3s ease, transform 0.3s ease',
+        display: 'inline-block', minWidth: 160, textAlign: 'left',
+      }}>
+        {INDUSTRIES[idx]}
+      </span>
     </div>
   )
 }
@@ -817,7 +811,6 @@ export default function HomePage() {
         @media(max-width:768px){
           .hero-grid{grid-template-columns:1fr!important;padding:40px 20px 0!important;}
           .hero-text{padding-right:0!important;}
-          .vsm-card{display:none!important;}
           .feat-grid{grid-template-columns:1fr!important;}
           .tools-grid{grid-template-columns:1fr 1fr!important;}
           .plan-grid{grid-template-columns:1fr!important;}
@@ -849,47 +842,42 @@ export default function HomePage() {
       </nav>
 
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.12fr', minHeight: 620, alignItems: 'center', padding: '56px 48px 0', gap: 32, background: '#F8F7F5', overflow: 'hidden' }}>
+      <section style={{ minHeight: 580, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(64px,8vw,100px) clamp(20px,5vw,48px) clamp(48px,6vw,80px)', background: '#F8F7F5', textAlign: 'center' }}>
+        <div style={{ maxWidth: 680, width: '100%' }}>
 
-        <div className="hero-text" style={{ paddingRight: 24 }}>
-
-          {/* Hero Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
-            <div className="logo-mark-anim" style={{ flexShrink: 0 }}>
-              <VLogoMark size={88} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <div className="wordmark-anim">
-                <VeSiMyWordmark size={52} />
-              </div>
-              <span className="tagline-anim" style={{
-                fontSize: 11, letterSpacing: 3, fontFamily: 'monospace',
-                textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600,
-              }}>
+          {/* Logo + wordmark centred */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, marginBottom: 32 }}>
+            <div className="logo-mark-anim"><VLogoMark size={80} /></div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, textAlign: 'left' }}>
+              <div className="wordmark-anim"><VeSiMyWordmark size={48} /></div>
+              <span className="tagline-anim" style={{ fontSize: 11, letterSpacing: 3, fontFamily: 'monospace', textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600 }}>
                 Continuous Improvement Platform
               </span>
             </div>
           </div>
 
           {/* Headline */}
-          <h1 className="reveal r2" style={{ fontSize: 'clamp(36px,4vw,54px)', lineHeight: 1.08, fontWeight: 700, color: '#242220', marginBottom: 18, letterSpacing: -0.5, fontFamily: serif }}>
+          <h1 className="reveal r2" style={{ fontSize: 'clamp(38px,5vw,58px)', lineHeight: 1.07, fontWeight: 700, color: '#242220', marginBottom: 20, letterSpacing: -0.5, fontFamily: serif }}>
             Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
           </h1>
 
-          {/* V Trade Statement */}
-          <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 24, padding: '14px 16px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0' }}>
-            <span style={{ fontSize: 32, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1 }}>V</span>
+          {/* Mission statement */}
+          <div className="reveal r3" style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 12, marginBottom: 24, padding: '14px 20px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', textAlign: 'left', maxWidth: 500 }}>
+            <span style={{ fontSize: 30, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#242220', lineHeight: 1.3 }}>Add Value to your process and yourself</div>
               <div style={{ fontSize: 12, color: '#8E8A82', marginTop: 3, lineHeight: 1.5 }}>Value Stream · Value Add · Value for your team</div>
             </div>
           </div>
 
-          <p className="reveal r3" style={{ fontSize: 15, color: '#6B6760', lineHeight: 1.8, marginBottom: 30, maxWidth: 420 }}>
+          {/* Cycling industry loop */}
+          <IndustryLoop />
+
+          <p className="reveal r3" style={{ fontSize: 15, color: '#6B6760', lineHeight: 1.8, marginBottom: 30, maxWidth: 460, margin: '0 auto 30px' }}>
             A complete lean CI toolkit — VSM, time study, fishbone, 5&nbsp;Why, kaizen, PDCA — all connected, all free.
           </p>
 
-          <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link href="/auth/signup" style={{ padding: '13px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               Start your 14-day free trial <ArrowRightIcon size={14} color="#fff" />
             </Link>
@@ -902,93 +890,9 @@ export default function HomePage() {
             14-day free trial · No credit card · Cancel anytime
           </p>
         </div>
-
-        {/* ── VSM PREVIEW CARD ── */}
-        <div className="vsm-card" style={{ background: '#fff', borderRadius: '16px 16px 0 0', border: '1px solid #D8D5CE', borderBottom: 'none', padding: '16px 16px 0', boxShadow: '0 -4px 32px rgba(0,0,0,0.08)', transform: 'perspective(900px) rotateX(2deg)', transformOrigin: 'bottom center' }}>
-
-          {/* Card top bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 12, paddingBottom: 11, borderBottom: '0.5px solid #ECEAE6' }}>
-            <div style={{ display: 'flex', gap: 5 }}>
-              {['#E8A49A', '#DEB96A', '#7DCAB5'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}
-            </div>
-            <span style={{ fontSize: 10, color: '#8E8A82', flex: 1, marginLeft: 5 }}>Seat Assembly Line 4 — Current State VSM</span>
-            <span style={{ fontSize: 8, padding: '2px 7px', borderRadius: 999, fontWeight: 700, background: '#EEF4FB', color: '#1A4F8A' }}>ISO 22468:2020</span>
-          </div>
-
-          {/* KPIs */}
-          <div style={{ display: 'flex', border: '0.5px solid #D8D5CE', borderRadius: 7, overflow: 'hidden', marginBottom: 12 }}>
-            {[
-              { label: 'Total CT', val: '8m 20s', color: '#C49B2E' },
-              { label: 'Takt', val: '2m 00s', color: '#C49B2E' },
-              { label: 'PCE', val: `${Math.round(pce)}%`, color: '#C0402A' },
-              { label: 'WIP', val: '47', color: '#C49B2E' },
-              { label: 'Open KZ', val: '4', color: '#C49B2E' },
-            ].map((k, i) => (
-              <div key={i} style={{ flex: 1, padding: '6px 8px', textAlign: 'center', borderRight: i < 4 ? '0.5px solid #D8D5CE' : 'none' }}>
-                <div style={{ fontSize: 7, color: '#8E8A82', letterSpacing: 1.2, textTransform: 'uppercase' }}>{k.label}</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: k.color, marginTop: 1 }}>{k.val}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* 3D ISO Steps */}
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, overflowX: 'auto', paddingBottom: 2 }}>
-            <IsoStep name="Material" sub="Staging" ct="NNVA · 45s" type="nnva" />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <WipCoins n={12} />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <IsoStep name="Frame" sub="Sub-Asm" ct="VA · 98s" type="va" />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <WipCoins n={6} />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <div style={{ opacity: bnVis ? 1 : 0.7, transition: 'opacity 0.4s' }}>
-              <IsoStep name="Foam &amp; Fabric" sub="" ct="NVA · 145s" type="va" isBn />
-            </div>
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <WipCoins n={8} color="#E8A49A" bg="#FEF2F0" />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <IsoStep name="Electrical" sub="Integr." ct="VA · 88s" type="va" />
-            <span style={{ fontSize: 11, color: '#B8B4AC', flexShrink: 0 }}>→</span>
-            <IsoStep name="Final" sub="QC" ct="NNVA · 72s" type="nnva" />
-          </div>
-
-          {/* Sawtooth timeline */}
-          <div style={{ marginTop: 10 }}>
-            <div style={{ display: 'flex', gap: 14, fontSize: 7, color: '#8E8A82', marginBottom: 4, fontFamily: 'monospace' }}>
-              <span style={{ color: '#2A9E82' }}>▲ value-add</span>
-              <span style={{ color: '#E8A49A' }}>▼ wait/queue</span>
-              <span style={{ color: '#C0402A' }}>— — takt 120s</span>
-            </div>
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', height: 40, gap: 2, borderBottom: '1px solid #D8D5CE' }}>
-              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 20, borderTop: '1.5px dashed #C0402A' }}>
-                <span style={{ position: 'absolute', right: 0, fontSize: 7, color: '#C0402A', fontWeight: 700, fontFamily: 'monospace', bottom: 2 }}>TAKT</span>
-              </div>
-              {[
-                { h: 9,  bg: '#DEB96A' }, { h: 20, bg: '#E8A49A', top: true }, { h: 18, bg: '#7DCAB5' },
-                { h: 11, bg: '#E8A49A', top: true }, { h: 34, bg: '#C0402A' },
-                { h: 16, bg: '#E8A49A', top: true }, { h: 16, bg: '#7DCAB5' },
-                { h: 9,  bg: '#E8A49A', top: true }, { h: 13, bg: '#DEB96A' },
-              ].map((b, i) => (
-                <div key={i} style={{ width: 18, height: b.h, background: b.bg, opacity: b.top ? 0.45 : 0.82, borderRadius: '2px 2px 0 0', alignSelf: b.top ? 'flex-start' : 'flex-end', flexShrink: 0 }} />
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
-      {/* ── INDUSTRY MARQUEE ─────────────────────────────────────────────────── */}
-      <div style={{ padding: '22px 48px', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE', overflow: 'hidden' }}>
-        <div style={{ fontSize: 10, color: '#8E8A82', textAlign: 'center', letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>
-          Built for lean teams across manufacturing industries
-        </div>
-        <div style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', gap: 56, alignItems: 'center', animation: 'mq 22s linear infinite', width: 'max-content' }}>
-            {['Automotive', 'Aerospace', 'Food & Beverage', 'Medical Devices', 'Logistics', 'Electronics', 'Pharmaceuticals', 'Industrial', 'Automotive', 'Aerospace', 'Food & Beverage', 'Medical Devices', 'Logistics', 'Electronics', 'Pharmaceuticals', 'Industrial'].map((n, i) => (
-              <span key={i} style={{ fontSize: 12, fontWeight: 700, color: '#C8C5BC', whiteSpace: 'nowrap', letterSpacing: 0.5, textTransform: 'uppercase' }}>{n}</span>
-            ))}
-          </div>
-        </div>
-      </div>
+
 
       {/* ── FEATURES ────────────────────────────────────────────────────────── */}
       <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: '#D8D5CE' }}>
