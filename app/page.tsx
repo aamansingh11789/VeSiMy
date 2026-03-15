@@ -14,7 +14,7 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 
 
-// ── IndustryLoop — cycles industries one by one under mission statement ──────
+// ── IndustryLoop — large cycling industry names below headline ───────────────
 const INDUSTRIES = ['Automotive','Aerospace','Food & Beverage','Medical Devices','Logistics','Electronics','Pharmaceuticals','Industrial']
 
 function IndustryLoop() {
@@ -27,21 +27,25 @@ function IndustryLoop() {
       setTimeout(() => {
         setIdx(i => (i + 1) % INDUSTRIES.length)
         setFading(false)
-      }, 300)
-    }, 2000)
+      }, 320)
+    }, 2200)
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <div style={{ height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, gap: 8 }}>
-      <span style={{ fontSize: 11, color: '#B8B4AC', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
+    <div style={{ height: 64, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: 28, gap: 4 }}>
+      <span style={{ fontSize: 11, color: '#B8B4AC', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
       <span style={{
-        fontSize: 13, fontWeight: 700, color: '#C49B2E',
-        letterSpacing: 0.5, textTransform: 'uppercase', fontFamily: 'monospace',
+        fontSize: 'clamp(22px,3.5vw,34px)',
+        fontWeight: 700,
+        color: '#C49B2E',
+        letterSpacing: -0.3,
+        fontFamily: serif,
         opacity: fading ? 0 : 1,
-        transform: fading ? 'translateY(-4px)' : 'translateY(0)',
-        transition: 'opacity 0.3s ease, transform 0.3s ease',
-        display: 'inline-block', minWidth: 160, textAlign: 'left',
+        transform: fading ? 'translateY(6px)' : 'translateY(0)',
+        transition: 'opacity 0.32s ease, transform 0.32s ease',
+        display: 'block',
+        minHeight: '1.2em',
       }}>
         {INDUSTRIES[idx]}
       </span>
@@ -842,27 +846,71 @@ export default function HomePage() {
       </nav>
 
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section style={{ minHeight: 580, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(64px,8vw,100px) clamp(20px,5vw,48px) clamp(48px,6vw,80px)', background: '#F8F7F5', textAlign: 'center' }}>
-        <div style={{ maxWidth: 680, width: '100%' }}>
+      <section style={{ position: 'relative', minHeight: 680, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(72px,9vw,110px) clamp(20px,5vw,60px) clamp(60px,7vw,90px)', background: '#F8F7F5', textAlign: 'center', overflow: 'hidden' }}>
 
-          {/* Logo + wordmark centred */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, marginBottom: 32 }}>
-            <div className="logo-mark-anim"><VLogoMark size={80} /></div>
+        {/* ── Constellation background ── */}
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid slice">
+          {/* Constellation lines */}
+          {[
+            [80,60,200,140],[200,140,340,90],[340,90,480,180],[480,180,560,80],[560,80,700,150],
+            [700,150,820,60],[820,60,960,140],[960,140,1100,80],[1100,80,1160,200],
+            [80,60,120,200],[120,200,200,140],[340,90,300,220],[300,220,480,180],
+            [560,80,520,240],[520,240,700,150],[820,60,780,220],[780,220,960,140],
+            [120,200,80,340],[80,340,200,420],[200,420,300,340],[300,340,300,220],
+            [520,240,480,380],[480,380,620,420],[620,420,700,340],[700,340,700,150],
+            [780,220,820,360],[820,360,960,420],[960,420,1060,320],[1060,320,960,140],
+            [200,420,340,500],[340,500,480,380],[620,420,700,540],[700,540,820,480],
+            [820,480,960,420],[960,420,1060,540],[80,340,60,480],[60,480,200,560],
+            [200,560,200,420],[340,500,280,600],[280,600,420,640],[420,640,480,500],
+            [700,540,780,620],[780,620,820,480],[1060,540,1140,460],[1140,460,1160,560],
+          ].map(([x1,y1,x2,y2],i) => (
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C49B2E" strokeWidth="0.5" opacity="0.12" />
+          ))}
+          {/* Constellation dots */}
+          {[
+            [80,60],[200,140],[340,90],[480,180],[560,80],[700,150],[820,60],[960,140],[1100,80],[1160,200],
+            [120,200],[300,220],[520,240],[780,220],[1060,320],[80,340],[300,340],[480,380],[700,340],[820,360],
+            [960,420],[1060,540],[200,420],[340,500],[620,420],[820,480],[60,480],[200,560],[280,600],[420,640],
+            [700,540],[780,620],[1140,460],[1160,560],[480,500],[700,460],[400,160],[900,280],[150,460],[650,580],
+          ].map(([cx,cy],i) => (
+            <circle key={i} cx={cx} cy={cy} r={i%5===0?2.5:i%3===0?2:1.5} fill="#C49B2E" opacity={i%5===0?0.25:0.15} />
+          ))}
+          {/* Faint VeSiMy V watermarks */}
+          {[[60,120,0.04],[980,40,0.035],[1080,300,0.04],[40,420,0.03],[1020,500,0.035],[540,580,0.03]].map(([x,y,op],i) => (
+            <path key={i} d={`M${x} ${y} H${x+18} L${x+28} ${y+48} L${x+38} ${y+30} L${x+48} ${y+48} L${x+58} ${y} H${x+76} L${x+50} ${y+60} L${x+28} ${y+36} L${x+6} ${y+60} Z`}
+              fill="#C49B2E" opacity={op} />
+          ))}
+        </svg>
+
+        {/* ── Content ── */}
+        <div style={{ maxWidth: 760, width: '100%', position: 'relative', zIndex: 1 }}>
+
+          {/* Logo + wordmark */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, marginBottom: 36 }}>
+            <div className="logo-mark-anim"><VLogoMark size={88} /></div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, textAlign: 'left' }}>
-              <div className="wordmark-anim"><VeSiMyWordmark size={48} /></div>
+              <div className="wordmark-anim"><VeSiMyWordmark size={52} /></div>
               <span className="tagline-anim" style={{ fontSize: 11, letterSpacing: 3, fontFamily: 'monospace', textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600 }}>
-                Continuous Improvement Platform
+                Continuous Improvement · AI Platform
               </span>
             </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="reveal r2" style={{ fontSize: 'clamp(38px,5vw,58px)', lineHeight: 1.07, fontWeight: 700, color: '#242220', marginBottom: 20, letterSpacing: -0.5, fontFamily: serif }}>
+          {/* Main headline */}
+          <h1 className="reveal r2" style={{ fontSize: 'clamp(40px,5.5vw,64px)', lineHeight: 1.06, fontWeight: 700, color: '#242220', marginBottom: 16, letterSpacing: -0.8, fontFamily: serif }}>
             Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
           </h1>
 
+          {/* Industry cycling — large, below headline */}
+          <IndustryLoop />
+
+          {/* AI intro paragraph */}
+          <p className="reveal r3" style={{ fontSize: 16, color: '#4E4B45', lineHeight: 1.85, marginBottom: 28, maxWidth: 600, margin: '0 auto 28px' }}>
+            VeSiMy is the intelligent CI platform that maps your processes, surfaces waste, and tells your team exactly what to fix — powered by AI that understands lean methodology. Not just a tool. A system that thinks alongside you.
+          </p>
+
           {/* Mission statement */}
-          <div className="reveal r3" style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 12, marginBottom: 24, padding: '14px 20px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', textAlign: 'left', maxWidth: 500 }}>
+          <div className="reveal r3" style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 12, marginBottom: 32, padding: '14px 20px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', textAlign: 'left', maxWidth: 520 }}>
             <span style={{ fontSize: 30, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#242220', lineHeight: 1.3 }}>Add Value to your process and yourself</div>
@@ -870,23 +918,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Cycling industry loop */}
-          <IndustryLoop />
+          {/* Capability pills */}
+          <div className="reveal r3" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginBottom: 32 }}>
+            {['VSM · ISO 22468','Time Study','5 Why','Fishbone','Waste ID','Kaizen','Yamazumi','PDCA / A3','AI Gap Analysis'].map(t => (
+              <span key={t} style={{ fontSize: 11, padding: '5px 12px', borderRadius: 100, background: '#FFFFFF', border: '0.5px solid #D8D5CE', color: '#6B6760', fontFamily: 'monospace', letterSpacing: 0.3 }}>{t}</span>
+            ))}
+          </div>
 
-          <p className="reveal r3" style={{ fontSize: 15, color: '#6B6760', lineHeight: 1.8, marginBottom: 30, maxWidth: 460, margin: '0 auto 30px' }}>
-            A complete lean CI toolkit — VSM, time study, fishbone, 5&nbsp;Why, kaizen, PDCA — all connected, all free.
-          </p>
-
+          {/* CTAs */}
           <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link href="/auth/signup" style={{ padding: '13px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <Link href="/auth/signup" style={{ padding: '14px 32px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               Start your 14-day free trial <ArrowRightIcon size={14} color="#fff" />
             </Link>
-            <Link href="/auth/signup" style={{ padding: '13px 20px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '14px 22px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
               See reference project →
             </Link>
           </div>
 
-          <p className="reveal r5" style={{ fontSize: 11, color: '#8E8A82', marginTop: 14 }}>
+          <p className="reveal r5" style={{ fontSize: 11, color: '#B8B4AC', marginTop: 16 }}>
             14-day free trial · No credit card · Cancel anytime
           </p>
         </div>
