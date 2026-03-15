@@ -1,7 +1,6 @@
 // @ts-nocheck
 // ── app/terms/page.tsx ────────────────────────────────────────────────────────
 import Link from 'next/link'
-import { ThemeToggle } from '@/components/ui/ThemeProvider'
 import { VesimyLogo } from '@/components/ui/Logo'
 
 export const metadata = { title: 'Terms of Service — Vesimy' }
@@ -18,7 +17,7 @@ export default function TermsPage() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <nav style={{ borderBottom: '1px solid rgba(26,26,64,0.6)', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" style={{ textDecoration: 'none' }}><VesimyLogo size={36} showText /></Link>
-        <div style={{ display:'flex', alignItems:'center', gap:10 }}><ThemeToggle size={28} /><Link href="/dashboard" style={{ fontSize: 13, color: 'var(--text3)', textDecoration: 'none' }}>← Dashboard</Link></div>
+        <Link href="/dashboard" style={{ fontSize: 13, color: 'var(--text3)', textDecoration: 'none' }}>← Dashboard</Link>
       </nav>
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>

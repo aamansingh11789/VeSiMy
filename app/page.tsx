@@ -55,6 +55,309 @@ function WipCoins({ n, color = '#DEB96A', bg = '#FEF9EE' }: any) {
   )
 }
 
+
+// ── Tool Showcase — sticky scroll with animated previews ──────────────────────
+const TOOLS_DATA = [
+  {
+    id: 'vsm',
+    icon: '🗺',
+    name: 'Value Stream Map',
+    label: 'See your whole process at once',
+    body: 'Map every step your product takes from start to finish. Cycle times, wait times, WIP, and bottlenecks all calculated automatically. Steps over Takt Time are flagged in red — no guessing where the constraint is.',
+    badge: 'Core',
+    badgeBg: '#EEF4FB', badgeColor: '#1A4F8A',
+    preview: () => (
+      <div style={{ fontFamily: 'monospace' }}>
+        <div style={{ display: 'flex', gap: 6, marginBottom: 10, padding: '8px 10px', background: '#F0F4FF', borderRadius: 8, fontSize: 11 }}>
+          {[['STEPS','6'],['TOTAL CT','8m 14s'],['TAKT','2m 00s'],['PCE','34%'],['WIP','47']].map(([l,v]) => (
+            <div key={l} style={{ flex:1, textAlign:'center', borderRight:'1px solid #D8D5CE', paddingRight:6 }}>
+              <div style={{ fontSize:8, color:'#8E8A82', letterSpacing:1 }}>{l}</div>
+              <div style={{ fontSize:13, fontWeight:700, color: l==='PCE'?'#C0402A':'#C49B2E' }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:4, overflowX:'auto', padding:'4px 0' }}>
+          {[
+            { name:'Staging', ct:'45s', ok:true },
+            { name:'Frame Asm', ct:'98s', ok:true },
+            { name:'Foam & Fabric', ct:'145s', ok:false },
+            { name:'Electrical', ct:'88s', ok:true },
+            { name:'Final QC', ct:'72s', ok:true },
+          ].map((s, i) => (
+            <div key={s.name} style={{ display:'flex', alignItems:'center', gap:4, flexShrink:0 }}>
+              <div style={{ width:90, background:'#FFFFFF', border:`1.5px solid ${s.ok?'#D8D5CE':'#C0402A'}`, borderRadius:8, padding:'8px 8px 6px', position:'relative', boxShadow: s.ok?'none':'0 0 10px rgba(192,64,42,0.18)' }}>
+                {!s.ok && <div style={{ position:'absolute', top:-7, right:-5, fontSize:10 }}>⚠️</div>}
+                <div style={{ fontSize:8, fontWeight:700, color: s.ok?'#242220':'#C0402A', marginBottom:4, textAlign:'center' }}>{s.name}</div>
+                <div style={{ height:3, background:'#EEE', borderRadius:2, marginBottom:4 }}>
+                  <div style={{ height:3, borderRadius:2, background: s.ok?'#C49B2E':'#C0402A', width: s.ok ? `${Math.round(parseInt(s.ct)*100/145)}%` : '100%' }} />
+                </div>
+                <div style={{ fontSize:8, color: s.ok?'#8E8A82':'#C0402A', textAlign:'center', fontWeight:700 }}>{s.ct}</div>
+              </div>
+              {i < 4 && <div style={{ fontSize:11, color:'#C8C5BC' }}>→</div>}
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop:10, padding:'6px 10px', background:'#FEF2F0', border:'1px solid rgba(192,64,42,0.2)', borderRadius:6, fontSize:11, color:'#C0402A' }}>
+          ⚠ Bottleneck: <strong>Foam & Fabric</strong> is running 21% over Takt Time — 47 units queued upstream.
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'timestudy',
+    icon: '⏱',
+    name: 'Time Study',
+    label: 'Measure it before you manage it',
+    body: 'Built-in stopwatch records every observation lap. Calculates mean cycle time, flags outliers, and sets the official CT used across your VSM. Works with manual entry too — paste in existing data from your clipboard.',
+    badge: 'Free',
+    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
+    preview: () => (
+      <div>
+        <div style={{ textAlign:'center', padding:'16px 0 12px', borderBottom:'1px solid #EEE', marginBottom:12 }}>
+          <div style={{ fontSize:44, fontWeight:800, color:'#242220', fontFamily:'monospace', letterSpacing:2 }}>1:24.3</div>
+          <div style={{ fontSize:11, color:'#8E8A82', marginTop:4 }}>Observation 6 of 10</div>
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:6, marginBottom:12 }}>
+          {[['Mean CT','98.4s','#C49B2E'],['Min','82s','#2A9E82'],['Max','141s','#C0402A']].map(([l,v,c]) => (
+            <div key={l} style={{ background:'#F8F7F5', borderRadius:6, padding:'8px', textAlign:'center' }}>
+              <div style={{ fontSize:9, color:'#8E8A82', letterSpacing:1, marginBottom:2 }}>{l}</div>
+              <div style={{ fontSize:16, fontWeight:700, color:c }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+          {[82,95,91,110,88,141,97,84,102,99].map((t,i) => (
+            <div key={i} style={{ padding:'4px 9px', borderRadius:5, fontSize:11, fontFamily:'monospace', fontWeight:600,
+              background: i===5 ? '#FEF2F0' : '#F0FAF6',
+              color: i===5 ? '#C0402A' : '#0F6E56',
+              border: `1px solid ${i===5?'rgba(192,64,42,0.3)':'rgba(15,110,86,0.2)'}`,
+              textDecoration: i===5 ? 'line-through' : 'none' }}>
+              #{i+1} {t}s
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop:8, fontSize:10, color:'#8E8A82' }}>Tap any lap to exclude from mean · Outlier excluded</div>
+      </div>
+    ),
+  },
+  {
+    id: 'fivewhy',
+    icon: '❓',
+    name: '5 Why Analysis',
+    label: 'Stop fixing symptoms. Find the cause.',
+    body: 'Ask why five times and reach the real root cause — not the one that's easiest to blame. Each answer becomes the next question. Assign a countermeasure, an owner, and a due date. The whole chain stays attached to the step it came from.',
+    badge: 'Free',
+    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
+    preview: () => (
+      <div>
+        <div style={{ padding:'10px 12px', background:'#FEF9EE', border:'1px solid rgba(196,155,46,0.3)', borderRadius:8, marginBottom:12, fontSize:12, color:'#5A3A00', fontWeight:600 }}>
+          Problem: Weld defect rate at Station 4 is 3.2% — target is 0.5%
+        </div>
+        {[
+          ['Why 1', 'Weld joint gaps are inconsistent between parts'],
+          ['Why 2', 'Fixture wear is not being caught in pre-shift checks'],
+          ['Why 3', 'Pre-shift checklist was updated but operators not retrained'],
+          ['Why 4', 'No retraining trigger exists when checklists are revised'],
+          ['Why 5', 'Change management process has no mandatory notification step'],
+        ].map(([w, a], i) => (
+          <div key={w} style={{ display:'flex', gap:10, marginBottom:8, alignItems:'flex-start' }}>
+            <div style={{ width:22, height:22, borderRadius:6, background:'rgba(196,155,46,0.12)', border:'1px solid rgba(196,155,46,0.25)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:'#C49B2E', flexShrink:0, marginTop:2 }}>{i+1}</div>
+            <div>
+              <div style={{ fontSize:9, color:'#C49B2E', fontFamily:'monospace', letterSpacing:1, marginBottom:2 }}>{w}</div>
+              <div style={{ fontSize:12, color:'#4E4B45', lineHeight:1.5 }}>{a}</div>
+            </div>
+          </div>
+        ))}
+        <div style={{ marginTop:10, padding:'10px 12px', background:'#EDF9F5', border:'1px solid rgba(15,110,86,0.25)', borderRadius:8 }}>
+          <div style={{ fontSize:9, color:'#0F6E56', letterSpacing:1, fontFamily:'monospace', marginBottom:4 }}>ROOT CAUSE → COUNTERMEASURE</div>
+          <div style={{ fontSize:12, color:'#242220' }}>Add mandatory notification step to change management SOP — Owner: J.Torres · Due: 15 Apr</div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'fishbone',
+    icon: '🐟',
+    name: 'Fishbone Diagram',
+    label: 'Map all possible causes before you fix anything',
+    body: 'Choose 6M Manufacturing, 8P Service, 4S, or Custom. Add causes across every category — Machine, Method, Material, Manpower, Measurement, Mother Nature. See the full picture before you start solving. Connects directly to your 5 Why.',
+    badge: 'Free',
+    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
+    preview: () => (
+      <div>
+        <div style={{ textAlign:'center', padding:'6px 12px', background:'#FEF2F0', border:'1px solid rgba(192,64,42,0.2)', borderRadius:6, fontSize:12, color:'#C0402A', fontWeight:600, marginBottom:12 }}>
+          Effect: High defect rate at Welding Station 4
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+          {[
+            { cat:'Machine', color:'#1A4F8A', bg:'#EEF4FB', causes:['Fixture worn — 0.3mm play','Calibration last done Q3'] },
+            { cat:'Method', color:'#0F6E56', bg:'#EDF9F5', causes:['Sequence varies by operator','No standard tack pattern'] },
+            { cat:'Material', color:'#854F0B', bg:'#FEF9EE', causes:['Batch 44C had thickness variance','Storage humidity uncontrolled'] },
+            { cat:'Manpower', color:'#534AB7', bg:'#EEEDFE', causes:['2 operators trained vs 5 needed','Shift handover informal'] },
+          ].map(({ cat, color, bg, causes }) => (
+            <div key={cat} style={{ background:bg, border:`1px solid ${color}22`, borderRadius:8, padding:'10px' }}>
+              <div style={{ fontSize:10, fontWeight:700, color, letterSpacing:0.5, marginBottom:6 }}>{cat}</div>
+              {causes.map(c => (
+                <div key={c} style={{ fontSize:11, color:'#4E4B45', lineHeight:1.5, marginBottom:3 }}>→ {c}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'waste',
+    icon: '⚠️',
+    name: 'Waste Identification',
+    label: '8 wastes. See them all. Fix the worst ones.',
+    body: 'Walk through all eight DOWNTIME wastes for any step. Select what you observe, add a specific note for each. Waste data rolls up to your Report automatically — giving you a prioritised improvement backlog without any extra work.',
+    badge: 'Free',
+    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
+    preview: () => (
+      <div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+          {[
+            { id:'T', label:'Transport', selected:false },
+            { id:'I', label:'Inventory', selected:true, note:'18 units queued before step' },
+            { id:'M', label:'Motion', selected:false },
+            { id:'W', label:'Waiting', selected:true, note:'Avg 4.2 min idle between batches' },
+            { id:'O', label:'Overproduction', selected:false },
+            { id:'O2', label:'Over-processing', selected:false },
+            { id:'D', label:'Defects', selected:true, note:'3.2% rework rate — weld joints' },
+            { id:'S', label:'Skills', selected:false },
+          ].map(w => (
+            <div key={w.id}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 10px', borderRadius:7, background: w.selected?'rgba(192,64,42,0.05)':'#F8F7F5', border:`1px solid ${w.selected?'rgba(192,64,42,0.3)':'#D8D5CE'}`, cursor:'default' }}>
+                <div style={{ width:14, height:14, borderRadius:3, background: w.selected?'#C0402A':'#EEE', border:`1px solid ${w.selected?'#C0402A':'#CCC'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                  {w.selected && <span style={{ color:'#fff', fontSize:9, fontWeight:700 }}>✓</span>}
+                </div>
+                <span style={{ fontSize:11, fontWeight: w.selected?600:400, color: w.selected?'#C0402A':'#6B6760' }}>{w.label}</span>
+              </div>
+              {w.selected && w.note && (
+                <div style={{ padding:'4px 8px', background:'rgba(192,64,42,0.04)', borderRadius:'0 0 6px 6px', fontSize:10, color:'#C0402A', borderLeft:'2px solid #C0402A', marginTop:1 }}>{w.note}</div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop:10, padding:'6px 12px', background:'#FEF2F0', borderRadius:6, fontSize:11, color:'#C0402A', fontWeight:600 }}>3 wastes identified · This step is a priority for Kaizen</div>
+      </div>
+    ),
+  },
+  {
+    id: 'kaizen',
+    icon: '⚡',
+    name: 'Kaizen Events',
+    label: 'Every improvement idea gets an owner and a deadline',
+    body: 'Log Kaizen events directly on the step where the problem lives. Set category, priority, owner, and due date. Open events show on your VSM Map as burst markers — the standard notation for improvement in progress. Nothing gets lost between shifts.',
+    badge: 'Free',
+    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
+    preview: () => (
+      <div>
+        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+          {[
+            { id:'KZ-001', title:'SMED event — reduce changeover from 38min to 18min', cat:'Delivery', priority:'high', status:'in-progress', owner:'J.Torres', due:'Apr 15', color:'#C49B2E' },
+            { id:'KZ-002', title:'Fixture inspection added to pre-shift checklist', cat:'Quality', priority:'critical', status:'complete', owner:'R.Singh', due:'Apr 3', color:'#2A9E82' },
+            { id:'KZ-003', title:'5S audit of weld consumables storage area', cat:'5S', priority:'medium', status:'open', owner:'T.Nakamura', due:'Apr 22', color:'#8E8A82' },
+          ].map(k => (
+            <div key={k.id} style={{ background:'#FFFFFF', border:'0.5px solid #D8D5CE', borderRadius:9, padding:'12px 14px' }}>
+              <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:8, marginBottom:8 }}>
+                <div style={{ fontSize:10, color:'#8E8A82', fontFamily:'monospace' }}>{k.id}</div>
+                <div style={{ display:'flex', gap:5 }}>
+                  <span style={{ fontSize:8, padding:'2px 7px', borderRadius:100, background: k.status==='complete'?'rgba(42,158,130,0.12)':k.status==='in-progress'?'rgba(196,155,46,0.12)':'rgba(142,138,130,0.12)', color: k.status==='complete'?'#2A9E82':k.status==='in-progress'?'#C49B2E':'#8E8A82', fontWeight:700 }}>
+                    {k.status==='in-progress'?'In Progress':k.status==='complete'?'Complete':'Open'}
+                  </span>
+                  <span style={{ fontSize:8, padding:'2px 7px', borderRadius:100, background:'rgba(192,64,42,0.08)', color:'#C0402A', fontWeight:700 }}>{k.priority}</span>
+                </div>
+              </div>
+              <div style={{ fontSize:12, color:'#242220', fontWeight:600, lineHeight:1.4, marginBottom:8 }}>{k.title}</div>
+              <div style={{ display:'flex', gap:12, fontSize:10, color:'#8E8A82' }}>
+                <span>👤 {k.owner}</span>
+                <span>📅 {k.due}</span>
+                <span>📁 {k.cat}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+]
+
+function ToolShowcase() {
+  const [active, setActive] = useState(0)
+  const tool = TOOLS_DATA[active]
+
+  return (
+    <section id="tools" style={{ padding: '80px 0', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <div style={{ maxWidth: 1060, margin: '0 auto', padding: '0 48px' }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 48 }}>
+          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
+          <h2 style={{ fontSize: 'clamp(24px,3vw,36px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean team needs</h2>
+          <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 500, lineHeight: 1.75 }}>All connected to your value stream. The work you do feeds the reports you need.</p>
+        </div>
+
+        {/* Tab pills */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 36 }}>
+          {TOOLS_DATA.map((t, i) => (
+            <button key={t.id} onClick={() => setActive(i)} style={{
+              padding: '8px 16px', borderRadius: 999, fontSize: 13, fontWeight: active===i ? 700 : 400,
+              background: active===i ? '#C49B2E' : '#FFFFFF',
+              color: active===i ? '#FFFFFF' : '#6B6760',
+              border: active===i ? 'none' : '0.5px solid #D8D5CE',
+              cursor: 'pointer', transition: 'all 0.18s',
+              display: 'flex', alignItems: 'center', gap: 6,
+            }}>
+              <span style={{ fontSize: 14 }}>{t.icon}</span> {t.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Main panel */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 32, alignItems: 'start' }}>
+
+          {/* Left: copy */}
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
+              <span style={{ fontSize: 28 }}>{tool.icon}</span>
+              <span style={{ fontSize: 8, fontWeight: 700, padding: '3px 8px', borderRadius: 4, background: tool.badgeBg, color: tool.badgeColor, letterSpacing: 0.5, fontFamily: 'monospace' }}>{tool.badge}</span>
+            </div>
+            <h3 style={{ fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: '#242220', marginBottom: 12, lineHeight: 1.25, fontFamily: serif }}>
+              {tool.label}
+            </h3>
+            <p style={{ fontSize: 14, color: '#6B6760', lineHeight: 1.85, marginBottom: 28 }}>{tool.body}</p>
+            <a href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 22px', background: '#C49B2E', color: '#fff', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none' }}>
+              Try it free →
+            </a>
+          </div>
+
+          {/* Right: live preview */}
+          <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.07)' }}>
+            {/* App chrome */}
+            <div style={{ background: '#F0F0F4', borderBottom: '0.5px solid #D8D5CE', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 5 }}>
+                {['#FF6B6B','#F4A623','#1DD1A1'].map(c => <div key={c} style={{ width:9, height:9, borderRadius:'50%', background:c, opacity:0.7 }} />)}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', fontSize: 10, color: '#8E8A82', fontFamily: 'monospace' }}>{tool.name} — Step: Foam & Fabric</div>
+              {/* VeSiMy brand */}
+              <div style={{ display:'flex', alignItems:'center', gap:4, padding:'2px 8px', background:'rgba(196,155,46,0.1)', border:'1px solid rgba(196,155,46,0.2)', borderRadius:5 }}>
+                <svg width="10" height="11" viewBox="0 0 100 108" fill="none"><defs><linearGradient id="vb" x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#FFD56C"/><stop offset="50%" stopColor="#D4A208"/><stop offset="100%" stopColor="#6426A0"/></linearGradient></defs><path d="M8 8L38 88L50 64L62 88L92 8H72L50 60L28 8Z" fill="url(#vb)"/></svg>
+                <span style={{ fontSize:9, fontWeight:700, color:'#8E8A82', letterSpacing:0.5, fontFamily:'Palatino Linotype,serif' }}>VeSiMy</span>
+              </div>
+            </div>
+            <div style={{ padding: '18px 16px' }}>
+              {tool.preview()}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function HomePage() {
   const [pce, setPce] = useState(36)
   const [bnVis, setBnVis] = useState(true)
@@ -306,38 +609,8 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* ── TOOLS ───────────────────────────────────────────────────────────── */}
-      <section id="tools" className="sec-pad" style={{ padding: '64px 48px', background: '#F8F7F5' }}>
-        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
-          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
-          <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean engineer needs</h2>
-          <p style={{ fontSize: 15, color: '#6B6760', marginBottom: 36, maxWidth: 520, lineHeight: 1.75 }}>All your CI tools connected to your value stream — the work you do feeds the reports you need.</p>
-
-          <div className="tools-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 12 }}>
-            {[
-              { icon: '⏱', name: 'Time Study',       desc: '10-lap stopwatch, outlier exclusion, baseline vs target',              badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '🐟', name: 'Fishbone',         desc: '6M, 8P, 4S frameworks — structured cause-and-effect mapping',          badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '❓', name: '5 Why',            desc: 'Root cause to countermeasure, linked to PDCA action',                  badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '⚠️', name: 'Waste ID',         desc: 'DOWNTIME 8-waste identification per step with notes',                  badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '⚡', name: 'Kaizen Events',   desc: 'Track events with owners, due dates, status and VSM burst markers',    badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '🔄', name: 'PDCA',             desc: 'Export as PDCA, A3, 8D, DMAIC or OODA — one dataset, five formats',   badge: 'ISO 9001',   bc: '#EEF4FB', btc: '#1A4F8A' },
-              { icon: '📊', name: 'Yamazumi Chart',  desc: 'Operator balance — VA / NNVA / NVA stacked vs takt time',              badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
-              { icon: '📋', name: 'Standard Work',   desc: 'Task-level breakdown with VA classification and ISO export',           badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
-              { icon: '🗺', name: 'VSM Export',      desc: 'A3 landscape map — auto-paginates, nothing truncated',                 badge: 'ISO 22468',  bc: '#EEF4FB', btc: '#1A4F8A' },
-              { icon: '🎯', name: 'Gap Analysis',    desc: 'Finds every gap between your VSM and world-class lean flow',           badge: 'AI',         bc: '#EEEDFE', btc: '#534AB7' },
-              { icon: '🗺️', name: 'Kaizen Roadmap', desc: 'Current → future state PCE journey with phase tracking',               badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-              { icon: '📈', name: 'Improvement',     desc: 'Before/after measurement goals per step feeding the report',           badge: 'Trial',       bc: '#EDF9F5', btc: '#0F6E56' },
-            ].map(t => (
-              <div key={t.name} style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 12, padding: '16px 15px' }}>
-                <span style={{ fontSize: 20, display: 'block', marginBottom: 8 }}>{t.icon}</span>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#242220', marginBottom: 4 }}>{t.name}</div>
-                <div style={{ fontSize: 11, color: '#8E8A82', lineHeight: 1.6 }}>{t.desc}</div>
-                <span style={{ display: 'inline-block', fontSize: 8, fontWeight: 700, padding: '2px 6px', borderRadius: 4, marginTop: 8, background: t.bc, color: t.btc, letterSpacing: 0.5 }}>{t.badge}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── TOOL SHOWCASE ────────────────────────────────────────────────────── */}
+      <ToolShowcase />
 
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
       <div style={{ padding: '60px 48px', textAlign: 'center', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE' }}>

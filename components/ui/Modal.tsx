@@ -140,6 +140,20 @@ export function Modal({
           <div style={{ fontFamily: 'var(--font-serif)', fontSize: isMobile ? 15 : 17, fontWeight: 700, color: 'var(--text)' }}>
             {title}
           </div>
+          {/* VeSiMy brand — visible in every tool screenshot */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginLeft: 'auto', marginRight: 10, padding: '3px 9px', borderRadius: 6, background: 'rgba(212,162,8,0.07)', border: '1px solid rgba(212,162,8,0.18)', flexShrink: 0 }}>
+            <svg width="11" height="12" viewBox="0 0 100 108" fill="none">
+              <defs>
+                <linearGradient id="vm-hdr" x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#FFD56C"/>
+                  <stop offset="50%" stopColor="#D4A208"/>
+                  <stop offset="100%" stopColor="#6426A0"/>
+                </linearGradient>
+              </defs>
+              <path d="M8 8L38 88L50 64L62 88L92 8H72L50 60L28 8Z" fill="url(#vm-hdr)"/>
+            </svg>
+            <span style={{ fontSize: 10, fontWeight: 700, color: '#7070A0', letterSpacing: 0.5, fontFamily: 'Palatino Linotype,serif' }}>VeSiMy</span>
+          </div>
           <button
             style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px', flexShrink: 0 }}
             onClick={() => onCloseRef.current()}

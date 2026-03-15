@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
 import { PLANS } from '@/lib/stripe'
-import { ThemeToggle } from '@/components/ui/ThemeProvider'
 import {
   ArrowLeftIcon,
   SparkleIcon,
@@ -641,7 +640,6 @@ export default function PricingPage() {
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <ThemeToggle size={28} />
           <Link
             href="/dashboard"
             style={{
