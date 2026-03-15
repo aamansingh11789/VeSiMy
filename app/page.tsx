@@ -145,7 +145,7 @@ const TOOLS_DATA = [
     icon: '❓',
     name: '5 Why Analysis',
     label: 'Stop fixing symptoms. Find the cause.',
-    body: 'Ask why five times and reach the real root cause — not the one that's easiest to blame. Each answer becomes the next question. Assign a countermeasure, an owner, and a due date. The whole chain stays attached to the step it came from.',
+    body: `Ask why five times and reach the real root cause — not the one that's easiest to blame. Each answer becomes the next question. Assign a countermeasure, an owner, and a due date. The whole chain stays attached to the step it came from.`,
     badge: 'Free',
     badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
     preview: () => (
