@@ -57,38 +57,128 @@ function WipCoins({ n, color = '#DEB96A', bg = '#FEF9EE' }: any) {
 
 
 // ── Tool Showcase ─────────────────────────────────────────────────────────────
-// Real tool popup previews · stacked 3D cards on right · details on left
 
-const _GOLD = '#C49B2E', _RED = '#C0402A', _GREEN = '#2A9E82', _VIOLET = '#6426A0', _STEEL = '#3070B8'
+const _G='#C49B2E',_R='#C0402A',_GR='#2A9E82',_V='#6426A0',_ST='#3070B8'
 
-const SHOWCASE_TOOLS = [
+const SHOWCASE_TOOLS=[
   {
-    name: 'Value Stream Map', short: 'VSM', color: _STEEL,
-    tag: 'Core', tagBg: '#EEF4FB', tagTxt: '#1A4F8A',
-    headline: 'See your entire process at once',
-    body: 'Map every step, every wait, every handoff. Bottlenecks flag red automatically against your Takt Time. PCE calculates live. Export as A3 ISO 22468:2020.',
-    cardBg: `background:#EEF4FB`,
-    cardContent: `
-      <div style="padding:8px 10px;font-family:monospace">
-        <div style="display:flex;gap:2px;margin-bottom:6px">
-          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A;letter-spacing:.5px">CT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">8m 14s</div></div>
-          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">TAKT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">2m 00s</div></div>
-          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">PCE</div><div style="font-size:10px;font-weight:700;color:#C0402A">34%</div></div>
-          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">WIP</div><div style="font-size:10px;font-weight:700;color:#C49B2E">47</div></div>
-        </div>
-        <div style="display:flex;align-items:flex-end;gap:2px">
-          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Stage</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:38%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">45s</div></div>
-          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
-          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Frame</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:68%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">98s</div></div>
-          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
-          <div style="flex:1;background:#fff;border:1.5px solid #C0402A;border-radius:5px;padding:4px 2px;text-align:center;position:relative;box-shadow:0 0 8px rgba(192,64,42,.2)"><div style="position:absolute;top:-4px;right:-3px;width:7px;height:7px;border-radius:50%;background:#C0402A"></div><div style="font-size:6px;font-weight:700;color:#C0402A">Foam</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C0402A;width:100%;border-radius:1px"></div></div><div style="font-size:6px;color:#C0402A;font-weight:700">145s</div></div>
-          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
-          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Elec</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:61%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">88s</div></div>
-          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
-          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">QC</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:50%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">72s</div></div>
-        </div>
-      </div>`,
-    popup: `
+    name:'Value Stream Map',short:'VSM',color:_ST,
+    tag:'Core',tagBg:'#EEF4FB',tagTxt:'#1A4F8A',
+    headline:'See your entire process at once',
+    body:'Map every step, every wait, every handoff. Bottleneck steps flag red automatically against your Takt Time. PCE calculates live. Export as A3 ISO\u00a022468:2020 with full data boxes, WIP triangles, and timeline.',
+    cardContent:`<div style="padding:0;font-family:sans-serif;overflow:hidden">
+      <svg viewBox="0 0 420 200" style="width:100%;display:block">
+        <rect width="420" height="200" fill="#FFFFFF"/>
+        <text x="210" y="13" text-anchor="middle" fill="#1F2937" font-size="7.5" font-weight="700" font-family="sans-serif">Current-State Value Stream Map — Seat Assembly Line 4</text>
+        <rect x="155" y="18" width="110" height="32" fill="#A7F3D0" stroke="#059669" stroke-width="1.2" rx="3"/>
+        <text x="210" y="30" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700" font-family="sans-serif">Production</text>
+        <text x="210" y="40" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700" font-family="sans-serif">Control</text>
+        <rect x="8" y="48" width="48" height="42" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1" rx="2"/>
+        <polygon points="8,60 32,48 56,60" fill="#4A6A8F" stroke="#3A5A7C" stroke-width="1"/>
+        <rect x="14" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="24" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="34" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="28" y="78" width="8" height="12" fill="#3A5A7C" rx="1"/>
+        <text x="32" y="102" text-anchor="middle" fill="#1F2937" font-size="7" font-weight="700" font-family="sans-serif">Supplier</text>
+        <rect x="364" y="48" width="48" height="42" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1" rx="2"/>
+        <polygon points="364,60 388,48 412,60" fill="#4A6A8F" stroke="#3A5A7C" stroke-width="1"/>
+        <rect x="370" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="380" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="390" y="64" width="7" height="7" fill="#C8DCF0" rx="1"/>
+        <rect x="384" y="78" width="8" height="12" fill="#3A5A7C" rx="1"/>
+        <text x="388" y="102" text-anchor="middle" fill="#1F2937" font-size="7" font-weight="700" font-family="sans-serif">Customer</text>
+        <line x1="155" y1="34" x2="60" y2="72" stroke="#0EA5E9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ia)" opacity="0.7"/>
+        <line x1="265" y1="34" x2="360" y2="72" stroke="#0EA5E9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ia)" opacity="0.7"/>
+        <defs><marker id="ia" markerWidth="5" markerHeight="4" refX="4" refY="2" orient="auto"><polygon points="0 0,5 2,0 4" fill="#0EA5E9"/></marker><marker id="ma" markerWidth="5" markerHeight="4" refX="4" refY="2" orient="auto"><polygon points="0 0,5 2,0 4" fill="#374151"/></marker></defs>
+        <g>
+          <rect x="62" y="108" width="52" height="38" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/>
+          <text x="88" y="118" text-anchor="middle" fill="#065F46" font-size="6.5" font-weight="700" font-family="sans-serif">Staging</text>
+          <circle cx="74" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="74" cy="134" r="2.5" fill="#0D9488"/>
+          <rect x="62" y="146" width="52" height="40" fill="#FFFFFF" stroke="#0D9488" stroke-width="1"/>
+          <line x1="62" y1="159" x2="114" y2="159" stroke="#E5E7EB" stroke-width="0.6"/>
+          <line x1="62" y1="172" x2="114" y2="172" stroke="#E5E7EB" stroke-width="0.6"/>
+          <text x="66" y="157" fill="#6B7280" font-size="5.5" font-family="monospace">C/T =</text><text x="88" y="157" fill="#0D9488" font-size="6" font-weight="700" font-family="monospace">45s</text>
+          <text x="66" y="170" fill="#6B7280" font-size="5.5" font-family="monospace">C/O =</text><text x="88" y="170" fill="#374151" font-size="6" font-family="monospace">0s</text>
+          <text x="66" y="183" fill="#6B7280" font-size="5.5" font-family="monospace">Uptime</text><text x="90" y="183" fill="#374151" font-size="6" font-family="monospace">95%</text>
+        </g>
+        <polygon points="118,118 125,108 132,118" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+        <text x="125" y="116" text-anchor="middle" fill="#92400E" font-size="5.5" font-weight="700" font-family="sans-serif">12</text>
+        <line x1="114" y1="127" x2="131" y2="127" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+        <text x="120" y="122" fill="#374151" font-size="5" font-family="sans-serif">push</text>
+        <g>
+          <rect x="134" y="108" width="52" height="38" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/>
+          <text x="160" y="118" text-anchor="middle" fill="#065F46" font-size="6.5" font-weight="700" font-family="sans-serif">Frame Asm</text>
+          <circle cx="146" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="146" cy="134" r="2.5" fill="#0D9488"/>
+          <circle cx="156" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="156" cy="134" r="2.5" fill="#0D9488"/>
+          <rect x="134" y="146" width="52" height="40" fill="#FFFFFF" stroke="#0D9488" stroke-width="1"/>
+          <line x1="134" y1="159" x2="186" y2="159" stroke="#E5E7EB" stroke-width="0.6"/>
+          <line x1="134" y1="172" x2="186" y2="172" stroke="#E5E7EB" stroke-width="0.6"/>
+          <text x="138" y="157" fill="#6B7280" font-size="5.5" font-family="monospace">C/T =</text><text x="160" y="157" fill="#0D9488" font-size="6" font-weight="700" font-family="monospace">98s</text>
+          <text x="138" y="170" fill="#6B7280" font-size="5.5" font-family="monospace">C/O =</text><text x="160" y="170" fill="#374151" font-size="6" font-family="monospace">300s</text>
+          <text x="138" y="183" fill="#6B7280" font-size="5.5" font-family="monospace">Uptime</text><text x="162" y="183" fill="#374151" font-size="6" font-family="monospace">92%</text>
+        </g>
+        <polygon points="190,118 197,108 204,118" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+        <text x="197" y="116" text-anchor="middle" fill="#92400E" font-size="5.5" font-weight="700" font-family="sans-serif">6</text>
+        <line x1="186" y1="127" x2="203" y2="127" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+        <g>
+          <rect x="206" y="108" width="52" height="38" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" rx="1"/>
+          <text x="232" y="116" text-anchor="middle" fill="#7F1D1D" font-size="6" font-weight="700" font-family="sans-serif">Foam &amp;</text>
+          <text x="232" y="124" text-anchor="middle" fill="#7F1D1D" font-size="6" font-weight="700" font-family="sans-serif">Fabric</text>
+          <text x="254" y="117" text-anchor="end" fill="#DC2626" font-size="5.5" font-weight="700" font-family="sans-serif">▲TAKT</text>
+          <circle cx="218" cy="138" r="4" fill="#fff" stroke="#DC2626" stroke-width="0.8"/>
+          <circle cx="218" cy="134" r="2.5" fill="#DC2626"/>
+          <circle cx="228" cy="138" r="4" fill="#fff" stroke="#DC2626" stroke-width="0.8"/>
+          <circle cx="228" cy="134" r="2.5" fill="#DC2626"/>
+          <circle cx="238" cy="138" r="4" fill="#fff" stroke="#DC2626" stroke-width="0.8"/>
+          <circle cx="238" cy="134" r="2.5" fill="#DC2626"/>
+          <rect x="206" y="146" width="52" height="40" fill="#FFFFFF" stroke="#DC2626" stroke-width="1"/>
+          <line x1="206" y1="159" x2="258" y2="159" stroke="#E5E7EB" stroke-width="0.6"/>
+          <line x1="206" y1="172" x2="258" y2="172" stroke="#E5E7EB" stroke-width="0.6"/>
+          <text x="210" y="157" fill="#6B7280" font-size="5.5" font-family="monospace">C/T =</text><text x="232" y="157" fill="#DC2626" font-size="6" font-weight="700" font-family="monospace">145s</text>
+          <text x="210" y="170" fill="#6B7280" font-size="5.5" font-family="monospace">C/O =</text><text x="232" y="170" fill="#374151" font-size="6" font-family="monospace">600s</text>
+          <text x="210" y="183" fill="#6B7280" font-size="5.5" font-family="monospace">Uptime</text><text x="234" y="183" fill="#374151" font-size="6" font-family="monospace">88%</text>
+          <polygon points="250,105 256,96 262,105" fill="#DC2626" opacity="0.9"/>
+          <polygon points="253,104 256,99 259,104" fill="#FF8888"/>
+        </g>
+        <polygon points="262,118 269,108 276,118" fill="#FEE2E2" stroke="#DC2626" stroke-width="1"/>
+        <text x="269" y="116" text-anchor="middle" fill="#7F1D1D" font-size="5.5" font-weight="700" font-family="sans-serif">18</text>
+        <line x1="258" y1="127" x2="275" y2="127" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+        <g>
+          <rect x="278" y="108" width="52" height="38" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/>
+          <text x="304" y="118" text-anchor="middle" fill="#065F46" font-size="6.5" font-weight="700" font-family="sans-serif">Electrical</text>
+          <circle cx="290" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="290" cy="134" r="2.5" fill="#0D9488"/>
+          <circle cx="300" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="300" cy="134" r="2.5" fill="#0D9488"/>
+          <rect x="278" y="146" width="52" height="40" fill="#FFFFFF" stroke="#0D9488" stroke-width="1"/>
+          <line x1="278" y1="159" x2="330" y2="159" stroke="#E5E7EB" stroke-width="0.6"/>
+          <line x1="278" y1="172" x2="330" y2="172" stroke="#E5E7EB" stroke-width="0.6"/>
+          <text x="282" y="157" fill="#6B7280" font-size="5.5" font-family="monospace">C/T =</text><text x="304" y="157" fill="#0D9488" font-size="6" font-weight="700" font-family="monospace">88s</text>
+          <text x="282" y="170" fill="#6B7280" font-size="5.5" font-family="monospace">C/O =</text><text x="304" y="170" fill="#374151" font-size="6" font-family="monospace">0s</text>
+          <text x="282" y="183" fill="#6B7280" font-size="5.5" font-family="monospace">Uptime</text><text x="306" y="183" fill="#374151" font-size="6" font-family="monospace">99%</text>
+        </g>
+        <line x1="330" y1="127" x2="347" y2="127" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+        <g>
+          <rect x="350" y="108" width="48" height="38" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/>
+          <text x="374" y="118" text-anchor="middle" fill="#065F46" font-size="6.5" font-weight="700" font-family="sans-serif">Final QC</text>
+          <circle cx="362" cy="138" r="4" fill="#fff" stroke="#0D9488" stroke-width="0.8"/>
+          <circle cx="362" cy="134" r="2.5" fill="#0D9488"/>
+          <rect x="350" y="146" width="48" height="40" fill="#FFFFFF" stroke="#0D9488" stroke-width="1"/>
+          <line x1="350" y1="159" x2="398" y2="159" stroke="#E5E7EB" stroke-width="0.6"/>
+          <line x1="350" y1="172" x2="398" y2="172" stroke="#E5E7EB" stroke-width="0.6"/>
+          <text x="354" y="157" fill="#6B7280" font-size="5.5" font-family="monospace">C/T =</text><text x="376" y="157" fill="#0D9488" font-size="6" font-weight="700" font-family="monospace">72s</text>
+          <text x="354" y="170" fill="#6B7280" font-size="5.5" font-family="monospace">C/O =</text><text x="376" y="170" fill="#374151" font-size="6" font-family="monospace">0s</text>
+          <text x="354" y="183" fill="#6B7280" font-size="5.5" font-family="monospace">Uptime</text><text x="378" y="183" fill="#374151" font-size="6" font-family="monospace">100%</text>
+        </g>
+        <line x1="56" y1="72" x2="62" y2="108" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+        <line x1="398" y1="108" x2="400" y2="90" stroke="#374151" stroke-width="1"/>
+        <line x1="400" y1="90" x2="364" y2="72" stroke="#374151" stroke-width="1" marker-end="url(#ma)"/>
+      </svg>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM Map · Seat Assembly Line 4 · Current State</span>
@@ -100,61 +190,86 @@ const SHOWCASE_TOOLS = [
           <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">WAIT</div><div style="font-size:10px;font-weight:700;color:#8E8A82">6m 12s</div></div>
           <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">TAKT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">2m 00s</div></div>
           <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">PCE</div><div style="font-size:10px;font-weight:700;color:#C0402A">34%</div></div>
-          <div style="flex:1.5;padding:6px 4px;text-align:center"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">BOTTLENECK</div><div style="font-size:9px;font-weight:700;color:#C0402A">Foam & Fabric</div></div>
+          <div style="flex:1.4;padding:6px 4px;text-align:center"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">BOTTLENECK</div><div style="font-size:9px;font-weight:700;color:#C0402A">Foam & Fabric</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px">
-          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Staging</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:38%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">45s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#EEF4FB;color:#3070B8;display:inline-block">NNVA</div></div></div>
-          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
-          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Frame Asm</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:68%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">98s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#E6F7F3;color:#2A9E82;display:inline-block">VA</div></div></div>
-          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
-          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #C0402A;border-radius:8px;padding:8px 6px;text-align:center;position:relative;box-shadow:0 0 10px rgba(192,64,42,.2)"><div style="position:absolute;top:-6px;right:-5px;background:#C0402A;color:#fff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:100px">BN</div><div style="font-size:8px;font-weight:700;color:#C0402A;margin-bottom:3px">Foam & Fabric</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C0402A;width:100%"></div></div><div style="font-size:8px;color:#C0402A;font-weight:700;margin-bottom:2px">145s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:rgba(192,64,42,.1);color:#C0402A;display:inline-block">NVA</div></div></div>
-          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
-          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Electrical</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:61%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">88s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#E6F7F3;color:#2A9E82;display:inline-block">VA</div></div></div>
-          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
-          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Final QC</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:50%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">72s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#EEF4FB;color:#3070B8;display:inline-block">NNVA</div></div></div>
+        <div style="overflow-x:auto;border:1px solid #D8D5CE;border-radius:8px">
+          <svg viewBox="0 0 500 148" style="min-width:500px;display:block;background:#fff">
+            <defs><marker id="vp" markerWidth="5" markerHeight="4" refX="4" refY="2" orient="auto"><polygon points="0 0,5 2,0 4" fill="#374151"/></marker></defs>
+            <rect x="8" y="8" width="40" height="32" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1" rx="1"/>
+            <polygon points="8,17 28,8 48,17" fill="#4A6A8F"/>
+            <rect x="22" y="24" width="5" height="5" fill="#C8DCF0"/>
+            <text x="28" y="50" text-anchor="middle" fill="#1F2937" font-size="6" font-weight="700">Supplier</text>
+            <line x1="48" y1="24" x2="63" y2="24" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <g><rect x="64" y="8" width="64" height="42" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/><text x="96" y="18" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700">Staging</text><circle cx="78" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="78" cy="35" r="2" fill="#0D9488"/><rect x="64" y="50" width="64" height="38" fill="#fff" stroke="#0D9488" stroke-width="1"/><text x="68" y="62" fill="#6B7280" font-size="6" font-family="monospace">C/T = 45s</text><text x="68" y="74" fill="#6B7280" font-size="6" font-family="monospace">C/O = 0s</text><text x="68" y="86" fill="#6B7280" font-size="6" font-family="monospace">Up= 95%</text></g>
+            <polygon points="131,16 137,8 143,16" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="137" y="14" text-anchor="middle" fill="#92400E" font-size="5" font-weight="700">12</text>
+            <line x1="128" y1="29" x2="150" y2="29" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <g><rect x="152" y="8" width="64" height="42" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/><text x="184" y="18" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700">Frame Asm</text><circle cx="166" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="166" cy="35" r="2" fill="#0D9488"/><circle cx="176" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="176" cy="35" r="2" fill="#0D9488"/><rect x="152" y="50" width="64" height="38" fill="#fff" stroke="#0D9488" stroke-width="1"/><text x="156" y="62" fill="#6B7280" font-size="6" font-family="monospace">C/T = 98s</text><text x="156" y="74" fill="#6B7280" font-size="6" font-family="monospace">C/O = 300s</text><text x="156" y="86" fill="#6B7280" font-size="6" font-family="monospace">Up= 92%</text></g>
+            <polygon points="219,16 225,8 231,16" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="225" y="14" text-anchor="middle" fill="#92400E" font-size="5" font-weight="700">6</text>
+            <line x1="216" y1="29" x2="238" y2="29" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <g><rect x="240" y="8" width="64" height="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" rx="1"/><text x="272" y="17" text-anchor="middle" fill="#7F1D1D" font-size="6.5" font-weight="700">Foam &amp;</text><text x="272" y="25" text-anchor="middle" fill="#7F1D1D" font-size="6.5" font-weight="700">Fabric</text><text x="300" y="17" text-anchor="end" fill="#DC2626" font-size="5.5" font-weight="700">▲TAKT</text><circle cx="254" cy="38" r="3.5" fill="#fff" stroke="#DC2626" stroke-width="0.8"/><circle cx="254" cy="35" r="2" fill="#DC2626"/><circle cx="264" cy="38" r="3.5" fill="#fff" stroke="#DC2626" stroke-width="0.8"/><circle cx="264" cy="35" r="2" fill="#DC2626"/><circle cx="274" cy="38" r="3.5" fill="#fff" stroke="#DC2626" stroke-width="0.8"/><circle cx="274" cy="35" r="2" fill="#DC2626"/><rect x="240" y="50" width="64" height="38" fill="#fff" stroke="#DC2626" stroke-width="1"/><text x="244" y="62" fill="#6B7280" font-size="6" font-family="monospace">C/T =</text><text x="266" y="62" fill="#DC2626" font-size="6" font-weight="700" font-family="monospace">145s</text><text x="244" y="74" fill="#6B7280" font-size="6" font-family="monospace">C/O = 600s</text><text x="244" y="86" fill="#6B7280" font-size="6" font-family="monospace">Up= 88%</text><polygon points="296,4 302,0 308,4" fill="#DC2626" opacity="0.9"/><polygon points="298,4 302,1 306,4" fill="#FF8888"/></g>
+            <polygon points="307,16 313,8 319,16" fill="#FEE2E2" stroke="#DC2626" stroke-width="1"/><text x="313" y="14" text-anchor="middle" fill="#7F1D1D" font-size="5" font-weight="700">18</text>
+            <line x1="304" y1="29" x2="326" y2="29" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <g><rect x="328" y="8" width="60" height="42" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/><text x="358" y="18" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700">Electrical</text><circle cx="342" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="342" cy="35" r="2" fill="#0D9488"/><circle cx="352" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="352" cy="35" r="2" fill="#0D9488"/><rect x="328" y="50" width="60" height="38" fill="#fff" stroke="#0D9488" stroke-width="1"/><text x="332" y="62" fill="#6B7280" font-size="6" font-family="monospace">C/T = 88s</text><text x="332" y="74" fill="#6B7280" font-size="6" font-family="monospace">C/O = 0s</text><text x="332" y="86" fill="#6B7280" font-size="6" font-family="monospace">Up= 99%</text></g>
+            <line x1="388" y1="29" x2="406" y2="29" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <g><rect x="408" y="8" width="52" height="42" fill="#CCFBF1" stroke="#0D9488" stroke-width="1" rx="1"/><text x="434" y="18" text-anchor="middle" fill="#065F46" font-size="7" font-weight="700">Final QC</text><circle cx="422" cy="38" r="3.5" fill="#fff" stroke="#0D9488" stroke-width="0.8"/><circle cx="422" cy="35" r="2" fill="#0D9488"/><rect x="408" y="50" width="52" height="38" fill="#fff" stroke="#0D9488" stroke-width="1"/><text x="412" y="62" fill="#6B7280" font-size="6" font-family="monospace">C/T = 72s</text><text x="412" y="74" fill="#6B7280" font-size="6" font-family="monospace">C/O = 0s</text><text x="412" y="86" fill="#6B7280" font-size="6" font-family="monospace">Up=100%</text></g>
+            <line x1="460" y1="29" x2="476" y2="29" stroke="#374151" stroke-width="1" marker-end="url(#vp)"/>
+            <rect x="478" y="8" width="16" height="32" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1" rx="1"/><text x="486" y="50" text-anchor="middle" fill="#1F2937" font-size="6" font-weight="700">Cust.</text>
+            <line x1="96" y1="88" x2="96" y2="102" stroke="#0D9488" stroke-width="1"/>
+            <line x1="96" y1="102" x2="110" y2="102" stroke="#0D9488" stroke-width="1"/>
+            <line x1="184" y1="88" x2="184" y2="102" stroke="#0D9488" stroke-width="1"/>
+            <line x1="110" y1="102" x2="152" y2="102" stroke="#C49B2E" stroke-width="5" opacity="0.8"/>
+            <text x="131" y="115" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">45s</text>
+            <line x1="152" y1="102" x2="184" y2="102" stroke="#8E8A82" stroke-width="2" opacity="0.5"/>
+            <line x1="272" y1="88" x2="272" y2="102" stroke="#DC2626" stroke-width="1"/>
+            <line x1="184" y1="102" x2="240" y2="102" stroke="#C49B2E" stroke-width="5" opacity="0.8"/>
+            <text x="212" y="115" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">98s</text>
+            <line x1="240" y1="102" x2="272" y2="102" stroke="#8E8A82" stroke-width="2" opacity="0.5"/>
+            <line x1="358" y1="88" x2="358" y2="102" stroke="#0D9488" stroke-width="1"/>
+            <line x1="272" y1="102" x2="328" y2="102" stroke="#DC2626" stroke-width="5" opacity="0.8"/>
+            <text x="300" y="115" text-anchor="middle" fill="#DC2626" font-size="5.5" font-family="monospace" font-weight="700">145s</text>
+            <line x1="328" y1="102" x2="358" y2="102" stroke="#8E8A82" stroke-width="2" opacity="0.5"/>
+            <line x1="434" y1="88" x2="434" y2="102" stroke="#0D9488" stroke-width="1"/>
+            <line x1="358" y1="102" x2="408" y2="102" stroke="#C49B2E" stroke-width="5" opacity="0.8"/>
+            <text x="383" y="115" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">88s</text>
+            <line x1="408" y1="102" x2="434" y2="102" stroke="#8E8A82" stroke-width="2" opacity="0.5"/>
+            <line x1="434" y1="102" x2="460" y2="102" stroke="#C49B2E" stroke-width="5" opacity="0.8"/>
+            <text x="447" y="115" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">72s</text>
+            <line x1="60" y1="102" x2="96" y2="102" stroke="#C49B2E" stroke-width="5" opacity="0.8"/>
+            <text x="78" y="115" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">—</text>
+            <line x1="60" y1="102" x2="60" y2="88" stroke="#C49B2E" stroke-width="1"/>
+            <line x1="460" y1="102" x2="460" y2="88" stroke="#C49B2E" stroke-width="1"/>
+            <line x1="60" y1="128" x2="460" y2="128" stroke="#E5E7EB" stroke-width="0.5"/>
+            <line x1="60" y1="120" x2="460" y2="120" stroke="#C0402A" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+            <text x="456" y="118" text-anchor="end" fill="#C0402A" font-size="5.5" font-family="monospace">TAKT=120s</text>
+            <text x="210" y="139" text-anchor="middle" fill="#8E8A82" font-size="6" font-family="monospace">VA: 448s  |  Wait: 372s  |  PCE: 34%  |  Lead Time: 14m 40s</text>
+          </svg>
         </div>
-        <div style="display:flex;align-items:flex-end;height:36px;gap:2px;border-bottom:1px solid #D8D5CE;position:relative;margin-bottom:4px">
-          <div style="position:absolute;left:0;right:0;bottom:18px;border-top:1.5px dashed #C0402A;opacity:.45"></div>
-          <div style="width:18px;height:9px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
-          <div style="width:18px;height:18px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
-          <div style="width:18px;height:15px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
-          <div style="width:18px;height:10px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
-          <div style="width:18px;height:34px;background:#C0402A;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.9"></div>
-          <div style="width:18px;height:14px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
-          <div style="width:18px;height:14px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
-          <div style="width:18px;height:9px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
-          <div style="width:18px;height:12px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
-        </div>
-        <div style="display:flex;gap:10px;font-size:9px;color:#8E8A82"><span style="color:#C49B2E">▲ value-add</span><span>▼ wait</span><span style="color:#C0402A">— takt line</span></div>
       </div>`,
   },
   {
-    name: 'Time Study', short: 'TIME', color: _GREEN,
-    tag: 'Free', tagBg: '#E6F7F3', tagTxt: '#0F6E56',
-    headline: 'Measure before you manage',
-    body: 'Built-in stopwatch with lap recording. Calculates mean CT, flags outliers for exclusion. Pushes the validated cycle time directly to your VSM.',
-    cardContent: `
-      <div style="padding:8px 10px;font-family:monospace">
-        <div style="text-align:center;padding:8px 0 6px;border-bottom:1px solid #D8D5CE;margin-bottom:7px">
-          <div style="font-size:28px;font-weight:800;color:#242220;letter-spacing:2px">1:38.4</div>
-          <div style="font-size:8px;color:#8E8A82;margin-top:2px">Obs. 7 / 10 · Foam & Fabric</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:7px">
-          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Mean</div><div style="font-size:11px;font-weight:700;color:#C49B2E">98.4s</div></div>
-          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Min</div><div style="font-size:11px;font-weight:700;color:#2A9E82">82s</div></div>
-          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Max</div><div style="font-size:11px;font-weight:700;color:#C0402A">141s</div></div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:3px">
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#1 82s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#2 95s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#3 91s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#4 110s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#5 88s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(192,64,42,.1);color:#C0402A;text-decoration:line-through">#6 141s</div>
-          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#7 97s</div>
-        </div>
-      </div>`,
-    popup: `
+    name:'Time Study',short:'TIME',color:_GR,
+    tag:'Free',tagBg:'#E6F7F3',tagTxt:'#0F6E56',
+    headline:'Measure before you manage',
+    body:'Built-in stopwatch with lap recording. Calculates mean CT, flags outliers for exclusion. Pushes the validated cycle time directly to your VSM.',
+    cardContent:`<div style="padding:8px 10px;font-family:monospace">
+      <div style="text-align:center;padding:8px 0 6px;border-bottom:1px solid #D8D5CE;margin-bottom:7px">
+        <div style="font-size:28px;font-weight:800;color:#242220;letter-spacing:2px">1:38.4</div>
+        <div style="font-size:8px;color:#8E8A82;margin-top:2px">Obs. 7 / 10</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:7px">
+        <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Mean</div><div style="font-size:11px;font-weight:700;color:#C49B2E">98.4s</div></div>
+        <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Min</div><div style="font-size:11px;font-weight:700;color:#2A9E82">82s</div></div>
+        <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Max</div><div style="font-size:11px;font-weight:700;color:#C0402A">141s</div></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px">
+        <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#1 82s</div>
+        <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#2 95s</div>
+        <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#3 91s</div>
+        <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#4 110s</div>
+        <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(192,64,42,.1);color:#C0402A;text-decoration:line-through">#6 141s</div>
+      </div>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⏱ Time Study — Foam & Fabric</span>
@@ -174,20 +289,17 @@ const SHOWCASE_TOOLS = [
           <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Min</div><div style="font-size:18px;font-weight:700;color:#2A9E82;font-family:monospace">82.0s</div></div>
           <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Max</div><div style="font-size:18px;font-weight:700;color:#C0402A;font-family:monospace">141.0s</div></div>
         </div>
-        <div>
-          <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:6px">Observations — click to exclude</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px">
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#1 82s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#2 95s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#3 91s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#4 110s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#5 88s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(192,64,42,.08);color:#C0402A;border:1px solid rgba(192,64,42,.3);text-decoration:line-through">#6 141s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#7 97s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#8 84s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#9 102s</div>
-            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#10 99s</div>
-          </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#1 82s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#2 95s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#3 91s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#4 110s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#5 88s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(192,64,42,.08);color:#C0402A;border:1px solid rgba(192,64,42,.3);text-decoration:line-through">#6 141s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#7 97s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#8 84s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#9 102s</div>
+          <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#10 99s</div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Baseline CT (sec)</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="180" type="number" /></div>
@@ -196,50 +308,31 @@ const SHOWCASE_TOOLS = [
       </div>`,
   },
   {
-    name: '5 Why Analysis', short: '5WHY', color: _VIOLET,
-    tag: 'Free', tagBg: '#F0EEFE', tagTxt: _VIOLET,
-    headline: 'Stop fixing symptoms',
-    body: 'Ask why five times and reach the real root cause. Assign a countermeasure, owner and due date — stays attached to the step it came from.',
-    cardContent: `
-      <div style="padding:8px 10px">
-        <div style="padding:5px 7px;background:#FEF9EE;border-radius:4px;margin-bottom:7px;font-size:8px;color:#5A3A00;font-weight:600">Problem: Weld defect rate 3.2% at Station 4</div>
-        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">1</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Weld joint gaps inconsistent</div></div>
-        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">2</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Fixture wear not caught in checks</div></div>
-        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">3</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No retraining after update</div></div>
-        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">4</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No trigger on checklist change</div></div>
-        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">5</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Change mgmt missing notify step</div></div>
-        <div style="padding:4px 7px;background:#E6F7F3;border-radius:4px;font-size:7px;color:#2A9E82;font-weight:700;margin-top:4px">✓ Root cause found</div>
-      </div>`,
-    popup: `
+    name:'5 Why Analysis',short:'5WHY',color:_V,
+    tag:'Free',tagBg:'#F0EEFE',tagTxt:_V,
+    headline:'Stop fixing symptoms',
+    body:'Ask why five times and reach the real root cause. Assign a countermeasure, owner and due date — stays attached to the step it came from.',
+    cardContent:`<div style="padding:8px 10px">
+      <div style="padding:5px 7px;background:#FEF9EE;border-radius:4px;margin-bottom:7px;font-size:8px;color:#5A3A00;font-weight:600">Problem: Weld defect rate 3.2% at Station 4</div>
+      <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">1</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Weld joint gaps inconsistent</div></div>
+      <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">2</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Fixture wear not caught</div></div>
+      <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">3</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No retraining after update</div></div>
+      <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">4</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No trigger on change</div></div>
+      <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">5</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Change mgmt missing notify step</div></div>
+      <div style="padding:4px 7px;background:#E6F7F3;border-radius:4px;font-size:7px;color:#2A9E82;font-weight:700;margin-top:4px">✓ Root cause found</div>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">❓ 5 Why Analysis — Foam & Fabric</span>
       </div>
       <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
-        <div>
-          <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Problem statement *</div>
-          <textarea style="width:100%;padding:9px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220;resize:none;font-family:inherit" rows="2">Weld defect rate at Station 4 is 3.2% — target is 0.5%</textarea>
-        </div>
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">1</div>
-          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why did this happen?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Weld joint gaps are inconsistent between parts" /></div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">2</div>
-          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why are gaps inconsistent?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Fixture wear not caught in pre-shift checks" /></div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">3</div>
-          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not caught?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Checklist updated but operators not retrained" /></div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">4</div>
-          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not retrained?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="No retraining trigger when checklists are revised" /></div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">5</div>
-          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why no trigger?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Change management has no mandatory notification step" /></div>
-        </div>
+        <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Problem statement *</div><textarea style="width:100%;padding:9px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220;resize:none;font-family:inherit" rows="2">Weld defect rate at Station 4 is 3.2% — target is 0.5%</textarea></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">1</div><div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why did this happen?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Weld joint gaps are inconsistent between parts" /></div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">2</div><div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why are gaps inconsistent?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Fixture wear not caught in pre-shift checks" /></div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">3</div><div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not caught?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Checklist updated but operators not retrained" /></div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">4</div><div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not retrained?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="No retraining trigger when checklists are revised" /></div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">5</div><div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why no trigger?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Change management has no mandatory notification step" /></div></div>
         <div style="background:#E6F7F3;border:1px solid rgba(42,158,130,.3);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px">
           <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#2A9E82;margin-bottom:5px">Root cause</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid rgba(42,158,130,.3);background:#fff;color:#242220" value="Change management process has no mandatory notification step" /></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -250,21 +343,20 @@ const SHOWCASE_TOOLS = [
       </div>`,
   },
   {
-    name: 'Fishbone Diagram', short: 'FISH', color: _GOLD,
-    tag: 'Free', tagBg: '#FEF9EE', tagTxt: '#854F0B',
-    headline: 'Map all causes before you fix anything',
-    body: '6M Manufacturing, 8P Service, 4S or Custom. Add causes across every category. Full picture first — then connect to 5 Why for deep analysis.',
-    cardContent: `
-      <div style="padding:8px 10px">
-        <div style="text-align:center;padding:4px 8px;background:#FEF2F0;border-radius:4px;font-size:7px;color:#C0402A;font-weight:600;margin-bottom:7px">Effect: High defect rate — Weld Station 4</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
-          <div style="background:#EEF4FB;border:1px solid rgba(48,112,184,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#3070B8;margin-bottom:3px">Machine</div><div style="font-size:7px;color:#4E4B45">› Fixture worn</div><div style="font-size:7px;color:#4E4B45">› Cal. overdue</div></div>
-          <div style="background:#E6F7F3;border:1px solid rgba(42,158,130,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#2A9E82;margin-bottom:3px">Method</div><div style="font-size:7px;color:#4E4B45">› Seq. varies</div><div style="font-size:7px;color:#4E4B45">› No std tack</div></div>
-          <div style="background:#FEF9EE;border:1px solid rgba(196,155,46,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#C49B2E;margin-bottom:3px">Material</div><div style="font-size:7px;color:#4E4B45">› Batch var.</div><div style="font-size:7px;color:#4E4B45">› Humidity</div></div>
-          <div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#6426A0;margin-bottom:3px">Manpower</div><div style="font-size:7px;color:#4E4B45">› 2/5 trained</div><div style="font-size:7px;color:#4E4B45">› Handover</div></div>
-        </div>
-      </div>`,
-    popup: `
+    name:'Fishbone Diagram',short:'FISH',color:_G,
+    tag:'Free',tagBg:'#FEF9EE',tagTxt:'#854F0B',
+    headline:'Map all causes before you fix anything',
+    body:'6M Manufacturing, 8P Service, 4S or Custom. Add causes across every category. Full picture first — then connect to 5 Why.',
+    cardContent:`<div style="padding:8px 10px">
+      <div style="text-align:center;padding:4px 8px;background:#FEF2F0;border-radius:4px;font-size:7px;color:#C0402A;font-weight:600;margin-bottom:7px">Effect: High defect rate — Weld Station 4</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+        <div style="background:#EEF4FB;border:1px solid rgba(48,112,184,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#3070B8;margin-bottom:3px">Machine</div><div style="font-size:7px;color:#4E4B45">› Fixture worn</div><div style="font-size:7px;color:#4E4B45">› Cal. overdue</div></div>
+        <div style="background:#E6F7F3;border:1px solid rgba(42,158,130,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#2A9E82;margin-bottom:3px">Method</div><div style="font-size:7px;color:#4E4B45">› Seq. varies</div><div style="font-size:7px;color:#4E4B45">› No std tack</div></div>
+        <div style="background:#FEF9EE;border:1px solid rgba(196,155,46,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#C49B2E;margin-bottom:3px">Material</div><div style="font-size:7px;color:#4E4B45">› Batch var.</div><div style="font-size:7px;color:#4E4B45">› Humidity</div></div>
+        <div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#6426A0;margin-bottom:3px">Manpower</div><div style="font-size:7px;color:#4E4B45">› 2/5 trained</div><div style="font-size:7px;color:#4E4B45">› Handover</div></div>
+      </div>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">🐟 Fishbone Diagram — Foam & Fabric</span>
@@ -282,23 +374,22 @@ const SHOWCASE_TOOLS = [
       </div>`,
   },
   {
-    name: 'Waste Identification', short: 'WASTE', color: _RED,
-    tag: 'Free', tagBg: '#FEF2F0', tagTxt: '#993C1D',
-    headline: 'See all 8 wastes. Act on the worst.',
-    body: 'Walk through DOWNTIME wastes per step. Select and note what you observe. Rolls up to your Report as a prioritised improvement backlog automatically.',
-    cardContent: `
-      <div style="padding:8px 10px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Transport</span></div></div>
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Inventory</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">18 units queued</div></div>
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Motion</span></div></div>
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Waiting</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">4.2 min avg idle</div></div>
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Overprod.</span></div></div>
-          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Defects</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">3.2% rework</div></div>
-        </div>
-        <div style="margin-top:6px;padding:4px 7px;background:#FEF2F0;border-radius:4px;font-size:8px;color:#C0402A;font-weight:600;text-align:center">3 wastes identified</div>
-      </div>`,
-    popup: `
+    name:'Waste Identification',short:'WASTE',color:_R,
+    tag:'Free',tagBg:'#FEF2F0',tagTxt:'#993C1D',
+    headline:'See all 8 wastes. Act on the worst.',
+    body:'Walk through DOWNTIME wastes per step. Select and note what you observe. Rolls up to your Report as a prioritised backlog automatically.',
+    cardContent:`<div style="padding:8px 10px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Transport</span></div></div>
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Inventory</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">18 units queued</div></div>
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Motion</span></div></div>
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Waiting</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">4.2 min avg idle</div></div>
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Overprod.</span></div></div>
+        <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Defects</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">3.2% rework</div></div>
+      </div>
+      <div style="margin-top:6px;padding:4px 7px;background:#FEF2F0;border-radius:4px;font-size:8px;color:#C0402A;font-weight:600;text-align:center">3 wastes identified</div>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⚠️ Waste Identification — Foam & Fabric</span>
@@ -307,89 +398,299 @@ const SHOWCASE_TOOLS = [
         <div style="font-size:12px;color:#4E4B45;line-height:1.65;padding:10px 12px;border-radius:10px;background:rgba(255,107,107,0.05);border:1px solid rgba(255,107,107,0.15);margin-bottom:12px">Select all wastes present at this step. This feeds your kaizen prioritization and reporting.</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:#F8F7F5;border:1px solid #D8D5CE;display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">🚛</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#242220">Transport</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">T</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Unnecessary movement of materials</div></div></button></div>
-          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left;box-shadow:0 0 0 2px rgba(192,64,42,.1)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">📦</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Inventory</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">I</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Excess stock, WIP, finished goods</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="18 units queued upstream before step" /></div>
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">📦</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Inventory</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">I</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Excess stock, WIP, finished goods</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="18 units queued upstream" /></div>
           <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:#F8F7F5;border:1px solid #D8D5CE;display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">🏃</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#242220">Motion</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">M</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Unnecessary movement of people</div></div></button></div>
-          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left;box-shadow:0 0 0 2px rgba(192,64,42,.1)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">⏳</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Waiting</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">W</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Idle time, waiting for approvals</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="4.2 min avg idle between batches" /></div>
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">⏳</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Waiting</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">W</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Idle time, waiting for approvals</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="4.2 min avg idle between batches" /></div>
         </div>
       </div>`,
   },
   {
-    name: 'Kaizen Events', short: 'KAIZEN', color: _GOLD,
-    tag: 'Free', tagBg: '#FEF9EE', tagTxt: '#854F0B',
-    headline: 'Every improvement gets an owner',
-    body: 'Log Kaizen events on the step where the problem lives. Owner, due date, status, priority. Open events show as burst markers on your VSM map.',
-    cardContent: `
-      <div style="padding:8px 10px;display:flex;flex-direction:column;gap:4px">
-        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-001</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E;font-weight:700">in-progress</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">SMED — changeover 38→18 min</div><div style="font-size:7px;color:#8E8A82">👤 J.Torres · 📅 Apr 15</div></div>
-        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-002</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82;font-weight:700">complete</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">Fixture check to pre-shift list</div><div style="font-size:7px;color:#8E8A82">👤 R.Singh · 📅 Apr 3</div></div>
-        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-003</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;font-weight:700">open</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">5S audit weld consumables</div><div style="font-size:7px;color:#8E8A82">👤 T.Nakamura · 📅 Apr 22</div></div>
-      </div>`,
-    popup: `
+    name:'Kaizen Events',short:'KAIZEN',color:_G,
+    tag:'Free',tagBg:'#FEF9EE',tagTxt:'#854F0B',
+    headline:'Every improvement gets an owner',
+    body:'Log Kaizen events on the step where the problem lives. Owner, due date, status, priority. Open events show as burst markers on your VSM map.',
+    cardContent:`<div style="padding:8px 10px;display:flex;flex-direction:column;gap:4px">
+      <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-001</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E;font-weight:700">in-progress</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">SMED — changeover 38→18 min</div><div style="font-size:7px;color:#8E8A82">👤 J.Torres · 📅 Apr 15</div></div>
+      <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-002</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82;font-weight:700">complete</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">Fixture check to pre-shift list</div><div style="font-size:7px;color:#8E8A82">👤 R.Singh · 📅 Apr 3</div></div>
+      <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-003</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;font-weight:700">open</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">5S audit weld consumables</div><div style="font-size:7px;color:#8E8A82">👤 T.Nakamura · 📅 Apr 22</div></div>
+    </div>`,
+    popup:`
       <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
         <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⚡ Kaizen Events — Foam & Fabric</span>
       </div>
       <div style="padding:14px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px">
-          <div style="display:flex;gap:5px;flex-wrap:wrap">
-            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;border:1px solid rgba(142,138,130,.25)">Open (2)</span>
-            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;border:1px solid rgba(196,155,46,.25)">In Progress (1)</span>
-            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(42,158,130,.12);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">Complete (1)</span>
-          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;border:1px solid rgba(142,138,130,.25)">Open (2)</span><span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;border:1px solid rgba(196,155,46,.25)">In Progress (1)</span><span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(42,158,130,.12);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">Complete (1)</span></div>
           <button style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 12px;font-size:11px;font-weight:600;border-radius:10px;border:none;background:#C49B2E;color:#fff;cursor:pointer">+ New Event</button>
         </div>
         <div style="display:flex;flex-direction:column;gap:7px">
           <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-001</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">SMED event — reduce changeover from 38 min to 18 min</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E;font-weight:700;flex-shrink:0">In Progress</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;flex-shrink:0">high</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 Delivery</span><span>👤 J.Torres</span><span>📅 Apr 15</span></div></div>
           <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-002</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">Add fixture inspection to pre-shift checklist</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82;font-weight:700;flex-shrink:0">Complete</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(192,64,42,.12);color:#C0402A;flex-shrink:0">critical</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 Quality</span><span>👤 R.Singh</span><span>📅 Apr 3</span></div></div>
-          <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-003</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">5S audit of weld consumables storage area</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;font-weight:700;flex-shrink:0">Open</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(42,158,130,.12);color:#2A9E82;flex-shrink:0">medium</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 5S</span><span>👤 T.Nakamura</span><span>📅 Apr 22</span></div></div>
         </div>
+      </div>`,
+  },
+  {
+    name:'Yamazumi Chart',short:'YAM',color:'#1090D4',
+    tag:'Free',tagBg:'#E6F1FB',tagTxt:'#1A4F8A',
+    headline:'Balance your operators against takt',
+    body:'Stacked bar chart showing each operator\'s workload split by VA, NNVA, and NVA time. See at a glance who is overloaded, who has capacity, and where to rebalance work elements.',
+    cardContent:`<div style="padding:8px 10px">
+      <div style="font-size:8px;color:#8E8A82;margin-bottom:6px;font-family:monospace">Operator workload vs Takt (120s)</div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:80px;position:relative;border-bottom:1px solid #D8D5CE;margin-bottom:4px">
+        <div style="position:absolute;left:0;right:0;bottom:38px;border-top:1.5px dashed #C0402A;opacity:.6"></div>
+        <div style="position:absolute;right:2px;bottom:40px;font-size:6px;color:#C0402A;font-family:monospace">TAKT 120s</div>
+        <div style="display:flex;flex-direction:column;width:28px">
+          <div style="height:18px;background:#FF6B6B;border-radius:2px 2px 0 0;opacity:.75"></div>
+          <div style="height:20px;background:#D4A208"></div>
+          <div style="height:32px;background:#1DD1A1"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;width:28px">
+          <div style="height:10px;background:#FF6B6B;border-radius:2px 2px 0 0;opacity:.75"></div>
+          <div style="height:14px;background:#D4A208"></div>
+          <div style="height:40px;background:#1DD1A1"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;width:28px">
+          <div style="height:30px;background:#FF6B6B;border-radius:2px 2px 0 0;opacity:.75"></div>
+          <div style="height:22px;background:#D4A208"></div>
+          <div style="height:28px;background:#1DD1A1"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;width:28px">
+          <div style="height:8px;background:#FF6B6B;border-radius:2px 2px 0 0;opacity:.75"></div>
+          <div style="height:12px;background:#D4A208"></div>
+          <div style="height:25px;background:#1DD1A1"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;width:28px">
+          <div style="height:12px;background:#FF6B6B;border-radius:2px 2px 0 0;opacity:.75"></div>
+          <div style="height:18px;background:#D4A208"></div>
+          <div style="height:22px;background:#1DD1A1"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:2px;font-size:7px;color:#8E8A82;text-align:center">
+        <div style="width:28px">Op 1</div><div style="width:28px">Op 2</div><div style="width:28px">Op 3</div><div style="width:28px">Op 4</div><div style="width:28px">Op 5</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px;font-size:7px">
+        <div style="display:flex;align-items:center;gap:3px"><div style="width:8px;height:8px;background:#1DD1A1;border-radius:1px"></div><span style="color:#8E8A82">VA</span></div>
+        <div style="display:flex;align-items:center;gap:3px"><div style="width:8px;height:8px;background:#D4A208;border-radius:1px"></div><span style="color:#8E8A82">NNVA</span></div>
+        <div style="display:flex;align-items:center;gap:3px"><div style="width:8px;height:8px;background:#FF6B6B;border-radius:1px;opacity:.75"></div><span style="color:#8E8A82">NVA</span></div>
+      </div>
+    </div>`,
+    popup:`
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">📊 Yamazumi Chart — Operator Balance</span>
+      </div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px">
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Takt</div><div style="font-size:16px;font-weight:700;color:#C49B2E;font-family:monospace">120s</div></div>
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Operators</div><div style="font-size:16px;font-weight:700;color:#1090D4;font-family:monospace">5</div></div>
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">VA %</div><div style="font-size:16px;font-weight:700;color:#1DD1A1;font-family:monospace">58%</div></div>
+          <div style="background:#FEF2F0;border:1px solid rgba(192,64,42,.25);border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Overloaded</div><div style="font-size:16px;font-weight:700;color:#C0402A;font-family:monospace">Op 3</div></div>
+        </div>
+        <div style="position:relative;height:160px;border-left:1px solid #D8D5CE;border-bottom:1px solid #D8D5CE;margin-bottom:8px;padding-left:8px">
+          <div style="position:absolute;left:8px;right:0;bottom:64px;border-top:1.5px dashed #C0402A;opacity:.5"></div>
+          <div style="position:absolute;right:4px;bottom:66px;font-size:9px;color:#C0402A;font-family:monospace;font-weight:700">TAKT 120s</div>
+          <div style="display:flex;align-items:flex-end;gap:12px;height:100%;padding-top:8px">
+            ${[['Op 1',[32,36,57],'ok'],['Op 2',[18,25,64],'ok'],['Op 3',[54,40,45],'over'],['Op 4',[14,22,40],'ok'],['Op 5',[22,32,35],'ok']].map(([name,bars,status])=>`<div style="display:flex;flex-direction:column;align-items:center;gap:0;flex:1">
+              <div style="display:flex;flex-direction:column;width:100%;border:${status==='over'?'1.5px solid rgba(192,64,42,.4)':'none'};border-radius:3px 3px 0 0;overflow:hidden">
+                <div style="height:${bars[0]}px;background:#FF6B6B;opacity:.8"></div>
+                <div style="height:${bars[1]}px;background:#D4A208"></div>
+                <div style="height:${bars[2]}px;background:#1DD1A1"></div>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
+          ${[['Op 1','ok'],['Op 2','ok'],['Op 3','over'],['Op 4','ok'],['Op 5','ok']].map(([n,s])=>`<span style="font-size:10px;padding:2px 10px;border-radius:100px;background:${s==='over'?'rgba(192,64,42,.1)':'rgba(29,209,161,.1)'};color:${s==='over'?'#C0402A':'#2A9E82'};border:1px solid ${s==='over'?'rgba(192,64,42,.3)':'rgba(29,209,161,.3)'}">${n}</span>`).join('')}
+        </div>
+        <div style="padding:10px 12px;background:#FEF2F0;border:1px solid rgba(192,64,42,.2);border-radius:8px;font-size:12px;color:#4E4B45">⚠ Op 3 is 25s over takt. Move NVA elements to Op 4 (45s available capacity) to rebalance.</div>
+      </div>`,
+  },
+  {
+    name:'Gap Analysis',short:'GAP',color:'#6426A0',
+    tag:'AI',tagBg:'#F0EEFE',tagTxt:'#6426A0',
+    headline:'Find every gap between now and world-class',
+    body:'Automatically analyzes your entire value stream against lean best-practice targets. Surfaces critical bottlenecks, PCE gaps, waste density, and specific actionable fixes — sorted by severity.',
+    cardContent:`<div style="padding:8px 10px;display:flex;flex-direction:column;gap:5px">
+      <div style="font-size:8px;color:#8E8A82;margin-bottom:2px;font-family:monospace">3 critical · 2 warning · 1 info</div>
+      <div style="background:#FEF2F0;border:1px solid rgba(192,64,42,.25);border-radius:6px;padding:7px 8px">
+        <div style="font-size:7px;color:#C0402A;font-weight:700;font-family:monospace;margin-bottom:2px">🔴 CRITICAL</div>
+        <div style="font-size:8px;color:#4E4B45;font-weight:600;margin-bottom:2px">Foam & Fabric is 25s over takt</div>
+        <div style="font-size:7px;color:#8E8A82;line-height:1.4">Will cause upstream queue buildup. Run SMED or operator rebalance.</div>
+      </div>
+      <div style="background:#FEF9EE;border:1px solid rgba(196,155,46,.25);border-radius:6px;padding:7px 8px">
+        <div style="font-size:7px;color:#C49B2E;font-weight:700;font-family:monospace;margin-bottom:2px">🟡 WARNING</div>
+        <div style="font-size:8px;color:#4E4B45;font-weight:600;margin-bottom:2px">PCE is 34% — target 95%+</div>
+        <div style="font-size:7px;color:#8E8A82;line-height:1.4">66% of lead time is non-value-adding wait.</div>
+      </div>
+      <div style="background:#EEF4FB;border:1px solid rgba(48,112,184,.2);border-radius:6px;padding:7px 8px">
+        <div style="font-size:7px;color:#3070B8;font-weight:700;font-family:monospace;margin-bottom:2px">🔵 INFO</div>
+        <div style="font-size:8px;color:#4E4B45;font-weight:600;margin-bottom:2px">3 steps have no time study data</div>
+        <div style="font-size:7px;color:#8E8A82;line-height:1.4">Run observations to improve VSM accuracy.</div>
+      </div>
+    </div>`,
+    popup:`
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">🎯 Gap Analysis — Seat Assembly Line 4</span>
+        <span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">AI</span>
+      </div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px">
+          <div style="background:#FEF2F0;border:1px solid rgba(192,64,42,.25);border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Critical</div><div style="font-size:22px;font-weight:700;color:#C0402A;font-family:monospace">3</div></div>
+          <div style="background:#FEF9EE;border:1px solid rgba(196,155,46,.25);border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Warning</div><div style="font-size:22px;font-weight:700;color:#C49B2E;font-family:monospace">2</div></div>
+          <div style="background:#EEF4FB;border:1px solid rgba(48,112,184,.2);border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Info</div><div style="font-size:22px;font-weight:700;color:#3070B8;font-family:monospace">1</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:#fff;border:1px solid rgba(192,64,42,.3);border-radius:10px;overflow:hidden">
+            <div style="padding:10px 12px;border-left:3px solid #C0402A">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:9px;padding:2px 8px;border-radius:100px;background:rgba(192,64,42,.1);color:#C0402A;font-weight:700;font-family:monospace">CRITICAL</span><span style="font-size:10px;color:#8E8A82;font-family:monospace">Bottleneck</span></div>
+              <div style="font-size:12px;font-weight:700;color:#242220;margin-bottom:6px">"Foam & Fabric" is 25s over takt time</div>
+              <div style="font-size:11px;color:#4E4B45;line-height:1.6;margin-bottom:8px">Cycle time is 145s vs takt of 120s. This step cannot keep pace with customer demand and will cause queue buildup upstream. Everything feeding into this step will stall.</div>
+              <div style="padding:8px 10px;background:#FEF2F0;border-radius:7px;font-size:11px;color:#C0402A">→ Run a 5 Why on this step. Decompose tasks using Operator Steps — identify NVA elements to eliminate. Consider splitting across 2 operators or adding a parallel station.</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(196,155,46,.3);border-radius:10px;overflow:hidden">
+            <div style="padding:10px 12px;border-left:3px solid #C49B2E">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:9px;padding:2px 8px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;font-weight:700;font-family:monospace">WARNING</span><span style="font-size:10px;color:#8E8A82;font-family:monospace">Process Efficiency</span></div>
+              <div style="font-size:12px;font-weight:700;color:#242220;margin-bottom:6px">PCE is 34% — target is 95%+</div>
+              <div style="font-size:11px;color:#4E4B45;line-height:1.6;margin-bottom:8px">66% of total lead time is non-value-adding wait. World-class VSMs run at 90–95% PCE. The gap represents working capital tied up in WIP and delayed customer responsiveness.</div>
+              <div style="padding:8px 10px;background:#FEF9EE;border-radius:7px;font-size:11px;color:#C49B2E">→ Focus kaizen on the largest WIP triangles between steps. Target the queue before Foam & Fabric first — 18 units sitting idle.</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+  },
+  {
+    name:'A3 Report',short:'A3',color:'#2A9E82',
+    tag:'Export',tagBg:'#E6F7F3',tagTxt:'#0F6E56',
+    headline:'One report. Every metric. Print-ready.',
+    body:'Generates a complete A3 improvement report from your VSM data — process overview, bottleneck analysis, waste register, root cause summary, Kaizen tracker, and before/after results. Opens in a new tab ready to print or PDF.',
+    cardContent:`<div style="padding:8px 10px">
+      <div style="background:#fff;border:1px solid #D8D5CE;border-radius:6px;overflow:hidden;font-family:sans-serif">
+        <div style="background:#242220;padding:6px 10px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:8px;color:#D4A208;font-weight:700;letter-spacing:1px">VESIMY · PROCESS INTELLIGENCE REPORT</div>
+          <div style="font-size:7px;color:#8E8A82">ISO 9001:2015</div>
+        </div>
+        <div style="padding:8px 10px">
+          <div style="font-size:9px;font-weight:700;color:#242220;margin-bottom:5px">Seat Assembly Line 4 — Current State Analysis</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px;margin-bottom:6px">
+            <div style="background:#F8F7F5;border-radius:3px;padding:3px 4px;text-align:center"><div style="font-size:6px;color:#8E8A82">PCE</div><div style="font-size:10px;font-weight:700;color:#C0402A">34%</div></div>
+            <div style="background:#F8F7F5;border-radius:3px;padding:3px 4px;text-align:center"><div style="font-size:6px;color:#8E8A82">Lead Time</div><div style="font-size:10px;font-weight:700;color:#C49B2E">14m40s</div></div>
+            <div style="background:#F8F7F5;border-radius:3px;padding:3px 4px;text-align:center"><div style="font-size:6px;color:#8E8A82">Takt</div><div style="font-size:10px;font-weight:700;color:#C49B2E">2m00s</div></div>
+            <div style="background:#FEF2F0;border-radius:3px;padding:3px 4px;text-align:center"><div style="font-size:6px;color:#8E8A82">BN Step</div><div style="font-size:9px;font-weight:700;color:#C0402A">Foam</div></div>
+          </div>
+          <div style="border-top:1px solid #EEE;padding-top:5px">
+            <div style="font-size:7px;font-weight:700;color:#242220;margin-bottom:3px">Open Kaizen Events</div>
+            <div style="display:flex;gap:3px">
+              <span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E">In Progress (1)</span>
+              <span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82">Open (2)</span>
+              <span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82">Done (1)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+    popup:`
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">📄 A3 Report — Seat Assembly Line 4</span>
+      </div>
+      <div style="background:#242220;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-size:8px;color:#D4A208;letter-spacing:2px;font-family:monospace;margin-bottom:4px">VESIMY · PROCESS INTELLIGENCE REPORT</div>
+            <div style="font-size:16px;font-weight:700;color:#EAE8F4;font-family:Palatino Linotype,serif">Seat Assembly Line 4</div>
+            <div style="font-size:11px;color:#7070A0;margin-top:2px">Current State Analysis · March 2026</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:8px;padding:3px 8px;border-radius:4px;background:rgba(212,162,8,.12);color:#D4A208;border:1px solid rgba(212,162,8,.25);font-family:monospace">ISO 9001:2015</span>
+            <span style="font-size:8px;padding:3px 8px;border-radius:4px;background:rgba(48,112,184,.12);color:#6CB9FC;border:1px solid rgba(48,112,184,.25);font-family:monospace">ISO 22468:2020</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px">
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px;text-align:center"><div style="font-size:8px;color:#7070A0;letter-spacing:1px;font-family:monospace;margin-bottom:4px">PCE</div><div style="font-size:20px;font-weight:700;color:#FF6B6B;font-family:monospace">34%</div><div style="font-size:8px;color:#38385C">Target: 95%+</div></div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px;text-align:center"><div style="font-size:8px;color:#7070A0;letter-spacing:1px;font-family:monospace;margin-bottom:4px">LEAD TIME</div><div style="font-size:16px;font-weight:700;color:#D4A208;font-family:monospace">14m 40s</div><div style="font-size:8px;color:#38385C">VA: 8m 14s</div></div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px;text-align:center"><div style="font-size:8px;color:#7070A0;letter-spacing:1px;font-family:monospace;margin-bottom:4px">TAKT TIME</div><div style="font-size:16px;font-weight:700;color:#D4A208;font-family:monospace">2m 00s</div><div style="font-size:8px;color:#38385C">120 units/day</div></div>
+          <div style="background:rgba(192,64,42,.12);border:1px solid rgba(192,64,42,.3);border-radius:8px;padding:10px;text-align:center"><div style="font-size:8px;color:#7070A0;letter-spacing:1px;font-family:monospace;margin-bottom:4px">BOTTLENECK</div><div style="font-size:12px;font-weight:700;color:#FF6B6B">Foam & Fabric</div><div style="font-size:8px;color:#38385C">145s vs 120s takt</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px">
+            <div style="font-size:9px;color:#D4A208;letter-spacing:1.5px;font-family:monospace;margin-bottom:8px">WASTE REGISTER</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">Inventory</span><span style="color:#FF6B6B;font-weight:700">47 units WIP</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">Waiting</span><span style="color:#FF6B6B;font-weight:700">6m 12s total</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">Defects</span><span style="color:#D4A208;font-weight:700">3.2% rework</span></div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px">
+            <div style="font-size:9px;color:#D4A208;letter-spacing:1.5px;font-family:monospace;margin-bottom:8px">KAIZEN TRACKER</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">KZ-001 SMED event</span><span style="color:#D4A208;font-weight:700">In Progress</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">KZ-002 Fixture check</span><span style="color:#1DD1A1;font-weight:700">Complete</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:#7070A0">KZ-003 5S audit</span><span style="color:#7070A0;font-weight:700">Open</span></div>
+            </div>
+          </div>
+        </div>
+        <button style="width:100%;padding:11px;background:linear-gradient(135deg,#C49510,#D4A208);border:none;border-radius:10px;color:#03030D;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">📄 Download Full A3 Report (PDF)</button>
       </div>`,
   },
 ]
 
 function ToolShowcase() {
   const [activeTool, setActiveTool] = useState(0)
+  const sectionRef = useRef<HTMLElement>(null)
+  const lastWheelTime = useRef(0)
   const tool = SHOWCASE_TOOLS[activeTool]
 
   useEffect(() => {
-    const el = document.getElementById('showcase-stack')
+    const el = sectionRef.current
     if (!el) return
     const onWheel = (e: WheelEvent) => {
-      const parent = el.closest('section')
-      if (!parent) return
-      const rect = parent.getBoundingClientRect()
-      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight * 0.4
+      const rect = el.getBoundingClientRect()
+      const inView = rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4
       if (!inView) return
-      e.preventDefault()
-      if (e.deltaY > 40) setActiveTool(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
-      if (e.deltaY < -40) setActiveTool(t => Math.max(t - 1, 0))
+      const now = Date.now()
+      if (now - lastWheelTime.current < 600) return
+      if (Math.abs(e.deltaY) < 30) return
+      if (e.deltaY > 0 && activeTool < SHOWCASE_TOOLS.length - 1) {
+        e.preventDefault()
+        lastWheelTime.current = now
+        setActiveTool(t => t + 1)
+      } else if (e.deltaY < 0 && activeTool > 0) {
+        e.preventDefault()
+        lastWheelTime.current = now
+        setActiveTool(t => t - 1)
+      }
     }
     window.addEventListener('wheel', onWheel, { passive: false })
     return () => window.removeEventListener('wheel', onWheel)
-  }, [])
+  }, [activeTool])
 
   return (
-    <section id="tools" style={{ padding: '80px 0', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
-      <div style={{ maxWidth: 1060, margin: '0 auto', padding: '0 48px' }}>
+    <section id="tools" ref={sectionRef} style={{ padding: '80px 0 100px', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 40px' }}>
 
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
-          <h2 style={{ fontSize: 'clamp(24px,3vw,36px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean team needs</h2>
-          <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto', lineHeight: 1.75 }}>All connected to your value stream. Click or scroll to explore each tool.</p>
+        <div style={{ textAlign: 'center', marginBottom: 52 }}>
+          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What\'s inside</div>
+          <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean team needs</h2>
+          <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 500, margin: '0 auto', lineHeight: 1.75 }}>
+            All connected to your value stream. Scroll or click the dots to explore.
+          </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 48, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 56, alignItems: 'start' }}>
 
           {/* LEFT: Detail + real popup */}
-          <div style={{ paddingTop: 4 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 9px', borderRadius: '100px', background: tool.tagBg, border: `1px solid ${tool.color}30`, marginBottom: 14 }}>
+          <div key={activeTool} style={{ paddingTop: 4, animation: 'showcaseReveal 0.3s ease both' }}>
+            <style>{`@keyframes showcaseReveal{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}`}</style>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: '100px', background: tool.tagBg, border: `1px solid ${tool.color}30`, marginBottom: 14 }}>
               <span style={{ fontSize: 9, fontWeight: 700, color: tool.tagTxt, letterSpacing: '.5px', fontFamily: 'monospace' }}>{tool.tag}</span>
             </div>
-            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 8 }}>{tool.headline}</h3>
-            <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.8, marginBottom: 18 }}>{tool.body}</p>
+            <h3 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 8 }}>{tool.headline}</h3>
+            <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.8, marginBottom: 20 }}>{tool.body}</p>
 
-            {/* Real popup preview */}
-            <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', maxHeight: 440, overflowY: 'auto' }}
+            <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 500, overflowY: 'auto' }}
               dangerouslySetInnerHTML={{ __html: tool.popup + `
                 <div style="padding:9px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
                   <div style="display:flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(196,155,46,.12);border:1px solid rgba(196,155,46,.25);border-radius:4px">
@@ -400,10 +701,10 @@ function ToolShowcase() {
             />
           </div>
 
-          {/* RIGHT: 3D stacked cards */}
-          <div id="showcase-stack" style={{ position: 'sticky', top: 28, height: 480, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ perspective: '1100px', perspectiveOrigin: '72% 48%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'relative', width: 280, height: 400, transformStyle: 'preserve-3d', transform: 'rotateY(22deg) rotateX(7deg) rotateZ(2deg)' }}>
+          {/* RIGHT: 3D stack */}
+          <div style={{ position: 'sticky', top: 28, height: 540, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
+            <div style={{ perspective: '1100px', perspectiveOrigin: '72% 48%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+              <div style={{ position: 'relative', width: 290, height: 420, transformStyle: 'preserve-3d', transform: 'rotateY(22deg) rotateX(7deg) rotateZ(2deg)' }}>
                 {SHOWCASE_TOOLS.map((t, i) => {
                   const off = i - activeTool
                   const isA = i === activeTool
@@ -411,10 +712,10 @@ function ToolShowcase() {
                     <div key={t.short} onClick={() => !isA && setActiveTool(i)} style={{
                       position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
                       borderRadius: 14,
-                      background: `rgba(255,255,255,${isA ? .97 : Math.max(.55, .85 - Math.abs(off) * .1)})`,
-                      border: `1.5px solid ${isA ? t.color + '55' : 'rgba(215,213,206,.7)'}`,
+                      background: `rgba(255,255,255,${isA ? .97 : Math.max(.45, .82 - Math.abs(off) * .09)})`,
+                      border: `1.5px solid ${isA ? t.color + '55' : 'rgba(215,213,206,.65)'}`,
                       boxShadow: isA ? `0 18px 50px rgba(0,0,0,.13),0 0 0 1px ${t.color}22` : '0 2px 10px rgba(0,0,0,.05)',
-                      transform: `translateY(${off * 16}px) translateZ(${isA ? 48 : -Math.abs(off) * 16}px) scale(${isA ? 1 : Math.max(.87, .97 - Math.abs(off) * .025)})`,
+                      transform: `translateY(${off * 16}px) translateZ(${isA ? 48 : -Math.abs(off) * 16}px) scale(${isA ? 1 : Math.max(.86, .97 - Math.abs(off) * .025)})`,
                       transition: 'all .45s cubic-bezier(.34,1.15,.64,1)',
                       overflow: 'hidden', display: 'flex', flexDirection: 'column',
                       cursor: isA ? 'default' : 'pointer',
@@ -429,7 +730,7 @@ function ToolShowcase() {
                           {isA && <div style={{ width: 6, height: 6, borderRadius: '50%', background: t.color, flexShrink: 0 }} />}
                         </div>
                       </div>
-                      <div style={{ flex: 1, overflow: 'hidden', opacity: isA ? 1 : Math.max(.15, .65 - Math.abs(off) * .2), transform: `scale(${isA ? 1 : .88})`, transformOrigin: 'top left', transition: 'opacity .4s,transform .4s', pointerEvents: 'none' }}
+                      <div style={{ flex: 1, overflow: 'hidden', opacity: isA ? 1 : Math.max(.12, .62 - Math.abs(off) * .18), transform: `scale(${isA ? 1 : .86})`, transformOrigin: 'top left', transition: 'opacity .4s,transform .4s', pointerEvents: 'none' }}
                         dangerouslySetInnerHTML={{ __html: t.cardContent }}
                       />
                       {isA && <div style={{ padding: '0 14px 10px', flexShrink: 0 }}><div style={{ height: 2, borderRadius: 2, background: `linear-gradient(90deg,${t.color},${t.color}22)` }} /></div>}
@@ -439,12 +740,13 @@ function ToolShowcase() {
               </div>
             </div>
             {/* Dots */}
-            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 6 }}>
+            <div style={{ display: 'flex', gap: 6 }}>
               {SHOWCASE_TOOLS.map((t, i) => (
                 <div key={i} onClick={() => setActiveTool(i)} style={{ width: i === activeTool ? 20 : 6, height: 6, borderRadius: 100, background: i === activeTool ? t.color : '#D8D5CE', cursor: 'pointer', transition: 'all .3s' }} />
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>
