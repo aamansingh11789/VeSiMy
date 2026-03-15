@@ -56,307 +56,401 @@ function WipCoins({ n, color = '#DEB96A', bg = '#FEF9EE' }: any) {
 }
 
 
-// ── Tool Showcase — sticky scroll with animated previews ──────────────────────
-const TOOLS_DATA = [
+// ── Tool Showcase ─────────────────────────────────────────────────────────────
+// Real tool popup previews · stacked 3D cards on right · details on left
+
+const _GOLD = '#C49B2E', _RED = '#C0402A', _GREEN = '#2A9E82', _VIOLET = '#6426A0', _STEEL = '#3070B8'
+
+const SHOWCASE_TOOLS = [
   {
-    id: 'vsm',
-    icon: '🗺',
-    name: 'Value Stream Map',
-    label: 'See your whole process at once',
-    body: 'Map every step your product takes from start to finish. Cycle times, wait times, WIP, and bottlenecks all calculated automatically. Steps over Takt Time are flagged in red — no guessing where the constraint is.',
-    badge: 'Core',
-    badgeBg: '#EEF4FB', badgeColor: '#1A4F8A',
-    preview: () => (
-      <div style={{ fontFamily: 'monospace' }}>
-        <div style={{ display: 'flex', gap: 6, marginBottom: 10, padding: '8px 10px', background: '#F0F4FF', borderRadius: 8, fontSize: 11 }}>
-          {[['STEPS','6'],['TOTAL CT','8m 14s'],['TAKT','2m 00s'],['PCE','34%'],['WIP','47']].map(([l,v]) => (
-            <div key={l} style={{ flex:1, textAlign:'center', borderRight:'1px solid #D8D5CE', paddingRight:6 }}>
-              <div style={{ fontSize:8, color:'#8E8A82', letterSpacing:1 }}>{l}</div>
-              <div style={{ fontSize:13, fontWeight:700, color: l==='PCE'?'#C0402A':'#C49B2E' }}>{v}</div>
-            </div>
-          ))}
+    name: 'Value Stream Map', short: 'VSM', color: _STEEL,
+    tag: 'Core', tagBg: '#EEF4FB', tagTxt: '#1A4F8A',
+    headline: 'See your entire process at once',
+    body: 'Map every step, every wait, every handoff. Bottlenecks flag red automatically against your Takt Time. PCE calculates live. Export as A3 ISO 22468:2020.',
+    cardBg: `background:#EEF4FB`,
+    cardContent: `
+      <div style="padding:8px 10px;font-family:monospace">
+        <div style="display:flex;gap:2px;margin-bottom:6px">
+          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A;letter-spacing:.5px">CT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">8m 14s</div></div>
+          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">TAKT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">2m 00s</div></div>
+          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">PCE</div><div style="font-size:10px;font-weight:700;color:#C0402A">34%</div></div>
+          <div style="flex:1;background:#EEF4FB;border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:6px;color:#1A4F8A">WIP</div><div style="font-size:10px;font-weight:700;color:#C49B2E">47</div></div>
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:4, overflowX:'auto', padding:'4px 0' }}>
-          {[
-            { name:'Staging', ct:'45s', ok:true },
-            { name:'Frame Asm', ct:'98s', ok:true },
-            { name:'Foam & Fabric', ct:'145s', ok:false },
-            { name:'Electrical', ct:'88s', ok:true },
-            { name:'Final QC', ct:'72s', ok:true },
-          ].map((s, i) => (
-            <div key={s.name} style={{ display:'flex', alignItems:'center', gap:4, flexShrink:0 }}>
-              <div style={{ width:90, background:'#FFFFFF', border:`1.5px solid ${s.ok?'#D8D5CE':'#C0402A'}`, borderRadius:8, padding:'8px 8px 6px', position:'relative', boxShadow: s.ok?'none':'0 0 10px rgba(192,64,42,0.18)' }}>
-                {!s.ok && <div style={{ position:'absolute', top:-7, right:-5, fontSize:10 }}>⚠️</div>}
-                <div style={{ fontSize:8, fontWeight:700, color: s.ok?'#242220':'#C0402A', marginBottom:4, textAlign:'center' }}>{s.name}</div>
-                <div style={{ height:3, background:'#EEE', borderRadius:2, marginBottom:4 }}>
-                  <div style={{ height:3, borderRadius:2, background: s.ok?'#C49B2E':'#C0402A', width: s.ok ? `${Math.round(parseInt(s.ct)*100/145)}%` : '100%' }} />
-                </div>
-                <div style={{ fontSize:8, color: s.ok?'#8E8A82':'#C0402A', textAlign:'center', fontWeight:700 }}>{s.ct}</div>
-              </div>
-              {i < 4 && <div style={{ fontSize:11, color:'#C8C5BC' }}>→</div>}
-            </div>
-          ))}
+        <div style="display:flex;align-items:flex-end;gap:2px">
+          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Stage</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:38%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">45s</div></div>
+          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
+          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Frame</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:68%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">98s</div></div>
+          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
+          <div style="flex:1;background:#fff;border:1.5px solid #C0402A;border-radius:5px;padding:4px 2px;text-align:center;position:relative;box-shadow:0 0 8px rgba(192,64,42,.2)"><div style="position:absolute;top:-4px;right:-3px;width:7px;height:7px;border-radius:50%;background:#C0402A"></div><div style="font-size:6px;font-weight:700;color:#C0402A">Foam</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C0402A;width:100%;border-radius:1px"></div></div><div style="font-size:6px;color:#C0402A;font-weight:700">145s</div></div>
+          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
+          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">Elec</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:61%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">88s</div></div>
+          <div style="color:#D8D5CE;font-size:8px;margin-bottom:6px">›</div>
+          <div style="flex:1;background:#fff;border:1.5px solid #D8D5CE;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:6px;font-weight:700;color:#242220">QC</div><div style="height:2px;background:#EEE;margin:2px 0;border-radius:1px"><div style="height:2px;background:#C49B2E;width:50%;border-radius:1px"></div></div><div style="font-size:6px;color:#8E8A82">72s</div></div>
         </div>
-        <div style={{ marginTop:10, padding:'6px 10px', background:'#FEF2F0', border:'1px solid rgba(192,64,42,0.2)', borderRadius:6, fontSize:11, color:'#C0402A' }}>
-          ⚠ Bottleneck: <strong>Foam & Fabric</strong> is running 21% over Takt Time — 47 units queued upstream.
-        </div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM Map · Seat Assembly Line 4 · Current State</span>
+        <span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#EEF4FB;color:#1A4F8A;font-family:monospace">ISO 22468</span>
       </div>
-    ),
+      <div style="padding:12px">
+        <div style="display:flex;gap:2px;margin-bottom:10px">
+          <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">TOTAL CT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">8m 14s</div></div>
+          <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">WAIT</div><div style="font-size:10px;font-weight:700;color:#8E8A82">6m 12s</div></div>
+          <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">TAKT</div><div style="font-size:10px;font-weight:700;color:#C49B2E">2m 00s</div></div>
+          <div style="flex:1;padding:6px 4px;text-align:center;border-right:1px solid #D8D5CE"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">PCE</div><div style="font-size:10px;font-weight:700;color:#C0402A">34%</div></div>
+          <div style="flex:1.5;padding:6px 4px;text-align:center"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace;margin-bottom:2px">BOTTLENECK</div><div style="font-size:9px;font-weight:700;color:#C0402A">Foam & Fabric</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px">
+          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Staging</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:38%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">45s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#EEF4FB;color:#3070B8;display:inline-block">NNVA</div></div></div>
+          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
+          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Frame Asm</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:68%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">98s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#E6F7F3;color:#2A9E82;display:inline-block">VA</div></div></div>
+          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
+          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #C0402A;border-radius:8px;padding:8px 6px;text-align:center;position:relative;box-shadow:0 0 10px rgba(192,64,42,.2)"><div style="position:absolute;top:-6px;right:-5px;background:#C0402A;color:#fff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:100px">BN</div><div style="font-size:8px;font-weight:700;color:#C0402A;margin-bottom:3px">Foam & Fabric</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C0402A;width:100%"></div></div><div style="font-size:8px;color:#C0402A;font-weight:700;margin-bottom:2px">145s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:rgba(192,64,42,.1);color:#C0402A;display:inline-block">NVA</div></div></div>
+          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
+          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Electrical</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:61%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">88s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#E6F7F3;color:#2A9E82;display:inline-block">VA</div></div></div>
+          <div style="color:#D8D5CE;font-size:14px;flex-shrink:0">→</div>
+          <div style="flex-shrink:0"><div style="width:82px;background:#fff;border:1.5px solid #D8D5CE;border-radius:8px;padding:8px 6px;text-align:center"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">Final QC</div><div style="height:3px;background:#EEE;border-radius:2px;margin-bottom:3px"><div style="height:3px;border-radius:2px;background:#C49B2E;width:50%"></div></div><div style="font-size:8px;color:#8E8A82;font-weight:700;margin-bottom:2px">72s</div><div style="font-size:7px;padding:1px 4px;border-radius:3px;background:#EEF4FB;color:#3070B8;display:inline-block">NNVA</div></div></div>
+        </div>
+        <div style="display:flex;align-items:flex-end;height:36px;gap:2px;border-bottom:1px solid #D8D5CE;position:relative;margin-bottom:4px">
+          <div style="position:absolute;left:0;right:0;bottom:18px;border-top:1.5px dashed #C0402A;opacity:.45"></div>
+          <div style="width:18px;height:9px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
+          <div style="width:18px;height:18px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
+          <div style="width:18px;height:15px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
+          <div style="width:18px;height:10px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
+          <div style="width:18px;height:34px;background:#C0402A;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.9"></div>
+          <div style="width:18px;height:14px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
+          <div style="width:18px;height:14px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
+          <div style="width:18px;height:9px;background:#D8D5CE;border-radius:2px 2px 0 0;align-self:flex-start;flex-shrink:0;opacity:.4"></div>
+          <div style="width:18px;height:12px;background:#C49B2E;border-radius:2px 2px 0 0;align-self:flex-end;flex-shrink:0;opacity:.8"></div>
+        </div>
+        <div style="display:flex;gap:10px;font-size:9px;color:#8E8A82"><span style="color:#C49B2E">▲ value-add</span><span>▼ wait</span><span style="color:#C0402A">— takt line</span></div>
+      </div>`,
   },
   {
-    id: 'timestudy',
-    icon: '⏱',
-    name: 'Time Study',
-    label: 'Measure it before you manage it',
-    body: 'Built-in stopwatch records every observation lap. Calculates mean cycle time, flags outliers, and sets the official CT used across your VSM. Works with manual entry too — paste in existing data from your clipboard.',
-    badge: 'Free',
-    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
-    preview: () => (
-      <div>
-        <div style={{ textAlign:'center', padding:'16px 0 12px', borderBottom:'1px solid #EEE', marginBottom:12 }}>
-          <div style={{ fontSize:44, fontWeight:800, color:'#242220', fontFamily:'monospace', letterSpacing:2 }}>1:24.3</div>
-          <div style={{ fontSize:11, color:'#8E8A82', marginTop:4 }}>Observation 6 of 10</div>
+    name: 'Time Study', short: 'TIME', color: _GREEN,
+    tag: 'Free', tagBg: '#E6F7F3', tagTxt: '#0F6E56',
+    headline: 'Measure before you manage',
+    body: 'Built-in stopwatch with lap recording. Calculates mean CT, flags outliers for exclusion. Pushes the validated cycle time directly to your VSM.',
+    cardContent: `
+      <div style="padding:8px 10px;font-family:monospace">
+        <div style="text-align:center;padding:8px 0 6px;border-bottom:1px solid #D8D5CE;margin-bottom:7px">
+          <div style="font-size:28px;font-weight:800;color:#242220;letter-spacing:2px">1:38.4</div>
+          <div style="font-size:8px;color:#8E8A82;margin-top:2px">Obs. 7 / 10 · Foam & Fabric</div>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:6, marginBottom:12 }}>
-          {[['Mean CT','98.4s','#C49B2E'],['Min','82s','#2A9E82'],['Max','141s','#C0402A']].map(([l,v,c]) => (
-            <div key={l} style={{ background:'#F8F7F5', borderRadius:6, padding:'8px', textAlign:'center' }}>
-              <div style={{ fontSize:9, color:'#8E8A82', letterSpacing:1, marginBottom:2 }}>{l}</div>
-              <div style={{ fontSize:16, fontWeight:700, color:c }}>{v}</div>
-            </div>
-          ))}
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:7px">
+          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Mean</div><div style="font-size:11px;font-weight:700;color:#C49B2E">98.4s</div></div>
+          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Min</div><div style="font-size:11px;font-weight:700;color:#2A9E82">82s</div></div>
+          <div style="background:#ECEAE6;border-radius:5px;padding:4px;text-align:center"><div style="font-size:7px;color:#8E8A82">Max</div><div style="font-size:11px;font-weight:700;color:#C0402A">141s</div></div>
         </div>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
-          {[82,95,91,110,88,141,97,84,102,99].map((t,i) => (
-            <div key={i} style={{ padding:'4px 9px', borderRadius:5, fontSize:11, fontFamily:'monospace', fontWeight:600,
-              background: i===5 ? '#FEF2F0' : '#F0FAF6',
-              color: i===5 ? '#C0402A' : '#0F6E56',
-              border: `1px solid ${i===5?'rgba(192,64,42,0.3)':'rgba(15,110,86,0.2)'}`,
-              textDecoration: i===5 ? 'line-through' : 'none' }}>
-              #{i+1} {t}s
-            </div>
-          ))}
+        <div style="display:flex;flex-wrap:wrap;gap:3px">
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#1 82s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#2 95s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#3 91s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#4 110s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#5 88s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(192,64,42,.1);color:#C0402A;text-decoration:line-through">#6 141s</div>
+          <div style="padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(42,158,130,.1);color:#2A9E82">#7 97s</div>
         </div>
-        <div style={{ marginTop:8, fontSize:10, color:'#8E8A82' }}>Tap any lap to exclude from mean · Outlier excluded</div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⏱ Time Study — Foam & Fabric</span>
       </div>
-    ),
-  },
-  {
-    id: 'fivewhy',
-    icon: '❓',
-    name: '5 Why Analysis',
-    label: 'Stop fixing symptoms. Find the cause.',
-    body: `Ask why five times and reach the real root cause — not the one that's easiest to blame. Each answer becomes the next question. Assign a countermeasure, an owner, and a due date. The whole chain stays attached to the step it came from.`,
-    badge: 'Free',
-    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
-    preview: () => (
-      <div>
-        <div style={{ padding:'10px 12px', background:'#FEF9EE', border:'1px solid rgba(196,155,46,0.3)', borderRadius:8, marginBottom:12, fontSize:12, color:'#5A3A00', fontWeight:600 }}>
-          Problem: Weld defect rate at Station 4 is 3.2% — target is 0.5%
-        </div>
-        {[
-          ['Why 1', 'Weld joint gaps are inconsistent between parts'],
-          ['Why 2', 'Fixture wear is not being caught in pre-shift checks'],
-          ['Why 3', 'Pre-shift checklist was updated but operators not retrained'],
-          ['Why 4', 'No retraining trigger exists when checklists are revised'],
-          ['Why 5', 'Change management process has no mandatory notification step'],
-        ].map(([w, a], i) => (
-          <div key={w} style={{ display:'flex', gap:10, marginBottom:8, alignItems:'flex-start' }}>
-            <div style={{ width:22, height:22, borderRadius:6, background:'rgba(196,155,46,0.12)', border:'1px solid rgba(196,155,46,0.25)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:'#C49B2E', flexShrink:0, marginTop:2 }}>{i+1}</div>
-            <div>
-              <div style={{ fontSize:9, color:'#C49B2E', fontFamily:'monospace', letterSpacing:1, marginBottom:2 }}>{w}</div>
-              <div style={{ fontSize:12, color:'#4E4B45', lineHeight:1.5 }}>{a}</div>
-            </div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+        <div style="text-align:center;padding:16px;background:#F8F7F5;border-radius:12px;border:1px solid #D8D5CE">
+          <div style="font-size:44px;font-weight:700;color:#242220;font-family:monospace;letter-spacing:3px;line-height:1.1">1:38.4</div>
+          <div style="font-size:11px;color:#8E8A82;margin-top:4px">Observation 7 of 10</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+            <button style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:600;border-radius:10px;border:none;background:#C0402A;color:#fff;cursor:pointer">⏹ Stop</button>
+            <button style="display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;font-size:11px;font-weight:600;border-radius:10px;border:1px solid #D8D5CE;background:#fff;color:#4E4B45;cursor:pointer">⏱ Lap</button>
+            <button style="display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;font-size:11px;font-weight:600;border-radius:10px;border:1px solid #D8D5CE;background:#fff;color:#4E4B45;cursor:pointer">↺ Reset</button>
           </div>
-        ))}
-        <div style={{ marginTop:10, padding:'10px 12px', background:'#EDF9F5', border:'1px solid rgba(15,110,86,0.25)', borderRadius:8 }}>
-          <div style={{ fontSize:9, color:'#0F6E56', letterSpacing:1, fontFamily:'monospace', marginBottom:4 }}>ROOT CAUSE → COUNTERMEASURE</div>
-          <div style={{ fontSize:12, color:'#242220' }}>Add mandatory notification step to change management SOP — Owner: J.Torres · Due: 15 Apr</div>
         </div>
-      </div>
-    ),
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Mean</div><div style="font-size:18px;font-weight:700;color:#C49B2E;font-family:monospace">98.4s</div></div>
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Min</div><div style="font-size:18px;font-weight:700;color:#2A9E82;font-family:monospace">82.0s</div></div>
+          <div style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8E8A82;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Max</div><div style="font-size:18px;font-weight:700;color:#C0402A;font-family:monospace">141.0s</div></div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:6px">Observations — click to exclude</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px">
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#1 82s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#2 95s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#3 91s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#4 110s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#5 88s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(192,64,42,.08);color:#C0402A;border:1px solid rgba(192,64,42,.3);text-decoration:line-through">#6 141s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#7 97s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#8 84s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#9 102s</div>
+            <div style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:monospace;background:rgba(42,158,130,.08);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">#10 99s</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Baseline CT (sec)</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="180" type="number" /></div>
+          <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Manual CT override</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" placeholder="Enter if known" /></div>
+        </div>
+      </div>`,
   },
   {
-    id: 'fishbone',
-    icon: '🐟',
-    name: 'Fishbone Diagram',
-    label: 'Map all possible causes before you fix anything',
-    body: 'Choose 6M Manufacturing, 8P Service, 4S, or Custom. Add causes across every category — Machine, Method, Material, Manpower, Measurement, Mother Nature. See the full picture before you start solving. Connects directly to your 5 Why.',
-    badge: 'Free',
-    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
-    preview: () => (
-      <div>
-        <div style={{ textAlign:'center', padding:'6px 12px', background:'#FEF2F0', border:'1px solid rgba(192,64,42,0.2)', borderRadius:6, fontSize:12, color:'#C0402A', fontWeight:600, marginBottom:12 }}>
-          Effect: High defect rate at Welding Station 4
-        </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-          {[
-            { cat:'Machine', color:'#1A4F8A', bg:'#EEF4FB', causes:['Fixture worn — 0.3mm play','Calibration last done Q3'] },
-            { cat:'Method', color:'#0F6E56', bg:'#EDF9F5', causes:['Sequence varies by operator','No standard tack pattern'] },
-            { cat:'Material', color:'#854F0B', bg:'#FEF9EE', causes:['Batch 44C had thickness variance','Storage humidity uncontrolled'] },
-            { cat:'Manpower', color:'#534AB7', bg:'#EEEDFE', causes:['2 operators trained vs 5 needed','Shift handover informal'] },
-          ].map(({ cat, color, bg, causes }) => (
-            <div key={cat} style={{ background:bg, border:`1px solid ${color}22`, borderRadius:8, padding:'10px' }}>
-              <div style={{ fontSize:10, fontWeight:700, color, letterSpacing:0.5, marginBottom:6 }}>{cat}</div>
-              {causes.map(c => (
-                <div key={c} style={{ fontSize:11, color:'#4E4B45', lineHeight:1.5, marginBottom:3 }}>→ {c}</div>
-              ))}
-            </div>
-          ))}
-        </div>
+    name: '5 Why Analysis', short: '5WHY', color: _VIOLET,
+    tag: 'Free', tagBg: '#F0EEFE', tagTxt: _VIOLET,
+    headline: 'Stop fixing symptoms',
+    body: 'Ask why five times and reach the real root cause. Assign a countermeasure, owner and due date — stays attached to the step it came from.',
+    cardContent: `
+      <div style="padding:8px 10px">
+        <div style="padding:5px 7px;background:#FEF9EE;border-radius:4px;margin-bottom:7px;font-size:8px;color:#5A3A00;font-weight:600">Problem: Weld defect rate 3.2% at Station 4</div>
+        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">1</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Weld joint gaps inconsistent</div></div>
+        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">2</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Fixture wear not caught in checks</div></div>
+        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">3</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No retraining after update</div></div>
+        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">4</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">No trigger on checklist change</div></div>
+        <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">5</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Change mgmt missing notify step</div></div>
+        <div style="padding:4px 7px;background:#E6F7F3;border-radius:4px;font-size:7px;color:#2A9E82;font-weight:700;margin-top:4px">✓ Root cause found</div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">❓ 5 Why Analysis — Foam & Fabric</span>
       </div>
-    ),
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Problem statement *</div>
+          <textarea style="width:100%;padding:9px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220;resize:none;font-family:inherit" rows="2">Weld defect rate at Station 4 is 3.2% — target is 0.5%</textarea>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">1</div>
+          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why did this happen?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Weld joint gaps are inconsistent between parts" /></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">2</div>
+          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why are gaps inconsistent?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Fixture wear not caught in pre-shift checks" /></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">3</div>
+          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not caught?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Checklist updated but operators not retrained" /></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">4</div>
+          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why not retrained?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="No retraining trigger when checklists are revised" /></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6426A0;flex-shrink:0;margin-top:2px">5</div>
+          <div style="flex:1"><div style="font-size:8px;color:#8E8A82;font-family:monospace;letter-spacing:.6px;margin-bottom:3px">Why no trigger?</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="Change management has no mandatory notification step" /></div>
+        </div>
+        <div style="background:#E6F7F3;border:1px solid rgba(42,158,130,.3);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px">
+          <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#2A9E82;margin-bottom:5px">Root cause</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid rgba(42,158,130,.3);background:#fff;color:#242220" value="Change management process has no mandatory notification step" /></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Owner</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="J. Torres" /></div>
+            <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Due date</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="2026-04-15" type="date" /></div>
+          </div>
+        </div>
+      </div>`,
   },
   {
-    id: 'waste',
-    icon: '⚠️',
-    name: 'Waste Identification',
-    label: '8 wastes. See them all. Fix the worst ones.',
-    body: 'Walk through all eight DOWNTIME wastes for any step. Select what you observe, add a specific note for each. Waste data rolls up to your Report automatically — giving you a prioritised improvement backlog without any extra work.',
-    badge: 'Free',
-    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
-    preview: () => (
-      <div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
-          {[
-            { id:'T', label:'Transport', selected:false },
-            { id:'I', label:'Inventory', selected:true, note:'18 units queued before step' },
-            { id:'M', label:'Motion', selected:false },
-            { id:'W', label:'Waiting', selected:true, note:'Avg 4.2 min idle between batches' },
-            { id:'O', label:'Overproduction', selected:false },
-            { id:'O2', label:'Over-processing', selected:false },
-            { id:'D', label:'Defects', selected:true, note:'3.2% rework rate — weld joints' },
-            { id:'S', label:'Skills', selected:false },
-          ].map(w => (
-            <div key={w.id}>
-              <div style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 10px', borderRadius:7, background: w.selected?'rgba(192,64,42,0.05)':'#F8F7F5', border:`1px solid ${w.selected?'rgba(192,64,42,0.3)':'#D8D5CE'}`, cursor:'default' }}>
-                <div style={{ width:14, height:14, borderRadius:3, background: w.selected?'#C0402A':'#EEE', border:`1px solid ${w.selected?'#C0402A':'#CCC'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                  {w.selected && <span style={{ color:'#fff', fontSize:9, fontWeight:700 }}>✓</span>}
-                </div>
-                <span style={{ fontSize:11, fontWeight: w.selected?600:400, color: w.selected?'#C0402A':'#6B6760' }}>{w.label}</span>
-              </div>
-              {w.selected && w.note && (
-                <div style={{ padding:'4px 8px', background:'rgba(192,64,42,0.04)', borderRadius:'0 0 6px 6px', fontSize:10, color:'#C0402A', borderLeft:'2px solid #C0402A', marginTop:1 }}>{w.note}</div>
-              )}
-            </div>
-          ))}
+    name: 'Fishbone Diagram', short: 'FISH', color: _GOLD,
+    tag: 'Free', tagBg: '#FEF9EE', tagTxt: '#854F0B',
+    headline: 'Map all causes before you fix anything',
+    body: '6M Manufacturing, 8P Service, 4S or Custom. Add causes across every category. Full picture first — then connect to 5 Why for deep analysis.',
+    cardContent: `
+      <div style="padding:8px 10px">
+        <div style="text-align:center;padding:4px 8px;background:#FEF2F0;border-radius:4px;font-size:7px;color:#C0402A;font-weight:600;margin-bottom:7px">Effect: High defect rate — Weld Station 4</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+          <div style="background:#EEF4FB;border:1px solid rgba(48,112,184,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#3070B8;margin-bottom:3px">Machine</div><div style="font-size:7px;color:#4E4B45">› Fixture worn</div><div style="font-size:7px;color:#4E4B45">› Cal. overdue</div></div>
+          <div style="background:#E6F7F3;border:1px solid rgba(42,158,130,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#2A9E82;margin-bottom:3px">Method</div><div style="font-size:7px;color:#4E4B45">› Seq. varies</div><div style="font-size:7px;color:#4E4B45">› No std tack</div></div>
+          <div style="background:#FEF9EE;border:1px solid rgba(196,155,46,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#C49B2E;margin-bottom:3px">Material</div><div style="font-size:7px;color:#4E4B45">› Batch var.</div><div style="font-size:7px;color:#4E4B45">› Humidity</div></div>
+          <div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.2);border-radius:5px;padding:5px"><div style="font-size:7px;font-weight:700;color:#6426A0;margin-bottom:3px">Manpower</div><div style="font-size:7px;color:#4E4B45">› 2/5 trained</div><div style="font-size:7px;color:#4E4B45">› Handover</div></div>
         </div>
-        <div style={{ marginTop:10, padding:'6px 12px', background:'#FEF2F0', borderRadius:6, fontSize:11, color:'#C0402A', fontWeight:600 }}>3 wastes identified · This step is a priority for Kaizen</div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">🐟 Fishbone Diagram — Foam & Fabric</span>
       </div>
-    ),
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+          <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Problem / Effect *</div><input style="width:100%;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" value="High weld defect rate at Station 4 — 3.2% vs 0.5% target" /></div>
+          <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8E8A82;margin-bottom:5px">Framework</div><select style="width:148px;padding:8px 11px;font-size:12px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220"><option>6M Manufacturing</option><option>8P Service</option><option>4S</option></select></div>
+        </div>
+        <div style="padding:8px 12px;background:rgba(196,155,46,.05);border:1px solid rgba(196,155,46,.2);border-radius:8px;font-size:11px;color:#4E4B45">🎯 Effect: <strong style="color:#242220">High weld defect rate at Station 4</strong></div>
+        <div style="display:grid;gap:6px">
+          <details open style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:8px 10px"><summary style="cursor:pointer;font-size:11px;font-weight:700;color:#3070B8;margin-bottom:6px">Machine</summary><div style="display:grid;gap:6px;margin-top:6px"><div style="display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;padding:6px 8px;border-radius:7px;border:1px solid #D8D5CE"><span style="font-size:11px;color:#4E4B45">Fixture worn — 0.3mm play</span><button style="background:none;border:none;color:#8E8A82;cursor:pointer;font-size:15px">×</button></div><div style="display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;padding:6px 8px;border-radius:7px;border:1px solid #D8D5CE"><span style="font-size:11px;color:#4E4B45">Calibration overdue Q3</span><button style="background:none;border:none;color:#8E8A82;cursor:pointer;font-size:15px">×</button></div><div style="display:grid;grid-template-columns:1fr 36px;gap:6px"><input style="width:100%;padding:5px 8px;font-size:11px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" placeholder="Add cause…" /><button style="background:rgba(196,155,46,.15);border:1px solid rgba(196,155,46,.3);color:#C49B2E;border-radius:7px;cursor:pointer;font-size:16px;min-height:34px">+</button></div></div></details>
+          <details style="background:#F8F7F5;border:1px solid #D8D5CE;border-radius:10px;padding:8px 10px"><summary style="cursor:pointer;font-size:11px;font-weight:700;color:#2A9E82;margin-bottom:6px">Method</summary><div style="display:grid;gap:6px;margin-top:6px"><div style="display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;padding:6px 8px;border-radius:7px;border:1px solid #D8D5CE"><span style="font-size:11px;color:#4E4B45">Sequence varies by operator</span><button style="background:none;border:none;color:#8E8A82;cursor:pointer;font-size:15px">×</button></div><div style="display:grid;grid-template-columns:1fr 36px;gap:6px"><input style="width:100%;padding:5px 8px;font-size:11px;border-radius:8px;border:1px solid #D8D5CE;background:#fff;color:#242220" placeholder="Add cause…" /><button style="background:rgba(196,155,46,.15);border:1px solid rgba(196,155,46,.3);color:#C49B2E;border-radius:7px;cursor:pointer;font-size:16px;min-height:34px">+</button></div></div></details>
+        </div>
+      </div>`,
   },
   {
-    id: 'kaizen',
-    icon: '⚡',
-    name: 'Kaizen Events',
-    label: 'Every improvement idea gets an owner and a deadline',
-    body: 'Log Kaizen events directly on the step where the problem lives. Set category, priority, owner, and due date. Open events show on your VSM Map as burst markers — the standard notation for improvement in progress. Nothing gets lost between shifts.',
-    badge: 'Free',
-    badgeBg: '#EDF9F5', badgeColor: '#0F6E56',
-    preview: () => (
-      <div>
-        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-          {[
-            { id:'KZ-001', title:'SMED event — reduce changeover from 38min to 18min', cat:'Delivery', priority:'high', status:'in-progress', owner:'J.Torres', due:'Apr 15', color:'#C49B2E' },
-            { id:'KZ-002', title:'Fixture inspection added to pre-shift checklist', cat:'Quality', priority:'critical', status:'complete', owner:'R.Singh', due:'Apr 3', color:'#2A9E82' },
-            { id:'KZ-003', title:'5S audit of weld consumables storage area', cat:'5S', priority:'medium', status:'open', owner:'T.Nakamura', due:'Apr 22', color:'#8E8A82' },
-          ].map(k => (
-            <div key={k.id} style={{ background:'#FFFFFF', border:'0.5px solid #D8D5CE', borderRadius:9, padding:'12px 14px' }}>
-              <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:8, marginBottom:8 }}>
-                <div style={{ fontSize:10, color:'#8E8A82', fontFamily:'monospace' }}>{k.id}</div>
-                <div style={{ display:'flex', gap:5 }}>
-                  <span style={{ fontSize:8, padding:'2px 7px', borderRadius:100, background: k.status==='complete'?'rgba(42,158,130,0.12)':k.status==='in-progress'?'rgba(196,155,46,0.12)':'rgba(142,138,130,0.12)', color: k.status==='complete'?'#2A9E82':k.status==='in-progress'?'#C49B2E':'#8E8A82', fontWeight:700 }}>
-                    {k.status==='in-progress'?'In Progress':k.status==='complete'?'Complete':'Open'}
-                  </span>
-                  <span style={{ fontSize:8, padding:'2px 7px', borderRadius:100, background:'rgba(192,64,42,0.08)', color:'#C0402A', fontWeight:700 }}>{k.priority}</span>
-                </div>
-              </div>
-              <div style={{ fontSize:12, color:'#242220', fontWeight:600, lineHeight:1.4, marginBottom:8 }}>{k.title}</div>
-              <div style={{ display:'flex', gap:12, fontSize:10, color:'#8E8A82' }}>
-                <span>👤 {k.owner}</span>
-                <span>📅 {k.due}</span>
-                <span>📁 {k.cat}</span>
-              </div>
-            </div>
-          ))}
+    name: 'Waste Identification', short: 'WASTE', color: _RED,
+    tag: 'Free', tagBg: '#FEF2F0', tagTxt: '#993C1D',
+    headline: 'See all 8 wastes. Act on the worst.',
+    body: 'Walk through DOWNTIME wastes per step. Select and note what you observe. Rolls up to your Report as a prioritised improvement backlog automatically.',
+    cardContent: `
+      <div style="padding:8px 10px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Transport</span></div></div>
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Inventory</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">18 units queued</div></div>
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Motion</span></div></div>
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Waiting</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">4.2 min avg idle</div></div>
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:#F8F7F5;border:1px solid #D8D5CE"><div style="width:10px;height:10px;border-radius:2px;background:#EEE;flex-shrink:0"></div><span style="font-size:8px;color:#8E8A82">Overprod.</span></div></div>
+          <div><div style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;background:rgba(192,64,42,.06);border:1px solid rgba(192,64,42,.3)"><div style="width:10px;height:10px;border-radius:2px;background:#C0402A;flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:4px;height:4px;background:#fff;border-radius:1px"></div></div><span style="font-size:8px;font-weight:600;color:#C0402A">Defects</span></div><div style="font-size:7px;color:#C0402A;padding:1px 5px;border-left:1.5px solid #C0402A;margin-top:1px">3.2% rework</div></div>
         </div>
+        <div style="margin-top:6px;padding:4px 7px;background:#FEF2F0;border-radius:4px;font-size:8px;color:#C0402A;font-weight:600;text-align:center">3 wastes identified</div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⚠️ Waste Identification — Foam & Fabric</span>
       </div>
-    ),
+      <div style="padding:14px">
+        <div style="font-size:12px;color:#4E4B45;line-height:1.65;padding:10px 12px;border-radius:10px;background:rgba(255,107,107,0.05);border:1px solid rgba(255,107,107,0.15);margin-bottom:12px">Select all wastes present at this step. This feeds your kaizen prioritization and reporting.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:#F8F7F5;border:1px solid #D8D5CE;display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">🚛</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#242220">Transport</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">T</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Unnecessary movement of materials</div></div></button></div>
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left;box-shadow:0 0 0 2px rgba(192,64,42,.1)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">📦</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Inventory</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">I</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Excess stock, WIP, finished goods</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="18 units queued upstream before step" /></div>
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:#F8F7F5;border:1px solid #D8D5CE;display:flex;align-items:flex-start;gap:8px;text-align:left"><span style="font-size:18px;flex-shrink:0;margin-top:1px">🏃</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#242220">Motion</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">M</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Unnecessary movement of people</div></div></button></div>
+          <div><button type="button" style="width:100%;padding:12px;border-radius:10px;cursor:pointer;background:rgba(192,64,42,.05);border:1px solid rgba(192,64,42,.35);display:flex;align-items:flex-start;gap:8px;text-align:left;box-shadow:0 0 0 2px rgba(192,64,42,.1)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">⏳</span><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-weight:700;font-size:12px;color:#C0402A">Waiting</span><span style="font-size:9px;font-family:monospace;color:#8E8A82;background:#fff;padding:1px 4px;border-radius:3px">W</span><span style="margin-left:auto;font-size:13px;color:#C0402A">✓</span></div><div style="font-size:10px;color:#8E8A82;margin-top:3px;line-height:1.4">Idle time, waiting for approvals</div></div></button><input style="width:100%;padding:5px 9px;font-size:11px;border-radius:0 0 8px 8px;border:1px solid rgba(192,64,42,.25);border-top:none;background:#fff;color:#C0402A" value="4.2 min avg idle between batches" /></div>
+        </div>
+      </div>`,
+  },
+  {
+    name: 'Kaizen Events', short: 'KAIZEN', color: _GOLD,
+    tag: 'Free', tagBg: '#FEF9EE', tagTxt: '#854F0B',
+    headline: 'Every improvement gets an owner',
+    body: 'Log Kaizen events on the step where the problem lives. Owner, due date, status, priority. Open events show as burst markers on your VSM map.',
+    cardContent: `
+      <div style="padding:8px 10px;display:flex;flex-direction:column;gap:4px">
+        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-001</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E;font-weight:700">in-progress</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">SMED — changeover 38→18 min</div><div style="font-size:7px;color:#8E8A82">👤 J.Torres · 📅 Apr 15</div></div>
+        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-002</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82;font-weight:700">complete</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">Fixture check to pre-shift list</div><div style="font-size:7px;color:#8E8A82">👤 R.Singh · 📅 Apr 3</div></div>
+        <div style="background:#fff;border:0.5px solid #D8D5CE;border-radius:6px;padding:6px 8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:7px;color:#8E8A82;font-family:monospace">KZ-003</span><span style="font-size:7px;padding:1px 5px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;font-weight:700">open</span></div><div style="font-size:8px;font-weight:600;color:#242220;line-height:1.3;margin-bottom:3px">5S audit weld consumables</div><div style="font-size:7px;color:#8E8A82">👤 T.Nakamura · 📅 Apr 22</div></div>
+      </div>`,
+    popup: `
+      <div style="background:#F5F5F8;border-bottom:1px solid #D8D5CE;padding:10px 14px;display:flex;align-items:center;gap:7px">
+        <div style="display:flex;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:#FF6B6B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F4A623"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1"></div></div>
+        <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">⚡ Kaizen Events — Foam & Fabric</span>
+      </div>
+      <div style="padding:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px">
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;border:1px solid rgba(142,138,130,.25)">Open (2)</span>
+            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;border:1px solid rgba(196,155,46,.25)">In Progress (1)</span>
+            <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(42,158,130,.12);color:#2A9E82;border:1px solid rgba(42,158,130,.25)">Complete (1)</span>
+          </div>
+          <button style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 12px;font-size:11px;font-weight:600;border-radius:10px;border:none;background:#C49B2E;color:#fff;cursor:pointer">+ New Event</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-001</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">SMED event — reduce changeover from 38 min to 18 min</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(196,155,46,.15);color:#C49B2E;font-weight:700;flex-shrink:0">In Progress</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(196,155,46,.12);color:#C49B2E;flex-shrink:0">high</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 Delivery</span><span>👤 J.Torres</span><span>📅 Apr 15</span></div></div>
+          <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-002</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">Add fixture inspection to pre-shift checklist</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(42,158,130,.15);color:#2A9E82;font-weight:700;flex-shrink:0">Complete</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(192,64,42,.12);color:#C0402A;flex-shrink:0">critical</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 Quality</span><span>👤 R.Singh</span><span>📅 Apr 3</span></div></div>
+          <div style="background:#fff;border:1px solid #D8D5CE;border-radius:10px;overflow:hidden"><div style="padding:10px 12px;display:flex;align-items:center;gap:7px"><span style="font-size:9px;color:#8E8A82;font-family:monospace;flex-shrink:0">KZ-003</span><span style="flex:1;font-size:11px;font-weight:600;color:#242220;line-height:1.3">5S audit of weld consumables storage area</span><span style="font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(142,138,130,.12);color:#8E8A82;font-weight:700;flex-shrink:0">Open</span><span style="font-size:9px;padding:2px 6px;border-radius:100px;background:rgba(42,158,130,.12);color:#2A9E82;flex-shrink:0">medium</span></div><div style="padding:0 12px 8px;display:flex;gap:10px;font-size:9px;color:#8E8A82"><span>📁 5S</span><span>👤 T.Nakamura</span><span>📅 Apr 22</span></div></div>
+        </div>
+      </div>`,
   },
 ]
 
 function ToolShowcase() {
-  const [active, setActive] = useState(0)
-  const tool = TOOLS_DATA[active]
+  const [activeTool, setActiveTool] = useState(0)
+  const tool = SHOWCASE_TOOLS[activeTool]
+
+  useEffect(() => {
+    const el = document.getElementById('showcase-stack')
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      const parent = el.closest('section')
+      if (!parent) return
+      const rect = parent.getBoundingClientRect()
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight * 0.4
+      if (!inView) return
+      e.preventDefault()
+      if (e.deltaY > 40) setActiveTool(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
+      if (e.deltaY < -40) setActiveTool(t => Math.max(t - 1, 0))
+    }
+    window.addEventListener('wheel', onWheel, { passive: false })
+    return () => window.removeEventListener('wheel', onWheel)
+  }, [])
 
   return (
     <section id="tools" style={{ padding: '80px 0', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
       <div style={{ maxWidth: 1060, margin: '0 auto', padding: '0 48px' }}>
 
-        {/* Header */}
-        <div style={{ marginBottom: 48 }}>
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
           <h2 style={{ fontSize: 'clamp(24px,3vw,36px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean team needs</h2>
-          <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 500, lineHeight: 1.75 }}>All connected to your value stream. The work you do feeds the reports you need.</p>
+          <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto', lineHeight: 1.75 }}>All connected to your value stream. Click or scroll to explore each tool.</p>
         </div>
 
-        {/* Tab pills */}
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 36 }}>
-          {TOOLS_DATA.map((t, i) => (
-            <button key={t.id} onClick={() => setActive(i)} style={{
-              padding: '8px 16px', borderRadius: 999, fontSize: 13, fontWeight: active===i ? 700 : 400,
-              background: active===i ? '#C49B2E' : '#FFFFFF',
-              color: active===i ? '#FFFFFF' : '#6B6760',
-              border: active===i ? 'none' : '0.5px solid #D8D5CE',
-              cursor: 'pointer', transition: 'all 0.18s',
-              display: 'flex', alignItems: 'center', gap: 6,
-            }}>
-              <span style={{ fontSize: 14 }}>{t.icon}</span> {t.name}
-            </button>
-          ))}
-        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 48, alignItems: 'start' }}>
 
-        {/* Main panel */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 32, alignItems: 'start' }}>
-
-          {/* Left: copy */}
-          <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
-              <span style={{ fontSize: 28 }}>{tool.icon}</span>
-              <span style={{ fontSize: 8, fontWeight: 700, padding: '3px 8px', borderRadius: 4, background: tool.badgeBg, color: tool.badgeColor, letterSpacing: 0.5, fontFamily: 'monospace' }}>{tool.badge}</span>
+          {/* LEFT: Detail + real popup */}
+          <div style={{ paddingTop: 4 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 9px', borderRadius: '100px', background: tool.tagBg, border: `1px solid ${tool.color}30`, marginBottom: 14 }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: tool.tagTxt, letterSpacing: '.5px', fontFamily: 'monospace' }}>{tool.tag}</span>
             </div>
-            <h3 style={{ fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: '#242220', marginBottom: 12, lineHeight: 1.25, fontFamily: serif }}>
-              {tool.label}
-            </h3>
-            <p style={{ fontSize: 14, color: '#6B6760', lineHeight: 1.85, marginBottom: 28 }}>{tool.body}</p>
-            <a href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 22px', background: '#C49B2E', color: '#fff', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none' }}>
-              Try it free →
-            </a>
+            <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 8 }}>{tool.headline}</h3>
+            <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.8, marginBottom: 18 }}>{tool.body}</p>
+
+            {/* Real popup preview */}
+            <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', maxHeight: 440, overflowY: 'auto' }}
+              dangerouslySetInnerHTML={{ __html: tool.popup + `
+                <div style="padding:9px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
+                  <div style="display:flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(196,155,46,.12);border:1px solid rgba(196,155,46,.25);border-radius:4px">
+                    <span style="font-size:9px;font-weight:700;color:#8E8A82;font-family:Palatino Linotype,serif">VeSiMy</span>
+                  </div>
+                  <a href="/auth/signup" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:700;border-radius:10px;border:none;background:#C49B2E;color:#fff;text-decoration:none;cursor:pointer">Try free →</a>
+                </div>` }}
+            />
           </div>
 
-          {/* Right: live preview */}
-          <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.07)' }}>
-            {/* App chrome */}
-            <div style={{ background: '#F0F0F4', borderBottom: '0.5px solid #D8D5CE', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ display: 'flex', gap: 5 }}>
-                {['#FF6B6B','#F4A623','#1DD1A1'].map(c => <div key={c} style={{ width:9, height:9, borderRadius:'50%', background:c, opacity:0.7 }} />)}
-              </div>
-              <div style={{ flex: 1, textAlign: 'center', fontSize: 10, color: '#8E8A82', fontFamily: 'monospace' }}>{tool.name} — Step: Foam & Fabric</div>
-              {/* VeSiMy brand */}
-              <div style={{ display:'flex', alignItems:'center', gap:4, padding:'2px 8px', background:'rgba(196,155,46,0.1)', border:'1px solid rgba(196,155,46,0.2)', borderRadius:5 }}>
-                <svg width="10" height="11" viewBox="0 0 100 108" fill="none"><defs><linearGradient id="vb" x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#FFD56C"/><stop offset="50%" stopColor="#D4A208"/><stop offset="100%" stopColor="#6426A0"/></linearGradient></defs><path d="M8 8L38 88L50 64L62 88L92 8H72L50 60L28 8Z" fill="url(#vb)"/></svg>
-                <span style={{ fontSize:9, fontWeight:700, color:'#8E8A82', letterSpacing:0.5, fontFamily:'Palatino Linotype,serif' }}>VeSiMy</span>
+          {/* RIGHT: 3D stacked cards */}
+          <div id="showcase-stack" style={{ position: 'sticky', top: 28, height: 480, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ perspective: '1100px', perspectiveOrigin: '72% 48%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ position: 'relative', width: 280, height: 400, transformStyle: 'preserve-3d', transform: 'rotateY(22deg) rotateX(7deg) rotateZ(2deg)' }}>
+                {SHOWCASE_TOOLS.map((t, i) => {
+                  const off = i - activeTool
+                  const isA = i === activeTool
+                  return (
+                    <div key={t.short} onClick={() => !isA && setActiveTool(i)} style={{
+                      position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                      borderRadius: 14,
+                      background: `rgba(255,255,255,${isA ? .97 : Math.max(.55, .85 - Math.abs(off) * .1)})`,
+                      border: `1.5px solid ${isA ? t.color + '55' : 'rgba(215,213,206,.7)'}`,
+                      boxShadow: isA ? `0 18px 50px rgba(0,0,0,.13),0 0 0 1px ${t.color}22` : '0 2px 10px rgba(0,0,0,.05)',
+                      transform: `translateY(${off * 16}px) translateZ(${isA ? 48 : -Math.abs(off) * 16}px) scale(${isA ? 1 : Math.max(.87, .97 - Math.abs(off) * .025)})`,
+                      transition: 'all .45s cubic-bezier(.34,1.15,.64,1)',
+                      overflow: 'hidden', display: 'flex', flexDirection: 'column',
+                      cursor: isA ? 'default' : 'pointer',
+                    }}>
+                      <div style={{ padding: '12px 14px 8px', borderBottom: '1px solid rgba(0,0,0,.05)', flexShrink: 0, background: 'rgba(255,255,255,.5)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                          <div style={{ width: 28, height: 28, borderRadius: 7, background: `${t.color}12`, border: `1px solid ${t.color}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 800, color: t.color, fontFamily: 'monospace', flexShrink: 0 }}>{t.short}</div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: '#242220' }}>{t.name}</div>
+                            <div style={{ fontSize: 8, color: '#8E8A82', marginTop: 1 }}>{t.headline}</div>
+                          </div>
+                          {isA && <div style={{ width: 6, height: 6, borderRadius: '50%', background: t.color, flexShrink: 0 }} />}
+                        </div>
+                      </div>
+                      <div style={{ flex: 1, overflow: 'hidden', opacity: isA ? 1 : Math.max(.15, .65 - Math.abs(off) * .2), transform: `scale(${isA ? 1 : .88})`, transformOrigin: 'top left', transition: 'opacity .4s,transform .4s', pointerEvents: 'none' }}
+                        dangerouslySetInnerHTML={{ __html: t.cardContent }}
+                      />
+                      {isA && <div style={{ padding: '0 14px 10px', flexShrink: 0 }}><div style={{ height: 2, borderRadius: 2, background: `linear-gradient(90deg,${t.color},${t.color}22)` }} /></div>}
+                    </div>
+                  )
+                })}
               </div>
             </div>
-            <div style={{ padding: '18px 16px' }}>
-              {tool.preview()}
+            {/* Dots */}
+            <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 6 }}>
+              {SHOWCASE_TOOLS.map((t, i) => (
+                <div key={i} onClick={() => setActiveTool(i)} style={{ width: i === activeTool ? 20 : 6, height: 6, borderRadius: 100, background: i === activeTool ? t.color : '#D8D5CE', cursor: 'pointer', transition: 'all .3s' }} />
+              ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>
   )
 }
+
 
 export default function HomePage() {
   const [pce, setPce] = useState(36)
