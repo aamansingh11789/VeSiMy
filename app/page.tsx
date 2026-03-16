@@ -635,6 +635,198 @@ const SHOWCASE_TOOLS=[
   },
 ]
 
+// ── InlineToolShowcase — embedded in hero right column ───────────────────────
+function InlineToolShowcase() {
+  const [active, setActive] = useState(0)
+  const touchStartX = useRef(0)
+  const touchStartY = useRef(0)
+  const lastTap = useRef(0)
+  const tool = SHOWCASE_TOOLS[active]
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = touchStartX.current - e.changedTouches[0].clientX
+    const dy = Math.abs(touchStartY.current - e.changedTouches[0].clientY)
+    if (Math.abs(dx) < 40 || dy > Math.abs(dx)) return
+    const now = Date.now()
+    if (now - lastTap.current < 400) return
+    lastTap.current = now
+    if (dx > 0) setActive(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
+    else        setActive(t => Math.max(t - 1, 0))
+  }
+
+  return (
+    <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ userSelect: 'none' }}>
+      <style>{`
+        @keyframes inlineReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:900px){
+          .hero-tools-grid{grid-template-columns:1fr!important;}
+          .hero-tools-left{padding-top:0!important;}
+        }
+        @media(max-width:600px){
+          .inline-popup{max-height:300px!important;}
+          .inline-stack-wrap{height:280px!important;}
+          .inline-3d{width:220px!important;height:260px!important;}
+        }
+      `}</style>
+
+      {/* Tool name + swipe hint */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 100, background: tool.tagBg, border: `1px solid ${tool.color}30` }}>
+            <span style={{ fontSize: 9, fontWeight: 700, color: tool.tagTxt, letterSpacing: '.5px', fontFamily: 'monospace' }}>{tool.tag}</span>
+          </div>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#242220', fontFamily: serif }}>{tool.headline}</span>
+        </div>
+        <span style={{ fontSize: 10, color: '#B8B4AC', fontFamily: 'monospace', letterSpacing: 1 }}>← swipe →</span>
+      </div>
+
+      {/* Tool popup preview */}
+      <div key={active} className="inline-popup" style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 420, overflowY: 'auto', marginBottom: 16, animation: 'inlineReveal 0.25s ease both' }}
+        dangerouslySetInnerHTML={{ __html: tool.popup + `
+          <div style="padding:8px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:9px;font-weight:700;color:#8E8A82;font-family:Palatino Linotype,serif">VeSiMy</span>
+            <a href="/auth/signup" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;background:#C49B2E;color:#fff;text-decoration:none">Try free →</a>
+          </div>` }}
+      />
+
+      {/* Mini 3D stack */}
+      <div className="inline-stack-wrap" style={{ height: 320, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+        <div style={{ perspective: '900px', perspectiveOrigin: '68% 46%', flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="inline-3d" style={{ position: 'relative', width: 260, height: 280, transformStyle: 'preserve-3d', transform: 'rotateY(20deg) rotateX(6deg) rotateZ(1.5deg)' }}>
+            {SHOWCASE_TOOLS.map((t, i) => {
+              const off = i - active
+              const isA = i === active
+              return (
+                <div key={t.short} onClick={() => !isA && setActive(i)} style={{
+                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                  borderRadius: 12,
+                  background: `rgba(255,255,255,${isA ? .97 : Math.max(.4, .8 - Math.abs(off) * .09)})`,
+                  border: `1.5px solid ${isA ? t.color + '55' : 'rgba(215,213,206,.6)'}`,
+                  boxShadow: isA ? `0 14px 40px rgba(0,0,0,.12),0 0 0 1px ${t.color}18` : '0 2px 8px rgba(0,0,0,.05)',
+                  transform: `translateY(${off * 13}px) translateZ(${isA ? 40 : -Math.abs(off) * 14}px) scale(${isA ? 1 : Math.max(.85, .97 - Math.abs(off) * .025)})`,
+                  transition: 'all .42s cubic-bezier(.34,1.15,.64,1)',
+                  overflow: 'hidden', display: 'flex', flexDirection: 'column',
+                  cursor: isA ? 'default' : 'pointer',
+                }}>
+                  <div style={{ padding: '10px 12px 7px', borderBottom: '1px solid rgba(0,0,0,.05)', flexShrink: 0, background: 'rgba(255,255,255,.5)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ width: 24, height: 24, borderRadius: 6, background: `${t.color}12`, border: `1px solid ${t.color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 7, fontWeight: 800, color: t.color, fontFamily: 'monospace', flexShrink: 0 }}>{t.short}</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 10, fontWeight: 700, color: '#242220' }}>{t.name}</div>
+                        <div style={{ fontSize: 7, color: '#8E8A82', marginTop: 1 }}>{t.headline}</div>
+                      </div>
+                      {isA && <div style={{ width: 5, height: 5, borderRadius: '50%', background: t.color, flexShrink: 0 }} />}
+                    </div>
+                  </div>
+                  <div style={{ flex: 1, overflow: 'hidden', opacity: isA ? 1 : Math.max(.1, .6 - Math.abs(off) * .18), transform: `scale(${isA ? 1 : .84})`, transformOrigin: 'top left', transition: 'opacity .4s,transform .4s', pointerEvents: 'none' }}
+                    dangerouslySetInnerHTML={{ __html: t.cardContent }}
+                  />
+                  {isA && <div style={{ padding: '0 12px 8px', flexShrink: 0 }}><div style={{ height: 2, borderRadius: 2, background: `linear-gradient(90deg,${t.color},${t.color}18)` }} /></div>}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Dots + prev/next */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={() => setActive(t => Math.max(t-1, 0))} disabled={active===0}
+            style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #D8D5CE', background: '#fff', color: active===0 ? '#D8D5CE' : '#4E4B45', fontSize: 12, cursor: active===0 ? 'default' : 'pointer', fontWeight: 600 }}>‹</button>
+          <div style={{ display: 'flex', gap: 5 }}>
+            {SHOWCASE_TOOLS.map((t,i) => (
+              <div key={i} onClick={() => setActive(i)} style={{ width: i===active?18:5, height: 5, borderRadius: 100, background: i===active ? t.color : '#D8D5CE', cursor: 'pointer', transition: 'all .25s' }} />
+            ))}
+          </div>
+          <button onClick={() => setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
+            style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #D8D5CE', background: '#fff', color: active===SHOWCASE_TOOLS.length-1 ? '#D8D5CE' : '#4E4B45', fontSize: 12, cursor: active===SHOWCASE_TOOLS.length-1 ? 'default' : 'pointer', fontWeight: 600 }}>›</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── CompetitorTable — VeSiMy vs spreadsheets, Visio, Lucidchart, Minitab ─────
+function CompetitorTable() {
+  const features = [
+    'Value Stream Mapping (ISO 22468)',
+    'Built-in Time Study / Stopwatch',
+    '5 Why Root Cause Analysis',
+    'Fishbone (Ishikawa) Diagram',
+    'DOWNTIME Waste Identification',
+    'Kaizen Event Tracker',
+    'Yamazumi / Operator Balance Chart',
+    'Gap Analysis (AI-powered)',
+    'A3 / PDCA / 8D Export',
+    'All tools connected to VSM',
+    'AI process mentor (Supe)',
+    'Free to start',
+  ]
+  const tools = [
+    { name: 'VeSiMy', color: '#C49B2E', bg: 'rgba(196,155,46,0.06)', border: 'rgba(196,155,46,0.3)', highlight: true, scores: [true,true,true,true,true,true,true,true,true,true,true,true] },
+    { name: 'Excel / Sheets', color: '#6B6760', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [false,false,false,false,false,false,false,false,false,false,false,true] },
+    { name: 'Visio / Lucidchart', color: '#1A4F8A', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [true,false,false,false,false,false,false,false,false,false,false,false] },
+    { name: 'Minitab', color: '#534AB7', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [false,false,false,false,false,false,false,false,false,false,false,false] },
+    { name: 'Generic PM Tool', color: '#6B6760', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [false,false,false,false,false,true,false,false,false,false,false,true] },
+  ]
+
+  return (
+    <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
+          <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>
+            One platform. Every CI tool. Nothing stitched together.
+          </h2>
+          <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
+            Most teams manage lean with a mix of spreadsheets, Visio, and whiteboards. VeSiMy replaces all of it — and adds AI.
+          </p>
+        </div>
+
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 620 }}>
+            <thead>
+              <tr>
+                <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, color: '#8E8A82', fontWeight: 600, letterSpacing: 0.5, borderBottom: '1px solid #D8D5CE', width: '32%' }}>Feature</th>
+                {tools.map(t => (
+                  <th key={t.name} style={{ padding: '10px 10px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: 0.3, borderBottom: t.highlight ? `2px solid ${t.color}` : '1px solid #D8D5CE', color: t.highlight ? t.color : '#6B6760', background: t.highlight ? t.bg : 'transparent', borderRadius: t.highlight ? '8px 8px 0 0' : 0 }}>
+                    {t.name}{t.highlight && <span style={{ display: 'block', fontSize: 8, marginTop: 2, fontWeight: 400, opacity: 0.8 }}>← YOU ARE HERE</span>}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {features.map((f, fi) => (
+                <tr key={f} style={{ background: fi % 2 === 0 ? '#FAFAF8' : '#FFFFFF' }}>
+                  <td style={{ padding: '9px 14px', fontSize: 12, color: '#4E4B45', borderBottom: '0.5px solid #ECEAE6', fontWeight: 500 }}>{f}</td>
+                  {tools.map(t => (
+                    <td key={t.name} style={{ padding: '9px 10px', textAlign: 'center', borderBottom: '0.5px solid #ECEAE6', background: t.highlight ? t.bg : 'transparent' }}>
+                      {t.scores[fi]
+                        ? <span style={{ fontSize: 14, color: t.highlight ? '#C49B2E' : '#2A9E82' }}>✓</span>
+                        : <span style={{ fontSize: 12, color: '#D8D5CE' }}>—</span>
+                      }
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 28 }}>
+          <Link href="/auth/signup" style={{ padding: '12px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            Switch to VeSiMy — free to start <ArrowRightIcon size={13} color="#fff" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
 function ToolShowcase() {
   const [activeTool, setActiveTool] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
@@ -918,103 +1110,71 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', minHeight: 680, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(72px,9vw,110px) clamp(20px,5vw,60px) clamp(60px,7vw,90px)', background: '#F8F7F5', textAlign: 'center', overflow: 'hidden' }}>
+      {/* ── HERO + TOOLS (merged top section) ─────────────────────────────── */}
+      <section style={{ position: 'relative', background: '#F8F7F5', overflow: 'hidden', borderBottom: '0.5px solid #D8D5CE' }}>
 
-        {/* ── Constellation background ── */}
-        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid slice">
-          {/* Constellation lines */}
-          {[
-            [80,60,200,140],[200,140,340,90],[340,90,480,180],[480,180,560,80],[560,80,700,150],
-            [700,150,820,60],[820,60,960,140],[960,140,1100,80],[1100,80,1160,200],
-            [80,60,120,200],[120,200,200,140],[340,90,300,220],[300,220,480,180],
-            [560,80,520,240],[520,240,700,150],[820,60,780,220],[780,220,960,140],
-            [120,200,80,340],[80,340,200,420],[200,420,300,340],[300,340,300,220],
-            [520,240,480,380],[480,380,620,420],[620,420,700,340],[700,340,700,150],
-            [780,220,820,360],[820,360,960,420],[960,420,1060,320],[1060,320,960,140],
-            [200,420,340,500],[340,500,480,380],[620,420,700,540],[700,540,820,480],
-            [820,480,960,420],[960,420,1060,540],[80,340,60,480],[60,480,200,560],
-            [200,560,200,420],[340,500,280,600],[280,600,420,640],[420,640,480,500],
-            [700,540,780,620],[780,620,820,480],[1060,540,1140,460],[1140,460,1160,560],
-          ].map(([x1,y1,x2,y2],i) => (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C49B2E" strokeWidth="0.5" opacity="0.12" />
+        {/* Constellation background */}
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+          {[[80,60,200,140],[200,140,340,90],[480,180,560,80],[700,150,820,60],[960,140,1100,80],[1300,60,1380,200],[80,60,120,200],[300,220,480,180],[520,240,700,150],[820,60,780,220],[80,340,200,420],[300,340,480,380],[620,420,700,340],[820,360,960,420],[1060,320,1200,400],[200,420,340,500],[480,380,620,420],[820,480,960,420],[1060,540,1200,460],[280,600,420,640],[700,540,820,480],[1140,460,1300,560]].map(([x1,y1,x2,y2],i)=>(
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C49B2E" strokeWidth="0.5" opacity="0.1"/>
           ))}
-          {/* Constellation dots */}
-          {[
-            [80,60],[200,140],[340,90],[480,180],[560,80],[700,150],[820,60],[960,140],[1100,80],[1160,200],
-            [120,200],[300,220],[520,240],[780,220],[1060,320],[80,340],[300,340],[480,380],[700,340],[820,360],
-            [960,420],[1060,540],[200,420],[340,500],[620,420],[820,480],[60,480],[200,560],[280,600],[420,640],
-            [700,540],[780,620],[1140,460],[1160,560],[480,500],[700,460],[400,160],[900,280],[150,460],[650,580],
-          ].map(([cx,cy],i) => (
-            <circle key={i} cx={cx} cy={cy} r={i%5===0?2.5:i%3===0?2:1.5} fill="#C49B2E" opacity={i%5===0?0.25:0.15} />
+          {[[80,60],[200,140],[340,90],[480,180],[700,150],[820,60],[960,140],[1100,80],[1300,60],[120,200],[300,220],[520,240],[780,220],[1060,320],[80,340],[300,340],[480,380],[700,340],[820,360],[960,420],[1060,540],[200,420],[340,500],[620,420],[820,480],[280,600],[700,540],[1140,460],[400,160],[900,280],[650,580],[1200,200],[50,500],[1350,400]].map(([cx,cy],i)=>(
+            <circle key={i} cx={cx} cy={cy} r={i%5===0?2.2:1.4} fill="#C49B2E" opacity={i%5===0?0.2:0.12}/>
           ))}
-          {/* Faint VeSiMy V watermarks */}
-          {[[60,120,0.04],[980,40,0.035],[1080,300,0.04],[40,420,0.03],[1020,500,0.035],[540,580,0.03]].map(([x,y,op],i) => (
-            <path key={i} d={`M${x} ${y} H${x+18} L${x+28} ${y+48} L${x+38} ${y+30} L${x+48} ${y+48} L${x+58} ${y} H${x+76} L${x+50} ${y+60} L${x+28} ${y+36} L${x+6} ${y+60} Z`}
-              fill="#C49B2E" opacity={op} />
+          {[[30,80,0.035],[1200,30,0.03],[1300,280,0.035],[30,400,0.025],[1100,480,0.03]].map(([x,y,op],i)=>(
+            <path key={i} d={`M${x} ${y} H${+x+14} L${+x+22} ${+y+40} L${+x+30} ${+y+24} L${+x+38} ${+y+40} L${+x+46} ${y} H${+x+60} L${+x+40} ${+y+50} L${+x+22} ${+y+30} L${+x+4} ${+y+50} Z`} fill="#C49B2E" opacity={op}/>
           ))}
         </svg>
 
-        {/* ── Content ── */}
-        <div style={{ maxWidth: 760, width: '100%', position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: 'clamp(40px,5vw,72px) clamp(16px,4vw,48px)' }}>
+          <div className="hero-tools-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 'clamp(24px,4vw,64px)', alignItems: 'start' }}>
 
-          {/* Logo + wordmark */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, marginBottom: 36 }}>
-            <div className="logo-mark-anim"><VLogoMark size={88} /></div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5, textAlign: 'left' }}>
-              <div className="wordmark-anim"><VeSiMyWordmark size={52} /></div>
-              <span className="tagline-anim" style={{ fontSize: 11, letterSpacing: 3, fontFamily: 'monospace', textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600 }}>
-                Continuous Improvement · AI Platform
-              </span>
+            {/* ── LEFT: Branding + copy ── */}
+            <div className="hero-tools-left" style={{ paddingTop: 'clamp(8px,2vw,32px)' }}>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
+                <div className="logo-mark-anim"><VLogoMark size={72} /></div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <div className="wordmark-anim"><VeSiMyWordmark size={42} /></div>
+                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600 }}>AI · Continuous Improvement</span>
+                </div>
+              </div>
+
+              <IndustryLoop />
+
+              <h1 className="reveal r2" style={{ fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1.07, fontWeight: 700, color: '#242220', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
+                Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
+              </h1>
+
+              <p className="reveal r3" style={{ fontSize: 14, color: '#4E4B45', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
+                VeSiMy is the intelligent CI platform that maps your processes, surfaces waste automatically, and tells your team exactly what to fix — powered by AI that thinks in lean.
+              </p>
+
+              <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
+                <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#242220', lineHeight: 1.3 }}>Add Value to your process and yourself</div>
+                  <div style={{ fontSize: 11, color: '#8E8A82', marginTop: 2, lineHeight: 1.5 }}>Value Stream · Value Add · Value for your team</div>
+                </div>
+              </div>
+
+              <div className="reveal r4" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+                <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
+                  Start free trial <ArrowRightIcon size={13} color="#fff" />
+                </Link>
+                <Link href="/auth/signup" style={{ padding: '12px 18px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
+                  See demo →
+                </Link>
+              </div>
+              <p className="reveal r5" style={{ fontSize: 10, color: '#B8B4AC' }}>14-day free trial · No credit card · Cancel anytime</p>
             </div>
+
+            {/* ── RIGHT: Inline tool showcase ── */}
+            <InlineToolShowcase />
+
           </div>
-
-          {/* Main headline */}
-          <h1 className="reveal r2" style={{ fontSize: 'clamp(40px,5.5vw,64px)', lineHeight: 1.06, fontWeight: 700, color: '#242220', marginBottom: 16, letterSpacing: -0.8, fontFamily: serif }}>
-            Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
-          </h1>
-
-          {/* Industry cycling — large, below headline */}
-          <IndustryLoop />
-
-          {/* AI intro paragraph */}
-          <p className="reveal r3" style={{ fontSize: 16, color: '#4E4B45', lineHeight: 1.85, marginBottom: 28, maxWidth: 600, margin: '0 auto 28px' }}>
-            VeSiMy is the intelligent CI platform that maps your processes, surfaces waste, and tells your team exactly what to fix — powered by AI that understands lean methodology. Not just a tool. A system that thinks alongside you.
-          </p>
-
-          {/* Mission statement */}
-          <div className="reveal r3" style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 12, marginBottom: 32, padding: '14px 20px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', textAlign: 'left', maxWidth: 520 }}>
-            <span style={{ fontSize: 30, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#242220', lineHeight: 1.3 }}>Add Value to your process and yourself</div>
-              <div style={{ fontSize: 12, color: '#8E8A82', marginTop: 3, lineHeight: 1.5 }}>Value Stream · Value Add · Value for your team</div>
-            </div>
-          </div>
-
-          {/* Capability pills */}
-          <div className="reveal r3" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginBottom: 32 }}>
-            {['VSM · ISO 22468','Time Study','5 Why','Fishbone','Waste ID','Kaizen','Yamazumi','PDCA / A3','AI Gap Analysis'].map(t => (
-              <span key={t} style={{ fontSize: 11, padding: '5px 12px', borderRadius: 100, background: '#FFFFFF', border: '0.5px solid #D8D5CE', color: '#6B6760', fontFamily: 'monospace', letterSpacing: 0.3 }}>{t}</span>
-            ))}
-          </div>
-
-          {/* CTAs */}
-          <div className="reveal r4" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link href="/auth/signup" style={{ padding: '14px 32px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              Start your 14-day free trial <ArrowRightIcon size={14} color="#fff" />
-            </Link>
-            <Link href="/auth/signup" style={{ padding: '14px 22px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
-              See reference project →
-            </Link>
-          </div>
-
-          <p className="reveal r5" style={{ fontSize: 11, color: '#B8B4AC', marginTop: 16 }}>
-            14-day free trial · No credit card · Cancel anytime
-          </p>
         </div>
       </section>
-
-
 
       {/* ── FEATURES ────────────────────────────────────────────────────────── */}
       <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: '#D8D5CE' }}>
@@ -1031,8 +1191,8 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* ── TOOL SHOWCASE ────────────────────────────────────────────────────── */}
-      <ToolShowcase />
+      {/* ── COMPETITOR COMPARISON ─────────────────────────────────────────────── */}
+      <CompetitorTable />
 
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
       <div style={{ padding: '60px 48px', textAlign: 'center', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE' }}>
