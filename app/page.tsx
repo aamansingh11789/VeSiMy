@@ -639,8 +639,12 @@ function ToolShowcase() {
   const [activeTool, setActiveTool] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
   const lastWheelTime = useRef(0)
+  const touchStartY = useRef(0)
+  const touchStartX = useRef(0)
+  const lastTouchTime = useRef(0)
   const tool = SHOWCASE_TOOLS[activeTool]
 
+  // ── Desktop: wheel scroll ──────────────────────────────────────────────────
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
@@ -665,30 +669,72 @@ function ToolShowcase() {
     return () => window.removeEventListener('wheel', onWheel)
   }, [activeTool])
 
-  return (
-    <section id="tools" ref={sectionRef} style={{ padding: '80px 0 100px', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
-      <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 40px' }}>
+  // ── Mobile: touch swipe ────────────────────────────────────────────────────
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY
+    touchStartX.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dy = touchStartY.current - e.changedTouches[0].clientY
+    const dx = Math.abs(touchStartX.current - e.changedTouches[0].clientX)
+    if (Math.abs(dy) < 40 || dx > Math.abs(dy)) return  // too small or horizontal swipe
+    const now = Date.now()
+    if (now - lastTouchTime.current < 500) return
+    lastTouchTime.current = now
+    if (dy > 0) setActiveTool(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
+    else        setActiveTool(t => Math.max(t - 1, 0))
+  }
 
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What\'s inside</div>
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
+  return (
+    <section id="tools" ref={sectionRef}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      style={{ padding: 'clamp(48px,6vw,80px) 0 clamp(56px,7vw,100px)', background: '#F8F7F5', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <style>{`
+        @keyframes showcaseReveal{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes showcaseRevealUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:767px){
+          .showcase-grid{grid-template-columns:1fr!important;gap:0!important;}
+          .showcase-stack-col{position:relative!important;top:auto!important;height:auto!important;padding:0 20px 8px!important;}
+          .showcase-detail-col{padding:0 20px 0!important;}
+          .showcase-stack-inner{width:100%!important;max-width:340px!important;margin:0 auto!important;}
+          .showcase-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;width:280px!important;height:340px!important;}
+          .showcase-popup{max-height:380px!important;}
+          .showcase-swipe-hint{display:flex!important;}
+        }
+        .showcase-swipe-hint{display:none;}
+      `}</style>
+
+      <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 clamp(16px,4vw,40px)' }}>
+
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(32px,5vw,52px)' }}>
+          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>What's inside</div>
           <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Every tool a lean team needs</h2>
           <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 500, margin: '0 auto', lineHeight: 1.75 }}>
-            All connected to your value stream. Scroll or click the dots to explore.
+            All connected to your value stream. Swipe or tap the dots to explore.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 56, alignItems: 'start' }}>
+        {/* Swipe hint — mobile only */}
+        <div className="showcase-swipe-hint" style={{ alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 16, color: '#B8B4AC', fontSize: 11, fontFamily: 'monospace', letterSpacing: 1 }}>
+          <span>↑↓</span><span>swipe to navigate</span>
+        </div>
 
-          {/* LEFT: Detail + real popup */}
-          <div key={activeTool} style={{ paddingTop: 4, animation: 'showcaseReveal 0.3s ease both' }}>
-            <style>{`@keyframes showcaseReveal{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}`}</style>
+        {/* Two-column grid — stacks to 1 col on mobile */}
+        <div className="showcase-grid" style={{ display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 56, alignItems: 'start' }}>
+
+          {/* LEFT (top on mobile): Detail + real popup */}
+          <div className="showcase-detail-col" key={activeTool} style={{ paddingTop: 4, animation: 'showcaseReveal 0.3s ease both' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: '100px', background: tool.tagBg, border: `1px solid ${tool.color}30`, marginBottom: 14 }}>
               <span style={{ fontSize: 9, fontWeight: 700, color: tool.tagTxt, letterSpacing: '.5px', fontFamily: 'monospace' }}>{tool.tag}</span>
             </div>
-            <h3 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 8 }}>{tool.headline}</h3>
+            <h3 style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 8 }}>{tool.headline}</h3>
             <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.8, marginBottom: 20 }}>{tool.body}</p>
 
-            <div style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 500, overflowY: 'auto' }}
+            <div className="showcase-popup" style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 500, overflowY: 'auto' }}
               dangerouslySetInnerHTML={{ __html: tool.popup + `
                 <div style="padding:9px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
                   <div style="display:flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(196,155,46,.12);border:1px solid rgba(196,155,46,.25);border-radius:4px">
@@ -699,10 +745,10 @@ function ToolShowcase() {
             />
           </div>
 
-          {/* RIGHT: 3D stack */}
-          <div style={{ position: 'sticky', top: 28, height: 540, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
-            <div style={{ perspective: '1100px', perspectiveOrigin: '72% 48%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-              <div style={{ position: 'relative', width: 290, height: 420, transformStyle: 'preserve-3d', transform: 'rotateY(22deg) rotateX(7deg) rotateZ(2deg)' }}>
+          {/* RIGHT (bottom on mobile): 3D stack + dots */}
+          <div className="showcase-stack-col" style={{ position: 'sticky', top: 28, height: 540, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
+            <div className="showcase-stack-inner" style={{ perspective: '1100px', perspectiveOrigin: '72% 48%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+              <div className="showcase-3d" style={{ position: 'relative', width: 290, height: 420, transformStyle: 'preserve-3d', transform: 'rotateY(22deg) rotateX(7deg) rotateZ(2deg)' }}>
                 {SHOWCASE_TOOLS.map((t, i) => {
                   const off = i - activeTool
                   const isA = i === activeTool
@@ -737,11 +783,38 @@ function ToolShowcase() {
                 })}
               </div>
             </div>
-            {/* Dots */}
-            <div style={{ display: 'flex', gap: 6 }}>
+
+            {/* Dots — bigger tap targets on mobile */}
+            <div style={{ display: 'flex', gap: 8, padding: '8px 0' }}>
               {SHOWCASE_TOOLS.map((t, i) => (
-                <div key={i} onClick={() => setActiveTool(i)} style={{ width: i === activeTool ? 20 : 6, height: 6, borderRadius: 100, background: i === activeTool ? t.color : '#D8D5CE', cursor: 'pointer', transition: 'all .3s' }} />
+                <div key={i} onClick={() => setActiveTool(i)} style={{
+                  width: i === activeTool ? 22 : 8,
+                  height: 8,
+                  borderRadius: 100,
+                  background: i === activeTool ? t.color : '#D8D5CE',
+                  cursor: 'pointer',
+                  transition: 'all .3s',
+                  minWidth: 8,
+                  // Larger invisible tap area on mobile
+                  position: 'relative',
+                }} />
               ))}
+            </div>
+
+            {/* Prev/Next arrows — visible on mobile */}
+            <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
+              <button
+                onClick={() => setActiveTool(t => Math.max(t - 1, 0))}
+                disabled={activeTool === 0}
+                style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #D8D5CE', background: '#fff', color: activeTool === 0 ? '#D8D5CE' : '#4E4B45', fontSize: 13, cursor: activeTool === 0 ? 'default' : 'pointer', fontWeight: 600, transition: 'all .15s' }}>
+                ← Prev
+              </button>
+              <button
+                onClick={() => setActiveTool(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))}
+                disabled={activeTool === SHOWCASE_TOOLS.length - 1}
+                style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #D8D5CE', background: '#fff', color: activeTool === SHOWCASE_TOOLS.length - 1 ? '#D8D5CE' : '#4E4B45', fontSize: 13, cursor: activeTool === SHOWCASE_TOOLS.length - 1 ? 'default' : 'pointer', fontWeight: 600, transition: 'all .15s' }}>
+                Next →
+              </button>
             </div>
           </div>
 
