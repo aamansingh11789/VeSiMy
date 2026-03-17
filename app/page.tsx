@@ -1,5 +1,5 @@
-'use client'
 // @ts-nocheck
+'use client'
 // ── app/page.tsx — VeSiMy Homepage ───────────────────────────────────────────
 
 import Link from 'next/link'
@@ -1403,7 +1403,7 @@ export default function HomePage() {
 
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
       <div style={{ background: '#1C1A17', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
-        <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10, fontFamily: serif }}>
+        <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10, }}>
           Stop describing waste.<br />Start <span style={{ color: '#C49B2E' }}>eliminating</span> it.
         </h2>
         <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Start your 14-day free trial today. No credit card. Cancel anytime.</p>
