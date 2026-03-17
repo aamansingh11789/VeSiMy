@@ -1,5 +1,5 @@
-// @ts-nocheck
 'use client'
+// @ts-nocheck
 // ── app/page.tsx — VeSiMy Homepage ───────────────────────────────────────────
 
 import Link from 'next/link'
@@ -1180,7 +1180,7 @@ export default function HomePage() {
           ))}
 
           {/* Constellation nodes */}
-          {([
+          {[
             [80,60,true],[200,140,false],[340,90,false],[480,180,true],[560,80,false],
             [700,150,true],[820,60,false],[960,140,false],[1100,80,true],[1300,60,false],
             [120,200,false],[300,220,false],[520,240,false],[780,220,false],[1060,320,true],
@@ -1189,7 +1189,7 @@ export default function HomePage() {
             [820,480,false],[60,500,false],[200,560,false],[280,620,false],[700,540,true],
             [1140,460,false],[400,160,false],[900,280,false],[650,580,false],[1200,200,false],
             [1380,400,false],[780,640,false],[1060,640,false],
-          ] as [number, number, boolean][]).map(([cx,cy,bright],i) => (
+          ].map(([cx,cy,bright],i) => (
             <circle key={i} cx={cx} cy={cy}
               r={bright ? 2.8 : 1.6}
               fill="#C49B2E"
@@ -1360,7 +1360,7 @@ export default function HomePage() {
 
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
       <div style={{ background: '#1C1A17', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
-        <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10 }}>
+        <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10, fontFamily: serif }}>
           Stop describing waste.<br />Start <span style={{ color: '#C49B2E' }}>eliminating</span> it.
         </h2>
         <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Start your 14-day free trial today. No credit card. Cancel anytime.</p>
