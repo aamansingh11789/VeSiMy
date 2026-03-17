@@ -34,7 +34,7 @@ function IndustryLoop() {
 
   return (
     <div style={{ height: 64, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: 28, gap: 4 }}>
-      <span style={{ fontSize: 11, color: '#B8B4AC', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
+      <span style={{ fontSize: 11, color: 'rgba(248,247,245,0.3)', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
       <span style={{
         fontSize: 'clamp(22px,3.5vw,34px)',
         fontWeight: 700,
@@ -662,30 +662,22 @@ function InlineToolShowcase() {
     <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ userSelect: 'none' }}>
       <style>{`
         @keyframes inlineReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        @media(max-width:900px){
-          .hero-tools-grid{grid-template-columns:1fr!important;}
-          .hero-tools-left{padding-top:0!important;}
-        }
-        @media(max-width:600px){
-          .inline-popup{max-height:300px!important;}
-          .inline-stack-wrap{height:280px!important;}
-          .inline-3d{width:220px!important;height:260px!important;}
-        }
+        /* mobile rules now in main style block */
       `}</style>
 
       {/* Tool name + swipe hint */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, flexWrap: 'wrap', gap: 6 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 100, background: tool.tagBg, border: `1px solid ${tool.color}30` }}>
+          <div className="hero-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 100, background: tool.tagBg, border: `1px solid ${tool.color}30` }}>
             <span style={{ fontSize: 9, fontWeight: 700, color: tool.tagTxt, letterSpacing: '.5px', fontFamily: 'monospace' }}>{tool.tag}</span>
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, color: '#242220', fontFamily: serif }}>{tool.headline}</span>
         </div>
-        <span style={{ fontSize: 10, color: '#B8B4AC', fontFamily: 'monospace', letterSpacing: 1 }}>← swipe →</span>
+        <span className="inline-swipe" style={{ fontSize: 10, color: '#B8B4AC', fontFamily: 'monospace', letterSpacing: 1 }}>← swipe →</span>
       </div>
 
       {/* Tool popup preview */}
-      <div key={active} className="inline-popup" style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 420, overflowY: 'auto', marginBottom: 16, animation: 'inlineReveal 0.25s ease both' }}
+      <div key={active} className="inline-popup" style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 420, overflowY: 'auto', marginBottom: 24, animation: 'inlineReveal 0.25s ease both' }}
         dangerouslySetInnerHTML={{ __html: tool.popup + `
           <div style="padding:8px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:9px;font-weight:700;color:#8E8A82;font-family:Palatino Linotype,serif">VeSiMy</span>
@@ -774,25 +766,25 @@ function CompetitorTable() {
   ]
 
   return (
-    <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+    <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#0D0C0A', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
       <div style={{ maxWidth: 1060, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
-          <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>
+          <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
+          <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
             One platform. Every CI tool. Nothing stitched together.
           </h2>
-          <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
+          <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.5)', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
             Most teams manage lean with a mix of spreadsheets, Visio, and whiteboards. VeSiMy replaces all of it — and adds AI.
           </p>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 620 }}>
+        <div className="comp-table-wrap" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 560 }}>
             <thead>
               <tr>
-                <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, color: '#8E8A82', fontWeight: 600, letterSpacing: 0.5, borderBottom: '1px solid #D8D5CE', width: '32%' }}>Feature</th>
+                <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, color: 'rgba(248,247,245,0.3)', fontWeight: 500, letterSpacing: 0.5, borderBottom: '1px solid rgba(255,255,255,0.08)', width: '32%' }}>Feature</th>
                 {tools.map(t => (
-                  <th key={t.name} style={{ padding: '10px 10px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: 0.3, borderBottom: t.highlight ? `2px solid ${t.color}` : '1px solid #D8D5CE', color: t.highlight ? t.color : '#6B6760', background: t.highlight ? t.bg : 'transparent', borderRadius: t.highlight ? '8px 8px 0 0' : 0 }}>
+                  <th key={t.name} style={{ padding: '10px 10px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: 0.3, borderBottom: t.highlight ? `2px solid ${t.color}` : '1px solid rgba(255,255,255,0.08)', color: t.highlight ? t.color : 'rgba(248,247,245,0.4)', background: t.highlight ? t.bg : 'transparent', borderRadius: t.highlight ? '8px 8px 0 0' : 0 }}>
                     {t.name}{t.highlight && <span style={{ display: 'block', fontSize: 8, marginTop: 2, fontWeight: 400, opacity: 0.8 }}>← YOU ARE HERE</span>}
                   </th>
                 ))}
@@ -800,8 +792,8 @@ function CompetitorTable() {
             </thead>
             <tbody>
               {features.map((f, fi) => (
-                <tr key={f} style={{ background: fi % 2 === 0 ? '#FAFAF8' : '#FFFFFF' }}>
-                  <td style={{ padding: '9px 14px', fontSize: 12, color: '#4E4B45', borderBottom: '0.5px solid #ECEAE6', fontWeight: 500 }}>{f}</td>
+                <tr key={f} style={{ background: fi % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+                  <td style={{ padding: '9px 14px', fontSize: 12, color: 'rgba(248,247,245,0.6)', borderBottom: '1px solid rgba(255,255,255,0.05)', fontWeight: 400 }}>{f}</td>
                   {tools.map(t => (
                     <td key={t.name} style={{ padding: '9px 10px', textAlign: 'center', borderBottom: '0.5px solid #ECEAE6', background: t.highlight ? t.bg : 'transparent' }}>
                       {t.scores[fi]
@@ -1075,22 +1067,49 @@ export default function HomePage() {
           opacity:0;
           animation: taglineIn 0.9s ease 0.6s forwards;
         }
-        .nav-link { color:#6B6760; text-decoration:none; font-size:13px; transition:color 0.15s; }
-        .nav-link:hover { color:#242220; }
+        .nav-link { color:rgba(248,247,245,0.55); text-decoration:none; font-size:13px; transition:color 0.15s; }
+        .nav-link:hover { color:#F8F7F5; }
+
+        /* ── Unified mobile breakpoints ── */
+        @media(max-width:900px){
+          .hero-tools-grid{grid-template-columns:1fr!important;gap:32px!important;}
+          .hero-tools-left{padding-top:0!important;text-align:center;}
+          .hero-tools-left .reveal{text-align:center;}
+          .hero-tools-left h1{text-align:center;}
+          .hero-tools-left p{margin-left:auto!important;margin-right:auto!important;}
+          .hero-cta-row{justify-content:center!important;}
+          .hero-mission{margin-left:auto!important;margin-right:auto!important;}
+          .hero-industry-loop{justify-content:center!important;}
+        }
         @media(max-width:768px){
-          .hero-grid{grid-template-columns:1fr!important;padding:40px 20px 0!important;}
-          .hero-text{padding-right:0!important;}
           .feat-grid{grid-template-columns:1fr!important;}
           .tools-grid{grid-template-columns:1fr 1fr!important;}
           .plan-grid{grid-template-columns:1fr!important;}
           .hide-mobile{display:none!important;}
-          .nav-pad{padding:0 20px!important;}
+          .nav-pad{padding:0 16px!important;}
           .sec-pad{padding:40px 20px!important;}
+          .showcase-grid{grid-template-columns:1fr!important;gap:0!important;}
+          .showcase-stack-col{position:relative!important;top:auto!important;height:auto!important;padding:0 16px 16px!important;}
+          .showcase-detail-col{padding:0 16px!important;}
+          .showcase-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;width:260px!important;height:320px!important;}
+          .showcase-popup{max-height:360px!important;}
+          .showcase-swipe-hint{display:flex!important;}
+          .comp-table-wrap{overflow-x:auto!important;}
+          .hero-tools-grid{gap:24px!important;}
         }
+        @media(max-width:500px){
+          .inline-popup{max-height:280px!important;}
+          .inline-stack-wrap{height:260px!important;}
+          .inline-3d{width:200px!important;height:240px!important;}
+          .inline-swipe{display:flex!important;}
+          .hero-pill{font-size:9px!important;padding:3px 8px!important;}
+        }
+        .inline-swipe{display:none;}
+        .showcase-swipe-hint{display:none;}
       `}</style>
 
       {/* ── NAV ─────────────────────────────────────────────────────────────── */}
-      <nav className="nav-pad" style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 60, background: '#FFFFFF', borderBottom: '0.5px solid #D8D5CE' }}>
+      <nav className="nav-pad" style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 60, background: 'rgba(13,12,10,0.96)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <VLogoMark size={30} />
           <VeSiMyWordmark size={19} />
@@ -1101,28 +1120,91 @@ export default function HomePage() {
           ))}
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <Link href="/auth/login" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid #D8D5CE', borderRadius: 8, fontSize: 13, color: '#4E4B45', textDecoration: 'none' }}>
+          <Link href="/auth/login" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 8, fontSize: 13, color: 'rgba(248,247,245,0.6)', textDecoration: 'none' }}>
             Sign in
           </Link>
-          <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#C49B2E', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#fff', textDecoration: 'none' }}>
+          <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#C49B2E', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#0D0C0A', textDecoration: 'none' }}>
             Start free
           </Link>
         </div>
       </nav>
 
       {/* ── HERO + TOOLS (merged top section) ─────────────────────────────── */}
-      <section style={{ position: 'relative', background: '#F8F7F5', overflow: 'hidden', borderBottom: '0.5px solid #D8D5CE' }}>
+      <section style={{ position: 'relative', background: '#0D0C0A', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
 
-        {/* Constellation background */}
-        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
-          {[[80,60,200,140],[200,140,340,90],[480,180,560,80],[700,150,820,60],[960,140,1100,80],[1300,60,1380,200],[80,60,120,200],[300,220,480,180],[520,240,700,150],[820,60,780,220],[80,340,200,420],[300,340,480,380],[620,420,700,340],[820,360,960,420],[1060,320,1200,400],[200,420,340,500],[480,380,620,420],[820,480,960,420],[1060,540,1200,460],[280,600,420,640],[700,540,820,480],[1140,460,1300,560]].map(([x1,y1,x2,y2],i)=>(
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C49B2E" strokeWidth="0.5" opacity="0.1"/>
+        {/* ── Constellation background — enhanced ── */}
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            {/* Soft radial glow around key nodes */}
+            <radialGradient id="ng1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#C49B2E" stopOpacity="0.18"/>
+              <stop offset="100%" stopColor="#C49B2E" stopOpacity="0"/>
+            </radialGradient>
+            <radialGradient id="ng2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#8C44CC" stopOpacity="0.12"/>
+              <stop offset="100%" stopColor="#8C44CC" stopOpacity="0"/>
+            </radialGradient>
+            {/* Pulsing animation on select nodes */}
+            <style>{`
+              @keyframes cPulse { 0%,100%{opacity:.22;r:3} 50%{opacity:.5;r:4.5} }
+              @keyframes cPulse2 { 0%,100%{opacity:.18;r:2.5} 50%{opacity:.4;r:4} }
+              .cn-pulse { animation: cPulse 3.2s ease-in-out infinite }
+              .cn-pulse2 { animation: cPulse2 4.1s ease-in-out infinite }
+              .cn-pulse3 { animation: cPulse 5s ease-in-out infinite 1.5s }
+            `}</style>
+          </defs>
+
+          {/* Ambient glow pools */}
+          <ellipse cx="200" cy="160" rx="180" ry="120" fill="url(#ng1)" opacity="0.6"/>
+          <ellipse cx="1100" cy="200" rx="160" ry="110" fill="url(#ng2)" opacity="0.5"/>
+          <ellipse cx="700" cy="500" rx="140" ry="90" fill="url(#ng1)" opacity="0.4"/>
+
+          {/* Constellation lines — extended network */}
+          {[
+            [80,60,200,140],[200,140,340,90],[340,90,480,180],[480,180,560,80],[560,80,700,150],
+            [700,150,820,60],[820,60,960,140],[960,140,1100,80],[1100,80,1300,60],[1300,60,1380,200],
+            [80,60,120,200],[120,200,200,140],[340,90,300,220],[300,220,480,180],
+            [560,80,520,240],[520,240,700,150],[820,60,780,220],[780,220,960,140],
+            [120,200,80,340],[80,340,200,420],[200,420,300,340],[300,340,300,220],
+            [520,240,480,380],[480,380,620,420],[620,420,700,340],[700,340,700,150],
+            [780,220,820,360],[820,360,960,420],[960,420,1060,320],[1060,320,960,140],
+            [200,420,340,500],[340,500,480,380],[620,420,700,540],[700,540,820,480],
+            [820,480,960,420],[960,420,1060,540],[1060,540,1200,460],[1200,460,1380,400],
+            [80,340,60,500],[60,500,200,560],[200,560,200,420],[340,500,280,620],
+            [700,540,780,640],[780,640,820,480],[1060,540,1140,640],[1140,640,1200,560],
+            [400,160,480,180],[900,280,960,140],[650,580,700,540],[1200,200,1100,80],
+          ].map(([x1,y1,x2,y2],i) => (
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke="#C49B2E" strokeWidth={i < 10 ? "0.7" : "0.45"}
+              opacity={i < 10 ? 0.16 : 0.09}/>
           ))}
-          {[[80,60],[200,140],[340,90],[480,180],[700,150],[820,60],[960,140],[1100,80],[1300,60],[120,200],[300,220],[520,240],[780,220],[1060,320],[80,340],[300,340],[480,380],[700,340],[820,360],[960,420],[1060,540],[200,420],[340,500],[620,420],[820,480],[280,600],[700,540],[1140,460],[400,160],[900,280],[650,580],[1200,200],[50,500],[1350,400]].map(([cx,cy],i)=>(
-            <circle key={i} cx={cx} cy={cy} r={i%5===0?2.2:1.4} fill="#C49B2E" opacity={i%5===0?0.2:0.12}/>
+
+          {/* Constellation nodes */}
+          {[
+            [80,60,true],[200,140,false],[340,90,false],[480,180,true],[560,80,false],
+            [700,150,true],[820,60,false],[960,140,false],[1100,80,true],[1300,60,false],
+            [120,200,false],[300,220,false],[520,240,false],[780,220,false],[1060,320,true],
+            [80,340,false],[300,340,false],[480,380,false],[700,340,false],[820,360,false],
+            [960,420,true],[1060,540,false],[200,420,false],[340,500,false],[620,420,false],
+            [820,480,false],[60,500,false],[200,560,false],[280,620,false],[700,540,true],
+            [1140,460,false],[400,160,false],[900,280,false],[650,580,false],[1200,200,false],
+            [1380,400,false],[780,640,false],[1060,640,false],
+          ].map(([cx,cy,bright],i) => (
+            <circle key={i} cx={cx} cy={cy}
+              r={bright ? 2.8 : 1.6}
+              fill="#C49B2E"
+              className={bright && i%3===0 ? 'cn-pulse' : bright && i%3===1 ? 'cn-pulse2' : bright ? 'cn-pulse3' : ''}
+              opacity={bright ? 0.28 : 0.13}/>
           ))}
-          {[[30,80,0.035],[1200,30,0.03],[1300,280,0.035],[30,400,0.025],[1100,480,0.03]].map(([x,y,op],i)=>(
-            <path key={i} d={`M${x} ${y} H${+x+14} L${+x+22} ${+y+40} L${+x+30} ${+y+24} L${+x+38} ${+y+40} L${+x+46} ${y} H${+x+60} L${+x+40} ${+y+50} L${+x+22} ${+y+30} L${+x+4} ${+y+50} Z`} fill="#C49B2E" opacity={op}/>
+
+          {/* VeSiMy V watermarks — scattered, more visible */}
+          {[
+            [22,55,0.06],[1240,22,0.05],[1310,260,0.06],[22,380,0.045],
+            [1050,460,0.05],[520,580,0.04],[850,30,0.04],[140,560,0.04],
+          ].map(([x,y,op],i) => (
+            <path key={i}
+              d={`M${x} ${y} H${+x+16} L${+x+26} ${+y+46} L${+x+36} ${+y+28} L${+x+46} ${+y+46} L${+x+56} ${y} H${+x+72} L${+x+46} ${+y+58} L${+x+26} ${+y+34} L${+x+6} ${+y+58} Z`}
+              fill="#C49B2E" opacity={op}/>
           ))}
         </svg>
 
@@ -1135,18 +1217,18 @@ export default function HomePage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
                 <div className="logo-mark-anim"><VLogoMark size={72} /></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <div className="wordmark-anim"><VeSiMyWordmark size={42} /></div>
-                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: '#8E8A82', fontWeight: 600 }}>AI · Continuous Improvement</span>
+                  <div className="wordmark-anim"><VeSiMyWordmark size={42} onDark /></div>
+                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: 'rgba(248,247,245,0.45)', fontWeight: 600 }}>AI · Continuous Improvement</span>
                 </div>
               </div>
 
               <IndustryLoop />
 
-              <h1 className="reveal r2" style={{ fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1.07, fontWeight: 700, color: '#242220', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
+              <h1 className="reveal r2" style={{ fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1.07, fontWeight: 700, color: '#F8F7F5', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
                 Map the waste.<br /><span style={{ color: '#C49B2E' }}>Kill</span> the waste.<br />Repeat.
               </h1>
 
-              <p className="reveal r3" style={{ fontSize: 14, color: '#4E4B45', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
+              <p className="reveal r3" style={{ fontSize: 14, color: 'rgba(248,247,245,0.62)', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
                 VeSiMy is the intelligent CI platform that maps your processes, surfaces waste automatically, and tells your team exactly what to fix — powered by AI that thinks in lean.
               </p>
 
@@ -1158,15 +1240,15 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="reveal r4" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
-                <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-                  Start free trial <ArrowRightIcon size={13} color="#fff" />
+              <div className="reveal r4 hero-cta-row" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+                <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
+                  Start free trial <ArrowRightIcon size={13} color="#0D0C0A" />
                 </Link>
                 <Link href="/auth/signup" style={{ padding: '12px 18px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
                   See demo →
                 </Link>
               </div>
-              <p className="reveal r5" style={{ fontSize: 10, color: '#B8B4AC' }}>14-day free trial · No credit card · Cancel anytime</p>
+              <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.25)', fontFamily: 'monospace' }}>14-day free trial · No credit card · Cancel anytime</p>
             </div>
 
             {/* ── RIGHT: Inline tool showcase ── */}
@@ -1176,14 +1258,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── STATS BAR ────────────────────────────────────────────────────────── */}
+      <div style={{ background: '#1C1A17', padding: '18px clamp(16px,4vw,48px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'center', gap: 'clamp(24px,6vw,80px)', flexWrap: 'wrap' }}>
+          {[['9','CI Tools built-in'],['100%','Free to start'],['ISO 22468','VSM standard'],['8','Industries']].map(([v,l]) => (
+            <div key={l} style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#C49B2E' }}>{v}</div>
+              <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.35)', marginTop: 2, letterSpacing: '0.3px' }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ── FEATURES ────────────────────────────────────────────────────────── */}
-      <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: '#D8D5CE' }}>
+      <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: '#C8C5BC', borderTop: '0.5px solid #C8C5BC' }}>
         {[
           { icon: '📊', bg: '#EDF9F5', title: 'Value Stream Mapping', body: 'ISO 22468:2020 notation. Bottlenecks flagged automatically. Export A3 maps and full ISO improvement reports in one click.' },
           { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool connected', body: 'Time Study, Fishbone, 5 Why, Waste ID, Kaizen, PDCA, Yamazumi, Standard Work — all linked to your steps, all feeding one report.' },
           { icon: '🛡', bg: '#EEEDFE', title: '14-day free trial.', body: 'Start today — no credit card required. Get full access to every tool for 14 days with up to 3 projects. Then choose the plan that fits.' },
         ].map(f => (
-          <div key={f.title} style={{ background: '#FFFFFF', padding: '28px 24px' }}>
+          <div key={f.title} style={{ background: '#EDE9E0', padding: '28px 24px' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
             <div style={{ fontSize: 15, fontWeight: 600, color: '#242220', marginBottom: 7 }}>{f.title}</div>
             <div style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.7 }}>{f.body}</div>
@@ -1195,17 +1289,17 @@ export default function HomePage() {
       <CompetitorTable />
 
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
-      <div style={{ padding: '60px 48px', textAlign: 'center', background: '#FFFFFF', borderTop: '0.5px solid #D8D5CE' }}>
+      <div style={{ padding: 'clamp(40px,5vw,64px) clamp(16px,4vw,48px)', textAlign: 'center', background: '#F8F6F0', borderTop: '3px solid #C49B2E' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
           <p style={{ fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 500, color: '#242220', lineHeight: 1.55, marginBottom: 14, fontFamily: serif }}>
             "This could serve as <em style={{ color: '#C49B2E', fontStyle: 'italic' }}>Mission Control</em> — to drive progress and allow for correction and modification along the way."
           </p>
-          <p style={{ fontSize: 13, color: '#8E8A82' }}>Max Singh · Creator of VeSiMy</p>
+          <p style={{ fontSize: 13, color: 'rgba(248,247,245,0.35)' }}>Max Singh · Creator of VeSiMy</p>
         </div>
       </div>
 
       {/* ── PRICING ─────────────────────────────────────────────────────────── */}
-      <section id="pricing" className="sec-pad" style={{ padding: '64px 48px', background: '#F8F7F5' }}>
+      <section id="pricing" className="sec-pad" style={{ padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', background: '#EDE9E0' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Pricing</div>
@@ -1265,11 +1359,11 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
-      <div style={{ background: '#242220', padding: '72px 48px', textAlign: 'center' }}>
-        <h2 style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
+      <div style={{ background: '#1C1A17', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
+        <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10, fontFamily: serif }}>
           Stop describing waste.<br />Start <span style={{ color: '#C49B2E' }}>eliminating</span> it.
         </h2>
-        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', marginBottom: 28 }}>Start your 14-day free trial today. No credit card. Cancel anytime.</p>
+        <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Start your 14-day free trial today. No credit card. Cancel anytime.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
             Start free trial

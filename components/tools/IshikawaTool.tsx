@@ -4,6 +4,8 @@
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 
 const FRAMEWORKS: Record<string, string[]> = {
   '6M Manufacturing': ['Machine', 'Method', 'Material', 'Manpower', 'Measurement', 'Mother Nature'],
@@ -99,9 +101,38 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
           </div>
         )}
 
-        <div style={{ fontSize: 11, color: 'var(--text3)' }}>
-          {totalCauses} cause{totalCauses !== 1 ? 's' : ''} added
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <span style={{ fontSize: 11, color: 'var(--text3)' }}>
+            {totalCauses} cause{totalCauses !== 1 ? 's' : ''} added
+          </span>
+          {problem && (
+            <AIAssistButton
+              label="Generate causes with AI"
+              loading={aiLoading}
+              small
+              onClick={() => aiAssist('fishbone_causes', { problem, framework, stepName })}
+            />
+          )}
         </div>
+        {aiResult && typeof aiResult === 'object' && (
+          <AIResultPanel
+            result={`AI suggested causes — click "Apply all" to add them to the diagram, or add individually below.`}
+            source={aiSource} error={aiError} onClear={aiClear}
+            useLabel="Apply all causes"
+            onUse={(r) => {
+              if (r && typeof r === 'object') {
+                const updated = { ...causes }
+                Object.entries(r as Record<string, string[]>).forEach(([cat, cs]) => {
+                  if (categories.includes(cat)) {
+                    updated[cat] = [...(updated[cat] || []), ...(cs as string[])]
+                  }
+                })
+                setCauses(updated)
+              }
+              aiClear()
+            }}
+          />
+        )}
 
         <div style={{ display: 'grid', gap: 8 }}>
           {categories.map((cat) => (

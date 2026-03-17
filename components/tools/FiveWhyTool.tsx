@@ -4,6 +4,8 @@
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 import { openISOReport } from '@/lib/isoReport'
 
 interface Props {
@@ -217,7 +219,22 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
         </div>
 
         <div>
-          <label className="label">Countermeasure / Action</label>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+            <label className="label" style={{ margin: 0 }}>Countermeasure / Action</label>
+            {rootCause && (
+              <AIAssistButton
+                label="Draft countermeasure"
+                loading={aiCMLoading}
+                small
+                onClick={() => aiCMAssist('fivewhy_countermeasure', { rootCause, problem, stepName })}
+              />
+            )}
+          </div>
+          <AIResultPanel
+            result={aiCM as string} source={aiCMSource} error={aiCMError} onClear={aiCMClear}
+            useLabel="Use this"
+            onUse={(r: any) => { setAction(r as string); aiCMClear() }}
+          />
           <textarea
             className="input"
             rows={2}

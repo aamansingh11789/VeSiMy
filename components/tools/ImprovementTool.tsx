@@ -4,6 +4,8 @@
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 
 const METRICS = [
   'Cycle Time (s)',
@@ -265,7 +267,33 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
               </div>
 
               <div>
-                <label className="label">Target (Future State)</label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <label className="label" style={{ margin: 0 }}>Target (Future State)</label>
+                  {g.baseline && (
+                    <AIAssistButton
+                      label="AI suggest"
+                      loading={aiLoading}
+                      small
+                      onClick={() => aiAssist('improvement_target', {
+                        metric: g.metric === 'Custom' ? (g.customMetric || 'metric') : g.metric,
+                        baseline: g.baseline,
+                        stepName,
+                        isBottleneck: false,
+                      })}
+                    />
+                  )}
+                </div>
+                {aiResult && (
+                  <AIResultPanel
+                    result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear}
+                    useLabel="Use target"
+                    onUse={(r: any) => {
+                      const match = String(r).match(/[0-9]+\.?[0-9]*/)
+                      if (match) setGoal(g.id, 'target', match[0])
+                      aiClear()
+                    }}
+                  />
+                )}
                 <input
                   className="input"
                   type="number"

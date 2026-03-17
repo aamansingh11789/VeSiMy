@@ -3,6 +3,8 @@
 
 import { useMemo, useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 import { openISOReport } from '@/lib/isoReport'
 
 interface Props {
@@ -35,6 +37,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
         <td style="text-align:center;font-weight:600;">${i + 1}</td>
         <td>${s.name}</td>
         <td style="text-align:center;color:${VA_COLORS[s.va_type] || '#666'};font-weight:700;">${VA_LABELS[s.va_type] || s.va_type}</td>
+        <td style="text-align:center;font-family:monospace;">${(s.step_type||'man').toUpperCase()}</td>
         <td style="text-align:center;font-family:monospace;font-weight:600;">${s.time}s</td>
         <td style="text-align:center;font-size:10pt;color:#888;">${s.time > 0 ? Math.round(s.time / totalTime * 100) : 0}%</td>
         <td></td>
@@ -107,6 +110,24 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
       onClose={onClose}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+        {opSteps.length > 0 && (
+          <div style={{ marginBottom: 12 }}>
+            <AIAssistButton
+              label="⚡ Write work instruction"
+              loading={aiLoading}
+              onClick={() => aiAssist('standard_work_instruction', {
+                opSteps, stepName: step?.name, takt,
+              })}
+            />
+            {aiResult && (
+              <AIResultPanel
+                result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear}
+                title="WORK INSTRUCTION"
+              />
+            )}
+          </div>
+        )}
 
         {stepsWithTasks.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '32px 20px', color: 'var(--text3)', fontSize: 13 }}>

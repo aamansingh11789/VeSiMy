@@ -29,6 +29,8 @@ import { SOPUpload } from '@/components/tools/SOPUpload'
 import { PDFExportButton } from '@/components/export/PDFExport'
 import { ProcessJournal } from '@/components/journal/ProcessJournal'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 import {
   StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
   PlusIcon, EditIcon, TrashIcon, SOPIcon, SettingsIcon, ZapIcon,
@@ -1371,12 +1373,116 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 }
 
 function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Branch[]; project: Project }) {
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+
+  const takt = project.takt_time ? Number(project.takt_time) : 0
+  const totalCT = steps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
+  const totalWT = steps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
+  const pceNum = totalCT + totalWT > 0 ? Math.round(totalCT / (totalCT + totalWT) * 100) : 0
+  const bottleneck = takt > 0
+    ? steps.filter(s => (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) > takt)
+        .sort((a, b) => (b.toolData?.stopwatch?.mean || Number(b.cycle_time) || 0) - (a.toolData?.stopwatch?.mean || Number(a.cycle_time) || 0))[0]
+    : null
+  const openKaizens = steps.reduce((a, s) =>
+    a + ((s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete' && k.status !== 'verified').length), 0)
+
   return (
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 4px' }}>
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>
-        CI Report — {project.name}
-      </h2>
-      <p style={{ color: 'var(--text2)' }}>Report view stays unchanged here.</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+          CI Report — {project.name}
+        </h2>
+        <AIAssistButton
+          label="⚡ AI Executive Summary"
+          loading={aiLoading}
+          onClick={() => aiAssist('report_summary', {
+            projectName: project.name,
+            steps, pce: pceNum, takt,
+            bottleneck: bottleneck?.name,
+            totalCT, totalWT, openKaizens,
+          })}
+        />
+      </div>
+
+      {aiResult && (
+        <div style={{ marginBottom: 20 }}>
+          <AIResultPanel
+            result={aiResult as string}
+            source={aiSource} error={aiError} onClear={aiClear}
+            title="AI EXECUTIVE SUMMARY"
+          />
+        </div>
+      )}
+
+      {/* Key metrics */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 20 }}>
+        {[
+          { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
+          { label: 'Process Cycle Efficiency', val: `${pceNum}%`, color: pceNum >= 60 ? '#1DD1A1' : '#FF6B6B' },
+          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)}min` : '—', color: 'var(--text)' },
+          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
+          { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#D4A208' : '#1DD1A1' },
+        ].map(({ label, val, color }) => (
+          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
+            <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color }}>{val}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Step breakdown table */}
+      {steps.length > 0 && (
+        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
+          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
+            Process Step Summary
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead>
+                <tr style={{ background: 'var(--bg3)' }}>
+                  {['Step', 'CT', 'Wait', 'VA Type', 'Wastes', 'Open Kaizens', 'Status'].map(h => (
+                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {steps.map((s, i) => {
+                  const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                  const wt = Number(s.wait_time) || 0
+                  const wastes = (s.toolData?.waste?.selected || []).length
+                  const openK = (s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete' && k.status !== 'verified').length
+                  const isBN = takt > 0 && ct > takt
+                  return (
+                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--bg3)', borderTop: '1px solid var(--border)' }}>
+                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
+                        {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
+                        {s.name}
+                      </td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? `${ct}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? `${wt}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,162,8,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#D4A208' }}>
+                          {(s.va_type || 'VA').toUpperCase()}
+                        </span>
+                      </td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#D4A208' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#D4A208' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px' }}>
+                        <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
+                          {isBN ? '⚠ Over Takt' : ct === 0 ? 'No data' : '✓ OK'}
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      <PDCATool steps={steps} project={project} takt={takt} />
     </div>
   )
 }

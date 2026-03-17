@@ -4,6 +4,8 @@
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 
 const WASTES = [
   { id: 'T', label: 'Transport', icon: '🚛', desc: 'Unnecessary movement of materials or products' },
@@ -170,6 +172,16 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
           >
             <span style={{ fontSize: 12, color: '#FF6B6B', fontWeight: 600, lineHeight: 1.6 }}>
               {selected.length} waste{selected.length !== 1 ? 's' : ''} identified: {selectedLabels.join(', ')}
+          {selected.length >= 2 && (
+            <span style={{ marginLeft: 8 }}>
+              <AIAssistButton
+                label="Prioritise"
+                loading={aiLoading}
+                small
+                onClick={() => aiAssist('waste_prioritise', { selected, notes, stepName })}
+              />
+            </span>
+          )}
             </span>
           </div>
         )}

@@ -4,6 +4,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 import { openISOReport } from '@/lib/isoReport'
 
 interface Lap {
@@ -315,6 +317,21 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {effectiveMean > 0 && laps.length >= 3 && (
+          <div>
+            <AIAssistButton
+              label="Interpret results"
+              loading={aiLoading}
+              onClick={() => aiAssist('timestudy_interpret', {
+                stepName, laps, mean: effectiveMean,
+                baseline: baseline ? Number(baseline) * 1000 : null,
+              })}
+              small
+            />
+            <AIResultPanel result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear} />
           </div>
         )}
 

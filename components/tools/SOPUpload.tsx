@@ -5,6 +5,7 @@
 
 import { useState, useRef } from 'react'
 import toast from 'react-hot-toast'
+import { Modal } from '@/components/ui/Modal'
 
 function Chip({ label, color }: { label: string; color: string }) {
   return (
@@ -74,15 +75,17 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" style={{ maxWidth:560 }} onClick={e => e.stopPropagation()}>
-        <div className="modal-header">
-          <span className="modal-title">📄 Import SOP → Auto-Generate Steps</span>
-          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--text2)', fontSize:18 }}>✕</button>
-        </div>
+    <Modal
+      title="📄 Import SOP → Auto-Generate Steps"
+      onClose={onClose}
+      onSave={preview.length > 0 ? confirm : undefined}
+      saveLabel={`Add ${preview.length} step${preview.length !== 1 ? 's' : ''} to Project`}
+      disableSave={preview.length === 0}
+    >
+      <div>
 
         {preview.length === 0 ? (
-          <div className="modal-body">
+          <div style={{ padding: 0 }}>
             {/* Mode toggle */}
             <div style={{ display:'flex', gap:6, marginBottom:16 }}>
               {(['upload','paste'] as const).map(m => (
@@ -124,7 +127,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             )}
           </div>
         ) : (
-          <div className="modal-body">
+          <div style={{ padding: 0 }}>
             <p style={{ fontSize:13, color:'var(--text2)', marginBottom:14 }}>
               Found <strong style={{ color:'var(--gold)' }}>{preview.length} steps</strong>. Review and remove any that don&apos;t belong, then click Add to Project.
             </p>
@@ -176,6 +179,6 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
           )}
         </div>
       </div>
-    </div>
+    </Modal>
   )
 }

@@ -3,6 +3,8 @@
 
 import { useMemo, useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 
 interface Props {
   steps: any[]
@@ -156,6 +158,23 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                 })}
               </div>
             </div>
+
+            {/* AI rebalance button */}
+            {operators.length > 1 && takt > 0 && (
+              <div>
+                <AIAssistButton
+                  label="⚡ Suggest rebalance"
+                  loading={aiLoading}
+                  onClick={() => aiAssist('yamazumi_rebalance', { operators, takt })}
+                />
+                {aiResult && (
+                  <AIResultPanel
+                    result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear}
+                    title="REBALANCE SUGGESTION"
+                  />
+                )}
+              </div>
+            )}
 
             {/* Summary stats */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: 8 }}>

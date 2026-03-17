@@ -4,6 +4,8 @@
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 import { openISOReport } from '@/lib/isoReport'
 
 const CATEGORIES = ['Safety', 'Quality', 'Delivery', 'Cost', 'Morale', 'Environment', 'Productivity', '5S']
@@ -322,7 +324,38 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
 
             <div className="vesimy-mobile-grid">
               <div style={{ gridColumn: '1/-1' }}>
-                <label className="label">Title *</label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <label className="label" style={{ margin: 0 }}>Title *</label>
+                  <AIAssistButton
+                    label="AI Draft"
+                    loading={aiLoading}
+                    small
+                    onClick={() => aiAssist('kaizen_draft', {
+                      finding: form.title || form.description || 'process improvement',
+                      stepName,
+                      principle: form.category,
+                    })}
+                  />
+                </div>
+                {aiResult && typeof aiResult === 'object' && (
+                  <AIResultPanel
+                    result="AI draft ready — click Apply to fill the form."
+                    source={aiSource} error={aiError} onClear={aiClear}
+                    useLabel="Apply draft"
+                    onUse={(r: any) => {
+                      if (r && typeof r === 'object') {
+                        setForm((f: any) => ({
+                          ...f,
+                          title: r.title || f.title,
+                          description: r.description || f.description,
+                          category: r.category || f.category,
+                          priority: r.priority || f.priority,
+                        }))
+                      }
+                      aiClear()
+                    }}
+                  />
+                )}
                 <input
                   className="input"
                   placeholder="Kaizen event title"

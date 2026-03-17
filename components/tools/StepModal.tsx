@@ -3,6 +3,8 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
+import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
+import { useAIAssist } from '@/hooks/useAIAssist'
 
 const FLOW_TYPES = [
   { value: 'push',         label: 'Push →' },
@@ -251,7 +253,7 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
           {showOpSteps && (
             <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div style={{ fontSize: 11, color: 'var(--text3)' }}>
-                Break this step into individual operator tasks. Each task is classified as VA, NNVA, or NVA — this feeds the Yamazumi chart and Standard Work Sheet.
+                Break this step into individual operator tasks. Classify each as VA/NNVA/NVA and Man/Machine/Walk — feeds the Yamazumi chart and Standard Work Combination Sheet.
               </div>
 
               {/* VA summary bar */}
@@ -276,6 +278,7 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
                   <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)' }}>
                     <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20 }}>{i+1}</span>
                     <span style={{ fontSize: 11, padding: '2px 6px', borderRadius: 4, background: `${vc}22`, color: vc, fontWeight: 700, fontSize: 9, minWidth: 36, textAlign: 'center' }}>{s.va_type.toUpperCase()}</span>
+                    <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', fontFamily: 'monospace', minWidth: 40, textAlign: 'center' }}>{(s.step_type||'man').toUpperCase()}</span>
                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                     <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{s.time}s</span>
                     <button type="button" onClick={() => removeOpStep(s.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14, padding: '0 2px' }}>×</button>
@@ -293,6 +296,16 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
                   <option value="va">VA</option>
                   <option value="nnva">NNVA</option>
                   <option value="nva">NVA</option>
+                </select>
+                <select
+                  value={newStep.step_type}
+                  onChange={e => setNewStep(p => ({ ...p, step_type: e.target.value }))}
+                  title="Man / Machine / Walk — for Standard Work Combination Sheet"
+                  style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 11, padding: '6px 4px' }}
+                >
+                  <option value="man">Man</option>
+                  <option value="machine">Machine</option>
+                  <option value="walk">Walk</option>
                 </select>
                 <input
                   className="input"
@@ -316,6 +329,20 @@ export function StepModal({ step, onSave, onClose }: StepModalProps) {
             </div>
           )}
         </div>
+
+        {(form.cycle_time || step?.toolData?.stopwatch?.mean) && (
+          <div>
+            <AIAssistButton
+              label="⚡ Diagnose this step"
+              loading={aiLoading}
+              onClick={() => aiAssist('step_diagnose', {
+                step: { ...step, ...form, name: form.name },
+                takt: step?.takt || undefined,
+              })}
+            />
+            <AIResultPanel result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear} title="STEP DIAGNOSIS" />
+          </div>
+        )}
 
         <div>
           <label className="label">Notes</label>
