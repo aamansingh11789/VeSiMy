@@ -18,6 +18,8 @@ interface Props {
 
 export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) {
   const { showToast } = useStore()
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+  const { result: aiCM, source: aiCMSource, loading: aiCMLoading, error: aiCMError, assist: aiCMAssist, clear: aiCMClear } = useAIAssist()
   const [problem, setProblem] = useState(data?.problem || '')
   const [whys, setWhys] = useState<string[]>(data?.whys || ['', '', '', '', ''])
   const [rootCause, setRootCause] = useState(data?.rootCause || '')

@@ -58,6 +58,7 @@ interface Props {
 
 export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: Props) {
   const { showToast } = useStore()
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 
   const [items, setItems] = useState<KaizenItem[]>(data?.items || [])
   const [editId, setEditId] = useState<string | null>(null)

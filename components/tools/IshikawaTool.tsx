@@ -24,6 +24,7 @@ interface Props {
 
 export default function IshikawaTool({ stepName, data, onSave, onClose }: Props) {
   const { showToast } = useStore()
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
   const [problem, setProblem] = useState(data?.problem || '')
   const [framework, setFramework] = useState(data?.framework || '6M Manufacturing')
   const [causes, setCauses] = useState<Record<string, string[]>>(data?.causes || {})

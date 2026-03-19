@@ -19,6 +19,8 @@ const VA_COLORS = {
 }
 
 export default function YamazumiTool({ steps, takt, onClose }: Props) {
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+
   const [showNva, setShowNva] = useState(true)
 
   // Build operator data from steps with op_steps

@@ -31,6 +31,8 @@ interface StepModalProps {
 export function StepModal({ step, onSave, onClose }: StepModalProps) {
   const isEdit = !!step?.id
 
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+
   const [form, setForm] = useState({
     name: '', description: '', department: '',
     operators: '1', cycle_time: '', wait_time: '',

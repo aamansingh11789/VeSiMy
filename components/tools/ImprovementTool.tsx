@@ -74,6 +74,7 @@ const STATUS_LBL = {
 
 export default function ImprovementTool({ stepId, stepName, data, onSave, onClose }: Props) {
   const { showToast } = useStore()
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 
   const initialGoals = data?.goals?.length ? data.goals : [BLANK_GOAL()]
 

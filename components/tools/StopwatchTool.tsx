@@ -40,6 +40,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
     data?.mean ? String(Math.round(data.mean / 10) / 100) : ''
   )
   const [saving, setSaving] = useState(false)
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 
   const startRef = useRef<number>(0)
   const rafRef = useRef<number>(0)

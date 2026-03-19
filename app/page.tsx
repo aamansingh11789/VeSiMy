@@ -813,7 +813,7 @@ function CompetitorTable() {
   ]
 
   return (
-    <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#0D0C0A', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+    <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#1A1714', borderTop: '1px solid rgba(255,255,255,0.09)', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
       <div style={{ maxWidth: 1060, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
@@ -1157,7 +1157,7 @@ export default function HomePage() {
       `}</style>
 
       {/* ── NAV ─────────────────────────────────────────────────────────────── */}
-      <nav className="nav-pad" style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 60, background: 'rgba(13,12,10,0.96)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      <nav className="nav-pad" style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 60, background: 'rgba(26,23,20,0.96)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <VLogoMark size={30} />
           <VeSiMyWordmark size={19} />
@@ -1178,7 +1178,7 @@ export default function HomePage() {
       </nav>
 
       {/* ── HERO + TOOLS (merged top section) ─────────────────────────────── */}
-      <section style={{ position: 'relative', background: '#0D0C0A', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      <section style={{ position: 'relative', background: '#1A1714', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
 
         {/* ── Constellation background — enhanced ── */}
         <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
@@ -1280,11 +1280,11 @@ export default function HomePage() {
                 VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps — so nothing gets lost between the whiteboard and the report. Built by lean practitioners, for lean practitioners.
               </p>
 
-              <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: '#FFFFFF', border: '1px solid #D8D5CE', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
+              <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
                 <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by lean practitioners — for lean practitioners</div>
-                  <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.45)', marginTop: 2, lineHeight: 1.5 }}>12+ years on real production floors at Tesla, Philips Electronics, LSG Sky Chefs</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3, fontWeight: 600 }}>Built by lean practitioners — for lean practitioners</div>
+                  <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.65)', marginTop: 2, lineHeight: 1.5 }}>12+ years on real production floors at Tesla, Philips Electronics, LSG Sky Chefs</div>
                 </div>
               </div>
 
@@ -1292,7 +1292,7 @@ export default function HomePage() {
                 <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
                   Start free — no card needed <ArrowRightIcon size={13} color="#0D0C0A" />
                 </Link>
-                <Link href="/auth/signup" style={{ padding: '12px 18px', background: '#fff', color: '#4E4B45', border: '1px solid #D8D5CE', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
+                <Link href="/auth/signup" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
                   See demo →
                 </Link>
               </div>
@@ -1307,7 +1307,7 @@ export default function HomePage() {
       </section>
 
       {/* ── STATS BAR ────────────────────────────────────────────────────────── */}
-      <div style={{ background: '#1C1A17', padding: '18px clamp(16px,4vw,48px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ background: '#231F1B', padding: '18px clamp(16px,4vw,48px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'center', gap: 'clamp(24px,6vw,80px)', flexWrap: 'wrap' }}>
           {[
             ['12+', 'Years manufacturing floor experience'],
@@ -1460,7 +1460,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
-      <div style={{ background: '#1C1A17', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
+      <div style={{ background: '#231F1B', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
         <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10 }}>
           Your next improvement project<br />shouldn't start in <span style={{ color: '#C49B2E' }}>Excel.</span>
         </h2>
@@ -1479,7 +1479,7 @@ export default function HomePage() {
       </div>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: 'clamp(20px,3vw,28px) clamp(16px,4vw,48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#0D0C0A' }}>
+      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: 'clamp(20px,3vw,28px) clamp(16px,4vw,48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#1A1714' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <VLogoMark size={28} />
           <VeSiMyWordmark size={16} />

@@ -18,6 +18,8 @@ const VA_LABELS: Record<string, string> = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }
 const VA_COLORS: Record<string, string> = { va: '#1DD1A1', nnva: '#D4A208', nva: '#FF6B6B' }
 
 export default function StandardWorkTool({ steps, takt, projectName, onClose }: Props) {
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+
   const [selectedStep, setSelectedStep] = useState<string>(steps[0]?.id || '')
 
   const stepsWithTasks = steps.filter(s => (s.op_steps || []).length > 0)
