@@ -20,7 +20,7 @@ export function useProject(projectId: string, initial: Project): UseProjectRetur
   const [project,   setProject]  = useState<Project>(initial)
   const [saving,    setSaving]   = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
-  const pendingRef  = useRef<NodeJS.Timeout | null>(null)
+  const pendingRef  = useRef<ReturnType<typeof setTimeout> | null>(null)
   const latestRef   = useRef(project)
 
   useEffect(() => { latestRef.current = project }, [project])

@@ -19,6 +19,7 @@ import { formatDistanceToNow } from 'date-fns'
 import type { Profile, Project } from '@/lib/store'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface Props {
   profile: Profile
@@ -487,6 +488,18 @@ function StatCard({
 
 // ── Main component ────────────────────────────────────────────────────────────
 export function DashboardClient({ profile, initialProjects }: Props) {
+  const { identify, track } = useAnalytics()
+
+  useEffect(() => {
+    if (profile?.id) {
+      identify(profile.id, {
+        email:    profile.email,
+        plan:     profile.plan_tier || 'free',
+        projects: profile.projects_count || 0,
+      })
+    }
+  }, [profile?.id])
+
   const router = useRouter()
   const [projects] = useState(initialProjects)
   const [creating, setCreating] = useState(false)

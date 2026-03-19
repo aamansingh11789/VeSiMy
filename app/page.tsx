@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 // @ts-nocheck
 // ── app/page.tsx — VeSiMy Homepage ───────────────────────────────────────────
 
@@ -1467,16 +1468,12 @@ export default function HomePage() {
                     ))}
                   </ul>
                   <Link
-                    href={isEnt ? '/enterprise' : isLife ? '/beta' : plan.price === 0 ? '/auth/signup' : `/auth/signup?plan=${key}`}
+                    href={isEnt ? '/enterprise' : plan.price === 0 ? '/auth/signup' : `/auth/signup?plan=${key}`}
                     style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '11px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', background: isPro || isLife ? '#C49B2E' : 'transparent', color: isPro || isLife ? '#fff' : '#4E4B45', border: isPro || isLife ? 'none' : '1px solid #D8D5CE' }}
                   >
                     {plan.cta}
                   </Link>
-                  {isLife && (
-                    <p style={{ textAlign: 'center', fontSize: 11, color: '#C49B2E', marginTop: 10 }}>
-                      Launch Week open → <Link href="/beta" style={{ color: '#C49B2E' }}>Claim Gold Standard</Link>
-                    </p>
-                  )}
+
                 </div>
               )
             })}

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ── middleware.ts ──────────────────────────────────────────────────────────
 // Auth middleware — protects all /dashboard and /project routes
 

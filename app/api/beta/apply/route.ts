@@ -1,6 +1,6 @@
 // @ts-nocheck
 // ── app/api/beta/apply/route.ts ───────────────────────────────────────────────
-// Launch Week: everyone is auto-approved during the launch window
+// Early Access: everyone is auto-approved during the launch window
 // Scoring kept for analytics / future use
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerSupabase }           from '@/lib/supabase-server'
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
   const { score, breakdown } = scoreApplication(data)
 
-  // ── Launch Week: everyone is auto-approved ────────────────────────────────
+  // ── Early Access: everyone is auto-approved ────────────────────────────────
   // Check if launch window is still open
   const admin = createAdminClient()
   const { data: win } = await admin.from('launch_window').select('*').single()

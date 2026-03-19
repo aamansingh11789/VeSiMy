@@ -20,7 +20,7 @@ const entries = [
       'Supe AI — convert any SOP to a VSM map in under 60 seconds',
       '14-day free trial — no credit card required',
       'Pro plan at $29/mo with cloud sync, unlimited projects, and full PDF export',
-      'Lifetime plan at $99 — available during Launch Week only',
+      'Lifetime plan at $99 — all Pro features forever, no monthly fee',
       'Enterprise pricing page with live quote builder',
       'Mobile-responsive across all tools',
       'PWA support — installable on iPhone and Android',

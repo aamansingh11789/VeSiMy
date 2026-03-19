@@ -50,7 +50,7 @@ export const PLANS = {
   lifetime: {
     name:        'Lifetime',
     price:       99,
-    description: 'All Pro features, forever. One payment — no subscriptions.',
+    description: 'All Pro features, forever. One payment — no subscriptions. Always available.',
     cta:         'Get lifetime access',
     features: [
       'All Pro features — including everything added in future',

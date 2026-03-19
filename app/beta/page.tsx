@@ -1,6 +1,6 @@
 // @ts-nocheck
 'use client'
-// ── app/beta/page.tsx — Launch Week Beta ─────────────────────────────────────
+// ── app/beta/page.tsx — Early Access Beta ─────────────────────────────────────
 
 import { useState, useEffect } from 'react'
 import Link                    from 'next/link'
@@ -98,24 +98,24 @@ export default function BetaPage() {
             {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{ fontSize:32 }}>👑</span>}
           </div>
           <h1 style={{ fontFamily:serif, fontSize:28, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
-            {isApproved ? "You're In. Welcome to Gold Standard." : 'Application Received'}
+            {isApproved ? "You're In. Welcome to Founding Member." : 'Application Received'}
           </h1>
           <p style={{ color:'var(--text3)', fontSize:15, lineHeight:1.7, marginBottom:28 }}>
             {isApproved
-              ? `Your Gold Standard beta access is confirmed. Log in to claim your 30-day Pro trial — and your permanent Gold Standard badge.`
+              ? `Your Founding Member access is confirmed. Log in to claim your 30-day Pro trial — and your permanent Founding Member badge.`
               : `Your application is under review. We'll reach out within 48 hours.`}
           </p>
           <div style={{ background:'#FFFFFF', border:`1px solid rgba(212,162,8,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
             <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>WHAT HAPPENS NEXT</p>
             {(isApproved ? [
-              '✅ Head to the app — your Gold Standard badge is waiting',
+              '✅ Head to the app — your Founding Member badge is waiting',
               '⏱  30-day Pro trial starts when you first log in',
               '💳 Upgrade to $99 Lifetime before trial ends to lock it in',
               '🏢 Your company gets a 33% enterprise discount code via email',
-              '👑 Gold Standard badge is permanent — it never goes away',
+              '👑 Founding Member badge is permanent — it never goes away',
             ] : [
               '📧 We\'ll email you within 48 hours',
-              '👑 Gold Standard badge is yours if approved',
+              '👑 Founding Member badge is yours if approved',
             ]).map((line, i) => (
               <div key={i} style={{ fontSize:13, color:'#B0B0C8', marginBottom:8 }}>{line}</div>
             ))}
@@ -155,16 +155,16 @@ export default function BetaPage() {
         <div style={{ textAlign:'center', marginBottom:56 }}>
           <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,162,8,0.08)', border:'1px solid rgba(212,162,8,0.25)', borderRadius:100, padding:'6px 18px', marginBottom:24 }}>
             <span style={{ fontSize:14 }}>👑</span>
-            <span style={{ fontSize:11, color:GOLD, fontWeight:700, letterSpacing:2, fontFamily:'monospace' }}>GOLD STANDARD BETA — LAUNCH WEEK</span>
+            <span style={{ fontSize:11, color:GOLD, fontWeight:700, letterSpacing:2, fontFamily:'monospace' }}>FOUNDING MEMBER ACCESS</span>
           </div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(32px,5vw,58px)', fontWeight:700, lineHeight:1.15, marginBottom:20 }}>
             For one week only —<br />
             <span style={{ background:'linear-gradient(135deg,#F5D060,#D4A208,#9A7200)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
-              Gold Standard
+              Founding Member
             </span>{' '}is open to everyone.
           </h1>
           <p style={{ fontSize:18, color:'var(--text3)', maxWidth:560, margin:'0 auto 36px', lineHeight:1.7 }}>
-            VeSiMy just launched. For launch week, every practitioner who signs up gets the Gold Standard badge — permanently. When the window closes, it's gone.
+            VeSiMy just launched. For early access, every practitioner who signs up gets the Founding Member badge — permanently. This is a limited credential for early practitioners.
           </p>
 
           {/* Countdown */}
@@ -194,7 +194,7 @@ export default function BetaPage() {
           <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap' }}>
             <button onClick={() => setPhase('form')} style={{ padding:'14px 36px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
               background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', border:'none', display:'flex', alignItems:'center', gap:8 }}>
-              Join Gold Standard <ArrowRightIcon size={16} />
+              Join Founding Member <ArrowRightIcon size={16} />
             </button>
             <a href="#perks" style={{ padding:'14px 24px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
               background:'#FFFFFF', color:'var(--text3)', border:'1px solid rgba(40,40,92,0.5)', textDecoration:'none' }}>
@@ -210,8 +210,8 @@ export default function BetaPage() {
             {[
               { icon:'⏱', title:'30-Day Pro Trial',       desc:'Full Pro access from day one — all 6 CI tools, PDF export, Supe AI, unlimited steps.' },
               { icon:'♾️', title:'$99 Lifetime Upgrade',   desc:'Pay once after the trial. 99 projects, no monthly fees, ever. Beta price only.' },
-              { icon:'👑', title:'Permanent Gold Badge',   desc:'Sidebar, settings, and every report you export carries the Gold Standard mark. Permanent.' },
-              { icon:'🏢', title:'33% Enterprise Discount',desc:"Your company gets a perpetual 33% off any enterprise plan — as long as you're a Gold Standard holder." },
+              { icon:'👑', title:'Permanent Gold Badge',   desc:'Sidebar, settings, and every report you export carries the Founding Member mark. Permanent.' },
+              { icon:'🏢', title:'33% Enterprise Discount',desc:"Your company gets a perpetual 33% off any enterprise plan — as long as you're a Founding Member holder." },
               { icon:'🗺️', title:'Shape the Roadmap',      desc:'Direct line to submit feature requests. Founding testers get priority consideration on every release.' },
               { icon:'📞', title:'Founding Tester Access', desc:'Direct channel to the team. Bug reports, feedback, product questions — you have our ear.' },
             ].map(item => (
@@ -230,9 +230,9 @@ export default function BetaPage() {
         <div style={{ background:'rgba(212,162,8,0.04)', border:'1px solid rgba(212,162,8,0.15)', borderRadius:14, padding:'24px 28px', marginBottom:48, display:'flex', gap:20, alignItems:'flex-start' }}>
           <span style={{ fontSize:28, flexShrink:0 }}>⏳</span>
           <div>
-            <div style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Why launch week only?</div>
+            <div style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Why early access only?</div>
             <p style={{ fontSize:13, color:'var(--text3)', lineHeight:1.7, margin:0 }}>
-              The Gold Standard badge is a founding-tester credential. After launch week, it goes away — new users join on standard pricing. 
+              The Founding Member badge is a founding-tester credential. After early access, it goes away — new users join on standard pricing. 
               Everyone who gets in during the window keeps their badge, their 33% enterprise discount, and their lifetime upgrade option permanently. 
               This is the only way to get it.
             </p>
@@ -243,7 +243,7 @@ export default function BetaPage() {
         <div style={{ textAlign:'center' }}>
           <button onClick={() => setPhase('form')} style={{ padding:'15px 44px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
             background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', border:'none', display:'inline-flex', alignItems:'center', gap:8 }}>
-            Join Gold Standard <ArrowRightIcon size={16} />
+            Join Founding Member <ArrowRightIcon size={16} />
           </button>
           <p style={{ fontSize:12, color:'var(--sl-400)', marginTop:12 }}>Takes 3 minutes. No credit card required.</p>
         </div>
@@ -268,9 +268,9 @@ export default function BetaPage() {
 
       <div style={{ maxWidth:680, margin:'0 auto', padding:'48px 24px 80px' }}>
         <div style={{ textAlign:'center', marginBottom:40 }}>
-          <div style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>GOLD STANDARD — LAUNCH WEEK</div>
-          <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,3.5vw,38px)', fontWeight:700, marginBottom:8 }}>Claim Your Gold Standard Access</h1>
-          <p style={{ fontSize:14, color:'var(--text3)' }}>Takes about 3 minutes. Everyone is approved during launch week.</p>
+          <div style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>GOLD STANDARD — EARLY ACCESS</div>
+          <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,3.5vw,38px)', fontWeight:700, marginBottom:8 }}>Claim Your Founding Member Access</h1>
+          <p style={{ fontSize:14, color:'var(--text3)' }}>Takes about 3 minutes. Everyone is approved during early access.</p>
         </div>
 
         <div style={{ display:'flex', flexDirection:'column', gap:22 }}>
@@ -383,7 +383,7 @@ export default function BetaPage() {
 
           <button onClick={submit} disabled={submitting} style={{ padding:'15px 32px', borderRadius:10, fontSize:16, fontWeight:700, cursor:submitting?'wait':'pointer', width:'100%', border:'none',
             background:'linear-gradient(135deg,#C49510,#D4A208)', color:'#2A1F00', opacity:submitting?0.8:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
-            {submitting ? '⟳ Submitting…' : 'Claim Gold Standard Access'} {!submitting && <ArrowRightIcon size={16} />}
+            {submitting ? '⟳ Submitting…' : 'Claim Founding Member Access'} {!submitting && <ArrowRightIcon size={16} />}
           </button>
           <p style={{ fontSize:12, color:'var(--sl-400)', textAlign:'center' }}>No spam. No cold calls. Cancel the trial anytime.</p>
         </div>

@@ -52,7 +52,7 @@ const PLAN_META: Record<
     icon: CrownIcon,
     border: 'rgba(212,162,8,0.42)',
     bg: 'rgba(212,162,8,0.06)',
-    badge: '👑 LAUNCH WEEK',
+    badge: '👑 BEST VALUE',
     highlight: false,
     gold: true,
     accent: '#D4A208',
@@ -501,23 +501,6 @@ function PlanCard({
               : plan.cta}
       </button>
 
-      {isLifetime && (
-        <p
-          style={{
-            fontSize: 11,
-            color: 'var(--text2)',
-            textAlign: 'center',
-            marginBottom: 16,
-            marginTop: -10,
-            lineHeight: 1.5,
-          }}
-        >
-          Available during Launch Week only ·{' '}
-          <Link href="/beta" style={{ color: '#D4A208', textDecoration: 'none', fontWeight: 700 }}>
-            Join Launch Week →
-          </Link>
-        </p>
-      )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
         {plan.features.map((f: string, i: number) => (
@@ -700,63 +683,6 @@ export default function PricingPage() {
       </div>
 
       <div style={{ maxWidth: 920, margin: '0 auto', padding: '0 24px 52px' }}>
-        <div
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 44%, rgba(248,247,245,0.97))',
-            border: '1px solid rgba(212,162,8,0.18)',
-            borderRadius: 20,
-            padding: '26px 30px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 20,
-            flexWrap: 'wrap',
-            boxShadow: '0 12px 34px rgba(212,162,8,0.05)',
-          }}
-        >
-          <div style={{ maxWidth: 620 }}>
-            <div
-              style={{
-                fontSize: 11,
-                color: '#D4A208',
-                letterSpacing: 2,
-                fontFamily: 'monospace',
-                marginBottom: 8,
-                textTransform: 'uppercase',
-                fontWeight: 700,
-              }}
-            >
-              Gold Standard Beta
-            </div>
-
-            <p style={{ fontSize: 17, fontWeight: 700, color: 'var(--text)', margin: '0 0 6px' }}>
-              Want the $99 Lifetime plan?
-            </p>
-
-            <p style={{ fontSize: 13, color: 'var(--text2)', margin: 0, lineHeight: 1.65 }}>
-              Join during Launch Week — open to all practitioners. Get 30 days of Pro, then unlock
-              Lifetime for a one-time $99 and keep your Gold Standard badge permanently.
-            </p>
-          </div>
-
-          <Link
-            href="/beta"
-            style={{
-              textDecoration: 'none',
-              padding: '12px 24px',
-              borderRadius: 12,
-              fontWeight: 700,
-              fontSize: 14,
-              whiteSpace: 'nowrap',
-              background: 'linear-gradient(135deg,#C49510,#D4A208)',
-              color: 'var(--bg)',
-              boxShadow: '0 8px 18px rgba(212,162,8,0.16)',
-            }}
-          >
-            Apply for Beta →
-          </Link>
-        </div>
       </div>
 
       <div
@@ -817,8 +743,8 @@ export default function PricingPage() {
 
         {[
           [
-            'What is the Gold Standard beta?',
-            'During Launch Week, every practitioner who signs up gets Gold Standard status — a permanent badge on their account. You get 30 days of Pro access free, then a one-time $99 unlocks Lifetime access — 99 projects, forever. After launch week, this offer is gone.',
+            'Is the Lifetime plan still available?',
+            'Yes — the Lifetime plan is $99 once and gives you all Pro features forever, with no monthly fee. There is no expiry or deadline on this offer.',
           ],
           [
             'Can I switch plans later?',
@@ -834,7 +760,7 @@ export default function PricingPage() {
           ],
           [
             'How does enterprise pricing work?',
-            "Enterprise is quote-based — $15/user/month with volume discounts at 50, 200, and 500+ users. Add-ons like API, SSO, and SLA stack on top. Gold Standard beta users' companies get 33% off.",
+            "Enterprise is quote-based — $15/user/month with volume discounts at 50, 200, and 500+ users. Add-ons like API, SSO, and SLA stack on top.",
           ],
           [
             'Do you offer refunds?',

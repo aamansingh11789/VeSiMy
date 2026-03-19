@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { VesimyLogo } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
-import { ChevronRightIcon } from '@/components/ui/Icons'
+import { ChevronRightIcon, CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'

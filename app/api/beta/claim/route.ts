@@ -1,6 +1,6 @@
 // @ts-nocheck
 // ── app/api/beta/claim/route.ts ───────────────────────────────────────────────
-// Launch Week Beta: open to everyone while the window is active
+// Early Access Beta: open to everyone while the window is active
 // No seat limits — uses admin client to bypass RLS on launch_window
 import { NextResponse }         from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
@@ -54,5 +54,5 @@ export async function POST() {
     }).eq('id', user.id),
   ])
 
-  return NextResponse.json({ success: true, expiresAt, windowLabel: win?.label || 'Launch Week' })
+  return NextResponse.json({ success: true, expiresAt, windowLabel: win?.label || 'Early Access' })
 }

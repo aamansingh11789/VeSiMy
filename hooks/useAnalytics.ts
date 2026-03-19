@@ -1,13 +1,10 @@
 // @ts-nocheck
 'use client'
 // ── hooks/useAnalytics.ts ─────────────────────────────────────────────────────
-// Safe analytics hook — no-ops gracefully if PostHog is not available.
+// Safe analytics hook — uses window.posthog when available, no-ops otherwise.
+// Does NOT import posthog-js directly to avoid crashes if it's not installed.
 
 import { useCallback } from 'react'
-
-// Try to use posthog-js/react hook — fall back to window.posthog
-let usePostHog: any = () => null
-try { usePostHog = require('posthog-js/react').usePostHog } catch {}
 
 export type VeSiMyEvent =
   | 'page_viewed' | 'cta_clicked' | 'signup_started' | 'signup_completed'
@@ -17,34 +14,23 @@ export type VeSiMyEvent =
   | 'journal_note_added' | 'upgrade_clicked' | 'pricing_viewed'
   | 'checkout_started' | 'subscription_created' | 'demo_viewed'
 
-function getPostHog() {
-  try { return usePostHog() } catch { return null }
+function safePostHog() {
+  if (typeof window === 'undefined') return null
+  return (window as any).posthog || null
 }
 
 export function useAnalytics() {
-  let ph: any = null
-  try { ph = usePostHog() } catch {}
-
   const track = useCallback((event: VeSiMyEvent, properties?: Record<string, any>) => {
-    try {
-      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
-      if (client) client.capture(event, properties)
-    } catch {}
-  }, [ph])
+    try { safePostHog()?.capture(event, properties) } catch {}
+  }, [])
 
   const identify = useCallback((userId: string, traits?: Record<string, any>) => {
-    try {
-      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
-      if (client) client.identify(userId, traits)
-    } catch {}
-  }, [ph])
+    try { safePostHog()?.identify(userId, traits) } catch {}
+  }, [])
 
   const reset = useCallback(() => {
-    try {
-      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
-      if (client) client.reset()
-    } catch {}
-  }, [ph])
+    try { safePostHog()?.reset() } catch {}
+  }, [])
 
   return { track, identify, reset }
 }

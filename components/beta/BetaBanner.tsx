@@ -2,7 +2,7 @@
 'use client'
 // ── components/beta/BetaBanner.tsx ───────────────────────────────────────────
 // Shows different states:
-//   A. Non-beta user — invite to join during launch week
+//   A. Non-beta user — invite to join during early access
 //   B. Active beta   — countdown + lifetime upgrade CTA
 //   C. Beta expired  — upgrade to lifetime or go free
 
@@ -47,11 +47,11 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         <div style={{ fontSize:28 }}>⏰</div>
         <div style={{ flex:1, minWidth:200 }}>
           <div style={{ fontSize:14, fontWeight:700, color:'#FF6B6B', marginBottom:3 }}>
-            Your Gold Standard beta trial has ended
+            Your Founding Member beta trial has ended
           </div>
           <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
             Upgrade to <strong style={{ color:'#D4A208' }}>Lifetime access</strong> for a one-time $99 —
-            99 projects, no monthly fees. Your Gold Standard badge stays permanently.
+            99 projects, no monthly fees. Your Founding Member badge stays permanently.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'9px 18px', borderRadius:8, fontWeight:700, fontSize:13, cursor:'pointer',
@@ -74,7 +74,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         <GoldCrown size={36} />
         <div style={{ flex:1, minWidth:200 }}>
           <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:3 }}>
-            <span style={{ fontSize:13, fontWeight:700, color:'var(--text)' }}>Gold Standard Beta</span>
+            <span style={{ fontSize:13, fontWeight:700, color:'var(--text)' }}>Founding Member Beta</span>
             <span style={{ fontSize:10, fontWeight:700, background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', padding:'2px 8px', borderRadius:100 }}>
               GOLD STANDARD
             </span>
@@ -95,7 +95,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
   // ── Lifetime confirmed — silent ───────────────────────────────────────────────
   if (isLifetime) return null
 
-  // ── A. Non-beta — show launch week CTA if window is open ────────────────────
+  // ── A. Non-beta — show early access CTA if window is open ────────────────────
   if (dismissed || windowOpen === null) return null
   if (!windowOpen) return null
 
@@ -108,16 +108,16 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
         <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>
-          👑 Gold Standard Beta — Launch Week Open
+          👑 Founding Member Beta — Early Access Open
         </div>
         <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
-          Join during launch week and get your permanent Gold Standard badge. 30-day Pro trial,
+          Join during early access and get your permanent Founding Member badge. 30-day Pro trial,
           then $99 Lifetime. Your company gets a <strong style={{ color:'#D4A208' }}>33% enterprise discount</strong> forever.
         </p>
       </div>
       <Link href="/beta" style={{ textDecoration:'none', padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12,
         background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', whiteSpace:'nowrap' }}>
-        Join Launch Week →
+        Join Early Access →
       </Link>
     </div>
   )
