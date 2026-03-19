@@ -1,8 +1,13 @@
 // @ts-nocheck
 // ── app/layout.tsx ─────────────────────────────────────────────────────────
 import type { Metadata, Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { PostHogProvider } from '@/components/analytics/PostHogProvider'
+import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { InstallPrompt } from '@/components/ui/InstallPrompt'
+import { PostHogPageView } from '@/components/analytics/PostHogPageView'
 import { ServiceWorkerRegistration } from '@/components/ui/ServiceWorkerRegistration'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import './globals.css'
@@ -82,7 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
       </head>
       <body>
+        <PostHogProvider>
         <ThemeProvider>
+        <Suspense><PostHogPageView /></Suspense>
         {children}
 
         {/* PWA components — invisible, run in background */}
@@ -105,6 +112,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         </ThemeProvider>
+        </PostHogProvider>
+        {/* Vercel Analytics — traffic + Web Vitals */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

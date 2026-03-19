@@ -14,6 +14,7 @@ import {
 import { StepModal } from '@/components/tools/StepModal'
 import { BranchModal } from '@/components/tools/BranchModal'
 import { ToolModal } from '@/components/tools/ToolModal'
+import { useAnalytics } from '@/hooks/useAnalytics'
 import { KanbanBoard } from '@/components/tools/KanbanBoard'
 import YamazumiTool from '@/components/tools/YamazumiTool'
 import StandardWorkTool from '@/components/tools/StandardWorkTool'
@@ -558,7 +559,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   setShowStepModal(true)
                 }}
                 onDelete={handleDeleteStep}
-                onTool={(tool, stepId) => setActiveTool({ tool, stepId })}
+                onTool={(tool, stepId) => setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id })}
                 onDragStart={setDragIdx}
                 onDrop={handleDrop}
                 onImportSOP={() => setShowSOPUpload(true)}
@@ -682,7 +683,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   setShowStepModal(true)
                 }}
                 onDeleteStep={handleDeleteStep}
-                onTool={(stepId, tool) => setActiveTool({ tool, stepId })}
+                onTool={(stepId, tool) => setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id })}
               />
             </div>
           )}

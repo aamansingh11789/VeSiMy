@@ -733,7 +733,7 @@ function InlineToolShowcase() {
       />
 
       {/* Mini 3D stack */}
-      <div className="inline-stack-wrap" style={{ height: 320, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+      <div className="inline-stack-wrap" style={{ height: 'min(320px, 55vw)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
         <div style={{ perspective: '900px', perspectiveOrigin: '68% 46%', flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div className="inline-3d" style={{ position: 'relative', width: 260, height: 280, transformStyle: 'preserve-3d', transform: 'rotateY(20deg) rotateX(6deg) rotateZ(1.5deg)' }}>
             {SHOWCASE_TOOLS.map((t, i) => {
@@ -1119,14 +1119,15 @@ export default function HomePage() {
 
         /* ── Unified mobile breakpoints ── */
         @media(max-width:900px){
-          .hero-tools-grid{grid-template-columns:1fr!important;gap:32px!important;}
+          .hero-tools-grid{grid-template-columns:1fr!important;gap:20px!important;}
           .hero-tools-left{padding-top:0!important;text-align:center;}
           .hero-tools-left .reveal{text-align:center;}
           .hero-tools-left h1{text-align:center;}
-          .hero-tools-left p{margin-left:auto!important;margin-right:auto!important;}
+          .hero-tools-left p{margin-left:auto!important;margin-right:auto!important;max-width:480px!important;}
           .hero-cta-row{justify-content:center!important;}
-          .hero-mission{margin-left:auto!important;margin-right:auto!important;}
+          .hero-mission{margin-left:auto!important;margin-right:auto!important;text-align:left;}
           .hero-industry-loop{justify-content:center!important;}
+          .stats-bar-grid{gap:20px 32px!important;}
         }
         @media(max-width:768px){
           .feat-grid{grid-template-columns:1fr!important;}
@@ -1139,20 +1140,28 @@ export default function HomePage() {
           .showcase-grid{grid-template-columns:1fr!important;gap:0!important;}
           .showcase-stack-col{position:relative!important;top:auto!important;height:auto!important;padding:0 16px 16px!important;}
           .showcase-detail-col{padding:0 16px!important;}
-          .showcase-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;width:260px!important;height:320px!important;}
-          .showcase-popup{max-height:360px!important;}
+          .showcase-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;width:240px!important;height:300px!important;}
+          .showcase-popup{max-height:320px!important;}
           .showcase-swipe-hint{display:flex!important;}
-          .comp-table-wrap{overflow-x:auto!important;}
-          .hero-tools-grid{gap:24px!important;}
+          .comp-table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch;}
+          .hero-tools-grid{gap:20px!important;}
+          .footer-links{justify-content:center!important;}
+          .footer-wrap{justify-content:center!important;text-align:center;}
+          .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:14px!important;}
+          .pricing-card-lifetime{display:none!important;}
         }
         @media(max-width:500px){
-          .inline-popup{max-height:280px!important;}
-          .inline-stack-wrap{height:260px!important;}
-          .inline-3d{width:200px!important;height:240px!important;}
+          .inline-popup{max-height:260px!important;}
+          .inline-stack-wrap{height:240px!important;}
+          .inline-3d{width:180px!important;height:220px!important;}
           .inline-swipe{display:flex!important;}
           .hero-pill{font-size:9px!important;padding:3px 8px!important;}
+          .nav-sign-in{display:none!important;}
+          .hero-cta-row a{font-size:13px!important;padding:11px 18px!important;}
+          .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:12px!important;}
+          .feat-grid>div{padding:20px 16px!important;}
         }
-        .inline-swipe{display:none;} /* handled in new component directly */
+        .inline-swipe{display:none;}
         .showcase-swipe-hint{display:none;}
       `}</style>
 
@@ -1168,7 +1177,7 @@ export default function HomePage() {
           ))}
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <Link href="/auth/login" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 8, fontSize: 13, color: 'rgba(248,247,245,0.6)', textDecoration: 'none' }}>
+          <Link href="/auth/login" className="nav-sign-in" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 8, fontSize: 13, color: 'rgba(248,247,245,0.6)', textDecoration: 'none' }}>
             Sign in
           </Link>
           <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#C49B2E', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#0D0C0A', textDecoration: 'none' }}>
@@ -1256,7 +1265,7 @@ export default function HomePage() {
           ))}
         </svg>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: 'clamp(40px,5vw,72px) clamp(16px,4vw,48px)' }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: 'clamp(28px,5vw,72px) clamp(16px,4vw,48px)' }}>
           <div className="hero-tools-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 'clamp(24px,4vw,64px)', alignItems: 'start' }}>
 
             {/* ── LEFT: Branding + copy ── */}
@@ -1280,7 +1289,7 @@ export default function HomePage() {
                 VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps — so nothing gets lost between the whiteboard and the report. Built by lean practitioners, for lean practitioners.
               </p>
 
-              <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
+              <div className="reveal r3 hero-mission" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
                 <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by lean practitioners — for lean practitioners</div>
@@ -1308,16 +1317,16 @@ export default function HomePage() {
 
       {/* ── STATS BAR ────────────────────────────────────────────────────────── */}
       <div style={{ background: '#231F1B', padding: '18px clamp(16px,4vw,48px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'center', gap: 'clamp(24px,6vw,80px)', flexWrap: 'wrap' }}>
+        <div className="stats-bar-grid" style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
           {[
-            ['12+', 'Years manufacturing floor experience'],
-            ['ISO 22468', 'Compliant VSM — the lean standard'],
-            ['9', 'CI tools, all in one connected system'],
-            ['Free', 'Unlimited projects — forever'],
+            ['12+', 'Years manufacturing experience'],
+            ['ISO 22468', 'Compliant VSM standard'],
+            ['9', 'CI tools, all connected'],
+            ['Free', 'Unlimited projects forever'],
           ].map(([v,l]) => (
-            <div key={l} style={{ textAlign: 'center' }}>
+            <div key={l} style={{ textAlign: 'center', padding: '4px 8px' }}>
               <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#C49B2E' }}>{v}</div>
-              <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.35)', marginTop: 2, letterSpacing: '0.3px' }}>{l}</div>
+              <div style={{ fontSize: 10, color: 'rgba(248,247,245,0.35)', marginTop: 2, letterSpacing: '0.2px', lineHeight: 1.4 }}>{l}</div>
             </div>
           ))}
         </div>
@@ -1353,11 +1362,11 @@ export default function HomePage() {
               ['Kaizen log that nobody updates', 'Actions get lost between meetings'],
               ['A report that takes a day to compile', 'And is outdated by the time anyone reads it'],
             ].map(([pain, detail]) => (
-              <div key={pain} style={{ display: 'flex', gap: 12, marginBottom: 14, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 14, color: '#C0402A', flexShrink: 0, marginTop: 2 }}>✗</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#242220' }}>{pain}</div>
-                  <div style={{ fontSize: 12, color: '#6B6760', marginTop: 2 }}>{detail}</div>
+              <div key={pain} style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 13, color: '#C0402A', flexShrink: 0, marginTop: 3, lineHeight: 1 }}>✗</span>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#242220', lineHeight: 1.35 }}>{pain}</div>
+                  <div style={{ fontSize: 12, color: '#6B6760', marginTop: 2, lineHeight: 1.5 }}>{detail}</div>
                 </div>
               </div>
             ))}
@@ -1408,13 +1417,13 @@ export default function HomePage() {
             <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto' }}>Unlimited projects free forever. Pro adds Supe AI, process simulation, and the A3 export — with a free trial on your first upgrade.</p>
           </div>
 
-          <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
+          <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(240px,100%),1fr))', gap: 16 }}>
             {(Object.entries(PLANS) as any[]).map(([key, plan]) => {
               const isPro = key === 'pro'
               const isLife = key === 'lifetime'
               const isEnt = key === 'enterprise'
               return (
-                <div key={key} style={{ background: '#FFFFFF', border: isPro || isLife ? '1.5px solid rgba(196,155,46,0.4)' : '0.5px solid #D8D5CE', borderRadius: 16, padding: '26px 22px', position: 'relative' }}>
+                <div key={key} className={isLife ? 'pricing-card-lifetime' : ''} style={{ background: '#FFFFFF', border: isPro || isLife ? '1.5px solid rgba(196,155,46,0.4)' : '0.5px solid #D8D5CE', borderRadius: 16, padding: '26px 22px', position: 'relative' }}>
                   {(isPro || isLife) && (
                     <div style={{ display: 'inline-flex', background: '#C49B2E', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
                       {isLife ? '👑 BEST VALUE' : 'MOST POPULAR'}
@@ -1479,12 +1488,12 @@ export default function HomePage() {
       </div>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: 'clamp(20px,3vw,28px) clamp(16px,4vw,48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#1A1714' }}>
+      <footer className="footer-wrap" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: 'clamp(20px,3vw,28px) clamp(16px,4vw,48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#1A1714' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <VLogoMark size={28} />
           <VeSiMyWordmark size={16} />
         </div>
-        <div style={{ display: 'flex', gap: 22, fontSize: 12, color: 'rgba(248,247,245,0.4)', flexWrap: 'wrap' }}>
+        <div className="footer-links" style={{ display: 'flex', gap: 22, fontSize: 12, color: 'rgba(248,247,245,0.4)', flexWrap: 'wrap' }}>
           {[['About', '/about'], ['Blog', '/blog'], ['Changelog', '/changelog'], ['Pricing', '/pricing'], ['Privacy', '/privacy'], ['Terms', '/terms'], ['Contact', 'mailto:founder@vesimy.com']].map(([l, h]) => (
             <Link key={l} href={h} style={{ color: 'inherit', textDecoration: 'none' }}
               onMouseEnter={e => (e.currentTarget.style.color = '#C49B2E')}

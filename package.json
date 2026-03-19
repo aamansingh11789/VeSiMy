@@ -1,7 +1,7 @@
 {
   "name": "vesimy",
   "version": "1.0.0",
-  "description": "Vesimy — Continuous Improvement Platform. CI · VSM · Kaizen for every industry.",
+  "description": "Vesimy \u2014 Continuous Improvement Platform. CI \u00b7 VSM \u00b7 Kaizen for every industry.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -29,7 +29,11 @@
     "zustand": "^4.5.4",
     "react-hot-toast": "^2.4.1",
     "date-fns": "^3.6.0",
-    "nanoid": "^5.0.7"
+    "nanoid": "^5.0.7",
+    "@vercel/analytics": "^1.3.1",
+    "@vercel/speed-insights": "^1.0.12",
+    "posthog-js": "^1.182.0",
+    "posthog-node": "^4.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.11",
