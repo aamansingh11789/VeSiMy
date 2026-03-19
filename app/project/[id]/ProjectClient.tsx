@@ -1003,6 +1003,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
         )
       })()}
 
+      <ProcessJournal
+        projectId={project.id}
+        open={showJournal}
+        onClose={() => setShowJournal(false)}
+      />
+
       {showBranchModal && (
         <BranchModal
           mainSteps={steps.filter(s => s.is_main_flow !== false)}
