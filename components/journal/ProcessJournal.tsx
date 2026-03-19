@@ -25,6 +25,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
   const [note, setNote] = useState('')
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const supabase = createClient()
 
@@ -39,37 +40,59 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
 
   async function loadEntries() {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('process_journal')
-      .select('*')
-      .eq('project_id', projectId)
-      .order('created_at', { ascending: true })
-      .limit(100)
+    setError(null)
+    try {
+      const { data, error: dbError } = await supabase
+        .from('process_journal')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: true })
+        .limit(100)
 
-    if (!error && data) setEntries(data)
+      if (dbError) {
+        // Table may not exist yet — show graceful empty state
+        console.warn('[Journal] DB error:', dbError.message)
+        setError('journal_unavailable')
+      } else if (data) {
+        setEntries(data)
+      }
+    } catch (e) {
+      setError('journal_unavailable')
+    }
     setLoading(false)
   }
 
   async function addNote() {
     if (!note.trim()) return
     setSaving(true)
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { setSaving(false); return }
 
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setSaving(false); return }
-
-    const { data, error } = await supabase
-      .from('process_journal')
-      .insert({
-        project_id: projectId,
-        user_id: user.id,
-        type: 'note',
+      const newEntry = {
+        id: Date.now().toString(),
+        type: 'note' as const,
         content: note.trim(),
-      })
-      .select()
-      .single()
+        created_at: new Date().toISOString(),
+        project_id: projectId,
+      }
 
-    if (!error && data) {
-      setEntries(prev => [...prev, data])
+      const { data, error: dbError } = await supabase
+        .from('process_journal')
+        .insert({ project_id: projectId, user_id: user.id, type: 'note', content: note.trim() })
+        .select()
+        .single()
+
+      if (dbError) {
+        // Fallback: save locally in state so user sees their note
+        setEntries(prev => [...prev, newEntry])
+        setNote('')
+        setError('journal_local')
+      } else if (data) {
+        setEntries(prev => [...prev, data])
+        setNote('')
+      }
+    } catch (e) {
       setNote('')
     }
     setSaving(false)
@@ -148,7 +171,17 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
             </div>
           )}
 
-          {!loading && entries.length === 0 && (
+          {error === 'journal_unavailable' && (
+            <div style={{ textAlign: 'center', padding: '32px 24px', background: 'rgba(212,162,8,0.06)', borderRadius: 12, border: '1px solid rgba(212,162,8,0.2)' }}>
+              <div style={{ fontSize: 24, marginBottom: 10 }}>📓</div>
+              <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>Journal table needs to be set up</div>
+              <p style={{ fontSize: 12, color: 'var(--sl-400)', lineHeight: 1.7 }}>
+                Run migration <strong>007_process_journal.sql</strong> in your Supabase dashboard to activate the journal. Notes you add below will be saved locally until then.
+              </p>
+            </div>
+          )}
+
+          {!loading && error !== 'journal_unavailable' && entries.length === 0 && (
             <div style={{
               textAlign: 'center', padding: '48px 24px',
               background: 'transparent', borderRadius: 12,

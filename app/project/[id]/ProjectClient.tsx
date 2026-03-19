@@ -1375,6 +1375,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
 function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Branch[]; project: Project }) {
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
+  const [showPDCA, setShowPDCA] = useState(false)
 
   const takt = project.takt_time ? Number(project.takt_time) : 0
   const totalCT = steps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
@@ -1483,7 +1484,23 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
         </div>
       )}
 
-      <PDCATool steps={steps} project={project} onClose={() => {}} />
+      {/* PDCA Tool — opens as proper modal with real close handler */}
+      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+        <button
+          type="button"
+          onClick={() => setShowPDCA(true)}
+          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
+        >
+          🔄 Open PDCA / A3 Report Tool
+        </button>
+      </div>
+      {showPDCA && (
+        <PDCATool
+          steps={steps}
+          project={project}
+          onClose={() => setShowPDCA(false)}
+        />
+      )}
     </div>
   )
 }
