@@ -559,7 +559,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   setShowStepModal(true)
                 }}
                 onDelete={handleDeleteStep}
-                onTool={(tool, stepId) => setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id })}
+                onTool={(tool, stepId) => { setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id }) }}
                 onDragStart={setDragIdx}
                 onDrop={handleDrop}
                 onImportSOP={() => setShowSOPUpload(true)}
@@ -683,7 +683,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   setShowStepModal(true)
                 }}
                 onDeleteStep={handleDeleteStep}
-                onTool={(stepId, tool) => setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id })}
+                onTool={(stepId, tool) => { setActiveTool({ tool, stepId }); track('tool_opened', { tool, projectId: project.id }) }}
               />
             </div>
           )}
