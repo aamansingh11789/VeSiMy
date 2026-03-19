@@ -1283,7 +1283,7 @@ export default function HomePage() {
               <div className="reveal r3" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
                 <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3, fontWeight: 600 }}>Built by lean practitioners — for lean practitioners</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by lean practitioners — for lean practitioners</div>
                   <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.65)', marginTop: 2, lineHeight: 1.5 }}>12+ years on real production floors at Tesla, Philips Electronics, LSG Sky Chefs</div>
                 </div>
               </div>
