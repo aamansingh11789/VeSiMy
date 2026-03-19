@@ -282,7 +282,7 @@ const SHOWCASE_TOOLS=[
     name:'5 Why Analysis',short:'5WHY',color:_V,
     tag:'Free',tagBg:'#F0EEFE',tagTxt:_V,
     headline:'Stop fixing symptoms',
-    body:'Ask why five times and reach the real root cause. Assign a countermeasure, owner and due date — stays attached to the step it came from.',
+    body:'Ask why five times and reach the real root cause. Assign a countermeasure, owner, and due date. Stays attached to the step it came from.',
     cardContent:`<div style="padding:8px 10px">
       <div style="padding:5px 7px;background:#FEF9EE;border-radius:4px;margin-bottom:7px;font-size:8px;color:#5A3A00;font-weight:600">Problem: Weld defect rate 3.2% at Station 4</div>
       <div style="display:flex;gap:5px;margin-bottom:4px;align-items:flex-start"><div style="width:13px;height:13px;border-radius:3px;background:rgba(100,38,160,.1);border:1px solid rgba(100,38,160,.22);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6426A0;flex-shrink:0">1</div><div style="font-size:8px;color:#4E4B45;line-height:1.4">Weld joint gaps inconsistent</div></div>
@@ -317,7 +317,7 @@ const SHOWCASE_TOOLS=[
     name:'Fishbone Diagram',short:'FISH',color:_G,
     tag:'Free',tagBg:'#FEF9EE',tagTxt:'#854F0B',
     headline:'Map all causes before you fix anything',
-    body:'6M Manufacturing, 8P Service, 4S or Custom. Add causes across every category. Full picture first — then connect to 5 Why.',
+    body:'6M Manufacturing, 8P Service, 4S or Custom. Add causes across every category. Build the full picture first, then connect to 5 Why.',
     cardContent:`<div style="padding:8px 10px">
       <div style="text-align:center;padding:4px 8px;background:#FEF2F0;border-radius:4px;font-size:7px;color:#C0402A;font-weight:600;margin-bottom:7px">Effect: High defect rate — Weld Station 4</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
@@ -481,7 +481,7 @@ const SHOWCASE_TOOLS=[
     name:'Gap Analysis',short:'GAP',color:'#6426A0',
     tag:'AI',tagBg:'#F0EEFE',tagTxt:'#6426A0',
     headline:'Find every gap between now and world-class',
-    body:'Automatically analyzes your entire value stream against lean best-practice targets. Surfaces critical bottlenecks, PCE gaps, waste density, and specific actionable fixes — sorted by severity.',
+    body:'Automatically analyzes your entire value stream against lean best-practice targets. Surfaces critical bottlenecks, PCE gaps, waste density, and specific actionable fixes. Sorted by severity.',
     cardContent:`<div style="padding:8px 10px;display:flex;flex-direction:column;gap:5px">
       <div style="font-size:8px;color:#8E8A82;margin-bottom:2px;font-family:monospace">3 critical · 2 warning · 1 info</div>
       <div style="background:#FEF2F0;border:1px solid rgba(192,64,42,.25);border-radius:6px;padding:7px 8px">
@@ -536,7 +536,7 @@ const SHOWCASE_TOOLS=[
     name:'A3 Report',short:'A3',color:'#2A9E82',
     tag:'Export',tagBg:'#E6F7F3',tagTxt:'#0F6E56',
     headline:'One report. Every metric. Print-ready.',
-    body:'Generates a complete A3 improvement report from your VSM data — process overview, bottleneck analysis, waste register, root cause summary, Kaizen tracker, and before/after results. Opens in a new tab ready to print or PDF.',
+    body:'Generates a complete A3 improvement report from your VSM data: process overview, bottleneck analysis, waste register, root cause summary, Kaizen tracker, and before/after results. Opens in a new tab ready to print or PDF.',
     cardContent:`<div style="padding:8px 10px">
       <div style="background:#fff;border:1px solid #D8D5CE;border-radius:6px;overflow:hidden;font-family:sans-serif">
         <div style="background:#242220;padding:6px 10px;display:flex;align-items:center;justify-content:space-between">
@@ -796,7 +796,7 @@ function CompetitorTable() {
             Why CI teams are replacing their current setup
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.5)', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
-            Your current CI workflow probably lives across 4–6 disconnected tools. VeSiMy replaces all of them — and adds AI that reads your real data.
+            Your current CI workflow probably lives across 4 to 6 disconnected tools. VeSiMy replaces all of them and adds AI that reads your real data.
           </p>
         </div>
 
@@ -832,7 +832,7 @@ function CompetitorTable() {
 
         <div style={{ textAlign: 'center', marginTop: 28 }}>
           <Link href="/auth/signup" style={{ padding: '12px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            Switch to VeSiMy — free to start <ArrowRightIcon size={13} color="#fff" />
+            Switch to VeSiMy. Free to start. <ArrowRightIcon size={13} color="#fff" />
           </Link>
         </div>
       </div>
@@ -1279,7 +1279,7 @@ export default function HomePage() {
               </h1>
 
               <p className="reveal r3" style={{ fontSize: 14, color: 'rgba(248,247,245,0.62)', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
-                Change a cycle time — the map updates. Log a kaizen — it appears on the VSM. Close a 5 Why — it stays on the step where the problem was. No copy-paste. No version hell. Nothing to install.
+                Change a cycle time. The map updates. Log a kaizen. It appears on the VSM. Close a 5 Why. It stays on the step where the problem was. No copy-paste. No version conflicts. Nothing to install.
               </p>
 
               <div className="reveal r3 hero-mission" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
@@ -1292,7 +1292,7 @@ export default function HomePage() {
 
               <div className="reveal r4 hero-cta-row" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
                 <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-                  Start free — no card needed <ArrowRightIcon size={13} color="#0D0C0A" />
+                  Start free. No card needed. <ArrowRightIcon size={13} color="#0D0C0A" />
                 </Link>
                 <Link href="/demo" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
                   Explore sample project →
@@ -1331,8 +1331,8 @@ export default function HomePage() {
       <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: '#C8C5BC', borderTop: '0.5px solid #C8C5BC' }}>
         {[
           { icon: '📊', bg: '#EDF9F5', title: 'Everything connected to the same steps.', body: 'Change a cycle time in your time study and it updates the VSM. Log a kaizen and it appears on the map. Write a 5 Why and it stays on the step. No files to sync, no reports to rebuild.' },
-          { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED — on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant throughout.' },
-          { icon: '🆓', bg: '#EEEDFE', title: 'Actually free. Not free-then-$29.', body: 'Unlimited projects. All 9 tools. No trial period. No project cap. The free plan exists to be useful, not to expire. Upgrade to Pro when you want Supe AI and process simulation — not before.' },
+          { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED. All on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant.' },
+          { icon: '🆓', bg: '#EEEDFE', title: 'Actually free. Not free-then-$29.', body: 'Unlimited projects. All 9 tools. No trial period. No project cap. The free plan exists to be useful, not to expire. Upgrade to Pro when you want Supe AI and process simulation. Not before.' },
         ].map(f => (
           <div key={f.title} style={{ background: '#EDE9E0', padding: '28px 24px' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
@@ -1352,7 +1352,7 @@ export default function HomePage() {
             </h2>
             {[
               ['A VSM on the whiteboard', 'Updated manually every time anything changes'],
-              ['Cycle times in a spreadsheet', 'Disconnected from the map — already out of date'],
+              ['Cycle times in a spreadsheet', 'Disconnected from the map. Already out of date.'],
               ['Root cause in a Word doc', 'No connection to the step where the problem lives'],
               ['Kaizen log that nobody updates', 'Actions get lost between meetings'],
               ['A report that takes a day to compile', 'And is outdated by the time anyone reads it'],
@@ -1372,7 +1372,7 @@ export default function HomePage() {
               When you run a time study, that cycle time <em>is</em> the cycle time on the VSM. When you open a Kaizen, it appears on the map. When you complete a 5 Why, the root cause stays attached to the step where the problem lives.
             </p>
             <p style={{ fontSize: 13, color: '#4E4B45', lineHeight: 1.75, marginBottom: 20 }}>
-              Nothing needs to be copied. Nothing gets out of sync. And when you need to know what to fix next, Supe reads your actual process data and tells you — specifically.
+              Nothing needs to be copied. Nothing gets out of sync. And when you need to know what to fix next, Supe reads your actual process data and tells you exactly what to address.
             </p>
             <div style={{ background: 'rgba(196,155,46,0.08)', border: '1px solid rgba(196,155,46,0.25)', borderRadius: 10, padding: '12px 16px' }}>
               <div style={{ fontSize: 11, color: '#8E8A82', fontFamily: 'monospace', marginBottom: 6 }}>⚡ SUPE — AI Gap Analysis</div>
@@ -1467,10 +1467,10 @@ export default function HomePage() {
         <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free forever. Unlimited projects. No credit card. No trial clock.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
-            Start free — no card needed
+            Start free. No card needed.
           </Link>
           <Link href="/demo" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
-            Explore sample project — no account needed →
+            Explore sample project. No account needed →
           </Link>
         </div>
         <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', marginTop: 16 }}>
