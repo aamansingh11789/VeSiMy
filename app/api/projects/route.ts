@@ -34,9 +34,9 @@ export async function POST(request: NextRequest) {
     .single()
 
   const isActive = profile && ['pro','lifetime','enterprise','trialing'].includes(profile.plan_tier) || (profile?.plan_tier === 'trial' && profile?.is_beta)
-  const overLimit = profile && profile.projects_count >= (profile.projects_limit || 3)
+  const overLimit = false // Free tier is now unlimited — no project gate
   if (overLimit && !['pro','lifetime','enterprise'].includes(profile?.plan_tier)) {
-    return NextResponse.json({ error: 'Project limit reached. Upgrade to Pro for unlimited projects.', code: 'LIMIT_REACHED' }, { status: 403 })
+    // // Project limit removed — free tier is now unlimited
   }
 
   const body = await request.json()

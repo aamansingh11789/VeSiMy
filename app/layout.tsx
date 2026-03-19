@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card:        'summary_large_image',
     title:       'VeSiMy — AI Operations Intelligence Platform',
-    description: 'The AI platform that monitors your manufacturing processes and tells you what to fix. 14-day free trial, no credit card required.',
+    description: 'VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps in one place. Unlimited projects, free forever. Built for lean and CI practitioners.',
     images:      ['/api/og'],
   },
 

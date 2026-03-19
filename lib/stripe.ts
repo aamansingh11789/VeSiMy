@@ -20,7 +20,7 @@ export const PLANS = {
     description: '14 days to explore every tool. No credit card required.',
     features: [
       '14-day full access trial',
-      'Up to 3 projects',
+      'Unlimited projects',
       'All CI tools — VSM, Kaizen, Fishbone, 5 Why, Waste ID, Time Study',
       'PDCA, Yamazumi, Standard Work',
       'VSM map view',

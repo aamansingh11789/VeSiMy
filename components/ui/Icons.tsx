@@ -239,6 +239,15 @@ export const RefreshIcon = (p: IconProps) => (
   </I>
 )
 
+export const SmedIcon = (p: IconProps) => (
+  <svg width={p.size||16} height={p.size||16} viewBox="0 0 24 24" fill="none"
+    stroke={p.color||'currentColor'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={p.style}>
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+    <path d="M8 12h-1M17 12h-1" strokeWidth="2.5" strokeLinecap="round"/>
+  </svg>
+)
+
 export const ExternalLinkIcon = (p: IconProps) => (
   <I {...def(p.size, p.color, p.stroke)} style={p.style} className={p.className}>
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h6" />

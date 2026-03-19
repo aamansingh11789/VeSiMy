@@ -137,7 +137,7 @@ export function SettingsClient({ profile, user }: Props) {
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
               <CrownIcon size={16} color='#D4A208' />
               <span style={{ fontSize:15, fontWeight:700, color:'#D4A208' }}>Upgrade to Pro</span>
-              <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day free trial</span>
+              <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day trial when upgrading</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:20 }}>
               {PLANS.pro.features.map((f,i) => (
@@ -183,7 +183,7 @@ export function SettingsClient({ profile, user }: Props) {
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
             {[
-              ['Projects', `${profile?.projects_count || 0} / ${isPaid || isBeta ? '∞' : profile?.projects_limit || 3}`, '#D4A208'],
+              ['Projects', `${profile?.projects_count || 0} · unlimited`, '#1DD1A1'],
               ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || 'var(--text3)'],
               ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (

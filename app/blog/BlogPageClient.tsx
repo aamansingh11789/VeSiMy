@@ -20,7 +20,7 @@ const posts = [
     tag: 'Tool',
     tagColor: '#1DD1A1',
     title: "The Best Free VSM Tool in 2026 (That's Actually Free)",
-    excerpt: "Most VSM software costs $200–$500 per month and requires a 2-day training course. VeSiMy is 14-day free trial, works on your phone, and takes 5 minutes to learn. Here's an honest comparison.",
+    excerpt: "Most VSM software costs $200–$500 per month and requires a 2-day training course. VeSiMy is Free to start — no credit card., works on your phone, and takes 5 minutes to learn. Here's an honest comparison.",
     readTime: '5 min read',
     date: 'March 12, 2026',
   },

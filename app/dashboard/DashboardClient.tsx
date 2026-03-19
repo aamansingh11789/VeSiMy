@@ -496,7 +496,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   const [seedingRef, setSeedingRef] = useState(false)
 
   const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
-  const atLimit = !isPro && profile.projects_count >= (profile.projects_limit || 3)
+  const atLimit = false // Free tier unlimited
 
   async function createProject() {
     if (!form.name.trim()) {
@@ -762,7 +762,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
           <StatCard
             label="Slots Used"
-            value={`${profile.projects_count}/${profile.projects_limit}`}
+            value={`${profile.projects_count} projects`}
             icon={ZapIcon}
             color="#F4A623"
             hint="Project capacity"

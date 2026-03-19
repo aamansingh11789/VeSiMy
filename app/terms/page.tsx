@@ -40,7 +40,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="4. Subscriptions and Billing">
-          <p>Paid plans are billed monthly or annually depending on your selection. All subscriptions include a 14-day free trial. You will not be charged until the trial period ends. Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
+          <p>Paid plans are billed monthly or annually depending on your selection. The Free plan is free forever with no payment required. Paid plans (Pro and above) include a 14-day free trial — you will not be charged until the trial period ends. Paid subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
         </Section>
 
         <Section title="5. Your Data">

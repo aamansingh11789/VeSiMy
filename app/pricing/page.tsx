@@ -667,7 +667,7 @@ export default function PricingPage() {
               priced for real operators.
             </>
           }
-          subtitle="Start free trial. Upgrade only when Vesimy starts delivering measurable value to your team."
+          subtitle="The Free plan gives you unlimited projects, all 9 CI tools, forever — no credit card needed. Upgrade to Pro for Supe AI, process simulation, and the A3 export."
         />
 
         <div style={{ marginTop: 34, textAlign: 'center' }}>
@@ -825,8 +825,8 @@ export default function PricingPage() {
             'Yes — upgrade or downgrade anytime from your account settings. Changes apply immediately.',
           ],
           [
-            'What happens after my free trial?',
-            "After 14 days you'll be prompted to choose a plan. No automatic charges. We send a reminder 3 days before.",
+            'Is the Free plan really free forever?',
+            "Yes. The Free plan gives you unlimited projects with all 9 CI tools — forever, no credit card needed. When you upgrade to Pro, you get a 14-day free trial before your card is charged, with a reminder 3 days before.",
           ],
           [
             'Is my process data secure?',

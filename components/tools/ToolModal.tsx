@@ -7,6 +7,7 @@ import IshikawaTool from './IshikawaTool'
 import WasteTool from './WasteTool'
 import KaizenTool from './KaizenTool'
 import ImprovementTool from './ImprovementTool'
+import SMEDTool from './SMEDTool'
 
 export interface ToolModalProps {
   tool: string
@@ -26,6 +27,7 @@ const TOOL_COMPONENTS: Record<string, any> = {
   waste: WasteTool,
   kaizen: KaizenTool,
   improvement: ImprovementTool,
+  smed: SMEDTool,
 }
 
 export function ToolModal({ tool, step, onSave, onClose }: ToolModalProps) {

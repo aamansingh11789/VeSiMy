@@ -105,10 +105,10 @@ function SignupForm() {
           {plan && planKey !== 'free' ? (
             <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,162,8,0.08)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--gold)', fontWeight:600 }}>✦ {plan.name} — ${plan.price}/mo</span>
-              <span style={{ fontSize:12, color:'var(--text3)' }}>· 14-day free trial</span>
+              <span style={{ fontSize:12, color:'var(--text3)' }}>· Free forever · Unlimited projects</span>
             </div>
           ) : (
-            <p style={{ color:'var(--text3)', fontSize:14 }}>Free plan · 3 projects · All 6 CI tools</p>
+            <p style={{ color:'var(--text3)', fontSize:14 }}>Free plan · Unlimited projects · All 9 CI tools</p>
           )}
         </div>
 

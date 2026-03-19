@@ -49,7 +49,7 @@ export async function POST() {
       beta_tier:           'gold_standard',
       beta_expires_at:     expiresAt,
       plan_tier:           'pro',
-      projects_limit:      3,  // trial: 3 projects
+      projects_limit:      999999,  // unlimited
       subscription_status: 'beta_trial',
     }).eq('id', user.id),
   ])

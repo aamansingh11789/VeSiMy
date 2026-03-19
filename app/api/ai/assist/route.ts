@@ -365,6 +365,57 @@ Use specific numbers from the data. Write in professional language suitable for 
         return NextResponse.json({ result: summary, source: 'rule' })
       }
 
+      // ── SMED: changeover analysis suggestions ───────────────────────────────
+      case 'smed_analysis': {
+        const { stepName, steps, totalTime, internalTime, convertibleTime, wasteTime, smedPotential, smedReductionPct } = data
+
+        if (aiAvailable() && steps && steps.length > 0) {
+          const stepList = (steps || []).map((s: any) =>
+            `${s.seq}. [${s.type.toUpperCase()}] ${s.name || 'unnamed'} — ${s.time}s${s.type==='internal'&&s.convertible?' (convertible)':''}`
+          ).join('\n')
+
+          const prompt = `You are a lean manufacturing expert specialising in SMED (Single-Minute Exchange of Die).
+
+Process step: ${stepName}
+Total changeover time: ${totalTime}s
+Internal (machine stopped): ${internalTime}s
+Convertible to external: ${convertibleTime}s
+Waste/NVA to eliminate: ${wasteTime}s
+SMED potential minimum: ${smedPotential}s (${smedReductionPct}% reduction)
+
+Changeover steps:
+${stepList}
+
+Give 3-4 specific, actionable recommendations to achieve the SMED target:
+1. Which internal steps can realistically be converted to external (and how)
+2. What waste/NVA to eliminate first
+3. Any quick-win tooling or fixture changes
+4. Suggested sequence for the improved changeover
+
+Be specific to the actual steps listed. Reference SMED stages (Shingo methodology). Keep it practical.`
+
+          const aiResult = await callAI(prompt, 350)
+          if (aiResult) return NextResponse.json({ result: aiResult, source: 'ai' })
+        }
+
+        // Rule-based fallback
+        const convertiblePct = totalTime > 0 ? Math.round(convertibleTime / totalTime * 100) : 0
+        const wastePct = totalTime > 0 ? Math.round(wasteTime / totalTime * 100) : 0
+        const ruleText = [
+          convertibleTime > 0
+            ? `Stage 2 → Stage 3: ${convertibleTime}s (${convertiblePct}%) of internal work is marked as convertible to external. Pre-stage these tasks before the machine stops — use a dedicated changeover cart and preparation checklist.`
+            : `No convertible internal steps identified yet. Review each internal step and ask: "Could this be prepared while the machine is still running?"`,
+          wasteTime > 0
+            ? `Waste elimination: ${wasteTime}s (${wastePct}%) is classified as Waste/NVA. Target these for complete elimination before addressing internal→external conversion.`
+            : '',
+          `Quick wins: Standardise tool storage at the point of use. Eliminate searches and trips. Consider colour-coding tools to their stations.`,
+          `After converting identified steps: verify the new sequence with 3 consecutive timed changeovers to confirm the target is achieved and sustainable.`,
+        ].filter(Boolean).join('\n\n')
+
+        return NextResponse.json({ result: ruleText, source: 'rule' })
+      }
+
+
       default:
         return NextResponse.json({ error: `Unknown assist type: ${type}` }, { status: 400 })
     }

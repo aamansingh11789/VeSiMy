@@ -102,7 +102,7 @@ export default function PDCAPost() {
               Run your first PDCA cycle free
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA — whichever format your audience requires. 14-day free trial.
+              VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA — whichever format your audience requires. Free to start — no credit card.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#6B24A8,#8C44CC)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start your PDCA project free →

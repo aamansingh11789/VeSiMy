@@ -31,6 +31,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
   const [selected, setSelected] = useState<string[]>(data?.selected || [])
   const [notes, setNotes] = useState<Record<string, string>>(data?.notes || {})
   const [saving, setSaving] = useState(false)
+  const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 
   const selectedLabels = useMemo(
     () => selected.map(id => WASTES.find(w => w.id === id)?.label).filter(Boolean),
@@ -186,6 +187,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
           </div>
         )}
       </div>
+      <AIResultPanel result={aiResult as string} source={aiSource} error={aiError} onClear={aiClear} />
     </Modal>
   )
 }

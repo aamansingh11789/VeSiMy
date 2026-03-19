@@ -32,7 +32,7 @@ import { Modal } from '@/components/ui/Modal'
 import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
 import { useAIAssist } from '@/hooks/useAIAssist'
 import {
-  StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon,
+  StopwatchIcon, FishboneIcon, FiveWhyIcon, WasteIcon, KaizenIcon, ImprovementIcon, SmedIcon,
   PlusIcon, EditIcon, TrashIcon, SOPIcon, SettingsIcon, ZapIcon,
   DragHandleIcon, ReportIcon, BranchIcon, KanbanIcon, SimulationIcon,
   LiveFloorIcon, VSMIcon, PDCAIcon, RoadmapIcon,
@@ -58,6 +58,7 @@ const CI_TOOLS = [
   { id: 'waste', Icon: WasteIcon, label: 'Waste ID' },
   { id: 'kaizen', Icon: KaizenIcon, label: 'Kaizen' },
   { id: 'improvement', Icon: ImprovementIcon, label: 'Improve' },
+  { id: 'smed', Icon: SmedIcon, label: 'SMED' },
 ]
 
 const fmtS = (s: number) => {
@@ -1482,7 +1483,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
         </div>
       )}
 
-      <PDCATool steps={steps} project={project} takt={takt} />
+      <PDCATool steps={steps} project={project} onClose={() => {}} />
     </div>
   )
 }
