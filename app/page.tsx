@@ -774,6 +774,7 @@ function InlineToolShowcase() {
         {/* Dots + prev/next */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={() => setActive(t => Math.max(t-1, 0))} disabled={active===0}
+            className="inline-nav-btn"
             style={{ padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', color: active===0 ? 'rgba(255,255,255,0.2)' : '#F8F7F5', fontSize: 13, cursor: active===0 ? 'default' : 'pointer', fontWeight: 600, transition: 'all .15s' }}>‹ Prev</button>
           <div style={{ display: 'flex', gap: 5, flex: 1, justifyContent: 'center' }}>
             {SHOWCASE_TOOLS.map((t,i) => (
@@ -781,6 +782,7 @@ function InlineToolShowcase() {
             ))}
           </div>
           <button onClick={() => setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
+            className="inline-nav-btn"
             style={{ padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', color: active===SHOWCASE_TOOLS.length-1 ? 'rgba(255,255,255,0.2)' : '#F8F7F5', fontSize: 13, cursor: active===SHOWCASE_TOOLS.length-1 ? 'default' : 'pointer', fontWeight: 600, transition: 'all .15s' }}>Next ›</button>
         </div>
       </div>
@@ -1079,10 +1081,18 @@ export default function HomePage() {
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
         @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        .reveal { opacity:0; animation: fadeUp 0.7s ease forwards; }
+        /* Reveal — text is ALWAYS visible; animation just adds the fade-in */
+        .reveal { opacity:1; animation: fadeUp 0.7s ease both; }
         .r1 { animation-delay:0.05s } .r2 { animation-delay:0.18s }
         .r3 { animation-delay:0.30s } .r4 { animation-delay:0.44s }
         .r5 { animation-delay:0.56s }
+        /* Prefers-reduced-motion: skip animation entirely, keep text visible */
+        @media(prefers-reduced-motion:reduce){
+          .reveal,.logo-mark-anim,.wordmark-anim,.tagline-anim{
+            animation:none!important;opacity:1!important;transform:none!important;
+            letter-spacing:inherit!important;
+          }
+        }
         @keyframes logoFloat {
           0%,100% { transform: translateY(0px) rotate(-1deg); }
           50%      { transform: translateY(-7px) rotate(1deg); }
@@ -1128,6 +1138,9 @@ export default function HomePage() {
           .hero-mission{margin-left:auto!important;margin-right:auto!important;text-align:left;}
           .hero-industry-loop{justify-content:center!important;}
           .stats-bar-grid{gap:20px 32px!important;}
+          /* Flatten 3D rotation at tablet — prevents horizontal overflow */
+          .inline-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;}
+          .inline-showcase-outer{display:flex;justify-content:center;overflow:hidden;}
         }
         @media(max-width:768px){
           .feat-grid{grid-template-columns:1fr!important;}
@@ -1149,17 +1162,24 @@ export default function HomePage() {
           .footer-wrap{justify-content:center!important;text-align:center;}
           .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:14px!important;}
           .pricing-card-lifetime{display:none!important;}
+          /* Showcase: no 3D on phone, centered, clipped */
+          .inline-3d{transform:rotateY(0deg) rotateX(2deg) rotateZ(0deg)!important;width:min(240px,78vw)!important;height:min(260px,68vw)!important;}
+          .inline-stack-wrap{height:min(280px,72vw)!important;}
+          .inline-showcase-outer{display:flex!important;justify-content:center!important;overflow:hidden!important;width:100%!important;}
+          /* Prev/Next buttons fit smaller screens */
+          .inline-nav-btn{padding:5px 10px!important;font-size:12px!important;}
         }
         @media(max-width:500px){
-          .inline-popup{max-height:260px!important;}
-          .inline-stack-wrap{height:240px!important;}
-          .inline-3d{width:180px!important;height:220px!important;}
+          .inline-popup{max-height:220px!important;}
+          .inline-stack-wrap{height:min(240px,64vw)!important;}
+          .inline-3d{width:min(180px,70vw)!important;height:min(200px,55vw)!important;transform:rotateY(0deg) rotateX(1deg) rotateZ(0deg)!important;}
           .inline-swipe{display:flex!important;}
           .hero-pill{font-size:9px!important;padding:3px 8px!important;}
           .nav-sign-in{display:none!important;}
           .hero-cta-row a{font-size:13px!important;padding:11px 18px!important;}
-          .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:12px!important;}
-          .feat-grid>div{padding:20px 16px!important;}
+          .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:10px!important;}
+          .feat-grid>div{padding:18px 14px!important;}
+          .inline-nav-btn{padding:4px 8px!important;font-size:11px!important;}
         }
         .inline-swipe{display:none;}
         .showcase-swipe-hint{display:none;}
@@ -1309,7 +1329,9 @@ export default function HomePage() {
             </div>
 
             {/* ── RIGHT: Inline tool showcase ── */}
-            <InlineToolShowcase />
+            <div className="inline-showcase-outer" style={{ width: '100%', overflow: 'hidden' }}>
+              <InlineToolShowcase />
+            </div>
 
           </div>
         </div>
