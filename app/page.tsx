@@ -1222,7 +1222,7 @@ export default function HomePage() {
             [700,540,780,640],[780,640,820,480],[1060,540,1140,640],[1140,640,1200,560],
             [400,160,480,180],[900,280,960,140],[650,580,700,540],[1200,200,1100,80],
           ].map(([x1,y1,x2,y2],i) => (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+            <line key={i} x1={x1 as number} y1={y1 as number} x2={x2 as number} y2={y2 as number}
               stroke="#C49B2E" strokeWidth={i < 10 ? "0.7" : "0.45"}
               opacity={i < 10 ? 0.16 : 0.09}/>
           ))}
@@ -1238,11 +1238,11 @@ export default function HomePage() {
             [1140,460,false],[400,160,false],[900,280,false],[650,580,false],[1200,200,false],
             [1380,400,false],[780,640,false],[1060,640,false],
           ].map(([cx,cy,bright],i) => (
-            <circle key={i} cx={cx} cy={cy}
-              r={bright ? 2.8 : 1.6}
+            <circle key={i} cx={cx as number} cy={cy as number}
+              r={(bright as boolean) ? 2.8 : 1.6}
               fill="#C49B2E"
-              className={bright && i%3===0 ? 'cn-pulse' : bright && i%3===1 ? 'cn-pulse2' : bright ? 'cn-pulse3' : ''}
-              opacity={bright ? 0.28 : 0.13}/>
+              className={(bright as boolean) && i%3===0 ? 'cn-pulse' : (bright as boolean) && i%3===1 ? 'cn-pulse2' : (bright as boolean) ? 'cn-pulse3' : ''}
+              opacity={(bright as boolean) ? 0.28 : 0.13}/>
           ))}
 
           {/* VeSiMy V watermarks — scattered, more visible */}
@@ -1252,7 +1252,7 @@ export default function HomePage() {
           ].map(([x,y,op],i) => (
             <path key={i}
               d={`M${x} ${y} H${+x+16} L${+x+26} ${+y+46} L${+x+36} ${+y+28} L${+x+46} ${+y+46} L${+x+56} ${y} H${+x+72} L${+x+46} ${+y+58} L${+x+26} ${+y+34} L${+x+6} ${+y+58} Z`}
-              fill="#C49B2E" opacity={op}/>
+              fill="#C49B2E" opacity={op as number}/>
           ))}
         </svg>
 
