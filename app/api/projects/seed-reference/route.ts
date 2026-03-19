@@ -30,7 +30,7 @@ export async function POST(_request: NextRequest) {
       .insert({
         user_id:     user.id,
         name:        '⭐ Reference — Automotive Seat Assembly',
-        description: 'Fully-built reference project — every tool populated. 6 main steps, 2 branches, time studies, fishbone, 5 Why, waste ID, kaizen events, improvement goals. Use this as your guide.',
+        description: 'Fully-built reference project. Every tool populated. 6 main steps, 2 branches, time studies, fishbone, 5 Why, waste ID, kaizen events, improvement goals. Use this as your guide.',
         industry:    'Automotive',
         customer:    'OEM Assembly Plant',
         state:       'current',
@@ -140,7 +140,7 @@ export async function POST(_request: NextRequest) {
 
     // ── 4. Fishbone (bottleneck step) ─────────────────────────────────────────
     await tool(s3.id, 'ishikawa', {
-      problem: 'Foam & Fabric Install CT 145s exceeds takt 120s — 3 seats/shift shortfall',
+      problem: 'Foam & Fabric Install CT 145s exceeds takt 120s (3 seats/shift shortfall)',
       framework: '6m',
       causes: {
         Machine:     ['No powered assist for fabric pull', 'Jig does not hold fabric taut automatically'],

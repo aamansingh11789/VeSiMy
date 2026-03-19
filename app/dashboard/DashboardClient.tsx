@@ -500,6 +500,16 @@ export function DashboardClient({ profile, initialProjects }: Props) {
     }
   }, [profile?.id])
 
+  // Auto-load reference project when ?ref=1 (from "Explore sample project" CTA)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('ref') === '1') {
+      // Small delay so the dashboard renders first
+      setTimeout(() => seedReferenceProject(), 800)
+    }
+  }, [])
+
   const router = useRouter()
   const [projects] = useState(initialProjects)
   const [creating, setCreating] = useState(false)

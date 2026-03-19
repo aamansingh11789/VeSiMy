@@ -70,7 +70,19 @@ export function OnboardingClient({ profile }: Props) {
         industry:  industry,
       }).eq('id', profile.id)
 
-      // 2. Create first project
+      // 2a. If sample project selected — use seed-reference API
+      if (template === 'sample') {
+        const refRes = await fetch('/api/projects/seed-reference', { method: 'POST' })
+        const refData = await refRes.json()
+        setDone(true)
+        setTimeout(() => {
+          if (refData?.id) router.push(`/project/${refData.id}`)
+          else router.push('/dashboard')
+        }, 2000)
+        return
+      }
+
+      // 2b. Create user's own first project
       const res = await fetch('/api/projects', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -95,6 +107,9 @@ export function OnboardingClient({ profile }: Props) {
           })
         ))
       }
+
+      // 4. Always seed reference project in the background for new users
+      fetch('/api/projects/seed-reference', { method: 'POST' }).catch(() => {})
 
       setDone(true)
       setTimeout(() => {
@@ -235,9 +250,9 @@ export function OnboardingClient({ profile }: Props) {
                 <button onClick={() => setStep(1)} style={{ padding:'13px 20px', borderRadius:10, fontSize:14, background:'rgba(40,40,92,0.3)', border:'1px solid rgba(40,40,92,0.6)', color:'var(--text3)', cursor:'pointer' }}>
                   ← Back
                 </button>
-                <button onClick={() => setStep(3)} disabled={!projName.trim() || !template} style={{ flex:1, padding:'13px 32px', borderRadius:10, fontSize:15, fontWeight:700, cursor:!projName.trim()||!template?'not-allowed':'pointer', transition:'all 0.2s', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
-                  background:!projName.trim()||!template ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#C49510,#D4A208)',
-                  color:     !projName.trim()||!template ? 'var(--sl-400)'            : 'var(--bg)',
+                <button onClick={() => setStep(3)} disabled={(!projName.trim() && template !== 'sample') || !template} style={{ flex:1, padding:'13px 32px', borderRadius:10, fontSize:15, fontWeight:700, cursor:((!projName.trim() && template !== 'sample') || !template)?'not-allowed':'pointer', transition:'all 0.2s', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+                  background:(!projName.trim() && template !== 'sample') || !template ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#C49510,#D4A208)',
+                  color:     (!projName.trim() && template !== 'sample') || !template ? 'var(--sl-400)'            : 'var(--bg)',
                 }}>
                   Continue <ArrowRightIcon size={16} />
                 </button>

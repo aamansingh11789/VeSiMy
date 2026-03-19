@@ -1294,7 +1294,7 @@ export default function HomePage() {
                 <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
                   Start free. No card needed. <ArrowRightIcon size={13} color="#0D0C0A" />
                 </Link>
-                <Link href="/demo" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
+                <Link href="/auth/signup?ref=1" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
                   Explore sample project →
                 </Link>
               </div>
@@ -1469,8 +1469,8 @@ export default function HomePage() {
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
             Start free. No card needed.
           </Link>
-          <Link href="/demo" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
-            Explore sample project. No account needed →
+          <Link href="/auth/signup?ref=1" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
+            Explore a fully-built sample project →
           </Link>
         </div>
         <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', marginTop: 16 }}>
