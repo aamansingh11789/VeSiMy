@@ -82,6 +82,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="VeSiMy" />
+        {/* Structured data for Google rich results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "VeSiMy",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "description": "AI-powered continuous improvement platform for lean and manufacturing teams. VSM, Kaizen, 5 Why, SMED, Fishbone, PDCA — all connected.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "description": "Free plan with unlimited projects"
+            },
+            "url": "https://www.vesimy.com",
+            "author": {
+              "@type": "Organization",
+              "name": "VeSiMy",
+              "url": "https://www.vesimy.com"
+            }
+          })}}
+        />
         {/* MS Tile for Windows pinned sites */}
         <meta name="msapplication-TileColor" content="var(--bg)" />
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
