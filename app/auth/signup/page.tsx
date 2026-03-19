@@ -5,9 +5,8 @@ import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
-import posthog from 'posthog-js'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/stripe'
+import { PLANS } from '@/lib/plans'
 
 function SignupForm() {
   const router       = useRouter()
@@ -24,7 +23,7 @@ function SignupForm() {
       const res  = await fetch('/api/stripe/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ plan: key }) })
       const data = await res.json()
       if (data.url) window.location.href = data.url
-      else posthog.capture('signup_completed', { plan: planKey || 'free' })
+      else try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'free' }) } catch {}
       router.push('/dashboard')
     } catch { router.push('/dashboard') }
   }

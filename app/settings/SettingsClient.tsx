@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
-import posthog from 'posthog-js'
 import { PLANS } from '@/lib/plans'
 import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/components/ui/Icons'
 
@@ -213,7 +212,7 @@ export function SettingsClient({ profile, user }: Props) {
             <button onClick={async () => {
               if (!confirm('Are you sure? This will sign you out of all devices.')) return
               await createClient().auth.signOut()
-      posthog.reset() // clear PostHog identity on logout
+      try { (window as any)?.posthog?.reset() } catch {} // clear PostHog identity
               router.push('/')
             }} className="btn btn-ghost" style={{ fontSize:13 }}>
               Sign Out

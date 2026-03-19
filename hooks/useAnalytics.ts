@@ -1,62 +1,50 @@
 // @ts-nocheck
 'use client'
 // ── hooks/useAnalytics.ts ─────────────────────────────────────────────────────
-// Thin wrapper around PostHog for tracking key VeSiMy product events.
-// Import and call from any component. No-ops if PostHog is not loaded.
-//
-// Usage:
-//   const { track, identify } = useAnalytics()
-//   identify(user.id, { email: user.email, plan: profile.plan_tier })
-//   track('tool_opened', { tool: 'stopwatch', projectId })
+// Safe analytics hook — no-ops gracefully if PostHog is not available.
 
-import { usePostHog } from 'posthog-js/react'
 import { useCallback } from 'react'
 
-// ── Key events tracked in VeSiMy ─────────────────────────────────────────────
+// Try to use posthog-js/react hook — fall back to window.posthog
+let usePostHog: any = () => null
+try { usePostHog = require('posthog-js/react').usePostHog } catch {}
+
 export type VeSiMyEvent =
-  // Acquisition
-  | 'page_viewed'
-  | 'cta_clicked'
-  | 'demo_viewed'
-  // Activation
-  | 'signup_started'
-  | 'signup_completed'
-  | 'first_project_created'
-  | 'onboarding_completed'
-  // Engagement
-  | 'project_created'
-  | 'project_opened'
-  | 'tool_opened'
-  | 'tool_saved'
-  | 'ai_assist_used'
-  | 'supe_opened'
-  | 'iso_report_exported'
-  | 'vsm_viewed'
-  | 'report_viewed'
-  | 'journal_note_added'
-  // Conversion
-  | 'upgrade_clicked'
-  | 'pricing_viewed'
-  | 'checkout_started'
-  | 'subscription_created'
+  | 'page_viewed' | 'cta_clicked' | 'signup_started' | 'signup_completed'
+  | 'first_project_created' | 'onboarding_completed' | 'project_created'
+  | 'project_opened' | 'tool_opened' | 'tool_saved' | 'ai_assist_used'
+  | 'supe_opened' | 'iso_report_exported' | 'vsm_viewed' | 'report_viewed'
+  | 'journal_note_added' | 'upgrade_clicked' | 'pricing_viewed'
+  | 'checkout_started' | 'subscription_created' | 'demo_viewed'
+
+function getPostHog() {
+  try { return usePostHog() } catch { return null }
+}
 
 export function useAnalytics() {
-  const posthog = usePostHog()
+  let ph: any = null
+  try { ph = usePostHog() } catch {}
 
   const track = useCallback((event: VeSiMyEvent, properties?: Record<string, any>) => {
-    if (!posthog) return
-    posthog.capture(event, properties)
-  }, [posthog])
+    try {
+      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
+      if (client) client.capture(event, properties)
+    } catch {}
+  }, [ph])
 
   const identify = useCallback((userId: string, traits?: Record<string, any>) => {
-    if (!posthog) return
-    posthog.identify(userId, traits)
-  }, [posthog])
+    try {
+      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
+      if (client) client.identify(userId, traits)
+    } catch {}
+  }, [ph])
 
   const reset = useCallback(() => {
-    if (!posthog) return
-    posthog.reset()
-  }, [posthog])
+    try {
+      const client = ph || (typeof window !== 'undefined' && (window as any).posthog)
+      if (client) client.reset()
+    } catch {}
+  }, [ph])
 
   return { track, identify, reset }
 }
