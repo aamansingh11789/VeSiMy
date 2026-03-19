@@ -140,6 +140,16 @@ export default function DemoPage() {
   const boxX = (i) => MARGIN + i * (BOX_W + GAP)
 
   return (
+    <div style={{ position: 'relative' }}>
+      {/* Read-only banner */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 200, background: '#1A1714', borderBottom: '1px solid rgba(212,162,8,0.3)', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+        <span style={{ fontSize: 13, color: 'rgba(248,247,245,0.7)', fontFamily: 'monospace' }}>
+          📋 Read-only sample project — Automotive Door Assembly Line
+        </span>
+        <a href="/auth/signup" style={{ fontSize: 13, fontWeight: 700, color: '#C49B2E', background: 'rgba(212,162,8,0.12)', border: '1px solid rgba(212,162,8,0.3)', borderRadius: 8, padding: '6px 16px', textDecoration: 'none' }}>
+          Save your own work → Create free account
+        </a>
+      </div>
     <div style={{ minHeight: '100vh', background: '#04060F', color: '#E8ECF4', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', overflowX: 'hidden' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto', padding: '28px 20px 80px' }}>
 
@@ -480,5 +490,6 @@ export default function DemoPage() {
         @keyframes pulse { 0%,100%{box-shadow:0 0 18px rgba(212,162,8,.3)} 50%{box-shadow:0 0 38px rgba(212,162,8,.6)} }
       `}</style>
     </div>
+  </div>
   )
 }

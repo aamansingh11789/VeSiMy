@@ -15,40 +15,12 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 
 
-// ── IndustryLoop — large cycling industry names below headline ───────────────
-const INDUSTRIES = ['Automotive','Aerospace','Food & Beverage','Medical Devices','Logistics','Electronics','Pharmaceuticals','Industrial']
-
+// ── AudienceLine — static audience statement ─────────────────────────────────
 function IndustryLoop() {
-  const [idx, setIdx] = useState(0)
-  const [fading, setFading] = useState(false)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setFading(true)
-      setTimeout(() => {
-        setIdx(i => (i + 1) % INDUSTRIES.length)
-        setFading(false)
-      }, 320)
-    }, 2200)
-    return () => clearInterval(timer)
-  }, [])
-
   return (
-    <div style={{ height: 64, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: 28, gap: 4 }}>
-      <span style={{ fontSize: 11, color: 'rgba(248,247,245,0.3)', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace' }}>Built for</span>
-      <span style={{
-        fontSize: 'clamp(22px,3.5vw,34px)',
-        fontWeight: 700,
-        color: '#C49B2E',
-        letterSpacing: -0.3,
-        fontFamily: serif,
-        opacity: fading ? 0 : 1,
-        transform: fading ? 'translateY(6px)' : 'translateY(0)',
-        transition: 'opacity 0.32s ease, transform 0.32s ease',
-        display: 'block',
-        minHeight: '1.2em',
-      }}>
-        {INDUSTRIES[idx]}
+    <div style={{ marginBottom: 20 }}>
+      <span style={{ fontSize: 11, color: 'rgba(212,162,8,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700 }}>
+        For lean engineers · CI coordinators · operations managers · quality teams
       </span>
     </div>
   )
@@ -1296,18 +1268,18 @@ export default function HomePage() {
                 <div className="logo-mark-anim"><VLogoMark size={72} /></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <div className="wordmark-anim"><VeSiMyWordmark size={42} onDark /></div>
-                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: 'rgba(248,247,245,0.45)', fontWeight: 600 }}>AI · Continuous Improvement</span>
+                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: 'rgba(248,247,245,0.45)', fontWeight: 600 }}>Browser-based · No install required</span>
                 </div>
               </div>
 
               <IndustryLoop />
 
               <h1 className="reveal r2" style={{ fontSize: 'clamp(28px,3.6vw,48px)', lineHeight: 1.1, fontWeight: 700, color: '#F8F7F5', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
-                Your entire improvement<br />process —<br /><span style={{ color: '#C49B2E' }}>one place.</span>
+                One system for your VSM, time studies,<br />root cause work, and kaizen tracking.<br /><span style={{ color: '#C49B2E' }}>All connected.</span>
               </h1>
 
               <p className="reveal r3" style={{ fontSize: 14, color: 'rgba(248,247,245,0.62)', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
-                VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps — so nothing gets lost between the whiteboard and the report. Built by lean practitioners, for lean practitioners.
+                Change a cycle time — the map updates. Log a kaizen — it appears on the VSM. Close a 5 Why — it stays on the step where the problem was. No copy-paste. No version hell. Nothing to install.
               </p>
 
               <div className="reveal r3 hero-mission" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
@@ -1322,11 +1294,11 @@ export default function HomePage() {
                 <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
                   Start free — no card needed <ArrowRightIcon size={13} color="#0D0C0A" />
                 </Link>
-                <Link href="/auth/signup" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
-                  See demo →
+                <Link href="/demo" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
+                  Explore sample project →
                 </Link>
               </div>
-              <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.25)', fontFamily: 'monospace' }}>Unlimited projects · Free forever · No credit card</p>
+              <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.25)', fontFamily: 'monospace' }}>Runs in your browser · Your process data stays private · No IP tracking</p>
             </div>
 
             {/* ── RIGHT: Inline tool showcase ── */}
@@ -1358,9 +1330,9 @@ export default function HomePage() {
       {/* ── FEATURES ────────────────────────────────────────────────────────── */}
       <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: '#C8C5BC', borderTop: '0.5px solid #C8C5BC' }}>
         {[
-          { icon: '📊', bg: '#EDF9F5', title: 'One map. All your data.', body: 'Your time study, root cause findings, and Kaizen log all feed the same VSM automatically. Change a cycle time — the map updates. Nothing to copy, nothing gets out of sync.' },
-          { icon: '🔗', bg: '#FAEEDA', title: '9 tools. All connected.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, Gap Analysis — linked to every step, feeding one A3 report in one click.' },
-          { icon: '🆓', bg: '#EEEDFE', title: 'Free forever. No clock.', body: 'Unlimited projects, all 9 CI tools — free forever. No time limits, no project caps. Upgrade to Pro only when you want Supe AI and process simulation.' },
+          { icon: '📊', bg: '#EDF9F5', title: 'Everything connected to the same steps.', body: 'Change a cycle time in your time study and it updates the VSM. Log a kaizen and it appears on the map. Write a 5 Why and it stays on the step. No files to sync, no reports to rebuild.' },
+          { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED — on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant throughout.' },
+          { icon: '🆓', bg: '#EEEDFE', title: 'Actually free. Not free-then-$29.', body: 'Unlimited projects. All 9 tools. No trial period. No project cap. The free plan exists to be useful, not to expire. Upgrade to Pro when you want Supe AI and process simulation — not before.' },
         ].map(f => (
           <div key={f.title} style={{ background: '#EDE9E0', padding: '28px 24px' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
@@ -1376,7 +1348,7 @@ export default function HomePage() {
           <div>
             <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>The problem</div>
             <h2 style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 20 }}>
-              Right now, your CI process looks like this.
+              If you have been here before, you know exactly what this costs.
             </h2>
             {[
               ['A VSM on the whiteboard', 'Updated manually every time anything changes'],
@@ -1490,15 +1462,15 @@ export default function HomePage() {
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
       <div style={{ background: '#231F1B', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
         <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10 }}>
-          Your next improvement project<br />shouldn't start in <span style={{ color: '#C49B2E' }}>Excel.</span>
+          Your next kaizen event starts here —<br />not in a <span style={{ color: '#C49B2E' }}>spreadsheet.</span>
         </h2>
         <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free forever. Unlimited projects. No credit card. No trial clock.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
             Start free — no card needed
           </Link>
-          <Link href="/auth/signup" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
-            Load reference project →
+          <Link href="/demo" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
+            Explore sample project — no account needed →
           </Link>
         </div>
         <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', marginTop: 16 }}>

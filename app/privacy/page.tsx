@@ -27,6 +27,20 @@ export default function PrivacyPage() {
           <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>
 
+        {/* Plain English Summary */}
+        <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 14, padding: '24px 28px', marginBottom: 40 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#1DD1A1', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 12 }}>The short version</div>
+          <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75, marginBottom: 12 }}>
+            Your process data is yours. We store it so you can access it across devices and sessions. We never share it, sell it, or use it to train AI models.
+          </p>
+          <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75, marginBottom: 12 }}>
+            We collect standard usage analytics — pages viewed, features used — to understand how to improve the product. Your IP address appears in standard server security logs, as it does with every web service. We do not use IP addresses to identify your operations, track your processes, or profile your company.
+          </p>
+          <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75, margin: 0 }}>
+            You can export your data and delete your account at any time. The full policy is below.
+          </p>
+        </div>
+
         <Section title="1. Information We Collect">
           <p><strong style={{ color: '#B0B0C8' }}>Account information:</strong> Name, email address, and password when you register.</p>
           <br />

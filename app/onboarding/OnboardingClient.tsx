@@ -35,6 +35,7 @@ const INDUSTRIES = [
 ]
 
 const FIRST_PROCESS_TEMPLATES = [
+  { id:'sample',     label:'Load the sample project — explore with real data already in it', steps:['Steel Blank Receiving','Stamping Press','Weld Sub-Assembly','Hem / Clinch','E-Coat / Paint Prep','Final Assembly & QC','Pack & Ship'] },
   { id:'assembly',   label:'Assembly Line',           steps:['Material Receipt','Sub-Assembly','Main Assembly','Quality Inspection','Packaging','Shipping'] },
   { id:'machining',  label:'CNC / Machining Cell',    steps:['Raw Material Queue','Setup','Machining','Deburr / Clean','Inspection','Move to Storage'] },
   { id:'order_flow', label:'Order Fulfilment',        steps:['Order Receipt','Pick','Pack','Quality Check','Dispatch','Delivery Confirmation'] },

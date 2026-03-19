@@ -743,6 +743,18 @@ export default function PricingPage() {
 
         {[
           [
+            'Is VeSiMy web-based or do I need to install something?',
+            'Entirely browser-based. Nothing to install, no IT ticket required. Works on any modern browser on desktop or mobile. Your account and data are accessible from any device.',
+          ],
+          [
+            'Why do I need an account to use it?',
+            'Your VSM data, process steps, time studies, and kaizen logs need somewhere to live so you can return to them across sessions. We store your work securely in your account. You can explore a sample project without signing up — click Explore sample project on the homepage.',
+          ],
+          [
+            'What data do you log? Do you use my process data for anything?',
+            'We log standard usage analytics — pages visited, features used — to improve the product. Your process data, including VSMs, cycle times, and root cause analyses, is private to your account. It is never shared, sold, or used to train AI models. We do not analyse what your processes look like or identify your operations.',
+          ],
+          [
             'Is the Lifetime plan still available?',
             'Yes — the Lifetime plan is $99 once and gives you all Pro features forever, with no monthly fee. There is no expiry or deadline on this offer.',
           ],

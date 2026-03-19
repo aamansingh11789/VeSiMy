@@ -102,7 +102,7 @@ function SignupForm() {
           <div style={{ display:'flex', justifyContent:'center', marginBottom:16 }}>
             <VesimyLogo size={48} showText />
           </div>
-          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
+          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your free account</h1>
           {plan && planKey !== 'free' ? (
             <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,162,8,0.08)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--gold)', fontWeight:600 }}>✦ {plan.name} — ${plan.price}/mo</span>
@@ -133,13 +133,14 @@ function SignupForm() {
             {error && <p style={{ color:'#FF6B6B', fontSize:13, background:'rgba(255,107,107,0.08)', padding:'8px 12px', borderRadius:8 }}>{error}</p>}
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
-                ? (planKey && planKey !== 'free' ? 'Setting up your trial…' : 'Creating account…')
-                : (planKey && planKey !== 'trial' ? `Start ${plan?.name} — 14-Day Trial` : 'Start Free Trial')}
+                ? (planKey && planKey !== 'free' ? 'Setting up your account…' : 'Creating your account…')
+                : (planKey && planKey !== 'free' && plan ? `Start ${plan?.name} — free for 14 days` : 'Create free account')}
             </button>
           </form>
         </div>
 
         <p style={{ textAlign:'center', marginTop:14, fontSize:12, color:'var(--sl-400)' }}>
+          Your process data is private to your account. We never share it or use it to train AI.<br/>
           By signing up you agree to our <Link href="/terms" style={{ color:'var(--text3)', textDecoration:'none' }}>Terms</Link> and <Link href="/privacy" style={{ color:'var(--text3)', textDecoration:'none' }}>Privacy Policy</Link>
         </p>
         <p style={{ textAlign:'center', marginTop:10, fontSize:13, color:'var(--text3)' }}>
