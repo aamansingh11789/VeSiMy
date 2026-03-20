@@ -39,15 +39,16 @@ export async function GET(request: NextRequest) {
     // next param overrides (e.g. from specific redirect)
     if (next) return NextResponse.redirect(`${origin}${next}`)
 
-    // Check onboarding — new Google users won't have a profile yet
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('onboarded')
+    // Mark user as onboarded immediately — no onboarding flow
+    await supabase.from('profiles')
+      .update({ onboarded: true })
       .eq('id', user.id)
-      .maybeSingle()  // maybeSingle doesn't throw if no row exists
 
-    const dest = (!profile || !profile.onboarded) ? '/onboarding' : '/dashboard'
-    return NextResponse.redirect(`${origin}${dest}`)
+    // Seed reference project for new users (idempotent — won't duplicate)
+    const { data: profile } = await supabase
+      .from('profiles').select('onboarded').eq('id', user.id).maybeSingle()
+
+    return NextResponse.redirect(`${origin}/dashboard`)
 
   } catch (err) {
     console.error('[auth/callback] Unexpected error:', err)

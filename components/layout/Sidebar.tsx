@@ -53,8 +53,7 @@ export function Sidebar({ profile }: SidebarProps) {
   const isPro      = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
   const isGold     = (profile as any).beta_tier === 'gold_standard'
   const isLifetime = (profile as any).lifetime_access === true
-  const usagePct   = Math.min(100,
-    ((profile.projects_count || 0) / Math.max(profile.projects_limit || 1, 1)) * 100)
+
   const initials   = (profile.full_name || profile.email || 'U').charAt(0).toUpperCase()
 
   return (
@@ -114,34 +113,24 @@ export function Sidebar({ profile }: SidebarProps) {
               </Link>
             )}
           </div>
-          <div style={{ fontSize: 11, color: SL[400], marginBottom: 6 }}>
-            {profile.projects_count} / {profile.projects_limit} projects
-          </div>
-          <div style={{ height: 4, borderRadius: 999, background: SL[700], overflow: 'hidden' }}>
-            <div style={{ height: '100%', borderRadius: 999, width: `${usagePct}%`, background: GOLD }} />
+          <div style={{ fontSize: 11, color: SL[400] }}>
+            Unlimited projects
           </div>
         </div>
       ) : !isPro ? (
         <div style={{
           margin: '12px 14px 8px',
           background: SL[700], border: `1px solid ${SL[600]}`,
-          borderRadius: 12, padding: '12px 12px 10px',
+          borderRadius: 12, padding: '12px 12px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
-            <div>
-              <div style={{ fontSize: 10, color: SL[300], fontWeight: 700, letterSpacing: 1.2, textTransform: 'uppercase' }}>Free Plan</div>
-              <div style={{ fontSize: 11, color: SL[400], marginTop: 3 }}>Starter workspace</div>
-            </div>
-            <Link href="/pricing" style={{ fontSize: 11, color: GOLD, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
-              <CrownIcon size={11} /> Upgrade
-            </Link>
+          <div>
+            <div style={{ fontSize: 10, color: SL[300], fontWeight: 700, letterSpacing: 1.2, textTransform: 'uppercase' }}>Free Plan</div>
+            <div style={{ fontSize: 11, color: SL[400], marginTop: 3 }}>Unlimited projects</div>
           </div>
-          <div style={{ fontSize: 11, color: SL[400], marginBottom: 6 }}>
-            {profile.projects_count} / {profile.projects_limit} projects
-          </div>
-          <div style={{ height: 4, borderRadius: 999, background: SL[600], overflow: 'hidden' }}>
-            <div style={{ height: '100%', borderRadius: 999, width: `${usagePct}%`, background: usagePct > 80 ? '#C0402A' : GOLD }} />
-          </div>
+          <Link href="/pricing" style={{ fontSize: 11, color: GOLD, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+            <CrownIcon size={11} /> Upgrade
+          </Link>
         </div>
       ) : (
         <div style={{

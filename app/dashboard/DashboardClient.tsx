@@ -500,12 +500,13 @@ export function DashboardClient({ profile, initialProjects }: Props) {
     }
   }, [profile?.id])
 
-  // Auto-load reference project when ?ref=1 (from "Explore sample project" CTA)
+  // Auto-load reference project when ?ref=1 OR on first visit (0 projects)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
-    if (params.get('ref') === '1') {
-      // Small delay so the dashboard renders first
+    const isFirstVisit = projects.length === 0 && !sessionStorage.getItem('vesimy_seeded')
+    if (params.get('ref') === '1' || isFirstVisit) {
+      sessionStorage.setItem('vesimy_seeded', '1')
       setTimeout(() => seedReferenceProject(), 800)
     }
   }, [])
