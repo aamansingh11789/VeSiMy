@@ -13,6 +13,14 @@ function LoginForm() {
   const router       = useRouter()
   const searchParams = useSearchParams()
   const redirect     = searchParams.get('redirect') || '/dashboard'
+  const authError    = searchParams.get('error')
+  const errorMessages: Record<string, string> = {
+    oauth_denied:    'Google sign-in was cancelled. Please try again.',
+    exchange_failed: 'Sign-in failed. The link may have expired — please try again.',
+    no_user:         'Could not retrieve your account. Please try again.',
+    unexpected:      'Something went wrong. Please try again or use email sign-in.',
+  }
+  const authErrorMsg = authError ? (errorMessages[authError] || 'Sign-in failed. Please try again.') : null
   const supabase     = createClient()
 
   const [mode,     setMode]     = useState<'login' | 'signup'>('login')
@@ -23,9 +31,15 @@ function LoginForm() {
 
   async function handleGoogleLogin() {
     setLoading(true)
+    // Store intended destination so callback can redirect correctly
+    // We cannot pass ?next= as a query param — Supabase rejects URLs
+    // that don't exactly match the allowlist (no wildcard query params)
+    if (typeof window !== 'undefined' && redirect !== '/dashboard') {
+      sessionStorage.setItem('auth_redirect', redirect)
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/api/auth/callback?next=${redirect}` },
+      options: { redirectTo: `${window.location.origin}/api/auth/callback` },
     })
     if (error) { toast.error(error.message); setLoading(false) }
   }
