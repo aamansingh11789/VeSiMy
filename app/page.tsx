@@ -224,22 +224,42 @@ const SHOWCASE_TOOLS=[
           <span style="font-size:7px;color:#C0402A;font-weight:700;font-family:monospace;letter-spacing:.8px">EFFECT: </span>
           <span style="font-size:9px;font-weight:600;color:#242220">Foam &amp; Fabric CT 145s exceeds Takt 120s — 3 seats/shift shortfall</span>
         </div>
-        <svg viewBox="0 0 480 180" style="width:100%;display:block;background:#fff;border:1px solid #D8D5CE;border-radius:8px">
-          <line x1="60" y1="90" x2="420" y2="90" stroke="#374151" stroke-width="2.5"/>
-          <polygon points="415,86 424,90 415,94" fill="#374151"/>
-          <rect x="424" y="78" width="52" height="24" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" rx="3"/>
-          <text x="450" y="93" text-anchor="middle" fill="#7F1D1D" font-size="7" font-weight="700">EFFECT</text>
-          ${[['Machine',80,1],['Method',190,1],['Material',300,1],['Manpower',80,-1],['Measure',190,-1],['Mother Nature',300,-1]].map(([cat,x,dir])=>`
-          <line x1="${x}" y1="${90-(dir as number)*28}" x2="${x}" y2="90" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
-          <text x="${x}" y="${90-(dir as number)*35}" text-anchor="middle" fill="#8A6300" font-size="7" font-weight="700">${cat}</text>`).join('')}
-          ${[
-            [65,62,'No powered assist'],[82,52,'Jig loosens after 200 cycles'],
-            [172,62,'Foam rack 4m away'],[190,52,'No SWS for new ops'],[208,62,'Dual mutual check'],
-            [285,62,'Cover tight on winter batch'],[305,52,'Foam density varies'],
-            [65,118,'New ops 20% slower'],[82,128,'LH/RH coordination wait'],
-            [172,118,'No in-process CT track'],[192,128,'End-of-shift review only'],
-            [282,118,'Cold temp stiffens foam'],[302,128,'Seasonal variation'],
-          ].map(([x,y,t])=>`<text x="${x}" y="${y}" text-anchor="middle" fill="#4E4B45" font-size="5.5">${t}</text>`).join('')}
+        <svg viewBox="0 0 480 190" style="width:100%;display:block;background:#fff;border:1px solid #D8D5CE;border-radius:8px">
+          <!-- spine -->
+          <line x1="60" y1="95" x2="418" y2="95" stroke="#374151" stroke-width="2.5"/>
+          <polygon points="414,91 424,95 414,99" fill="#374151"/>
+          <!-- effect box -->
+          <rect x="424" y="82" width="52" height="26" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" rx="3"/>
+          <text x="450" y="95" text-anchor="middle" fill="#7F1D1D" font-size="7" font-weight="700" font-family="system-ui,sans-serif">EFFECT</text>
+          <!-- top category bones -->
+          <line x1="80" y1="62" x2="80" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="190" y1="62" x2="190" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="300" y1="62" x2="300" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <!-- bottom category bones -->
+          <line x1="80" y1="95" x2="80" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="190" y1="95" x2="190" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="300" y1="95" x2="300" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <!-- category labels -->
+          <text x="80" y="55" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Machine</text>
+          <text x="190" y="55" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Method</text>
+          <text x="300" y="55" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Material</text>
+          <text x="80" y="143" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Manpower</text>
+          <text x="190" y="143" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Measurement</text>
+          <text x="300" y="143" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Environment</text>
+          <!-- top sub-causes -->
+          <line x1="55" y1="68" x2="80" y2="68" stroke="#D4D0C8" stroke-width="1"/><text x="53" y="71" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">No powered assist</text>
+          <line x1="55" y1="78" x2="80" y2="78" stroke="#D4D0C8" stroke-width="1"/><text x="53" y="81" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Jig loosens</text>
+          <line x1="165" y1="68" x2="190" y2="68" stroke="#D4D0C8" stroke-width="1"/><text x="163" y="71" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Rack 4m away</text>
+          <line x1="165" y1="78" x2="190" y2="78" stroke="#D4D0C8" stroke-width="1"/><text x="163" y="81" text-anchor="end" fill="#C0402A" font-size="5.5" font-weight="700" font-family="system-ui,sans-serif">No SWS</text>
+          <line x1="275" y1="68" x2="300" y2="68" stroke="#D4D0C8" stroke-width="1"/><text x="273" y="71" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Cover tight</text>
+          <line x1="275" y1="78" x2="300" y2="78" stroke="#D4D0C8" stroke-width="1"/><text x="273" y="81" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Density varies</text>
+          <!-- bottom sub-causes -->
+          <line x1="55" y1="108" x2="80" y2="108" stroke="#D4D0C8" stroke-width="1"/><text x="53" y="111" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">New ops 20% slower</text>
+          <line x1="55" y1="118" x2="80" y2="118" stroke="#D4D0C8" stroke-width="1"/><text x="53" y="121" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">LH/RH wait</text>
+          <line x1="165" y1="108" x2="190" y2="108" stroke="#D4D0C8" stroke-width="1"/><text x="163" y="111" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">No in-process CT</text>
+          <line x1="165" y1="118" x2="190" y2="118" stroke="#D4D0C8" stroke-width="1"/><text x="163" y="121" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">End-of-shift only</text>
+          <line x1="275" y1="108" x2="300" y2="108" stroke="#D4D0C8" stroke-width="1"/><text x="273" y="111" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Cold stiffens foam</text>
+          <line x1="275" y1="118" x2="300" y2="118" stroke="#D4D0C8" stroke-width="1"/><text x="273" y="121" text-anchor="end" fill="#4E4B45" font-size="5.5" font-family="system-ui,sans-serif">Seasonal variation</text>
         </svg>
       </div>
     </div>`,
@@ -542,7 +562,7 @@ const SHOWCASE_TOOLS=[
   },
 ]
 
-// ── InlineToolShowcase — SIDE-BY-SIDE: preview left, mini stack right ─────────
+// ── InlineToolShowcase ────────────────────────────────────────────────────────
 function InlineToolShowcase() {
   const [active, setActive] = useState(0)
   const wrapRef     = useRef<HTMLDivElement>(null)
@@ -556,15 +576,12 @@ function InlineToolShowcase() {
     const el = wrapRef.current
     if (!el) return
     const onWheel = (e: WheelEvent) => {
-      if (popupRef.current && popupRef.current.contains(e.target as Node)) {
-        const pop = popupRef.current
-        const atTop = pop.scrollTop === 0
-        const atBot = pop.scrollTop + pop.clientHeight >= pop.scrollHeight - 2
-        if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBot)) return
+      if (popupRef.current?.contains(e.target as Node)) {
+        const pop = popupRef.current!
+        if ((e.deltaY < 0 && pop.scrollTop > 0) || (e.deltaY > 0 && pop.scrollTop + pop.clientHeight < pop.scrollHeight - 2)) return
       }
       const now = Date.now()
-      if (now - lastNav.current < 500) return
-      if (Math.abs(e.deltaY) < 20) return
+      if (now - lastNav.current < 500 || Math.abs(e.deltaY) < 20) return
       e.preventDefault()
       lastNav.current = now
       if (e.deltaY > 0) setActive(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
@@ -575,12 +592,12 @@ function InlineToolShowcase() {
   }, [active])
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') setActive(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
-      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   setActive(t => Math.max(t - 1, 0))
+    const k = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))
+      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   setActive(t => Math.max(t-1, 0))
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('keydown', k)
+    return () => window.removeEventListener('keydown', k)
   }, [])
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -594,97 +611,139 @@ function InlineToolShowcase() {
     const now = Date.now()
     if (now - lastNav.current < 400) return
     lastNav.current = now
-    if (dx > 0) setActive(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
-    else        setActive(t => Math.max(t - 1, 0))
+    if (dx > 0) setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))
+    else        setActive(t => Math.max(t-1, 0))
   }
 
   return (
     <div ref={wrapRef} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-      style={{ userSelect: 'none', outline: 'none' }}>
+      style={{ userSelect:'none', outline:'none' }}>
       <style>{`
-        @keyframes inlineReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes inlineRevealX{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes previewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes labelIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
       `}</style>
 
-      {/* Tool name + nav hint */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10, flexWrap:'wrap', gap:6 }}>
+      {/* Tool label row */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, flexWrap:'wrap', gap:6 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:4, padding:'2px 8px', borderRadius:100, background:'rgba(255,255,255,0.10)', border:`1px solid ${tool.color}55` }}>
-            <span style={{ fontSize:9, fontWeight:700, color:tool.color, letterSpacing:'.5px', fontFamily:'monospace' }}>{tool.tag}</span>
-          </div>
-          <span key={active} style={{ fontSize:13, fontWeight:700, color:'#F8F7F5', fontFamily:serif, animation:'inlineRevealX 0.2s ease both' }}>{tool.headline}</span>
+          <span style={{ fontSize:9, fontWeight:700, color:tool.color, letterSpacing:'.5px', fontFamily:'monospace',
+            padding:'2px 8px', borderRadius:100, background:'rgba(255,255,255,0.08)', border:`1px solid ${tool.color}55` }}>
+            {tool.tag}
+          </span>
+          <span key={`lbl-${active}`} style={{ fontSize:13, fontWeight:700, color:'#F8F7F5', fontFamily:serif, animation:'labelIn 0.2s ease both' }}>
+            {tool.headline}
+          </span>
         </div>
-        <span style={{ fontSize:10, color:'rgba(248,247,245,0.3)', fontFamily:'monospace' }}>
-          {active + 1} / {SHOWCASE_TOOLS.length} · scroll
+        <span style={{ fontSize:10, color:'rgba(248,247,245,0.28)', fontFamily:'monospace' }}>
+          {active+1}/{SHOWCASE_TOOLS.length} · scroll
         </span>
       </div>
 
-      {/* ── SIDE-BY-SIDE: preview left, stack right ── */}
-      <div style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
+      {/* Side-by-side layout — preview + mini stack */}
+      <div className="showcase-row" style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
 
-        {/* LEFT: app preview panel */}
+        {/* PREVIEW — takes most of the width */}
         <div style={{ flex:'1 1 0', minWidth:0 }}>
-          <div ref={popupRef} key={active}
-            style={{ background:'#FFFFFF', border:'0.5px solid #D8D5CE', borderRadius:14, overflow:'hidden', boxShadow:'0 4px 28px rgba(0,0,0,0.22)', maxHeight:320, overflowY:'auto', animation:'inlineReveal 0.25s ease both' }}
+          <div ref={popupRef} key={`pop-${active}`}
+            style={{ background:'#fff', border:'0.5px solid #D8D5CE', borderRadius:12, overflow:'hidden',
+              boxShadow:'0 4px 24px rgba(0,0,0,0.24)', maxHeight:340, overflowY:'auto',
+              animation:'previewIn 0.22s ease both' }}
             dangerouslySetInnerHTML={{ __html: tool.popup + `
-              <div style="padding:6px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
+              <div style="padding:5px 12px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
                 <span style="font-size:9px;color:#8E8A82;font-family:monospace">${tool.name} · VeSiMy</span>
-                <a href="/auth/signup" style="padding:4px 11px;font-size:11px;font-weight:700;border-radius:7px;background:#C49B2E;color:#fff;text-decoration:none">Try free →</a>
+                <a href="/auth/signup" style="padding:4px 10px;font-size:10px;font-weight:700;border-radius:6px;background:#C49B2E;color:#fff;text-decoration:none">Try free →</a>
               </div>` }}
           />
+          {/* Mobile nav — shown only on small screens */}
+          <div className="showcase-mobile-nav" style={{ display:'none', justifyContent:'center', gap:12, marginTop:10 }}>
+            <button onClick={() => setActive(t => Math.max(t-1,0))} disabled={active===0}
+              style={{ padding:'6px 18px', borderRadius:8, border:'1px solid rgba(255,255,255,.15)',
+                background:'rgba(255,255,255,.08)', color:active===0?'rgba(255,255,255,.2)':'#F8F7F5',
+                fontSize:13, cursor:active===0?'default':'pointer', fontWeight:600 }}>‹ Prev</button>
+            <div style={{ display:'flex', gap:4, alignItems:'center' }}>
+              {SHOWCASE_TOOLS.map((_,i) => (
+                <div key={i} onClick={() => setActive(i)} style={{
+                  width:i===active?14:5, height:5, borderRadius:100,
+                  background:i===active ? tool.color : 'rgba(255,255,255,.2)',
+                  cursor:'pointer', transition:'all .22s',
+                }}/>
+              ))}
+            </div>
+            <button onClick={() => setActive(t => Math.min(t+1,SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
+              style={{ padding:'6px 18px', borderRadius:8, border:'1px solid rgba(255,255,255,.15)',
+                background:'rgba(255,255,255,.08)', color:active===SHOWCASE_TOOLS.length-1?'rgba(255,255,255,.2)':'#F8F7F5',
+                fontSize:13, cursor:active===SHOWCASE_TOOLS.length-1?'default':'pointer', fontWeight:600 }}>Next ›</button>
+          </div>
         </div>
 
-        {/* RIGHT: compact 3D card stack */}
-        <div style={{ width:160, flexShrink:0 }}>
-          <div style={{ perspective:'700px', perspectiveOrigin:'60% 42%' }}>
-            <div className="inline-3d" style={{ position:'relative', width:160, height:260, transformStyle:'preserve-3d', transform:'rotateY(16deg) rotateX(5deg) rotateZ(1deg)', margin:'0 auto' }}>
+        {/* MINI STACK — desktop only, hidden on mobile */}
+        <div className="showcase-stack-panel" style={{ width:130, flexShrink:0 }}>
+          <div style={{ perspective:'580px', perspectiveOrigin:'55% 38%' }}>
+            <div className="showcase-mini-3d" style={{
+              position:'relative', width:130, height:270,
+              transformStyle:'preserve-3d',
+              transform:'rotateY(15deg) rotateX(5deg) rotateZ(1deg)',
+            }}>
               {SHOWCASE_TOOLS.map((t, i) => {
                 const off = i - active
                 const isA = i === active
+                const ao  = Math.abs(off)
                 return (
                   <div key={t.short} onClick={() => !isA && setActive(i)} style={{
-                    position:'absolute', top:0, left:0, width:'100%', height:'100%',
-                    borderRadius:10,
-                    background:`rgba(255,255,255,${isA ? .97 : Math.max(.35, .78 - Math.abs(off) * .08)})`,
-                    border:`1.5px solid ${isA ? t.color + '55' : 'rgba(215,213,206,.5)'}`,
-                    boxShadow: isA ? `0 10px 30px rgba(0,0,0,.14),0 0 0 1px ${t.color}18` : '0 2px 6px rgba(0,0,0,.04)',
-                    transform:`translateY(${off * 11}px) translateZ(${isA ? 32 : -Math.abs(off) * 12}px) scale(${isA ? 1 : Math.max(.83, .96 - Math.abs(off) * .024)})`,
-                    transition:'all .42s cubic-bezier(.34,1.15,.64,1)',
+                    position:'absolute', top:0, left:0, width:'100%',
+                    height:'calc(100% - 20px)',
+                    borderRadius:9,
+                    background:`rgba(255,255,255,${isA?.97:Math.max(.28,.75-ao*.07)})`,
+                    border:`1.5px solid ${isA ? t.color+'60' : 'rgba(215,213,206,.42)'}`,
+                    boxShadow: isA ? `0 8px 24px rgba(0,0,0,.13),0 0 0 1px ${t.color}18` : '0 1px 4px rgba(0,0,0,.04)',
+                    transform:`translateY(${off*10}px) translateZ(${isA?26:-ao*10}px) scale(${isA?1:Math.max(.82,.96-ao*.022)})`,
+                    transition:'all .4s cubic-bezier(.34,1.1,.64,1)',
                     overflow:'hidden', display:'flex', flexDirection:'column',
                     cursor: isA ? 'default' : 'pointer',
                   }}>
-                    <div style={{ padding:'7px 9px 5px', borderBottom:'1px solid rgba(0,0,0,.05)', flexShrink:0, background:'rgba(255,255,255,.5)' }}>
-                      <div style={{ display:'flex', alignItems:'center', gap:5 }}>
-                        <div style={{ width:20, height:20, borderRadius:5, background:`${t.color}12`, border:`1px solid ${t.color}22`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:6, fontWeight:800, color:t.color, fontFamily:'monospace', flexShrink:0 }}>{t.short}</div>
-                        <div style={{ flex:1, minWidth:0 }}>
-                          <div style={{ fontSize:8, fontWeight:700, color:'#242220', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis' }}>{t.name}</div>
-                          <div style={{ fontSize:6, color:'#8E8A82', marginTop:1, overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis' }}>{t.headline}</div>
-                        </div>
-                        {isA && <div style={{ width:5, height:5, borderRadius:'50%', background:t.color, flexShrink:0 }} />}
+                    <div style={{ padding:'6px 7px 4px', borderBottom:'1px solid rgba(0,0,0,.05)', flexShrink:0 }}>
+                      <div style={{ display:'flex', alignItems:'center', gap:4 }}>
+                        <div style={{ width:16, height:16, borderRadius:4, background:`${t.color}14`, border:`1px solid ${t.color}20`,
+                          display:'flex', alignItems:'center', justifyContent:'center', fontSize:5.5, fontWeight:800,
+                          color:t.color, fontFamily:'monospace', flexShrink:0 }}>{t.short}</div>
+                        <div style={{ fontSize:7, fontWeight:700, color:'#242220', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis', flex:1 }}>{t.name}</div>
+                        {isA && <div style={{ width:4, height:4, borderRadius:'50%', background:t.color, flexShrink:0 }}/>}
                       </div>
                     </div>
-                    <div style={{ flex:1, overflow:'hidden', opacity: isA ? 1 : Math.max(.08, .55 - Math.abs(off) * .16), transform:`scale(${isA ? 1 : .82})`, transformOrigin:'top left', transition:'opacity .4s,transform .4s', pointerEvents:'none' }}
+                    <div style={{ flex:1, overflow:'hidden',
+                      opacity:isA?1:Math.max(.05,.48-ao*.14),
+                      transform:`scale(${isA?1:.79})`, transformOrigin:'top left',
+                      transition:'opacity .35s,transform .35s', pointerEvents:'none' }}
                       dangerouslySetInnerHTML={{ __html: t.cardContent }}
                     />
-                    {isA && <div style={{ padding:'0 9px 6px', flexShrink:0 }}><div style={{ height:2, borderRadius:2, background:`linear-gradient(90deg,${t.color},${t.color}18)` }} /></div>}
+                    {isA && <div style={{ padding:'0 7px 5px', flexShrink:0 }}>
+                      <div style={{ height:2, borderRadius:2, background:`linear-gradient(90deg,${t.color},${t.color}18)` }}/>
+                    </div>}
                   </div>
                 )
               })}
             </div>
           </div>
-
-          {/* Dots + arrows under stack */}
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:6, marginTop:8 }}>
-            <div style={{ display:'flex', gap:4 }}>
+          {/* Stack dots + arrows */}
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:5, marginTop:8 }}>
+            <div style={{ display:'flex', gap:3, flexWrap:'wrap', justifyContent:'center' }}>
               {SHOWCASE_TOOLS.map((t,i) => (
-                <div key={i} onClick={() => setActive(i)} style={{ width:i===active?14:5, height:5, borderRadius:100, background:i===active ? t.color : 'rgba(255,255,255,0.2)', cursor:'pointer', transition:'all .25s' }} />
+                <div key={i} onClick={() => setActive(i)} style={{
+                  width:i===active?12:4, height:4, borderRadius:100,
+                  background:i===active?t.color:'rgba(255,255,255,.2)',
+                  cursor:'pointer', transition:'all .22s',
+                }}/>
               ))}
             </div>
-            <div style={{ display:'flex', gap:6 }}>
-              <button onClick={() => setActive(t => Math.max(t-1, 0))} disabled={active===0}
-                style={{ padding:'4px 11px', borderRadius:7, border:'1px solid rgba(255,255,255,0.15)', background:'rgba(255,255,255,0.07)', color:active===0?'rgba(255,255,255,0.2)':'#F8F7F5', fontSize:12, cursor:active===0?'default':'pointer', fontWeight:600, transition:'all .15s' }}>‹</button>
-              <button onClick={() => setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
-                style={{ padding:'4px 11px', borderRadius:7, border:'1px solid rgba(255,255,255,0.15)', background:'rgba(255,255,255,0.07)', color:active===SHOWCASE_TOOLS.length-1?'rgba(255,255,255,0.2)':'#F8F7F5', fontSize:12, cursor:active===SHOWCASE_TOOLS.length-1?'default':'pointer', fontWeight:600, transition:'all .15s' }}>›</button>
+            <div style={{ display:'flex', gap:4 }}>
+              <button onClick={() => setActive(t => Math.max(t-1,0))} disabled={active===0}
+                style={{ padding:'3px 10px', borderRadius:6, border:'1px solid rgba(255,255,255,.14)',
+                  background:'rgba(255,255,255,.07)', color:active===0?'rgba(255,255,255,.2)':'#F8F7F5',
+                  fontSize:12, cursor:active===0?'default':'pointer', fontWeight:600 }}>‹</button>
+              <button onClick={() => setActive(t => Math.min(t+1,SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
+                style={{ padding:'3px 10px', borderRadius:6, border:'1px solid rgba(255,255,255,.14)',
+                  background:'rgba(255,255,255,.07)', color:active===SHOWCASE_TOOLS.length-1?'rgba(255,255,255,.2)':'#F8F7F5',
+                  fontSize:12, cursor:active===SHOWCASE_TOOLS.length-1?'default':'pointer', fontWeight:600 }}>›</button>
             </div>
           </div>
         </div>
@@ -693,7 +752,6 @@ function InlineToolShowcase() {
     </div>
   )
 }
-
 
 // ── CompetitorTable — VeSiMy vs spreadsheets, Visio, Lucidchart, Minitab ─────
 function CompetitorTable() {
@@ -1043,9 +1101,8 @@ export default function HomePage() {
           .hero-mission{margin-left:auto!important;margin-right:auto!important;text-align:left;}
           .hero-industry-loop{justify-content:center!important;}
           .stats-bar-grid{gap:20px 32px!important;}
-          /* Flatten 3D rotation at tablet — prevents horizontal overflow */
-          .inline-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;}
-          .inline-showcase-outer{display:flex;justify-content:center;overflow:hidden;}
+          /* Flatten 3D rotation at tablet */
+          .showcase-mini-3d{transform:rotateY(0deg) rotateX(3deg) rotateZ(0deg)!important;}
         }
         @media(max-width:768px){
           .feat-grid{grid-template-columns:1fr!important;}
@@ -1056,38 +1113,25 @@ export default function HomePage() {
           .nav-pad{padding:0 16px!important;}
           .sec-pad{padding:40px 20px!important;}
           .showcase-grid{grid-template-columns:1fr!important;gap:0!important;}
-          .showcase-stack-col{position:relative!important;top:auto!important;height:auto!important;padding:0 16px 16px!important;}
-          .showcase-detail-col{padding:0 16px!important;}
           .showcase-3d{transform:rotateY(0deg) rotateX(4deg) rotateZ(0deg)!important;width:240px!important;height:300px!important;}
           .showcase-popup{max-height:320px!important;}
-          .showcase-swipe-hint{display:flex!important;}
           .comp-table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch;}
-          .hero-tools-grid{gap:20px!important;}
           .footer-links{justify-content:center!important;}
           .footer-wrap{justify-content:center!important;text-align:center;}
           .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:14px!important;}
           .pricing-card-lifetime{display:none!important;}
-          /* Showcase: no 3D on phone, centered, clipped */
-          .inline-3d{transform:rotateY(0deg) rotateX(2deg) rotateZ(0deg)!important;width:min(240px,78vw)!important;height:min(260px,68vw)!important;}
-          .inline-stack-wrap{height:min(280px,72vw)!important;}
-          .inline-showcase-outer{display:flex!important;justify-content:center!important;overflow:hidden!important;width:100%!important;}
-          /* Prev/Next buttons fit smaller screens */
-          .inline-nav-btn{padding:5px 10px!important;font-size:12px!important;}
+          /* On mobile: hide the stack, full-width preview, show mobile nav */
+          .showcase-stack-panel{display:none!important;}
+          .showcase-row{flex-direction:column!important;}
+          .showcase-mobile-nav{display:flex!important;}
         }
         @media(max-width:500px){
-          .inline-popup{max-height:220px!important;}
-          .inline-stack-wrap{height:min(240px,64vw)!important;}
-          .inline-3d{width:min(180px,70vw)!important;height:min(200px,55vw)!important;transform:rotateY(0deg) rotateX(1deg) rotateZ(0deg)!important;}
-          .inline-swipe{display:flex!important;}
           .hero-pill{font-size:9px!important;padding:3px 8px!important;}
           .nav-sign-in{display:none!important;}
           .hero-cta-row a{font-size:13px!important;padding:11px 18px!important;}
           .stats-bar-grid{grid-template-columns:1fr 1fr!important;gap:10px!important;}
           .feat-grid>div{padding:18px 14px!important;}
-          .inline-nav-btn{padding:4px 8px!important;font-size:11px!important;}
         }
-        .inline-swipe{display:none;}
-        .showcase-swipe-hint{display:none;}
       `}</style>
 
       {/* ── NAV ─────────────────────────────────────────────────────────────── */}
