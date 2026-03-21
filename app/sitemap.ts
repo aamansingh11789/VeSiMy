@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/yamazumi-chart-guide`,              lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/blog/standard-work-manufacturing`,       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/industries`,                                lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/demos`,                                     lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/blog/automotive-process-improvement`,       lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/blog/aerospace-process-improvement`,        lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/blog/food-beverage-process-improvement`,    lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
