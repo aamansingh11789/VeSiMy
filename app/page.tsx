@@ -433,7 +433,7 @@ const SHOWCASE_TOOLS=[
       </div>
       <div style="padding:10px 14px">
         <div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start">
-          <div style="width:28px;height:28px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✦</div>
+          <div style="width:28px;height:28px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;font-family:monospace;flex-shrink:0">AI</div>
           <div>
             <div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;letter-spacing:.8px;margin-bottom:3px">SUPE — AI ANALYSIS</div>
             <div style="font-size:9px;color:#2A1A4E;line-height:1.5">Foam &amp; Fabric is 21% over Takt with 3 open Kaizen events and a confirmed root cause. Eliminate the 16s NVA foam rack walk <strong>before</strong> adding capacity — KZ-001 closes the gap without equipment spend. Projected CT after KZ-001: 129s. After KZ-002: 116s (within Takt).</div>
@@ -579,7 +579,7 @@ const SHOWCASE_TOOLS=[
 
 const DEMO_SHOWCASE = [
   {
-    id:'mfg', icon:'🏭', industry:'MANUFACTURING', color:'#3070B8',
+    id:'mfg', code:'MFG', industry:'MANUFACTURING', color:'#3070B8',
     headline:'Seat Assembly Line 4',
     metric:'PCE 34%', metricLabel:'CURRENT STATE', metricColor:'#C0402A',
     chromTitle:'VSM Builder · Seat Assembly Line 4 · Current State',
@@ -587,7 +587,7 @@ const DEMO_SHOWCASE = [
     tools:['VSM','TIME','5WHY','FISH','WASTE','KAIZEN','YAM','GAP','A3','PDCA'],
   },
   {
-    id:'health', icon:'🏥', industry:'HEALTHCARE', color:'#2A9E82',
+    id:'health', code:'HC', industry:'HEALTHCARE', color:'#2A9E82',
     headline:'Urgent Care Patient Flow',
     metric:'3.2 hr', metricLabel:'DOOR-TO-DISCHARGE', metricColor:'#C0402A',
     chromTitle:'VSM · Urgent Care Patient Flow · Current State',
@@ -595,7 +595,7 @@ const DEMO_SHOWCASE = [
     tools:['VSM','5WHY','WASTE','KAIZEN','GAP'],
   },
   {
-    id:'re', icon:'🏠', industry:'REAL ESTATE', color:'#C49B2E',
+    id:'re', code:'RE', industry:'REAL ESTATE', color:'#C49B2E',
     headline:'Transaction Flow',
     metric:'28%', metricLabel:'DOC KICKBACK RATE', metricColor:'#C0402A',
     chromTitle:'VSM · Real Estate Transaction Flow · Current State',
@@ -603,7 +603,7 @@ const DEMO_SHOWCASE = [
     tools:['VSM','5WHY','WASTE','KAIZEN'],
   },
   {
-    id:'brew', icon:'🍺', industry:'CRAFT BREWERY', color:'#C0402A',
+    id:'brew', code:'CBR', industry:'CRAFT BREWERY', color:'#C0402A',
     headline:'Batch Production — 10 bbl',
     metric:'4→5', metricLabel:'BATCHES/WEEK GAP', metricColor:'#C0402A',
     chromTitle:'VSM · Craft Brewery Batch Production · 10bbl',
@@ -611,7 +611,7 @@ const DEMO_SHOWCASE = [
     tools:['VSM','5WHY','WASTE','KAIZEN'],
   },
   {
-    id:'wine', icon:'🍷', industry:'WINERY', color:'#6426A0',
+    id:'wine', code:'WIN', industry:'WINERY', color:'#6426A0',
     headline:'Boutique Wine Production',
     metric:'6%', metricLabel:'BARREL DEFECT RATE', metricColor:'#C0402A',
     chromTitle:'VSM · Boutique Winery · 2,000 cases/yr',
@@ -630,7 +630,7 @@ function getDemoPopup(demoId: string, tool: string): string {
   // Healthcare
   if (demoId === 'health') {
     if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Urgent Care Patient Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:12px;font-weight:700;color:#C49B2E;margin-top:2px">45 min</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">192 min</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Treatment 52 min</div></div></div><div style="padding:8px 10px">${[['Patient Arrival','8 min','480 min',false],['Triage & Acuity','6 min','18 min',false],['Vitals & Assessment','12 min','25 min',false],['Physician Assessment','18 min','35 min',false],['Diagnostics — Lab','45 min','30 min',false],['Treatment','52 min','15 min',true],['Discharge & Docs','18 min','22 min',false]].map(([n,ct,wt,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:8px;color:#8E8A82;font-family:monospace">Wait: ${wt}</span></div>`).join('')}</div></div>`
-    if (tool === 'GAP') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Urgent Care Patient Flow</span><span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">✦</div><div><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">SUPE — AI ANALYSIS</div><div style="font-size:9px;color:#2A1A4E;line-height:1.5">Door-to-discharge averages 3.2 hours — 1.2 hrs over target. Root cause: demand-matched staffing gaps on Mon/Fri 4-8pm surges. Staff observe the problem daily but no data mechanism exists to escalate it.</div></div></div>${[['CRITICAL','Treatment CT 52 min vs 45-min Takt','Point-of-care medication saves 8 min. Concurrent discharge docs saves 22 min.'],['CRITICAL','Physician wait 35 min during surge hours','Mon/Fri 4-8pm surge not reflected in staffing schedule'],['WARNING','72-hour return rate 8%','Discharge documentation quality — missed instructions'],['INFO','Lab turnaround 35–90 min variation','CT scanner backlog peaks on high-volume days']].map(([s,t,n])=>`<div style="background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.3)':s==='WARNING'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:7px;font-weight:700;font-family:monospace;color:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#C49B2E':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${s==='CRITICAL'?'rgba(192,64,42,.1)':s==='WARNING'?'rgba(196,155,46,.1)':'rgba(26,79,138,.1)'}">${s}</span><span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${t}</span></div><div style="font-size:7.5px;color:#6B6760;margin-top:3px">${n}</div></div>`).join('')}</div></div>`
+    if (tool === 'GAP') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Urgent Care Patient Flow</span><span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;font-family:monospace;flex-shrink:0">AI</div><div><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">SUPE — AI ANALYSIS</div><div style="font-size:9px;color:#2A1A4E;line-height:1.5">Door-to-discharge averages 3.2 hours — 1.2 hrs over target. Root cause: demand-matched staffing gaps on Mon/Fri 4-8pm surges. Staff observe the problem daily but no data mechanism exists to escalate it.</div></div></div>${[['CRITICAL','Treatment CT 52 min vs 45-min Takt','Point-of-care medication saves 8 min. Concurrent discharge docs saves 22 min.'],['CRITICAL','Physician wait 35 min during surge hours','Mon/Fri 4-8pm surge not reflected in staffing schedule'],['WARNING','72-hour return rate 8%','Discharge documentation quality — missed instructions'],['INFO','Lab turnaround 35–90 min variation','CT scanner backlog peaks on high-volume days']].map(([s,t,n])=>`<div style="background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.3)':s==='WARNING'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:7px;font-weight:700;font-family:monospace;color:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#C49B2E':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${s==='CRITICAL'?'rgba(192,64,42,.1)':s==='WARNING'?'rgba(196,155,46,.1)':'rgba(26,79,138,.1)'}">${s}</span><span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${t}</span></div><div style="font-size:7.5px;color:#6B6760;margin-top:3px">${n}</div></div>`).join('')}</div></div>`
   }
   // Real Estate
   if (demoId === 're') {
@@ -734,7 +734,7 @@ function InlineToolShowcase() {
               <div key={d.id} className={`demo-stack-card${i===activeDemo?' dsc-active':''}`} onClick={() => switchDemo(i)}>
                 {/* Color stripe */}
                 <div style={{ position:'absolute', top:0, left:0, right:0, height:2, borderRadius:'11px 11px 0 0', background:d.color, opacity:i===activeDemo?.9:.35 }} />
-                <div style={{ fontSize:17, marginBottom:4, lineHeight:1 }}>{d.icon}</div>
+                <div style={{ fontSize:9, fontWeight:800, fontFamily:'monospace', letterSpacing:1, color:d.color, marginBottom:5, padding:'2px 6px', background:`${d.color}18`, border:`1px solid ${d.color}35`, borderRadius:4, display:'inline-block' }}>{d.code}</div>
                 <div style={{ fontSize:9, fontWeight:700, fontFamily:'monospace', letterSpacing:'.7px', color:d.color, marginBottom:2 }}>{d.industry}</div>
                 <div style={{ fontSize:9, color:'rgba(248,247,245,0.42)', lineHeight:1.4 }}>{d.headline}</div>
                 <div style={{ marginTop:6, paddingTop:5, borderTop:'1px solid rgba(255,255,255,0.06)' }}>
@@ -1404,7 +1404,7 @@ export default function HomePage() {
               Whether you run a production line, a clinic, or a real estate team — the waste is visible, the bottleneck is flagged, and the fix is prioritised.
             </p>
             <div style={{ background: 'rgba(196,155,46,0.06)', border: '1px solid rgba(196,155,46,0.2)', borderRadius: 10, padding: '12px 16px', position: 'relative', zIndex: 1, boxShadow: '0 2px 8px rgba(196,155,46,0.08),inset 0 1px 0 rgba(196,155,46,0.1)' }}>
-              <div style={{ fontSize: 9, color: 'rgba(196,155,46,0.7)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6, fontWeight: 700 }}>⚡ SUPE — AI ANALYSIS</div>
+              <div style={{ fontSize: 9, color: 'rgba(196,155,46,0.7)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6, fontWeight: 700 }}>SUPE — AI ANALYSIS</div>
               <p style={{ fontSize: 12, color: '#4E4B45', lineHeight: 1.65, fontStyle: 'italic', margin: 0 }}>
                 "Foam & Fabric is 21% over Takt with 3 open Kaizen events. Eliminate the 16s NVA walk before adding capacity — that closes the gap without equipment spend."
               </p>
@@ -1429,38 +1429,33 @@ export default function HomePage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(280px,100%),1fr))', gap: 16 }}>
             {([
-              { icon: '🏭', label: 'Manufacturing', color: '#3070B8', tagline: 'Where it all started.', demoHref: '/auth/signup?ref=1',
+              { label: 'Manufacturing', color: '#3070B8', tagline: 'Where it all started.', demoHref: '/auth/signup?ref=1',
                 desc: 'VSM, time study, and kaizen built on 12 years of real floor experience. ISO 22468:2020 compliant. Automotive, food and beverage, aerospace, electronics.',
                 examples: ['Assembly line bottleneck analysis', 'OEE and uptime tracking', 'SMED changeover reduction'] },
-              { icon: '🏥', label: 'Healthcare', color: '#2A9E82', tagline: 'Patient flow is a value stream.', demoHref: '/auth/signup?demo=healthcare',
+              { label: 'Healthcare', color: '#2A9E82', tagline: 'Patient flow is a value stream.', demoHref: '/auth/signup?demo=healthcare',
                 desc: 'Intake to discharge. Admissions to billing. Every wait, every handoff, every rework step is measurable. Supe finds the bottleneck that costs beds and time.',
                 examples: ['Patient flow mapping', 'Appointment scheduling waste', 'Medication error root cause'] },
-              { icon: '🏠', label: 'Real Estate', color: '#C49B2E', tagline: 'Days on market is cycle time.', demoHref: '/auth/signup?demo=realestate',
+              { label: 'Real Estate', color: '#C49B2E', tagline: 'Days on market is cycle time.', demoHref: '/auth/signup?demo=realestate',
                 desc: 'Lead to close is a process with steps, handoffs, and waiting. Fall-through rate is a defect rate. Supe tells you where deals die and what to fix first.',
                 examples: ['Lead to close value stream', 'Financing delay root cause', 'Offer process bottleneck'] },
-              { icon: '⚖️', label: 'Legal & Professional Services', color: '#6426A0', tagline: 'Billable hours lost to waste.',
+              { label: 'Legal & Professional Services', color: '#6426A0', tagline: 'Billable hours lost to waste.',
                 desc: 'Case intake to resolution. Proposal to invoice. Rework, approval delays, and duplicate data entry cost firms thousands per matter — invisible until mapped.',
                 examples: ['Matter lifecycle mapping', 'Discovery bottleneck analysis', 'Client onboarding waste'] },
-              { icon: '🏗️', label: 'Construction & Trades', color: '#C0402A', tagline: 'Every handoff is a wait time.',
+              { label: 'Construction & Trades', color: '#C0402A', tagline: 'Every handoff is a wait time.',
                 desc: 'Permit to certificate of occupancy. Subcontractor handoffs, material delays, and punch list rework are pure waste. Make the delays quantified and the fixes owned.',
                 examples: ['Trade sequencing analysis', 'Punch list defect rate', 'Permit process mapping'] },
-              { icon: '🍺', label: 'Craft Brewery & Winery', color: '#C0402A', tagline: 'Fermentation time is cycle time.', demoHref: '/auth/signup?demo=brewery',
+              { label: 'Craft Brewery & Winery', color: '#C0402A', tagline: 'Fermentation time is cycle time.', demoHref: '/auth/signup?demo=brewery',
                 desc: 'A stuck sparge, a canning line seamer head issue, a barrel with TCA contamination — every brewing and winemaking problem is a process problem. Map your production flow and find the constraint.',
                 examples: ['Batch fermentation value stream', 'Packaging line uptime analysis', 'Stuck sparge root cause'] },
-              { icon: '🔗', label: 'Logistics & Supply Chain', color: '#1090D4', tagline: 'Every node is a process step.',
+              { label: 'Logistics & Supply Chain', color: '#1090D4', tagline: 'Every node is a process step.',
                 desc: 'Order receipt to last-mile delivery. Pick rates, dock scheduling, carrier handoffs, returns — all measurable, all improvable with the same structured method.',
                 examples: ['Warehouse pick process VSM', 'Returns root cause analysis', 'Dock scheduling kaizen'] },
             ] as any[]).map((ind: any) => (
               <div key={ind.label} className="card-lt" style={{ padding: '24px 22px' }}>
                 <div className="card-stripe" style={{ background: ind.color }} />
-                <div style={{ width: 42, height: 42, borderRadius: 11, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, background: `${ind.color}14`, border: `1px solid ${ind.color}2A`, boxShadow: '0 4px 12px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.7)' }}>
-                  <span style={{ fontSize: 20 }}>{ind.icon}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: '#1E1B17', textShadow: '0 1px 2px rgba(0,0,0,0.09)' }}>{ind.label}</div>
-                    <div style={{ fontSize: 11, color: ind.color, fontWeight: 600, fontFamily: 'monospace' }}>{ind.tagline}</div>
-                  </div>
+                <div style={{ marginBottom: 14 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1E1B17', textShadow: '0 1px 2px rgba(0,0,0,0.09)' }}>{ind.label}</div>
+                  <div style={{ fontSize: 11, color: ind.color, fontWeight: 600, fontFamily: 'monospace' }}>{ind.tagline}</div>
                 </div>
                 <p style={{ fontSize: 12.5, color: '#6B6760', lineHeight: 1.7, marginBottom: 12 }}>{ind.desc}</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -1528,7 +1523,7 @@ export default function HomePage() {
                 <div key={key} className={`card-dk ${isLife ? 'pricing-card-lifetime' : ''}`} style={{ padding: '28px 24px', ...(isPro || isLife ? { background: 'linear-gradient(155deg,rgba(52,44,28,0.97),rgba(34,30,20,0.99))', borderTop: '1px solid rgba(196,155,46,0.3)', borderLeft: '1px solid rgba(196,155,46,0.15)' } : {}) }}>
                   {(isPro || isLife) && (
                     <div style={{ display: 'inline-flex', background: '#C49B2E', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
-                      {isLife ? '👑 BEST VALUE' : 'MOST POPULAR'}
+                      {isLife ? 'BEST VALUE' : 'MOST POPULAR'}
                     </div>
                   )}
                   <div style={{ fontSize: 9, color: 'rgba(248,247,245,0.35)', letterSpacing: 2, fontWeight: 700, marginBottom: 10, fontFamily: 'monospace', textTransform: 'uppercase' }}>{plan.name}</div>

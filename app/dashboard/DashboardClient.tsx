@@ -715,7 +715,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                       fontWeight: view === v ? 700 : 500,
                     }}
                   >
-                    {v === 'cards' ? '⊞' : '☰'} {v.charAt(0).toUpperCase() + v.slice(1)}
+                    {v.charAt(0).toUpperCase() + v.slice(1)}
                   </button>
                 ))}
               </div>
@@ -826,7 +826,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
         {/* ── Reference Projects — all 5 industries ── */}
         <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>⭐</div>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--gold)', letterSpacing: 0.5 }}>REF</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>Reference Projects — 5 Industries</div>
               <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
@@ -844,14 +844,13 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           {/* Industry chips */}
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {([
-              { icon: '🏭', label: 'Manufacturing', color: '#3070B8', desc: 'Seat Assembly — VSM, Time Study, 5 Why, Fishbone, Waste, Kaizen, Yamazumi, PDCA, A3' },
-              { icon: '🏥', label: 'Healthcare', color: '#2A9E82', desc: 'Urgent Care — Patient flow, 3.2hr lead time, treatment bottleneck, Supe analysis' },
-              { icon: '🏠', label: 'Real Estate', color: '#C49B2E', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
-              { icon: '🍺', label: 'Craft Brewery', color: '#C0402A', desc: 'Batch Production — Fermenter constraint, stuck sparge root cause, canning line' },
-              { icon: '🍷', label: 'Winery', color: '#6426A0', desc: 'Boutique Wine — 80 barrels at capacity, 6% barrel defect, no tracking system' },
+              { label: 'Manufacturing', color: '#3070B8', desc: 'Seat Assembly — VSM, Time Study, 5 Why, Fishbone, Waste, Kaizen, Yamazumi, PDCA, A3' },
+              { label: 'Healthcare', color: '#2A9E82', desc: 'Urgent Care — Patient flow, 3.2hr lead time, treatment bottleneck, Supe analysis' },
+              { label: 'Real Estate', color: '#C49B2E', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
+              { label: 'Craft Brewery', color: '#C0402A', desc: 'Batch Production — Fermenter constraint, stuck sparge root cause, canning line' },
+              { label: 'Winery', color: '#6426A0', desc: 'Boutique Wine — 80 barrels at capacity, 6% barrel defect, no tracking system' },
             ] as any[]).map((ind: any) => (
               <div key={ind.label} title={ind.desc} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 100, background: `${ind.color}0F`, border: `1px solid ${ind.color}30`, fontSize: 11 }}>
-                <span style={{ fontSize: 13 }}>{ind.icon}</span>
                 <span style={{ fontWeight: 600, color: ind.color }}>{ind.label}</span>
               </div>
             ))}
@@ -921,7 +920,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               </button>
 
               <Link href="/learn" style={{ textDecoration: 'none' }} className="btn-ghost">
-                📖 Learn Lean Basics
+                Learn Lean Basics
               </Link>
             </div>
           </div>

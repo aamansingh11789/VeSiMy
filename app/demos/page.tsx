@@ -17,7 +17,6 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 const DEMOS = [
   {
     slug: 'manufacturing',
-    icon: '🏭',
     name: 'Automotive Seat Assembly',
     industry: 'Manufacturing',
     color: '#3070B8',
@@ -34,7 +33,6 @@ const DEMOS = [
   },
   {
     slug: 'healthcare',
-    icon: '🏥',
     name: 'Urgent Care Patient Flow',
     industry: 'Healthcare',
     color: '#2A9E82',
@@ -51,7 +49,6 @@ const DEMOS = [
   },
   {
     slug: 'realestate',
-    icon: '🏠',
     name: 'Real Estate Transaction Flow',
     industry: 'Real Estate',
     color: '#C49B2E',
@@ -68,7 +65,6 @@ const DEMOS = [
   },
   {
     slug: 'brewery',
-    icon: '🍺',
     name: 'Craft Brewery Batch Production',
     industry: 'Food & Beverage',
     color: '#C0402A',
@@ -85,7 +81,6 @@ const DEMOS = [
   },
   {
     slug: 'winery',
-    icon: '🍷',
     name: 'Boutique Winery Production',
     industry: 'Food & Beverage',
     color: '#6426A0',
@@ -190,7 +185,7 @@ export default function DemosPage() {
 
               {/* CTA column */}
               <div style={{ padding: '36px 28px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, minWidth: 180, textAlign: 'center', background: '#FAFAF8' }}>
-                <span style={{ fontSize: 40 }}>{demo.icon}</span>
+                <div style={{ fontSize: 11, fontWeight: 800, fontFamily: 'monospace', color: demo.color, padding: '4px 10px', background: `${demo.color}18`, border: `1px solid ${demo.color}35`, borderRadius: 6, display: 'inline-block', letterSpacing: 1, marginBottom: 8 }}>{demo.industry.split(' ')[0]}</div>
                 <Link href={demo.href} style={{ display: 'block', width: '100%', padding: '12px 16px', background: demo.color, color: '#fff', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', textAlign: 'center', lineHeight: 1.4 }}>
                   {demo.cta}
                 </Link>
