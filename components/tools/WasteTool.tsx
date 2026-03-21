@@ -9,14 +9,14 @@ import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
 import { useAIAssist } from '@/hooks/useAIAssist'
 
 const WASTES = [
-  { id: 'T', label: 'Transport', icon: 'TRP', desc: 'Unnecessary movement of materials or products' },
-  { id: 'I', label: 'Inventory', icon: 'INV', desc: 'Excess stock, WIP, or finished goods beyond need' },
-  { id: 'M', label: 'Motion', icon: 'MOT', desc: 'Unnecessary movement of people or equipment' },
-  { id: 'W', label: 'Waiting', icon: 'WIT', desc: 'Idle time waiting for materials, information, or approvals' },
-  { id: 'O', label: 'Overproduction', icon: 'OVP', desc: 'Producing more than what is needed or before it is needed' },
-  { id: 'O2', label: 'Over-processing', icon: 'OVR', desc: 'More processing than the customer requires' },
-  { id: 'D', label: 'Defects', icon: 'DEF', desc: 'Errors, rework, scrap, and corrections' },
-  { id: 'S', label: 'Skills', icon: 'SKL', desc: 'Unused talent, knowledge, and capabilities of people' },
+  { id: 'T', label: 'Transport', icon: 'TRP', desc: 'Unnecessary movement of materials or products' , tipKey: 'waste_transport' },
+  { id: 'I', label: 'Inventory', icon: 'INV', desc: 'Excess stock, WIP, or finished goods beyond need' , tipKey: 'waste_inventory' },
+  { id: 'M', label: 'Motion', icon: 'MOT', desc: 'Unnecessary movement of people or equipment' , tipKey: 'waste_motion' },
+  { id: 'W', label: 'Waiting', icon: 'WIT', desc: 'Idle time waiting for materials, information, or approvals' , tipKey: 'waste_waiting' },
+  { id: 'O', label: 'Overproduction', icon: 'OVP', desc: 'Producing more than what is needed or before it is needed' , tipKey: 'waste_overproduction' },
+  { id: 'O2', label: 'Over-processing', icon: 'OVR', desc: 'More processing than the customer requires' , tipKey: 'waste_overprocessing' },
+  { id: 'D', label: 'Defects', icon: 'DEF', desc: 'Errors, rework, scrap, and corrections' , tipKey: 'waste_defects' },
+  { id: 'S', label: 'Skills', icon: 'SKL', desc: 'Unused talent, knowledge, and capabilities of people' , tipKey: 'waste_skills' },
 ]
 
 interface Props {
@@ -115,13 +115,12 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                     minHeight: 84,
                   }}
                 >
-                  <span style={{ fontSize: 20, flexShrink: 0, marginTop: 1 }}>{w.icon}</span>
-
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                       <span style={{ fontWeight: 700, fontSize: 13, color: active ? '#FF6B6B' : 'var(--text)' }}>
                         {w.label}
                       </span>
+                      <FieldTip termKey={w.tipKey} />
 
                       <span
                         style={{

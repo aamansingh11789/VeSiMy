@@ -37,7 +37,7 @@ export default function AboutPage() {
         <div style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
           <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.45 }}>
-            "Make every manufacturing operation as smart as the best lean consultant in the world — on demand, 24/7, at a price any team can afford."
+            "Make every team — manufacturer, clinic, law firm, or warehouse — as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export default function AboutPage() {
             VeSiMy is an AI operations intelligence platform. It doesn't just give you tools — it watches your processes continuously, detects when something is drifting from normal, and tells you exactly what to fix before it costs you money.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
-            We started with 6 core lean tools (VSM, Kaizen, 5 Why, Fishbone, Time Study, Kanban) and we're building the AI layer on top — an always-on monitor that learns what your operation looks like when it's running well, and alerts you the moment it starts to drift.
+            We started with 9 core CI tools — VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, and PDCA — and we're building the AI layer on top — an always-on monitor that learns what your operation looks like when it's running well, and alerts you the moment it starts to drift.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8 }}>
             The goal: replace the reactive, manual, disconnected world of CI tooling with a proactive, intelligent, connected platform that any manufacturer can afford.
@@ -69,7 +69,7 @@ export default function AboutPage() {
             </div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#D4A208', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY INC. · DELAWARE</div>
+              <div style={{ fontSize: 13, color: '#D4A208', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY LTD · UNITED KINGDOM</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
                 Building VeSiMy from the ground up — product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every manufacturer in the world.
               </p>

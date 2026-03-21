@@ -233,7 +233,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
 
             <div className="vesimy-mobile-grid">
               <div style={{ gridColumn: g.metric === 'Custom' ? 'auto' : '1 / -1' }}>
-                <label className="label">Metric</label>
+                <TipLabel termKey="improvement_metric">Metric</TipLabel>
                 <select
                   className="input"
                   value={g.metric}
@@ -258,7 +258,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
               )}
 
               <div>
-                <label className="label">Baseline (Current State)</label>
+                <TipLabel termKey="improvement_baseline">Baseline (Current State)</TipLabel>
                 <input
                   className="input"
                   type="number"

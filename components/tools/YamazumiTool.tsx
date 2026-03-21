@@ -3,6 +3,7 @@
 
 import { useMemo, useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
+import { FieldTip } from '@/components/ui/FieldTip'
 import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
 import { useAIAssist } from '@/hooks/useAIAssist'
 
@@ -82,7 +83,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
           {takt > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11 }}>
               <div style={{ width: 16, height: 2, background: '#FF6B6B', borderTop: '2px dashed #FF6B6B' }} />
-              <span style={{ color: '#FF6B6B' }}>Takt Time ({takt}s)</span>
+              <span style={{ color: '#FF6B6B', display:'flex', alignItems:'center', gap:4 }}>Takt Time ({takt}s)<FieldTip termKey="takt_time" /></span>
             </div>
           )}
         </div>

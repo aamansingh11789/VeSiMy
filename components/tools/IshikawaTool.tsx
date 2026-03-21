@@ -70,7 +70,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          <label className="label" style={{ margin: 0 }}>Problem / Effect Statement *</label>
+          <TipLabel termKey="fishbone_effect" style={{ margin: 0 }}>Problem / Effect Statement *</TipLabel>
         </div>
         <input
           className="input"

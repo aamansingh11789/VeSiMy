@@ -497,7 +497,7 @@ function PlanCard({
           : isEnterprise
             ? 'Get a Quote →'
             : price === 0
-              ? 'Start Free Trial'
+              ? 'Start free — no card needed'
               : plan.cta}
       </button>
 
@@ -650,7 +650,7 @@ export default function PricingPage() {
               priced for real operators.
             </>
           }
-          subtitle="The Free plan gives you unlimited projects, all 9 CI tools, forever — no credit card needed. Upgrade to Pro for Supe AI, process simulation, and the A3 export."
+          subtitle="The free plan gives you unlimited projects and all 9 CI tools — no credit card, no expiry. Upgrade to Pro for Supe AI, process simulation, and the A3 export. First upgrade includes a 14-day free trial."
         />
 
         <div style={{ marginTop: 34, textAlign: 'center' }}>
@@ -705,7 +705,7 @@ export default function PricingPage() {
           }}
         >
           {[
-            '256-bit SSL encryption',
+            '256-bit encryption in transit and at rest',
             'Cancel anytime',
             'Stripe-secured payments',
             'No hidden fees',
@@ -810,7 +810,7 @@ export default function PricingPage() {
         }}
       >
         <p style={{ fontSize: 12, color: 'var(--text3)' }}>
-          © 2026 VeSiMy ·{' '}
+          © 2026 VeSiMy Ltd ·{' '}
           <Link href="/terms" style={{ color: 'var(--text3)', textDecoration: 'none' }}>
             Terms
           </Link>{' '}

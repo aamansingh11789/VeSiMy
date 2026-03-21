@@ -327,7 +327,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
             <div className="vesimy-mobile-grid">
               <div style={{ gridColumn: '1/-1' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                  <label className="label" style={{ margin: 0 }}>Title *</label>
+                  <TipLabel termKey="kaizen_title" style={{ margin: 0 }}>Title *</TipLabel>
                   <AIAssistButton
                     label="AI Draft"
                     loading={aiLoading}

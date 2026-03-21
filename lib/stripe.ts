@@ -8,28 +8,12 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 // ── Plans ───────────────────────────────────────────────────────────────────
-// Trial:    14 days · 3 projects · no card required at signup
-// Pro:      $29/mo  · 10 projects · all tools + exports
-// Lifetime: $99 once · 30 projects · everything
-// Enterprise: custom
+// Free:       $0 · unlimited projects · all 9 CI tools · no card required
+// Pro:        $29/mo · unlimited projects · Supe AI + A3 export · 14-day trial on first upgrade
+// Lifetime:   $99 once · unlimited projects · all Pro features · no monthly fee
+// Enterprise: custom · unlimited · SSO + SLA + admin dashboard
 
 export const PLANS = {
-  trial: {
-    name:        'Free Trial',
-    price:       0,
-    description: '14 days to explore every tool. No credit card required.',
-    features: [
-      '14-day full access trial',
-      'Unlimited projects',
-      'All CI tools — VSM, Kaizen, Fishbone, 5 Why, Waste ID, Time Study',
-      'PDCA, Yamazumi, Standard Work',
-      'VSM map view',
-      'No credit card required to start',
-    ],
-    cta: 'Start Free Trial',
-    priceId: null,
-    isTrial: true,
-  },
   pro: {
     name:        'Pro',
     price:       29,

@@ -375,23 +375,23 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
             </div>
 
             <div>
-              <label className="label">Problem Statement *</label>
+              <TipLabel termKey="problem_statement">Problem Statement *</TipLabel>
               <textarea className="input" style={inputStyle} rows={3} placeholder="Describe the problem with data — what is wrong, where, how often, since when?" value={data.problemStatement} onChange={e => set('problemStatement', e.target.value)} />
             </div>
             <div>
-              <label className="label">Background / Context</label>
+              <TipLabel termKey="fishbone_effect">Background / Context</TipLabel>
               <textarea className="input" style={inputStyle} rows={2} placeholder="Why does this matter? Impact on customer, safety, quality, cost?" value={data.background} onChange={e => set('background', e.target.value)} />
             </div>
             <div>
-              <label className="label">Current Condition</label>
+              <TipLabel termKey="improvement_baseline">Current Condition</TipLabel>
               <textarea className="input" style={inputStyle} rows={2} placeholder="What does the process look like today? Include data — CT, WIP, defect rate, lead time…" value={data.currentCondition} onChange={e => set('currentCondition', e.target.value)} />
             </div>
             <div>
-              <label className="label">Target Condition</label>
+              <TipLabel termKey="improvement_target">Target Condition</TipLabel>
               <textarea className="input" style={inputStyle} rows={2} placeholder="What does success look like? Be specific — e.g. 'CT reduced from 180s to 120s, WIP from 15 to 3'" value={data.targetCondition} onChange={e => set('targetCondition', e.target.value)} />
             </div>
             <div>
-              <label className="label">Root Cause Analysis</label>
+              <TipLabel termKey="root_cause">Root Cause Analysis</TipLabel>
               <textarea className="input" style={inputStyle} rows={3} placeholder="What is the verified root cause? Use 5 Why or Fishbone tools to support this." value={data.rootCause} onChange={e => set('rootCause', e.target.value)} />
             </div>
             <div>

@@ -28,7 +28,7 @@ export default function TermsPage() {
         </div>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy, a registered business.</p>
+          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy Ltd, a company registered in England and Wales. These Terms are governed by the laws of England and Wales.</p>
         </Section>
 
         <Section title="2. Description of Service">
@@ -40,7 +40,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="4. Subscriptions and Billing">
-          <p>Paid plans are billed monthly or annually depending on your selection. The Free plan is free forever with no payment required. Paid plans (Pro and above) include a 14-day free trial — you will not be charged until the trial period ends. Paid subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
+          <p>The Free plan is available at no cost with no credit card required and no time limit. Paid plans are billed monthly or annually depending on your selection. When upgrading to Pro for the first time, a 14-day free trial applies — you will not be charged until the trial period ends. Paid subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
         </Section>
 
         <Section title="5. Your Data">
@@ -52,7 +52,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="7. Intellectual Property">
-          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy and are protected by international copyright, trademark, and other intellectual property laws. The VeSiMy name, logo, and associated marks are trademarks of VeSiMy.</p>
+          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy Ltd and are protected by international copyright and other intellectual property laws. The VeSiMy name, logo, and associated marks are proprietary to VeSiMy Ltd.</p>
         </Section>
 
         <Section title="8. Limitation of Liability">

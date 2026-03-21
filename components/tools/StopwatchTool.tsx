@@ -381,7 +381,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
-            <label className="label">Manual Cycle Time (sec)</label>
+            <TipLabel termKey="cycle_time">Manual Cycle Time (sec)</TipLabel>
             <input
               className="input"
               type="number"
@@ -393,7 +393,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
           </div>
 
           <div>
-            <label className="label">Baseline CT (sec)</label>
+            <TipLabel termKey="baseline_ct">Baseline CT (sec)</TipLabel>
             <input
               className="input"
               type="number"

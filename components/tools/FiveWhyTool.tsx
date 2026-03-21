@@ -139,7 +139,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <label className="label" style={{ margin: 0 }}>Problem Statement *</label>
+          <TipLabel termKey="problem_statement" style={{ margin: 0 }}>Problem Statement *</TipLabel>
           {(problem || whys.some(w => w)) && (
             <button
               onClick={exportFiveWhyISO}
@@ -211,7 +211,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
             padding: 10,
           }}
         >
-          <label className="label" style={{ color: '#1DD1A1' }}>Root Cause</label>
+          <TipLabel termKey="root_cause" style={{ color: '#1DD1A1' }}>Root Cause</TipLabel>
           <textarea
             className="input"
             rows={2}
@@ -223,7 +223,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-            <label className="label" style={{ margin: 0 }}>Countermeasure / Action</label>
+            <TipLabel termKey="countermeasure" style={{ margin: 0 }}>Countermeasure / Action</TipLabel>
             {rootCause && (
               <AIAssistButton
                 label="Draft countermeasure"
@@ -249,11 +249,11 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
-            <label className="label">Owner</label>
+            <TipLabel termKey="kaizen_owner">Owner</TipLabel>
             <input className="input" value={owner} onChange={(e) => setOwner(e.target.value)} />
           </div>
           <div>
-            <label className="label">Due Date</label>
+            <TipLabel termKey="kaizen_due">Due Date</TipLabel>
             <input className="input" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
           </div>
         </div>

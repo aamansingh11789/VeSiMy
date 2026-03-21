@@ -53,10 +53,10 @@ const fmtS = (s: number) => {
   return sec > 0 ? `${m}m ${sec}s` : `${m}m`
 }
 
-const TYPE_META: Record<StepType, { label: string; color: string; bg: string; desc: string }> = {
-  internal: { label: 'Internal',  color: '#C0402A', bg: 'rgba(192,64,42,0.1)',   desc: 'Machine must be stopped' },
-  external: { label: 'External',  color: '#1A7A5E', bg: 'rgba(26,122,94,0.1)',   desc: 'Can be done while machine runs' },
-  waste:    { label: 'Waste/NVA', color: '#8C44CC', bg: 'rgba(140,68,204,0.1)', desc: 'Eliminate — adds no value' },
+const TYPE_META: Record<StepType, { label: string; color: string; bg: string; desc: string; tipKey: string }> = {
+  internal: { label: 'Internal',  color: '#C0402A', bg: 'rgba(192,64,42,0.1)',   desc: 'Machine must be stopped to perform this task', tipKey: 'smed_internal' },
+  external: { label: 'External',  color: '#1A7A5E', bg: 'rgba(26,122,94,0.1)',   desc: 'Can be done while machine is still running', tipKey: 'smed_external' },
+  waste:    { label: 'Waste/NVA', color: '#8C44CC', bg: 'rgba(140,68,204,0.1)', desc: 'Target for elimination — adds no value', tipKey: 'waste_overprocessing' },
 }
 const PHASE_META: Record<Phase, { label: string; color: string }> = {
   pre:    { label: 'Pre-Changeover',    color: '#1A4F8A' },
@@ -613,15 +613,15 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             {[
-              { label: 'Current changeover time (min)', val: currentTime, set: setCurrentTime, hint: '0 = use recorded step times' },
-              { label: 'Target changeover time (min)',  val: targetTime,  set: setTargetTime,  hint: 'Your SMED goal' },
+              { label: 'Current changeover time (min)', tipKey: 'smed_changeover', val: currentTime, set: setCurrentTime, hint: '0 = use recorded step times' },
+              { label: 'Target changeover time (min)',  tipKey: 'smed_changeover',  val: targetTime,  set: setTargetTime,  hint: 'Your SMED goal — aim for under 10 min' },
               { label: 'Changeovers per day',           val: changesPerDay, set: setChangesPerDay, hint: '' },
               { label: 'Working days per year',         val: workingDays, set: setWorkingDays, hint: 'Typically 250' },
               { label: 'Labour cost ($/hour)',          val: laborCost,   set: setLaborCost,   hint: 'Including benefits' },
               { label: 'Hours available per day',       val: hoursPerDay, set: setHoursPerDay, hint: 'Net productive hours' },
             ].map(({ label, val, set, hint }) => (
               <div key={label}>
-                <label style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>{label}</label>
+                <label style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>{label}{tipKey && <FieldTip termKey={tipKey} />}</label>
                 <input
                   style={inputStyle}
                   type="number"

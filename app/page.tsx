@@ -1310,7 +1310,7 @@ export default function HomePage() {
                 View all demos →
               </Link>
             </div>
-            <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.18)', fontFamily: 'monospace' }}>Runs in your browser · Your process data stays private · No IP tracking</p>
+            <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.18)', fontFamily: 'monospace' }}>Runs in your browser · Your process data is private · No advertising trackers</p>
           </div>
 
           {/* ── Showcase below text: preview left + demo stack right ── */}
@@ -1511,7 +1511,7 @@ export default function HomePage() {
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(196,155,46,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4 }}>Pricing</div>
             <h2 className="h2-dark-shadow" style={{ fontSize: 'clamp(26px,3vw,42px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 12, fontFamily: serif, letterSpacing: -.5 }}>Simple, honest pricing.</h2>
-            <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.42)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>Unlimited projects free forever. Pro adds Supe AI, process simulation, and the A3 export — with a free trial on your first upgrade.</p>
+            <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.42)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>Free plan: unlimited projects, all 9 CI tools — no credit card, no expiry. Pro adds Supe AI, process simulation, and the A3 export. First upgrade includes a 14-day free trial.</p>
           </div>
 
           <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(240px,100%),1fr))', gap: 16 }}>
@@ -1566,7 +1566,7 @@ export default function HomePage() {
         <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10 }}>
           Your next kaizen event starts here —<br />not in a <span style={{ color: '#C49B2E' }}>spreadsheet.</span>
         </h2>
-        <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free forever. Unlimited projects. No credit card. No trial clock.</p>
+        <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free plan. Unlimited projects. No credit card required.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
             Start free. No card needed.

@@ -66,7 +66,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="5. Third-Party Services">
-          <p>We use the following third-party services: <strong style={{ color: '#B0B0C8' }}>Supabase</strong> (database and authentication), <strong style={{ color: '#B0B0C8' }}>Stripe</strong> (payment processing), <strong style={{ color: '#B0B0C8' }}>Vercel</strong> (hosting), <strong style={{ color: '#B0B0C8' }}>Anthropic</strong> (AI features via Claude API — only process metadata is sent, never raw business data). Each of these providers has their own privacy policy.</p>
+          <p>We use the following third-party services: <strong style={{ color: '#B0B0C8' }}>Supabase</strong> (database and authentication), <strong style={{ color: '#B0B0C8' }}>Stripe</strong> (payment processing), <strong style={{ color: '#B0B0C8' }}>Vercel</strong> (hosting), <strong style={{ color: '#B0B0C8' }}>Anthropic</strong> (AI features via Claude API — step names, timing data, and process classifications are sent to generate AI analysis; avoid including confidential identifiers in step names). Each of these providers has their own privacy policy.</p>
         </Section>
 
         <Section title="6. Your Rights">
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a><br />VeSiMy, United Kingdom.</p>
+          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a><br />VeSiMy Ltd, United Kingdom.</p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>

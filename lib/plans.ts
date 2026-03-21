@@ -8,7 +8,7 @@ export const PLANS = {
     name:        'Free',
     price:       0,
     description: 'Unlimited projects, all 9 CI tools — completely free. No clock, no pressure.',
-    cta:         'Start free — unlimited projects',
+    cta:         'Start free — no card needed',
     features: [
       'Unlimited projects — free forever',
       'VSM Builder with unlimited steps',
