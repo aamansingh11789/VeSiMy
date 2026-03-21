@@ -573,192 +573,158 @@ const SHOWCASE_TOOLS=[
   },
 ]
 
-// ── InlineToolShowcase ────────────────────────────────────────────────────────
+// ── MultiDemoShowcase — 5 demo cards right + tool popup left ─────────────────
+// Shows real app popup content for each industry demo.
+// Clicking a demo card switches the main popup. Tool tabs switch tool views.
+
+const DEMO_SHOWCASE = [
+  {
+    id:'mfg', icon:'🏭', industry:'MANUFACTURING', color:'#3070B8',
+    headline:'Seat Assembly Line 4',
+    metric:'PCE 34%', metricLabel:'CURRENT STATE', metricColor:'#C0402A',
+    chromTitle:'VSM Builder · Seat Assembly Line 4 · Current State',
+    badge:'ISO 22468',
+    tools:['VSM','TIME','5WHY','FISH','WASTE','KAIZEN','YAM','GAP','A3','PDCA'],
+  },
+  {
+    id:'health', icon:'🏥', industry:'HEALTHCARE', color:'#2A9E82',
+    headline:'Urgent Care Patient Flow',
+    metric:'3.2 hr', metricLabel:'DOOR-TO-DISCHARGE', metricColor:'#C0402A',
+    chromTitle:'VSM · Urgent Care Patient Flow · Current State',
+    badge:'7 Steps',
+    tools:['VSM','5WHY','WASTE','KAIZEN','GAP'],
+  },
+  {
+    id:'re', icon:'🏠', industry:'REAL ESTATE', color:'#C49B2E',
+    headline:'Transaction Flow',
+    metric:'28%', metricLabel:'DOC KICKBACK RATE', metricColor:'#C0402A',
+    chromTitle:'VSM · Real Estate Transaction Flow · Current State',
+    badge:'7 Steps',
+    tools:['VSM','5WHY','WASTE','KAIZEN'],
+  },
+  {
+    id:'brew', icon:'🍺', industry:'CRAFT BREWERY', color:'#C0402A',
+    headline:'Batch Production — 10 bbl',
+    metric:'4→5', metricLabel:'BATCHES/WEEK GAP', metricColor:'#C0402A',
+    chromTitle:'VSM · Craft Brewery Batch Production · 10bbl',
+    badge:'8 Steps',
+    tools:['VSM','5WHY','WASTE','KAIZEN'],
+  },
+  {
+    id:'wine', icon:'🍷', industry:'WINERY', color:'#6426A0',
+    headline:'Boutique Wine Production',
+    metric:'6%', metricLabel:'BARREL DEFECT RATE', metricColor:'#C0402A',
+    chromTitle:'VSM · Boutique Winery · 2,000 cases/yr',
+    badge:'8 Steps',
+    tools:['VSM','5WHY','KAIZEN'],
+  },
+]
+
+// Popup HTML per demo+tool — real app data
+function getDemoPopup(demoId: string, tool: string): string {
+  // Manufacturing uses the full SHOWCASE_TOOLS data
+  if (demoId === 'mfg') {
+    const t = SHOWCASE_TOOLS.find(t => t.short === tool) || SHOWCASE_TOOLS[0]
+    return t.popup
+  }
+  // Healthcare
+  if (demoId === 'health') {
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Urgent Care Patient Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:12px;font-weight:700;color:#C49B2E;margin-top:2px">45 min</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">192 min</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Treatment 52 min</div></div></div><div style="padding:8px 10px">${[['Patient Arrival','8 min','480 min',false],['Triage & Acuity','6 min','18 min',false],['Vitals & Assessment','12 min','25 min',false],['Physician Assessment','18 min','35 min',false],['Diagnostics — Lab','45 min','30 min',false],['Treatment','52 min','15 min',true],['Discharge & Docs','18 min','22 min',false]].map(([n,ct,wt,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:8px;color:#8E8A82;font-family:monospace">Wait: ${wt}</span></div>`).join('')}</div></div>`
+    if (tool === 'GAP') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Urgent Care Patient Flow</span><span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">✦</div><div><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">SUPE — AI ANALYSIS</div><div style="font-size:9px;color:#2A1A4E;line-height:1.5">Door-to-discharge averages 3.2 hours — 1.2 hrs over target. Root cause: demand-matched staffing gaps on Mon/Fri 4-8pm surges. Staff observe the problem daily but no data mechanism exists to escalate it.</div></div></div>${[['CRITICAL','Treatment CT 52 min vs 45-min Takt','Point-of-care medication saves 8 min. Concurrent discharge docs saves 22 min.'],['CRITICAL','Physician wait 35 min during surge hours','Mon/Fri 4-8pm surge not reflected in staffing schedule'],['WARNING','72-hour return rate 8%','Discharge documentation quality — missed instructions'],['INFO','Lab turnaround 35–90 min variation','CT scanner backlog peaks on high-volume days']].map(([s,t,n])=>`<div style="background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.3)':s==='WARNING'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:7px;font-weight:700;font-family:monospace;color:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#C49B2E':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${s==='CRITICAL'?'rgba(192,64,42,.1)':s==='WARNING'?'rgba(196,155,46,.1)':'rgba(26,79,138,.1)'}">${s}</span><span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${t}</span></div><div style="font-size:7.5px;color:#6B6760;margin-top:3px">${n}</div></div>`).join('')}</div></div>`
+  }
+  // Real Estate
+  if (demoId === 're') {
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Real Estate Transaction Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~45 days</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">KICKBACK RATE</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">28%</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Financing 10+ days</div></div></div><div style="padding:8px 10px">${[['Lead Inquiry','25 min','8 hr','0%',false],['Qualify & Consult','90 min','2 days','15% unqualif.',false],['Property Search','8 hrs','1 day','—',false],['Offer & Negotiation','2 hrs','2 days','35% rejected',false],['Inspection & Appraisal','4 hrs','5 days','22% renegotiate',false],['Financing & Underwriting','10 hrs','10 days','28% kickback',true],['Closing & Handover','3 hrs','2 days','5% fall-through',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 28% Document Kickback Rate</span></div><div style="padding:10px 14px"><div style="background:#FDF5E0;border:1px solid rgba(196,155,46,.4);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A6300;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A3000">28% of financing files kicked back — adds 3-5 days per transaction</div></div>${[['1','Why are 28% of files kicked back?','Files submitted before all required documents collected and verified.'],['2','Why before complete?','No standardised pre-submission checklist. Each agent assembles files differently.'],['3','Why no checklist?','Lender requirements vary by loan type — no master checklist built per type.'],['4','Why no master checklist?','No formal process owner for transaction coordination workflows.'],['5','Why no process owner?','ROOT CAUSE: The brokerage treats every transaction as one-off agent work. No standard work exists.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#C49B2E'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(196,155,46,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+  }
+  // Brewery
+  if (demoId === 'brew') {
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Craft Brewery Batch Production — 10bbl</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">THROUGHPUT</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">4 batch/wk</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TARGET</div><div style="font-size:12px;font-weight:700;color:#2A9E82;margin-top:2px">5 batch/wk</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">CONSTRAINT</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6 Fermenters — 6 day</div></div></div><div style="padding:8px 10px">${[['Grain Receiving & Milling','90 min','1,440 min','1% moisture reject',false],['Mashing & Lautering','120 min','30 min','3% stuck sparge',false],['Boil & Hop Addition','75 min','15 min','2% hop adjust',false],['Whirlpool, Chill & Transfer','45 min','10 min','',false],['Fermentation','6 days','—','4% off-flavour',true],['Conditioning & Dry Hop','3 days','—','2% extended',false],['Packaging — Can/Keg','4 hrs','60 min','3% underfill — seamer',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 3% Stuck Sparge — Rye &amp; Wheat Batches</span></div><div style="padding:10px 14px"><div style="background:#FEF0ED;border:1px solid rgba(192,64,42,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A2A1A;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A1200">3% of batches stuck sparge — adds 45 min rework, delays downstream schedule</div></div>${[['1','Why do batches get stuck sparge?','High-adjunct grain bills (rye, oats, wheat) create dense grain bed restricting wort flow.'],['2','Why do high-adjunct bills restrict flow?','Rice hulls not added to these grists. Recipe sheet does not specify rice hull addition.'],['3','Why don\'t recipe sheets specify rice hulls?','Recipes were written for the 3-barrel system. Equipment changed to 10-barrel but recipes weren\'t updated.'],['4','Why weren\'t recipes updated?','No formal recipe scale-up review. Head brewer carried the adjustment in memory only.'],['5','Why not documented?','ROOT CAUSE: No recipe management system with equipment-specific parameters. Recipes in Google Docs with no version control.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#C49B2E'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(196,155,46,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+  }
+  // Winery
+  if (demoId === 'wine') {
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Boutique Winery · 2,000 cases/year</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~18 months</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BARRELS</div><div style="font-size:12px;font-weight:700;color:#C49B2E;margin-top:2px">80 — full</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">DEFECT RATE</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6% TCA/high VA</div></div></div><div style="padding:8px 10px">${[['Harvest & Vineyard Receiving','8 hrs','24 hrs','8% fruit rejected',false],['Destemming & Crush','2 hrs','2 hrs','2% SO₂ error',false],['Primary Alcoholic Fermentation','20 days','—','5% off-aromas',false],['Pressing & Free-Run Sep.','3 hrs','12 hrs','3% blend error',false],['Malolactic Fermentation','45 days','—','8% incomplete ML',false],['Barrel Ageing & Topping','15 months','—','6% TCA/high VA',true],['Blending & Filtration','4 hrs','30 days','4% reformulation',false],['Bottling & Labelling','6 hrs','48 hrs','4% label errors',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(100,38,160,.06)':'#fff'};border:1px solid ${bad?'rgba(100,38,160,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#6426A0':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 6% Barrel Defect Rate — TCA &amp; High VA</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#2A1A4E">6% of barrels develop TCA or excessive volatile acidity — avg $4,200 loss per barrel</div></div>${[['1','Why do 6% develop TCA or high VA?','TCA from cork contact. High VA from insufficient topping — oxygen exposure.'],['2','Why insufficient topping?','Schedule managed from memory. No documented topping log. Back barrels missed for 3-4 weeks.'],['3','Why no topping log?','No barrel tracking system. Each barrel identified by chalk marker only.'],['4','Why no tracking system?','Winery grew from 400 to 2,000 cases without updating record-keeping practices.'],['5','Why not updated as winery grew?','ROOT CAUSE: No formal operations review as the winery scaled. Production processes never systematically reviewed for scalability.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#6426A0'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(100,38,160,.3);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+  }
+  return `<div style="padding:24px;text-align:center;color:#8E8A82;font-family:monospace;font-size:11px">Select a demo to explore</div>`
+}
+
 function InlineToolShowcase() {
-  const [active, setActive] = useState(0)
-  const wrapRef     = useRef<HTMLDivElement>(null)
-  const popupRef    = useRef<HTMLDivElement>(null)
-  const touchStartX = useRef(0)
-  const touchStartY = useRef(0)
-  const lastNav     = useRef(0)
-  const tool        = SHOWCASE_TOOLS[active]
+  const [activeDemo, setActiveDemo] = useState(0)
+  const [activeTool, setActiveTool] = useState('VSM')
 
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return
-    const onWheel = (e: WheelEvent) => {
-      if (popupRef.current?.contains(e.target as Node)) {
-        const pop = popupRef.current!
-        if ((e.deltaY < 0 && pop.scrollTop > 0) || (e.deltaY > 0 && pop.scrollTop + pop.clientHeight < pop.scrollHeight - 2)) return
-      }
-      const now = Date.now()
-      if (now - lastNav.current < 500 || Math.abs(e.deltaY) < 20) return
-      e.preventDefault()
-      lastNav.current = now
-      if (e.deltaY > 0) setActive(t => Math.min(t + 1, SHOWCASE_TOOLS.length - 1))
-      else              setActive(t => Math.max(t - 1, 0))
-    }
-    el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
-  }, [active])
+  const demo = DEMO_SHOWCASE[activeDemo]
 
-  useEffect(() => {
-    const k = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))
-      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   setActive(t => Math.max(t-1, 0))
-    }
-    window.addEventListener('keydown', k)
-    return () => window.removeEventListener('keydown', k)
-  }, [])
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-    touchStartY.current = e.touches[0].clientY
+  // When switching demos, reset to VSM or first available tool
+  function switchDemo(idx: number) {
+    setActiveDemo(idx)
+    setActiveTool(DEMO_SHOWCASE[idx].tools[0])
   }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = touchStartX.current - e.changedTouches[0].clientX
-    const dy = Math.abs(touchStartY.current - e.changedTouches[0].clientY)
-    if (Math.abs(dx) < 40 || dy > Math.abs(dx)) return
-    const now = Date.now()
-    if (now - lastNav.current < 400) return
-    lastNav.current = now
-    if (dx > 0) setActive(t => Math.min(t+1, SHOWCASE_TOOLS.length-1))
-    else        setActive(t => Math.max(t-1, 0))
-  }
+
+  const popupHtml = getDemoPopup(demo.id, activeTool)
 
   return (
-    <div ref={wrapRef} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-      style={{ userSelect:'none', outline:'none' }}>
+    <div style={{ userSelect:'none' }}>
       <style>{`
-        @keyframes previewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes labelIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes popIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        .demo-stack-card{cursor:pointer;border-radius:11px;padding:10px 9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);transition:all .2s;position:relative;overflow:hidden;}
+        .demo-stack-card:hover{background:rgba(255,255,255,0.08);transform:translateY(-2px);}
+        .demo-stack-card.dsc-active{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18);}
+        .tool-tab{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:700;font-family:monospace;cursor:pointer;border:1px solid rgba(255,255,255,0.08);color:rgba(248,247,245,0.4);background:transparent;transition:all .15s;}
+        .tool-tab:hover{background:rgba(255,255,255,0.07);color:rgba(248,247,245,0.7);}
+        .tool-tab.tt-active{color:#C49B2E;border-color:rgba(196,155,46,0.4);background:rgba(196,155,46,0.08);}
+        .showcase-popup-body{max-height:400px;overflow-y:auto;background:#F8F6F0;border-radius:0 0 8px 8px;}
+        .showcase-popup-body::-webkit-scrollbar{width:4px}
+        .showcase-popup-body::-webkit-scrollbar-thumb{background:rgba(196,155,46,0.3);border-radius:2px}
       `}</style>
 
-      {/* Tool label row */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, flexWrap:'wrap', gap:6 }}>
-        <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontSize:9, fontWeight:700, color:tool.color, letterSpacing:'.5px', fontFamily:'monospace',
-            padding:'2px 8px', borderRadius:100, background:'rgba(255,255,255,0.08)', border:`1px solid ${tool.color}55` }}>
-            {tool.tag}
-          </span>
-          <span key={`lbl-${active}`} style={{ fontSize:13, fontWeight:700, color:'#F8F7F5', fontFamily:serif, animation:'labelIn 0.2s ease both' }}>
-            {tool.headline}
-          </span>
-        </div>
-        <span style={{ fontSize:10, color:'rgba(248,247,245,0.28)', fontFamily:'monospace' }}>
-          {active+1}/{SHOWCASE_TOOLS.length} · scroll
-        </span>
-      </div>
+      {/* Outer frame with glow border */}
+      <div style={{ position:'relative', borderRadius:20, padding:1, background:'linear-gradient(135deg,rgba(196,155,46,0.25),rgba(100,38,160,0.1),rgba(48,112,184,0.15))' }}>
+        <div style={{ borderRadius:19, background:'rgba(30,27,23,0.97)', padding:14, display:'flex', gap:10 }}>
 
-      {/* Side-by-side layout — preview + mini stack */}
-      <div className="showcase-row" style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-
-        {/* PREVIEW — takes most of the width */}
-        <div style={{ flex:'1 1 0', minWidth:0 }}>
-          <div ref={popupRef} key={`pop-${active}`}
-            style={{ background:'#fff', border:'0.5px solid #D8D5CE', borderRadius:12, overflow:'hidden',
-              boxShadow:'0 4px 24px rgba(0,0,0,0.24)', maxHeight:340, overflowY:'auto',
-              animation:'previewIn 0.22s ease both' }}
-            dangerouslySetInnerHTML={{ __html: tool.popup + `
-              <div style="padding:5px 12px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
-                <span style="font-size:9px;color:#8E8A82;font-family:monospace">${tool.name} · VeSiMy</span>
-                <a href="/auth/signup" style="padding:4px 10px;font-size:10px;font-weight:700;border-radius:6px;background:#C49B2E;color:#fff;text-decoration:none">Try free →</a>
-              </div>` }}
-          />
-          {/* Mobile nav — shown only on small screens */}
-          <div className="showcase-mobile-nav" style={{ display:'none', justifyContent:'center', gap:12, marginTop:10 }}>
-            <button onClick={() => setActive(t => Math.max(t-1,0))} disabled={active===0}
-              style={{ padding:'6px 18px', borderRadius:8, border:'1px solid rgba(255,255,255,.15)',
-                background:'rgba(255,255,255,.08)', color:active===0?'rgba(255,255,255,.2)':'#F8F7F5',
-                fontSize:13, cursor:active===0?'default':'pointer', fontWeight:600 }}>‹ Prev</button>
-            <div style={{ display:'flex', gap:4, alignItems:'center' }}>
-              {SHOWCASE_TOOLS.map((_,i) => (
-                <div key={i} onClick={() => setActive(i)} style={{
-                  width:i===active?14:5, height:5, borderRadius:100,
-                  background:i===active ? tool.color : 'rgba(255,255,255,.2)',
-                  cursor:'pointer', transition:'all .22s',
-                }}/>
-              ))}
-            </div>
-            <button onClick={() => setActive(t => Math.min(t+1,SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
-              style={{ padding:'6px 18px', borderRadius:8, border:'1px solid rgba(255,255,255,.15)',
-                background:'rgba(255,255,255,.08)', color:active===SHOWCASE_TOOLS.length-1?'rgba(255,255,255,.2)':'#F8F7F5',
-                fontSize:13, cursor:active===SHOWCASE_TOOLS.length-1?'default':'pointer', fontWeight:600 }}>Next ›</button>
-          </div>
-        </div>
-
-        {/* MINI STACK — desktop only, hidden on mobile */}
-        <div className="showcase-stack-panel" style={{ width:130, flexShrink:0 }}>
-          <div style={{ perspective:'580px', perspectiveOrigin:'55% 38%' }}>
-            <div className="showcase-mini-3d" style={{
-              position:'relative', width:130, height:270,
-              transformStyle:'preserve-3d',
-              transform:'rotateY(15deg) rotateX(5deg) rotateZ(1deg)',
-            }}>
-              {SHOWCASE_TOOLS.map((t, i) => {
-                const off = i - active
-                const isA = i === active
-                const ao  = Math.abs(off)
-                return (
-                  <div key={t.short} onClick={() => !isA && setActive(i)} style={{
-                    position:'absolute', top:0, left:0, width:'100%',
-                    height:'calc(100% - 20px)',
-                    borderRadius:9,
-                    background:`rgba(255,255,255,${isA?.97:Math.max(.28,.75-ao*.07)})`,
-                    border:`1.5px solid ${isA ? t.color+'60' : 'rgba(215,213,206,.42)'}`,
-                    boxShadow: isA ? `0 8px 24px rgba(0,0,0,.13),0 0 0 1px ${t.color}18` : '0 1px 4px rgba(0,0,0,.04)',
-                    transform:`translateY(${off*10}px) translateZ(${isA?26:-ao*10}px) scale(${isA?1:Math.max(.82,.96-ao*.022)})`,
-                    transition:'all .4s cubic-bezier(.34,1.1,.64,1)',
-                    overflow:'hidden', display:'flex', flexDirection:'column',
-                    cursor: isA ? 'default' : 'pointer',
-                  }}>
-                    <div style={{ padding:'6px 7px 4px', borderBottom:'1px solid rgba(0,0,0,.05)', flexShrink:0 }}>
-                      <div style={{ display:'flex', alignItems:'center', gap:4 }}>
-                        <div style={{ width:16, height:16, borderRadius:4, background:`${t.color}14`, border:`1px solid ${t.color}20`,
-                          display:'flex', alignItems:'center', justifyContent:'center', fontSize:5.5, fontWeight:800,
-                          color:t.color, fontFamily:'monospace', flexShrink:0 }}>{t.short}</div>
-                        <div style={{ fontSize:7, fontWeight:700, color:'#242220', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis', flex:1 }}>{t.name}</div>
-                        {isA && <div style={{ width:4, height:4, borderRadius:'50%', background:t.color, flexShrink:0 }}/>}
-                      </div>
-                    </div>
-                    <div style={{ flex:1, overflow:'hidden',
-                      opacity:isA?1:Math.max(.05,.48-ao*.14),
-                      transform:`scale(${isA?1:.79})`, transformOrigin:'top left',
-                      transition:'opacity .35s,transform .35s', pointerEvents:'none' }}
-                      dangerouslySetInnerHTML={{ __html: t.cardContent }}
-                    />
-                    {isA && <div style={{ padding:'0 7px 5px', flexShrink:0 }}>
-                      <div style={{ height:2, borderRadius:2, background:`linear-gradient(90deg,${t.color},${t.color}18)` }}/>
-                    </div>}
-                  </div>
-                )
-              })}
+          {/* LEFT: chrome + popup + tool tabs */}
+          <div style={{ flex:1, minWidth:0, transform:'perspective(1400px) rotateX(2deg)', transition:'transform .5s' }}>
+            <div style={{ background:'linear-gradient(180deg,#2A2620,#1E1B17)', borderRadius:12, overflow:'hidden', border:'1px solid rgba(255,255,255,0.07)', boxShadow:'inset 0 1px 0 rgba(255,255,255,0.05),inset 0 -1px 0 rgba(0,0,0,0.4)' }}>
+              {/* Chrome bar */}
+              <div style={{ padding:'9px 14px', display:'flex', alignItems:'center', gap:8, background:'linear-gradient(180deg,rgba(40,37,33,0.96),rgba(30,27,23,0.96))', borderBottom:'1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ display:'flex', gap:5 }}>
+                  <div style={{ width:9, height:9, borderRadius:'50%', background:'#C0402A' }} />
+                  <div style={{ width:9, height:9, borderRadius:'50%', background:'#C49B2E' }} />
+                  <div style={{ width:9, height:9, borderRadius:'50%', background:'#2A9E82' }} />
+                </div>
+                <div style={{ flex:1, textAlign:'center', fontSize:10, color:'rgba(248,247,245,0.28)', fontFamily:'monospace', letterSpacing:'.8px' }}>{demo.chromTitle}</div>
+                <div style={{ fontSize:8, fontWeight:700, padding:'2px 7px', borderRadius:3, background:'rgba(48,112,184,0.15)', color:'rgba(96,160,240,0.8)', border:'1px solid rgba(48,112,184,0.2)', fontFamily:'monospace' }}>{demo.badge}</div>
+              </div>
+              {/* Popup content */}
+              <div key={`${activeDemo}-${activeTool}`} className="showcase-popup-body" style={{ animation:'popIn 0.2s ease both' }} dangerouslySetInnerHTML={{ __html: popupHtml }} />
+              {/* Tool tabs */}
+              <div style={{ display:'flex', gap:4, padding:'8px 12px', background:'rgba(26,23,20,0.7)', borderTop:'1px solid rgba(255,255,255,0.06)', flexWrap:'wrap' }}>
+                {demo.tools.map(t => (
+                  <button key={t} className={`tool-tab${t===activeTool?' tt-active':''}`} onClick={() => setActiveTool(t)}>{t}</button>
+                ))}
+              </div>
             </div>
           </div>
-          {/* Stack dots + arrows */}
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:5, marginTop:8 }}>
-            <div style={{ display:'flex', gap:3, flexWrap:'wrap', justifyContent:'center' }}>
-              {SHOWCASE_TOOLS.map((t,i) => (
-                <div key={i} onClick={() => setActive(i)} style={{
-                  width:i===active?12:4, height:4, borderRadius:100,
-                  background:i===active?t.color:'rgba(255,255,255,.2)',
-                  cursor:'pointer', transition:'all .22s',
-                }}/>
-              ))}
-            </div>
-            <div style={{ display:'flex', gap:4 }}>
-              <button onClick={() => setActive(t => Math.max(t-1,0))} disabled={active===0}
-                style={{ padding:'3px 10px', borderRadius:6, border:'1px solid rgba(255,255,255,.14)',
-                  background:'rgba(255,255,255,.07)', color:active===0?'rgba(255,255,255,.2)':'#F8F7F5',
-                  fontSize:12, cursor:active===0?'default':'pointer', fontWeight:600 }}>‹</button>
-              <button onClick={() => setActive(t => Math.min(t+1,SHOWCASE_TOOLS.length-1))} disabled={active===SHOWCASE_TOOLS.length-1}
-                style={{ padding:'3px 10px', borderRadius:6, border:'1px solid rgba(255,255,255,.14)',
-                  background:'rgba(255,255,255,.07)', color:active===SHOWCASE_TOOLS.length-1?'rgba(255,255,255,.2)':'#F8F7F5',
-                  fontSize:12, cursor:active===SHOWCASE_TOOLS.length-1?'default':'pointer', fontWeight:600 }}>›</button>
-            </div>
-          </div>
-        </div>
 
+          {/* RIGHT: demo stack */}
+          <div style={{ width:130, flexShrink:0, display:'flex', flexDirection:'column', gap:6 }}>
+            {DEMO_SHOWCASE.map((d, i) => (
+              <div key={d.id} className={`demo-stack-card${i===activeDemo?' dsc-active':''}`} onClick={() => switchDemo(i)}>
+                {/* Color stripe */}
+                <div style={{ position:'absolute', top:0, left:0, right:0, height:2, borderRadius:'11px 11px 0 0', background:d.color, opacity:i===activeDemo?.9:.35 }} />
+                <div style={{ fontSize:17, marginBottom:4, lineHeight:1 }}>{d.icon}</div>
+                <div style={{ fontSize:9, fontWeight:700, fontFamily:'monospace', letterSpacing:'.7px', color:d.color, marginBottom:2 }}>{d.industry}</div>
+                <div style={{ fontSize:9, color:'rgba(248,247,245,0.42)', lineHeight:1.4 }}>{d.headline}</div>
+                <div style={{ marginTop:6, paddingTop:5, borderTop:'1px solid rgba(255,255,255,0.06)' }}>
+                  <div style={{ fontSize:7, color:'rgba(248,247,245,0.25)', fontFamily:'monospace', letterSpacing:'.5px' }}>{d.metricLabel}</div>
+                  <div style={{ fontSize:11, fontWeight:700, fontFamily:'monospace', color:d.metricColor }}>{d.metric}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
     </div>
   )
@@ -793,7 +759,7 @@ function CompetitorTable() {
       <div style={{ maxWidth: 1060, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
-          <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
+          <h2 className="h2-dark-shadow" style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif, letterSpacing: -.5 }}>
             Why process teams are replacing their current setup
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.5)', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
@@ -1101,6 +1067,59 @@ export default function HomePage() {
         .nav-link { color:rgba(248,247,245,0.55); text-decoration:none; font-size:13px; transition:color 0.15s; }
         .nav-link:hover { color:#F8F7F5; }
 
+        /* ── 3D CARD SYSTEM ── */
+        .card-dk{
+          border-radius:15px;position:relative;
+          background:linear-gradient(155deg,rgba(44,40,34,0.96),rgba(26,23,19,0.99));
+          border-top:1px solid rgba(255,255,255,0.1);
+          border-left:1px solid rgba(255,255,255,0.06);
+          border-right:1px solid rgba(0,0,0,0.25);
+          border-bottom:1px solid rgba(0,0,0,0.4);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),inset 0 -2px 0 rgba(0,0,0,0.45),0 6px 14px rgba(0,0,0,0.45),0 14px 32px rgba(0,0,0,0.3);
+          transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s ease;
+        }
+        .card-dk:hover{
+          transform:translateY(-7px) perspective(900px) rotateX(2.5deg) rotateY(-.5deg);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),inset 0 -2px 0 rgba(0,0,0,0.45),0 16px 48px rgba(0,0,0,0.55),0 28px 56px rgba(0,0,0,0.3),0 0 40px rgba(196,155,46,0.07);
+        }
+        .card-lt{
+          border-radius:15px;position:relative;
+          background:linear-gradient(155deg,#FFFFFF,#F6F3EC 55%,#EDE9E0);
+          border-top:1px solid rgba(255,255,255,0.95);
+          border-left:1px solid rgba(255,255,255,0.7);
+          border-right:1px solid rgba(0,0,0,0.07);
+          border-bottom:1px solid rgba(0,0,0,0.12);
+          box-shadow:inset 0 2px 0 rgba(255,255,255,0.85),inset 0 -1px 0 rgba(0,0,0,0.06),0 6px 16px rgba(0,0,0,0.1),0 14px 36px rgba(0,0,0,0.07);
+          transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s ease;
+        }
+        .card-lt:hover{
+          transform:translateY(-7px) perspective(900px) rotateX(2deg) rotateY(-.4deg);
+          box-shadow:inset 0 2px 0 rgba(255,255,255,0.85),inset 0 -1px 0 rgba(0,0,0,0.06),0 18px 48px rgba(0,0,0,0.14),0 28px 60px rgba(0,0,0,0.08),0 0 36px rgba(196,155,46,0.09);
+        }
+        .card-stripe{position:absolute;top:0;left:0;right:0;height:2px;border-radius:15px 15px 0 0;opacity:.75}
+        /* ── CONSTELLATION ON LIGHT SECTIONS ── */
+        .constell-section{position:relative;overflow:hidden}
+        .constell-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+        .constell-section>*:not(.constell-canvas){position:relative;z-index:1}
+        /* ── TEXT SHADOWS ── */
+        .h2-dark-shadow{ text-shadow:0 2px 8px rgba(0,0,0,0.65),0 10px 40px rgba(0,0,0,0.35) }
+        .h2-light-shadow{ text-shadow:0 1px 3px rgba(0,0,0,0.14),0 4px 18px rgba(0,0,0,0.08) }
+        /* ── GLASS PANEL (problem right) ── */
+        .glass-panel{
+          background:linear-gradient(145deg,rgba(255,255,255,0.88),rgba(248,246,240,0.94));
+          border-radius:18px;
+          border-top:1px solid rgba(255,255,255,0.95);
+          border-left:1px solid rgba(255,255,255,0.7);
+          border-right:1px solid rgba(0,0,0,0.05);
+          border-bottom:1px solid rgba(0,0,0,0.1);
+          box-shadow:inset 0 2px 0 rgba(255,255,255,0.8),0 24px 64px rgba(0,0,0,0.12),0 8px 24px rgba(0,0,0,0.07),0 0 0 1px rgba(196,155,46,0.06);
+          transform:perspective(1200px) rotateY(-3deg) rotateX(1deg);
+          transition:transform .4s ease;
+          position:relative;overflow:hidden;
+        }
+        .glass-panel:hover{transform:perspective(1200px) rotateY(-1deg) rotateX(.5deg)}
+        .glass-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:42%;background:linear-gradient(180deg,rgba(255,255,255,0.5),transparent);border-radius:18px 18px 0 0;pointer-events:none}
+
         /* ── Unified mobile breakpoints ── */
         @media(max-width:900px){
           .hero-tools-grid{grid-template-columns:1fr!important;gap:20px!important;}
@@ -1245,58 +1264,41 @@ export default function HomePage() {
           ))}
         </svg>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: 'clamp(28px,5vw,72px) clamp(16px,4vw,48px)' }}>
-          <div className="hero-tools-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 'clamp(24px,4vw,64px)', alignItems: 'start' }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: 'clamp(56px,7vw,96px) clamp(16px,4vw,48px) 0' }}>
 
-            {/* ── LEFT: Branding + copy ── */}
-            <div className="hero-tools-left" style={{ paddingTop: 'clamp(8px,2vw,32px)' }}>
+          {/* ── Centered hero text ── */}
+          <div style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
+            <IndustryLoop />
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
-                <div className="logo-mark-anim"><VLogoMark size={72} /></div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <div className="wordmark-anim"><VeSiMyWordmark size={42} onDark /></div>
-                  <span className="tagline-anim" style={{ fontSize: 10, letterSpacing: 2.5, fontFamily: 'monospace', textTransform: 'uppercase', color: 'rgba(248,247,245,0.45)', fontWeight: 600 }}>Browser-based · No install required</span>
-                </div>
-              </div>
+            <h1 className="reveal r2 h2-dark-shadow" style={{ fontSize: 'clamp(38px,5.5vw,68px)', lineHeight: 1.08, fontWeight: 700, color: '#F8F7F5', marginBottom: 20, letterSpacing: -1.5, fontFamily: serif }}>
+              Map any process.<br />Find the waste.<br /><span style={{ color: '#C49B2E', textShadow: '0 0 40px rgba(196,155,46,0.45),0 2px 8px rgba(0,0,0,0.5)' }}>Fix the bottleneck.</span>
+            </h1>
 
-              <IndustryLoop />
+            <p className="reveal r3" style={{ fontSize: 16, color: 'rgba(248,247,245,0.52)', lineHeight: 1.82, marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
+              Every step, every wait, every handoff — visible in one place. Manufacturing, healthcare, real estate, brewing — any process, any industry.
+            </p>
 
-              <h1 className="reveal r2" style={{ fontSize: 'clamp(28px,3.6vw,48px)', lineHeight: 1.1, fontWeight: 700, color: '#F8F7F5', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
-                Map any process.<br />Find the waste. Fix the bottleneck.<br /><span style={{ color: '#C49B2E' }}>All connected.</span>
-              </h1>
-
-              <p className="reveal r3" style={{ fontSize: 14, color: 'rgba(248,247,245,0.62)', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
-                Every step, every wait, every handoff — visible in one place. Whether you run a production line, a clinic, a property team, or a law firm: if you have a process, you have waste you can find and fix.
-              </p>
-
-              <div className="reveal r3 hero-mission" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
-                <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by process people — for process people</div>
-                  <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.65)', marginTop: 2, lineHeight: 1.5 }}>12+ years across Tesla, Philips, LSG Sky Chefs — proven on real floors, built for every industry</div>
-                </div>
-              </div>
-
-              <div className="reveal r4 hero-cta-row" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
-                <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-                  Start free. No card needed. <ArrowRightIcon size={13} color="#0D0C0A" />
-                </Link>
-                <Link href="/auth/signup?ref=1" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
-                  Explore sample project →
-                </Link>
-                <Link href="/demos" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
-                  View all demos →
-                </Link>
-              </div>
-              <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.25)', fontFamily: 'monospace' }}>Runs in your browser · Your process data stays private · No IP tracking</p>
+            <div className="reveal r4 hero-cta-row" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 14, justifyContent: 'center' }}>
+              <Link href="/auth/signup" style={{ padding: '13px 26px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 11, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, boxShadow: '0 8px 24px rgba(196,155,46,0.35),inset 0 1px 0 rgba(255,255,255,0.2)' }}>
+                Start free. No card needed. <ArrowRightIcon size={14} color="#0D0C0A" />
+              </Link>
+              <Link href="/auth/signup?ref=1" style={{ padding: '13px 20px', background: 'rgba(255,255,255,0.05)', color: 'rgba(248,247,245,0.65)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 11, fontSize: 13, textDecoration: 'none', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                Explore sample project →
+              </Link>
+              <Link href="/demos" style={{ padding: '13px 20px', background: 'rgba(255,255,255,0.03)', color: 'rgba(248,247,245,0.45)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 11, fontSize: 13, textDecoration: 'none' }}>
+                View all demos →
+              </Link>
             </div>
-
-            {/* ── RIGHT: Inline tool showcase ── */}
-            <div className="inline-showcase-outer" style={{ width: '100%', overflow: 'hidden' }}>
-              <InlineToolShowcase />
-            </div>
-
+            <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.18)', fontFamily: 'monospace' }}>Runs in your browser · Your process data stays private · No IP tracking</p>
           </div>
+
+          {/* ── Showcase below text: preview left + demo stack right ── */}
+          <div style={{ marginTop: 48, position: 'relative' }}>
+            {/* Glow ring */}
+            <div style={{ position: 'absolute', inset: -2, borderRadius: 22, background: 'linear-gradient(135deg,rgba(196,155,46,0.2),rgba(100,38,160,0.08),rgba(48,112,184,0.12))', zIndex: -1, filter: 'blur(2px)' }} />
+            <InlineToolShowcase />
+          </div>
+
         </div>
       </section>
 
@@ -1310,7 +1312,7 @@ export default function HomePage() {
             ['Free', 'Unlimited projects forever'],
           ].map(([v,l]) => (
             <div key={l} style={{ textAlign: 'center', padding: '4px 8px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#C49B2E' }}>{v}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#C49B2E', textShadow: '0 0 20px rgba(196,155,46,0.4),0 2px 4px rgba(0,0,0,0.4)' }}>{v}</div>
               <div style={{ fontSize: 10, color: 'rgba(248,247,245,0.35)', marginTop: 2, letterSpacing: '0.2px', lineHeight: 1.4 }}>{l}</div>
             </div>
           ))}
@@ -1318,27 +1320,45 @@ export default function HomePage() {
       </div>
 
       {/* ── FEATURES ────────────────────────────────────────────────────────── */}
-      <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: '#C8C5BC', borderTop: '0.5px solid #C8C5BC' }}>
-        {[
-          { icon: '📊', bg: '#EDF9F5', title: 'Everything connected to the same steps.', body: 'Change a cycle time in your time study and it updates the VSM. Log a kaizen and it appears on the map. Write a 5 Why and it stays on the step. No files to sync, no reports to rebuild.' },
-          { icon: '🔗', bg: '#FAEEDA', title: 'Every process tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED. All on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant.' },
-          { icon: '🆓', bg: '#EEEDFE', title: 'Actually free. Not free-then-$29.', body: 'Unlimited projects. All 9 tools. No trial period. No project cap. The free plan exists to be useful, not to expire. Upgrade to Pro when you want Supe AI and process simulation. Not before.' },
-        ].map(f => (
-          <div key={f.title} style={{ background: '#EDE9E0', padding: '28px 24px' }}>
-            <div style={{ width: 40, height: 40, borderRadius: 10, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>{f.icon}</div>
-            <div style={{ fontSize: 15, fontWeight: 600, color: '#242220', marginBottom: 7 }}>{f.title}</div>
-            <div style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.7 }}>{f.body}</div>
+      <div style={{ background: 'linear-gradient(180deg,#1F1C18,#1A1714)', padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 44 }}>
+            <div style={{ fontSize: 10, color: 'rgba(196,155,46,0.75)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, marginBottom: 12, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4, display: 'inline-block' }}>How it works</div>
+            <h2 className="h2-dark-shadow" style={{ fontFamily: serif, fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700, color: '#F8F7F5', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
+              Everything connected<br/>to the same steps.
+            </h2>
+            <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.42)', lineHeight: 1.82, maxWidth: 520, margin: '0 auto' }}>Change a cycle time and the map updates. Log a kaizen and it appears on the VSM. Close a 5 Why and the root cause stays on the step.</p>
           </div>
-        ))}
+          <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+            {([
+              { color:'#3070B8', title:'Map every step of your process', body:'Value Stream Mapping with ISO 22468:2020 compliance. Bottleneck steps flag automatically. PCE and lead time calculate live as you add data.', svg:'<rect x="2" y="9" width="5" height="6" rx="1"/><rect x="9.5" y="9" width="5" height="6" rx="1"/><rect x="17" y="9" width="5" height="6" rx="1"/><path d="M7 12h2.5M14.5 12H17"/>' },
+              { color:'#2A9E82', title:'Measure before you manage', body:'Built-in stopwatch with lap recording. Mean CT, outlier detection, standard deviation — calculated automatically. Times push directly to your VSM.', svg:'<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/>' },
+              { color:'#6426A0', title:'Find the root. Fix it once.', body:'5 Why chains stay attached to the step where the problem lives. Root cause, countermeasure, and owner — never in a separate document.', svg:'<circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="10" y2="12"/><line x1="10" y1="12" x2="8.5" y2="15.5"/><circle cx="12" cy="8" r=".8" fill="#6426A0"/>' },
+              { color:'#C0402A', title:'Name the waste. Own the fix.', body:'8 DOWNTIME waste categories on every step. Daily cost estimate, VA/NNVA/NVA classification, and a direct path to a kaizen action.', svg:'<polyline points="3 6 5 6 21 6"/><path d="M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2"/><polyline points="19 6 18 20 6 20 5 6"/>' },
+              { color:'#C49B2E', title:'Supe — your AI lean mentor', body:'Reads your actual project data and tells you what to fix first. Gap analysis, root cause hypothesis, and executive summary from live numbers — not templates.', svg:'<polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/>' },
+              { color:'#1090D4', title:'One-click A3 export', body:'ISO 9001:2015 compliant A3 report generated from your live data. VSM summary, gap findings, countermeasures — formatted and ready to present.', svg:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
+            ] as any[]).map((f:any) => (
+              <div key={f.title} className="card-dk" style={{ padding: '30px 26px' }}>
+                <div className="card-stripe" style={{ background: `linear-gradient(90deg,transparent,${f.color},transparent)` }} />
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: `${f.color}22`, border: `1px solid ${f.color}38`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: '0 4px 12px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={f.color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: f.svg }} />
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: '#F8F7F5', marginBottom: 10, lineHeight: 1.3, textShadow: '0 1px 5px rgba(0,0,0,0.55)' }}>{f.title}</div>
+                <div style={{ fontSize: 13, color: 'rgba(248,247,245,0.42)', lineHeight: 1.75 }}>{f.body}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── PROBLEM SECTION ─────────────────────────────────────────────────── */}
-      <section style={{ background: '#FFFFFF', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <section className="constell-section" style={{ background: '#F8F6F0', padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+        <canvas className="constell-canvas" data-dark="false" />
         <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px,5vw,72px)', alignItems: 'center' }} className="problem-grid">
           <div>
-            <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>The problem</div>
-            <h2 style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 20 }}>
-              Every business runs on processes. Most of them are broken in the same way.
+            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(192,64,42,0.85)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(192,64,42,0.07)', border: '1px solid rgba(192,64,42,0.15)', borderRadius: 4 }}>The problem</div>
+            <h2 className="h2-light-shadow" style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,36px)', fontWeight: 700, color: '#1E1B17', lineHeight: 1.15, marginBottom: 24, letterSpacing: -.5 }}>
+              Every business runs on processes.<br/>Most are broken the same way.
             </h2>
             {[
               ['Your process lives in your head', 'Or in a whiteboard photo nobody looks at again'],
@@ -1356,18 +1376,18 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <div style={{ background: '#F8F6F0', borderRadius: 16, padding: 'clamp(20px,3vw,32px)', border: '0.5px solid #D8D5CE' }}>
-            <div style={{ fontSize: 11, color: '#1A7A5E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>With VeSiMy</div>
-            <p style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(16px,2vw,20px)', fontWeight: 500, color: '#242220', lineHeight: 1.6, marginBottom: 20 }}>
-              Map your process once. Every measurement, every root cause, every improvement action connects to the same step automatically. Whether you run a production line, a clinic, or a property team — the waste is visible, the bottleneck is flagged, and the fix is prioritised.
+          <div className="glass-panel" style={{ padding: 'clamp(24px,3vw,32px)' }}>
+            <div style={{ fontSize: 9, color: '#2A9E82', fontFamily: 'monospace', letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 12 }}>With VeSiMy</div>
+            <p style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(15px,1.8vw,18px)', fontWeight: 600, color: '#1E1B17', lineHeight: 1.65, marginBottom: 14, textShadow: '0 1px 3px rgba(0,0,0,0.1)', position: 'relative', zIndex: 1 }}>
+              Map your process once. Every measurement, every root cause, every improvement connects to the same step automatically.
             </p>
-            <p style={{ fontSize: 13, color: '#4E4B45', lineHeight: 1.75, marginBottom: 20 }}>
-              Nothing needs to be copied. Nothing gets out of sync. And when you need to know what to fix next, Supe reads your actual process data and tells you exactly what to address.
+            <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.75, marginBottom: 18, position: 'relative', zIndex: 1 }}>
+              Whether you run a production line, a clinic, or a real estate team — the waste is visible, the bottleneck is flagged, and the fix is prioritised.
             </p>
-            <div style={{ background: 'rgba(196,155,46,0.08)', border: '1px solid rgba(196,155,46,0.25)', borderRadius: 10, padding: '12px 16px' }}>
-              <div style={{ fontSize: 11, color: '#8E8A82', fontFamily: 'monospace', marginBottom: 6 }}>⚡ SUPE — AI Gap Analysis</div>
+            <div style={{ background: 'rgba(196,155,46,0.06)', border: '1px solid rgba(196,155,46,0.2)', borderRadius: 10, padding: '12px 16px', position: 'relative', zIndex: 1, boxShadow: '0 2px 8px rgba(196,155,46,0.08),inset 0 1px 0 rgba(196,155,46,0.1)' }}>
+              <div style={{ fontSize: 9, color: 'rgba(196,155,46,0.7)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6, fontWeight: 700 }}>⚡ SUPE — AI ANALYSIS</div>
               <p style={{ fontSize: 12, color: '#4E4B45', lineHeight: 1.65, fontStyle: 'italic', margin: 0 }}>
-                "Foam & Fabric is 21% over Takt with 3 open Kaizen events. Eliminate the 14s of NVA before adding capacity — that closes the gap without equipment spend."
+                "Foam & Fabric is 21% over Takt with 3 open Kaizen events. Eliminate the 16s NVA walk before adding capacity — that closes the gap without equipment spend."
               </p>
             </div>
           </div>
@@ -1375,12 +1395,13 @@ export default function HomePage() {
       </section>
 
       {/* ── INDUSTRIES ──────────────────────────────────────────────────────── */}
-      <section style={{ background: '#F8F6F0', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+      <section className="constell-section" style={{ background: '#F0EDE5', padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+        <canvas className="constell-canvas" data-dark="false" />
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>Every industry</div>
-            <h2 style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 14 }}>
-              Waste is waste. Whatever you make or deliver.
+            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(196,155,46,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4 }}>Every industry</div>
+            <h2 className="h2-light-shadow" style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,38px)', fontWeight: 700, color: '#1E1B17', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
+              Waste is waste.<br/>Whatever you make or deliver.
             </h2>
             <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 540, margin: '0 auto', lineHeight: 1.8 }}>
               The tools in VeSiMy were built on manufacturing floors. But a bottleneck in a law firm looks exactly like a bottleneck on a production line. A root cause in a real estate transaction is found the same way as one in a factory. The method is universal.
@@ -1411,12 +1432,14 @@ export default function HomePage() {
                 desc: 'Order receipt to last-mile delivery. Pick rates, dock scheduling, carrier handoffs, returns — all measurable, all improvable with the same structured method.',
                 examples: ['Warehouse pick process VSM', 'Returns root cause analysis', 'Dock scheduling kaizen'] },
             ] as any[]).map((ind: any) => (
-              <div key={ind.label} style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, padding: '22px 20px', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: ind.color, opacity: 0.7 }} />
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                  <span style={{ fontSize: 24 }}>{ind.icon}</span>
+              <div key={ind.label} className="card-lt" style={{ padding: '24px 22px' }}>
+                <div className="card-stripe" style={{ background: ind.color }} />
+                <div style={{ width: 42, height: 42, borderRadius: 11, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, background: `${ind.color}14`, border: `1px solid ${ind.color}2A`, boxShadow: '0 4px 12px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.7)' }}>
+                  <span style={{ fontSize: 20 }}>{ind.icon}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: '#242220' }}>{ind.label}</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#1E1B17', textShadow: '0 1px 2px rgba(0,0,0,0.09)' }}>{ind.label}</div>
                     <div style={{ fontSize: 11, color: ind.color, fontWeight: 600, fontFamily: 'monospace' }}>{ind.tagline}</div>
                   </div>
                 </div>
@@ -1469,12 +1492,12 @@ export default function HomePage() {
       </div>
 
       {/* ── PRICING ─────────────────────────────────────────────────────────── */}
-      <section id="pricing" className="sec-pad" style={{ padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', background: '#EDE9E0' }}>
+      <section id="pricing" className="sec-pad" style={{ padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', background: 'radial-gradient(ellipse 70% 50% at 50% 0%,rgba(196,155,46,0.07),transparent 55%),linear-gradient(180deg,#1A1714,#131110)' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <div style={{ fontSize: 11, color: '#8E8A82', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Pricing</div>
-            <h2 style={{ fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: '#242220', marginBottom: 10, fontFamily: serif }}>Simple, honest pricing.</h2>
-            <p style={{ fontSize: 15, color: '#6B6760', maxWidth: 480, margin: '0 auto' }}>Unlimited projects free forever. Pro adds Supe AI, process simulation, and the A3 export — with a free trial on your first upgrade.</p>
+            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(196,155,46,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4 }}>Pricing</div>
+            <h2 className="h2-dark-shadow" style={{ fontSize: 'clamp(26px,3vw,42px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 12, fontFamily: serif, letterSpacing: -.5 }}>Simple, honest pricing.</h2>
+            <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.42)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>Unlimited projects free forever. Pro adds Supe AI, process simulation, and the A3 export — with a free trial on your first upgrade.</p>
           </div>
 
           <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(240px,100%),1fr))', gap: 16 }}>
@@ -1483,20 +1506,20 @@ export default function HomePage() {
               const isLife = key === 'lifetime'
               const isEnt = key === 'enterprise'
               return (
-                <div key={key} className={isLife ? 'pricing-card-lifetime' : ''} style={{ background: '#FFFFFF', border: isPro || isLife ? '1.5px solid rgba(196,155,46,0.4)' : '0.5px solid #D8D5CE', borderRadius: 16, padding: '26px 22px', position: 'relative' }}>
+                <div key={key} className={`card-dk ${isLife ? 'pricing-card-lifetime' : ''}`} style={{ padding: '28px 24px', ...(isPro || isLife ? { background: 'linear-gradient(155deg,rgba(52,44,28,0.97),rgba(34,30,20,0.99))', borderTop: '1px solid rgba(196,155,46,0.3)', borderLeft: '1px solid rgba(196,155,46,0.15)' } : {}) }}>
                   {(isPro || isLife) && (
                     <div style={{ display: 'inline-flex', background: '#C49B2E', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
                       {isLife ? '👑 BEST VALUE' : 'MOST POPULAR'}
                     </div>
                   )}
-                  <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, fontWeight: 700, marginBottom: 6, fontFamily: 'monospace', textTransform: 'uppercase' }}>{plan.name}</div>
-                  <div style={{ fontSize: 36, fontWeight: 800, color: '#242220', marginBottom: 6, lineHeight: 1, fontFamily: serif }}>
+                  <div style={{ fontSize: 9, color: 'rgba(248,247,245,0.35)', letterSpacing: 2, fontWeight: 700, marginBottom: 10, fontFamily: 'monospace', textTransform: 'uppercase' }}>{plan.name}</div>
+                  <div style={{ fontSize: 38, fontWeight: 700, color: '#F8F7F5', marginBottom: 6, lineHeight: 1, fontFamily: serif, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                     {isEnt ? 'Custom' : plan.price === 0 ? 'Free' : `$${plan.price}`}
                     {!isEnt && plan.price !== null && Number(plan.price) > 0 && (
                       <span style={{ fontSize: 13, fontWeight: 400, color: '#8E8A82', marginLeft: 4 }}>{isLife ? ' once' : '/mo'}</span>
                     )}
                   </div>
-                  <p style={{ fontSize: 13, color: '#6B6760', marginBottom: 18, lineHeight: 1.65, minHeight: 40 }}>{plan.description}</p>
+                  <p style={{ fontSize: 12, color: 'rgba(248,247,245,0.38)', marginBottom: 18, lineHeight: 1.65, minHeight: 40 }}>{plan.description}</p>
                   <ul style={{ listStyle: 'none', marginBottom: 22, display: 'flex', flexDirection: 'column', gap: 9 }}>
                     {plan.features.map((f: string) => (
                       <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 13, color: '#4E4B45', lineHeight: 1.5 }}>
@@ -1542,6 +1565,27 @@ export default function HomePage() {
           ISO 9001:2015 · ISO 22468:2020 · IATF 16949 aligned
         </p>
       </div>
+
+      {/* ── CONSTELLATION SCRIPT ─────────────────────────────────────────── */}
+      <script dangerouslySetInnerHTML={{ __html: `
+        (function(){
+          var canvases=document.querySelectorAll('.constell-canvas');
+          canvases.forEach(function(cv){
+            var dark=cv.getAttribute('data-dark')!=='false';
+            var par=cv.parentElement,ctx=cv.getContext('2d');
+            var W,H,ns=[],rf,f=0;
+            var N=dark?55:38,MD=dark?160:125,AO=dark?.18:.05,NO=dark?.24:.07,V=dark?.15:.09;
+            function init(){W=cv.width=par.offsetWidth;H=cv.height=par.offsetHeight;ns=[];for(var i=0;i<N;i++)ns.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*V,vy:(Math.random()-.5)*V,r:Math.random()>.82?(dark?2.5:1.7):(dark?1.1:.7),b:Math.random()>.72,ph:Math.random()*Math.PI*2,sp:.007+Math.random()*.012})}
+            function tick(){ctx.clearRect(0,0,W,H);f++;
+              ns.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<-30)n.x=W+30;if(n.x>W+30)n.x=-30;if(n.y<-30)n.y=H+30;if(n.y>H+30)n.y=-30});
+              for(var i=0;i<ns.length;i++)for(var j=i+1;j<ns.length;j++){var dx=ns[i].x-ns[j].x,dy=ns[i].y-ns[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<MD){ctx.strokeStyle='rgba(196,155,46,'+((1-d/MD)*AO)+')';ctx.lineWidth=dark?.5:.3;ctx.beginPath();ctx.moveTo(ns[i].x,ns[i].y);ctx.lineTo(ns[j].x,ns[j].y);ctx.stroke()}}
+              ns.forEach(function(n){var p=n.b?(NO*.7+Math.sin(f*n.sp+n.ph)*NO*.5):NO*.4;ctx.fillStyle='rgba(196,155,46,'+p+')';ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill()});
+              rf=requestAnimationFrame(tick)}
+            init();tick();
+            window.addEventListener('resize',function(){cancelAnimationFrame(rf);init();tick()});
+          });
+        })();
+      ` }} />
 
       {/* ── FOOTER ──────────────────────────────────────────────────────────── */}
       <footer className="footer-wrap" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: 'clamp(20px,3vw,28px) clamp(16px,4vw,48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, background: '#1A1714' }}>
