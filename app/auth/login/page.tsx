@@ -64,8 +64,6 @@ function LoginForm() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        // Hard navigation so the server picks up the new session cookie
-        // router.push can race with middleware before the cookie is set
         window.location.href = redirect
       }
     } catch (err: any) {
