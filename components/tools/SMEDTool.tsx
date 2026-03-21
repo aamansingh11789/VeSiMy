@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { TipLabel, FieldTip } from '@/components/ui/FieldTip'
 // ── components/tools/SMEDTool.tsx ────────────────────────────────────────────
 // Single-Minute Exchange of Die (SMED) Calculator
 // ISO 9001:2015 §8.5.1 — Changeover Management

@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FieldTip, TipLabel } from '@/components/ui/FieldTip'
 
 import { useState } from 'react'
 import { useStore } from '@/lib/store'
@@ -79,7 +80,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
         />
 
         <div>
-          <label className="label">Framework</label>
+          <TipLabel termKey="fishbone_6m">Framework</TipLabel>
           <select className="input" value={framework} onChange={(e) => setFramework(e.target.value)}>
             {Object.keys(FRAMEWORKS).map((item) => (
               <option key={item}>{item}</option>

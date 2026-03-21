@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { TipLabel } from '@/components/ui/FieldTip'
 
 import { useState, useMemo } from 'react'
 import { useStore } from '@/lib/store'
@@ -48,10 +49,10 @@ const BLANK: PDCAData = {
 function uid() { return Math.random().toString(36).slice(2, 9) }
 
 const PHASE_CFG = [
-  { key: 'plan', label: 'Plan',  color: '#6CB9FC', icon: '📋', desc: 'Define the problem, analyse root cause, set target' },
-  { key: 'do',   label: 'Do',   color: '#D4A208', icon: '⚡', desc: 'Implement countermeasures on a small scale' },
-  { key: 'check',label: 'Check',color: '#1DD1A1', icon: '📊', desc: 'Measure results against the target' },
-  { key: 'act',  label: 'Act',  color: '#8C44CC', icon: '🔁', desc: 'Standardise success or loop back to Plan' },
+  { key: 'plan', label: 'Plan',  color: '#6CB9FC', icon: '', desc: 'Define the problem, analyse root cause, set target' },
+  { key: 'do',   label: 'Do',   color: '#D4A208', icon: '', desc: 'Implement countermeasures on a small scale' },
+  { key: 'check',label: 'Check',color: '#1DD1A1', icon: '', desc: 'Measure results against the target' },
+  { key: 'act',  label: 'Act',  color: '#8C44CC', icon: '', desc: 'Standardise success or loop back to Plan' },
 ]
 
 const FORMAT_CFG = [

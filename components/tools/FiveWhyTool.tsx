@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FieldTip, TipLabel } from '@/components/ui/FieldTip'
 
 import { useState } from 'react'
 import { useStore } from '@/lib/store'

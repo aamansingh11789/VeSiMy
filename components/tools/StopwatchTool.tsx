@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FieldTip, FieldWarn, TipLabel, clampMin, timeWarn, secToHuman } from '@/components/ui/FieldTip'
 
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '@/lib/store'
@@ -399,7 +400,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               min={0}
               placeholder="e.g. 180"
               value={baseline}
-              onChange={(e) => setBaseline(e.target.value)}
+              onChange={(e) => setBaseline(clampMin(e.target.value))}
             />
           </div>
         </div>

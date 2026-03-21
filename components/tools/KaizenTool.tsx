@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { TipLabel, FieldWarn } from '@/components/ui/FieldTip'
 
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
@@ -377,7 +378,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               </div>
 
               <div>
-                <label className="label">Category</label>
+                <TipLabel termKey="kaizen_category">Category</TipLabel>
                 <select
                   className="input"
                   value={form.category}
@@ -388,7 +389,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               </div>
 
               <div>
-                <label className="label">Priority</label>
+                <TipLabel termKey="kaizen_priority">Priority</TipLabel>
                 <select
                   className="input"
                   value={form.priority}
@@ -414,7 +415,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               </div>
 
               <div>
-                <label className="label">Owner</label>
+                <TipLabel termKey="kaizen_owner">Owner</TipLabel>
                 <input
                   className="input"
                   placeholder="Team member name"
@@ -424,7 +425,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               </div>
 
               <div>
-                <label className="label">Due Date</label>
+                <TipLabel termKey="kaizen_due">Due Date</TipLabel>
                 <input
                   className="input"
                   type="date"

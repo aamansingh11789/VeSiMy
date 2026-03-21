@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FieldTip } from '@/components/ui/FieldTip'
 
 import { useMemo, useState } from 'react'
 import { useStore } from '@/lib/store'
@@ -8,14 +9,14 @@ import { AIAssistButton, AIResultPanel } from '@/components/ui/AIAssistPanel'
 import { useAIAssist } from '@/hooks/useAIAssist'
 
 const WASTES = [
-  { id: 'T', label: 'Transport', icon: '🚛', desc: 'Unnecessary movement of materials or products' },
-  { id: 'I', label: 'Inventory', icon: '📦', desc: 'Excess stock, WIP, or finished goods beyond need' },
-  { id: 'M', label: 'Motion', icon: '🏃', desc: 'Unnecessary movement of people or equipment' },
-  { id: 'W', label: 'Waiting', icon: '⏳', desc: 'Idle time waiting for materials, information, or approvals' },
-  { id: 'O', label: 'Overproduction', icon: '⚙️', desc: 'Producing more than what is needed or before it is needed' },
-  { id: 'O2', label: 'Over-processing', icon: '🔧', desc: 'More processing than the customer requires' },
-  { id: 'D', label: 'Defects', icon: '❌', desc: 'Errors, rework, scrap, and corrections' },
-  { id: 'S', label: 'Skills', icon: '🧠', desc: 'Unused talent, knowledge, and capabilities of people' },
+  { id: 'T', label: 'Transport', icon: 'TRP', desc: 'Unnecessary movement of materials or products' },
+  { id: 'I', label: 'Inventory', icon: 'INV', desc: 'Excess stock, WIP, or finished goods beyond need' },
+  { id: 'M', label: 'Motion', icon: 'MOT', desc: 'Unnecessary movement of people or equipment' },
+  { id: 'W', label: 'Waiting', icon: 'WIT', desc: 'Idle time waiting for materials, information, or approvals' },
+  { id: 'O', label: 'Overproduction', icon: 'OVP', desc: 'Producing more than what is needed or before it is needed' },
+  { id: 'O2', label: 'Over-processing', icon: 'OVR', desc: 'More processing than the customer requires' },
+  { id: 'D', label: 'Defects', icon: 'DEF', desc: 'Errors, rework, scrap, and corrections' },
+  { id: 'S', label: 'Skills', icon: 'SKL', desc: 'Unused talent, knowledge, and capabilities of people' },
 ]
 
 interface Props {
