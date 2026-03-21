@@ -35,7 +35,7 @@ const INDUSTRIES = [
 ]
 
 const FIRST_PROCESS_TEMPLATES = [
-  { id:'sample',     label:'Load the sample project — explore with real data already in it', steps:['Steel Blank Receiving','Stamping Press','Weld Sub-Assembly','Hem / Clinch','E-Coat / Paint Prep','Final Assembly & QC','Pack & Ship'] },
+  { id:'sample',     label:'Load reference projects — 5 industries, every tool populated, real data ready to explore', steps:['Steel Blank Receiving','Stamping Press','Weld Sub-Assembly','Hem / Clinch','E-Coat / Paint Prep','Final Assembly & QC','Pack & Ship'] },
   { id:'assembly',   label:'Assembly Line',           steps:['Material Receipt','Sub-Assembly','Main Assembly','Quality Inspection','Packaging','Shipping'] },
   { id:'machining',  label:'CNC / Machining Cell',    steps:['Raw Material Queue','Setup','Machining','Deburr / Clean','Inspection','Move to Storage'] },
   { id:'order_flow', label:'Order Fulfilment',        steps:['Order Receipt','Pick','Pack','Quality Check','Dispatch','Delivery Confirmation'] },
@@ -72,7 +72,7 @@ export function OnboardingClient({ profile }: Props) {
 
       // 2a. If sample project selected — use seed-reference API
       if (template === 'sample') {
-        const refRes = await fetch('/api/projects/seed-reference', { method: 'POST' })
+        const refRes = await fetch('/api/projects/seed-all-references', { method: 'POST' })
         const refData = await refRes.json()
         setDone(true)
         setTimeout(() => {
@@ -109,7 +109,7 @@ export function OnboardingClient({ profile }: Props) {
       }
 
       // 4. Always seed reference project in the background for new users
-      fetch('/api/projects/seed-reference', { method: 'POST' }).catch(() => {})
+      fetch('/api/projects/seed-all-references', { method: 'POST' }).catch(() => {})
 
       setDone(true)
       setTimeout(() => {

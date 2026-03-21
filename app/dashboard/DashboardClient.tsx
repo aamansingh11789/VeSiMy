@@ -521,7 +521,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       setTimeout(() => seedDemoProject('/api/projects/seed-winery', 'Winery demo'), 800)
     } else if (params.get('ref') === '1' || isFirstVisit) {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)
+      setTimeout(() => seedReferenceProject(), 800)  // seeds all 5 industries
     }
   }, [])
 
@@ -590,15 +590,16 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   async function seedReferenceProject() {
     setSeedingRef(true)
     try {
-      const res = await fetch('/api/projects/seed-reference', { method: 'POST' })
+      const res = await fetch('/api/projects/seed-all-references', { method: 'POST' })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Failed to create reference project')
+      if (!res.ok) throw new Error(data.error || 'Failed to create reference projects')
       if (data.already_exists) {
-        toast.success('Opening your reference project…')
+        toast.success('All reference projects already loaded — check your dashboard')
       } else {
-        toast.success('Reference project created — exploring now!')
+        toast.success(data.message || 'Reference projects added!')
       }
-      router.push(`/project/${data.id}`)
+      if (data.id) router.push(`/project/${data.id}`)
+      else router.refresh()
     } catch (e: any) {
       toast.error(e.message)
     } finally {
@@ -822,46 +823,39 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
         </div>
 
-        {/* ── Reference Project card ── */}
-        <div style={{
-          background: '#FFFFFF',
-          border: '1px solid var(--border)',
-          borderRadius: 14,
-          padding: '18px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 16,
-          flexWrap: 'wrap',
-        }}>
-          <div style={{
-            width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-            background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
-          }}>
-            ⭐
-          </div>
-          <div style={{ flex: 1, minWidth: 200 }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
-              Reference Project — Automotive Seat Assembly
+        {/* ── Reference Projects — all 5 industries ── */}
+        <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>⭐</div>
+            <div style={{ flex: 1, minWidth: 200 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>Reference Projects — 5 Industries</div>
+              <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
+                Load fully-built reference projects across every supported industry. Every CI tool populated, real bottlenecks, root causes drilled to source. Use them as guides when building your own process maps.
+              </p>
             </div>
-            <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
-              A fully-built example project showing every tool in action — time studies, fishbone, 5 Why, waste ID, kaizen events, PDCA, standard work, Yamazumi, 2 branches, and a complete VSM. Load it as a guide when building your own projects.
-            </p>
+            <button
+              onClick={seedReferenceProject}
+              disabled={seedingRef}
+              style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#C49510,#D4A208)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
+            >
+              {seedingRef ? 'Loading…' : 'Load All Reference Projects →'}
+            </button>
           </div>
-          <button
-            onClick={seedReferenceProject}
-            disabled={seedingRef}
-            style={{
-              padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12,
-              cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap',
-              background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#C49510,#D4A208)',
-              color: seedingRef ? 'var(--text3)' : '#FFFFFF',
-              border: 'none', flexShrink: 0,
-              opacity: seedingRef ? 0.7 : 1,
-            }}
-          >
-            {seedingRef ? 'Loading…' : 'Load Reference Project →'}
-          </button>
+          {/* Industry chips */}
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {([
+              { icon: '🏭', label: 'Manufacturing', color: '#3070B8', desc: 'Seat Assembly — VSM, Time Study, 5 Why, Fishbone, Waste, Kaizen, Yamazumi, PDCA, A3' },
+              { icon: '🏥', label: 'Healthcare', color: '#2A9E82', desc: 'Urgent Care — Patient flow, 3.2hr lead time, treatment bottleneck, Supe analysis' },
+              { icon: '🏠', label: 'Real Estate', color: '#C49B2E', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
+              { icon: '🍺', label: 'Craft Brewery', color: '#C0402A', desc: 'Batch Production — Fermenter constraint, stuck sparge root cause, canning line' },
+              { icon: '🍷', label: 'Winery', color: '#6426A0', desc: 'Boutique Wine — 80 barrels at capacity, 6% barrel defect, no tracking system' },
+            ] as any[]).map((ind: any) => (
+              <div key={ind.label} title={ind.desc} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 100, background: `${ind.color}0F`, border: `1px solid ${ind.color}30`, fontSize: 11 }}>
+                <span style={{ fontSize: 13 }}>{ind.icon}</span>
+                <span style={{ fontWeight: 600, color: ind.color }}>{ind.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Health overview */}
