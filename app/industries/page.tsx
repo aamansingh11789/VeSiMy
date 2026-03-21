@@ -3,12 +3,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Industries — VeSiMy | Continuous Improvement Across Every Sector',
-  description: 'VeSiMy brings structured continuous improvement to every industry. If you have a process, VeSiMy can help you make it better — automotive, aerospace, food & beverage, medical, logistics, electronics, pharma, and industrial.',
+  title: 'Industries — VeSiMy | Process Improvement for Every Industry',
+  description: 'If you have a process, VeSiMy can help you improve it. Manufacturing, healthcare, real estate, legal, construction, logistics and beyond — the same structured method, applied to your world.',
   keywords: ['continuous improvement', 'lean manufacturing industries', 'process improvement', 'automotive CI', 'aerospace lean', 'pharmaceutical process improvement'],
   openGraph: {
-    title: 'Industries — VeSiMy | If You Have a Process, We Can Help You Improve It',
-    description: 'Lean tools built for every industry. VeSiMy applies structured CI methodology to automotive, aerospace, food & beverage, medical devices, logistics, electronics, pharma, and industrial.',
+    title: 'VeSiMy | Map any process. Find the waste. Fix the bottleneck.',
+    description: 'VSM, time study, root cause analysis, and kaizen — for manufacturing, healthcare, real estate, legal, logistics and any other process-driven business.',
     type: 'website',
   },
 }

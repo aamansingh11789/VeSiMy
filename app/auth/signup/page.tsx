@@ -45,7 +45,10 @@ function SignupForm() {
     // go straight to onboarding. Otherwise show the confirm-email screen.
     if (data?.session) {
       if (planKey && planKey !== 'trial') await redirectToCheckout(planKey)
-      else router.push('/dashboard')
+      else {
+        const demo = searchParams.get('demo')
+        router.push(demo ? `/dashboard?demo=${demo}` : '/dashboard')
+      }
     } else {
       // Email confirmation required — show instructions instead of redirecting
       setDone(true)

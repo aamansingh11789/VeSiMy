@@ -17,10 +17,21 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 // ── AudienceLine — static audience statement ─────────────────────────────────
 function IndustryLoop() {
+  const [idx, setIdx] = useState(0)
+  const lines = [
+    'Manufacturing · Logistics · Healthcare · Real Estate · Legal · Financial Services',
+    'For lean engineers · CI coordinators · operations managers · quality teams',
+    'Any process. Any industry. Any team size.',
+  ]
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % lines.length), 3200)
+    return () => clearInterval(t)
+  }, [])
   return (
-    <div style={{ marginBottom: 20 }}>
-      <span style={{ fontSize: 11, color: 'rgba(212,162,8,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700 }}>
-        For lean engineers · CI coordinators · operations managers · quality teams
+    <div style={{ marginBottom: 20, height: 18, overflow: 'hidden' }}>
+      <style>{`@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <span key={idx} style={{ fontSize: 11, color: 'rgba(212,162,8,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, animation: 'slideUp 0.4s ease both', display: 'block' }}>
+        {lines[idx]}
       </span>
     </div>
   )
@@ -783,10 +794,10 @@ function CompetitorTable() {
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
           <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif }}>
-            Why CI teams are replacing their current setup
+            Why process teams are replacing their current setup
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.5)', maxWidth: 520, margin: '0 auto', lineHeight: 1.75 }}>
-            Your current CI workflow probably lives across 4 to 6 disconnected tools. VeSiMy replaces all of them and adds AI that reads your real data.
+            Most teams manage their processes across 4 to 6 disconnected tools. VeSiMy replaces all of them and adds AI that reads your actual data — in any industry.
           </p>
         </div>
 
@@ -1141,7 +1152,7 @@ export default function HomePage() {
           <VeSiMyWordmark size={19} />
         </div>
         <div className="hide-mobile" style={{ display: 'flex', gap: 28 }}>
-          {[['Tools', '#tools'], ['Pricing', '#pricing'], ['Blog', '/blog'], ['Learn', '/learn']].map(([l, h]) => (
+          {[['Tools', '#tools'], ['Demos', '/demos'], ['Pricing', '#pricing'], ['Blog', '/blog'], ['Learn', '/learn']].map(([l, h]) => (
             <a key={l} href={h} className="nav-link">{l}</a>
           ))}
         </div>
@@ -1251,18 +1262,18 @@ export default function HomePage() {
               <IndustryLoop />
 
               <h1 className="reveal r2" style={{ fontSize: 'clamp(28px,3.6vw,48px)', lineHeight: 1.1, fontWeight: 700, color: '#F8F7F5', marginBottom: 16, letterSpacing: -0.5, fontFamily: serif }}>
-                One system for your VSM, time studies,<br />root cause work, and kaizen tracking.<br /><span style={{ color: '#C49B2E' }}>All connected.</span>
+                Map any process.<br />Find the waste. Fix the bottleneck.<br /><span style={{ color: '#C49B2E' }}>All connected.</span>
               </h1>
 
               <p className="reveal r3" style={{ fontSize: 14, color: 'rgba(248,247,245,0.62)', lineHeight: 1.85, marginBottom: 20, maxWidth: 400 }}>
-                Change a cycle time. The map updates. Log a kaizen. It appears on the VSM. Close a 5 Why. It stays on the step where the problem was. No copy-paste. No version conflicts. Nothing to install.
+                Every step, every wait, every handoff — visible in one place. Whether you run a production line, a clinic, a property team, or a law firm: if you have a process, you have waste you can find and fix.
               </p>
 
               <div className="reveal r3 hero-mission" style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 24, padding: '12px 16px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderLeft: '3px solid #C49B2E', borderRadius: '0 10px 10px 0', maxWidth: 380 }}>
                 <span style={{ fontSize: 26, fontWeight: 800, color: '#C49B2E', fontFamily: serif, lineHeight: 1, flexShrink: 0 }}>V</span>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by lean practitioners — for lean practitioners</div>
-                  <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.65)', marginTop: 2, lineHeight: 1.5 }}>12+ years on real production floors at Tesla, Philips Electronics, LSG Sky Chefs</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#F8F7F5', lineHeight: 1.3 }}>Built by process people — for process people</div>
+                  <div style={{ fontSize: 11, color: 'rgba(248,247,245,0.65)', marginTop: 2, lineHeight: 1.5 }}>12+ years across Tesla, Philips, LSG Sky Chefs — proven on real floors, built for every industry</div>
                 </div>
               </div>
 
@@ -1272,6 +1283,9 @@ export default function HomePage() {
                 </Link>
                 <Link href="/auth/signup?ref=1" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.7)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
                   Explore sample project →
+                </Link>
+                <Link href="/demos" style={{ padding: '12px 18px', background: 'transparent', color: 'rgba(248,247,245,0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, fontSize: 13, textDecoration: 'none' }}>
+                  View all demos →
                 </Link>
               </div>
               <p className="reveal r5" style={{ fontSize: 10, color: 'rgba(248,247,245,0.25)', fontFamily: 'monospace' }}>Runs in your browser · Your process data stays private · No IP tracking</p>
@@ -1290,9 +1304,9 @@ export default function HomePage() {
       <div style={{ background: '#231F1B', padding: '18px clamp(16px,4vw,48px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <div className="stats-bar-grid" style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
           {[
-            ['12+', 'Years manufacturing experience'],
+            ['Any industry', 'Manufacturing to healthcare to real estate'],
+            ['9', 'Process tools, all connected'],
             ['ISO 22468', 'Compliant VSM standard'],
-            ['9', 'CI tools, all connected'],
             ['Free', 'Unlimited projects forever'],
           ].map(([v,l]) => (
             <div key={l} style={{ textAlign: 'center', padding: '4px 8px' }}>
@@ -1307,7 +1321,7 @@ export default function HomePage() {
       <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: '#C8C5BC', borderTop: '0.5px solid #C8C5BC' }}>
         {[
           { icon: '📊', bg: '#EDF9F5', title: 'Everything connected to the same steps.', body: 'Change a cycle time in your time study and it updates the VSM. Log a kaizen and it appears on the map. Write a 5 Why and it stays on the step. No files to sync, no reports to rebuild.' },
-          { icon: '🔗', bg: '#FAEEDA', title: 'Every CI tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED. All on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant.' },
+          { icon: '🔗', bg: '#FAEEDA', title: 'Every process tool you need. None you do not.', body: 'Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA, SMED. All on every process step. All feeding one A3 report. ISO 9001:2015 and ISO 22468:2020 compliant.' },
           { icon: '🆓', bg: '#EEEDFE', title: 'Actually free. Not free-then-$29.', body: 'Unlimited projects. All 9 tools. No trial period. No project cap. The free plan exists to be useful, not to expire. Upgrade to Pro when you want Supe AI and process simulation. Not before.' },
         ].map(f => (
           <div key={f.title} style={{ background: '#EDE9E0', padding: '28px 24px' }}>
@@ -1324,14 +1338,14 @@ export default function HomePage() {
           <div>
             <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>The problem</div>
             <h2 style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 20 }}>
-              If you have been here before, you know exactly what this costs.
+              Every business runs on processes. Most of them are broken in the same way.
             </h2>
             {[
-              ['A VSM on the whiteboard', 'Updated manually every time anything changes'],
-              ['Cycle times in a spreadsheet', 'Disconnected from the map. Already out of date.'],
-              ['Root cause in a Word doc', 'No connection to the step where the problem lives'],
-              ['Kaizen log that nobody updates', 'Actions get lost between meetings'],
-              ['A report that takes a day to compile', 'And is outdated by the time anyone reads it'],
+              ['Your process lives in your head', 'Or in a whiteboard photo nobody looks at again'],
+              ['The bottleneck shifts every week', 'Because you\'re reacting, not measuring'],
+              ['Root causes get found and forgotten', 'No connection between the problem and the fix'],
+              ['Improvement actions die in spreadsheets', 'No owner. No deadline. Nothing gets closed.'],
+              ['Every report takes a day to compile', 'And is outdated before anyone reads it'],
             ].map(([pain, detail]) => (
               <div key={pain} style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'flex-start' }}>
                 <span style={{ fontSize: 13, color: '#C0402A', flexShrink: 0, marginTop: 3, lineHeight: 1 }}>✗</span>
@@ -1345,7 +1359,7 @@ export default function HomePage() {
           <div style={{ background: '#F8F6F0', borderRadius: 16, padding: 'clamp(20px,3vw,32px)', border: '0.5px solid #D8D5CE' }}>
             <div style={{ fontSize: 11, color: '#1A7A5E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>With VeSiMy</div>
             <p style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(16px,2vw,20px)', fontWeight: 500, color: '#242220', lineHeight: 1.6, marginBottom: 20 }}>
-              When you run a time study, that cycle time <em>is</em> the cycle time on the VSM. When you open a Kaizen, it appears on the map. When you complete a 5 Why, the root cause stays attached to the step where the problem lives.
+              Map your process once. Every measurement, every root cause, every improvement action connects to the same step automatically. Whether you run a production line, a clinic, or a property team — the waste is visible, the bottleneck is flagged, and the fix is prioritised.
             </p>
             <p style={{ fontSize: 13, color: '#4E4B45', lineHeight: 1.75, marginBottom: 20 }}>
               Nothing needs to be copied. Nothing gets out of sync. And when you need to know what to fix next, Supe reads your actual process data and tells you exactly what to address.
@@ -1360,7 +1374,82 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── COMPETITOR COMPARISON ─────────────────────────────────────────────── */}
+      {/* ── INDUSTRIES ──────────────────────────────────────────────────────── */}
+      <section style={{ background: '#F8F6F0', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10, fontWeight: 700 }}>Every industry</div>
+            <h2 style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,34px)', fontWeight: 700, color: '#242220', lineHeight: 1.2, marginBottom: 14 }}>
+              Waste is waste. Whatever you make or deliver.
+            </h2>
+            <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 540, margin: '0 auto', lineHeight: 1.8 }}>
+              The tools in VeSiMy were built on manufacturing floors. But a bottleneck in a law firm looks exactly like a bottleneck on a production line. A root cause in a real estate transaction is found the same way as one in a factory. The method is universal.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(280px,100%),1fr))', gap: 16 }}>
+            {([
+              { icon: '🏭', label: 'Manufacturing', color: '#3070B8', tagline: 'Where it all started.', demoHref: '/auth/signup?ref=1',
+                desc: 'VSM, time study, and kaizen built on 12 years of real floor experience. ISO 22468:2020 compliant. Automotive, food and beverage, aerospace, electronics.',
+                examples: ['Assembly line bottleneck analysis', 'OEE and uptime tracking', 'SMED changeover reduction'] },
+              { icon: '🏥', label: 'Healthcare', color: '#2A9E82', tagline: 'Patient flow is a value stream.', demoHref: '/auth/signup?demo=healthcare',
+                desc: 'Intake to discharge. Admissions to billing. Every wait, every handoff, every rework step is measurable. Supe finds the bottleneck that costs beds and time.',
+                examples: ['Patient flow mapping', 'Appointment scheduling waste', 'Medication error root cause'] },
+              { icon: '🏠', label: 'Real Estate', color: '#C49B2E', tagline: 'Days on market is cycle time.', demoHref: '/auth/signup?demo=realestate',
+                desc: 'Lead to close is a process with steps, handoffs, and waiting. Fall-through rate is a defect rate. Supe tells you where deals die and what to fix first.',
+                examples: ['Lead to close value stream', 'Financing delay root cause', 'Offer process bottleneck'] },
+              { icon: '⚖️', label: 'Legal & Professional Services', color: '#6426A0', tagline: 'Billable hours lost to waste.',
+                desc: 'Case intake to resolution. Proposal to invoice. Rework, approval delays, and duplicate data entry cost firms thousands per matter — invisible until mapped.',
+                examples: ['Matter lifecycle mapping', 'Discovery bottleneck analysis', 'Client onboarding waste'] },
+              { icon: '🏗️', label: 'Construction & Trades', color: '#C0402A', tagline: 'Every handoff is a wait time.',
+                desc: 'Permit to certificate of occupancy. Subcontractor handoffs, material delays, and punch list rework are pure waste. Make the delays quantified and the fixes owned.',
+                examples: ['Trade sequencing analysis', 'Punch list defect rate', 'Permit process mapping'] },
+              { icon: '🍺', label: 'Craft Brewery & Winery', color: '#C0402A', tagline: 'Fermentation time is cycle time.', demoHref: '/auth/signup?demo=brewery',
+                desc: 'A stuck sparge, a canning line seamer head issue, a barrel with TCA contamination — every brewing and winemaking problem is a process problem. Map your production flow and find the constraint.',
+                examples: ['Batch fermentation value stream', 'Packaging line uptime analysis', 'Stuck sparge root cause'] },
+              { icon: '🔗', label: 'Logistics & Supply Chain', color: '#1090D4', tagline: 'Every node is a process step.',
+                desc: 'Order receipt to last-mile delivery. Pick rates, dock scheduling, carrier handoffs, returns — all measurable, all improvable with the same structured method.',
+                examples: ['Warehouse pick process VSM', 'Returns root cause analysis', 'Dock scheduling kaizen'] },
+            ] as any[]).map((ind: any) => (
+              <div key={ind.label} style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, padding: '22px 20px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: ind.color, opacity: 0.7 }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                  <span style={{ fontSize: 24 }}>{ind.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#242220' }}>{ind.label}</div>
+                    <div style={{ fontSize: 11, color: ind.color, fontWeight: 600, fontFamily: 'monospace' }}>{ind.tagline}</div>
+                  </div>
+                </div>
+                <p style={{ fontSize: 12.5, color: '#6B6760', lineHeight: 1.7, marginBottom: 12 }}>{ind.desc}</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  {ind.examples.map((ex: string) => (
+                    <div key={ex} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ width: 4, height: 4, borderRadius: '50%', background: ind.color, flexShrink: 0, opacity: 0.7 }} />
+                      <span style={{ fontSize: 11, color: '#8E8A82' }}>{ex}</span>
+                    </div>
+                  ))}
+                </div>
+                {ind.demoHref && (
+                  <div style={{ marginTop: 12, paddingTop: 10, borderTop: '0.5px solid #E8E5E0' }}>
+                    <a href={ind.demoHref} style={{ fontSize: 11, fontWeight: 700, color: ind.color, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      Try this demo →
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <p style={{ fontSize: 13, color: '#8E8A82', marginBottom: 16 }}>Don't see your industry? If you have a process, VeSiMy works for you.</p>
+            <a href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: '#C49B2E', color: '#0D0C0A', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+              Start free — no card needed →
+            </a>
+          </div>
+        </div>
+      </section>
+
+            {/* ── COMPETITOR COMPARISON ─────────────────────────────────────────────── */}
       <CompetitorTable />
 
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}

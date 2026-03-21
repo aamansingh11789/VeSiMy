@@ -500,12 +500,26 @@ export function DashboardClient({ profile, initialProjects }: Props) {
     }
   }, [profile?.id])
 
-  // Auto-load reference project when ?ref=1 OR on first visit (0 projects)
+  // Auto-load demo/reference project from URL param or first visit
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
+    const demo = params.get('demo')
     const isFirstVisit = projects.length === 0 && !sessionStorage.getItem('vesimy_seeded')
-    if (params.get('ref') === '1' || isFirstVisit) {
+
+    if (demo === 'realestate') {
+      sessionStorage.setItem('vesimy_seeded', '1')
+      setTimeout(() => seedDemoProject('/api/projects/seed-realestate', 'Real Estate demo'), 800)
+    } else if (demo === 'healthcare') {
+      sessionStorage.setItem('vesimy_seeded', '1')
+      setTimeout(() => seedDemoProject('/api/projects/seed-healthcare', 'Healthcare demo'), 800)
+    } else if (demo === 'brewery') {
+      sessionStorage.setItem('vesimy_seeded', '1')
+      setTimeout(() => seedDemoProject('/api/projects/seed-brewery', 'Craft Brewery demo'), 800)
+    } else if (demo === 'winery') {
+      sessionStorage.setItem('vesimy_seeded', '1')
+      setTimeout(() => seedDemoProject('/api/projects/seed-winery', 'Winery demo'), 800)
+    } else if (params.get('ref') === '1' || isFirstVisit) {
       sessionStorage.setItem('vesimy_seeded', '1')
       setTimeout(() => seedReferenceProject(), 800)
     }
@@ -555,6 +569,21 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       toast.error(e.message)
     } finally {
       setCreating(false)
+    }
+  }
+
+  async function seedDemoProject(endpoint: string, label: string) {
+    setSeedingRef(true)
+    try {
+      const res = await fetch(endpoint, { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to create demo project')
+      toast.success(data.already_exists ? `Opening your ${label}…` : `${label} created — exploring now!`)
+      router.push(`/project/${data.id}`)
+    } catch (e: any) {
+      toast.error(e.message)
+    } finally {
+      setSeedingRef(false)
     }
   }
 
