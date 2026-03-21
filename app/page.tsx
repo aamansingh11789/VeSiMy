@@ -668,24 +668,43 @@ function InlineToolShowcase() {
     <div style={{ userSelect:'none' }}>
       <style>{`
         @keyframes popIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-        .demo-stack-card{cursor:pointer;border-radius:11px;padding:10px 9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);transition:all .2s;position:relative;overflow:hidden;}
-        .demo-stack-card:hover{background:rgba(255,255,255,0.08);transform:translateY(-2px);}
-        .demo-stack-card.dsc-active{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18);}
+        .demo-stack-card{
+          cursor:pointer;border-radius:11px;padding:10px 9px;
+          border-top:1px solid rgba(255,255,255,0.1);
+          border-left:1px solid rgba(255,255,255,0.06);
+          border-right:1px solid rgba(0,0,0,0.3);
+          border-bottom:1px solid rgba(0,0,0,0.4);
+          background:linear-gradient(155deg,rgba(42,38,32,0.95),rgba(26,23,19,0.98));
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 12px rgba(0,0,0,0.4),0 2px 4px rgba(0,0,0,0.3);
+          transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease;
+          position:relative;overflow:hidden;
+        }
+        .demo-stack-card:hover{
+          transform:translateY(-3px);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 10px 24px rgba(0,0,0,0.5),0 4px 8px rgba(0,0,0,0.3);
+        }
+        .demo-stack-card.dsc-active{
+          background:linear-gradient(155deg,rgba(52,46,34,0.97),rgba(34,30,20,0.99));
+          border-top:1px solid rgba(255,255,255,0.14);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 8px 20px rgba(0,0,0,0.45),0 0 0 1px rgba(196,155,46,0.12);
+        }
         .tool-tab{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:700;font-family:monospace;cursor:pointer;border:1px solid rgba(255,255,255,0.08);color:rgba(248,247,245,0.4);background:transparent;transition:all .15s;}
         .tool-tab:hover{background:rgba(255,255,255,0.07);color:rgba(248,247,245,0.7);}
         .tool-tab.tt-active{color:#C49B2E;border-color:rgba(196,155,46,0.4);background:rgba(196,155,46,0.08);}
-        .showcase-popup-body{max-height:400px;overflow-y:auto;background:#F8F6F0;border-radius:0 0 8px 8px;}
+        .showcase-popup-body{max-height:440px;overflow-y:auto;background:#F8F6F0;border-radius:0 0 8px 8px;}
+        /* Sharp subpixel text inside popup */
+        .showcase-popup-body *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
         .showcase-popup-body::-webkit-scrollbar{width:4px}
         .showcase-popup-body::-webkit-scrollbar-thumb{background:rgba(196,155,46,0.3);border-radius:2px}
       `}</style>
 
       {/* Outer frame with glow border */}
-      <div style={{ position:'relative', borderRadius:20, padding:1, background:'linear-gradient(135deg,rgba(196,155,46,0.25),rgba(100,38,160,0.1),rgba(48,112,184,0.15))' }}>
-        <div style={{ borderRadius:19, background:'rgba(30,27,23,0.97)', padding:14, display:'flex', gap:10 }}>
+      <div style={{ position:'relative', borderRadius:20, padding:1, background:'linear-gradient(135deg,rgba(196,155,46,0.22),rgba(100,38,160,0.08),rgba(48,112,184,0.12))' }}>
+        <div style={{ borderRadius:19, background:'rgba(26,23,20,0.98)', padding:14, display:'flex', gap:10, boxShadow:'0 32px 64px rgba(0,0,0,0.55),0 12px 24px rgba(0,0,0,0.3)' }}>
 
           {/* LEFT: chrome + popup + tool tabs */}
-          <div style={{ flex:1, minWidth:0, transform:'perspective(1400px) rotateX(2deg)', transition:'transform .5s' }}>
-            <div style={{ background:'linear-gradient(180deg,#2A2620,#1E1B17)', borderRadius:12, overflow:'hidden', border:'1px solid rgba(255,255,255,0.07)', boxShadow:'inset 0 1px 0 rgba(255,255,255,0.05),inset 0 -1px 0 rgba(0,0,0,0.4)' }}>
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ background:'linear-gradient(180deg,#2A2620,#1E1B17)', borderRadius:12, overflow:'hidden', border:'1px solid rgba(255,255,255,0.07)', boxShadow:'inset 0 1px 0 rgba(255,255,255,0.05),inset 0 -1px 0 rgba(0,0,0,0.4)', transform:'translateZ(0)', WebkitFontSmoothing:'antialiased' }}>
               {/* Chrome bar */}
               <div style={{ padding:'9px 14px', display:'flex', alignItems:'center', gap:8, background:'linear-gradient(180deg,rgba(40,37,33,0.96),rgba(30,27,23,0.96))', borderBottom:'1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display:'flex', gap:5 }}>
@@ -699,7 +718,8 @@ function InlineToolShowcase() {
               {/* Popup content */}
               <div key={`${activeDemo}-${activeTool}`} className="showcase-popup-body" style={{ animation:'popIn 0.2s ease both' }} dangerouslySetInnerHTML={{ __html: popupHtml }} />
               {/* Tool tabs */}
-              <div style={{ display:'flex', gap:4, padding:'8px 12px', background:'rgba(26,23,20,0.7)', borderTop:'1px solid rgba(255,255,255,0.06)', flexWrap:'wrap' }}>
+              <div style={{ display:'flex', gap:4, padding:'6px 12px 8px', background:'rgba(22,19,16,0.85)', borderTop:'1px solid rgba(255,255,255,0.06)', flexWrap:'wrap', alignItems:'center' }}>
+                <span style={{ fontSize:7, color:'rgba(248,247,245,0.2)', fontFamily:'monospace', letterSpacing:1, textTransform:'uppercase', marginRight:4, flexShrink:0 }}>Tool:</span>
                 {demo.tools.map(t => (
                   <button key={t} className={`tool-tab${t===activeTool?' tt-active':''}`} onClick={() => setActiveTool(t)}>{t}</button>
                 ))}
@@ -709,6 +729,7 @@ function InlineToolShowcase() {
 
           {/* RIGHT: demo stack */}
           <div style={{ width:130, flexShrink:0, display:'flex', flexDirection:'column', gap:6 }}>
+            <div style={{ fontSize:8, color:'rgba(248,247,245,0.25)', fontFamily:'monospace', letterSpacing:1.5, textTransform:'uppercase', marginBottom:2, paddingLeft:2 }}>Select demo</div>
             {DEMO_SHOWCASE.map((d, i) => (
               <div key={d.id} className={`demo-stack-card${i===activeDemo?' dsc-active':''}`} onClick={() => switchDemo(i)}>
                 {/* Color stripe */}
@@ -1293,9 +1314,7 @@ export default function HomePage() {
           </div>
 
           {/* ── Showcase below text: preview left + demo stack right ── */}
-          <div style={{ marginTop: 48, position: 'relative' }}>
-            {/* Glow ring */}
-            <div style={{ position: 'absolute', inset: -2, borderRadius: 22, background: 'linear-gradient(135deg,rgba(196,155,46,0.2),rgba(100,38,160,0.08),rgba(48,112,184,0.12))', zIndex: -1, filter: 'blur(2px)' }} />
+          <div style={{ marginTop: 48 }}>
             <InlineToolShowcase />
           </div>
 
