@@ -24,8 +24,8 @@ function SignupForm() {
       const data = await res.json()
       if (data.url) window.location.href = data.url
       else try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'free' }) } catch {}
-      router.push('/dashboard')
-    } catch { router.push('/dashboard') }
+      window.location.href = '/dashboard'
+    } catch { window.location.href = '/dashboard' }
   }
 
   const [done,    setDone]    = useState(false)
@@ -47,7 +47,7 @@ function SignupForm() {
       if (planKey && planKey !== 'trial') await redirectToCheckout(planKey)
       else {
         const demo = searchParams.get('demo')
-        router.push(demo ? `/dashboard?demo=${demo}` : '/dashboard')
+        window.location.href = demo ? `/dashboard?demo=${demo}` : '/dashboard'
       }
     } else {
       // Email confirmation required — show instructions instead of redirecting

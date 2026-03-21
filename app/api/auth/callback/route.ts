@@ -44,10 +44,6 @@ export async function GET(request: NextRequest) {
       .update({ onboarded: true })
       .eq('id', user.id)
 
-    // Seed reference project for new users (idempotent — won't duplicate)
-    const { data: profile } = await supabase
-      .from('profiles').select('onboarded').eq('id', user.id).maybeSingle()
-
     return NextResponse.redirect(`${origin}/dashboard`)
 
   } catch (err) {

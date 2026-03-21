@@ -64,8 +64,9 @@ function LoginForm() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        router.push(redirect)
-        router.refresh()
+        // Hard navigation so the server picks up the new session cookie
+        // router.push can race with middleware before the cookie is set
+        window.location.href = redirect
       }
     } catch (err: any) {
       toast.error(err.message || 'Authentication failed')
