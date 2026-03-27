@@ -68,28 +68,28 @@ function SignupForm() {
     return (
       <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ width:'100%', maxWidth:420, textAlign:'center' }}>
-          <div style={{ fontSize:56, marginBottom:16 }}>📧</div>
+          <div style={{ fontSize:11, fontWeight:800, fontFamily:'monospace', letterSpacing:1, color:'var(--brand)', marginBottom:16 }}>EMAIL SENT</div>
           <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             Check your email
           </h2>
           <p style={{ color:'var(--text2)', fontSize:14, lineHeight:1.7, marginBottom:8 }}>
             We sent a confirmation link to
           </p>
-          <p style={{ color:'var(--gold)', fontWeight:700, fontSize:15, marginBottom:20 }}>
+          <p style={{ color:'var(--brand)', fontWeight:700, fontSize:15, marginBottom:20 }}>
             {form.email}
           </p>
           <p style={{ color:'var(--text3)', fontSize:13, lineHeight:1.7, marginBottom:28 }}>
             Click the link in the email to activate your account.
             If you don't see it, check your spam folder.
           </p>
-          <div style={{ background:'rgba(212,162,8,0.06)', border:'1px solid rgba(212,162,8,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
-            <strong style={{ color:'var(--gold)' }}>On Android?</strong> Open Gmail or your email app,
+          <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
+            <strong style={{ color:'var(--brand)' }}>On Android?</strong> Open Gmail or your email app,
             find the VeSiMy email, and tap the confirmation link.
             It will open VeSiMy and log you in automatically.
           </div>
           <button
             onClick={() => router.push('/auth/login')}
-            style={{ marginTop:24, background:'none', border:'1px solid rgba(212,162,8,0.3)', color:'var(--gold)', borderRadius:10, padding:'10px 24px', cursor:'pointer', fontSize:14 }}
+            style={{ marginTop:24, background:'none', border:'1px solid rgba(1,118,211,0.3)', color:'var(--brand)', borderRadius:10, padding:'10px 24px', cursor:'pointer', fontSize:14 }}
           >
             Back to Sign In
           </button>
@@ -107,8 +107,8 @@ function SignupForm() {
           </div>
           <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your free account</h1>
           {plan && planKey !== 'free' ? (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,162,8,0.08)', border:'1px solid rgba(212,162,8,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
-              <span style={{ fontSize:13, color:'var(--gold)', fontWeight:600 }}>✦ {plan.name} — ${plan.price}/mo</span>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
+              <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name} — ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Free forever · Unlimited projects</span>
             </div>
           ) : (
@@ -147,7 +147,7 @@ function SignupForm() {
           By signing up you agree to our <Link href="/terms" style={{ color:'var(--text3)', textDecoration:'none' }}>Terms</Link> and <Link href="/privacy" style={{ color:'var(--text3)', textDecoration:'none' }}>Privacy Policy</Link>
         </p>
         <p style={{ textAlign:'center', marginTop:10, fontSize:13, color:'var(--text3)' }}>
-          Already have an account?{' '}<Link href="/auth/login" style={{ color:'var(--gold)', textDecoration:'none' }}>Sign in</Link>
+          Already have an account?{' '}<Link href="/auth/login" style={{ color:'var(--brand)', textDecoration:'none' }}>Sign in</Link>
         </p>
       </div>
     </div>

@@ -57,7 +57,7 @@ export function AIAssistButton({
         </>
       ) : (
         <>
-          <span style={{ fontSize: 12 }}>⚡</span>
+          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:"monospace" }}>AI</span>
           {label}
         </>
       )}
@@ -107,7 +107,7 @@ export function AIResultPanel({
         background: isError ? 'rgba(192,64,42,0.06)' : 'rgba(100,38,160,0.06)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontSize: 11 }}>{isError ? '⚠' : '⚡'}</span>
+          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:'monospace' }}>{isError ? '!' : 'AI'}</span>
           <span style={{ fontSize: 10, fontWeight: 700, color: isError ? '#C0402A' : '#8C44CC', fontFamily: 'monospace', letterSpacing: 0.8 }}>
             {isError ? 'ERROR' : source === 'ai' ? (title || 'AI ASSIST') : (title || 'SMART ASSIST')}
           </span>
@@ -180,7 +180,7 @@ export function AIBadge({ small }: { small?: boolean }) {
       fontFamily: 'monospace',
       letterSpacing: 0.5,
     }}>
-      ⚡ AI
+      AI
     </span>
   )
 }

@@ -17,7 +17,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', '🏠 Demo — Real Estate Transaction Flow')
+      .eq('name', 'Demo — Real Estate Transaction Flow')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -26,7 +26,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        '🏠 Demo — Real Estate Transaction Flow',
+        name:        'Demo — Real Estate Transaction Flow',
         description: 'Full value stream from lead inquiry to closing. 7 steps, 45-day lead time, bottleneck at Financing & Underwriting. All CI tools populated. Use as a guide for mapping your own process.',
         industry:    'Real Estate',
         customer:    'Home Buyer',

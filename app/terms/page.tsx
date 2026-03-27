@@ -68,7 +68,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#D4A208' }}>founder@vesimy.com</a></p>
+          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a></p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>

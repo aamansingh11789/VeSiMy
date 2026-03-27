@@ -84,16 +84,16 @@ export default function FreeVSMPost() {
             },
           ].map((tool) => (
             <div key={tool.name} style={{
-              background: tool.highlight ? 'rgba(212,162,8,0.06)' : 'rgba(248,247,245,0.97)',
-              border: `1px solid ${tool.highlight ? 'rgba(212,162,8,0.25)' : 'rgba(44,44,92,0.6)'}`,
+              background: tool.highlight ? 'rgba(1,118,211,0.06)' : 'rgba(248,247,245,0.97)',
+              border: `1px solid ${tool.highlight ? 'rgba(1,118,211,0.25)' : 'rgba(44,44,92,0.6)'}`,
               borderRadius: 14, padding: '24px 26px', marginBottom: 16,
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                  <span style={{ fontWeight: 800, fontSize: 17, color: tool.highlight ? '#D4A208' : 'var(--text)' }}>{tool.name}</span>
-                  {tool.highlight && <span style={{ fontSize: 9, background: '#D4A208', color: 'var(--bg)', padding: '2px 8px', borderRadius: 999, fontWeight: 800, letterSpacing: 1 }}>RECOMMENDED</span>}
+                  <span style={{ fontWeight: 800, fontSize: 17, color: tool.highlight ? '#0176D3' : 'var(--text)' }}>{tool.name}</span>
+                  {tool.highlight && <span style={{ fontSize: 9, background: '#0176D3', color: 'var(--bg)', padding: '2px 8px', borderRadius: 999, fontWeight: 800, letterSpacing: 1 }}>RECOMMENDED</span>}
                 </div>
-                <span style={{ fontSize: 13, color: tool.highlight ? '#D4A208' : 'var(--text2)', fontFamily: 'monospace' }}>{tool.price}</span>
+                <span style={{ fontSize: 13, color: tool.highlight ? '#0176D3' : 'var(--text2)', fontFamily: 'monospace' }}>{tool.price}</span>
               </div>
               <p style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 14 }}>Best for: {tool.best}</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -117,14 +117,14 @@ export default function FreeVSMPost() {
             The most important thing is to start. A rough VSM on paper is infinitely more useful than a perfect diagram you never built.
           </p>
 
-          <div style={{ padding: '32px 36px', background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.2)', borderRadius: 16, textAlign: 'center' }}>
+          <div style={{ padding: '32px 36px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 16, textAlign: 'center' }}>
             <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Try the free VSM tool
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               No download. No Visio. No setup. Build your first VSM map in under 5 minutes.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start free trial — no credit card →
             </Link>
           </div>

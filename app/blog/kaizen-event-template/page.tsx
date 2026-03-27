@@ -84,7 +84,7 @@ export default function KaizenEventPost() {
 
           {[
             {
-              day: 'Day 1', label: 'Understand', color: '#D4A208',
+              day: 'Day 1', label: 'Understand', color: '#0176D3',
               items: [
                 'Morning: Team kickoff — review goals, ground rules, and roles',
                 'Review baseline data and go to gemba (the actual work floor)',

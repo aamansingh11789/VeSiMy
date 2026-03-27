@@ -223,7 +223,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
   return (
     <Modal
-      title={`⏱ Time Study — ${stepName}`}
+      title={`Time Study — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Study'}
@@ -243,7 +243,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               fontSize: 'clamp(30px, 8vw, 42px)',
               fontFamily: 'monospace',
               fontWeight: 700,
-              color: running ? '#D4A208' : 'var(--text)',
+              color: running ? '#0176D3' : 'var(--text)',
               lineHeight: 1.1,
             }}
           >
@@ -265,7 +265,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               style={{ minWidth: 90 }}
               type="button"
             >
-              {running ? '⏹ Stop' : '▶ Start'}
+              {running ? 'Stop' : 'Start'}
             </button>
 
             {running && (
@@ -314,7 +314,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 4 }}>
                   {label}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#D4A208' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#0176D3' }}>
                   {val}
                 </div>
               </div>
@@ -348,7 +348,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                   onClick={exportTimeStudyISO}
                   style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
                 >
-                  📄 ISO Report
+                  ISO Report
                 </button>
               )}
             </div>

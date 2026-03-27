@@ -14,25 +14,18 @@ import { ChevronRightIcon, CheckIcon, ArrowRightIcon } from '@/components/ui/Ico
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
 const ROLES = [
-  { id:'ops_manager',    label:'Operations Manager',       icon:'🏭' },
-  { id:'lean_engineer',  label:'Lean / CI Engineer',       icon:'⚙️' },
-  { id:'quality_mgr',    label:'Quality Manager',          icon:'✅' },
-  { id:'plant_mgr',      label:'Plant / Site Manager',     icon:'🏗️' },
-  { id:'consultant',     label:'Lean Consultant',          icon:'🤝' },
-  { id:'student',        label:'Student / Learning Lean',  icon:'🎓' },
-  { id:'other',          label:'Other',                    icon:'👋' },
+  { id:'ops_manager',    label:'Operations Manager',       icon:'MFG' },
+  { id:'lean_engineer',  label:'Lean / CI Engineer',       icon:'CI' },
+  { id:'quality_mgr',    label:'Quality Manager',          icon:'QA' },
+  { id:'plant_mgr',      label:'Plant / Site Manager',     icon:'PM' },
+  { id:'consultant',     label:'Lean Consultant',          icon:'CON' },
+  { id:'student',        label:'Student / Learning Lean',  icon:'EDU' },
+  { id:'other',          label:'Other',                    icon:'OTH' },
 ]
 
-const INDUSTRIES = [
-  { id:'automotive',    label:'Automotive',         icon:'🚗' },
-  { id:'electronics',   label:'Electronics / PCB',  icon:'⚡' },
-  { id:'food_bev',      label:'Food & Beverage',    icon:'🍽️' },
-  { id:'aerospace',     label:'Aerospace',          icon:'✈️' },
-  { id:'healthcare',    label:'Healthcare',         icon:'🏥' },
-  { id:'logistics',     label:'Logistics / 3PL',    icon:'📦' },
-  { id:'industrial',    label:'Industrial Mfg',     icon:'🔧' },
-  { id:'other',         label:'Other',              icon:'🌐' },
-]
+// Full industry list from industry-language.ts
+import { INDUSTRY_OPTIONS } from '@/lib/industry-language'
+const INDUSTRIES = INDUSTRY_OPTIONS.map(o => ({ id: o.id, label: o.label, sector: o.sector }))
 
 const FIRST_PROCESS_TEMPLATES = [
   { id:'sample',     label:'Load reference projects — 5 industries, every tool populated, real data ready to explore', steps:['Steel Blank Receiving','Stamping Press','Weld Sub-Assembly','Hem / Clinch','E-Coat / Paint Prep','Final Assembly & QC','Pack & Ship'] },
@@ -134,7 +127,7 @@ export function OnboardingClient({ profile }: Props) {
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', flexDirection:'column',
-      backgroundImage:'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,162,8,0.05) 0%, transparent 60%)',
+      backgroundImage:'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(1,118,211,0.05) 0%, transparent 60%)',
     }}>
       {/* Top bar */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
@@ -143,9 +136,9 @@ export function OnboardingClient({ profile }: Props) {
           {[1,2,3].map(n => (
             <div key={n} style={{ display:'flex', alignItems:'center', gap:8 }}>
               <div style={{ width:28, height:28, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700,
-                background: step > n ? 'rgba(29,209,161,0.15)' : step === n ? 'rgba(212,162,8,0.15)' : 'rgba(40,40,92,0.4)',
-                border: step > n ? '1.5px solid #1DD1A1' : step === n ? '1.5px solid #D4A208' : '1.5px solid rgba(40,40,92,0.6)',
-                color:   step > n ? '#1DD1A1' : step === n ? '#D4A208' : 'var(--sl-400)',
+                background: step > n ? 'rgba(29,209,161,0.15)' : step === n ? 'rgba(1,118,211,0.15)' : 'rgba(40,40,92,0.4)',
+                border: step > n ? '1.5px solid #1DD1A1' : step === n ? '1.5px solid #0176D3' : '1.5px solid rgba(40,40,92,0.6)',
+                color:   step > n ? '#1DD1A1' : step === n ? '#0176D3' : 'var(--sl-400)',
               }}>
                 {step > n ? <CheckIcon size={13} strokeWidth={3} /> : n}
               </div>
@@ -160,7 +153,7 @@ export function OnboardingClient({ profile }: Props) {
 
       {/* Progress bar */}
       <div style={{ height:2, background:'rgba(26,26,64,0.4)' }}>
-        <div style={{ height:'100%', background:'linear-gradient(90deg,#C49510,#D4A208)', width:`${pct}%`, transition:'width 0.4s ease' }} />
+        <div style={{ height:'100%', background:'linear-gradient(90deg,#0a5eaa,#0176D3)', width:`${pct}%`, transition:'width 0.4s ease' }} />
       </div>
 
       {/* Content */}
@@ -170,10 +163,10 @@ export function OnboardingClient({ profile }: Props) {
           {/* ── STEP 1: Role + Industry ── */}
           {step === 1 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A208', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 1 OF 3 — YOUR ROLE</p>
+              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 1 OF 3 — YOUR ROLE</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,4vw,40px)', fontWeight:700, color:'var(--text)', marginBottom:8, lineHeight:1.2 }}>
                 Welcome{profile.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}.<br />
-                <span style={{ color:'#D4A208' }}>What's your role?</span>
+                <span style={{ color:'#0176D3' }}>What's your role?</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:32, lineHeight:1.6 }}>
                 VeSiMy adapts its suggestions to how you work.
@@ -182,8 +175,8 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))', gap:10, marginBottom:32 }}>
                 {ROLES.map(r => (
                   <button key={r.id} onClick={() => setRole(r.id)} style={{ padding:'14px 16px', borderRadius:12, textAlign:'left', cursor:'pointer', transition:'all 0.15s',
-                    background: role===r.id ? 'rgba(212,162,8,0.08)' : '#FFFFFF',
-                    border:     role===r.id ? '1.5px solid rgba(212,162,8,0.5)' : '1.5px solid rgba(40,40,92,0.5)',
+                    background: role===r.id ? 'rgba(1,118,211,0.08)' : '#FFFFFF',
+                    border:     role===r.id ? '1.5px solid rgba(1,118,211,0.5)' : '1.5px solid rgba(40,40,92,0.5)',
                   }}>
                     <div style={{ fontSize:22, marginBottom:6 }}>{r.icon}</div>
                     <div style={{ fontSize:13, fontWeight:600, color: role===r.id?'var(--text)':'#B0B0C8', lineHeight:1.3 }}>{r.label}</div>
@@ -195,8 +188,8 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:40 }}>
                 {INDUSTRIES.map(ind => (
                   <button key={ind.id} onClick={() => setIndustry(ind.id)} style={{ padding:'8px 14px', borderRadius:100, fontSize:13, cursor:'pointer', transition:'all 0.15s', display:'flex', alignItems:'center', gap:6,
-                    background: industry===ind.id ? 'rgba(212,162,8,0.1)' : '#FFFFFF',
-                    border:     industry===ind.id ? '1px solid rgba(212,162,8,0.4)' : '1px solid rgba(40,40,92,0.5)',
+                    background: industry===ind.id ? 'rgba(1,118,211,0.10)' : '#FFFFFF',
+                    border:     industry===ind.id ? '1px solid #0176D3' : '1px solid #DDDBDA',
                     color:      industry===ind.id ? 'var(--text)' : 'var(--text3)',
                   }}>
                     <span>{ind.icon}</span>{ind.label}
@@ -205,7 +198,7 @@ export function OnboardingClient({ profile }: Props) {
               </div>
 
               <button onClick={() => setStep(2)} disabled={!role || !industry} style={{ padding:'13px 32px', borderRadius:10, fontSize:15, fontWeight:700, cursor: !role||!industry?'not-allowed':'pointer', transition:'all 0.2s', display:'flex', alignItems:'center', gap:8,
-                background:!role||!industry ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#C49510,#D4A208)',
+                background:!role||!industry ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)',
                 color:     !role||!industry ? 'var(--sl-400)'            : 'var(--bg)',
               }}>
                 Continue <ArrowRightIcon size={16} />
@@ -216,9 +209,9 @@ export function OnboardingClient({ profile }: Props) {
           {/* ── STEP 2: First Project ── */}
           {step === 2 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A208', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 2 OF 3 — YOUR FIRST PROCESS</p>
+              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 2 OF 3 — YOUR FIRST PROCESS</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,4vw,40px)', fontWeight:700, color:'var(--text)', marginBottom:8, lineHeight:1.2 }}>
-                Name your first<br /><span style={{ color:'#D4A208' }}>value stream.</span>
+                Name your first<br /><span style={{ color:'#0176D3' }}>value stream.</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.6 }}>
                 This is the process you'll map first. You can always add more later.
@@ -251,7 +244,7 @@ export function OnboardingClient({ profile }: Props) {
                   ← Back
                 </button>
                 <button onClick={() => setStep(3)} disabled={(!projName.trim() && template !== 'sample') || !template} style={{ flex:1, padding:'13px 32px', borderRadius:10, fontSize:15, fontWeight:700, cursor:((!projName.trim() && template !== 'sample') || !template)?'not-allowed':'pointer', transition:'all 0.2s', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
-                  background:(!projName.trim() && template !== 'sample') || !template ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#C49510,#D4A208)',
+                  background:(!projName.trim() && template !== 'sample') || !template ? 'rgba(40,40,92,0.3)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)',
                   color:     (!projName.trim() && template !== 'sample') || !template ? 'var(--sl-400)'            : 'var(--bg)',
                 }}>
                   Continue <ArrowRightIcon size={16} />
@@ -263,22 +256,22 @@ export function OnboardingClient({ profile }: Props) {
           {/* ── STEP 3: Confirm + Launch ── */}
           {step === 3 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A208', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 3 OF 3 — READY TO MAP</p>
+              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16 }}>STEP 3 OF 3 — READY TO MAP</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,4vw,40px)', fontWeight:700, color:'var(--text)', marginBottom:8, lineHeight:1.2 }}>
-                You're ready.<br /><span style={{ color:'#D4A208' }}>Let's start mapping.</span>
+                You're ready.<br /><span style={{ color:'#0176D3' }}>Let's start mapping.</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:36, lineHeight:1.6 }}>
                 Here's what VeSiMy is about to create for you:
               </p>
 
               {/* Summary card */}
-              <div style={{ background:'#FFFFFF', border:'1px solid rgba(212,162,8,0.2)', borderRadius:16, padding:28, marginBottom:36 }}>
+              <div style={{ background:'#FFFFFF', border:'1px solid rgba(1,118,211,0.2)', borderRadius:16, padding:28, marginBottom:36 }}>
                 <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
                   {[
-                    ['Your Role',     ROLES.find(r=>r.id===role)?.label || role,     '👤'],
-                    ['Industry',      INDUSTRIES.find(i=>i.id===industry)?.label || industry, '🏭'],
-                    ['First Project', projName,                                        '🗺️'],
-                    ['Template',      FIRST_PROCESS_TEMPLATES.find(t=>t.id===template)?.label || 'Blank', '📋'],
+                    ['Your Role',     ROLES.find(r=>r.id===role)?.label || role,     ''],
+                    ['Industry',      INDUSTRIES.find(i=>i.id===industry)?.label || industry, ''],
+                    ['First Project', projName,                                        ''],
+                    ['Template',      FIRST_PROCESS_TEMPLATES.find(t=>t.id===template)?.label || 'Blank', ''],
                   ].map(([k, v, icon]) => (
                     <div key={k} style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
                       <span style={{ fontSize:13, color:'var(--text3)', display:'flex', alignItems:'center', gap:8 }}>
@@ -293,9 +286,9 @@ export function OnboardingClient({ profile }: Props) {
               {/* What happens next */}
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:12, marginBottom:36 }}>
                 {[
-                  { icon:'🗺️', label:'VSM map opens with your steps pre-loaded' },
-                  { icon:'🤖', label:'Supe AI analyzes your process immediately' },
-                  { icon:'📊', label:'Process Health Score starts tracking' },
+                  { icon:'', label:'VSM map opens with your steps pre-loaded' },
+                  { icon:'', label:'Supe AI analyzes your process immediately' },
+                  { icon:'', label:'Process Health Score starts tracking' },
                 ].map(item => (
                   <div key={item.label} style={{ background:'#FFFFFF', border:'1px solid rgba(40,40,92,0.4)', borderRadius:10, padding:'14px 12px', textAlign:'center' }}>
                     <div style={{ fontSize:22, marginBottom:8 }}>{item.icon}</div>
@@ -309,8 +302,8 @@ export function OnboardingClient({ profile }: Props) {
                   ← Back
                 </button>
                 <button onClick={finish} disabled={saving} style={{ flex:1, padding:'14px 32px', borderRadius:10, fontSize:16, fontWeight:700, cursor:saving?'wait':'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
-                  background:'linear-gradient(135deg,#C49510,#D4A208)',
-                  color:'var(--bg)', boxShadow:'0 4px 24px rgba(212,162,8,0.3)',
+                  background:'linear-gradient(135deg,#0a5eaa,#0176D3)',
+                  color:'var(--bg)', boxShadow:'0 4px 24px rgba(1,118,211,0.3)',
                   opacity: saving ? 0.8 : 1,
                 }}>
                   {saving ? '⟳ Creating your map…' : 'Launch My Value Stream Map'} {!saving && <ArrowRightIcon size={16} />}

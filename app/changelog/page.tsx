@@ -13,7 +13,7 @@ const entries = [
   {
     date: 'March 12, 2026',
     tag: 'LAUNCH',
-    color: '#D4A208',
+    color: '#0176D3',
     title: 'VeSiMy goes live',
     items: [
       'All 9 CI tools live: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA',
@@ -102,7 +102,7 @@ export default function ChangelogPage() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
           What's New
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
@@ -157,7 +157,7 @@ export default function ChangelogPage() {
         <div style={{ marginTop: 56, padding: '28px 32px', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 16, textAlign: 'center' }}>
           <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
             Want updates when we ship? Follow{' '}
-            <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#D4A208', textDecoration: 'none' }}>
+            <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#0176D3', textDecoration: 'none' }}>
               VeSiMy on LinkedIn
             </a>
             {' '}— we post every release.

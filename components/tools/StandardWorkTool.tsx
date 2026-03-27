@@ -15,7 +15,7 @@ interface Props {
 }
 
 const VA_LABELS: Record<string, string> = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }
-const VA_COLORS: Record<string, string> = { va: '#1DD1A1', nnva: '#D4A208', nva: '#FF6B6B' }
+const VA_COLORS: Record<string, string> = { va: '#1DD1A1', nnva: '#0176D3', nva: '#FF6B6B' }
 
 export default function StandardWorkTool({ steps, takt, projectName, onClose }: Props) {
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
@@ -108,7 +108,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
 
   return (
     <Modal
-      title={`📋 Standard Work Sheet — ${projectName}`}
+      title={`Standard Work Sheet — ${projectName}`}
       onClose={onClose}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -116,7 +116,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
         {opSteps.length > 0 && (
           <div style={{ marginBottom: 12 }}>
             <AIAssistButton
-              label="⚡ Write work instruction"
+              label="AI Write work instruction"
               loading={aiLoading}
               onClick={() => aiAssist('standard_work_instruction', {
                 opSteps, stepName: step?.name, takt,
@@ -133,7 +133,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
 
         {stepsWithTasks.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '32px 20px', color: 'var(--text3)', fontSize: 13 }}>
-            <div style={{ fontSize: 32, marginBottom: 10 }}>📋</div>
+            
             No operator steps defined yet.<br />
             Edit each process step and expand <strong>Operator Steps</strong> to add tasks with their times and VA classifications.
           </div>
@@ -160,7 +160,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                   {[
                     { label: 'Total CT',  val: `${totalTime}s`, color: 'var(--text)' },
                     { label: '% VA',      val: `${pct}%`,       color: '#1DD1A1' },
-                    { label: 'Takt',      val: takt ? `${takt}s` : '—', color: takt && totalTime > takt ? '#FF6B6B' : '#D4A208' },
+                    { label: 'Takt',      val: takt ? `${takt}s` : '—', color: takt && totalTime > takt ? '#FF6B6B' : '#0176D3' },
                     { label: 'Tasks',     val: String(opSteps.length), color: 'var(--text)' },
                   ].map(({ label, val, color }) => (
                     <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px', textAlign: 'center' }}>
@@ -175,12 +175,12 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                   <div>
                     <div style={{ display: 'flex', height: 10, borderRadius: 5, overflow: 'hidden', gap: 1 }}>
                       <div style={{ width: `${vaTime/totalTime*100}%`, background: '#1DD1A1' }} />
-                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#D4A208' }} />
+                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#0176D3' }} />
                       <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#FF6B6B' }} />
                     </div>
                     <div style={{ display: 'flex', gap: 10, fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>
                       <span style={{ color: '#1DD1A1' }}>VA: {vaTime}s</span>
-                      <span style={{ color: '#D4A208' }}>NNVA: {opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
+                      <span style={{ color: '#0176D3' }}>NNVA: {opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
                       <span style={{ color: '#FF6B6B' }}>NVA: {opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
                     </div>
                   </div>
@@ -203,18 +203,18 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                       <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--text2)', textAlign: 'right' }}>{s.time}s</span>
                     </div>
                   ))}
-                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: 'rgba(212,162,8,0.06)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: 'rgba(1,118,211,0.06)' }}>
                     <span />
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#D4A208' }}>Total</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#0176D3' }}>Total</span>
                     <span />
-                    <span style={{ fontSize: 11, fontFamily: 'monospace', fontWeight: 700, color: '#D4A208', textAlign: 'right' }}>{totalTime}s</span>
+                    <span style={{ fontSize: 11, fontFamily: 'monospace', fontWeight: 700, color: '#0176D3', textAlign: 'right' }}>{totalTime}s</span>
                   </div>
                 </div>
 
                 {/* Takt warning */}
                 {takt > 0 && totalTime > takt && (
                   <div style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#FF6B6B' }}>
-                    ⚠️ Cycle time <strong>{totalTime}s</strong> exceeds takt time <strong>{takt}s</strong> by {totalTime - takt}s. This step is a bottleneck — load-balance tasks to another operator or kaizen the NVA elements.
+                    <span style={{color:"#0176D3",fontWeight:700}}>OVER TAKT:</span> Cycle time <strong>{totalTime}s</strong> exceeds takt time <strong>{takt}s</strong> by {totalTime - takt}s. This step is a bottleneck — load-balance tasks to another operator or kaizen the NVA elements.
                   </div>
                 )}
 
@@ -224,7 +224,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                   className="btn btn-ghost"
                   style={{ width: '100%', justifyContent: 'center', gap: 8 }}
                 >
-                  📄 Export ISO Standard Work Sheet
+                  Export ISO Standard Work Sheet
                 </button>
               </>
             )}

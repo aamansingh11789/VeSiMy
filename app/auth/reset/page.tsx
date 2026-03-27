@@ -8,7 +8,7 @@ import { ArrowLeftIcon, CheckIcon } from '@/components/ui/Icons'
 
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = 'var(--gold)'
+const GOLD  = 'var(--brand)'
 
 export default function ResetPage() {
   const [email,   setEmail]   = useState('')
@@ -33,7 +33,7 @@ export default function ResetPage() {
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24,
-      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212,162,8,0.05) 0%, transparent 60%)' }}>
+      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(1,118,211,0.05) 0%, transparent 60%)' }}>
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:36 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
@@ -71,7 +71,7 @@ export default function ResetPage() {
               </div>
             )}
             <button onClick={handleReset} disabled={loading} style={{ width:'100%', padding:'13px', borderRadius:10, fontSize:15, fontWeight:700, cursor:loading?'wait':'pointer',
-              background:'linear-gradient(135deg,#B8880A,var(--gold))', color:'var(--bg)', border:'none', opacity:loading?0.8:1 }}>
+              background:'linear-gradient(135deg,#B8880A,var(--brand))', color:'var(--bg)', border:'none', opacity:loading?0.8:1 }}>
               {loading ? 'Sending…' : 'Send Reset Link'}
             </button>
             <div style={{ textAlign:'center', marginTop:20 }}>

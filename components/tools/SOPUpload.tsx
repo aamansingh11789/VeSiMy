@@ -76,7 +76,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
 
   return (
     <Modal
-      title="📄 Import SOP → Auto-Generate Steps"
+      title="Import SOP — Auto-Generate Steps"
       onClose={onClose}
       onSave={preview.length > 0 ? confirm : undefined}
       saveLabel={`Add ${preview.length} step${preview.length !== 1 ? 's' : ''} to Project`}
@@ -90,9 +90,9 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             <div style={{ display:'flex', gap:6, marginBottom:16 }}>
               {(['upload','paste'] as const).map(m => (
                 <button key={m} onClick={() => setMode(m)} style={{ flex:1, padding:'8px', borderRadius:'var(--radius-sm)', border:'1px solid', cursor:'pointer',
-                  background:mode===m?'var(--gold-dim)':'transparent', borderColor:mode===m?'var(--gold-glow)':'var(--border2)',
-                  color:mode===m?'var(--gold2)':'var(--text2)', fontSize:12, fontWeight:mode===m?700:400 }}>
-                  {m==='upload'?'📎 Upload File':'✎ Paste Text'}
+                  background:mode===m?'var(--brand-dim)':'transparent', borderColor:mode===m?'var(--brand-glow)':'var(--border2)',
+                  color:mode===m?'var(--brand)':'var(--text2)', fontSize:12, fontWeight:mode===m?700:400 }}>
+                  {m==='upload'?'Upload File':'Paste Text'}
                 </button>
               ))}
             </div>
@@ -100,9 +100,9 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             {mode==='upload' ? (
               <div>
                 <div onClick={() => inputRef.current?.click()}
-                  style={{ border:`2px dashed ${file?'var(--gold)':'var(--border2)'}`, borderRadius:'var(--radius)', padding:'32px 24px', textAlign:'center', cursor:'pointer',
-                    background:file?'var(--gold-dim)':'transparent', transition:'all 0.2s' }}>
-                  <div style={{ fontSize:32, marginBottom:8 }}>{file?'📄':'📁'}</div>
+                  style={{ border:`2px dashed ${file?'var(--brand)':'var(--border2)'}`, borderRadius:'var(--radius)', padding:'32px 24px', textAlign:'center', cursor:'pointer',
+                    background:file?'var(--brand-dim)':'transparent', transition:'all 0.2s' }}>
+                  <div style={{ fontSize:11, fontWeight:800, fontFamily:'monospace', letterSpacing:1, color:'var(--text3)', marginBottom:8 }}>{file?'FILE':'UPLOAD'}</div>
                   <div style={{ fontSize:14, color:'var(--text)', fontWeight:500, marginBottom:4 }}>
                     {file ? file.name : 'Click to select a file'}
                   </div>
@@ -129,7 +129,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
         ) : (
           <div style={{ padding: 0 }}>
             <p style={{ fontSize:13, color:'var(--text2)', marginBottom:14 }}>
-              Found <strong style={{ color:'var(--gold)' }}>{preview.length} steps</strong>. Review and remove any that don&apos;t belong, then click Add to Project.
+              Found <strong style={{ color:'var(--brand)' }}>{preview.length} steps</strong>. Review and remove any that don&apos;t belong, then click Add to Project.
             </p>
             <div style={{ maxHeight:320, overflowY:'auto', display:'flex', flexDirection:'column', gap:6 }}>
               {preview.map((s,i) => (
@@ -143,7 +143,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                   {/* Show extracted fields as chips */}
                   {(s.cycle_time||s.wait_time||s.setup_time||s.operators||s.department||s.defect_rate||s.uptime||s.wip) && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:6, paddingLeft:32 }}>
-                      {s.department        && <Chip label={s.department} color="#D4A208" />}
+                      {s.department        && <Chip label={s.department} color="#0176D3" />}
                       {s.operators         && <Chip label={`${s.operators} ops`} color="#6CB9FC" />}
                       {s.cycle_time        && <Chip label={`CT ${s.cycle_time>=60?(s.cycle_time/60).toFixed(0)+'min':s.cycle_time+'s'}`} color="#1DD1A1" />}
                       {s.wait_time         && <Chip label={`Wait ${s.wait_time>=60?(s.wait_time/60).toFixed(0)+'min':s.wait_time+'s'}`} color="#F4A623" />}

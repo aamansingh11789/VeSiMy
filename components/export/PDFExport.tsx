@@ -623,7 +623,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   <div style="border-top:2px solid #1E3A5F;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
     <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">VeSiMy AI Operations Intelligence Platform · vesimy.com</div>
     <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${docRef} · Rev A · ${now} · ISO 9001:2015 / ISO 13053</div>
-    <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${isGold ? '👑 Gold Standard · ' : ''}CONFIDENTIAL — INTERNAL USE ONLY</div>
+    <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${isGold ? 'Gold Standard · ' : ''}CONFIDENTIAL — INTERNAL USE ONLY</div>
   </div>
 
 </div>

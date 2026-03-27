@@ -7,7 +7,7 @@ import Link          from 'next/link'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = '#D4A208'
+const GOLD  = '#0176D3'
 
 const COMPANY_SIZES = ['1-10','11-50','51-200','201-500','500+']
 const ADDONS = [
@@ -213,7 +213,7 @@ export default function EnterprisePage() {
 
               {/* Official quote */}
               {quote && (
-                <div style={{ background:'rgba(212,162,8,0.06)', border:'1px solid rgba(212,162,8,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
+                <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
                   <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'monospace', marginBottom:6 }}>OFFICIAL QUOTE</div>
                   <div style={{ fontSize:13, color:'var(--text)', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
                   {quote.breakdown.code_discount && (
@@ -252,7 +252,7 @@ export default function EnterprisePage() {
                   <div style={{ marginTop:16, display:'flex', gap:10, flexWrap:'wrap' }}>
                     <a
                       href={`mailto:founder@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
-                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#C49510,#D4A208)', color:'var(--bg)', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
+                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'var(--bg)', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
                     >
                       Email us directly →
                     </a>

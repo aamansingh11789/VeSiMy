@@ -26,7 +26,7 @@ export default function AutomotiveBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>AUTOMOTIVE</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontFamily: 'monospace', letterSpacing: 1.5 }}>AUTOMOTIVE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>9 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -58,7 +58,7 @@ export default function AutomotiveBlog() {
             ['Supplier variation passed forward', 'Incoming part variation that exceeds your process window causes fitment issues, torque failures, and NVH problems. These often get "absorbed" by skilled operators instead of traced to source.'],
             ['Over-processing in quality inspection', 'Redundant check points, manual data entry, and paper-based inspection records don\'t add value — they add time and introduce transcription errors.'],
           ].map(([title, body]) => (
-            <div key={title} style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.15)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
+            <div key={title} style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 6 }}>{title}</div>
               <div style={{ color: 'var(--text2)', fontSize: 14 }}>{body}</div>
             </div>
@@ -69,7 +69,7 @@ export default function AutomotiveBlog() {
             VeSiMy doesn't claim to replace your MES, your APQP process, or your control plan. What it does is give your teams — at every level — a structured way to see and act on process problems that are hiding in plain sight.
           </p>
 
-          <div style={{ borderLeft: '3px solid #D4A208', paddingLeft: 20, marginBottom: 24 }}>
+          <div style={{ borderLeft: '3px solid #0176D3', paddingLeft: 20, marginBottom: 24 }}>
             <p style={{ fontFamily: serif, fontSize: 18, color: 'var(--text)', fontStyle: 'italic', marginBottom: 8 }}>
               "The tools exist in Toyota. The discipline to use them every day is what's rare."
             </p>
@@ -112,7 +112,7 @@ export default function AutomotiveBlog() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/demo" style={{ display: 'inline-block', background: '#D4A208', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
+            <Link href="/demo" style={{ display: 'inline-block', background: '#0176D3', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
               Start a free project
             </Link>
             <Link href="/industries" style={{ display: 'inline-block', border: '1px solid rgba(44,44,92,0.3)', color: 'var(--text)', fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>

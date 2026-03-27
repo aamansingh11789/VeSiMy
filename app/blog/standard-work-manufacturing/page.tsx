@@ -65,7 +65,7 @@ export default function StandardWorkPost() {
             },
             {
               title: '2. Standard Work Combination Sheet',
-              color: '#D4A208',
+              color: '#0176D3',
               desc: 'Shows the relationship between operator time and machine time on a timeline. A horizontal bar for each task — manual tasks in one colour, machine auto-cycle in another, walking in a third. Reveals where operators wait for machines (opportunity for parallel work) and where machines wait for operators (bottleneck).',
               use: 'Identifying hidden wait times, optimising operator-machine interaction, reducing cycle time without adding resources.',
             },

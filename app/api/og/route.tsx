@@ -23,15 +23,15 @@ export async function GET() {
         <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 8, background: '#00B4A6', display: 'flex' }} />
 
         {/* Gold top-right accent */}
-        <div style={{ position: 'absolute', right: 0, top: 0, width: 200, height: 8, background: '#D4A208', display: 'flex' }} />
+        <div style={{ position: 'absolute', right: 0, top: 0, width: 200, height: 8, background: '#0176D3', display: 'flex' }} />
 
         {/* Tagline badge */}
         <div style={{
-          background: 'rgba(212,162,8,0.12)',
-          border: '1px solid rgba(212,162,8,0.3)',
+          background: 'rgba(1,118,211,0.12)',
+          border: '1px solid rgba(1,118,211,0.3)',
           borderRadius: '999px',
           padding: '8px 22px',
-          color: '#D4A208',
+          color: '#0176D3',
           fontSize: '16px',
           fontWeight: 800,
           letterSpacing: '3px',
@@ -60,7 +60,7 @@ export async function GET() {
         <div style={{ position: 'absolute', bottom: '56px', left: '88px', display: 'flex', gap: '40px' }}>
           {[['8', 'CI Tools'], ['Free', 'To Start'], ['24/7', 'AI Monitoring']].map(([val, label]) => (
             <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <div style={{ fontSize: '32px', fontWeight: 900, color: '#D4A208', display: 'flex' }}>{val}</div>
+              <div style={{ fontSize: '32px', fontWeight: 900, color: '#0176D3', display: 'flex' }}>{val}</div>
               <div style={{ fontSize: '13px', color: '#52507A', letterSpacing: '2px', display: 'flex' }}>{label.toUpperCase()}</div>
             </div>
           ))}

@@ -30,7 +30,7 @@ function IndustryLoop() {
   return (
     <div style={{ marginBottom: 20, height: 18, overflow: 'hidden' }}>
       <style>{`@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <span key={idx} style={{ fontSize: 11, color: 'rgba(212,162,8,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, animation: 'slideUp 0.4s ease both', display: 'block' }}>
+      <span key={idx} style={{ fontSize: 11, color: 'rgba(1,118,211,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, animation: 'slideUp 0.4s ease both', display: 'block' }}>
         {lines[idx]}
       </span>
     </div>
@@ -40,7 +40,7 @@ function IndustryLoop() {
 
 // ── Tool Showcase ─────────────────────────────────────────────────────────────
 
-const _G='#C49B2E',_R='#C0402A',_GR='#2A9E82',_V='#6426A0',_ST='#3070B8'
+const _G='#0176D3',_R='#C0402A',_GR='#2A9E82',_V='#6426A0',_ST='#3070B8'
 
 
 // ── App-accurate popup HTML helpers ──────────────────────────────────────────
@@ -54,14 +54,14 @@ const SHOWCASE_TOOLS=[
     headline:'See your entire process at once',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0;min-height:200px">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM Builder · Seat Assembly Line 4 · Current State</span>
         <span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#EEF4FB;color:#1A4F8A;font-family:monospace">ISO 22468</span>
       </div>
       <div style="display:flex;gap:0;padding:10px 12px 6px;border-bottom:1px solid #D8D5CE;background:#fff">
-        <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TOTAL CT</div><div style="font-size:13px;font-weight:700;color:#C49B2E;margin-top:2px">8m 14s</div></div>
+        <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TOTAL CT</div><div style="font-size:13px;font-weight:700;color:#0176D3;margin-top:2px">8m 14s</div></div>
         <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:13px;font-weight:700;color:#6B6760;margin-top:2px">14m 40s</div></div>
-        <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:13px;font-weight:700;color:#C49B2E;margin-top:2px">2m 00s</div></div>
+        <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:13px;font-weight:700;color:#0176D3;margin-top:2px">2m 00s</div></div>
         <div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">PCE</div><div style="font-size:13px;font-weight:700;color:#C0402A;margin-top:2px">34%</div></div>
         <div style="flex:1.4;text-align:center;padding:0 8px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:11px;font-weight:700;color:#C0402A;margin-top:2px">Foam &amp; Fabric</div></div>
       </div>
@@ -88,16 +88,16 @@ const SHOWCASE_TOOLS=[
           <rect x="474" y="8" width="16" height="30" fill="#5B7FA6" stroke="#3A5A7C" stroke-width="1" rx="1"/>
           <text x="482" y="48" text-anchor="middle" fill="#1F2937" font-size="6" font-weight="700">Cust.</text>
           <line x1="94" y1="84" x2="94" y2="100"/><line x1="179" y1="84" x2="179" y2="100"/><line x1="266" y1="84" x2="266" y2="100"/><line x1="351" y1="84" x2="351" y2="100"/><line x1="426" y1="84" x2="426" y2="100"/>
-          <line x1="58" y1="100" x2="94" y2="100" stroke="#C49B2E" stroke-width="5" opacity=".7"/><text x="76" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">45s</text>
+          <line x1="58" y1="100" x2="94" y2="100" stroke="#0176D3" stroke-width="5" opacity=".7"/><text x="76" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">45s</text>
           <line x1="94" y1="100" x2="148" y2="100" stroke="#8E8A82" stroke-width="2" opacity=".4"/>
-          <line x1="148" y1="100" x2="179" y2="100" stroke="#C49B2E" stroke-width="5" opacity=".7"/><text x="163" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">98s</text>
+          <line x1="148" y1="100" x2="179" y2="100" stroke="#0176D3" stroke-width="5" opacity=".7"/><text x="163" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">98s</text>
           <line x1="179" y1="100" x2="234" y2="100" stroke="#8E8A82" stroke-width="2" opacity=".4"/>
           <line x1="234" y1="100" x2="266" y2="100" stroke="#DC2626" stroke-width="5" opacity=".7"/><text x="250" y="113" text-anchor="middle" fill="#DC2626" font-size="5.5" font-family="monospace" font-weight="700">145s</text>
           <line x1="266" y1="100" x2="322" y2="100" stroke="#8E8A82" stroke-width="2" opacity=".4"/>
-          <line x1="322" y1="100" x2="351" y2="100" stroke="#C49B2E" stroke-width="5" opacity=".7"/><text x="336" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">88s</text>
+          <line x1="322" y1="100" x2="351" y2="100" stroke="#0176D3" stroke-width="5" opacity=".7"/><text x="336" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">88s</text>
           <line x1="351" y1="100" x2="400" y2="100" stroke="#8E8A82" stroke-width="2" opacity=".4"/>
-          <line x1="400" y1="100" x2="426" y2="100" stroke="#C49B2E" stroke-width="5" opacity=".7"/><text x="413" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">72s</text>
-          <line x1="426" y1="100" x2="460" y2="100" stroke="#C49B2E" stroke-width="1"/>
+          <line x1="400" y1="100" x2="426" y2="100" stroke="#0176D3" stroke-width="5" opacity=".7"/><text x="413" y="113" text-anchor="middle" fill="#8E8A82" font-size="5.5" font-family="monospace">72s</text>
+          <line x1="426" y1="100" x2="460" y2="100" stroke="#0176D3" stroke-width="1"/>
           <line x1="58" y1="118" x2="460" y2="118" stroke="#C0402A" stroke-width="1" stroke-dasharray="4,3" opacity=".5"/>
           <text x="456" y="116" text-anchor="end" fill="#C0402A" font-size="5.5" font-family="monospace">TAKT=120s</text>
           <text x="250" y="136" text-anchor="middle" fill="#8E8A82" font-size="6" font-family="monospace">VA: 448s  |  Wait: 372s  |  PCE: 34%  |  Lead Time: 14m 40s</text>
@@ -123,7 +123,7 @@ const SHOWCASE_TOOLS=[
     headline:'Measure before you manage',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Time Study · Foam &amp; Fabric Install · Step 3</span>
       </div>
       <div style="padding:10px 14px">
@@ -173,7 +173,7 @@ const SHOWCASE_TOOLS=[
     headline:'Find the root. Fix it once.',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why Analysis · Foam &amp; Fabric · CT 25s over Takt</span>
       </div>
       <div style="padding:10px 14px">
@@ -227,7 +227,7 @@ const SHOWCASE_TOOLS=[
     headline:'Every cause, every category',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Fishbone · Foam &amp; Fabric · 6M Framework</span>
       </div>
       <div style="padding:10px 14px">
@@ -243,13 +243,13 @@ const SHOWCASE_TOOLS=[
           <rect x="424" y="82" width="52" height="26" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" rx="3"/>
           <text x="450" y="95" text-anchor="middle" fill="#7F1D1D" font-size="7" font-weight="700" font-family="system-ui,sans-serif">EFFECT</text>
           <!-- top category bones -->
-          <line x1="80" y1="62" x2="80" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
-          <line x1="190" y1="62" x2="190" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
-          <line x1="300" y1="62" x2="300" y2="95" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="80" y1="62" x2="80" y2="95" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
+          <line x1="190" y1="62" x2="190" y2="95" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
+          <line x1="300" y1="62" x2="300" y2="95" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
           <!-- bottom category bones -->
-          <line x1="80" y1="95" x2="80" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
-          <line x1="190" y1="95" x2="190" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
-          <line x1="300" y1="95" x2="300" y2="128" stroke="#C49B2E" stroke-width="1.5" opacity=".8"/>
+          <line x1="80" y1="95" x2="80" y2="128" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
+          <line x1="190" y1="95" x2="190" y2="128" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
+          <line x1="300" y1="95" x2="300" y2="128" stroke="#0176D3" stroke-width="1.5" opacity=".8"/>
           <!-- category labels -->
           <text x="80" y="55" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Machine</text>
           <text x="190" y="55" text-anchor="middle" fill="#8A6300" font-size="7.5" font-weight="700" font-family="system-ui,sans-serif">Method</text>
@@ -280,7 +280,7 @@ const SHOWCASE_TOOLS=[
         <line x1="20" y1="40" x2="160" y2="40" stroke="#374151" stroke-width="2"/>
         <polygon points="157,37 163,40 157,43" fill="#374151"/>
         ${[['Machine',40,1],['Method',90,1],['Material',135,1],['Manpower',40,-1],['Measure',90,-1],['Env',135,-1]].map(([n,x,d])=>`
-        <line x1="${x}" y1="${40-(d as number)*14}" x2="${x}" y2="40" stroke="#C49B2E" stroke-width="1.2" opacity=".8"/>
+        <line x1="${x}" y1="${40-(d as number)*14}" x2="${x}" y2="40" stroke="#0176D3" stroke-width="1.2" opacity=".8"/>
         <text x="${x}" y="${40-(d as number)*18}" text-anchor="middle" fill="#8A6300" font-size="5.5" font-weight="700">${n}</text>`).join('')}
       </svg>
       <div style="font-size:8px;color:#4E4B45;margin-top:3px;text-align:center">11 causes identified across 6M</div>
@@ -292,7 +292,7 @@ const SHOWCASE_TOOLS=[
     headline:'Name it. Quantify it. Eliminate it.',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Waste ID · DOWNTIME · All Steps</span>
       </div>
       <div style="padding:10px 14px">
@@ -300,12 +300,12 @@ const SHOWCASE_TOOLS=[
           ${[
             ['D','Defects','2.1% fabric mis-clip — rework 8 min avg','#C0402A'],
             ['O','Overproduction','—','#8E8A82'],
-            ['W','Waiting','Operator waits 13s for LH/RH partner','#C49B2E'],
+            ['W','Waiting','Operator waits 13s for LH/RH partner','#0176D3'],
             ['N','Non-Utilisation','No SWS — new ops 20% slower','#6426A0'],
             ['T','Transport','—','#8E8A82'],
             ['I','Inventory','WIP 8 units avg vs target 3','#1090D4'],
             ['M','Motion','4m walk to foam rack = 16s NVA','#C0402A'],
-            ['E','Extra-Processing','Dual mutual check = 13s NNVA','#C49B2E'],
+            ['E','Extra-Processing','Dual mutual check = 13s NNVA','#0176D3'],
           ].map(([l,name,desc,color])=>`
           <div style="padding:6px 8px;background:#fff;border:1px solid ${desc==='—'?'#E8E5E0':color+'33'};border-radius:6px">
             <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">
@@ -331,7 +331,7 @@ const SHOWCASE_TOOLS=[
     headline:'Track every improvement action',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Kaizen Events · Seat Assembly Line 4 · 4 open</span>
       </div>
       <div style="padding:10px 14px;display:flex;flex-direction:column;gap:6px">
@@ -345,12 +345,12 @@ const SHOWCASE_TOOLS=[
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
             <span style="font-size:8px;font-weight:700;font-family:monospace;color:#8E8A82">${id}</span>
             <div style="flex:1;font-size:9px;font-weight:600;color:#242220">${title}</div>
-            <div style="padding:2px 6px;border-radius:4px;font-size:7px;font-weight:700;font-family:monospace;background:${status==='complete'?'rgba(42,158,130,.12)':status==='in-progress'?'rgba(196,155,46,.12)':'rgba(108,185,252,.12)'};color:${status==='complete'?'#2A9E82':status==='in-progress'?'#C49B2E':'#1A4F8A'}">${status.toUpperCase()}</div>
+            <div style="padding:2px 6px;border-radius:4px;font-size:7px;font-weight:700;font-family:monospace;background:${status==='complete'?'rgba(42,158,130,.12)':status==='in-progress'?'rgba(1,118,211,.12)':'rgba(108,185,252,.12)'};color:${status==='complete'?'#2A9E82':status==='in-progress'?'#0176D3':'#1A4F8A'}">${status.toUpperCase()}</div>
           </div>
           <div style="display:flex;gap:10px">
             <span style="font-size:7.5px;color:#8E8A82">Owner: ${owner}</span>
             <span style="font-size:7.5px;color:#8E8A82">Due: ${due}</span>
-            <span style="font-size:7.5px;color:${prio==='critical'?'#C0402A':prio==='high'?'#C49B2E':'#6B6760'};font-weight:${prio==='critical'?700:400}">${prio.toUpperCase()}</span>
+            <span style="font-size:7.5px;color:${prio==='critical'?'#C0402A':prio==='high'?'#0176D3':'#6B6760'};font-weight:${prio==='critical'?700:400}">${prio.toUpperCase()}</span>
           </div>
         </div>`).join('')}
       </div>
@@ -359,9 +359,9 @@ const SHOWCASE_TOOLS=[
       <div style="font-size:7px;color:#8E8A82;font-family:monospace;letter-spacing:.8px;margin-bottom:2px">4 EVENTS · 1 COMPLETE</div>
       ${[['KZ-001','Relocate foam rack','critical','in-progress'],['KZ-002','Clip poka-yoke jig','high','open'],['KZ-003','Standard Work Sheet','medium','complete'],['KZ-004','Auto-close MES entry','medium','open']].map(([id,t,p,s])=>`
       <div style="display:flex;align-items:center;gap:5px;padding:4px 6px;background:${s==='complete'?'rgba(42,158,130,.06)':'rgba(255,255,255,.8)'};border:1px solid ${s==='complete'?'rgba(42,158,130,.2)':'#E8E5E0'};border-radius:5px">
-        <div style="width:6px;height:6px;border-radius:50%;background:${p==='critical'?'#C0402A':p==='high'?'#C49B2E':'#8E8A82'};flex-shrink:0"></div>
+        <div style="width:6px;height:6px;border-radius:50%;background:${p==='critical'?'#C0402A':p==='high'?'#0176D3':'#8E8A82'};flex-shrink:0"></div>
         <span style="font-size:7px;color:#4E4B45;flex:1">${t}</span>
-        <span style="font-size:6px;font-weight:700;color:${s==='complete'?'#2A9E82':s==='in-progress'?'#C49B2E':'#8E8A82'};font-family:monospace">${s==='complete'?'DONE':s==='in-progress'?'WIP':'OPEN'}</span>
+        <span style="font-size:6px;font-weight:700;color:${s==='complete'?'#2A9E82':s==='in-progress'?'#0176D3':'#8E8A82'};font-family:monospace">${s==='complete'?'DONE':s==='in-progress'?'WIP':'OPEN'}</span>
       </div>`).join('')}
     </div>`,
   },
@@ -371,7 +371,7 @@ const SHOWCASE_TOOLS=[
     headline:'See every operator against Takt',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Yamazumi · Operator Balance Chart · Takt: 120s</span>
       </div>
       <div style="padding:10px 14px">
@@ -394,7 +394,7 @@ const SHOWCASE_TOOLS=[
             return `
           <g>
             <rect x="${x}" y="${155-vaH}" width="54" height="${vaH}" fill="#1DD1A1" opacity=".75" rx="2"/>
-            <rect x="${x}" y="${155-vaH-nnvaH}" width="54" height="${nnvaH}" fill="#C49B2E" opacity=".75"/>
+            <rect x="${x}" y="${155-vaH-nnvaH}" width="54" height="${nnvaH}" fill="#0176D3" opacity=".75"/>
             <rect x="${x}" y="${155-vaH-nnvaH-nvaH}" width="54" height="${nvaH}" fill="#C0402A" opacity="${isOver?.9:.75}"/>
             ${isOver?`<rect x="${x}" y="${155-vaH-nnvaH-nvaH-4}" width="54" height="4" fill="#FF4444" opacity=".6" rx="1"/>
             <text x="${x+27}" y="${155-vaH-nnvaH-nvaH-6}" text-anchor="middle" fill="#C0402A" font-size="6.5" font-weight="700">▲ OVER</text>`:''}
@@ -403,7 +403,7 @@ const SHOWCASE_TOOLS=[
           </g>`;
           }).join('')}
           <rect x="300" y="15" width="8" height="8" fill="#1DD1A1" opacity=".75" rx="1"/><text x="312" y="22" fill="#4E4B45" font-size="6.5">Value-Add</text>
-          <rect x="300" y="27" width="8" height="8" fill="#C49B2E" opacity=".75" rx="1"/><text x="312" y="34" fill="#4E4B45" font-size="6.5">Necessary NVA</text>
+          <rect x="300" y="27" width="8" height="8" fill="#0176D3" opacity=".75" rx="1"/><text x="312" y="34" fill="#4E4B45" font-size="6.5">Necessary NVA</text>
           <rect x="300" y="39" width="8" height="8" fill="#C0402A" opacity=".75" rx="1"/><text x="312" y="46" fill="#4E4B45" font-size="6.5">Waste / NVA</text>
         </svg>
       </div>
@@ -427,7 +427,7 @@ const SHOWCASE_TOOLS=[
     headline:'AI reads your data. You get the fix.',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Gap Analysis · Seat Assembly Line 4</span>
         <span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span>
       </div>
@@ -446,9 +446,9 @@ const SHOWCASE_TOOLS=[
             ['WARNING','4 open Kaizen actions — 2 past due date','Assign owners and close KZ-002 first'],
             ['INFO','Material Staging CT at 45s has 40% NVA','Point-of-use improvement available Q2'],
           ].map(([sev,title,note])=>`
-          <div style="background:#fff;border:1px solid ${sev==='CRITICAL'?'rgba(192,64,42,.3)':sev==='WARNING'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px">
+          <div style="background:#fff;border:1px solid ${sev==='CRITICAL'?'rgba(192,64,42,.3)':sev==='WARNING'?'rgba(1,118,211,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px">
             <div style="display:flex;align-items:center;gap:6px">
-              <span style="font-size:7px;font-weight:700;font-family:monospace;color:${sev==='CRITICAL'?'#C0402A':sev==='WARNING'?'#C49B2E':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${sev==='CRITICAL'?'rgba(192,64,42,.1)':sev==='WARNING'?'rgba(196,155,46,.1)':'rgba(26,79,138,.1)'}">${sev}</span>
+              <span style="font-size:7px;font-weight:700;font-family:monospace;color:${sev==='CRITICAL'?'#C0402A':sev==='WARNING'?'#0176D3':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${sev==='CRITICAL'?'rgba(192,64,42,.1)':sev==='WARNING'?'rgba(1,118,211,.1)':'rgba(26,79,138,.1)'}">${sev}</span>
               <span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${title}</span>
             </div>
             <div style="font-size:7.5px;color:#6B6760;margin-top:3px">${note}</div>
@@ -459,8 +459,8 @@ const SHOWCASE_TOOLS=[
     cardContent:`<div style="padding:8px 10px;display:flex;flex-direction:column;gap:4px">
       <div style="font-size:7px;color:#8E8A82;font-family:monospace;letter-spacing:.8px;margin-bottom:2px">SUPE AI · 4 FINDINGS</div>
       ${[['CRITICAL','CT 145s — 21% over Takt'],['WARNING','PCE 34% vs 95% target'],['WARNING','4 open Kaizen actions'],['INFO','NVA reduction available']].map(([s,t])=>`
-      <div style="display:flex;align-items:center;gap:4px;padding:3px 6px;background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.25)':s==='WARNING'?'rgba(196,155,46,.25)':'#E8E5E0'};border-radius:4px">
-        <div style="width:5px;height:5px;border-radius:50%;background:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#C49B2E':'#1090D4'};flex-shrink:0"></div>
+      <div style="display:flex;align-items:center;gap:4px;padding:3px 6px;background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.25)':s==='WARNING'?'rgba(1,118,211,.25)':'#E8E5E0'};border-radius:4px">
+        <div style="width:5px;height:5px;border-radius:50%;background:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#0176D3':'#1090D4'};flex-shrink:0"></div>
         <span style="font-size:7px;color:#4E4B45">${t}</span>
       </div>`).join('')}
     </div>`,
@@ -471,7 +471,7 @@ const SHOWCASE_TOOLS=[
     headline:'Export in one click',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">A3 Report · Seat Assembly Line 4 · PDF Ready</span>
       </div>
       <div style="padding:10px 12px">
@@ -481,7 +481,7 @@ const SHOWCASE_TOOLS=[
               <div style="font-size:9px;font-weight:700;color:#F8F7F5;font-family:'Palatino Linotype',serif">PROCESS IMPROVEMENT REPORT — A3</div>
               <div style="font-size:7px;color:#8E8A82;font-family:monospace;margin-top:2px">Seat Assembly Line 4 · Current State Analysis · March 2026</div>
             </div>
-            <div style="font-size:7px;font-weight:700;color:#C49B2E;font-family:monospace;padding:2px 6px;border:1px solid rgba(196,155,46,.4);border-radius:4px">ISO 9001:2015</div>
+            <div style="font-size:7px;font-weight:700;color:#0176D3;font-family:monospace;padding:2px 6px;border:1px solid rgba(1,118,211,.4);border-radius:4px">ISO 9001:2015</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
             <div style="padding:8px 10px;border-right:1px solid #E8E5E0;border-bottom:1px solid #E8E5E0">
@@ -491,7 +491,7 @@ const SHOWCASE_TOOLS=[
             <div style="padding:8px 10px;border-bottom:1px solid #E8E5E0">
               <div style="font-size:7px;color:#8E8A82;font-family:monospace;letter-spacing:.8px;margin-bottom:4px">CURRENT CONDITION</div>
               <div style="display:flex;flex-direction:column;gap:2px">
-                ${[['CT Bottleneck','145s (Takt 120s)','#C0402A'],['PCE','34%','#C0402A'],['Open Kaizen','4 events','#C49B2E'],['Root Cause','PFMEA gap','#6426A0']].map(([k,v,c])=>`<div style="display:flex;justify-content:space-between"><span style="font-size:7.5px;color:#6B6760">${k}</span><span style="font-size:7.5px;font-weight:700;color:${c};font-family:monospace">${v}</span></div>`).join('')}
+                ${[['CT Bottleneck','145s (Takt 120s)','#C0402A'],['PCE','34%','#C0402A'],['Open Kaizen','4 events','#0176D3'],['Root Cause','PFMEA gap','#6426A0']].map(([k,v,c])=>`<div style="display:flex;justify-content:space-between"><span style="font-size:7.5px;color:#6B6760">${k}</span><span style="font-size:7.5px;font-weight:700;color:${c};font-family:monospace">${v}</span></div>`).join('')}
               </div>
             </div>
             <div style="padding:8px 10px;border-right:1px solid #E8E5E0;border-bottom:1px solid #E8E5E0">
@@ -507,7 +507,7 @@ const SHOWCASE_TOOLS=[
             <div style="padding:8px 10px;grid-column:span 2">
               <div style="font-size:7px;color:#8E8A82;font-family:monospace;letter-spacing:.8px;margin-bottom:4px">TARGET vs ACTUAL</div>
               <div style="display:flex;gap:16px">
-                ${[['CT Target','≤ 120s','145s','#C0402A'],['PCE Target','≥ 70%','34%','#C0402A'],['Kaizen Close','Apr 15','In progress','#C49B2E']].map(([k,t,a,c])=>`<div><div style="font-size:7px;color:#8E8A82">${k}</div><div style="font-size:8px;color:#2A9E82;font-weight:700">${t}</div><div style="font-size:7.5px;color:${c}">${a}</div></div>`).join('')}
+                ${[['CT Target','≤ 120s','145s','#C0402A'],['PCE Target','≥ 70%','34%','#C0402A'],['Kaizen Close','Apr 15','In progress','#0176D3']].map(([k,t,a,c])=>`<div><div style="font-size:7px;color:#8E8A82">${k}</div><div style="font-size:8px;color:#2A9E82;font-weight:700">${t}</div><div style="font-size:7.5px;color:${c}">${a}</div></div>`).join('')}
               </div>
             </div>
           </div>
@@ -524,7 +524,7 @@ const SHOWCASE_TOOLS=[
       </div>
       <div style="display:flex;gap:4px">
         <div style="flex:1;padding:3px 5px;background:rgba(42,158,130,.08);border:1px solid rgba(42,158,130,.2);border-radius:4px;text-align:center;font-size:7px;color:#2A9E82;font-weight:700">PDF</div>
-        <div style="flex:1;padding:3px 5px;background:rgba(196,155,46,.08);border:1px solid rgba(196,155,46,.2);border-radius:4px;text-align:center;font-size:7px;color:#C49B2E;font-weight:700">PRINT</div>
+        <div style="flex:1;padding:3px 5px;background:rgba(1,118,211,.08);border:1px solid rgba(1,118,211,.2);border-radius:4px;text-align:center;font-size:7px;color:#0176D3;font-weight:700">PRINT</div>
         <div style="flex:1;padding:3px 5px;background:rgba(108,185,252,.08);border:1px solid rgba(108,185,252,.2);border-radius:4px;text-align:center;font-size:7px;color:#1A4F8A;font-weight:700">SHARE</div>
       </div>
     </div>`,
@@ -535,21 +535,21 @@ const SHOWCASE_TOOLS=[
     headline:'Plan. Do. Check. Act.',
     popup:`<div style="font-family:'Inter',sans-serif;background:#F8F6F0">
       <div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330">
-        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
+        <div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div>
         <span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">PDCA Tracker · KZ-001 Foam Rack Relocation</span>
       </div>
       <div style="padding:10px 14px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
           ${[
             ['PLAN','Planning complete','Objective: CT ≤ 120s by relocating foam rack within 0.5m. Resources: 1 tech, 2 hrs. Target date: April 1.','#1090D4','DONE'],
-            ['DO','Implementation in progress','Rack location marked, facilities relocation booked. Standard work updated. Operator briefing scheduled.','#C49B2E','IN PROGRESS'],
+            ['DO','Implementation in progress','Rack location marked, facilities relocation booked. Standard work updated. Operator briefing scheduled.','#0176D3','IN PROGRESS'],
             ['CHECK','Not started','Measure CT over 20 cycles post-relocation. Compare to 145s baseline. Check for secondary NVA.','#8E8A82','PENDING'],
             ['ACT','Not started','If CT ≤ 120s: update SOP and PFMEA. Replicate to Branch B foam station. Close KZ-001.','#8E8A82','PENDING'],
           ].map(([phase,sub,desc,color,status])=>`
-          <div style="background:#fff;border:1px solid ${status==='DONE'?'rgba(16,144,212,.2)':status==='IN PROGRESS'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:8px;padding:8px 10px">
+          <div style="background:#fff;border:1px solid ${status==='DONE'?'rgba(16,144,212,.2)':status==='IN PROGRESS'?'rgba(1,118,211,.3)':'#E8E5E0'};border-radius:8px;padding:8px 10px">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <div style="width:28px;height:28px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${phase}</div>
-              <span style="font-size:7px;font-weight:700;font-family:monospace;color:${status==='DONE'?'#1090D4':status==='IN PROGRESS'?'#C49B2E':'#8E8A82'};padding:1px 5px;border-radius:4px;background:${status==='DONE'?'rgba(16,144,212,.1)':status==='IN PROGRESS'?'rgba(196,155,46,.1)':'rgba(142,138,130,.1)'}">${status}</span>
+              <span style="font-size:7px;font-weight:700;font-family:monospace;color:${status==='DONE'?'#1090D4':status==='IN PROGRESS'?'#0176D3':'#8E8A82'};padding:1px 5px;border-radius:4px;background:${status==='DONE'?'rgba(16,144,212,.1)':status==='IN PROGRESS'?'rgba(1,118,211,.1)':'rgba(142,138,130,.1)'}">${status}</span>
             </div>
             <div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:3px">${sub}</div>
             <div style="font-size:7.5px;color:#6B6760;line-height:1.4">${desc}</div>
@@ -560,8 +560,8 @@ const SHOWCASE_TOOLS=[
     cardContent:`<div style="padding:8px 10px">
       <div style="font-size:7px;color:#8E8A82;font-family:monospace;letter-spacing:.8px;margin-bottom:6px">PDCA CYCLE STATUS</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
-        ${[['P','PLAN','#1090D4','DONE'],['D','DO','#C49B2E','IN PROG'],['C','CHECK','#8E8A82','PENDING'],['A','ACT','#8E8A82','PENDING']].map(([l,name,c,s])=>`
-        <div style="padding:5px 6px;background:${s==='DONE'?'rgba(16,144,212,.08)':s==='IN PROG'?'rgba(196,155,46,.08)':'rgba(255,255,255,.5)'};border:1px solid ${s==='DONE'?'rgba(16,144,212,.2)':s==='IN PROG'?'rgba(196,155,46,.2)':'#E8E5E0'};border-radius:6px">
+        ${[['P','PLAN','#1090D4','DONE'],['D','DO','#0176D3','IN PROG'],['C','CHECK','#8E8A82','PENDING'],['A','ACT','#8E8A82','PENDING']].map(([l,name,c,s])=>`
+        <div style="padding:5px 6px;background:${s==='DONE'?'rgba(16,144,212,.08)':s==='IN PROG'?'rgba(1,118,211,.08)':'rgba(255,255,255,.5)'};border:1px solid ${s==='DONE'?'rgba(16,144,212,.2)':s==='IN PROG'?'rgba(1,118,211,.2)':'#E8E5E0'};border-radius:6px">
           <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
             <div style="width:14px;height:14px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:#fff">${l}</div>
             <span style="font-size:7px;font-weight:700;color:#242220">${name}</span>
@@ -595,7 +595,7 @@ const DEMO_SHOWCASE = [
     tools:['VSM','5WHY','WASTE','KAIZEN','GAP'],
   },
   {
-    id:'re', code:'RE', industry:'REAL ESTATE', color:'#C49B2E',
+    id:'re', code:'RE', industry:'REAL ESTATE', color:'#0176D3',
     headline:'Transaction Flow',
     metric:'28%', metricLabel:'DOC KICKBACK RATE', metricColor:'#C0402A',
     chromTitle:'VSM · Real Estate Transaction Flow · Current State',
@@ -629,23 +629,23 @@ function getDemoPopup(demoId: string, tool: string): string {
   }
   // Healthcare
   if (demoId === 'health') {
-    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Urgent Care Patient Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:12px;font-weight:700;color:#C49B2E;margin-top:2px">45 min</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">192 min</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Treatment 52 min</div></div></div><div style="padding:8px 10px">${[['Patient Arrival','8 min','480 min',false],['Triage & Acuity','6 min','18 min',false],['Vitals & Assessment','12 min','25 min',false],['Physician Assessment','18 min','35 min',false],['Diagnostics — Lab','45 min','30 min',false],['Treatment','52 min','15 min',true],['Discharge & Docs','18 min','22 min',false]].map(([n,ct,wt,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:8px;color:#8E8A82;font-family:monospace">Wait: ${wt}</span></div>`).join('')}</div></div>`
-    if (tool === 'GAP') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Urgent Care Patient Flow</span><span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;font-family:monospace;flex-shrink:0">AI</div><div><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">SUPE — AI ANALYSIS</div><div style="font-size:9px;color:#2A1A4E;line-height:1.5">Door-to-discharge averages 3.2 hours — 1.2 hrs over target. Root cause: demand-matched staffing gaps on Mon/Fri 4-8pm surges. Staff observe the problem daily but no data mechanism exists to escalate it.</div></div></div>${[['CRITICAL','Treatment CT 52 min vs 45-min Takt','Point-of-care medication saves 8 min. Concurrent discharge docs saves 22 min.'],['CRITICAL','Physician wait 35 min during surge hours','Mon/Fri 4-8pm surge not reflected in staffing schedule'],['WARNING','72-hour return rate 8%','Discharge documentation quality — missed instructions'],['INFO','Lab turnaround 35–90 min variation','CT scanner backlog peaks on high-volume days']].map(([s,t,n])=>`<div style="background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.3)':s==='WARNING'?'rgba(196,155,46,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:7px;font-weight:700;font-family:monospace;color:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#C49B2E':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${s==='CRITICAL'?'rgba(192,64,42,.1)':s==='WARNING'?'rgba(196,155,46,.1)':'rgba(26,79,138,.1)'}">${s}</span><span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${t}</span></div><div style="font-size:7.5px;color:#6B6760;margin-top:3px">${n}</div></div>`).join('')}</div></div>`
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Urgent Care Patient Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TAKT</div><div style="font-size:12px;font-weight:700;color:#0176D3;margin-top:2px">45 min</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">192 min</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Treatment 52 min</div></div></div><div style="padding:8px 10px">${[['Patient Arrival','8 min','480 min',false],['Triage & Acuity','6 min','18 min',false],['Vitals & Assessment','12 min','25 min',false],['Physician Assessment','18 min','35 min',false],['Diagnostics — Lab','45 min','30 min',false],['Treatment','52 min','15 min',true],['Discharge & Docs','18 min','22 min',false]].map(([n,ct,wt,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:8px;color:#8E8A82;font-family:monospace">Wait: ${wt}</span></div>`).join('')}</div></div>`
+    if (tool === 'GAP') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">Supe AI · Urgent Care Patient Flow</span><span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F0EEFE;color:#6426A0;font-family:monospace">PRO</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid #C9A8F7;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#6426A0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;font-family:monospace;flex-shrink:0">AI</div><div><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">SUPE — AI ANALYSIS</div><div style="font-size:9px;color:#2A1A4E;line-height:1.5">Door-to-discharge averages 3.2 hours — 1.2 hrs over target. Root cause: demand-matched staffing gaps on Mon/Fri 4-8pm surges. Staff observe the problem daily but no data mechanism exists to escalate it.</div></div></div>${[['CRITICAL','Treatment CT 52 min vs 45-min Takt','Point-of-care medication saves 8 min. Concurrent discharge docs saves 22 min.'],['CRITICAL','Physician wait 35 min during surge hours','Mon/Fri 4-8pm surge not reflected in staffing schedule'],['WARNING','72-hour return rate 8%','Discharge documentation quality — missed instructions'],['INFO','Lab turnaround 35–90 min variation','CT scanner backlog peaks on high-volume days']].map(([s,t,n])=>`<div style="background:#fff;border:1px solid ${s==='CRITICAL'?'rgba(192,64,42,.3)':s==='WARNING'?'rgba(1,118,211,.3)':'#E8E5E0'};border-radius:6px;padding:6px 10px;margin-bottom:4px"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:7px;font-weight:700;font-family:monospace;color:${s==='CRITICAL'?'#C0402A':s==='WARNING'?'#0176D3':'#1A4F8A'};padding:1px 4px;border-radius:3px;background:${s==='CRITICAL'?'rgba(192,64,42,.1)':s==='WARNING'?'rgba(1,118,211,.1)':'rgba(26,79,138,.1)'}">${s}</span><span style="font-size:8.5px;font-weight:600;color:#242220;flex:1">${t}</span></div><div style="font-size:7.5px;color:#6B6760;margin-top:3px">${n}</div></div>`).join('')}</div></div>`
   }
   // Real Estate
   if (demoId === 're') {
-    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Real Estate Transaction Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~45 days</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">KICKBACK RATE</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">28%</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Financing 10+ days</div></div></div><div style="padding:8px 10px">${[['Lead Inquiry','25 min','8 hr','0%',false],['Qualify & Consult','90 min','2 days','15% unqualif.',false],['Property Search','8 hrs','1 day','—',false],['Offer & Negotiation','2 hrs','2 days','35% rejected',false],['Inspection & Appraisal','4 hrs','5 days','22% renegotiate',false],['Financing & Underwriting','10 hrs','10 days','28% kickback',true],['Closing & Handover','3 hrs','2 days','5% fall-through',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
-    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 28% Document Kickback Rate</span></div><div style="padding:10px 14px"><div style="background:#FDF5E0;border:1px solid rgba(196,155,46,.4);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A6300;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A3000">28% of financing files kicked back — adds 3-5 days per transaction</div></div>${[['1','Why are 28% of files kicked back?','Files submitted before all required documents collected and verified.'],['2','Why before complete?','No standardised pre-submission checklist. Each agent assembles files differently.'],['3','Why no checklist?','Lender requirements vary by loan type — no master checklist built per type.'],['4','Why no master checklist?','No formal process owner for transaction coordination workflows.'],['5','Why no process owner?','ROOT CAUSE: The brokerage treats every transaction as one-off agent work. No standard work exists.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#C49B2E'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(196,155,46,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Real Estate Transaction Flow</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~45 days</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">KICKBACK RATE</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">28%</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BOTTLENECK</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">Financing 10+ days</div></div></div><div style="padding:8px 10px">${[['Lead Inquiry','25 min','8 hr','0%',false],['Qualify & Consult','90 min','2 days','15% unqualif.',false],['Property Search','8 hrs','1 day','—',false],['Offer & Negotiation','2 hrs','2 days','35% rejected',false],['Inspection & Appraisal','4 hrs','5 days','22% renegotiate',false],['Financing & Underwriting','10 hrs','10 days','28% kickback',true],['Closing & Handover','3 hrs','2 days','5% fall-through',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">CT: ${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 28% Document Kickback Rate</span></div><div style="padding:10px 14px"><div style="background:#FDF5E0;border:1px solid rgba(1,118,211,.4);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A6300;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A3000">28% of financing files kicked back — adds 3-5 days per transaction</div></div>${[['1','Why are 28% of files kicked back?','Files submitted before all required documents collected and verified.'],['2','Why before complete?','No standardised pre-submission checklist. Each agent assembles files differently.'],['3','Why no checklist?','Lender requirements vary by loan type — no master checklist built per type.'],['4','Why no master checklist?','No formal process owner for transaction coordination workflows.'],['5','Why no process owner?','ROOT CAUSE: The brokerage treats every transaction as one-off agent work. No standard work exists.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#0176D3'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(1,118,211,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
   }
   // Brewery
   if (demoId === 'brew') {
-    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Craft Brewery Batch Production — 10bbl</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">THROUGHPUT</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">4 batch/wk</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TARGET</div><div style="font-size:12px;font-weight:700;color:#2A9E82;margin-top:2px">5 batch/wk</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">CONSTRAINT</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6 Fermenters — 6 day</div></div></div><div style="padding:8px 10px">${[['Grain Receiving & Milling','90 min','1,440 min','1% moisture reject',false],['Mashing & Lautering','120 min','30 min','3% stuck sparge',false],['Boil & Hop Addition','75 min','15 min','2% hop adjust',false],['Whirlpool, Chill & Transfer','45 min','10 min','',false],['Fermentation','6 days','—','4% off-flavour',true],['Conditioning & Dry Hop','3 days','—','2% extended',false],['Packaging — Can/Keg','4 hrs','60 min','3% underfill — seamer',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
-    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 3% Stuck Sparge — Rye &amp; Wheat Batches</span></div><div style="padding:10px 14px"><div style="background:#FEF0ED;border:1px solid rgba(192,64,42,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A2A1A;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A1200">3% of batches stuck sparge — adds 45 min rework, delays downstream schedule</div></div>${[['1','Why do batches get stuck sparge?','High-adjunct grain bills (rye, oats, wheat) create dense grain bed restricting wort flow.'],['2','Why do high-adjunct bills restrict flow?','Rice hulls not added to these grists. Recipe sheet does not specify rice hull addition.'],['3','Why don\'t recipe sheets specify rice hulls?','Recipes were written for the 3-barrel system. Equipment changed to 10-barrel but recipes weren\'t updated.'],['4','Why weren\'t recipes updated?','No formal recipe scale-up review. Head brewer carried the adjustment in memory only.'],['5','Why not documented?','ROOT CAUSE: No recipe management system with equipment-specific parameters. Recipes in Google Docs with no version control.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#C49B2E'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(196,155,46,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Craft Brewery Batch Production — 10bbl</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">THROUGHPUT</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">4 batch/wk</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">TARGET</div><div style="font-size:12px;font-weight:700;color:#2A9E82;margin-top:2px">5 batch/wk</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">CONSTRAINT</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6 Fermenters — 6 day</div></div></div><div style="padding:8px 10px">${[['Grain Receiving & Milling','90 min','1,440 min','1% moisture reject',false],['Mashing & Lautering','120 min','30 min','3% stuck sparge',false],['Boil & Hop Addition','75 min','15 min','2% hop adjust',false],['Whirlpool, Chill & Transfer','45 min','10 min','',false],['Fermentation','6 days','—','4% off-flavour',true],['Conditioning & Dry Hop','3 days','—','2% extended',false],['Packaging — Can/Keg','4 hrs','60 min','3% underfill — seamer',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(192,64,42,.06)':'#fff'};border:1px solid ${bad?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#C0402A':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 3% Stuck Sparge — Rye &amp; Wheat Batches</span></div><div style="padding:10px 14px"><div style="background:#FEF0ED;border:1px solid rgba(192,64,42,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#8A2A1A;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#4A1200">3% of batches stuck sparge — adds 45 min rework, delays downstream schedule</div></div>${[['1','Why do batches get stuck sparge?','High-adjunct grain bills (rye, oats, wheat) create dense grain bed restricting wort flow.'],['2','Why do high-adjunct bills restrict flow?','Rice hulls not added to these grists. Recipe sheet does not specify rice hull addition.'],['3','Why don\'t recipe sheets specify rice hulls?','Recipes were written for the 3-barrel system. Equipment changed to 10-barrel but recipes weren\'t updated.'],['4','Why weren\'t recipes updated?','No formal recipe scale-up review. Head brewer carried the adjustment in memory only.'],['5','Why not documented?','ROOT CAUSE: No recipe management system with equipment-specific parameters. Recipes in Google Docs with no version control.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#0176D3'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(1,118,211,.4);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
   }
   // Winery
   if (demoId === 'wine') {
-    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Boutique Winery · 2,000 cases/year</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~18 months</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BARRELS</div><div style="font-size:12px;font-weight:700;color:#C49B2E;margin-top:2px">80 — full</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">DEFECT RATE</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6% TCA/high VA</div></div></div><div style="padding:8px 10px">${[['Harvest & Vineyard Receiving','8 hrs','24 hrs','8% fruit rejected',false],['Destemming & Crush','2 hrs','2 hrs','2% SO₂ error',false],['Primary Alcoholic Fermentation','20 days','—','5% off-aromas',false],['Pressing & Free-Run Sep.','3 hrs','12 hrs','3% blend error',false],['Malolactic Fermentation','45 days','—','8% incomplete ML',false],['Barrel Ageing & Topping','15 months','—','6% TCA/high VA',true],['Blending & Filtration','4 hrs','30 days','4% reformulation',false],['Bottling & Labelling','6 hrs','48 hrs','4% label errors',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(100,38,160,.06)':'#fff'};border:1px solid ${bad?'rgba(100,38,160,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#6426A0':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
-    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#C49B2E;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 6% Barrel Defect Rate — TCA &amp; High VA</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#2A1A4E">6% of barrels develop TCA or excessive volatile acidity — avg $4,200 loss per barrel</div></div>${[['1','Why do 6% develop TCA or high VA?','TCA from cork contact. High VA from insufficient topping — oxygen exposure.'],['2','Why insufficient topping?','Schedule managed from memory. No documented topping log. Back barrels missed for 3-4 weeks.'],['3','Why no topping log?','No barrel tracking system. Each barrel identified by chalk marker only.'],['4','Why no tracking system?','Winery grew from 400 to 2,000 cases without updating record-keeping practices.'],['5','Why not updated as winery grew?','ROOT CAUSE: No formal operations review as the winery scaled. Production processes never systematically reviewed for scalability.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#6426A0'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(100,38,160,.3);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
+    if (tool === 'VSM') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">VSM · Boutique Winery · 2,000 cases/year</span></div><div style="display:flex;gap:0;padding:8px 10px;border-bottom:1px solid #D8D5CE;background:#fff"><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">LEAD TIME</div><div style="font-size:12px;font-weight:700;color:#C0402A;margin-top:2px">~18 months</div></div><div style="flex:1;text-align:center;border-right:1px solid #E8E5E0;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">BARRELS</div><div style="font-size:12px;font-weight:700;color:#0176D3;margin-top:2px">80 — full</div></div><div style="flex:1.4;text-align:center;padding:0 6px"><div style="font-size:7px;color:#8E8A82;letter-spacing:.8px;font-family:monospace">DEFECT RATE</div><div style="font-size:10px;font-weight:700;color:#C0402A;margin-top:2px">6% TCA/high VA</div></div></div><div style="padding:8px 10px">${[['Harvest & Vineyard Receiving','8 hrs','24 hrs','8% fruit rejected',false],['Destemming & Crush','2 hrs','2 hrs','2% SO₂ error',false],['Primary Alcoholic Fermentation','20 days','—','5% off-aromas',false],['Pressing & Free-Run Sep.','3 hrs','12 hrs','3% blend error',false],['Malolactic Fermentation','45 days','—','8% incomplete ML',false],['Barrel Ageing & Topping','15 months','—','6% TCA/high VA',true],['Blending & Filtration','4 hrs','30 days','4% reformulation',false],['Bottling & Labelling','6 hrs','48 hrs','4% label errors',false]].map(([n,ct,wt,d,bad])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:3px;background:${bad?'rgba(100,38,160,.06)':'#fff'};border:1px solid ${bad?'rgba(100,38,160,.3)':'#E8E5E0'};border-radius:6px"><span style="font-size:8px;color:#4E4B45;flex:1;font-weight:${bad?700:400}">${n}</span><span style="font-size:8px;font-weight:700;color:${bad?'#6426A0':'#2A9E82'};font-family:monospace">${ct}</span><span style="font-size:7px;color:#C0402A;font-family:monospace">${d}</span></div>`).join('')}</div></div>`
+    if (tool === '5WHY') return `<div style="font-family:'Inter',sans-serif;background:#F8F6F0"><div style="background:#242220;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #353330"><div style="display:flex;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#C0402A;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#0176D3;opacity:.7"></div><div style="width:8px;height:8px;border-radius:50%;background:#1DD1A1;opacity:.7"></div></div><span style="font-size:10px;color:#8E8A82;font-family:monospace;flex:1;text-align:center">5 Why · 6% Barrel Defect Rate — TCA &amp; High VA</span></div><div style="padding:10px 14px"><div style="background:#F0EEFE;border:1px solid rgba(100,38,160,.3);border-radius:8px;padding:8px 12px;margin-bottom:8px"><div style="font-size:7px;color:#6426A0;font-weight:700;font-family:monospace;margin-bottom:3px">PROBLEM STATEMENT</div><div style="font-size:11px;font-weight:600;color:#2A1A4E">6% of barrels develop TCA or excessive volatile acidity — avg $4,200 loss per barrel</div></div>${[['1','Why do 6% develop TCA or high VA?','TCA from cork contact. High VA from insufficient topping — oxygen exposure.'],['2','Why insufficient topping?','Schedule managed from memory. No documented topping log. Back barrels missed for 3-4 weeks.'],['3','Why no topping log?','No barrel tracking system. Each barrel identified by chalk marker only.'],['4','Why no tracking system?','Winery grew from 400 to 2,000 cases without updating record-keeping practices.'],['5','Why not updated as winery grew?','ROOT CAUSE: No formal operations review as the winery scaled. Production processes never systematically reviewed for scalability.']].map(([n,q,a])=>`<div style="display:flex;gap:0;margin-bottom:0"><div style="display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0"><div style="width:20px;height:20px;border-radius:50%;background:${n==='5'?'#C0402A':'#6426A0'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:6px">${n}</div>${n!=='5'?'<div style="width:2px;flex:1;background:rgba(100,38,160,.3);min-height:8px"></div>':''}</div><div style="flex:1;padding:6px 8px;margin-bottom:4px;background:#fff;border:1px solid ${n==='5'?'rgba(192,64,42,.3)':'#E8E5E0'};border-radius:6px;margin-left:4px"><div style="font-size:8px;font-weight:700;color:#242220;margin-bottom:2px">${q}</div><div style="font-size:9px;color:${n==='5'?'#C0402A':'#6B6760'};line-height:1.4;font-weight:${n==='5'?700:400}">${a}</div></div></div>`).join('')}</div></div>`
   }
   return `<div style="padding:24px;text-align:center;color:#8E8A82;font-family:monospace;font-size:11px">Select a demo to explore</div>`
 }
@@ -686,20 +686,20 @@ function InlineToolShowcase() {
         .demo-stack-card.dsc-active{
           background:linear-gradient(155deg,rgba(52,46,34,0.97),rgba(34,30,20,0.99));
           border-top:1px solid rgba(255,255,255,0.14);
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 8px 20px rgba(0,0,0,0.45),0 0 0 1px rgba(196,155,46,0.12);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 8px 20px rgba(0,0,0,0.45),0 0 0 1px rgba(1,118,211,0.12);
         }
         .tool-tab{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:700;font-family:monospace;cursor:pointer;border:1px solid rgba(255,255,255,0.08);color:rgba(248,247,245,0.4);background:transparent;transition:all .15s;}
         .tool-tab:hover{background:rgba(255,255,255,0.07);color:rgba(248,247,245,0.7);}
-        .tool-tab.tt-active{color:#C49B2E;border-color:rgba(196,155,46,0.4);background:rgba(196,155,46,0.08);}
+        .tool-tab.tt-active{color:#0176D3;border-color:rgba(1,118,211,0.4);background:rgba(1,118,211,0.08);}
         .showcase-popup-body{max-height:440px;overflow-y:auto;background:#F8F6F0;border-radius:0 0 8px 8px;}
         /* Sharp subpixel text inside popup */
         .showcase-popup-body *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
         .showcase-popup-body::-webkit-scrollbar{width:4px}
-        .showcase-popup-body::-webkit-scrollbar-thumb{background:rgba(196,155,46,0.3);border-radius:2px}
+        .showcase-popup-body::-webkit-scrollbar-thumb{background:rgba(1,118,211,0.3);border-radius:2px}
       `}</style>
 
       {/* Outer frame with glow border */}
-      <div style={{ position:'relative', borderRadius:20, padding:1, background:'linear-gradient(135deg,rgba(196,155,46,0.22),rgba(100,38,160,0.08),rgba(48,112,184,0.12))' }}>
+      <div style={{ position:'relative', borderRadius:20, padding:1, background:'linear-gradient(135deg,rgba(1,118,211,0.22),rgba(100,38,160,0.08),rgba(48,112,184,0.12))' }}>
         <div style={{ borderRadius:19, background:'rgba(26,23,20,0.98)', padding:14, display:'flex', gap:10, boxShadow:'0 32px 64px rgba(0,0,0,0.55),0 12px 24px rgba(0,0,0,0.3)' }}>
 
           {/* LEFT: chrome + popup + tool tabs */}
@@ -709,7 +709,7 @@ function InlineToolShowcase() {
               <div style={{ padding:'9px 14px', display:'flex', alignItems:'center', gap:8, background:'linear-gradient(180deg,rgba(40,37,33,0.96),rgba(30,27,23,0.96))', borderBottom:'1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display:'flex', gap:5 }}>
                   <div style={{ width:9, height:9, borderRadius:'50%', background:'#C0402A' }} />
-                  <div style={{ width:9, height:9, borderRadius:'50%', background:'#C49B2E' }} />
+                  <div style={{ width:9, height:9, borderRadius:'50%', background:'#0176D3' }} />
                   <div style={{ width:9, height:9, borderRadius:'50%', background:'#2A9E82' }} />
                 </div>
                 <div style={{ flex:1, textAlign:'center', fontSize:10, color:'rgba(248,247,245,0.28)', fontFamily:'monospace', letterSpacing:'.8px' }}>{demo.chromTitle}</div>
@@ -768,7 +768,7 @@ function CompetitorTable() {
     'Free to start',
   ]
   const tools = [
-    { name: 'VeSiMy', color: '#C49B2E', bg: 'rgba(196,155,46,0.06)', border: 'rgba(196,155,46,0.3)', highlight: true, scores: [true,true,true,true,true,true,true,true,true,true,true,true] },
+    { name: 'VeSiMy', color: '#0176D3', bg: 'rgba(1,118,211,0.06)', border: 'rgba(1,118,211,0.3)', highlight: true, scores: [true,true,true,true,true,true,true,true,true,true,true,true] },
     { name: 'Excel / Sheets', color: '#6B6760', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [false,false,false,false,false,false,false,false,false,false,false,true] },
     { name: 'Visio / Lucidchart', color: '#1A4F8A', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [true,false,false,false,false,false,false,false,false,false,false,false] },
     { name: 'Minitab', color: '#534AB7', bg: '#FAFAFA', border: '#E0E0E0', highlight: false, scores: [false,false,false,false,false,false,false,false,false,false,false,false] },
@@ -779,7 +779,7 @@ function CompetitorTable() {
     <section style={{ padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', background: '#1A1714', borderTop: '1px solid rgba(255,255,255,0.09)', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
       <div style={{ maxWidth: 1060, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{ fontSize: 11, color: '#C49B2E', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
+          <div style={{ fontSize: 11, color: '#0176D3', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'monospace' }}>Why VeSiMy</div>
           <h2 className="h2-dark-shadow" style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 10, fontFamily: serif, letterSpacing: -.5 }}>
             Why process teams are replacing their current setup
           </h2>
@@ -807,7 +807,7 @@ function CompetitorTable() {
                   {tools.map(t => (
                     <td key={t.name} style={{ padding: '9px 10px', textAlign: 'center', borderBottom: '0.5px solid #ECEAE6', background: t.highlight ? t.bg : 'transparent' }}>
                       {t.scores[fi]
-                        ? <span style={{ fontSize: 14, color: t.highlight ? '#C49B2E' : '#2A9E82' }}>✓</span>
+                        ? <span style={{ fontSize: 14, color: t.highlight ? '#0176D3' : '#2A9E82' }}>✓</span>
                         : <span style={{ fontSize: 12, color: '#D8D5CE' }}>—</span>
                       }
                     </td>
@@ -819,7 +819,7 @@ function CompetitorTable() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 28 }}>
-          <Link href="/auth/signup" style={{ padding: '12px 28px', background: '#C49B2E', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <Link href="/auth/signup" style={{ padding: '12px 28px', background: '#0176D3', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             Switch to VeSiMy. Free to start. <ArrowRightIcon size={13} color="#fff" />
           </Link>
         </div>
@@ -931,10 +931,10 @@ function ToolShowcase() {
             <div className="showcase-popup" style={{ background: '#FFFFFF', border: '0.5px solid #D8D5CE', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 28px rgba(0,0,0,0.09)', maxHeight: 500, overflowY: 'auto' }}
               dangerouslySetInnerHTML={{ __html: tool.popup + `
                 <div style="padding:9px 14px;border-top:1px solid #D8D5CE;background:#F5F5F8;display:flex;align-items:center;justify-content:space-between">
-                  <div style="display:flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(196,155,46,.12);border:1px solid rgba(196,155,46,.25);border-radius:4px">
+                  <div style="display:flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(1,118,211,.12);border:1px solid rgba(1,118,211,.25);border-radius:4px">
                     <span style="font-size:9px;font-weight:700;color:#8E8A82;font-family:Palatino Linotype,serif">VeSiMy</span>
                   </div>
-                  <a href="/auth/signup" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:700;border-radius:10px;border:none;background:#C49B2E;color:#fff;text-decoration:none;cursor:pointer">Try free →</a>
+                  <a href="/auth/signup" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:700;border-radius:10px;border:none;background:#0176D3;color:#fff;text-decoration:none;cursor:pointer">Try free →</a>
                 </div>` }}
             />
           </div>
@@ -1041,12 +1041,10 @@ export default function HomePage() {
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
         @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        
         /* Reveal — text is ALWAYS visible; animation just adds the fade-in */
-        .reveal { opacity:1; animation: fadeUp 0.7s ease both; }
-        .r1 { animation-delay:0.05s } .r2 { animation-delay:0.18s }
-        .r3 { animation-delay:0.30s } .r4 { animation-delay:0.44s }
-        .r5 { animation-delay:0.56s }
+        .reveal { opacity:1; }
+        .r1{}.r2{}.r3{}.r4{}.r5{}
         /* Prefers-reduced-motion: skip animation entirely, keep text visible */
         @media(prefers-reduced-motion:reduce){
           .reveal,.logo-mark-anim,.wordmark-anim,.tagline-anim{
@@ -1059,8 +1057,8 @@ export default function HomePage() {
           50%      { transform: translateY(-7px) rotate(1deg); }
         }
         @keyframes logoGlow {
-          0%,100% { filter: drop-shadow(0 4px 18px rgba(196,155,46,0.22)) drop-shadow(0 0 0px rgba(140,68,204,0)); }
-          50%     { filter: drop-shadow(0 8px 32px rgba(196,155,46,0.45)) drop-shadow(0 0 18px rgba(140,68,204,0.25)); }
+          0%,100% { filter: drop-shadow(0 4px 18px rgba(1,118,211,0.22)) drop-shadow(0 0 0px rgba(140,68,204,0)); }
+          50%     { filter: drop-shadow(0 8px 32px rgba(1,118,211,0.45)) drop-shadow(0 0 18px rgba(140,68,204,0.25)); }
         }
         @keyframes wordmarkIn {
           from { opacity:0; transform: translateX(-12px) skewX(-4deg); }
@@ -1085,6 +1083,29 @@ export default function HomePage() {
           opacity:0;
           animation: taglineIn 0.9s ease 0.6s forwards;
         }
+        .h1-3d{
+          color:#F8F7F5;
+          text-shadow:
+            0 1px 0 rgba(255,255,255,0.12),
+            0 2px 0 rgba(0,0,0,0.65),
+            0 3px 0 rgba(0,0,0,0.55),
+            0 4px 0 rgba(0,0,0,0.45),
+            0 5px 0 rgba(0,0,0,0.35),
+            0 6px 0 rgba(0,0,0,0.25),
+            0 7px 1px rgba(0,0,0,0.12),
+            0 10px 18px rgba(0,0,0,0.55),
+            0 20px 36px rgba(0,0,0,0.28);
+        }
+        .gold-3d{
+          color:#0176D3;
+          text-shadow:
+            0 1px 0 #8B6010,
+            0 2px 0 #7A5510,
+            0 3px 0 #6A480C,
+            0 4px 2px rgba(0,0,0,0.45),
+            0 6px 10px rgba(0,0,0,0.35),
+            0 12px 22px rgba(0,0,0,0.2);
+        }
         .nav-link { color:rgba(248,247,245,0.55); text-decoration:none; font-size:13px; transition:color 0.15s; }
         .nav-link:hover { color:#F8F7F5; }
 
@@ -1101,7 +1122,7 @@ export default function HomePage() {
         }
         .card-dk:hover{
           transform:translateY(-7px) perspective(900px) rotateX(2.5deg) rotateY(-.5deg);
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),inset 0 -2px 0 rgba(0,0,0,0.45),0 16px 48px rgba(0,0,0,0.55),0 28px 56px rgba(0,0,0,0.3),0 0 40px rgba(196,155,46,0.07);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),inset 0 -2px 0 rgba(0,0,0,0.45),0 16px 48px rgba(0,0,0,0.55),0 28px 56px rgba(0,0,0,0.3),0 0 40px rgba(1,118,211,0.07);
         }
         .card-lt{
           border-radius:15px;position:relative;
@@ -1115,7 +1136,7 @@ export default function HomePage() {
         }
         .card-lt:hover{
           transform:translateY(-7px) perspective(900px) rotateX(2deg) rotateY(-.4deg);
-          box-shadow:inset 0 2px 0 rgba(255,255,255,0.85),inset 0 -1px 0 rgba(0,0,0,0.06),0 18px 48px rgba(0,0,0,0.14),0 28px 60px rgba(0,0,0,0.08),0 0 36px rgba(196,155,46,0.09);
+          box-shadow:inset 0 2px 0 rgba(255,255,255,0.85),inset 0 -1px 0 rgba(0,0,0,0.06),0 18px 48px rgba(0,0,0,0.14),0 28px 60px rgba(0,0,0,0.08),0 0 36px rgba(1,118,211,0.09);
         }
         .card-stripe{position:absolute;top:0;left:0;right:0;height:2px;border-radius:15px 15px 0 0;opacity:.75}
         /* ── CONSTELLATION ON LIGHT SECTIONS ── */
@@ -1123,8 +1144,24 @@ export default function HomePage() {
         .constell-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
         .constell-section>*:not(.constell-canvas){position:relative;z-index:1}
         /* ── TEXT SHADOWS ── */
-        .h2-dark-shadow{ text-shadow:0 2px 8px rgba(0,0,0,0.65),0 10px 40px rgba(0,0,0,0.35) }
-        .h2-light-shadow{ text-shadow:0 1px 3px rgba(0,0,0,0.14),0 4px 18px rgba(0,0,0,0.08) }
+        .h2-dark-shadow{
+          text-shadow:
+            0 1px 0 rgba(255,255,255,0.08),
+            0 2px 0 rgba(0,0,0,0.65),
+            0 3px 0 rgba(0,0,0,0.5),
+            0 4px 0 rgba(0,0,0,0.38),
+            0 5px 1px rgba(0,0,0,0.2),
+            0 8px 14px rgba(0,0,0,0.5),
+            0 16px 28px rgba(0,0,0,0.25)
+        }
+        .h2-light-shadow{
+          text-shadow:
+            0 1px 0 rgba(255,255,255,0.92),
+            0 2px 0 rgba(185,170,145,0.7),
+            0 3px 0 rgba(165,150,125,0.45),
+            0 4px 2px rgba(0,0,0,0.18),
+            0 7px 12px rgba(0,0,0,0.12)
+        }
         /* ── GLASS PANEL (problem right) ── */
         .glass-panel{
           background:linear-gradient(145deg,rgba(255,255,255,0.88),rgba(248,246,240,0.94));
@@ -1133,7 +1170,7 @@ export default function HomePage() {
           border-left:1px solid rgba(255,255,255,0.7);
           border-right:1px solid rgba(0,0,0,0.05);
           border-bottom:1px solid rgba(0,0,0,0.1);
-          box-shadow:inset 0 2px 0 rgba(255,255,255,0.8),0 24px 64px rgba(0,0,0,0.12),0 8px 24px rgba(0,0,0,0.07),0 0 0 1px rgba(196,155,46,0.06);
+          box-shadow:inset 0 2px 0 rgba(255,255,255,0.8),0 24px 64px rgba(0,0,0,0.12),0 8px 24px rgba(0,0,0,0.07),0 0 0 1px rgba(1,118,211,0.06);
           transform:perspective(1200px) rotateY(-3deg) rotateX(1deg);
           transition:transform .4s ease;
           position:relative;overflow:hidden;
@@ -1200,7 +1237,7 @@ export default function HomePage() {
           <Link href="/auth/login" className="nav-sign-in" style={{ padding: '7px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 8, fontSize: 13, color: 'rgba(248,247,245,0.6)', textDecoration: 'none' }}>
             Sign in
           </Link>
-          <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#C49B2E', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#0D0C0A', textDecoration: 'none' }}>
+          <Link href="/auth/signup" style={{ padding: '7px 18px', background: '#0176D3', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, color: '#0D0C0A', textDecoration: 'none' }}>
             Start free
           </Link>
         </div>
@@ -1214,8 +1251,8 @@ export default function HomePage() {
           <defs>
             {/* Soft radial glow around key nodes */}
             <radialGradient id="ng1" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#C49B2E" stopOpacity="0.18"/>
-              <stop offset="100%" stopColor="#C49B2E" stopOpacity="0"/>
+              <stop offset="0%" stopColor="#0176D3" stopOpacity="0.18"/>
+              <stop offset="100%" stopColor="#0176D3" stopOpacity="0"/>
             </radialGradient>
             <radialGradient id="ng2" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor="#8C44CC" stopOpacity="0.12"/>
@@ -1252,7 +1289,7 @@ export default function HomePage() {
             [400,160,480,180],[900,280,960,140],[650,580,700,540],[1200,200,1100,80],
           ].map(([x1,y1,x2,y2],i) => (
             <line key={i} x1={x1 as number} y1={y1 as number} x2={x2 as number} y2={y2 as number}
-              stroke="#C49B2E" strokeWidth={i < 10 ? "0.7" : "0.45"}
+              stroke="#0176D3" strokeWidth={i < 10 ? "0.7" : "0.45"}
               opacity={i < 10 ? 0.16 : 0.09}/>
           ))}
 
@@ -1269,7 +1306,7 @@ export default function HomePage() {
           ].map(([cx,cy,bright],i) => (
             <circle key={i} cx={cx as number} cy={cy as number}
               r={(bright as boolean) ? 2.8 : 1.6}
-              fill="#C49B2E"
+              fill="#0176D3"
               className={(bright as boolean) && i%3===0 ? 'cn-pulse' : (bright as boolean) && i%3===1 ? 'cn-pulse2' : (bright as boolean) ? 'cn-pulse3' : ''}
               opacity={(bright as boolean) ? 0.28 : 0.13}/>
           ))}
@@ -1281,7 +1318,7 @@ export default function HomePage() {
           ].map(([x,y,op],i) => (
             <path key={i}
               d={`M${x} ${y} H${+x+16} L${+x+26} ${+y+46} L${+x+36} ${+y+28} L${+x+46} ${+y+46} L${+x+56} ${y} H${+x+72} L${+x+46} ${+y+58} L${+x+26} ${+y+34} L${+x+6} ${+y+58} Z`}
-              fill="#C49B2E" opacity={op as number}/>
+              fill="#0176D3" opacity={op as number}/>
           ))}
         </svg>
 
@@ -1291,17 +1328,17 @@ export default function HomePage() {
           <div style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
             <IndustryLoop />
 
-            <h1 className="reveal r2 h2-dark-shadow" style={{ fontSize: 'clamp(38px,5.5vw,68px)', lineHeight: 1.08, fontWeight: 700, color: '#F8F7F5', marginBottom: 20, letterSpacing: -1.5, fontFamily: serif }}>
-              Map any process.<br />Find the waste.<br /><span style={{ color: '#C49B2E', textShadow: '0 0 40px rgba(196,155,46,0.45),0 2px 8px rgba(0,0,0,0.5)' }}>Fix the bottleneck.</span>
+            <h1 className="reveal r2 h1-3d" style={{ fontSize: 'clamp(38px,5.5vw,68px)', lineHeight: 1.08, fontWeight: 700, color: '#F8F7F5', marginBottom: 20, letterSpacing: -1.5, fontFamily: serif }}>
+              Map any process.<br />Find the waste.<br /><span style={{ color: '#0176D3', textShadow: '0 0 40px rgba(1,118,211,0.45),0 2px 8px rgba(0,0,0,0.5)' }}>Fix the bottleneck.</span>
             </h1>
 
             <p className="reveal r3" style={{ fontSize: 16, color: 'rgba(248,247,245,0.52)', lineHeight: 1.82, marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-              Every step, every wait, every handoff — visible in one place. Manufacturing, healthcare, real estate, brewing — any process, any industry.
+              For every employee with a target to reach. Map your process, find the waste, fix it — and build a record of every improvement you make.
             </p>
 
             <div className="reveal r4 hero-cta-row" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 14, justifyContent: 'center' }}>
-              <Link href="/auth/signup" style={{ padding: '13px 26px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 11, fontSize: 14, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, boxShadow: '0 8px 24px rgba(196,155,46,0.35),inset 0 1px 0 rgba(255,255,255,0.2)' }}>
-                Start free. No card needed. <ArrowRightIcon size={14} color="#0D0C0A" />
+              <Link href="/auth/signup" style={{ padding: '13px 26px', background: '#0176D3', color: '#FFFFFF', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, boxShadow: '0 4px 14px rgba(1,118,211,0.40)' }}>
+                Start free — no card needed <ArrowRightIcon size={14} color="#FFFFFF" />
               </Link>
               <Link href="/auth/signup?ref=1" style={{ padding: '13px 20px', background: 'rgba(255,255,255,0.05)', color: 'rgba(248,247,245,0.65)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 11, fontSize: 13, textDecoration: 'none', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
                 Explore sample project →
@@ -1331,7 +1368,7 @@ export default function HomePage() {
             ['Free', 'Unlimited projects forever'],
           ].map(([v,l]) => (
             <div key={l} style={{ textAlign: 'center', padding: '4px 8px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#C49B2E', textShadow: '0 0 20px rgba(196,155,46,0.4),0 2px 4px rgba(0,0,0,0.4)' }}>{v}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: '#0176D3', textShadow: '0 0 20px rgba(1,118,211,0.4),0 2px 4px rgba(0,0,0,0.4)' }}>{v}</div>
               <div style={{ fontSize: 10, color: 'rgba(248,247,245,0.35)', marginTop: 2, letterSpacing: '0.2px', lineHeight: 1.4 }}>{l}</div>
             </div>
           ))}
@@ -1342,7 +1379,7 @@ export default function HomePage() {
       <div style={{ background: 'linear-gradient(180deg,#1F1C18,#1A1714)', padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 44 }}>
-            <div style={{ fontSize: 10, color: 'rgba(196,155,46,0.75)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, marginBottom: 12, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4, display: 'inline-block' }}>How it works</div>
+            <div style={{ fontSize: 10, color: 'rgba(1,118,211,0.75)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700, marginBottom: 12, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4, display: 'inline-block' }}>How it works</div>
             <h2 className="h2-dark-shadow" style={{ fontFamily: serif, fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700, color: '#F8F7F5', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
               Everything connected<br/>to the same steps.
             </h2>
@@ -1354,7 +1391,7 @@ export default function HomePage() {
               { color:'#2A9E82', title:'Measure before you manage', body:'Built-in stopwatch with lap recording. Mean CT, outlier detection, standard deviation — calculated automatically. Times push directly to your VSM.', svg:'<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/>' },
               { color:'#6426A0', title:'Find the root. Fix it once.', body:'5 Why chains stay attached to the step where the problem lives. Root cause, countermeasure, and owner — never in a separate document.', svg:'<circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="10" y2="12"/><line x1="10" y1="12" x2="8.5" y2="15.5"/><circle cx="12" cy="8" r=".8" fill="#6426A0"/>' },
               { color:'#C0402A', title:'Name the waste. Own the fix.', body:'8 DOWNTIME waste categories on every step. Daily cost estimate, VA/NNVA/NVA classification, and a direct path to a kaizen action.', svg:'<polyline points="3 6 5 6 21 6"/><path d="M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2"/><polyline points="19 6 18 20 6 20 5 6"/>' },
-              { color:'#C49B2E', title:'Supe — your AI lean mentor', body:'Reads your actual project data and tells you what to fix first. Gap analysis, root cause hypothesis, and executive summary from live numbers — not templates.', svg:'<polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/>' },
+              { color:'#0176D3', title:'Supe — your AI lean mentor', body:'Reads your actual project data and tells you what to fix first. Gap analysis, root cause hypothesis, and executive summary from live numbers — not templates.', svg:'<polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/>' },
               { color:'#1090D4', title:'One-click A3 export', body:'ISO 9001:2015 compliant A3 report generated from your live data. VSM summary, gap findings, countermeasures — formatted and ready to present.', svg:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
             ] as any[]).map((f:any) => (
               <div key={f.title} className="card-dk" style={{ padding: '30px 26px' }}>
@@ -1403,8 +1440,8 @@ export default function HomePage() {
             <p style={{ fontSize: 13, color: '#6B6760', lineHeight: 1.75, marginBottom: 18, position: 'relative', zIndex: 1 }}>
               Whether you run a production line, a clinic, or a real estate team — the waste is visible, the bottleneck is flagged, and the fix is prioritised.
             </p>
-            <div style={{ background: 'rgba(196,155,46,0.06)', border: '1px solid rgba(196,155,46,0.2)', borderRadius: 10, padding: '12px 16px', position: 'relative', zIndex: 1, boxShadow: '0 2px 8px rgba(196,155,46,0.08),inset 0 1px 0 rgba(196,155,46,0.1)' }}>
-              <div style={{ fontSize: 9, color: 'rgba(196,155,46,0.7)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6, fontWeight: 700 }}>SUPE — AI ANALYSIS</div>
+            <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '12px 16px', position: 'relative', zIndex: 1, boxShadow: '0 2px 8px rgba(1,118,211,0.08),inset 0 1px 0 rgba(1,118,211,0.1)' }}>
+              <div style={{ fontSize: 9, color: 'rgba(1,118,211,0.7)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6, fontWeight: 700 }}>SUPE — AI ANALYSIS</div>
               <p style={{ fontSize: 12, color: '#4E4B45', lineHeight: 1.65, fontStyle: 'italic', margin: 0 }}>
                 "Foam & Fabric is 21% over Takt with 3 open Kaizen events. Eliminate the 16s NVA walk before adding capacity — that closes the gap without equipment spend."
               </p>
@@ -1418,9 +1455,9 @@ export default function HomePage() {
         <canvas className="constell-canvas" data-dark="false" />
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(196,155,46,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4 }}>Every industry</div>
+            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(1,118,211,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4 }}>Every industry</div>
             <h2 className="h2-light-shadow" style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,38px)', fontWeight: 700, color: '#1E1B17', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
-              Waste is waste.<br/>Whatever you make or deliver.
+              Every process has a target.<br/>Every target has a path.
             </h2>
             <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 540, margin: '0 auto', lineHeight: 1.8 }}>
               The tools in VeSiMy were built on manufacturing floors. But a bottleneck in a law firm looks exactly like a bottleneck on a production line. A root cause in a real estate transaction is found the same way as one in a factory. The method is universal.
@@ -1435,7 +1472,7 @@ export default function HomePage() {
               { label: 'Healthcare', color: '#2A9E82', tagline: 'Patient flow is a value stream.', demoHref: '/auth/signup?demo=healthcare',
                 desc: 'Intake to discharge. Admissions to billing. Every wait, every handoff, every rework step is measurable. Supe finds the bottleneck that costs beds and time.',
                 examples: ['Patient flow mapping', 'Appointment scheduling waste', 'Medication error root cause'] },
-              { label: 'Real Estate', color: '#C49B2E', tagline: 'Days on market is cycle time.', demoHref: '/auth/signup?demo=realestate',
+              { label: 'Real Estate', color: '#0176D3', tagline: 'Days on market is cycle time.', demoHref: '/auth/signup?demo=realestate',
                 desc: 'Lead to close is a process with steps, handoffs, and waiting. Fall-through rate is a defect rate. Supe tells you where deals die and what to fix first.',
                 examples: ['Lead to close value stream', 'Financing delay root cause', 'Offer process bottleneck'] },
               { label: 'Legal & Professional Services', color: '#6426A0', tagline: 'Billable hours lost to waste.',
@@ -1479,8 +1516,8 @@ export default function HomePage() {
 
           <div style={{ textAlign: 'center', marginTop: 36 }}>
             <p style={{ fontSize: 13, color: '#8E8A82', marginBottom: 16 }}>Don't see your industry? If you have a process, VeSiMy works for you.</p>
-            <a href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: '#C49B2E', color: '#0D0C0A', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
-              Start free — no card needed →
+            <a href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: '#0176D3', color: '#0D0C0A', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+              Start free — map your first process →
             </a>
           </div>
         </div>
@@ -1490,13 +1527,13 @@ export default function HomePage() {
       <CompetitorTable />
 
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
-      <div style={{ padding: 'clamp(40px,5vw,64px) clamp(16px,4vw,48px)', textAlign: 'center', background: '#F8F6F0', borderTop: '3px solid #C49B2E' }}>
+      <div style={{ padding: 'clamp(40px,5vw,64px) clamp(16px,4vw,48px)', textAlign: 'center', background: '#F8F6F0', borderTop: '3px solid #0176D3' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
           <p style={{ fontSize: 'clamp(18px,2.5vw,24px)', fontWeight: 500, color: '#242220', lineHeight: 1.55, marginBottom: 14, fontFamily: serif }}>
             "The ability to add individual steps per operator with times is exactly what we needed. The designator for value-add and non value-add per operator step and the Yamazumi — that's the workflow."
           </p>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-            <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#C49B2E', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#0D0C0A' }}>CI</div>
+            <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#0176D3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#0D0C0A' }}>CI</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: '#242220' }}>Continuous Improvement Practitioner</div>
               <div style={{ fontSize: 11, color: '#8E8A82' }}>Lean manufacturing professional, early user feedback</div>
@@ -1506,10 +1543,10 @@ export default function HomePage() {
       </div>
 
       {/* ── PRICING ─────────────────────────────────────────────────────────── */}
-      <section id="pricing" className="sec-pad" style={{ padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', background: 'radial-gradient(ellipse 70% 50% at 50% 0%,rgba(196,155,46,0.07),transparent 55%),linear-gradient(180deg,#1A1714,#131110)' }}>
+      <section id="pricing" className="sec-pad" style={{ padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', background: 'radial-gradient(ellipse 70% 50% at 50% 0%,rgba(1,118,211,0.07),transparent 55%),linear-gradient(180deg,#1A1714,#131110)' }}>
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(196,155,46,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(196,155,46,0.07)', border: '1px solid rgba(196,155,46,0.15)', borderRadius: 4 }}>Pricing</div>
+            <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(1,118,211,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4 }}>Pricing</div>
             <h2 className="h2-dark-shadow" style={{ fontSize: 'clamp(26px,3vw,42px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 12, fontFamily: serif, letterSpacing: -.5 }}>Simple, honest pricing.</h2>
             <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.42)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>Free plan: unlimited projects, all 9 CI tools — no credit card, no expiry. Pro adds Supe AI, process simulation, and the A3 export. First upgrade includes a 14-day free trial.</p>
           </div>
@@ -1520,9 +1557,9 @@ export default function HomePage() {
               const isLife = key === 'lifetime'
               const isEnt = key === 'enterprise'
               return (
-                <div key={key} className={`card-dk ${isLife ? 'pricing-card-lifetime' : ''}`} style={{ padding: '28px 24px', ...(isPro || isLife ? { background: 'linear-gradient(155deg,rgba(52,44,28,0.97),rgba(34,30,20,0.99))', borderTop: '1px solid rgba(196,155,46,0.3)', borderLeft: '1px solid rgba(196,155,46,0.15)' } : {}) }}>
+                <div key={key} className={`card-dk ${isLife ? 'pricing-card-lifetime' : ''}`} style={{ padding: '28px 24px', ...(isPro || isLife ? { background: 'linear-gradient(155deg,rgba(52,44,28,0.97),rgba(34,30,20,0.99))', borderTop: '1px solid rgba(1,118,211,0.3)', borderLeft: '1px solid rgba(1,118,211,0.15)' } : {}) }}>
                   {(isPro || isLife) && (
-                    <div style={{ display: 'inline-flex', background: '#C49B2E', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
+                    <div style={{ display: 'inline-flex', background: '#0176D3', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 14px', borderRadius: 999, letterSpacing: 1.5, marginBottom: 12 }}>
                       {isLife ? 'BEST VALUE' : 'MOST POPULAR'}
                     </div>
                   )}
@@ -1537,13 +1574,13 @@ export default function HomePage() {
                   <ul style={{ listStyle: 'none', marginBottom: 22, display: 'flex', flexDirection: 'column', gap: 9 }}>
                     {plan.features.map((f: string) => (
                       <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 13, color: '#4E4B45', lineHeight: 1.5 }}>
-                        <CheckIcon size={13} color="#C49B2E" style={{ marginTop: 3, flexShrink: 0 }} /> {f}
+                        <CheckIcon size={13} color="#0176D3" style={{ marginTop: 3, flexShrink: 0 }} /> {f}
                       </li>
                     ))}
                   </ul>
                   <Link
                     href={isEnt ? '/enterprise' : plan.price === 0 ? '/auth/signup' : `/auth/signup?plan=${key}`}
-                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '11px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', background: isPro || isLife ? '#C49B2E' : 'transparent', color: isPro || isLife ? '#fff' : '#4E4B45', border: isPro || isLife ? 'none' : '1px solid #D8D5CE' }}
+                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '11px 20px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', background: isPro || isLife ? '#0176D3' : 'transparent', color: isPro || isLife ? '#fff' : '#4E4B45', border: isPro || isLife ? 'none' : '1px solid #D8D5CE' }}
                   >
                     {plan.cta}
                   </Link>
@@ -1564,11 +1601,11 @@ export default function HomePage() {
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
       <div style={{ background: '#231F1B', padding: 'clamp(48px,6vw,72px) clamp(16px,4vw,48px)', textAlign: 'center' }}>
         <h2 style={{ fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, color: '#F8F6F0', fontFamily: serif, marginBottom: 10 }}>
-          Your next kaizen event starts here —<br />not in a <span style={{ color: '#C49B2E' }}>spreadsheet.</span>
+          Your next kaizen event starts here —<br />not in a <span className="gold-3d">spreadsheet.</span>
         </h2>
-        <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free plan. Unlimited projects. No credit card required.</p>
+        <p style={{ fontSize: 14, color: 'rgba(248,246,240,0.35)', marginBottom: 24 }}>Free for every employee. Unlimited projects. No credit card.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#C49B2E', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+          <Link href="/auth/signup" style={{ padding: '14px 38px', background: '#0176D3', color: '#0D0C0A', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
             Start free. No card needed.
           </Link>
           <Link href="/auth/signup?ref=1" style={{ padding: '14px 24px', background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, fontSize: 15, textDecoration: 'none' }}>
@@ -1592,8 +1629,8 @@ export default function HomePage() {
             function init(){W=cv.width=par.offsetWidth;H=cv.height=par.offsetHeight;ns=[];for(var i=0;i<N;i++)ns.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*V,vy:(Math.random()-.5)*V,r:Math.random()>.82?(dark?2.5:1.7):(dark?1.1:.7),b:Math.random()>.72,ph:Math.random()*Math.PI*2,sp:.007+Math.random()*.012})}
             function tick(){ctx.clearRect(0,0,W,H);f++;
               ns.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<-30)n.x=W+30;if(n.x>W+30)n.x=-30;if(n.y<-30)n.y=H+30;if(n.y>H+30)n.y=-30});
-              for(var i=0;i<ns.length;i++)for(var j=i+1;j<ns.length;j++){var dx=ns[i].x-ns[j].x,dy=ns[i].y-ns[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<MD){ctx.strokeStyle='rgba(196,155,46,'+((1-d/MD)*AO)+')';ctx.lineWidth=dark?.5:.3;ctx.beginPath();ctx.moveTo(ns[i].x,ns[i].y);ctx.lineTo(ns[j].x,ns[j].y);ctx.stroke()}}
-              ns.forEach(function(n){var p=n.b?(NO*.7+Math.sin(f*n.sp+n.ph)*NO*.5):NO*.4;ctx.fillStyle='rgba(196,155,46,'+p+')';ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill()});
+              for(var i=0;i<ns.length;i++)for(var j=i+1;j<ns.length;j++){var dx=ns[i].x-ns[j].x,dy=ns[i].y-ns[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<MD){ctx.strokeStyle='rgba(1,118,211,'+((1-d/MD)*AO)+')';ctx.lineWidth=dark?.5:.3;ctx.beginPath();ctx.moveTo(ns[i].x,ns[i].y);ctx.lineTo(ns[j].x,ns[j].y);ctx.stroke()}}
+              ns.forEach(function(n){var p=n.b?(NO*.7+Math.sin(f*n.sp+n.ph)*NO*.5):NO*.4;ctx.fillStyle='rgba(1,118,211,'+p+')';ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill()});
               rf=requestAnimationFrame(tick)}
             init();tick();
             window.addEventListener('resize',function(){cancelAnimationFrame(rf);init();tick()});
@@ -1610,7 +1647,7 @@ export default function HomePage() {
         <div className="footer-links" style={{ display: 'flex', gap: 22, fontSize: 12, color: 'rgba(248,247,245,0.4)', flexWrap: 'wrap' }}>
           {[['About', '/about'], ['Blog', '/blog'], ['Changelog', '/changelog'], ['Pricing', '/pricing'], ['Privacy', '/privacy'], ['Terms', '/terms'], ['Contact', 'mailto:founder@vesimy.com']].map(([l, h]) => (
             <Link key={l} href={h} style={{ color: 'inherit', textDecoration: 'none' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#C49B2E')}
+              onMouseEnter={e => (e.currentTarget.style.color = '#0176D3')}
               onMouseLeave={e => (e.currentTarget.style.color = 'rgba(248,247,245,0.4)')}>
               {l}
             </Link>

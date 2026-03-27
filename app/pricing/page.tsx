@@ -41,21 +41,21 @@ const PLAN_META: Record<
   },
   pro: {
     icon: ZapIcon,
-    border: 'rgba(212,162,8,0.34)',
-    bg: 'rgba(212,162,8,0.04)',
+    border: 'rgba(1,118,211,0.34)',
+    bg: 'rgba(1,118,211,0.04)',
     badge: 'MOST POPULAR',
     highlight: true,
     gold: false,
-    accent: '#D4A208',
+    accent: '#0176D3',
   },
   lifetime: {
     icon: CrownIcon,
-    border: 'rgba(212,162,8,0.42)',
-    bg: 'rgba(212,162,8,0.06)',
-    badge: '👑 BEST VALUE',
+    border: 'rgba(1,118,211,0.42)',
+    bg: 'rgba(1,118,211,0.06)',
+    badge: 'BEST VALUE',
     highlight: false,
     gold: true,
-    accent: '#D4A208',
+    accent: '#0176D3',
   },
   enterprise: {
     icon: BuildingIcon,
@@ -82,8 +82,8 @@ function SectionTitle({
       <div
         style={{
           display: 'inline-block',
-          background: 'rgba(212,162,8,0.08)',
-          border: '1px solid rgba(212,162,8,0.18)',
+          background: 'rgba(1,118,211,0.08)',
+          border: '1px solid rgba(1,118,211,0.18)',
           borderRadius: 999,
           padding: '5px 14px',
           marginBottom: 18,
@@ -92,7 +92,7 @@ function SectionTitle({
         <span
           style={{
             fontSize: 11,
-            color: '#D4A208',
+            color: '#0176D3',
             fontFamily: 'monospace',
             letterSpacing: 1.6,
             textTransform: 'uppercase',
@@ -175,9 +175,9 @@ function PricingToggle({
           position: 'relative',
           transition: 'background 0.2s',
           background: annual
-            ? 'linear-gradient(135deg,#C49510,#D4A208)'
+            ? 'linear-gradient(135deg,#0a5eaa,#0176D3)'
             : 'rgba(184,180,172,0.6)',
-          boxShadow: annual ? '0 4px 12px rgba(212,162,8,0.18)' : 'none',
+          boxShadow: annual ? '0 4px 12px rgba(1,118,211,0.18)' : 'none',
         }}
       >
         <div
@@ -268,15 +268,15 @@ function PlanCard({
         padding: 26,
         background:
           meta.highlight
-            ? 'linear-gradient(180deg, rgba(212,162,8,0.05), rgba(248,247,245,0.97) 70%)'
+            ? 'linear-gradient(180deg, rgba(1,118,211,0.05), rgba(248,247,245,0.97) 70%)'
             : meta.gold
-              ? 'linear-gradient(180deg, rgba(212,162,8,0.06), rgba(248,247,245,0.97) 70%)'
+              ? 'linear-gradient(180deg, rgba(1,118,211,0.06), rgba(248,247,245,0.97) 70%)'
               : `linear-gradient(180deg, rgba(255,255,255,0.0), ${meta.bg})`,
         border: `1px solid ${meta.border}`,
         boxShadow: meta.highlight
-          ? '0 0 0 1px rgba(212,162,8,0.18), 0 18px 60px rgba(0,0,0,0.42)'
+          ? '0 0 0 1px rgba(1,118,211,0.18), 0 18px 60px rgba(0,0,0,0.42)'
           : meta.gold
-            ? '0 0 0 1px rgba(212,162,8,0.10), 0 14px 40px rgba(0,0,0,0.34)'
+            ? '0 0 0 1px rgba(1,118,211,0.10), 0 14px 40px rgba(0,0,0,0.34)'
             : '0 12px 32px rgba(0,0,0,0.32)',
         backdropFilter: 'blur(14px)',
         transition: 'transform .25s ease, box-shadow .25s ease',
@@ -304,7 +304,7 @@ function PlanCard({
             letterSpacing: 1.2,
             background:
               meta.highlight || meta.gold
-                ? 'linear-gradient(135deg,#C49510,#D4A208)'
+                ? 'linear-gradient(135deg,#0a5eaa,#0176D3)'
                 : 'rgba(108,185,252,0.15)',
             border:
               meta.highlight || meta.gold
@@ -313,7 +313,7 @@ function PlanCard({
             color: meta.highlight || meta.gold ? 'var(--bg)' : '#6CB9FC',
             boxShadow:
               meta.highlight || meta.gold
-                ? '0 6px 16px rgba(212,162,8,0.18)'
+                ? '0 6px 16px rgba(1,118,211,0.18)'
                 : 'none',
           }}
         >
@@ -333,13 +333,13 @@ function PlanCard({
               justifyContent: 'center',
               background:
                 meta.highlight || meta.gold
-                  ? 'rgba(212,162,8,0.12)'
+                  ? 'rgba(1,118,211,0.12)'
                   : isEnterprise
                     ? 'rgba(108,185,252,0.10)'
                     : 'rgba(184,180,172,0.6)',
               border:
                 meta.highlight || meta.gold
-                  ? '1px solid rgba(212,162,8,0.18)'
+                  ? '1px solid rgba(1,118,211,0.18)'
                   : isEnterprise
                     ? '1px solid rgba(108,185,252,0.18)'
                     : '1px solid rgba(255,255,255,0.0)',
@@ -349,7 +349,7 @@ function PlanCard({
               size={18}
               color={
                 meta.highlight || meta.gold
-                  ? '#D4A208'
+                  ? '#0176D3'
                   : isEnterprise
                     ? '#6CB9FC'
                     : 'var(--text2)'
@@ -374,7 +374,7 @@ function PlanCard({
               <div
                 style={{
                   fontSize: 10,
-                  color: '#D4A208',
+                  color: '#0176D3',
                   fontFamily: 'monospace',
                   letterSpacing: 1.2,
                   marginTop: 3,
@@ -431,7 +431,7 @@ function PlanCard({
                   fontSize: 46,
                   fontWeight: 700,
                   fontFamily: serif,
-                  color: meta.highlight || meta.gold ? '#D4A208' : 'var(--text)',
+                  color: meta.highlight || meta.gold ? '#0176D3' : 'var(--text)',
                   lineHeight: 1,
                 }}
               >
@@ -476,7 +476,7 @@ function PlanCard({
           opacity: isLoad ? 0.7 : 1,
           background:
             meta.highlight || meta.gold
-              ? 'linear-gradient(135deg,#C49510,#D4A208,#F4A623)'
+              ? 'linear-gradient(135deg,#0a5eaa,#0176D3,#F4A623)'
               : isEnterprise
                 ? 'rgba(108,185,252,0.10)'
                 : 'rgba(215,213,206,0.9)',
@@ -488,7 +488,7 @@ function PlanCard({
                 : 'var(--text)',
           boxShadow:
             meta.highlight || meta.gold
-              ? '0 8px 22px rgba(212,162,8,0.18)'
+              ? '0 8px 22px rgba(1,118,211,0.18)'
               : 'none',
         }}
       >
@@ -517,13 +517,13 @@ function PlanCard({
                 marginTop: 1,
                 background:
                   meta.highlight || meta.gold
-                    ? 'rgba(212,162,8,0.12)'
+                    ? 'rgba(1,118,211,0.12)'
                     : isEnterprise
                       ? 'rgba(108,185,252,0.10)'
                       : 'rgba(215,213,206,0.9)',
                 border:
                   meta.highlight || meta.gold
-                    ? '1px solid rgba(212,162,8,0.18)'
+                    ? '1px solid rgba(1,118,211,0.18)'
                     : isEnterprise
                       ? '1px solid rgba(108,185,252,0.16)'
                       : '1px solid rgba(255,255,255,0.0)',
@@ -533,7 +533,7 @@ function PlanCard({
                 size={10}
                 color={
                   meta.highlight || meta.gold
-                    ? '#D4A208'
+                    ? '#0176D3'
                     : isEnterprise
                       ? '#6CB9FC'
                       : 'var(--text2)'
@@ -602,7 +602,7 @@ export default function PricingPage() {
         minHeight: '100vh',
         background: 'var(--bg)',
         backgroundImage:
-          'radial-gradient(ellipse 80% 50% at 20% 0%, rgba(212,162,8,0.08) 0%, transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100,38,160,0.06) 0%, transparent 55%)',
+          'radial-gradient(ellipse 80% 50% at 20% 0%, rgba(1,118,211,0.08) 0%, transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100,38,160,0.06) 0%, transparent 55%)',
       }}
     >
       <nav

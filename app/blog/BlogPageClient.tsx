@@ -9,7 +9,7 @@ const posts = [
   {
     slug: 'smed-calculator',
     tag: 'Tool Guide',
-    tagColor: '#D4A208',
+    tagColor: '#0176D3',
     title: 'SMED Calculator: How to Calculate Changeover Savings Before You Touch a Wrench',
     excerpt: "Before you change a single procedure, a SMED calculator shows you exactly where the time goes and what you recover when you apply Shingo's three-stage methodology. Built-in tool included.",
     readTime: '7 min read',
@@ -27,7 +27,7 @@ const posts = [
   {
     slug: 'fishbone-diagram-guide',
     tag: 'Guide',
-    tagColor: '#D4A208',
+    tagColor: '#0176D3',
     title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause',
     excerpt: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that works — with a real machining defect example showing how deep to go.',
     readTime: '7 min read',
@@ -54,7 +54,7 @@ const posts = [
   {
     slug: 'what-is-value-stream-mapping',
     tag: 'Guide',
-    tagColor: '#D4A208',
+    tagColor: '#0176D3',
     title: "What Is Value Stream Mapping? The Complete Guide for 2026",
     excerpt: "Value stream mapping (VSM) is the single most powerful lean tool available to manufacturers. Here's how it works, when to use it, and how to run your first VSM session — with a free digital tool.",
     readTime: '8 min read',
@@ -126,7 +126,7 @@ const posts = [
   {
     slug: 'automotive-process-improvement',
     tag: 'Industry',
-    tagColor: '#D4A208',
+    tagColor: '#0176D3',
     title: 'Process Improvement in Automotive Manufacturing: Where Every Second Has a Price Tag',
     excerpt: "Takt-driven lines, model-mix complexity, and supplier quality cascades make automotive one of the most process-intensive environments in manufacturing. Here's how structured CI tools address it.",
     readTime: '9 min read',
@@ -189,7 +189,7 @@ const posts = [
   {
     slug: 'industrial-process-improvement',
     tag: 'Industry',
-    tagColor: '#D4A208',
+    tagColor: '#0176D3',
     title: "The Machine Doesn't Know It's Inefficient. You Have to Tell It.",
     excerpt: "Heavy industrial, job shops, and custom fabrication — the environments that said lean doesn't apply here. They were wrong. Here's how structured CI works in high-mix, low-volume industrial manufacturing.",
     readTime: '8 min read',
@@ -206,7 +206,7 @@ export default function BlogPageClient() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
           Resources
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
@@ -218,11 +218,11 @@ export default function BlogPageClient() {
 
         <Link href="/industries" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(212,162,8,0.08)', border: '1px solid rgba(212,162,8,0.3)',
-          color: '#D4A208', fontSize: 13, fontWeight: 700, padding: '9px 18px',
+          background: 'rgba(1,118,211,0.08)', border: '1px solid rgba(1,118,211,0.3)',
+          color: '#0176D3', fontSize: 13, fontWeight: 700, padding: '9px 18px',
           borderRadius: 9, textDecoration: 'none', marginBottom: 48,
         }}>
-          🏭 Browse by Industry →
+          Browse by Industry →
         </Link>
 
         {/* Lean Guides */}
@@ -250,8 +250,8 @@ export default function BlogPageClient() {
 
         <Link href="/industries" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(212,162,8,0.08)', border: '1px solid rgba(212,162,8,0.3)',
-          color: '#D4A208', fontSize: 13, fontWeight: 700, padding: '10px 20px',
+          background: 'rgba(1,118,211,0.08)', border: '1px solid rgba(1,118,211,0.3)',
+          color: '#0176D3', fontSize: 13, fontWeight: 700, padding: '10px 20px',
           borderRadius: 9, textDecoration: 'none',
         }}>
           View all industries on one page →
@@ -295,7 +295,7 @@ function PostCard({ post }: { post: (typeof posts)[0] }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 12, color: 'var(--sl-400)' }}>{post.date}</span>
-          <span style={{ fontSize: 13, color: '#D4A208' }}>Read →</span>
+          <span style={{ fontSize: 13, color: '#0176D3' }}>Read →</span>
         </div>
       </article>
     </Link>

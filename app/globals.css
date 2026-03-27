@@ -2,85 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS Variables ────────────────────────────────────────────────────── */
+/* ── CSS Variables — Salesforce-inspired design system ───────────────── */
 :root {
-  /* ── Slate palette ─────────────────────────────────── */
-  --sl-50:  #F8F7F5;
-  --sl-100: #ECEAE6;
-  --sl-200: #D8D5CE;
-  --sl-300: #B8B4AC;
-  --sl-400: #8E8A82;
-  --sl-500: #6B6760;
-  --sl-600: #4E4B45;
-  --sl-700: #353330;
-  --sl-800: #242220;
-  --sl-900: #161513;
+  /* ── Brand palette — Salesforce Blue ───────────────── */
+  --brand:        #0176D3;
+  --brand2:       #0a5eaa;
+  --brand-dark:   #032D60;
+  --brand-light:  #D8EDFF;
+  --brand-dim:    rgba(1, 118, 211, 0.10);
+  --brand-glow:   rgba(1, 118, 211, 0.18);
 
-  /* ── Semantic variables (mapped to slate) ──────────── */
-  --bg:      #F8F7F5;
-  --bg2:     #FFFFFF;
-  --bg3:     #ECEAE6;
-  --bg4:     #E4E1DA;
-  --bg5:     #D8D5CE;
+  /* ── Legacy gold aliases → brand blue (for any missed references) ── */
+  --gold:         #0176D3;
+  --gold2:        #0176D3;
+  --gold3:        #D8EDFF;
+  --gold-dim:     rgba(1, 118, 211, 0.10);
+  --gold-glow:    rgba(1, 118, 211, 0.18);
 
-  --border:  #D8D5CE;
-  --border2: #B8B4AC;
+  /* ── Neutral palette ────────────────────────────────── */
+  --sl-50:  #F8F8F8;
+  --sl-100: #F3F3F3;
+  --sl-200: #E5E5E5;
+  --sl-300: #DDDBDA;
+  --sl-400: #A8A8A8;
+  --sl-500: #706E6B;
+  --sl-600: #514F4D;
+  --sl-700: #3E3E3C;
+  --sl-800: #2B2826;
+  --sl-900: #181818;
+
+  /* ── Semantic backgrounds ───────────────────────────── */
+  --bg:     #F3F3F3;
+  --bg2:    #FFFFFF;
+  --bg3:    #F3F3F3;
+  --bg4:    #E5E5E5;
+  --bg5:    #DDDBDA;
+
+  /* ── Borders ────────────────────────────────────────── */
+  --border:  #DDDBDA;
+  --border2: #A8A8A8;
   --border3: rgba(0, 0, 0, 0.06);
 
-  --glass:   rgba(255, 255, 255, 0.92);
-  --glass-2: rgba(248, 247, 245, 0.88);
+  /* ── Glass ──────────────────────────────────────────── */
+  --glass:      rgba(255, 255, 255, 0.95);
+  --glass-2:    rgba(255, 255, 255, 0.88);
   --glass-soft: rgba(0, 0, 0, 0.02);
 
-  /* ── Accent colours ────────────────────────────────── */
-  --gold: #C49B2E;
-  --gold2: #D4A835;
-  --gold3: #E8C060;
-  --gold-dim: rgba(196, 155, 46, 0.12);
-  --gold-glow: rgba(196, 155, 46, 0.22);
-
-  --violet: #6426A0;
-  --violet2: #8C44CC;
+  /* ── Semantic accent colors ─────────────────────────── */
+  --violet:     #6426A0;
+  --violet2:    #8C44CC;
   --violet-dim: rgba(100, 38, 160, 0.10);
 
-  --steel: #3070B8;
-  --steel2: #1A5AAA;
-  --steel-dim: rgba(48, 112, 184, 0.10);
+  --steel:      #0176D3;
+  --steel2:     #0a5eaa;
+  --steel-dim:  rgba(1, 118, 211, 0.10);
 
-  --red: #C0402A;
-  --red-dim: rgba(192, 64, 42, 0.08);
+  --red:        #BA0517;
+  --red2:       #C0402A;
+  --red-dim:    rgba(186, 5, 23, 0.08);
 
-  --green: #2A9E82;
-  --green-dim: rgba(42, 158, 130, 0.10);
+  --green:      #2E844A;
+  --green2:     #2A9E82;
+  --green-dim:  rgba(46, 132, 74, 0.10);
 
-  /* ── Text ──────────────────────────────────────────── */
-  --text:  #242220;
-  --text2: #4E4B45;
-  --text3: #8E8A82;
-  --text4: #6B6760;
+  --warning:    #FE9339;
+  --warning-dim: rgba(254, 147, 57, 0.10);
 
-  /* ── Typography ────────────────────────────────────── */
+  /* ── Text ───────────────────────────────────────────── */
+  --text:  #181818;
+  --text2: #3E3E3C;
+  --text3: #706E6B;
+  --text4: #514F4D;
+
+  /* ── Typography ─────────────────────────────────────── */
   --font-serif: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  --font-sans: "Inter", -apple-system, Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "Courier New", monospace;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Arial, sans-serif;
+  --font-mono:  "JetBrains Mono", "Courier New", monospace;
 
-  /* ── Shape ─────────────────────────────────────────── */
-  --radius: 10px;
-  --radius-sm: 7px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* ── Shape ──────────────────────────────────────────── */
+  --radius:    8px;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.14);
-  --shadow-gold: 0 4px 16px rgba(196, 155, 46, 0.16);
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.10), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-brand: 0 4px 12px rgba(1, 118, 211, 0.22);
 
-  --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 0.15s ease;
 }
 
 /* ── Reset & Base ─────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -93,6 +107,7 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  font-size: 14px;
 }
 
 body {
@@ -101,20 +116,14 @@ body {
   color: var(--text);
 }
 
-#__next,
-main {
+#__next, main {
   position: relative;
   z-index: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   color: var(--text);
-  letter-spacing: 0.1px;
+  letter-spacing: -0.1px;
 }
 
 p {
@@ -123,34 +132,21 @@ p {
 }
 
 ::selection {
-  background: rgba(196, 155, 46, 0.20);
-  color: #5A3A00;
+  background: rgba(1, 118, 211, 0.18);
+  color: var(--brand-dark);
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
 /* ── Scrollbar ────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--sl-300);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--sl-400);
-}
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sl-300); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sl-400); }
 
 /* ── Component utilities ──────────────────────────────────────────────── */
 @layer components {
@@ -160,60 +156,46 @@ p {
     border-color: var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
-    transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      border-color var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   }
-
   .card:hover {
     transform: translateY(-1px);
-    border-color: var(--gold);
+    border-color: var(--brand);
     box-shadow: var(--shadow-md);
   }
 
+  /* ── Salesforce-style buttons ── */
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer select-none whitespace-nowrap border;
-    border-radius: 10px;
-    transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      background var(--transition),
-      border-color var(--transition),
-      color var(--transition),
-      filter var(--transition);
-    letter-spacing: 0.1px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    transition: all var(--transition);
+    letter-spacing: 0;
   }
-
-  .btn:active {
-    transform: translateY(0);
-  }
+  .btn:active { transform: scale(0.99); }
 
   .btn-primary {
     @apply btn;
-    background: var(--gold);
+    background: var(--brand);
     color: #FFFFFF;
-    border-color: var(--gold);
-    font-weight: 700;
-    box-shadow: var(--shadow-sm);
+    border-color: var(--brand);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   }
-
   .btn-primary:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.06);
-    box-shadow: var(--shadow-md);
+    background: var(--brand2);
+    border-color: var(--brand2);
+    box-shadow: var(--shadow-brand);
   }
 
   .btn-secondary {
     @apply btn;
-    background: var(--gold-dim);
-    color: var(--gold);
-    border-color: rgba(196, 155, 46, 0.3);
+    background: #FFFFFF;
+    color: var(--brand);
+    border-color: var(--brand);
   }
-
   .btn-secondary:hover {
-    background: rgba(196, 155, 46, 0.18);
-    border-color: var(--gold);
+    background: var(--brand-dim);
   }
 
   .btn-ghost {
@@ -222,113 +204,95 @@ p {
     color: var(--text2);
     border-color: var(--border);
   }
-
   .btn-ghost:hover {
     background: var(--bg3);
     color: var(--text);
-    border-color: var(--gold);
-    transform: translateY(-1px);
+    border-color: var(--sl-400);
   }
 
   .btn-danger {
     @apply btn;
     background: var(--red-dim);
     color: var(--red);
-    border-color: rgba(192, 64, 42, 0.25);
+    border-color: rgba(186, 5, 23, 0.25);
   }
-
   .btn-danger:hover {
-    background: rgba(192, 64, 42, 0.14);
+    background: rgba(186, 5, 23, 0.14);
     border-color: var(--red);
   }
 
-  .btn-sm {
-    @apply btn;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
+  .btn-sm  { @apply btn; padding: 5px 12px; font-size: 12px; }
+  .btn-lg  { @apply btn; padding: 10px 22px; font-size: 14px; }
+  .btn-xs  { @apply btn; padding: 3px 8px; font-size: 11px; }
 
-  .btn-lg {
-    @apply btn;
-    padding: 11px 20px;
-    font-size: 15px;
-  }
-
-  .btn-xs {
-    @apply btn;
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-
+  /* ── Salesforce-style input ── */
   .input {
-    @apply w-full text-sm border;
-    padding: 10px 12px;
-    border-radius: 8px;
+    @apply w-full border;
+    padding: 8px 12px;
+    border-radius: var(--radius);
     background: #FFFFFF;
     color: var(--text);
-    border-color: var(--border);
+    border-color: var(--sl-300);
     font-family: var(--font-sans);
-    transition:
-      border-color var(--transition),
-      box-shadow var(--transition);
+    font-size: 13px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    height: 36px;
   }
-
-  .input:hover {
-    border-color: var(--border2);
-  }
-
-  .input:focus {
+  .input:hover  { border-color: var(--sl-400); }
+  .input:focus  {
     outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(196, 155, 46, 0.12);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(1, 118, 211, 0.12);
   }
+  .input::placeholder { color: var(--text3); }
+  textarea.input { height: auto; }
 
-  .input::placeholder {
-    color: var(--text3);
-  }
-
+  /* ── Label ── */
   .label {
-    @apply block text-xs font-medium mb-1;
-    color: var(--sl-500);
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    @apply block mb-1;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: 0;
   }
 
+  /* ── Badges ── */
   .badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold;
     border: 1px solid transparent;
-    letter-spacing: 0.2px;
   }
-
-  .badge-gold {
-    background: rgba(212, 162, 8, 0.1);
-    color: var(--gold2);
-    border-color: rgba(212, 162, 8, 0.18);
+  .badge-gold, .badge-brand {
+    background: var(--brand-dim);
+    color: var(--brand2);
+    border-color: rgba(1, 118, 211, 0.20);
   }
-
   .badge-violet {
     background: var(--violet-dim);
     color: var(--violet2);
     border-color: rgba(100, 38, 160, 0.16);
   }
-
   .badge-steel {
-    background: var(--steel-dim);
-    color: var(--steel);
-    border-color: rgba(108, 185, 252, 0.16);
+    background: var(--brand-dim);
+    color: var(--brand);
+    border-color: rgba(1, 118, 211, 0.16);
   }
-
   .badge-red {
     background: var(--red-dim);
     color: var(--red);
-    border-color: rgba(255, 107, 107, 0.16);
+    border-color: rgba(186, 5, 23, 0.16);
+  }
+  .badge-green {
+    background: var(--green-dim);
+    color: var(--green);
+    border-color: rgba(46, 132, 74, 0.16);
   }
 
   .page-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-weight: 700;
     color: var(--text);
-    letter-spacing: 0.35px;
+    font-size: 22px;
+    letter-spacing: -0.2px;
   }
 
   .vesimy-mobile-grid {
@@ -338,37 +302,34 @@ p {
   }
 }
 
-/* ── Select + textarea polish ─────────────────────────────────────────── */
+/* ── Select & textarea ────────────────────────────────────────────────── */
 select.input {
   appearance: none;
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6760' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat, no-repeat;
-  background-position: 0 0, right 12px center;
-  padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23706E6B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
 }
-
 textarea.input {
   resize: vertical;
   min-height: 72px;
   line-height: 1.65;
+  height: auto;
 }
 
-/* ── Shared modal system only ─────────────────────────────────────────── */
+/* ── Modal system ─────────────────────────────────────────────────────── */
 .vesimy-modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(22, 21, 19, 0.52);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
   overflow: hidden;
   overscroll-behavior: contain;
-  /* Prevent iOS rubber-band scroll on the overlay itself */
   touch-action: none;
 }
 
@@ -377,58 +338,54 @@ textarea.input {
   max-width: 640px;
   margin: auto;
   background: #FFFFFF;
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   max-height: calc(100dvh - 60px);
   overflow: hidden;
 }
-
-.vesimy-modal-handle {
-  display: none;
-}
+.vesimy-modal-handle { display: none; }
 
 .vesimy-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 22px 14px;
-  border-bottom: 0.5px solid var(--border);
-  background: var(--sl-50);
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #FFFFFF;
   gap: 12px;
   flex-shrink: 0;
 }
-
 .vesimy-modal-title {
-  font-family: var(--font-serif);
   font-size: 16px;
   font-weight: 700;
-  color: var(--sl-800);
-  letter-spacing: 0.2px;
+  color: var(--text);
+  letter-spacing: -0.1px;
   line-height: 1.3;
 }
-
 .vesimy-modal-close {
   background: none;
   border: none;
-  color: var(--text2);
+  color: var(--text3);
   font-size: 18px;
   cursor: pointer;
   padding: 4px 6px;
   line-height: 1;
   flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
 }
+.vesimy-modal-close:hover { background: var(--bg3); color: var(--text); }
 
 .vesimy-modal-body {
-  padding: 22px 22px 20px;
+  padding: 20px;
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  /* Ensure last element scrolls above the sticky footer */
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
   scroll-padding-bottom: 80px;
 }
@@ -437,260 +394,141 @@ textarea.input {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 15px 22px 18px;
-  border-top: 0.5px solid var(--border);
-  background: var(--sl-50);
+  padding: 14px 20px 16px;
+  border-top: 1px solid var(--border);
+  background: #FFFFFF;
   position: sticky;
   bottom: 0;
   z-index: 2;
   flex-shrink: 0;
 }
 
-/* ── Loading polish ───────────────────────────────────────────────────── */
+/* ── Skeleton ─────────────────────────────────────────────────────────── */
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: var(--sl-100);
-  border-radius: 12px;
+  background: var(--sl-200);
+  border-radius: var(--radius);
 }
-
 .skeleton::after {
   content: "";
   position: absolute;
   inset: 0;
   transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.06),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
   animation: shimmer 1.5s infinite;
 }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
+/* ── VSM tool buttons ─────────────────────────────────────────────────── */
+.vsm-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid;
+  white-space: nowrap;
+  transition: all 0.12s;
+}
+.vsm-tool-btn--red  { background: #FFF3F2; border-color: #F6A79C; color: #8A2010; }
+.vsm-tool-btn--teal { background: #EDF9F5; border-color: #7DCAB5; color: #1A7860; }
+.vsm-tool-btn--blue { background: #EEF5FB; border-color: #85B8DD; color: #0a5eaa; }
+.vsm-tool-btn--red:hover  { background: #FFE4E1; border-color: #BA0517; }
+.vsm-tool-btn--teal:hover { background: #D4F0E8; border-color: #2E844A; }
+.vsm-tool-btn--blue:hover { background: #D8EDFF; border-color: #0176D3; }
+
+/* ── Step CI buttons ──────────────────────────────────────────────────── */
+.step-ci-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  font-size: 11px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  color: var(--text2);
+  transition: all 0.10s;
+  min-height: 28px;
+  font-weight: 500;
+}
+.step-ci-btn:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-dim);
+}
+.step-ci-btn.active {
+  border-color: var(--brand);
+  background: var(--brand-dim);
+  color: var(--brand);
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* ── Modal force overrides ────────────────────────────────────────────── */
+.vesimy-modal,
+.vesimy-modal-header,
+.vesimy-modal-body  { background: #FFFFFF !important; color: var(--text) !important; }
+.vesimy-modal       { border: 1px solid var(--border) !important; }
+.vesimy-modal-header { border-bottom: 1px solid var(--border) !important; }
+.vesimy-modal-footer {
+  background: #FFFFFF !important;
+  border-top: 1px solid var(--border) !important;
 }
 
-/* ── Mobile ───────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  aside {
-    display: none !important;
-  }
-
-  .bottom-nav {
-    display: flex !important;
-  }
-
-  main {
-    margin-left: 0 !important;
-    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  .app-page-wrapper {
-    padding: 16px !important;
-  }
-
-  .home-nav {
-    padding: 0 16px !important;
-  }
-
-  .home-nav-links {
-    display: none !important;
-  }
-
-  .home-nav-cta .demo-link {
-    display: none !important;
-  }
-
-  .home-nav-cta {
-    gap: 6px !important;
-  }
-
-  .hero-cta-row {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
-  }
-
-  .feature-grid-3,
-  .feature-grid-2,
-  .pricing-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .pricing-grid {
-    max-width: 420px !important;
-  }
-
-  .pricing-header h1 {
-    font-size: 32px !important;
-  }
-
-  .project-main {
-    overflow: auto !important;
-    margin-left: 0 !important;
-    min-width: 0 !important;
-  }
-
-  .supe-desktop-panel {
-    display: none !important;
-  }
-
-  .mobile-fabs {
-    display: flex !important;
-    bottom: calc(72px + 8px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  .tab-bar,
-  .ci-tool-strip,
-  .vsm-scroll-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-  }
-
-  .tab-bar::-webkit-scrollbar,
-  .ci-tool-strip::-webkit-scrollbar {
-    display: none;
-  }
-
-  .step-card-meta,
-  .health-overview-stats {
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-  }
-
-  .settings-main {
-    padding: 20px 16px !important;
-  }
-
-  .settings-inner {
-    padding: 0 !important;
-    max-width: 100% !important;
-  }
-
-  .card {
-    padding: 16px !important;
-  }
-
-  .btn,
-  button {
-    min-height: 42px;
-  }
-
-  input,
-  select,
-  textarea {
-    font-size: 16px !important;
-  }
-
-  .vesimy-mobile-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .vesimy-modal-overlay {
-    align-items: flex-end;
-    justify-content: stretch;
-    padding: 0;
-  }
-
-  .vesimy-modal {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    border-radius: 20px 20px 0 0;
-    max-height: 92dvh;
-    height: 92dvh;
-    min-height: 0;
-    box-shadow:
-      0 -4px 24px rgba(0, 0, 0, 0.12),
-      0 0 0 1px rgba(196, 155, 46, 0.08);
-  }
-
-  .vesimy-modal-handle {
-    display: block;
-    width: 42px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 999px;
-    margin: 10px auto 0;
-    flex-shrink: 0;
-  }
-
-  .vesimy-modal-header {
-    padding: 14px 16px 10px;
-  }
-
-  .vesimy-modal-title {
-    font-size: 15px;
-  }
-
-  .vesimy-modal-body {
-    padding: 16px;
-    min-height: 0;
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    /* Must exceed sticky footer height (~68px) + safe area so bottom inputs
-       can scroll fully above the Cancel/Save bar */
-    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .vesimy-modal-body textarea {
-    resize: none;
-    min-height: 72px;
-  }
-
-  .vesimy-modal-footer {
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
-    background: rgba(248,247,245, 0.98);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .vesimy-modal-footer .btn {
-    width: 100%;
-  }
-
-  .go2072408551 {
-    width: calc(100vw - 32px) !important;
-    max-width: 100% !important;
-  }
+/* ── Salesforce-style section containers ──────────────────────────────── */
+.sf-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.sf-section-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  background: #FFFFFF;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
-@media (min-width: 769px) {
-  .bottom-nav {
-    display: none !important;
-  }
+/* ── Health score badge ───────────────────────────────────────────────── */
+.health-score-badge {
+  background: var(--sl-100) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
 }
 
-/* ── Bottom nav ───────────────────────────────────────────────────────── */
+/* ── Kanban ───────────────────────────────────────────────────────────── */
+.kanban-column {
+  background: var(--sl-100) !important;
+  border: 1px solid var(--border) !important;
+}
+.kanban-card {
+  background: #FFFFFF !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ── Bottom navigation ────────────────────────────────────────────────── */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   z-index: 200;
-  background:
-    #FFFFFF;
-  border-top: 0.5px solid var(--border);
+  background: #FFFFFF;
+  border-top: 1px solid var(--border);
   padding: 8px 0 max(8px, env(safe-area-inset-bottom));
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   gap: 0;
-  box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
 }
-
 .bottom-nav-item {
   display: flex;
   flex-direction: column;
@@ -698,303 +536,29 @@ textarea.input {
   gap: 3px;
   padding: 4px 16px;
   text-decoration: none;
-  color: var(--sl-400);
+  color: var(--text3);
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: color var(--transition), transform var(--transition);
+  letter-spacing: 0.3px;
+  transition: color var(--transition);
   cursor: pointer;
   background: none;
   border: none;
 }
-
 .bottom-nav-item.active,
-.bottom-nav-item:hover {
-  color: var(--gold);
-}
+.bottom-nav-item:hover { color: var(--brand); }
+.bottom-nav-item:active { transform: translateY(1px); }
+.bottom-nav-item svg { margin-bottom: 1px; }
 
-.bottom-nav-item:active {
-  transform: translateY(1px);
-}
-
-.bottom-nav-item svg {
-  margin-bottom: 1px;
-}
-
-
-/* Modal + bottom-nav safety overrides */
-/* Portal-rendered modal sits above everything — bottom-nav is hidden via CSS only */
 body.modal-open .bottom-nav {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
+body.modal-open main { padding-bottom: 0 !important; }
+.vesimy-modal-overlay { z-index: 9999 !important; }
 
-body.modal-open main {
-  padding-bottom: 0 !important;
-}
-
-.vesimy-modal-overlay {
-  z-index: 9999 !important;
-}
-
-@media (max-width: 768px) {
-  /* ── Modal shell: fixed height so body calc works ── */
-  .vesimy-modal {
-    /* Use dvh (dynamic) so Safari's browser toolbar is excluded */
-    height: 92dvh !important;
-    max-height: 92dvh !important;
-    margin-bottom: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-  }
-
-  /* ── Handle: 25px total (5px bar + 10px margin + padding) ── */
-  .vesimy-modal-handle {
-    flex-shrink: 0 !important;
-  }
-
-  /* ── Header: fixed ~56px ── */
-  .vesimy-modal-header {
-    flex-shrink: 0 !important;
-  }
-
-  /* ── Footer: fixed ~68px ── */
-  .vesimy-modal-footer {
-    padding: 12px 16px !important;
-    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)) !important;
-    background: rgba(248,247,245, 0.98) !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-    flex-shrink: 0 !important;
-    /* NOT sticky — footer is a flex child of a fixed-height parent,
-       so it naturally pins at the bottom without sticky hacks */
-    position: relative !important;
-    bottom: auto !important;
-    z-index: 2 !important;
-  }
-
-  /* ── Body: EXPLICITLY calculated height — no flex magic, no Safari bugs ──
-     92dvh  = modal height
-     - 25px = handle
-     - 56px = header  
-     - 68px = footer
-     = the remaining space the body gets                                    */
-  .vesimy-modal-body {
-    height: calc(92dvh - 149px) !important;
-    max-height: calc(92dvh - 149px) !important;
-    min-height: 0 !important;
-    flex: none !important;          /* don't use flex sizing at all */
-    overflow-y: scroll !important;  /* scroll (not auto) forces Safari to honour height */
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
-    padding: 16px !important;
-    /* Extra bottom padding so last field clears the footer */
-    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)) !important;
-    scroll-padding-bottom: 32px !important;
-  }
-
-  /* Disable resize on textareas — resize:vertical breaks iOS scroll height */
-  .vesimy-modal-body textarea {
-    resize: none !important;
-    min-height: 72px !important;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   VSM TOOL BUTTONS — slate-friendly, works light and dark
-   ═══════════════════════════════════════════════════════════════ */
-.vsm-tool-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 13px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 1.5px solid;
-  white-space: nowrap;
-  transition: all 0.15s;
-}
-.vsm-tool-btn--red  { background: #FEF2F0; border-color: #E8A49A; color: #A83222; }
-.vsm-tool-btn--teal { background: #EDF9F5; border-color: #7DCAB5; color: #1A7860; }
-.vsm-tool-btn--blue { background: #EEF4FB; border-color: #85AEDD; color: #1A4F8A; }
-.vsm-tool-btn--red:hover  { background: #FCDBD8; border-color: #C0402A; }
-.vsm-tool-btn--teal:hover { background: #D4F0E8; border-color: #2A9E82; }
-.vsm-tool-btn--blue:hover { background: #D8E8F6; border-color: #3070B8; }
-
-/* ═══════════════════════════════════════════════════════════════
-   MOBILE PROJECT VIEW — full responsive treatment
-   ═══════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* Top bar — compact on mobile */
-  .project-topbar {
-    padding: 8px 12px !important;
-    gap: 6px !important;
-  }
-  .project-topbar .project-title {
-    font-size: 14px !important;
-  }
-  .action-btn-label {
-    display: none;
-  }
-
-  /* KPI strip — smaller cells */
-  .kpi-strip-cell {
-    padding: 6px 10px !important;
-    min-width: 56px !important;
-  }
-  .kpi-strip-cell .kpi-label {
-    font-size: 7px !important;
-  }
-  .kpi-strip-cell .kpi-val {
-    font-size: 12px !important;
-  }
-
-  /* Tab bar — smaller text, no icons on narrow */
-  .project-tab-btn {
-    padding: 8px 10px !important;
-    font-size: 10px !important;
-    gap: 3px !important;
-  }
-
-  /* Builder content area */
-  .builder-content {
-    padding: 12px !important;
-  }
-
-  /* Step card — stack tools below on narrow */
-  .step-card-tools {
-    flex-wrap: wrap !important;
-    gap: 4px !important;
-    padding: 8px 10px !important;
-  }
-  .step-card-tools button {
-    padding: 5px 8px !important;
-    font-size: 10px !important;
-    min-height: 32px;
-  }
-
-  /* VSM toolbar */
-  .vsm-toolbar {
-    padding: 8px 12px 0 !important;
-    gap: 6px !important;
-  }
-  .vsm-tool-btn {
-    padding: 6px 10px !important;
-    font-size: 10px !important;
-  }
-
-  /* Tab content padding */
-  .tab-content-pad {
-    padding: 12px !important;
-  }
-
-  /* PDCA phase tabs */
-  .pdca-phase-tab {
-    padding: 7px 3px !important;
-    font-size: 9px !important;
-  }
-
-  /* Yamazumi chart */
-  .yamazumi-bar {
-    min-width: 44px !important;
-  }
-
-  /* Roadmap phase header */
-  .roadmap-phase-header {
-    padding: 10px 12px !important;
-  }
-
-  /* Gap analysis score */
-  .gap-score-block {
-    flex-direction: column !important;
-    gap: 10px !important;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   STEP CARD — slate-correct colors
-   ═══════════════════════════════════════════════════════════════ */
-.step-ci-btn {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 10px;
-  font-size: 11px;
-  border-radius: 6px;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  color: var(--sl-500);
-  transition: all 0.12s;
-  min-height: 30px;
-}
-.step-ci-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(196,155,46,0.06);
-}
-.step-ci-btn.active {
-  border-color: var(--gold);
-  background: rgba(196,155,46,0.10);
-  color: var(--gold);
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   MODAL — force white bg on all tool modals
-   ═══════════════════════════════════════════════════════════════ */
-.vesimy-modal,
-.vesimy-modal-header,
-.vesimy-modal-body {
-  background: #FFFFFF !important;
-  color: var(--text) !important;
-}
-.vesimy-modal {
-  border: 0.5px solid var(--border) !important;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.14) !important;
-}
-.vesimy-modal-header {
-  background: var(--sl-50) !important;
-  border-bottom: 0.5px solid var(--border) !important;
-}
-.vesimy-modal-footer {
-  background: var(--sl-50) !important;
-  border-top: 0.5px solid var(--border) !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   PROCESS HEALTH SCORE compact badge — slate
-   ═══════════════════════════════════════════════════════════════ */
-.health-score-badge {
-  background: var(--sl-100) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   KANBAN — slate cards
-   ═══════════════════════════════════════════════════════════════ */
-.kanban-column {
-  background: var(--sl-50) !important;
-  border: 1px solid var(--border) !important;
-}
-.kanban-card {
-  background: #FFFFFF !important;
-  border: 0.5px solid var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   LEARNING CENTER — responsive sidebar
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Desktop sidebar */
+/* ── Learning center sidebar ──────────────────────────────────────────── */
 .learn-sidebar {
   width: 220px;
   flex-shrink: 0;
@@ -1003,53 +567,114 @@ body.modal-open main {
   padding: 10px 0;
   background: #FFFFFF;
 }
+.learn-mobile-picker { display: none; position: relative; }
+.learn-section-header { display: flex; }
 
-/* Mobile picker — hidden on desktop */
-.learn-mobile-picker {
-  display: none;
-  position: relative;
-}
-
-/* Section header — always shown on desktop, hidden on mobile (picker replaces it) */
-.learn-section-header {
-  display: flex;
-}
-
+/* ── Mobile ───────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  /* Hide sidebar on mobile */
-  .learn-sidebar {
-    display: none !important;
+  aside { display: none !important; }
+  .bottom-nav { display: flex !important; }
+  main {
+    margin-left: 0 !important;
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
   }
+  .app-page-wrapper { padding: 12px !important; }
+  .home-nav { padding: 0 16px !important; }
+  .home-nav-links { display: none !important; }
+  .home-nav-cta .demo-link { display: none !important; }
+  .home-nav-cta { gap: 6px !important; }
+  .hero-cta-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .feature-grid-3, .feature-grid-2, .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .project-main { overflow: auto !important; margin-left: 0 !important; min-width: 0 !important; }
+  .supe-desktop-panel { display: none !important; }
+  .mobile-fabs {
+    display: flex !important;
+    bottom: calc(72px + 8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .tab-bar, .ci-tool-strip, .vsm-scroll-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .tab-bar::-webkit-scrollbar, .ci-tool-strip::-webkit-scrollbar { display: none; }
+  .settings-main { padding: 16px !important; }
+  .settings-inner { padding: 0 !important; max-width: 100% !important; }
+  .card { padding: 14px !important; }
+  .btn, button { min-height: 40px; }
+  input, select, textarea { font-size: 16px !important; }
+  .vesimy-mobile-grid { grid-template-columns: 1fr !important; }
 
-  /* Show mobile picker */
-  .learn-mobile-picker {
+  .vesimy-modal-overlay {
+    align-items: flex-end;
+    justify-content: stretch;
+    padding: 0;
+  }
+  .vesimy-modal {
+    max-width: 100%; width: 100%; margin: 0;
+    border-radius: 16px 16px 0 0;
+    max-height: 92dvh; height: 92dvh; min-height: 0;
+  }
+  .vesimy-modal-handle {
     display: block;
-    position: sticky;
-    top: 0;
-    z-index: 40;
+    width: 40px; height: 4px;
+    background: var(--sl-300);
+    border-radius: 999px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+  .vesimy-modal-header { padding: 12px 16px 10px; }
+  .vesimy-modal-title  { font-size: 15px; }
+  .vesimy-modal-body {
+    padding: 16px;
+    min-height: 0; flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+  .vesimy-modal-body textarea { resize: none; min-height: 72px; }
+  .vesimy-modal-footer {
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
     background: #FFFFFF;
-    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
+  .vesimy-modal-footer .btn { width: 100%; }
 
-  /* Hide desktop section header on mobile (picker shows title) */
-  .learn-section-header {
-    display: none !important;
-  }
+  /* Project mobile */
+  .project-topbar { padding: 8px 12px !important; gap: 6px !important; }
+  .project-topbar .project-title { font-size: 14px !important; }
+  .action-btn-label { display: none; }
+  .kpi-strip-cell { padding: 6px 10px !important; min-width: 56px !important; }
+  .kpi-strip-cell .kpi-label { font-size: 7px !important; }
+  .kpi-strip-cell .kpi-val { font-size: 12px !important; }
+  .project-tab-btn { padding: 8px 10px !important; font-size: 10px !important; gap: 3px !important; }
+  .builder-content { padding: 12px !important; }
+  .step-card-tools { flex-wrap: wrap !important; gap: 4px !important; padding: 8px 10px !important; }
+  .step-card-tools button { padding: 5px 8px !important; font-size: 10px !important; min-height: 30px; }
+  .vsm-toolbar { padding: 8px 12px 0 !important; gap: 6px !important; }
+  .vsm-tool-btn { padding: 5px 9px !important; font-size: 10px !important; }
+  .tab-content-pad { padding: 12px !important; }
+  .pdca-phase-tab { padding: 7px 3px !important; font-size: 9px !important; }
+  .yamazumi-bar { min-width: 44px !important; }
+  .roadmap-phase-header { padding: 10px 12px !important; }
+  .gap-score-block { flex-direction: column !important; gap: 10px !important; }
 
-  /* Full-width content, tighter padding */
-  .learn-content {
-    padding: 14px !important;
-  }
-
-  /* Header tighter on mobile */
-  .learn-header h1 {
-    font-size: 19px !important;
-  }
+  /* Learning center mobile */
+  .learn-sidebar { display: none !important; }
+  .learn-mobile-picker { display: block; position: sticky; top: 0; z-index: 40; background: #FFFFFF; border-bottom: 1px solid var(--border); }
+  .learn-section-header { display: none !important; }
+  .learn-content { padding: 14px !important; }
+  .learn-header h1 { font-size: 19px !important; }
 }
 
 @media (min-width: 769px) {
-  /* Desktop: hide mobile picker */
-  .learn-mobile-picker {
-    display: none !important;
-  }
+  .bottom-nav { display: none !important; }
+  .learn-mobile-picker { display: none !important; }
 }

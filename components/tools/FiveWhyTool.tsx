@@ -132,7 +132,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
 
   return (
     <Modal
-      title={`❓ 5 Why Analysis — ${stepName}`}
+      title={`5 Why Analysis — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
@@ -145,7 +145,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
               onClick={exportFiveWhyISO}
               style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
             >
-              📄 ISO Report
+              ISO Report
             </button>
           )}
         </div>
@@ -178,14 +178,14 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                   width: 28,
                   height: 28,
                   borderRadius: 8,
-                  background: 'rgba(212,162,8,0.1)',
-                  border: '1px solid rgba(212,162,8,0.25)',
+                  background: 'rgba(1,118,211,0.1)',
+                  border: '1px solid rgba(1,118,211,0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: 11,
                   fontWeight: 700,
-                  color: '#D4A208',
+                  color: '#0176D3',
                   marginTop: 2,
                 }}
               >

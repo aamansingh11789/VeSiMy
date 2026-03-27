@@ -50,13 +50,13 @@ function uid() { return Math.random().toString(36).slice(2, 9) }
 
 const PHASE_CFG = [
   { key: 'plan', label: 'Plan',  color: '#6CB9FC', icon: '', desc: 'Define the problem, analyse root cause, set target' },
-  { key: 'do',   label: 'Do',   color: '#D4A208', icon: '', desc: 'Implement countermeasures on a small scale' },
+  { key: 'do',   label: 'Do',   color: '#0176D3', icon: '', desc: 'Implement countermeasures on a small scale' },
   { key: 'check',label: 'Check',color: '#1DD1A1', icon: '', desc: 'Measure results against the target' },
   { key: 'act',  label: 'Act',  color: '#8C44CC', icon: '', desc: 'Standardise success or loop back to Plan' },
 ]
 
 const FORMAT_CFG = [
-  { id: 'pdca',  label: 'PDCA',  color: '#D4A208', desc: 'Plan-Do-Check-Act cycle report' },
+  { id: 'pdca',  label: 'PDCA',  color: '#0176D3', desc: 'Plan-Do-Check-Act cycle report' },
   { id: 'a3',   label: 'A3',    color: '#1DD1A1', desc: 'Toyota one-page A3 format' },
   { id: '8d',   label: '8D',    color: '#FF6B6B', desc: 'Ford 8-Disciplines customer report' },
   { id: 'dmaic',label: 'DMAIC', color: '#6CB9FC', desc: 'Six Sigma structured project format' },
@@ -321,7 +321,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
 
   return (
     <Modal
-      title={`🔄 PDCA — ${data.projectTitle || project?.name || 'Improvement Project'}`}
+      title={`PDCA — ${data.projectTitle || project?.name || 'Improvement Project'}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Project'}
@@ -371,7 +371,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {phase === 'plan' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ padding: '8px 12px', background: 'rgba(108,185,252,0.06)', border: '1px solid rgba(108,185,252,0.2)', borderRadius: 8, fontSize: 11, color: '#6CB9FC' }}>
-              📋 Define the problem clearly, describe current condition, identify root cause, and set the target.
+              Define the problem clearly, describe current condition, identify root cause, and set the target.
             </div>
 
             <div>
@@ -404,14 +404,14 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               <label className="label">Team Members</label>
               {data.team.map(m => (
                 <div key={m.id} style={{ display: 'flex', gap: 8, marginBottom: 6, alignItems: 'center' }}>
-                  <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>👤 {m.name}{m.role ? ` — ${m.role}` : ''}</span>
+                  <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{m.name}{m.role ? ` — ${m.role}` : ''}</span>
                   <button type="button" onClick={() => set('team', data.team.filter(t => t.id !== m.id))} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                 </div>
               ))}
               <div style={{ display: 'flex', gap: 6 }}>
                 <input className="input" style={{ flex: 2, fontSize: 12 }} placeholder="Name" value={newMember.name} onChange={e => setNewMember(p => ({ ...p, name: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addTeam()} />
                 <input className="input" style={{ flex: 1, fontSize: 12 }} placeholder="Role" value={newMember.role} onChange={e => setNewMember(p => ({ ...p, role: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addTeam()} />
-                <button type="button" onClick={addTeam} style={{ background: 'rgba(212,162,8,0.15)', border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
+                <button type="button" onClick={addTeam} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(1,118,211,0.3)', color: '#0176D3', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
               </div>
             </div>
           </div>
@@ -420,8 +420,8 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {/* ── DO ── */}
         {phase === 'do' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ padding: '8px 12px', background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.2)', borderRadius: 8, fontSize: 11, color: '#D4A208' }}>
-              ⚡ Implement your countermeasures. Start small — test on one shift or one product before full rollout.
+            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 8, fontSize: 11, color: '#0176D3' }}>
+              Implement your countermeasures. Start small — test on one shift or one product before full rollout.
             </div>
 
             <div>
@@ -434,7 +434,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 12, color: cm.status === 'done' ? 'var(--text3)' : 'var(--text2)', textDecoration: cm.status === 'done' ? 'line-through' : 'none' }}>{cm.action}</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>
-                      {cm.owner && `👤 ${cm.owner}`}{cm.dueDate && ` · 📅 ${cm.dueDate}`}
+                      {cm.owner && `${cm.owner}`}{cm.dueDate && ` · ${cm.dueDate}`}
                     </div>
                   </div>
                   <button type="button" onClick={() => removeCM(cm.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
@@ -444,7 +444,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                 <input className="input" style={{ flex: 3, minWidth: 120, fontSize: 12 }} placeholder="Action / countermeasure *" value={newCM.action} onChange={e => setNewCM(p => ({ ...p, action: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addCM()} />
                 <input className="input" style={{ flex: 1, minWidth: 80, fontSize: 12 }} placeholder="Owner" value={newCM.owner} onChange={e => setNewCM(p => ({ ...p, owner: e.target.value }))} />
                 <input className="input" type="date" style={{ flex: 1, minWidth: 100, fontSize: 12 }} value={newCM.dueDate} onChange={e => setNewCM(p => ({ ...p, dueDate: e.target.value }))} />
-                <button type="button" onClick={addCM} style={{ background: 'rgba(212,162,8,0.15)', border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
+                <button type="button" onClick={addCM} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(1,118,211,0.3)', color: '#0176D3', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
               </div>
             </div>
 
@@ -459,7 +459,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {phase === 'check' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ padding: '8px 12px', background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 8, fontSize: 11, color: '#1DD1A1' }}>
-              📊 Measure whether the countermeasures worked. Compare before vs after using the same metrics you defined in Plan.
+              Measure whether the countermeasures worked. Compare before vs after using the same metrics you defined in Plan.
             </div>
 
             <div>
@@ -497,9 +497,9 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               <label className="label">Was the target achieved?</label>
               <div style={{ display: 'flex', gap: 8 }}>
                 {[
-                  { val: 'yes', label: '✓ Yes', color: '#1DD1A1' },
-                  { val: 'partial', label: '⚠ Partially', color: '#D4A208' },
-                  { val: 'no', label: '✕ No — loop back', color: '#FF6B6B' },
+                  { val: 'yes', label: 'Yes', color: '#1DD1A1' },
+                  { val: 'partial', label: 'Partially', color: '#0176D3' },
+                  { val: 'no', label: 'No — loop back', color: '#FF6B6B' },
                 ].map(o => (
                   <button key={o.val} type="button" onClick={() => set('achieved', o.val)}
                     style={{ flex: 1, padding: '8px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 700,
@@ -518,7 +518,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {phase === 'act' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ padding: '8px 12px', background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 8, fontSize: 11, color: '#8C44CC' }}>
-              🔁 If the target was met — standardise and prevent reversion. If not — adjust the plan and run the next cycle.
+              If the target was met — standardise and prevent reversion. If not — adjust the plan and run the next cycle.
             </div>
 
             <div>
@@ -539,8 +539,8 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {/* Export section */}
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowExport(v => !v)}
-            style={{ width: '100%', padding: '10px 14px', background: 'rgba(212,162,8,0.06)', border: 'none', color: '#D4A208', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
-            <span>📄 Export Report — Choose Format</span>
+            style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#0176D3', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
+            <span>Export Report — Choose Format</span>
             <span>{showExport ? '▲' : '▼'}</span>
           </button>
           {showExport && (
@@ -565,7 +565,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                 ))}
               </div>
               <button type="button" onClick={exportReport} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', gap: 8 }}>
-                📄 Export as {FORMAT_CFG.find(f => f.id === exportFormat)?.label} Report
+                Export as {FORMAT_CFG.find(f => f.id === exportFormat)?.label} Report
               </button>
             </div>
           )}

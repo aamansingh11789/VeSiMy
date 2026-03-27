@@ -56,10 +56,10 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     // 1. MANUFACTURING — seed-reference handles this one (it's the richest)
     // ══════════════════════════════════════════════════════════════════════════
-    const mfgName = '⭐ Reference — Automotive Seat Assembly'
+    const mfgName = 'Reference — Automotive Seat Assembly'
     const mfgId = await exists(mfgName)
     if (mfgId) {
-      existing.push('🏭 Manufacturing')
+      existing.push('Manufacturing')
       primaryId = mfgId
     } else {
       // Call the dedicated seed-reference route logic inline via its own API
@@ -82,15 +82,15 @@ export async function POST(_request: NextRequest) {
       await tool(s3.id, pid, 'waste', { wastes: { Motion: 'Operator walks 4m to foam rack every cycle = 16s NVA', Waiting: 'Operator waits 13s for partner each cycle', Defects: '2.1% defect rate — fabric mis-clip causes rework' }, notes: 'Priority: foam rack relocation first.' })
       await tool(s3.id, pid, 'kaizen', { items: [{ id: 'kz001', kzId: 'KZ-001', title: 'Relocate foam rack to point of use', description: 'Move foam rack from 4m to within 0.5m. Shadow board. Expected saving: 16s NVA.', category: 'Productivity', priority: 'critical', status: 'in-progress', owner: 'J. Patel', dueDate: '2026-04-01', actions: ['Mark new location', 'Arrange relocation', 'Update standard work', 'Before/after time study'], created: Date.now() - 604800000 }, { id: 'kz002', kzId: 'KZ-002', title: 'Poka-yoke fabric clip alignment jig', description: 'Design guide pins to locate clips automatically. Eliminates 13s mutual check.', category: 'Quality', priority: 'high', status: 'open', owner: 'S. Ahmed', dueDate: '2026-05-01', actions: ['Raise ECR', 'Prototype guide pins', '30-cycle trial'], created: Date.now() - 259200000 }] })
       await tool(s3.id, pid, 'improvement', { goals: [{ id: 'g1', metric: 'Cycle Time', baseline: 145, target: 110, actual: null, unit: 'seconds', status: 'in-progress', owner: 'J. Patel', dueDate: '2026-05-01', notes: 'After foam rack relocation + poka-yoke' }] })
-      seeded.push('🏭 Manufacturing')
+      seeded.push('Manufacturing')
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 2. HEALTHCARE
     // ══════════════════════════════════════════════════════════════════════════
-    const hcName = '🏥 Demo — Urgent Care Patient Flow'
+    const hcName = 'Demo — Urgent Care Patient Flow'
     const hcId = await exists(hcName)
-    if (hcId) { existing.push('🏥 Healthcare') } else {
+    if (hcId) { existing.push('Healthcare') } else {
       const pid = await createProject({ name: hcName, description: 'Urgent care patient flow from arrival to discharge. 7 steps, 3.2hr lead time, bottleneck at Treatment. All CI tools populated.', industry: 'Healthcare', customer: 'Patient' })
       const s1 = await step(pid, 0, { name: 'Patient Arrival & Check-In', department: 'Front Desk', operators: 1, cycle_time: 8, wait_time: 12, wip: 6, flow_type: 'push', uptime: 100, defect_rate: 3, notes: 'NNVA. Paper form duplicates EHR entry. 3% incorrect registrations cause billing rework.' })
       const s2 = await step(pid, 1, { name: 'Triage & Acuity Assessment', department: 'Nursing', operators: 1, cycle_time: 6, wait_time: 18, wip: 5, flow_type: 'push', uptime: 100, defect_rate: 2, notes: 'VA. ESI Level classification. 18-min queue on ambulance surge.' })
@@ -104,15 +104,15 @@ export async function POST(_request: NextRequest) {
       await tool(s6.id, pid, 'waste', { wastes: { Waiting: 'Patients wait 35 min for physician + 30 min for labs = 65 min pure queue', Motion: 'Nurses make avg 3 trips to medication room per patient', Defects: '6% of treatments require additional intervention', 'Over-processing': 'Paper forms re-entered into EHR — duplicate data entry' }, notes: 'Quick win: point-of-care medication supply eliminates 3 trips per patient.' })
       await tool(s6.id, pid, 'kaizen', { items: [{ id: 'kz001', kzId: 'KZ-001', title: 'Point-of-care medication supply', description: 'Move top 20 medications to secured dispensing cabinet in treatment area. Eliminates avg 3 med room trips per patient. 8 min nursing time saving per patient.', category: 'Productivity', priority: 'critical', status: 'in-progress', owner: 'Charge Nurse / Pharmacy', dueDate: '2026-04-15', actions: ['Identify top 20 meds by volume', 'Procure Pyxis unit', 'Install in treatment bay 3', 'Update protocol'], created: Date.now() - 604800000 }, { id: 'kz002', kzId: 'KZ-002', title: 'Concurrent discharge documentation during treatment', description: 'Physician completes discharge plan while patient in treatment. Eliminates 22-min signature wait.', category: 'Productivity', priority: 'high', status: 'open', owner: 'Medical Director', dueDate: '2026-05-01', actions: ['Redesign EHR discharge workflow', 'Pilot with 2 physicians 2 weeks', 'Measure wait time before/after'], created: Date.now() - 259200000 }, { id: 'kz003', kzId: 'KZ-003', title: 'Demand-matched physician schedule — Mon/Fri surge', description: '90-day data shows consistent Mon/Fri 4-8pm surge. Adding 1 physician for these windows reduces wait from 35 to under 15 min.', category: 'Productivity', priority: 'high', status: 'open', owner: 'Operations Manager', dueDate: '2026-06-01', actions: ['Pull 90-day hourly arrival data', 'Build cost-benefit for admin', 'Pilot 4-week schedule change'], created: Date.now() - 172800000 }] })
       await tool(s6.id, pid, 'improvement', { goals: [{ id: 'g1', metric: 'Door-to-Discharge Time', baseline: 192, target: 120, actual: null, unit: 'minutes', status: 'in-progress', owner: 'Medical Director', dueDate: '2026-09-01', notes: 'KZ-001 + KZ-002 + KZ-003 combined target' }] })
-      seeded.push('🏥 Healthcare')
+      seeded.push('Healthcare')
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 3. REAL ESTATE
     // ══════════════════════════════════════════════════════════════════════════
-    const reName = '🏠 Demo — Real Estate Transaction Flow'
+    const reName = 'Demo — Real Estate Transaction Flow'
     const reId = await exists(reName)
-    if (reId) { existing.push('🏠 Real Estate') } else {
+    if (reId) { existing.push('Real Estate') } else {
       const pid = await createProject({ name: reName, description: 'Full value stream from lead inquiry to closing. 7 steps, 45-day lead time, bottleneck at Financing & Underwriting.', industry: 'Real Estate', customer: 'Home Buyer' })
       await step(pid, 0, { name: 'Lead Inquiry & Initial Response', department: 'Sales', operators: 1, cycle_time: 25, wait_time: 480, wip: 12, flow_type: 'push', uptime: 100, defect_rate: 0, notes: 'NNVA. Avg 8hr response time — best practice is under 5 min. Response time is #1 conversion driver.' })
       await step(pid, 1, { name: 'Qualify & Buyer Consultation', department: 'Sales', operators: 1, cycle_time: 90, wait_time: 2880, wip: 6, flow_type: 'push', uptime: 100, defect_rate: 15, notes: 'VA. 15% of leads are unqualified — pure waste if not screened earlier.' })
@@ -124,15 +124,15 @@ export async function POST(_request: NextRequest) {
       await tool(s6.id, pid, 'fivewhy', { problem: '28% of financing files kicked back by lender — adds 3-5 days per transaction', whys: [{ q: 'Why 28% of files kicked back?', a: 'Files submitted before all required documents collected and verified.' }, { q: 'Why before complete?', a: 'No standardised pre-submission checklist. Each agent assembles files differently.' }, { q: 'Why no standardised checklist?', a: 'Requirements vary by loan type — no master checklist built per type.' }, { q: 'Why no master checklist?', a: 'No formal process owner for transaction coordination workflows.' }, { q: 'Why no process owner?', a: 'ROOT CAUSE: Brokerage treats every transaction as one-off agent work. No standard work exists for the TC role.' }], rootCause: 'No standard work or loan-type document checklist for transaction coordinators.', countermeasure: '1. Create loan-type checklists. 2. Mandatory pre-submission review. 3. Assign TC role with defined SOP.', owner: 'Broker / Operations Manager', dueDate: '2026-04-30' })
       await tool(s6.id, pid, 'waste', { wastes: { Defects: '28% of files kicked back — document rework adds avg 3.5 days', Waiting: '10-day lender processing wait with zero queue visibility', 'Over-processing': 'Agent re-collects docs already submitted — no single file source of truth' }, notes: 'Primary target: eliminate 28% kickback rate through document standardisation.' })
       await tool(s6.id, pid, 'kaizen', { items: [{ id: 'kz001', kzId: 'KZ-001', title: 'Create loan-type document checklists', description: 'Build pre-submission checklists for conventional, FHA, VA, and jumbo loans. Target: kickback rate from 28% to under 5%.', category: 'Quality', priority: 'critical', status: 'in-progress', owner: 'Operations Manager', dueDate: '2026-04-15', actions: ['Interview top 3 lenders for requirements', 'Build checklist in transaction system', 'Train all agents', 'Track kickback rate weekly'], created: Date.now() - 604800000 }] })
-      seeded.push('🏠 Real Estate')
+      seeded.push('Real Estate')
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 4. CRAFT BREWERY
     // ══════════════════════════════════════════════════════════════════════════
-    const brewName = '🍺 Demo — Craft Brewery Batch Production'
+    const brewName = 'Demo — Craft Brewery Batch Production'
     const brewId = await exists(brewName)
-    if (brewId) { existing.push('🍺 Craft Brewery') } else {
+    if (brewId) { existing.push('Craft Brewery') } else {
       const pid = await createProject({ name: brewName, description: 'Full brewing value stream from grain delivery to packaged product. 8 steps, 21-day lead time, bottleneck at Fermentation.', industry: 'Food & Beverage', customer: 'Taproom & Wholesale' })
       await step(pid, 0, { name: 'Grain Receiving & Milling', department: 'Brew Floor', operators: 1, cycle_time: 90, wait_time: 1440, wip: 2, flow_type: 'push', uptime: 96, defect_rate: 1, notes: 'NNVA. Grain delivery twice weekly — creates batch release. Mill uptime 96%.' })
       await step(pid, 1, { name: 'Mashing & Lautering', department: 'Brew Floor', operators: 1, cycle_time: 120, wait_time: 30, wip: 1, flow_type: 'push', uptime: 99, defect_rate: 3, notes: 'VA. 3% batches have stuck sparge — adds 45 min rework. Rye and wheat grists most problematic.' })
@@ -145,15 +145,15 @@ export async function POST(_request: NextRequest) {
       await tool(s5.id, pid, 'fivewhy', { problem: '3% of batches have stuck sparge — adds 45 min rework per batch', whys: [{ q: 'Why do batches get stuck sparge?', a: 'High-adjunct grain bills (rye, oats, wheat) create dense grain bed restricting wort flow.' }, { q: 'Why do high-adjunct bills restrict flow?', a: 'Rice hulls not added to these grists. Recipe sheet does not specify rice hull addition.' }, { q: 'Why no rice hulls on recipe?', a: 'Recipes were written for 3-barrel system. Equipment changed to 10-barrel but recipes never updated.' }, { q: 'Why were recipes not updated?', a: 'No formal recipe scale-up review process. Head brewer carried adjustment in memory only.' }, { q: 'Why not documented?', a: 'ROOT CAUSE: No recipe management system with equipment-specific parameters. Recipes in Google Docs with no version control.' }], rootCause: 'No recipe management system. High-adjunct adjustments exist only in head brewer memory — not in recipe.', countermeasure: '1. Implement Brewfather with equipment profiles. 2. Add rice hull requirement to all high-adjunct recipes immediately. 3. Create scale-up review checklist.', owner: 'Head Brewer', dueDate: '2026-04-15' })
       await tool(s5.id, pid, 'waste', { wastes: { Waiting: 'Fermenters fully occupied — new batches wait for tanks to free up', Defects: '4% of batches develop off-flavours — partial volume loss', 'Non-Utilisation': 'Cellarman monitoring fermentation manually — no automated alerts' }, notes: 'Fermenter capacity is the constraint. Every other improvement has limited impact until tank count increases or fermentation time decreases.' })
       await tool(s5.id, pid, 'kaizen', { items: [{ id: 'kz001', kzId: 'KZ-001', title: 'Canning line seamer rebuild', description: 'Seamer head worn — 3% underfill. Full rebuild with quick-change format kit. Uptime target: 96%. Changeover from 60 min to 20 min.', category: 'Quality', priority: 'critical', status: 'in-progress', owner: 'Head Brewer / Maintenance', dueDate: '2026-04-01', actions: ['Order rebuild kit', 'Schedule 1-day shutdown', 'Calibrate and run 50-can test', 'Record fill weights across 200 cans'], created: Date.now() - 604800000 }, { id: 'kz002', kzId: 'KZ-002', title: 'Optimise fermentation schedule — staggered starts', description: 'Currently all fermenters start Mon/Thu. Staggering to Mon/Wed/Fri gains +0.5 batches/week without adding tanks.', category: 'Productivity', priority: 'high', status: 'open', owner: 'Head Brewer', dueDate: '2026-04-15', actions: ['Model batch schedule', 'Adjust brew day calendar', 'Trial 4-week staggered schedule', 'Measure actual throughput'], created: Date.now() - 259200000 }] })
-      seeded.push('🍺 Craft Brewery')
+      seeded.push('Craft Brewery')
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 5. WINERY
     // ══════════════════════════════════════════════════════════════════════════
-    const wineName = '🍷 Demo — Boutique Winery Production'
+    const wineName = 'Demo — Boutique Winery Production'
     const wineId = await exists(wineName)
-    if (wineId) { existing.push('🍷 Winery') } else {
+    if (wineId) { existing.push('Winery') } else {
       const pid = await createProject({ name: wineName, description: '2,000-case boutique winery. 8 steps, 18-month lead time, bottleneck at Barrel Ageing. 6% barrel defect rate. DTC demand growing 18% annually.', industry: 'Food & Beverage', customer: 'DTC Wine Club & Wholesale' })
       await step(pid, 0, { name: 'Harvest & Vineyard Receiving', department: 'Cellar / Vineyard', operators: 4, cycle_time: 480, wait_time: 24, wip: 3, flow_type: 'push', uptime: 100, defect_rate: 8, notes: 'VA. 8% of fruit rejected (sun damage, under-ripe). Night harvest adds quality.' })
       await step(pid, 1, { name: 'Destemming, Crush & SO₂ Addition', department: 'Cellar', operators: 2, cycle_time: 120, wait_time: 2, wip: 2, flow_type: 'push', uptime: 97, defect_rate: 2, notes: 'VA. 2% of lots require re-press due to incorrect SO₂ dosage.' })
@@ -166,7 +166,7 @@ export async function POST(_request: NextRequest) {
       await tool(s6.id, pid, 'fivewhy', { problem: '6% of barrels develop TCA or excessive volatile acidity — avg $4,200 loss per barrel', whys: [{ q: 'Why do 6% develop TCA or high VA?', a: 'TCA from cork contact. High VA from insufficient topping — oxygen exposure.' }, { q: 'Why is topping insufficient?', a: 'Topping schedule managed from memory. No documented topping log. Back barrels missed for 3-4 weeks.' }, { q: 'Why no topping log?', a: 'No barrel tracking system. Each barrel identified by chalk marker only — no individual ID.' }, { q: 'Why no tracking system?', a: 'Winery grew from 400 to 2,000 cases without updating record-keeping practices.' }, { q: 'Why were practices not updated?', a: 'ROOT CAUSE: No formal operations review as the winery scaled. Production processes never reviewed for scalability.' }], rootCause: 'No individual barrel tracking. Topping done from memory — barrels in the back missed for weeks.', countermeasure: '1. Assign QR code to every barrel. 2. Weekly topping log with sign-off. 3. Monthly SO₂ and VA check per barrel. 4. Evaluate Diam cork for TCA-prone barrels.', owner: 'Winemaker / Operations', dueDate: '2026-05-31' })
       await tool(s6.id, pid, 'waste', { wastes: { Defects: '6% barrel defect rate — TCA and high VA. $1,200 barrel + $35/bottle wine = $4,200+ per barrel', 'Non-Utilisation': '4th-fill+ barrels contributing <5% flavour but occupying full capacity slot', Waiting: '18-month ageing creates 18-month cash flow gap' }, notes: 'Retire 4th-fill+ barrels to free premium capacity for 1st-fill French oak.' })
       await tool(s6.id, pid, 'kaizen', { items: [{ id: 'kz001', kzId: 'KZ-001', title: 'Individual barrel tracking — QR code + topping log', description: 'QR code on every barrel. Cellarman scans on each topping. Weekly report flags barrels not topped in 10+ days. Target: TCA/VA rate from 6% to under 1%.', category: 'Quality', priority: 'critical', status: 'in-progress', owner: 'Winemaker', dueDate: '2026-04-01', actions: ['Print QR codes, attach to all 80 barrels', 'Set up topping log', 'Train cellarman on scan protocol', 'First monthly VA and SO₂ check'], created: Date.now() - 604800000 }, { id: 'kz002', kzId: 'KZ-002', title: 'Retire 4th-fill+ barrels — reallocate to entry tier', description: '18 barrels (22%) are 4th fill or older. Contributing minimal flavour. Retire after current vintage, sell to spirits producers. Frees capacity for premium oak.', category: 'Productivity', priority: 'high', status: 'open', owner: 'Winemaker', dueDate: '2026-08-01', actions: ['Audit all barrels by fill count', 'Identify 4th fill+ group', 'List on barrel marketplace', 'Allocate replacement budget'], created: Date.now() - 259200000 }] })
-      seeded.push('🍷 Winery')
+      seeded.push('Winery')
     }
 
     // ── Done ──────────────────────────────────────────────────────────────────

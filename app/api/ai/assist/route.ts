@@ -10,6 +10,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { callAI, aiAvailable } from '@/lib/ai/ai-assist'
+import { buildSupeSystemPrompt } from '@/lib/supe-knowledge'
+import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import {
   interpretTimeStudy,
   prioritiseWastes,
@@ -20,16 +22,26 @@ import {
 } from '@/lib/ai/rule-engine'
 
 // ── Auth helper ───────────────────────────────────────────────────────────────
-async function getUser(req: NextRequest) {
+async function getUserWithIndustry(req: NextRequest) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
-  return user
+  if (!user) return { user: null, industry: null }
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('industry')
+    .eq('id', user.id)
+    .single()
+  return { user, industry: profile?.industry || null }
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────
 export async function POST(request: NextRequest) {
-  const user = await getUser(request)
+  const { user, industry } = await getUserWithIndustry(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const industryLabel = getIndustryLabel(industry || 'general_manufacturing')
+  const t = getIndustryTerms(industry)
+  const supeContext = buildSupeSystemPrompt({ industryKey: industry })
 
   try {
     const body = await request.json()

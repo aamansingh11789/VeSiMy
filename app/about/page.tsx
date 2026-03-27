@@ -21,12 +21,12 @@ export default function AboutPage() {
 
         {/* Header */}
         <div style={{ marginBottom: 64 }}>
-          <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
             Our Story
           </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(36px,5vw,60px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.1 }}>
             Built by practitioners.<br />
-            <span style={{ color: '#D4A208' }}>For practitioners.</span>
+            <span style={{ color: '#0176D3' }}>For practitioners.</span>
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8, maxWidth: 640 }}>
             VeSiMy started with a simple observation: manufacturing teams were still running their continuous improvement programs on Excel spreadsheets, sticky notes, and $500/month desktop software that hadn't changed in a decade.
@@ -34,8 +34,8 @@ export default function AboutPage() {
         </div>
 
         {/* Mission */}
-        <div style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
-          <p style={{ fontSize: 11, color: '#D4A208', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
+        <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
+          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.45 }}>
             "Make every team — manufacturer, clinic, law firm, or warehouse — as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
           </p>
@@ -64,12 +64,10 @@ export default function AboutPage() {
 
           {/* Founder card */}
           <div style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.86)', borderRadius: 16, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(212,162,8,0.3),rgba(100,38,160,0.3))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, flexShrink: 0 }}>
-              👤
-            </div>
+            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(1,118,211,0.4),rgba(100,38,160,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#0176D3', fontFamily: 'Palatino Linotype,serif' }}>M</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#D4A208', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY LTD · UNITED KINGDOM</div>
+              <div style={{ fontSize: 13, color: '#0176D3', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY LTD · UNITED KINGDOM</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
                 Building VeSiMy from the ground up — product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every manufacturer in the world.
               </p>
@@ -97,7 +95,7 @@ export default function AboutPage() {
           ].map(({ label, value }) => (
             <div key={label} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '20px 22px' }}>
               <div style={{ fontSize: 11, color: 'var(--sl-400)', letterSpacing: 2, fontFamily: 'monospace', marginBottom: 8, textTransform: 'uppercase' }}>{label}</div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: '#D4A208' }}>{value}</div>
+              <div style={{ fontSize: 17, fontWeight: 700, color: '#0176D3' }}>{value}</div>
             </div>
           ))}
         </div>
@@ -113,11 +111,11 @@ export default function AboutPage() {
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:founder@vesimy.com"
-              style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+              style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               founder@vesimy.com
             </a>
             <Link href="/enterprise"
-              style={{ padding: '12px 28px', border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+              style={{ padding: '12px 28px', border: '1px solid rgba(1,118,211,0.3)', color: '#0176D3', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Enterprise Inquiry →
             </Link>
           </div>

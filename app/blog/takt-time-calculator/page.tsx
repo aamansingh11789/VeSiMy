@@ -151,7 +151,7 @@ export default function TaktTimePost() {
             ['Lead Time', 'Total time from order to delivery', 'Internal — includes all waiting'],
           ].map(([term, def, note]) => (
             <div key={term} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 1fr', gap: 12, marginBottom: 10, alignItems: 'center', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 16px', fontSize: 13 }}>
-              <span style={{ fontWeight: 700, color: '#D4A208' }}>{term}</span>
+              <span style={{ fontWeight: 700, color: '#0176D3' }}>{term}</span>
               <span>{def}</span>
               <span style={{ color: 'var(--text2)', fontStyle: 'italic' }}>{note}</span>
             </div>

@@ -26,7 +26,7 @@ export default function IndustrialBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>INDUSTRIAL</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontFamily: 'monospace', letterSpacing: 1.5 }}>INDUSTRIAL</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>8 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -58,7 +58,7 @@ export default function IndustrialBlog() {
             ['Quality rework on first-off parts', 'Custom and low-volume parts fail first-article inspection at higher rates than high-volume parts because there are fewer opportunities to optimize the setup. Structured first-article review processes that feed back into setup documentation reduce this failure rate over time.'],
             ['Knowledge locked in individuals', 'Industrial operations often rely on veteran machinists, fabricators, and welders who carry setup knowledge, tooling preferences, and workholding solutions in their heads. When they leave — or aren\'t available — productivity drops. Capturing this knowledge in standard work documents preserves it and makes it trainable.'],
           ].map(([title, body]) => (
-            <div key={title} style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.15)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
+            <div key={title} style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 6 }}>{title}</div>
               <div style={{ color: 'var(--text2)', fontSize: 14 }}>{body}</div>
             </div>
@@ -82,7 +82,7 @@ export default function IndustrialBlog() {
             VeSiMy's VSM tool makes this visible — even in job shop environments where standard product families are harder to define.
           </p>
 
-          <div style={{ borderLeft: '3px solid #D4A208', paddingLeft: 20, marginBottom: 28 }}>
+          <div style={{ borderLeft: '3px solid #0176D3', paddingLeft: 20, marginBottom: 28 }}>
             <p style={{ fontFamily: serif, fontSize: 18, color: 'var(--text)', fontStyle: 'italic', marginBottom: 8 }}>
               "A job shop that thinks it doesn't have repeatable processes is usually running the same 20 setups 80% of the time — it just hasn't standardized them yet."
             </p>
@@ -103,7 +103,7 @@ export default function IndustrialBlog() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/demo" style={{ display: 'inline-block', background: '#D4A208', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
+            <Link href="/demo" style={{ display: 'inline-block', background: '#0176D3', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
               Start a free project
             </Link>
             <Link href="/industries" style={{ display: 'inline-block', border: '1px solid rgba(44,44,92,0.3)', color: 'var(--text)', fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>

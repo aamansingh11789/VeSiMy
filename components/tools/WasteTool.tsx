@@ -64,7 +64,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
 
   return (
     <Modal
-      title={`⚠️ Waste Identification — ${stepName}`}
+      title={`Waste Identification — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${selected.length} selected)`}

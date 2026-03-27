@@ -58,7 +58,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
   return (
     <div>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
-        <h3 style={{ margin:0, fontFamily:'var(--font-serif)', fontSize:18, color:'var(--text)' }}>📡 Live Floor Metrics</h3>
+        <h3 style={{ margin:0, fontFamily:'var(--font-serif)', fontSize:18, color:'var(--text)' }}>Live Floor Metrics</h3>
         <button onClick={() => setLive(l=>!l)} style={{ fontSize:10, padding:'3px 10px', borderRadius:100, border:'1px solid', cursor:'pointer',
           background:live?'rgba(29,209,161,0.1)':'transparent',
           borderColor:live?'#1DD1A1':'var(--border2)', color:live?'#1DD1A1':'var(--text3)' }}>

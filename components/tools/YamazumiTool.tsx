@@ -15,7 +15,7 @@ interface Props {
 
 const VA_COLORS = {
   va:   { bar: '#1DD1A1', label: 'Value Add',                text: '#1DD1A1' },
-  nnva: { bar: '#D4A208', label: 'Necessary Non-Value Add',  text: '#D4A208' },
+  nnva: { bar: '#0176D3', label: 'Necessary Non-Value Add',  text: '#0176D3' },
   nva:  { bar: '#FF6B6B', label: 'Non-Value Add',            text: '#FF6B6B' },
 }
 
@@ -67,7 +67,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
 
   return (
     <Modal
-      title="📊 Yamazumi Chart — Operator Balance"
+      title="Yamazumi Chart — Operator Balance"
       onClose={onClose}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -90,7 +90,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
 
         {operators.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '32px 20px', color: 'var(--text3)', fontSize: 13 }}>
-            <div style={{ fontSize: 32, marginBottom: 10 }}>📋</div>
+            
             No operator steps defined yet.<br />
             Edit each process step and add operator tasks under <strong>Operator Steps</strong> to populate this chart.
           </div>
@@ -166,7 +166,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             {operators.length > 1 && takt > 0 && (
               <div>
                 <AIAssistButton
-                  label="⚡ Suggest rebalance"
+                  label="AI Suggest rebalance"
                   loading={aiLoading}
                   onClick={() => aiAssist('yamazumi_rebalance', { operators, takt })}
                 />
@@ -185,7 +185,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                 { label: 'Total CT',    val: `${summary.total}s`, color: 'var(--text)' },
                 { label: '% VA',        val: `${summary.pct}%`,   color: '#1DD1A1' },
                 { label: 'VA Time',     val: `${summary.va}s`,    color: '#1DD1A1' },
-                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#D4A208' },
+                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#0176D3' },
                 { label: 'NVA Waste',   val: `${summary.nva}s`,   color: '#FF6B6B' },
               ].map(({ label, val, color }) => (
                 <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
@@ -198,13 +198,13 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             {/* Imbalance warnings */}
             {takt > 0 && operators.some(o => o.totalTime > takt) && (
               <div style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#FF6B6B' }}>
-                ⚠️ <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time — these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
+                <strong style={{color:'#0176D3'}}>OVER TAKT:</strong> <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time — these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
               </div>
             )}
 
             {summary.nva > 0 && (
-              <div style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#D4A208' }}>
-                💡 <strong>{summary.nva}s of NVA waste</strong> identified across all operators. Target these tasks for elimination in your next kaizen event.
+              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#0176D3' }}>
+                <strong style={{color:'#1DD1A1'}}>NVA WASTE:</strong> <strong>{summary.nva}s of NVA waste</strong> identified across all operators. Target these tasks for elimination in your next kaizen event.
               </div>
             )}
           </>

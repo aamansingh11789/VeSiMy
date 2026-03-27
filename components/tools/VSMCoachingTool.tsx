@@ -20,8 +20,8 @@ interface GapItem {
   action: string
 }
 
-const SEV_COLOR = { critical: '#FF6B6B', warning: '#D4A208', info: '#6CB9FC' }
-const SEV_ICON  = { critical: '🔴', warning: '🟡', info: '🔵' }
+const SEV_COLOR = { critical: '#FF6B6B', warning: '#0176D3', info: '#6CB9FC' }
+const SEV_ICON  = { critical: '', warning: '', info: '' }
 
 function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
   const gaps: GapItem[] = []
@@ -183,14 +183,14 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
   }, [steps, takt, pce, gaps, project])
 
   return (
-    <Modal title="🎯 VSM Gap Analysis & AI Coaching" onClose={onClose}>
+    <Modal title="VSM Gap Analysis & AI Coaching" onClose={onClose}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* Score header */}
-        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(212,162,8,0.08)' : 'rgba(255,107,107,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(212,162,8,0.3)' : 'rgba(255,107,107,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(1,118,211,0.08)' : 'rgba(255,107,107,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(1,118,211,0.3)' : 'rgba(255,107,107,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <div>
             <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 3 }}>PROCESS CYCLE EFFICIENCY</div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#D4A208' : '#FF6B6B' }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#0176D3' : '#FF6B6B' }}>
               {Math.round(pce)}%
             </div>
             <div style={{ fontSize: 11, color: 'var(--text3)' }}>Target: 95–100%</div>
@@ -201,7 +201,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               <div style={{ fontSize: 9, color: 'var(--text3)' }}>CRITICAL</div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: '#D4A208' }}>{warnCount}</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#0176D3' }}>{warnCount}</div>
               <div style={{ fontSize: 9, color: 'var(--text3)' }}>WARNINGS</div>
             </div>
             <div style={{ textAlign: 'center' }}>
@@ -218,13 +218,13 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
           className="btn btn-primary"
           style={{ width: '100%', justifyContent: 'center', gap: 8 }}
         >
-          {aiLoading ? '🤖 Analysing your value stream…' : '🤖 Get AI Coaching Recommendations'}
+          {aiLoading ? 'Analysing your value stream…' : 'Get AI Coaching Recommendations'}
         </button>
 
         {/* AI insight */}
         {aiInsight && (
           <div style={{ background: '#EEF4FB', border: '1px solid #85AEDD', borderRadius: 10, padding: '14px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#6CB9FC', marginBottom: 8 }}>🤖 AI COACHING — CLAUDE ANALYSIS</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#6CB9FC', marginBottom: 8 }}>AI COACHING</div>
             <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{aiInsight}</div>
           </div>
         )}
@@ -236,9 +236,9 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               key={f}
               type="button"
               onClick={() => setFilter(f)}
-              style={{ flex: 1, padding: '6px 4px', borderRadius: 8, cursor: 'pointer', fontSize: 10, fontWeight: 700, border: `1px solid ${filter === f ? (f === 'all' ? '#D4A208' : SEV_COLOR[f] || '#D4A208') : 'var(--border)'}`, background: filter === f ? 'rgba(212,162,8,0.08)' : 'var(--bg)', color: filter === f ? (f === 'all' ? '#D4A208' : SEV_COLOR[f] || '#D4A208') : 'var(--text3)' }}
+              style={{ flex: 1, padding: '6px 4px', borderRadius: 8, cursor: 'pointer', fontSize: 10, fontWeight: 700, border: `1px solid ${filter === f ? (f === 'all' ? '#0176D3' : SEV_COLOR[f] || '#0176D3') : 'var(--border)'}`, background: filter === f ? 'rgba(1,118,211,0.08)' : 'var(--bg)', color: filter === f ? (f === 'all' ? '#0176D3' : SEV_COLOR[f] || '#0176D3') : 'var(--text3)' }}
             >
-              {f === 'all' ? `All (${gaps.length})` : f === 'critical' ? `🔴 ${critCount}` : f === 'warning' ? `🟡 ${warnCount}` : `🔵 ${gaps.filter(g=>g.severity==='info').length}`}
+              {f === 'all' ? `All (${gaps.length})` : f === 'critical' ? `${critCount} critical` : f === 'warning' ? `${warnCount} warnings` : `${gaps.filter(g=>g.severity==='info').length}`}
             </button>
           ))}
         </div>
@@ -246,7 +246,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
         {/* Gap items */}
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '24px', color: 'var(--text3)', fontSize: 13 }}>
-            No {filter === 'all' ? '' : filter} issues found ✓
+            No {filter === 'all' ? '' : filter} issues found
           </div>
         ) : (
           filtered.map((gap, i) => (
@@ -262,8 +262,8 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               </div>
               <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.6 }}>{gap.detail}</div>
-                <div style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 11.5, color: 'var(--text2)', lineHeight: 1.6 }}>
-                  <span style={{ color: '#D4A208', fontWeight: 700 }}>→ Action: </span>{gap.action}
+                <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 11.5, color: 'var(--text2)', lineHeight: 1.6 }}>
+                  <span style={{ color: '#0176D3', fontWeight: 700 }}>→ Action: </span>{gap.action}
                 </div>
               </div>
             </div>

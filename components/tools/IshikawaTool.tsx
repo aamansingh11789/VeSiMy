@@ -63,7 +63,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
 
   return (
     <Modal
-      title={`🐟 Fishbone Diagram — ${stepName}`}
+      title={`Fishbone Diagram — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Diagram'}
@@ -91,15 +91,15 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
         {problem && (
           <div
             style={{
-              background: 'rgba(212,162,8,0.04)',
-              border: '1px solid rgba(212,162,8,0.2)',
+              background: 'rgba(1,118,211,0.04)',
+              border: '1px solid rgba(1,118,211,0.2)',
               borderRadius: 10,
               padding: '10px 12px',
               fontSize: 12,
               color: 'var(--text2)',
             }}
           >
-            🎯 Effect: <strong style={{ color: 'var(--text)' }}>{problem}</strong>
+            Effect: <strong style={{ color: 'var(--text)' }}>{problem}</strong>
           </div>
         )}
 
@@ -139,7 +139,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
         <div style={{ display: 'grid', gap: 8 }}>
           {categories.map((cat) => (
             <details key={cat} open style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: 10 }}>
-              <summary style={{ cursor: 'pointer', fontSize: 12, fontWeight: 700, color: '#D4A208', marginBottom: 8 }}>
+              <summary style={{ cursor: 'pointer', fontSize: 12, fontWeight: 700, color: '#0176D3', marginBottom: 8 }}>
                 {cat}
               </summary>
               <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
@@ -154,7 +154,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
                 )}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gap: 8, marginBottom: 4 }}>
                   <input className="input" style={{ fontSize: 12, minWidth: 0 }} placeholder="Add cause…" value={newCause[cat] || ''} onChange={(e) => setNewCause((prev) => ({ ...prev, [cat]: e.target.value }))} onKeyDown={(e) => e.key === 'Enter' && addCause(cat)} />
-                  <button onClick={() => addCause(cat)} type="button" style={{ background: 'rgba(212,162,8,0.15)', border: '1px solid rgba(212,162,8,0.3)', color: '#D4A208', borderRadius: 8, cursor: 'pointer', fontSize: 18, minWidth: 40, minHeight: 40 }}>+</button>
+                  <button onClick={() => addCause(cat)} type="button" style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(1,118,211,0.3)', color: '#0176D3', borderRadius: 8, cursor: 'pointer', fontSize: 18, minWidth: 40, minHeight: 40 }}>+</button>
                 </div>
               </div>
             </details>

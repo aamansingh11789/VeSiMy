@@ -141,12 +141,12 @@ export function Modal({
             {title}
           </div>
           {/* VeSiMy brand — visible in every tool screenshot */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginLeft: 'auto', marginRight: 10, padding: '3px 9px', borderRadius: 6, background: 'rgba(212,162,8,0.07)', border: '1px solid rgba(212,162,8,0.18)', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginLeft: 'auto', marginRight: 10, padding: '3px 9px', borderRadius: 6, background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.18)', flexShrink: 0 }}>
             <svg width="11" height="12" viewBox="0 0 100 108" fill="none">
               <defs>
                 <linearGradient id="vm-hdr" x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="#FFD56C"/>
-                  <stop offset="50%" stopColor="#D4A208"/>
+                  <stop offset="50%" stopColor="#0176D3"/>
                   <stop offset="100%" stopColor="#6426A0"/>
                 </linearGradient>
               </defs>

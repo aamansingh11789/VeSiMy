@@ -94,17 +94,17 @@ export function SupePanel({ steps, projectId }: Props) {
       {/* ── Header ── */}
       <div style={{ padding:'12px 16px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontSize:15 }}>⚡</span>
+          <span style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:.5 }}>AI</span>
           <span style={{ fontWeight:700, color:'var(--text)', fontSize:14, fontFamily:'var(--font-serif)' }}>Supe</span>
           <span style={{ fontSize:9, color:'var(--text3)', fontFamily:'var(--font-mono)', letterSpacing:1.5 }}>AI MENTOR</span>
-          {isDemo && <span style={{ fontSize:9, color:'var(--gold)', background:'var(--gold-dim)', border:'1px solid var(--gold-glow)', padding:'1px 7px', borderRadius:100, letterSpacing:1 }}>DEMO</span>}
+          {isDemo && <span style={{ fontSize:9, color:'var(--brand)', background:'var(--brand-dim)', border:'1px solid var(--brand-glow)', padding:'1px 7px', borderRadius:100, letterSpacing:1 }}>DEMO</span>}
         </div>
         {highN > 0 && <span style={{ background:'var(--red)', color:'#fff', fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:100 }}>{highN} HIGH</span>}
       </div>
 
       {/* ── Stats row ── */}
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', borderBottom:'1px solid var(--border)', flexShrink:0 }}>
-        {([[open.length, highN>0?'var(--red)':'var(--gold2)', 'ISSUES'],
+        {([[open.length, highN>0?'var(--red)':'var(--brand)', 'ISSUES'],
            [resolved.size, '#1DD1A1', 'RESOLVED'],
            [isDemo ? '—' : steps.length, 'var(--steel)', 'STEPS']] as any[]).map(([v,c,l]) => (
           <div key={l} style={{ padding:'10px', textAlign:'center' }}>
@@ -125,7 +125,7 @@ export function SupePanel({ steps, projectId }: Props) {
             border:'none', cursor:'pointer', transition:'all 0.15s',
             fontFamily:'var(--font-mono)', letterSpacing:0.5, textTransform:'uppercase',
           }}>
-            {t === 'findings' ? `⚡ Findings${open.length ? ` (${open.length})` : ''}` : '💬 Ask Supe'}
+            {t === 'findings' ? `Findings${open.length ? ` (${open.length})` : ''}` : 'Ask Supe'}
           </button>
         ))}
       </div>
@@ -135,13 +135,13 @@ export function SupePanel({ steps, projectId }: Props) {
         <div style={{ flex:1, overflowY:'auto', maxHeight:400 }}>
           {isDemo && (
             <div style={{ padding:'8px 14px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', gap:8 }}>
-              <span style={{ fontSize:11 }}>💡</span>
+              
               <span style={{ fontSize:11, color:'var(--text2)' }}>Demo data. Add real steps with cycle times for live analysis.</span>
             </div>
           )}
           {open.length === 0 && (
             <div style={{ padding:'32px 16px', textAlign:'center', color:'var(--text3)', fontSize:13 }}>
-              <div style={{ fontSize:28, marginBottom:8 }}>✓</div>
+              <div style={{ fontSize:22, fontWeight:700, color:"#1DD1A1", marginBottom:8 }}>OK</div>
               No active issues. Process looks healthy!
             </div>
           )}
@@ -167,11 +167,11 @@ export function SupePanel({ steps, projectId }: Props) {
                   <div style={{ padding:'0 14px 14px 31px' }}>
                     <p style={{ fontSize:12, color:'var(--text2)', lineHeight:1.7, marginBottom:10 }}>{rec.suggestion}</p>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:6, flexWrap:'wrap' }}>
-                      <span style={{ fontSize:10, background:'var(--gold-dim)', border:'1px solid var(--gold-glow)', color:'var(--gold)', padding:'2px 8px', borderRadius:100 }}>{rec.principle}</span>
+                      <span style={{ fontSize:10, background:'var(--brand-dim)', border:'1px solid var(--brand-glow)', color:'var(--brand)', padding:'2px 8px', borderRadius:100 }}>{rec.principle}</span>
                       <div style={{ display:'flex', gap:8 }}>
                         <button onClick={() => { setTab('chat'); setInput(`Tell me more about the ${rec.principle} issue at ${rec.step_name||'this step'}`); }}
                           style={{ background:'none', border:'none', color:'#8C44CC', fontSize:11, cursor:'pointer' }}>
-                          💬 Ask Supe
+                          Ask Supe
                         </button>
                         {!isDemo && (
                           <button onClick={() => setResolved(p => new Set([...p, rec.key]))}
@@ -197,7 +197,7 @@ export function SupePanel({ steps, projectId }: Props) {
           <div style={{ flex:1, overflowY:'auto', padding:'12px 14px', display:'flex', flexDirection:'column', gap:10, maxHeight:320 }}>
             {chat.length === 0 && (
               <div style={{ color:'var(--text3)', fontSize:12, textAlign:'center', paddingTop:8, paddingBottom:4 }}>
-                <div style={{ fontSize:22, marginBottom:6 }}>⚡</div>
+                <div style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:1, color:"var(--brand)", marginBottom:6 }}>SUPE AI</div>
                 Ask Supe anything about your process
               </div>
             )}
@@ -211,7 +211,7 @@ export function SupePanel({ steps, projectId }: Props) {
                   fontSize:12, color:'var(--text)', lineHeight:1.65,
                 }}>
                   {msg.role === 'assistant' && (
-                    <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>⚡ SUPE</div>
+                    <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>SUPE</div>
                   )}
                   <div style={{ whiteSpace:'pre-wrap' }}>{msg.content}</div>
                 </div>
@@ -221,7 +221,7 @@ export function SupePanel({ steps, projectId }: Props) {
             {loading && (
               <div style={{ display:'flex', alignItems:'flex-start' }}>
                 <div style={{ padding:'9px 14px', borderRadius:'12px 12px 12px 2px', background:'var(--sl-100)', border:'1px solid var(--border)' }}>
-                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>⚡ SUPE</div>
+                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>SUPE</div>
                   <div style={{ display:'flex', gap:4, alignItems:'center' }}>
                     {[0,1,2].map(i => (
                       <div key={i} style={{ width:5, height:5, borderRadius:'50%', background:'#8C44CC', opacity:0.6,

@@ -15,7 +15,7 @@ const STATUSES = ['open', 'in-progress', 'complete', 'verified'] as const
 
 const STATUS_COLOR: Record<string, string> = {
   open: 'var(--text3)',
-  'in-progress': '#D4A208',
+  'in-progress': '#0176D3',
   complete: '#1DD1A1',
   verified: '#6CB9FC',
 }
@@ -264,7 +264,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
 
   return (
     <Modal
-      title={`⚡ Kaizen Tracker — ${stepName}`}
+      title={`Kaizen Tracker — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${items.length} event${items.length !== 1 ? 's' : ''})`}
@@ -306,7 +306,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               onClick={exportKaizenISO}
               style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
             >
-              📄 ISO Report
+              ISO Report
             </button>
           )}
         </div>
@@ -314,8 +314,8 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
         {editId && (
           <div
             style={{
-              background: 'rgba(212,162,8,0.04)',
-              border: '1px solid rgba(212,162,8,0.2)',
+              background: 'rgba(1,118,211,0.04)',
+              border: '1px solid rgba(1,118,211,0.2)',
               borderRadius: 12,
               padding: 16,
             }}
@@ -512,7 +512,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
 
         {items.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text3)' }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>⚡</div>
+            <div style={{ fontSize:11, fontWeight:800, fontFamily:"monospace", letterSpacing:1, color:"var(--brand)", marginBottom:8 }}>KAIZEN</div>
             <p style={{ fontSize: 13 }}>
               No kaizen events yet. Add one to track improvement activities.
             </p>
@@ -607,9 +607,9 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                     )}
 
                     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 11, color: 'var(--text3)', marginTop: 6 }}>
-                      {item.category && <span>📁 {item.category}</span>}
-                      {item.owner && <span>👤 {item.owner}</span>}
-                      {item.dueDate && <span>📅 {item.dueDate}</span>}
+                      {item.category && <span>{item.category}</span>}
+                      {item.owner && <span>{item.owner}</span>}
+                      {item.dueDate && <span>{item.dueDate}</span>}
                     </div>
 
                     {item.actions.length > 0 && (

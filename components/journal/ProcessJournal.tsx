@@ -105,7 +105,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
 
   function tagStyle(type: string) {
     if (type === 'auto') return { bg: 'rgba(108,185,252,0.12)', color: '#6CB9FC', label: 'AUTO' }
-    if (type === 'milestone') return { bg: 'rgba(212,162,8,0.12)', color: '#D4A208', label: 'MILESTONE' }
+    if (type === 'milestone') return { bg: 'rgba(1,118,211,0.12)', color: '#0176D3', label: 'MILESTONE' }
     return { bg: 'rgba(139,136,179,0.12)', color: 'var(--text2)', label: 'NOTE' }
   }
 
@@ -142,7 +142,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 16 }}>📓</span>
+              <span style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:.5 }}>LOG</span>
               <span style={{ fontFamily: serif, fontSize: 17, fontWeight: 700, color: 'var(--text)' }}>
                 Process Journal
               </span>
@@ -172,8 +172,8 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           )}
 
           {error === 'journal_unavailable' && (
-            <div style={{ textAlign: 'center', padding: '32px 24px', background: 'rgba(212,162,8,0.06)', borderRadius: 12, border: '1px solid rgba(212,162,8,0.2)' }}>
-              <div style={{ fontSize: 24, marginBottom: 10 }}>📓</div>
+            <div style={{ textAlign: 'center', padding: '32px 24px', background: 'rgba(1,118,211,0.06)', borderRadius: 12, border: '1px solid rgba(1,118,211,0.2)' }}>
+              
               <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>Journal table needs to be set up</div>
               <p style={{ fontSize: 12, color: 'var(--sl-400)', lineHeight: 1.7 }}>
                 Run migration <strong>007_process_journal.sql</strong> in your Supabase dashboard to activate the journal. Notes you add below will be saved locally until then.
@@ -187,7 +187,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               background: 'transparent', borderRadius: 12,
               border: '1px dashed rgba(44,44,92,0.6)',
             }}>
-              <div style={{ fontSize: 28, marginBottom: 12 }}>📝</div>
+              
               <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>
                 Nothing recorded yet
               </div>
@@ -268,7 +268,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               disabled={saving || !note.trim()}
               style={{
                 padding: '0 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                background: note.trim() ? 'linear-gradient(135deg,#C49510,#D4A208)' : 'transparent',
+                background: note.trim() ? 'linear-gradient(135deg,#0a5eaa,#0176D3)' : 'transparent',
                 color: note.trim() ? 'var(--bg)' : 'var(--sl-400)',
                 fontWeight: 700, fontSize: 18, transition: 'all 0.2s',
                 flexShrink: 0,

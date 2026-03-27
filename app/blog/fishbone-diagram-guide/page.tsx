@@ -89,7 +89,7 @@ export default function FishboneDiagramPost() {
               <div style={{ fontWeight: 700, color: 'var(--text)', marginBottom: 6, fontSize: 14 }}>{item.cat}</div>
               {item.causes.map(c => (
                 <div key={c} style={{ display: 'flex', gap: 8, marginBottom: 4, fontSize: 13 }}>
-                  <span style={{ color: '#D4A208', flexShrink: 0 }}>→</span>
+                  <span style={{ color: '#0176D3', flexShrink: 0 }}>→</span>
                   <span>{c}</span>
                 </div>
               ))}
@@ -108,7 +108,7 @@ export default function FishboneDiagramPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Run a Fishbone analysis free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Connected to 5 Why and your VSM. AI-assisted cause generation. ISO export when you need it.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#C49B2E', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →
             </Link>
           </div>

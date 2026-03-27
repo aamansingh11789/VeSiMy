@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { CheckIcon } from '@/components/ui/Icons'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = 'var(--gold)'
+const GOLD  = 'var(--brand)'
 
 export default function UpdatePasswordPage() {
   const router = useRouter()
@@ -67,7 +67,7 @@ export default function UpdatePasswordPage() {
               </div>
             )}
             <button onClick={handleUpdate} disabled={loading} style={{ width:'100%', padding:'13px', borderRadius:10, fontSize:15, fontWeight:700, cursor:loading?'wait':'pointer',
-              background:'linear-gradient(135deg,#B8880A,var(--gold))', color:'var(--bg)', border:'none', opacity:loading?0.8:1 }}>
+              background:'linear-gradient(135deg,#B8880A,var(--brand))', color:'var(--bg)', border:'none', opacity:loading?0.8:1 }}>
               {loading ? 'Updating…' : 'Update Password'}
             </button>
           </div>

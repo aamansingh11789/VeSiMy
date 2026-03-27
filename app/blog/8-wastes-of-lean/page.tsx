@@ -19,7 +19,7 @@ const WASTES = [
   {
     letter: 'D',
     name: 'Defects',
-    icon: '🔴',
+    icon: '',
     definition: 'Any output that does not meet specification and requires rework, scrap, or inspection.',
     examples: ['Weld porosity requiring rework at final QC', 'Dimensional non-conformances caught at first-piece inspection', 'Incorrect labels on finished goods requiring re-labelling', 'Software bugs discovered in UAT that require a code fix'],
     cost: 'Defects consume labour twice — once to produce and once to correct. Scrap consumes material with zero customer value. Rework delays shipment and erodes confidence in the process.',
@@ -28,7 +28,7 @@ const WASTES = [
   {
     letter: 'O',
     name: 'Overproduction',
-    icon: '📦',
+    icon: '',
     definition: 'Producing more than the customer requires, sooner than required, or faster than downstream can consume.',
     examples: ['Running a batch of 500 when the customer order is 200', 'Producing subassemblies 3 days before final assembly needs them', 'Printing reports that nobody reads', 'Processing transactions in bulk overnight when real-time would serve better'],
     cost: 'Overproduction is the worst waste because it creates all the others — it generates inventory, requires transportation, hides defects, and ties up capacity that should respond to actual demand.',
@@ -37,7 +37,7 @@ const WASTES = [
   {
     letter: 'W',
     name: 'Waiting',
-    icon: '⏳',
+    icon: '',
     definition: 'Time when work — product, people, or information — is idle and not progressing through the process.',
     examples: ['Parts waiting in bins between machining and assembly', 'Operators waiting for a crane that serves multiple cells', 'Approval signatures holding a purchase order for 3 days', 'A machine idle while the operator locates a tool'],
     cost: 'Waiting is often invisible because the product is still in the building and the operator may appear busy with other tasks. But it is the primary driver of long lead time and low PCE.',
@@ -46,7 +46,7 @@ const WASTES = [
   {
     letter: 'N',
     name: 'Non-Utilisation of Talent',
-    icon: '🧠',
+    icon: '',
     definition: 'Failing to use the knowledge, skills, creativity, and experience of the people doing the work.',
     examples: ['Operators who see a better method but are never asked', 'Engineers solving problems in the office that operators already solved on the floor', 'Skilled technicians spending time on administrative tasks', 'Suggestions that are never implemented or responded to'],
     cost: 'Often called the 8th waste because it was added to the original 7 after Toyota codified the others. The knowledge gap between what workers know and what management acts on is enormous in most organisations.',
@@ -55,7 +55,7 @@ const WASTES = [
   {
     letter: 'T',
     name: 'Transportation',
-    icon: '🚛',
+    icon: '',
     definition: 'Moving product, material, or information that does not add value to the transformation.',
     examples: ['Parts moved to a central inspection area and back to the line', 'Raw material stored in a warehouse far from point of use', 'A document emailed, printed, signed, scanned, and emailed again', 'A subassembly that crosses the building floor four times before final assembly'],
     cost: 'Every move is an opportunity for damage, loss, delay, and labelling error. Transport also obscures the sequence of operations — when parts travel, the process is harder to see and manage.',
@@ -64,7 +64,7 @@ const WASTES = [
   {
     letter: 'I',
     name: 'Inventory',
-    icon: '🏭',
+    icon: '',
     definition: 'More material, WIP, or finished goods than is needed to support current demand.',
     examples: ['Three pallets of raw material when one shift\'s worth is sufficient', 'WIP triangles on the VSM showing 4-day queues between steps', 'Finished goods stock that hasn\'t moved in 90 days', 'A spare parts cage with components for machines no longer in service'],
     cost: 'Inventory ties up cash, occupies space, and hides problems. When a quality issue is discovered in 500 units of WIP, the cost is exponentially higher than discovering it in 5. Inventory is the buffer that makes all other wastes tolerable — and therefore invisible.',
@@ -73,7 +73,7 @@ const WASTES = [
   {
     letter: 'M',
     name: 'Motion',
-    icon: '🏃',
+    icon: '',
     definition: 'Unnecessary movement of people that does not add value to the product.',
     examples: ['An operator walking to a shared tool cabinet 12 times per shift', 'Reaching, bending, or stretching to access materials not at ergonomic height', 'Walking between disconnected workstations to check status', 'Searching for information across multiple systems or physical locations'],
     cost: 'Motion waste is the most visible waste on a properly run time study — and the most ignored. It accumulates in seconds per cycle, but at 480 cycles per shift, minutes per hour become hours per week.',
@@ -82,7 +82,7 @@ const WASTES = [
   {
     letter: 'E',
     name: 'Extra Processing',
-    icon: '⚙️',
+    icon: '',
     definition: 'Doing more to a product than the customer requires, or using a more complex process than the task demands.',
     examples: ['Polishing a surface the customer will never see', 'Running a tolerance tighter than the specification requires', 'Multiple sign-off levels for low-risk decisions', 'Re-entering data from one system into another', 'Inspecting at every step when process capability is proven'],
     cost: 'Extra processing consumes capacity without producing value. It often originates in well-intentioned process additions that were never revisited — the inspection step added after a quality escape ten years ago, still running on every part.',
@@ -125,7 +125,7 @@ export default function EightWastesPost() {
           {WASTES.map((w, idx) => (
             <div key={w.letter} style={{ marginBottom: 48 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(212,162,8,0.1)', border: '1.5px solid rgba(212,162,8,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontWeight: 800, fontSize: 22, color: '#D4A208', flexShrink: 0 }}>{w.letter}</div>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(1,118,211,0.1)', border: '1.5px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontWeight: 800, fontSize: 22, color: '#0176D3', flexShrink: 0 }}>{w.letter}</div>
                 <h2 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>{w.name} {w.icon}</h2>
               </div>
               <p style={{ marginBottom: 14, fontStyle: 'italic', color: 'var(--text)', fontSize: 15 }}>{w.definition}</p>
@@ -159,7 +159,7 @@ export default function EightWastesPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Identify waste on your floor — free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>VeSiMy's Waste ID tool covers all 8 wastes per step and builds your improvement backlog automatically.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#C49B2E', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →
             </Link>
           </div>

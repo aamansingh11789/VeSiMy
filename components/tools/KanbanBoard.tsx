@@ -32,7 +32,7 @@ const PRIORITY_DOT: Record<KanbanPriority, string> = {
 }
 
 const COL_COLORS = [
-  'var(--border2)','#1090D4','#D4A208','#6426A0',
+  'var(--border2)','#1090D4','#0176D3','#6426A0',
   '#1DD1A1','#F4A623','#E84393','#00BCD4','#FF6B6B',
 ]
 
@@ -45,7 +45,7 @@ function fmtDate(d: string): string {
   const dt   = new Date(d)
   const now  = new Date()
   const past = dt < now
-  return `${past ? '⚠ ' : ''}${dt.toLocaleDateString('en-US', { month:'short', day:'numeric' })}`
+  return `${past ? '' : ''}${dt.toLocaleDateString('en-US', { month:'short', day:'numeric' })}`
 }
 
 // ── Card Form (inline) ────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
 
   return (
     <div style={{
-      background: 'var(--sl-50)', border: '1px solid rgba(212,162,8,0.25)',
+      background: 'var(--sl-50)', border: '1px solid rgba(1,118,211,0.25)',
       borderRadius: 8, padding: 12, marginBottom: 8,
     }}>
       <textarea
@@ -108,7 +108,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
           disabled={!title.trim()}
           onClick={() => { if (title.trim()) onSave(title.trim(), priority, assignee) }}
           style={{
-            background: 'linear-gradient(135deg,#C49510,#D4A208)', border: 'none',
+            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', border: 'none',
             borderRadius: 5, padding: '5px 14px', color: '#FFFFFF',
             fontSize: 12, fontWeight: 700, cursor: 'pointer',
             opacity: title.trim() ? 1 : 0.4,
@@ -189,7 +189,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
             disabled={!title.trim()}
             onClick={() => onSave({ title: title.trim(), color, wip_limit: wipLimit ? parseInt(wipLimit) : null })}
             style={{
-              background: 'linear-gradient(135deg,#C49510,#D4A208)',
+              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
               opacity: title.trim() ? 1 : 0.4,
@@ -385,14 +385,14 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           <button onClick={() => { if (confirm('Delete this card?')) onDelete(card.id) }} style={{
             background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.3)',
             borderRadius: 7, padding: '8px 14px', color: '#FF6B6B', fontSize: 13, cursor: 'pointer',
-          }}>🗑 Delete</button>
+          }>Delete</button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onClose} style={{
               background: 'none', border: '1px solid var(--border)', borderRadius: 7,
               padding: '8px 16px', color: 'var(--text3)', fontSize: 13, cursor: 'pointer',
             }}>Cancel</button>
             <button onClick={() => { onUpdate(card.id, form); onClose() }} style={{
-              background: 'linear-gradient(135deg,#C49510,#D4A208)',
+              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
             }}>Save Changes</button>
@@ -552,12 +552,12 @@ export function KanbanBoard({
               onClick={handleSeed}
               disabled={seeding}
               style={{
-                background: 'linear-gradient(135deg,#C49510,#D4A208)',
+                background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
                 border: 'none', borderRadius: 10, padding: '12px 24px',
                 color: '#FFFFFF', fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
-              {seeding ? '⏳ Setting up…' : '⊞ Auto-create from VSM Steps'}
+              {seeding ? 'Setting up…' : 'Auto-create from VSM Steps'}
             </button>
           )}
           <button
@@ -585,20 +585,20 @@ export function KanbanBoard({
           </div>
           <div style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <span>{totalCards} cards · {columns.length} columns</span>
-            {blockedCards > 0 && <span style={{ color: '#FF6B6B' }}>⚠ {blockedCards} blocked</span>}
-            {overWIP > 0     && <span style={{ color: '#F4A623' }}>⚠ {overWIP} over WIP limit</span>}
+            {blockedCards > 0 && <span style={{ color: '#FF6B6B', fontSize:11, fontWeight:700 }}>{blockedCards} blocked</span>}
+            {overWIP > 0 && <span style={{ color: '#F4A623', fontSize:11, fontWeight:700 }}>{overWIP} over WIP limit</span>}
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {steps.length > 0 && columns.length === 0 && (
             <button onClick={handleSeed} disabled={seeding} style={{
-              background: 'rgba(212,162,8,0.1)', border: '1px solid rgba(212,162,8,0.3)',
-              borderRadius: 7, padding: '7px 14px', color: '#D4A208',
+              background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(1,118,211,0.3)',
+              borderRadius: 7, padding: '7px 14px', color: '#0176D3',
               fontSize: 12, fontWeight: 600, cursor: 'pointer',
             }}>⊞ Seed from VSM</button>
           )}
           <button onClick={() => setColForm({ open: true })} style={{
-            background: 'linear-gradient(135deg,#C49510,#D4A208)',
+            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
             border: 'none', borderRadius: 7, padding: '7px 14px',
             color: '#FFFFFF', fontSize: 12, fontWeight: 700, cursor: 'pointer',
           }}>＋ Add Column</button>
@@ -662,7 +662,7 @@ export function KanbanBoard({
                 {/* WIP indicator */}
                 <div style={{ fontSize: 10, fontFamily: 'monospace', display: 'flex', gap: 8 }}>
                   <span style={{ color: over ? '#F4A623' : 'var(--sl-400)' }}>
-                    {cards.length}{col.wip_limit ? `/${col.wip_limit}` : ''} {over ? '⚠ OVER' : ''}
+                    {cards.length}{col.wip_limit ? `/${col.wip_limit}` : ''}{over ? ' OVER' : ''}
                   </span>
                   {col.step_id && <span style={{ color: 'var(--sl-400)' }}>· Linked</span>}
                 </div>
@@ -731,9 +731,9 @@ export function KanbanBoard({
 
                     {/* Meta row */}
                     <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--sl-400)', flexWrap: 'wrap' }}>
-                      {card.assignee && <span>👤 {card.assignee}</span>}
-                      {card.due_date  && <span style={{ color: new Date(card.due_date) < new Date() ? '#FF6B6B' : 'var(--sl-400)' }}>📅 {fmtDate(card.due_date)}</span>}
-                      {card.blocked_reason && <span style={{ color: '#FF6B6B' }}>🔒 Blocked</span>}
+                      {card.assignee && <span>{card.assignee}</span>}
+                      {card.due_date && <span style={{ color: new Date(card.due_date) < new Date() ? '#FF6B6B' : 'var(--sl-400)' }}>{fmtDate(card.due_date)}</span>}
+                      {card.blocked_reason && <span style={{ color: '#FF6B6B', fontWeight:700 }}>Blocked</span>}
                     </div>
                   </div>
                 ))}
@@ -771,7 +771,7 @@ export function KanbanBoard({
             fontSize: 13, cursor: 'pointer', flexShrink: 0, alignSelf: 'flex-start',
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#D4A208'; e.currentTarget.style.color = '#D4A208' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#0176D3'; e.currentTarget.style.color = '#0176D3' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
           ＋ Add Column
         </button>

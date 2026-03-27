@@ -48,10 +48,10 @@ export default function PDCAPost() {
           </p>
 
           {[
-            { phase: 'Plan', color: '#6CB9FC', icon: '📋', desc: 'Define the problem with data. Describe the current condition. Identify the root cause using 5 Why or Fishbone analysis. Set a specific, measurable target condition. Define what success looks like before you start. Write a hypothesis: "If we do X, we expect Y because Z."' },
-            { phase: 'Do', color: '#D4A208', icon: '⚡', desc: 'Implement your countermeasure — but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
-            { phase: 'Check', color: '#1DD1A1', icon: '📊', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip — and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
-            { phase: 'Act', color: '#8C44CC', icon: '🔁', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
+            { phase: 'Plan', color: '#6CB9FC', icon: '', desc: 'Define the problem with data. Describe the current condition. Identify the root cause using 5 Why or Fishbone analysis. Set a specific, measurable target condition. Define what success looks like before you start. Write a hypothesis: "If we do X, we expect Y because Z."' },
+            { phase: 'Do', color: '#0176D3', icon: '', desc: 'Implement your countermeasure — but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
+            { phase: 'Check', color: '#1DD1A1', icon: '', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip — and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
+            { phase: 'Act', color: '#8C44CC', icon: '', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
           ].map(({ phase, color, icon, desc }) => (
             <div key={phase} style={{ background: `${color}08`, border: `1px solid ${color}33`, borderRadius: 12, padding: '18px 20px', marginBottom: 12 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 10 }}>
@@ -68,7 +68,7 @@ export default function PDCAPost() {
           <p style={{ marginBottom: 16 }}>All four frameworks ask the same questions in different orders with different names. Choose based on your audience and problem complexity:</p>
 
           {[
-            { fmt: 'PDCA', color: '#D4A208', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
+            { fmt: 'PDCA', color: '#0176D3', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
             { fmt: 'A3', color: '#1DD1A1', use: 'When you need to communicate the problem and solution on one page to management or across teams. Toyota\'s standard problem-solving communication format. Essentially PDCA on one sheet of A3 paper.' },
             { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA — different format and language.' },
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },

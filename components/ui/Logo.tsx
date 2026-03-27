@@ -52,7 +52,7 @@ export function VLogoMark({ size = 40 }: { size?: number }) {
         </linearGradient>
         <filter id={`${u}-shadow`} x="-25%" y="-15%" width="155%" height="145%">
           <feDropShadow dx="2"  dy="7"  stdDeviation="7"   floodColor="#000000" floodOpacity="0.24" />
-          <feDropShadow dx="0"  dy="2"  stdDeviation="2"   floodColor="#C49B2E" floodOpacity="0.16" />
+          <feDropShadow dx="0"  dy="2"  stdDeviation="2"   floodColor="#0176D3" floodOpacity="0.16" />
         </filter>
       </defs>
 
@@ -122,7 +122,7 @@ export function VeSiMyWordmark({ size = 40, onDark = false }: { size?: number; o
         whiteSpace: 'nowrap',
       }}
     >
-      <span style={{ fontSize: capSize,   color: '#C49B2E' }}>V</span>
+      <span style={{ fontSize: capSize,   color: '#0176D3' }}>V</span>
       <span style={{ fontSize: lowerSize, color: mutedColor }}>e</span>
       <span style={{ fontSize: capSize,   color: '#8C44CC' }}>S</span>
       <span style={{ fontSize: lowerSize, color: mutedColor }}>i</span>

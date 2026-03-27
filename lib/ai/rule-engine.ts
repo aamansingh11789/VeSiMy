@@ -225,7 +225,7 @@ export function diagnoseStep(step: {
   const hasRoot = !!(step.toolData?.fivewhy?.rootCause)
 
   if (takt && ct > 0 && ct > takt * 1.05) {
-    lines.push(`🔴 BOTTLENECK: This step runs ${((ct-takt)/takt*100).toFixed(0)}% over Takt (${ct}s vs ${takt}s). This is your constraint — it determines the output rate of the entire line.`)
+    lines.push(`BOTTLENECK: This step runs ${((ct-takt)/takt*100).toFixed(0)}% over Takt (${ct}s vs ${takt}s). This is your constraint — it determines the output rate of the entire line.`)
   }
 
   if (wt > ct && ct > 0) {

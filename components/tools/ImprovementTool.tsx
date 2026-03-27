@@ -61,7 +61,7 @@ const BLANK_GOAL = (): Goal => ({
 
 const STATUS_COL = {
   open: 'var(--text3)',
-  'in-progress': '#D4A208',
+  'in-progress': '#0176D3',
   achieved: '#1DD1A1',
   'not-achieved': '#FF6B6B',
 }
@@ -144,7 +144,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
 
   return (
     <Modal
-      title={`📈 Improvement Tracking — ${stepName}`}
+      title={`Improvement Tracking — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${goals.length} goal${goals.length !== 1 ? 's' : ''})`}
@@ -167,9 +167,9 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
                 style={{
                   padding: '7px 12px',
                   borderRadius: 10,
-                  border: `1px solid ${editId === goal.id ? '#D4A208' : 'var(--border)'}`,
-                  background: editId === goal.id ? 'rgba(212,162,8,0.10)' : 'var(--bg)',
-                  color: editId === goal.id ? '#D4A208' : 'var(--text2)',
+                  border: `1px solid ${editId === goal.id ? '#0176D3' : 'var(--border)'}`,
+                  background: editId === goal.id ? 'rgba(1,118,211,0.10)' : 'var(--bg)',
+                  color: editId === goal.id ? '#0176D3' : 'var(--text2)',
                   cursor: 'pointer',
                   fontSize: 12,
                   fontWeight: editId === goal.id ? 700 : 500,

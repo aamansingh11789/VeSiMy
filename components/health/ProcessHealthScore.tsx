@@ -38,7 +38,7 @@ export function ProcessHealthScore({ steps, compact=false }: Props) {
         <div style={{ fontSize:9, color:'var(--text3)', letterSpacing:2, fontFamily:'var(--font-mono)' }}>PROCESS HEALTH</div>
       </div>
       {([['Lead Time', h.lead_time,'var(--steel)'],['Bottlenecks',h.bottleneck,'var(--red)'],
-         ['Waiting',   h.waiting,  'var(--gold2)'],['Defects',   h.defect,  '#1DD1A1']] as any[]).map(([l,v,c])=>(
+         ['Waiting',   h.waiting,  'var(--brand)'],['Defects',   h.defect,  '#1DD1A1']] as any[]).map(([l,v,c])=>(
         <div key={l} style={{ marginBottom:7 }}>
           <div style={{ display:'flex', justifyContent:'space-between', fontSize:10, marginBottom:3 }}>
             <span style={{ color:'var(--text3)', fontFamily:'var(--font-mono)' }}>{l}</span>

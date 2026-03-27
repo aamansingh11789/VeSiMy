@@ -26,7 +26,7 @@ export default function VSMPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>8 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -52,10 +52,10 @@ export default function VSMPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The two maps: current state vs future state</h2>
           <p style={{ marginBottom: 18 }}>
-            Every VSM project starts with a <strong style={{ color: '#D4A208' }}>current state map</strong> — an honest picture of exactly how your process works today. Not how it's supposed to work. How it actually works.
+            Every VSM project starts with a <strong style={{ color: '#0176D3' }}>current state map</strong> — an honest picture of exactly how your process works today. Not how it's supposed to work. How it actually works.
           </p>
           <p style={{ marginBottom: 18 }}>
-            From there, you build a <strong style={{ color: '#D4A208' }}>future state map</strong> — what the process should look like after you've eliminated the waste you found. The gap between current and future state is your kaizen roadmap.
+            From there, you build a <strong style={{ color: '#0176D3' }}>future state map</strong> — what the process should look like after you've eliminated the waste you found. The gap between current and future state is your kaizen roadmap.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The 5 key numbers every VSM must show</h2>
@@ -66,8 +66,8 @@ export default function VSMPost() {
             ['Inventory', 'How many units are waiting between each step (the triangles on the map)'],
             ['Lead Time', 'Total time from customer order to delivery — the number that matters most'],
           ].map(([term, def]) => (
-            <div key={term} style={{ background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
-              <span style={{ color: '#D4A208', fontWeight: 700 }}>{term}:</span> {def}
+            <div key={term} style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
+              <span style={{ color: '#0176D3', fontWeight: 700 }}>{term}:</span> {def}
             </div>
           ))}
 
@@ -101,7 +101,7 @@ export default function VSMPost() {
             ['Step 6: Identify the biggest waste', 'Where is the most inventory piling up? Which step has the lowest uptime? That\'s where you start.'],
           ].map(([title, body], i) => (
             <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 20 }}>
-              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(212,162,8,0.15)', color: '#D4A208', fontWeight: 800, fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontWeight: 800, fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
                 {i + 1}
               </div>
               <div>
@@ -112,14 +112,14 @@ export default function VSMPost() {
           ))}
 
           {/* CTA */}
-          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(212,162,8,0.06)', border: '1px solid rgba(212,162,8,0.2)', borderRadius: 16, textAlign: 'center' }}>
+          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 16, textAlign: 'center' }}>
             <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Ready to build your first VSM?
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's VSM tool is free, browser-based, and works on any device. No download, no setup, no Visio license required.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Build your VSM free →
             </Link>
           </div>

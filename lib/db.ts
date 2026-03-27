@@ -758,7 +758,7 @@ export async function seedDefaultKanbanColumns(
   const db = createClient()
   const user = await getCurrentUser(db)
 
-  const COLORS = ['#38385C', '#1090D4', '#D4A208', '#6426A0', '#1DD1A1', '#F4A623', '#E84393', '#00BCD4']
+  const COLORS = ['#38385C', '#1090D4', '#0176D3', '#6426A0', '#1DD1A1', '#F4A623', '#E84393', '#00BCD4']
 
   const cols = [
     { title: 'Backlog', color: '#38385C', wip_limit: null, step_id: null, position: 0 },

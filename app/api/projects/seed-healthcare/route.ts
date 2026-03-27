@@ -17,7 +17,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', '🏥 Demo — Urgent Care Patient Flow')
+      .eq('name', 'Demo — Urgent Care Patient Flow')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -26,7 +26,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        '🏥 Demo — Urgent Care Patient Flow',
+        name:        'Demo — Urgent Care Patient Flow',
         description: 'Full patient value stream from arrival to discharge. 7 steps, 3.2hr lead time against 45-min takt. Bottleneck at Treatment. All CI tools populated. Use as a guide for your own process.',
         industry:    'Healthcare',
         customer:    'Patient',

@@ -17,7 +17,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', '🍺 Demo — Craft Brewery Batch Production')
+      .eq('name', 'Demo — Craft Brewery Batch Production')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -26,7 +26,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        '🍺 Demo — Craft Brewery Batch Production',
+        name:        'Demo — Craft Brewery Batch Production',
         description: 'Full brewing value stream from grain delivery to packaged product. 8 steps, 21-day lead time, bottleneck at Fermentation. Taproom throughput and packaging waste analysis included.',
         industry:    'Food & Beverage',
         customer:    'Taproom & Wholesale Accounts',

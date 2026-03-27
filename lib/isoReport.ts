@@ -205,7 +205,7 @@ export const ISO_STYLES = `
     font-size: 9.5pt;
     background: #fefefe;
   }
-  .obs-box.finding { border-left-color: #D4A208; }
+  .obs-box.finding { border-left-color: #0176D3; }
   .obs-box.waste   { border-left-color: #cc3300; }
   .obs-box.ok      { border-left-color: #0a5; }
   .obs-label { font-weight: 700; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3pt; color: #444; font-family: Arial, sans-serif; }
@@ -260,7 +260,7 @@ export function buildDocHeader(meta: ISODocMeta): string {
   const standards = getISOStandards(meta.toolType)
 
   return `
-  <button class="print-btn no-print" onclick="window.print()">🖨 Print / Save PDF</button>
+  <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
 
   <div class="doc-header">
     <div class="doc-title-block">

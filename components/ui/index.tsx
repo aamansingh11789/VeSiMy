@@ -51,9 +51,9 @@ export function ToastContainer() {
                     border: '1px solid rgba(255,107,107,0.25)',
                   }
                 : {
-                    background: 'rgba(212,162,8,0.12)',
-                    color: '#D4A208',
-                    border: '1px solid rgba(212,162,8,0.25)',
+                    background: 'rgba(1,118,211,0.12)',
+                    color: '#0176D3',
+                    border: '1px solid rgba(1,118,211,0.25)',
                   }),
           }}
         >
@@ -75,7 +75,7 @@ export function Badge({
   variant?: BadgeVariant
 }) {
   const styles: Record<BadgeVariant, React.CSSProperties> = {
-    gold: { background: 'rgba(212,162,8,0.12)', color: '#D4A208', border: '1px solid rgba(212,162,8,0.22)' },
+    gold: { background: 'rgba(1,118,211,0.12)', color: '#0176D3', border: '1px solid rgba(1,118,211,0.22)' },
     steel: { background: 'rgba(108,185,252,0.10)', color: '#6CB9FC', border: '1px solid rgba(108,185,252,0.22)' },
     violet: { background: 'rgba(100,38,160,0.12)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.22)' },
     green: { background: 'rgba(29,209,161,0.10)', color: '#1DD1A1', border: '1px solid rgba(29,209,161,0.22)' },
@@ -107,8 +107,8 @@ export function Spinner({ size = 20 }: { size?: number }) {
       style={{
         width: size,
         height: size,
-        border: `2px solid rgba(212,162,8,0.15)`,
-        borderTop: `2px solid #D4A208`,
+        border: `2px solid rgba(1,118,211,0.15)`,
+        borderTop: `2px solid #0176D3`,
         borderRadius: '50%',
         animation: 'spin 0.7s linear infinite',
       }}

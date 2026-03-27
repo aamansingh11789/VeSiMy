@@ -310,7 +310,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
   return (
     <Modal
-      title={`⚙️ SMED — ${stepName}`}
+      title={`SMED — ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
@@ -373,13 +373,13 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
         {(['steps', 'analysis', 'targets'] as const).map(tab => (
           <button key={tab} type="button" onClick={() => setActiveTab(tab)} style={{
             padding: '7px 14px', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-            background: activeTab === tab ? 'rgba(212,162,8,0.08)' : 'transparent',
-            borderBottom: activeTab === tab ? '2px solid #D4A208' : '2px solid transparent',
-            color: activeTab === tab ? '#D4A208' : 'var(--text3)',
+            background: activeTab === tab ? 'rgba(1,118,211,0.08)' : 'transparent',
+            borderBottom: activeTab === tab ? '2px solid #0176D3' : '2px solid transparent',
+            color: activeTab === tab ? '#0176D3' : 'var(--text3)',
             border: 'none', fontFamily: 'inherit', textTransform: 'capitalize',
             transition: 'all .15s',
           }}>
-            {tab === 'steps' ? `📋 Steps (${steps.length})` : tab === 'analysis' ? '⚡ SMED Analysis' : '💰 Targets & ROI'}
+            {tab === 'steps' ? `Steps (${steps.length})` : tab === 'analysis' ? 'SMED Analysis' : 'Targets & ROI'}
           </button>
         ))}
       </div>
@@ -395,15 +395,15 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
           {/* Live timer indicator */}
           {timerActive && (
-            <div style={{ padding: '8px 12px', background: 'rgba(212,162,8,0.1)', border: '1px solid rgba(212,162,8,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#D4A208' }}>
-              <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block' }}>⏱</span>
+            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(1,118,211,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#0176D3' }}>
+              <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block', fontFamily:"monospace", fontSize:11 }}>REC</span>
               <span>Timer running: <strong style={{ fontFamily: 'monospace' }}>{(timerMs / 1000).toFixed(1)}s</strong></span>
             </div>
           )}
 
           {steps.length === 0 && (
             <div style={{ padding: '32px 16px', textAlign: 'center', color: 'var(--text3)', fontSize: 13, border: '1px dashed var(--border)', borderRadius: 10 }}>
-              <div style={{ fontSize: 28, marginBottom: 8 }}>⚙️</div>
+              
               No steps recorded yet.<br />
               <span style={{ fontSize: 12 }}>Add your first changeover step below. Work through the changeover sequentially.</span>
             </div>
@@ -413,7 +413,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             const meta = TYPE_META[s.type]
             const isTimingThis = timerStepId === s.id && timerActive
             return (
-              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#D4A208' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(212,162,8,0.04)' : meta.bg + '66' }}>
+              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#0176D3' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
                 {/* Step header row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20, textAlign: 'center', fontWeight: 700 }}>#{s.seq}</span>
@@ -428,9 +428,9 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
                   {/* Type */}
                   <select style={{ ...selectStyle, flex: 1.2, minWidth: 90 }} value={s.type} onChange={e => updateStep(s.id, 'type', e.target.value as StepType)}>
-                    <option value="internal">🔴 Internal</option>
-                    <option value="external">🟢 External</option>
-                    <option value="waste">🟣 Waste/NVA</option>
+                    <option value="internal">Internal</option>
+                    <option value="external">External</option>
+                    <option value="waste">Waste/NVA</option>
                   </select>
 
                   {/* Phase */}
@@ -456,7 +456,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                       disabled={timerActive && !isTimingThis}
                       style={{
                         padding: '5px 7px', borderRadius: 6, border: '1px solid var(--border)',
-                        background: isTimingThis ? '#D4A208' : 'var(--bg)',
+                        background: isTimingThis ? '#0176D3' : 'var(--bg)',
                         color: isTimingThis ? '#fff' : 'var(--text3)',
                         cursor: timerActive && !isTimingThis ? 'not-allowed' : 'pointer',
                         fontSize: 11, fontWeight: 700,
@@ -535,7 +535,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>Reduction</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A208', fontFamily: 'monospace' }}>{smedReductionPct}%</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#0176D3', fontFamily: 'monospace' }}>{smedReductionPct}%</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)' }}>save {fmtS(savingPerChange)} per change</div>
                   </div>
                 </div>
@@ -584,7 +584,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
               {/* AI Assist */}
               <div>
                 <AIAssistButton
-                  label="⚡ AI Rebalancing Suggestions"
+                  label="AI Rebalancing Suggestions"
                   loading={aiLoading}
                   onClick={() => aiAssist('smed_analysis' as any, {
                     stepName, steps, totalTime, internalTime, convertibleTime, wasteTime, smedPotential, smedReductionPct,
@@ -595,7 +595,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
               {/* Export */}
               <button type="button" onClick={exportISOReport} style={{ padding: '8px 16px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, alignSelf: 'flex-start' }}>
-                📄 Export ISO Report (SMED / ISO 9001:2015 §8.5.1)
+                Export ISO Report (SMED / ISO 9001:2015 §8.5.1)
               </button>
             </>
           )}

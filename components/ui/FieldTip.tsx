@@ -238,9 +238,9 @@ export function FieldTip({ termKey }: { termKey: string }) {
         aria-label={`What is ${tip.title}?`}
         style={{
           width: 16, height: 16, borderRadius: '50%',
-          background: open ? 'var(--gold)' : 'rgba(196,155,46,0.12)',
-          border: '1px solid rgba(196,155,46,0.3)',
-          color: open ? '#0D0C0A' : 'rgba(196,155,46,0.7)',
+          background: open ? 'var(--brand)' : 'rgba(1,118,211,0.12)',
+          border: '1px solid rgba(1,118,211,0.3)',
+          color: open ? '#0D0C0A' : 'rgba(1,118,211,0.7)',
           fontSize: 10, fontWeight: 800, cursor: 'pointer', padding: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all .15s', flexShrink: 0,
@@ -252,11 +252,11 @@ export function FieldTip({ termKey }: { termKey: string }) {
           width: 300, padding: '12px 14px',
           background: 'var(--bg)',
           border: '1px solid var(--border)',
-          borderLeft: '3px solid var(--gold)',
+          borderLeft: '3px solid var(--brand)',
           borderRadius: '0 10px 10px 10px',
           boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
         }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--gold)', marginBottom: 7 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--brand)', marginBottom: 7 }}>
             {tip.title}
             {tip.unit && (
               <span style={{ fontWeight: 400, color: 'var(--text3)', marginLeft: 6, fontSize: 10 }}>
@@ -302,7 +302,7 @@ export function FieldWarn({ msg }: { msg?: string | null }) {
   if (!msg) return null
   return (
     <div style={{
-      fontSize: 11, color: '#D4A208', marginTop: 4,
+      fontSize: 11, color: '#0176D3', marginTop: 4,
       display: 'flex', alignItems: 'flex-start', gap: 5, lineHeight: 1.5,
     }}>
       <span style={{ flexShrink: 0, marginTop: 1 }}>⚠</span>

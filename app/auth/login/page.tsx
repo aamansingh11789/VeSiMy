@@ -59,7 +59,7 @@ function LoginForm() {
         if (data?.session) {
           router.push('/onboarding')
         } else {
-          toast.success('✉️ Check your email — click the link to confirm your account', { duration: 8000 })
+          toast.success('Check your email — click the link to confirm your account', { duration: 8000 })
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -82,7 +82,7 @@ function LoginForm() {
             <VesimyLogo size={56} />
           </div>
           <h1 style={{ fontFamily: 'Palatino Linotype,Book Antiqua,Palatino,serif', fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
-              className="text-[var(--gold)]">
+              className="text-[var(--brand)]">
             Vesimy
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text3)', letterSpacing: 3 }}>CONTINUOUS IMPROVEMENT</p>
@@ -94,7 +94,7 @@ function LoginForm() {
               <button key={m} onClick={() => setMode(m)}
                 className="flex-1 py-2 text-sm font-medium transition-all"
                 style={{
-                  background: mode === m ? 'linear-gradient(135deg,#B8880A,var(--gold))' : 'transparent',
+                  background: mode === m ? 'linear-gradient(135deg,#B8880A,var(--brand))' : 'transparent',
                   color:      mode === m ? 'var(--bg)' : 'var(--text3)',
                   fontWeight: mode === m ? 700 : 400,
                 }}>
@@ -144,15 +144,15 @@ function LoginForm() {
 
           {mode === 'login' && (
             <p className="text-center mt-4 text-xs" style={{ color: 'var(--sl-400)' }}>
-              <Link href="/auth/reset" className="hover:text-[var(--gold)] transition-colors">Forgot password?</Link>
+              <Link href="/auth/reset" className="hover:text-[var(--brand)] transition-colors">Forgot password?</Link>
             </p>
           )}
         </div>
 
         <p className="text-center mt-4 text-xs" style={{ color: 'var(--sl-400)' }}>
           By continuing you agree to our{' '}
-          <Link href="/terms" className="hover:text-[var(--gold)]">Terms</Link> and{' '}
-          <Link href="/privacy" className="hover:text-[var(--gold)]">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-[var(--brand)]">Terms</Link> and{' '}
+          <Link href="/privacy" className="hover:text-[var(--brand)]">Privacy Policy</Link>
         </p>
       </div>
     </div>

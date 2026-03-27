@@ -126,12 +126,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             style: {
               background:   'var(--bg3)',
               color:        'var(--text)',
-              border:       '1px solid rgba(212,162,8,0.25)',
+              border:       '1px solid rgba(1,118,211,0.25)',
               borderRadius: '10px',
               fontFamily:   'Inter, sans-serif',
               fontSize:     '14px',
             },
-            success: { iconTheme: { primary: '#D4A208', secondary: 'var(--bg)' } },
+            success: { iconTheme: { primary: '#0176D3', secondary: 'var(--bg)' } },
             error:   { iconTheme: { primary: '#FF6B6B', secondary: 'var(--bg)' } },
           }}
         />

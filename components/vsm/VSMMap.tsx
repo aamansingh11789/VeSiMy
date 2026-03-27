@@ -86,7 +86,7 @@ const ProcessBox = ({ x, y, step, takt }: any) => {
       <rect x={x} y={y} width={PW} height={8}  fill={header} rx={3} />
       <rect x={x} y={y+5} width={PW} height={3} fill={header} />
       <text x={x + PW/2} y={y+22} textAnchor="middle" fill="#1F2937" fontSize={9} fontWeight={700} fontFamily="sans-serif">
-        {isQueue ? '⏳ ' : ''}{step.name.length > 14 ? step.name.slice(0, 13) + '…' : step.name}
+        {step.name.length > 14 ? step.name.slice(0, 13) + '…' : step.name}
       </text>
       {step.department && (
         <text x={x + PW/2} y={y+33} textAnchor="middle" fill="#6B7280" fontSize={7.5} fontFamily="sans-serif">{step.department}</text>
@@ -383,7 +383,7 @@ tr:nth-child(even) td{background:#F8FAFC}
 </style>
 </head><body>
 <div class="no-print">
-  <button class="bp" onclick="window.print()">🖨 Print / Save PDF</button>
+  <button class="bp" onclick="window.print()">Print / Save PDF</button>
   <button class="bc" onclick="window.close()">✕ Close</button>
 </div>
 <div class="hdr">
@@ -846,7 +846,7 @@ export function VSMMap({ steps, branches, project }: Props) {
       {/* KPI strip */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14, alignItems: 'stretch' }}>
         {[
-          { l: 'Lead Time',  v: fmtS(lt),                           c: '#D4A208' },
+          { l: 'Lead Time',  v: fmtS(lt),                           c: '#0176D3' },
           { l: 'Value Added', v: fmtS(mainCT),                       c: '#10B981' },
           { l: 'NVA / Wait',  v: fmtS(mainWT),                       c: '#6B7280' },
           { l: 'Takt Time',   v: takt ? fmtS(takt) : '—',            c: '#0EA5E9' },
@@ -859,9 +859,9 @@ export function VSMMap({ steps, branches, project }: Props) {
         ))}
         <button
           onClick={() => exportVSMReport(steps, project, branches)}
-          style={{ padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.12)', border: '1px solid rgba(212,162,8,0.35)', color: '#D4A208', alignSelf: 'stretch', minWidth: 160 }}
+          style={{ padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer', background: 'rgba(1,118,211,0.12)', border: '1px solid rgba(1,118,211,0.35)', color: '#0176D3', alignSelf: 'stretch', minWidth: 160 }}
         >
-          📄 Export VSM Report
+          Export VSM Report
         </button>
         <button
           onClick={() => setFullscreen(true)}
@@ -883,8 +883,8 @@ export function VSMMap({ steps, branches, project }: Props) {
             </div>
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
               <span style={{ fontSize: 11, opacity: 0.55 }}>Esc to exit</span>
-              <button onClick={() => exportVSMReport(steps, project, branches)} style={{ padding: '6px 14px', borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'rgba(212,162,8,0.2)', border: '1px solid rgba(212,162,8,0.5)', color: '#D4A208' }}>
-                📄 Export
+              <button onClick={() => exportVSMReport(steps, project, branches)} style={{ padding: '6px 14px', borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'rgba(1,118,211,0.2)', border: '1px solid rgba(1,118,211,0.5)', color: '#0176D3' }}>
+                Export
               </button>
               <button onClick={() => setFullscreen(false)} style={{ padding: '6px 14px', borderRadius: 7, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: '#FFF' }}>
                 ✕

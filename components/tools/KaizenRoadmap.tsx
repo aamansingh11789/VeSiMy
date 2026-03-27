@@ -11,10 +11,10 @@ interface Props {
   onSaveRoadmap?: (roadmap: any) => void
 }
 
-const PHASE_COLORS = ['#D4A208', '#1DD1A1', '#6CB9FC', '#FF6B6B', '#8C44CC']
+const PHASE_COLORS = ['#0176D3', '#1DD1A1', '#6CB9FC', '#FF6B6B', '#8C44CC']
 const STATUS_CFG = {
   planned:     { label: 'Planned',     color: 'var(--text3)', bg: 'rgba(112,112,160,0.1)' },
-  active:      { label: 'Active',      color: '#D4A208', bg: 'rgba(212,162,8,0.1)'   },
+  active:      { label: 'Active',      color: '#0176D3', bg: 'rgba(1,118,211,0.1)'   },
   complete:    { label: 'Complete',    color: '#1DD1A1', bg: 'rgba(29,209,161,0.1)'  },
   cancelled:   { label: 'Cancelled',  color: '#FF6B6B', bg: 'rgba(255,107,107,0.1)' },
 }
@@ -105,10 +105,10 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             {[
-              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : '—', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#D4A208' : '#FF6B6B' },
+              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : '—', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#0176D3' : '#FF6B6B' },
               { label: 'Target PCE', value: phases.length > 0 && phases[phases.length-1].target_pce ? `${phases[phases.length-1].target_pce}%` : '95%', color: '#1DD1A1' },
               { label: 'Events', value: `${completeEvents}/${totalEvents}`, color: '#6CB9FC' },
-              { label: 'Progress', value: `${progressPct}%`, color: '#D4A208' },
+              { label: 'Progress', value: `${progressPct}%`, color: '#0176D3' },
             ].map(({ label, value, color }) => (
               <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 14px', textAlign: 'center', minWidth: 80 }}>
                 <div style={{ fontSize: 15, fontWeight: 700, color }}>{value}</div>
@@ -126,7 +126,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
               <span>{completeEvents} of {totalEvents} events complete</span>
             </div>
             <div style={{ height: 8, background: 'var(--bg)', borderRadius: 4, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #D4A208, #1DD1A1)', borderRadius: 4, transition: 'width 0.5s' }} />
+              <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #0176D3, #1DD1A1)', borderRadius: 4, transition: 'width 0.5s' }} />
             </div>
           </div>
         )}
@@ -190,7 +190,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(212,162,8,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#D4A208' : 'var(--text3)', fontWeight: 700 }}>
+                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(1,118,211,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#0176D3' : 'var(--text3)', fontWeight: 700 }}>
                   {phaseComplete ? 'COMPLETE' : phaseActive ? 'ACTIVE' : 'PLANNED'}
                 </span>
                 <span style={{ color: 'var(--text3)', fontSize: 12 }}>{isExpanded ? '▲' : '▼'}</span>
@@ -227,12 +227,12 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                         <div>
                           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>{event.title}</div>
                           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 10, color: 'var(--text3)' }}>
-                            {linkedStep && <span>📍 {linkedStep.name}</span>}
-                            {event.owner && <span>👤 {event.owner}</span>}
-                            {event.dueDate && <span>📅 {event.dueDate}</span>}
-                            {event.target_ct && <span>⏱ CT target: {event.target_ct}s</span>}
-                            {event.target_wip && <span>📦 WIP target: {event.target_wip}</span>}
-                            {event.expected_pce_gain && <span style={{ color: '#1DD1A1' }}>📈 +{event.expected_pce_gain}% PCE</span>}
+                            {linkedStep && <span>Step: {linkedStep.name}</span>}
+                            {event.owner && <span>{event.owner}</span>}
+                            {event.dueDate && <span>{event.dueDate}</span>}
+                            {event.target_ct && <span>CT target: {event.target_ct}s</span>}
+                            {event.target_wip && <span>WIP target: {event.target_wip}</span>}
+                            {event.expected_pce_gain && <span style={{ color: '#1DD1A1' }}>+{event.expected_pce_gain}% PCE</span>}
                           </div>
                         </div>
                         <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
@@ -252,8 +252,8 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
                 {/* Add event form */}
                 {showAddEvent === phase.id ? (
-                  <div style={{ border: '1px solid rgba(212,162,8,0.3)', borderRadius: 10, padding: '12px 14px', background: 'rgba(212,162,8,0.04)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: '#D4A208' }}>Add Kaizen Event</div>
+                  <div style={{ border: '1px solid rgba(1,118,211,0.3)', borderRadius: 10, padding: '12px 14px', background: 'rgba(1,118,211,0.04)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: '#0176D3' }}>Add Kaizen Event</div>
                     <input className="input" placeholder="Event title *" value={newEvent.title} onChange={e => setNewEvent(p => ({ ...p, title: e.target.value }))} style={{ fontSize: 12 }} />
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                       <div>
@@ -306,7 +306,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
       {/* Add phase */}
       {showAddPhase ? (
-        <div style={{ border: '1px solid rgba(212,162,8,0.3)', borderRadius: 10, padding: '12px 14px', display: 'flex', gap: 8 }}>
+        <div style={{ border: '1px solid rgba(1,118,211,0.3)', borderRadius: 10, padding: '12px 14px', display: 'flex', gap: 8 }}>
           <input className="input" placeholder="Phase name e.g. Phase 2 — Flow Improvement" value={newPhaseName} onChange={e => setNewPhaseName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addPhase()} style={{ flex: 1, fontSize: 12 }} autoFocus />
           <button type="button" onClick={addPhase} className="btn btn-primary">Add</button>
           <button type="button" onClick={() => setShowAddPhase(false)} className="btn btn-ghost">Cancel</button>
@@ -315,7 +315,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
         <button
           type="button"
           onClick={() => setShowAddPhase(true)}
-          style={{ border: '1px dashed rgba(212,162,8,0.4)', background: 'transparent', color: '#D4A208', borderRadius: 10, padding: '10px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+          style={{ border: '1px dashed rgba(1,118,211,0.4)', background: 'transparent', color: '#0176D3', borderRadius: 10, padding: '10px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
         >
           + Add Phase
         </button>

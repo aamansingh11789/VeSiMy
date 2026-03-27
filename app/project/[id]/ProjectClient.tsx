@@ -286,9 +286,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
     ? Math.min(100, (totalCT / (totalCT + totalWait)) * 100)
     : null
   const pce = pceNum !== null ? `${pceNum.toFixed(0)}%` : '—'
-  const pceColor = pceNum === null ? '#D4A208'
+  const pceColor = pceNum === null ? '#0176D3'
     : pceNum >= 90 ? '#1DD1A1'
-    : pceNum >= 60 ? '#D4A208'
+    : pceNum >= 60 ? '#0176D3'
     : '#FF6B6B'
 
   return (
@@ -369,12 +369,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
-              background: 'rgba(212,162,8,0.08)',
-              border: '1px solid rgba(212,162,8,0.25)',
-              color: 'var(--gold)',
+              background: 'rgba(1,118,211,0.08)',
+              border: '1px solid rgba(1,118,211,0.25)',
+              color: 'var(--brand)',
             }}
           >
-            <SOPIcon size={13} color="#D4A208" />
+            <SOPIcon size={13} color="#0176D3" />
             <span className="action-btn-label">Import SOP</span>
           </button>
 
@@ -396,12 +396,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
-              background: 'rgba(212,162,8,0.06)',
-              border: '1px solid rgba(212,162,8,0.2)',
-              color: 'var(--gold)',
+              background: 'rgba(1,118,211,0.06)',
+              border: '1px solid rgba(1,118,211,0.2)',
+              color: 'var(--brand)',
             }}
           >
-            📓
+            Journal
             <span className="action-btn-label">Journal</span>
           </button>
 
@@ -437,10 +437,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 13,
               fontWeight: 700,
               cursor: 'pointer',
-              background: 'linear-gradient(135deg,#C49510,#D4A208)',
+              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
               color: 'var(--bg)',
               border: 'none',
-              boxShadow: '0 2px 12px rgba(212,162,8,0.25)',
+              boxShadow: '0 2px 12px rgba(1,118,211,0.25)',
             }}
           >
             <PlusIcon size={14} color="var(--bg)" />
@@ -458,14 +458,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
         }}
       >
         {([
-          { label: 'STEPS',    value: mainSteps.length,            color: 'var(--gold)' },
-          { label: 'BRANCHES', value: branches.length,             color: 'var(--gold)' },
-          { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--gold)' },
-          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : '#D4A208' },
-          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: 'var(--gold)' },
+          { label: 'STEPS',    value: mainSteps.length,            color: 'var(--brand)' },
+          { label: 'BRANCHES', value: branches.length,             color: 'var(--brand)' },
+          { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--brand)' },
+          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : '#0176D3' },
+          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: 'var(--brand)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
-          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? '#D4A208' : '#1DD1A1' },
-          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? '#D4A208' : '#1DD1A1' },
+          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? '#0176D3' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? '#0176D3' : '#1DD1A1' },
         ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
@@ -516,14 +516,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 border: 'none',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                color: active ? 'var(--gold)' : locked ? 'var(--sl-300)' : 'var(--sl-500)',
-                borderBottom: `2px solid ${active ? '#D4A208' : 'transparent'}`,
+                color: active ? 'var(--brand)' : locked ? 'var(--sl-300)' : 'var(--sl-500)',
+                borderBottom: `2px solid ${active ? '#0176D3' : 'transparent'}`,
                 marginBottom: -1,
               }}
             >
               <TIcon size={11} color="currentColor" />
               {t.label}
-              {locked && <span style={{ fontSize: 9, marginLeft: 2 }}>🔒</span>}
+              {locked && <span style={{ fontSize: 8, marginLeft: 3, fontWeight:800, letterSpacing:.5, color:"var(--text3)" }}>PRO</span>}
             </button>
           )
         })}
@@ -576,19 +576,19 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   onClick={() => setShowVSMCoaching(true)}
                   className="vsm-tool-btn vsm-tool-btn--red"
                 >
-                  🎯 Gap Analysis & AI Coaching
+                  Gap Analysis
                 </button>
                 <button
                   onClick={() => setShowYamazumi(true)}
                   className="vsm-tool-btn vsm-tool-btn--teal"
                 >
-                  📊 Yamazumi Chart
+                  Yamazumi Chart
                 </button>
                 <button
                   onClick={() => setShowStandardWork(true)}
                   className="vsm-tool-btn vsm-tool-btn--blue"
                 >
-                  📋 Standard Work Sheet
+                  Standard Work Sheet
                 </button>
               </div>
               <div style={{ padding: 24 }}>
@@ -613,7 +613,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>🔄 PDCA Projects</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>PDCA Projects</div>
                     <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>One data model — export as PDCA, A3, 8D, DMAIC, or OODA</div>
                   </div>
                   <button
@@ -626,7 +626,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
-                    const colors = ['#D4A208', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
+                    const colors = ['#0176D3', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
                     const descs = [
                       'Plan-Do-Check-Act — standard lean cycle',
                       'Toyota one-page problem-solving report',
@@ -770,7 +770,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       Supe
                     </div>
                     <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginTop: 2 }}>
-                      AI MENTOR {!isPaid && '🔒'}
+                      AI MENTOR {!isPaid && 'PRO'}
                     </div>
                   </div>
                 </div>
@@ -781,9 +781,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   <SupePanel steps={steps} projectId={project.id} />
                 ) : (
                   <div style={{ padding: 20, textAlign: 'center' }}>
-                    <div style={{ fontSize: 32, marginBottom: 10 }}>🔒</div>
+                    
                     <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 14 }}>
-                      Supe AI is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>.
+                      Supe AI is a <strong style={{ color: 'var(--brand)' }}>Pro feature</strong>.
                     </p>
                     <a
                       href="/pricing"
@@ -791,7 +791,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                         display: 'inline-block',
                         padding: '8px 16px',
                         borderRadius: 8,
-                        background: 'linear-gradient(135deg,#C49510,#D4A208)',
+                        background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
                         color: 'var(--bg)',
                         fontWeight: 700,
                         fontSize: 12,
@@ -876,9 +876,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 <SupePanel steps={steps} projectId={project.id} />
               ) : (
                 <div style={{ padding: 32, textAlign: 'center' }}>
-                  <div style={{ fontSize: 40, marginBottom: 12 }}>🔒</div>
+                  
                   <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 20 }}>
-                    Supe AI is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>.<br />
+                    Supe AI is a <strong style={{ color: 'var(--brand)' }}>Pro feature</strong>.<br />
                     Upgrade to unlock AI-powered lean coaching.
                   </p>
                   <a
@@ -887,14 +887,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       display: 'inline-block',
                       padding: '10px 20px',
                       borderRadius: 10,
-                      background: 'linear-gradient(135deg,#C49510,#D4A208)',
+                      background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
                       color: 'var(--bg)',
                       fontWeight: 700,
                       fontSize: 14,
                       textDecoration: 'none',
                     }}
                   >
-                    👑 Upgrade to Pro
+                    Upgrade to Pro
                   </a>
                 </div>
               )}
@@ -927,8 +927,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
             borderRadius: '50%',
             border: 'none',
             cursor: 'pointer',
-            background: 'linear-gradient(135deg,#C49510,#D4A208)',
-            boxShadow: '0 4px 20px rgba(212,162,8,0.4)',
+            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            boxShadow: '0 4px 20px rgba(1,118,211,0.4)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -956,7 +956,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           }}
           title="Open Supe AI"
         >
-          ⚡
+          
         </button>
       </div>
 
@@ -1106,18 +1106,18 @@ interface BuilderTabProps {
 function PaywallGate({ feature }: { feature: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 24px', textAlign: 'center' }}>
-      <div style={{ fontSize: 52, marginBottom: 16 }}>🔒</div>
+      
       <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
         {feature}
       </h2>
       <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 360, lineHeight: 1.7, marginBottom: 28 }}>
-        This is a <strong style={{ color: 'var(--gold)' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
+        This is a <strong style={{ color: 'var(--brand)' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
       </p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#C49510,#D4A208)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-          👑 Upgrade to Pro — $29/mo
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+          Upgrade to Pro to track all your improvement targets — $29/mo
         </a>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(212,162,8,0.3)', color: 'var(--gold)', fontSize: 14, textDecoration: 'none' }}>
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(1,118,211,0.3)', color: 'var(--brand)', fontSize: 14, textDecoration: 'none' }}>
           View all plans
         </a>
       </div>
@@ -1132,7 +1132,7 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
     return (
       <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--sl-400)' }}>
         <div style={{ marginBottom: 20, opacity: 0.3 }}>
-          <VSMIcon size={64} color="#D4A208" />
+          <VSMIcon size={64} color="#0176D3" />
         </div>
         <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
           No process steps yet
@@ -1149,7 +1149,7 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
               gap: 8,
               padding: '10px 24px',
               borderRadius: 9,
-              background: 'linear-gradient(135deg,#C49510,#D4A208)',
+              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
               color: 'var(--bg)',
               border: 'none',
               cursor: 'pointer',
@@ -1167,15 +1167,15 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
               gap: 8,
               padding: '10px 20px',
               borderRadius: 9,
-              background: 'rgba(212,162,8,0.08)',
-              border: '1px solid rgba(212,162,8,0.3)',
-              color: 'var(--gold)',
+              background: 'rgba(1,118,211,0.08)',
+              border: '1px solid rgba(1,118,211,0.3)',
+              color: 'var(--brand)',
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 600,
             }}
           >
-            <SOPIcon size={14} color="#D4A208" /> Import from SOP
+            <SOPIcon size={14} color="#0176D3" /> Import from SOP
           </button>
         </div>
       </div>
@@ -1251,8 +1251,8 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
         onDrop()
       }}
       style={{
-        background: over ? 'rgba(212,162,8,0.03)' : 'var(--bg2)',
-        border: `1px solid ${over ? 'rgba(212,162,8,0.4)' : 'var(--border)'}`,
+        background: over ? 'rgba(1,118,211,0.03)' : 'var(--bg2)',
+        border: `1px solid ${over ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
         borderRadius: 10,
         overflow: 'hidden',
       }}
@@ -1288,10 +1288,10 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
         </div>
 
         <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap', flexShrink: 0 }}>
-          {sw?.mean && <span style={{ color: 'var(--gold)' }}>CT:{fmtS(sw.mean)}</span>}
+          {sw?.mean && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(sw.mean)}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
           {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
-          {kzOpen > 0 && <span style={{ color: '#F4A623' }}>⚡{kzOpen}</span>}
+          {kzOpen > 0 && <span style={{ fontSize:10, fontWeight:700, color:'#F4A623', marginLeft:4 }}>{kzOpen}</span>}
         </div>
 
         <button onClick={onEdit} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
@@ -1319,15 +1319,15 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }
                 fontSize: 11,
                 borderRadius: 6,
                 cursor: 'pointer',
-                background: has ? 'rgba(212,162,8,0.10)' : 'transparent',
-                border: `1px solid ${has ? 'var(--gold)' : 'var(--border)'}`,
-                background: has ? 'rgba(196,155,46,0.08)' : 'var(--bg2)',
-                color: has ? '#D4A208' : 'var(--sl-400)',
+                background: has ? 'rgba(1,118,211,0.10)' : 'transparent',
+                border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
+                background: has ? 'rgba(1,118,211,0.08)' : 'var(--bg2)',
+                color: has ? '#0176D3' : 'var(--sl-400)',
               }}
             >
               <TIcon size={11} color="currentColor" />
               {t.label}
-              {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#D4A208', display: 'inline-block', marginLeft: 1 }} />}
+              {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#0176D3', display: 'inline-block', marginLeft: 1 }} />}
             </button>
           )
         })}
@@ -1368,7 +1368,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
                 {allItems.filter(i => i.status === st).map((item: any, ki: number) => (
                   <div key={ki} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: '12px 14px' }}>
                     <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 4 }}>{item.title}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text2)' }}>📍 {item.stepName}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text2)' }}>{item.stepName}</div>
                   </div>
                 ))}
               </div>
@@ -1402,7 +1402,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           CI Report — {project.name}
         </h2>
         <AIAssistButton
-          label="⚡ AI Executive Summary"
+          label="AI Executive Summary"
           loading={aiLoading}
           onClick={() => aiAssist('report_summary', {
             projectName: project.name,
@@ -1431,7 +1431,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)}min` : '—', color: 'var(--text)' },
           { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
           { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
-          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#D4A208' : '#1DD1A1' },
+          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
@@ -1471,15 +1471,15 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? `${ct}s` : '—'}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? `${wt}s` : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,162,8,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#D4A208' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#0176D3' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#D4A208' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
-                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#D4A208' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#0176D3' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#0176D3' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
-                          {isBN ? '⚠ Over Takt' : ct === 0 ? 'No data' : '✓ OK'}
+                          {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
                         </span>
                       </td>
                     </tr>
@@ -1498,7 +1498,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           onClick={() => setShowPDCA(true)}
           style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
         >
-          🔄 Open PDCA / A3 Report Tool
+          Open PDCA Report
         </button>
       </div>
       {showPDCA && (
@@ -1554,7 +1554,7 @@ function ProjectSettingsModal({ project, onSave, onClose, onDelete }: {
 
         <div style={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'flex-start', marginTop: 8 }}>
           <button onClick={onDelete} className="btn btn-danger">
-            🗑 Delete Project
+            Delete Project
           </button>
         </div>
       </div>
@@ -1591,7 +1591,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
             gap: 6,
             padding: '8px 16px',
             borderRadius: 8,
-            background: 'linear-gradient(135deg,#C49510,#D4A208)',
+            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
             border: 'none',
             color: 'var(--bg)',
             cursor: 'pointer',

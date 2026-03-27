@@ -17,7 +17,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', '🍷 Demo — Boutique Winery Production')
+      .eq('name', 'Demo — Boutique Winery Production')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -26,7 +26,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        '🍷 Demo — Boutique Winery Production',
+        name:        'Demo — Boutique Winery Production',
         description: 'Full winery value stream from harvest crush to bottled wine. 8 steps, 18-month lead time, bottleneck at Barrel Ageing. Yield loss, label compliance, and DTC channel waste analysis included.',
         industry:    'Food & Beverage',
         customer:    'DTC Wine Club & Wholesale',

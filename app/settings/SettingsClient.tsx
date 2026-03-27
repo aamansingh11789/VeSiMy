@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { INDUSTRY_OPTIONS, getIndustryLabel } from '@/lib/industry-language'
 // ── app/settings/SettingsClient.tsx ──────────────────────────────────────────
 
 import { useState } from 'react'
@@ -16,7 +17,7 @@ interface Props {
   user:    { email?: string }
 }
 
-const PLAN_COLOR = { free:'var(--text3)', pro:'#D4A208', enterprise:'#6CB9FC' }
+const PLAN_COLOR = { free:'var(--text3)', pro:'#0176D3', enterprise:'#6CB9FC' }
 
 export function SettingsClient({ profile, user }: Props) {
   const router   = useRouter()
@@ -120,7 +121,7 @@ export function SettingsClient({ profile, user }: Props) {
 
           {subStatus === 'past_due' && (
             <div style={{ marginTop:16, padding:'12px 16px', background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)', borderRadius:8 }}>
-              <p style={{ fontSize:13, color:'#FF6B6B', marginBottom:6, fontWeight:600 }}>⚠ Payment failed</p>
+              <p style={{ fontSize:13, color:'#FF6B6B', marginBottom:6, fontWeight:600 }}>Payment failed</p>
               <p style={{ fontSize:12, color:'var(--text3)' }}>Your last payment didn't go through. Update your payment method to keep your Pro access.</p>
               <button onClick={openPortal} style={{ marginTop:10, fontSize:12, color:'#FF6B6B', background:'none', border:'1px solid rgba(255,107,107,0.3)', borderRadius:6, padding:'6px 14px', cursor:'pointer' }}>
                 Update Payment Method
@@ -133,16 +134,16 @@ export function SettingsClient({ profile, user }: Props) {
       {/* ── Plan comparison ── */}
       {!isPaid && !isBeta && (
         <section style={{ marginBottom:32 }}>
-          <div className="card" style={{ padding:24, background:'rgba(212,162,8,0.03)', borderColor:'rgba(212,162,8,0.15)' }}>
+          <div className="card" style={{ padding:24, background:'rgba(1,118,211,0.03)', borderColor:'rgba(1,118,211,0.15)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
-              <CrownIcon size={16} color='#D4A208' />
-              <span style={{ fontSize:15, fontWeight:700, color:'#D4A208' }}>Upgrade to Pro</span>
+              <CrownIcon size={16} color='#0176D3' />
+              <span style={{ fontSize:15, fontWeight:700, color:'#0176D3' }}>Upgrade to Pro</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day trial when upgrading</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:20 }}>
               {PLANS.pro.features.map((f,i) => (
                 <div key={i} style={{ display:'flex', alignItems:'center', gap:8 }}>
-                  <CheckIcon size={12} color='#D4A208' strokeWidth={3} />
+                  <CheckIcon size={12} color='#0176D3' strokeWidth={3} />
                   <span style={{ fontSize:12, color:'#B0B0C8' }}>{f}</span>
                 </div>
               ))}
@@ -172,6 +173,11 @@ export function SettingsClient({ profile, user }: Props) {
               <label className="label">Email Address</label>
               <input className="input" value={user.email || ''} disabled style={{ opacity:0.6, cursor:'not-allowed' }} />
               <p style={{ fontSize:11, color:'var(--sl-400)', marginTop:4 }}>Email cannot be changed here. Contact support if needed.</p>
+            </div>
+            <div>
+              <label className="label">Your Industry</label>
+              <IndustrySelector profileId={profile.id} currentIndustry={(profile as any).industry} />
+              <p style={{ fontSize:11, color:'var(--text3)', marginTop:5 }}>VeSiMy adapts its language to your field — patients, batches, matters, or units, depending on your industry.</p>
             </div>
           </div>
         </div>

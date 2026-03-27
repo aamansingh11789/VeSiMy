@@ -33,7 +33,7 @@ function UpgradeToast() {
     if (params.get('upgraded') === 'true') {
       const plan = params.get('plan') || 'pro'
       toast.success(
-        `🎉 Welcome to VeSiMy ${plan.charAt(0).toUpperCase() + plan.slice(1)}! Your plan is now active.`,
+        `You're ready to start tracking improvements and hitting your targets.`,
         { duration: 6000 }
       )
       window.history.replaceState({}, '', '/dashboard')
@@ -43,16 +43,7 @@ function UpgradeToast() {
   return null
 }
 
-const INDUSTRIES = [
-  'Manufacturing',
-  'Healthcare',
-  'Logistics',
-  'Retail',
-  'Food & Beverage',
-  'Construction',
-  'Domestic',
-  'Other',
-]
+// Industry options loaded from lib/industry-language.ts via the IndustrySelector component
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
 
@@ -290,8 +281,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
       style={{
         padding: '24px 28px',
         marginBottom: 28,
-        background:
-          'rgba(248,247,245,0.97)',
+        background: '#FFFFFF',
       }}
     >
       <div
@@ -313,7 +303,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
               marginBottom: 8,
             }}
           >
-            PORTFOLIO HEALTH
+            IMPROVEMENT PROGRESS
           </p>
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
@@ -647,18 +637,18 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 gap: 8,
                 padding: '6px 10px',
                 borderRadius: 999,
-                background: 'rgba(212,162,8,0.08)',
-                border: '1px solid rgba(212,162,8,0.14)',
+                background: 'rgba(1,118,211,0.08)',
+                border: '1px solid rgba(1,118,211,0.14)',
                 marginBottom: 14,
               }}
             >
-              <CrownIcon size={12} color="#D4A208" />
+              <CrownIcon size={12} color="#0176D3" />
               <span
                 style={{
                   fontSize: 10,
                   letterSpacing: 1.2,
                   textTransform: 'uppercase',
-                  color: '#D4A208',
+                  color: '#0176D3',
                   fontWeight: 700,
                 }}
               >
@@ -668,8 +658,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
             <h1
               style={{
-                fontFamily: serif,
-                fontSize: 34,
+                fontFamily: 'var(--font-sans)',
+                fontSize: 26,
                 fontWeight: 700,
                 color: 'var(--text)',
                 marginBottom: 8,
@@ -683,7 +673,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
             <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 620 }}>
               {projects.length === 0
-                ? 'Create your first project to start mapping your current state and uncovering improvement opportunities.'
+                ? 'Map your process, identify your wins, and track every improvement toward your targets. Start with your first project.'
                 : `${projects.length} active project${projects.length !== 1 ? 's' : ''} · ${totalSteps} total steps mapped across your workspace.`}
             </p>
           </div>
@@ -710,8 +700,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
-                      background: view === v ? 'rgba(212,162,8,0.12)' : 'transparent',
-                      color: view === v ? '#D4A208' : 'var(--text2)',
+                      background: view === v ? 'rgba(1,118,211,0.12)' : 'transparent',
+                      color: view === v ? '#0176D3' : 'var(--text2)',
                       fontWeight: view === v ? 700 : 500,
                     }}
                   >
@@ -745,7 +735,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               gap: 16,
               flexWrap: 'wrap',
               background:
-                'linear-gradient(135deg, rgba(212,162,8,0.06), rgba(212,162,8,0.02) 42%, rgba(248,247,245,0.97))',
+                'linear-gradient(135deg, rgba(1,118,211,0.06), rgba(1,118,211,0.02) 42%, rgba(248,247,245,0.97))',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -754,18 +744,18 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   width: 34,
                   height: 34,
                   borderRadius: 10,
-                  background: 'rgba(212,162,8,0.12)',
-                  border: '1px solid rgba(212,162,8,0.22)',
+                  background: 'rgba(1,118,211,0.12)',
+                  border: '1px solid rgba(1,118,211,0.22)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <CrownIcon size={16} color="#D4A208" />
+                <CrownIcon size={16} color="#0176D3" />
               </div>
 
               <div>
-                <div style={{ fontSize: 13, color: '#D4A208', fontWeight: 700 }}>
+                <div style={{ fontSize: 13, color: '#0176D3', fontWeight: 700 }}>
                   You’ve reached your free project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
@@ -797,7 +787,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             label="Projects"
             value={projects.length}
             icon={BarChartIcon}
-            color="#D4A208"
+            color="#0176D3"
             hint="Active workspaces"
           />
           <StatCard
@@ -815,18 +805,18 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             hint={isPro ? 'Premium access active' : 'Starter tier'}
           />
           <StatCard
-            label="Slots Used"
+            label="Last Active"
             value={`${profile.projects_count} projects`}
             icon={ZapIcon}
             color="#F4A623"
-            hint="Project capacity"
+            hint="Keep the momentum going"
           />
         </div>
 
         {/* ── Reference Projects — all 5 industries ── */}
         <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(196,155,46,0.10)', border: '1px solid rgba(196,155,46,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--gold)', letterSpacing: 0.5 }}>REF</div>
+            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(1,118,211,0.10)', border: '1px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>Reference Projects — 5 Industries</div>
               <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
@@ -836,7 +826,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             <button
               onClick={seedReferenceProject}
               disabled={seedingRef}
-              style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#C49510,#D4A208)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
+              style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
             >
               {seedingRef ? 'Loading…' : 'Load All Reference Projects →'}
             </button>
@@ -846,7 +836,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             {([
               { label: 'Manufacturing', color: '#3070B8', desc: 'Seat Assembly — VSM, Time Study, 5 Why, Fishbone, Waste, Kaizen, Yamazumi, PDCA, A3' },
               { label: 'Healthcare', color: '#2A9E82', desc: 'Urgent Care — Patient flow, 3.2hr lead time, treatment bottleneck, Supe analysis' },
-              { label: 'Real Estate', color: '#C49B2E', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
+              { label: 'Real Estate', color: '#0176D3', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
               { label: 'Craft Brewery', color: '#C0402A', desc: 'Batch Production — Fermenter constraint, stuck sparge root cause, canning line' },
               { label: 'Winery', color: '#6426A0', desc: 'Boutique Wine — 80 barrels at capacity, 6% barrel defect, no tracking system' },
             ] as any[]).map((ind: any) => (
@@ -880,10 +870,10 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(212,162,8,0.08)',
-                border: '1px solid rgba(212,162,8,0.16)',
+                background: 'rgba(1,118,211,0.08)',
+                border: '1px solid rgba(1,118,211,0.16)',
                 fontSize: 34,
-                color: '#D4A208',
+                color: '#0176D3',
               }}
             >
               ⊚
@@ -953,7 +943,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   href={`/project/${recentProject.id}`}
                   style={{
                     fontSize: 12,
-                    color: '#D4A208',
+                    color: '#0176D3',
                     textDecoration: 'none',
                     display: 'flex',
                     alignItems: 'center',
@@ -1061,16 +1051,16 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   gap: 8,
                   padding: '6px 10px',
                   borderRadius: 999,
-                  background: 'rgba(212,162,8,0.08)',
-                  border: '1px solid rgba(212,162,8,0.14)',
+                  background: 'rgba(1,118,211,0.08)',
+                  border: '1px solid rgba(1,118,211,0.14)',
                   marginBottom: 14,
                 }}
               >
-                <PlusIcon size={11} color="#D4A208" />
+                <PlusIcon size={11} color="#0176D3" />
                 <span
                   style={{
                     fontSize: 10,
-                    color: '#D4A208',
+                    color: '#0176D3',
                     fontWeight: 700,
                     letterSpacing: 1.2,
                     textTransform: 'uppercase',

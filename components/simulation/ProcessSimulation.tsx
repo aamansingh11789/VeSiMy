@@ -45,7 +45,7 @@ export function ProcessSimulation({ steps, projectId }: Props) {
       {/* Summary */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(110px,1fr))', gap:10, marginBottom:20 }}>
         {[['Current LT',fmt(curLT),'var(--text2)'],['Future LT',fmt(futLT),'#1DD1A1'],
-          ['Time Saved',saved>0?fmt(saved):'—','var(--gold2)'],
+          ['Time Saved',saved>0?fmt(saved):'—','var(--brand)'],
           ['PCE',`${curPCE}% → ${futPCE}%`,'var(--steel)']].map(([l,v,c]) => (
           <div key={l as string} style={{ background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)', padding:'12px 14px' }}>
             <div style={{ fontSize:9, color:'var(--text3)', letterSpacing:1.5, fontFamily:'var(--font-mono)', marginBottom:4 }}>{l as string}</div>
@@ -58,15 +58,15 @@ export function ProcessSimulation({ steps, projectId }: Props) {
       <div style={{ display:'flex', gap:6, marginBottom:16 }}>
         {(['edit','compare'] as const).map(v => (
           <button key={v} onClick={() => setView(v)} style={{ padding:'7px 16px', borderRadius:'var(--radius-sm)', border:'1px solid',
-            background:view===v?'var(--gold-dim)':'transparent', borderColor:view===v?'var(--gold-glow)':'var(--border2)',
-            color:view===v?'var(--gold2)':'var(--text2)', fontSize:12, fontWeight:view===v?700:400, cursor:'pointer' }}>
-            {v==='edit'?'⚙ Adjust':'⊞ Compare'}
+            background:view===v?'var(--brand-dim)':'transparent', borderColor:view===v?'var(--brand-glow)':'var(--border2)',
+            color:view===v?'var(--brand)':'var(--text2)', fontSize:12, fontWeight:view===v?700:400, cursor:'pointer' }}>
+            {v==='edit'?'Adjust':'Compare'}
           </button>
         ))}
         <div style={{ flex:1 }}/>
         <button onClick={() => setAdj({})} style={{ padding:'7px 12px', borderRadius:'var(--radius-sm)', border:'1px solid var(--border2)', background:'transparent', cursor:'pointer', color:'var(--text3)', fontSize:11 }}>↺ Reset</button>
         <button onClick={save} disabled={saving} className="btn-primary" style={{ fontSize:11 }}>
-          {saving?'…':'💾 Save'}
+          {saving?'Saving…':'Save'}
         </button>
       </div>
 
@@ -87,7 +87,7 @@ export function ProcessSimulation({ steps, projectId }: Props) {
                 </div>
                 <input type="range" min={0} max={Math.max(orig*2,300)} value={a[key]}
                   onChange={e => setA(s,key,Number(e.target.value))}
-                  style={{ width:'100%', accentColor:a[key]<orig?'#1DD1A1':'var(--gold)' }}/>
+                  style={{ width:'100%', accentColor:a[key]<orig?'#1DD1A1':'var(--brand)' }}/>
               </div>
             ))}
           </div>
