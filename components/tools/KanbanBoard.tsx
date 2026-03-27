@@ -377,7 +377,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
             background: 'rgba(100,38,160,0.1)', border: '1px solid rgba(100,38,160,0.3)',
             borderRadius: 6, padding: '6px 12px', color: '#8C44CC',
             fontSize: 12, cursor: 'pointer',
-          }}>＋</button>
+          }}>+</button>
         </div>
 
         {/* Footer */}
@@ -385,7 +385,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           <button onClick={() => { if (confirm('Delete this card?')) onDelete(card.id) }} style={{
             background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.3)',
             borderRadius: 7, padding: '8px 14px', color: '#FF6B6B', fontSize: 13, cursor: 'pointer',
-          }>Delete</button>
+          }}>Delete</button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onClose} style={{
               background: 'none', border: '1px solid var(--border)', borderRadius: 7,
@@ -567,7 +567,7 @@ export function KanbanBoard({
               borderRadius: 10, padding: '12px 24px', color: 'var(--text)',
               fontSize: 14, cursor: 'pointer',
             }}>
-            ＋ Create Column Manually
+            + Create Column Manually
           </button>
         </div>
       </div>
@@ -601,7 +601,7 @@ export function KanbanBoard({
             background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
             border: 'none', borderRadius: 7, padding: '7px 14px',
             color: '#FFFFFF', fontSize: 12, fontWeight: 700, cursor: 'pointer',
-          }}>＋ Add Column</button>
+          }}>+ Add Column</button>
         </div>
       </div>
 
@@ -754,7 +754,7 @@ export function KanbanBoard({
                     }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = col.color; e.currentTarget.style.color = col.color }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
-                    ＋ Add card
+                    + Add card
                   </button>
                 )}
               </div>
@@ -773,7 +773,7 @@ export function KanbanBoard({
           }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = '#0176D3'; e.currentTarget.style.color = '#0176D3' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
-          ＋ Add Column
+          + Add Column
         </button>
       </div>
 
