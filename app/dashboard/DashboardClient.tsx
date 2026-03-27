@@ -835,11 +835,24 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           {/* Industry chips */}
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {([
-              { label: 'Manufacturing', color: '#3070B8', desc: 'Seat Assembly — VSM, Time Study, 5 Why, Fishbone, Waste, Kaizen, Yamazumi, PDCA, A3' },
-              { label: 'Healthcare', color: '#2A9E82', desc: 'Urgent Care — Patient flow, 3.2hr lead time, treatment bottleneck, Supe analysis' },
-              { label: 'Real Estate', color: '#0176D3', desc: 'Transactions — Lead to close, 28% doc kickback, 5 Why to standard work gap' },
-              { label: 'Craft Brewery', color: '#C0402A', desc: 'Batch Production — Fermenter constraint, stuck sparge root cause, canning line' },
-              { label: 'Winery', color: '#6426A0', desc: 'Boutique Wine — 80 barrels at capacity, 6% barrel defect, no tracking system' },
+  { label:'Automotive', color:'#0176D3', desc:'Seat assembly. CT 145s vs 120s Takt. All 9 tools.' },
+              { label:'Hospital', color:'#2E844A', desc:'ED patient flow. 3.2hr door-to-discharge. PDCA + 5 Why.' },
+              { label:'Software', color:'#6426A0', desc:'PR cycle 14 days. Bottleneck at code review. Kaizen + PDCA.' },
+              { label:'Restaurant', color:'#C0402A', desc:'Kitchen 22 min avg. 6% wrong orders. All tools.' },
+              { label:'Law Firm', color:'#0a5eaa', desc:'40% draft revision rate. 8 tools populated.' },
+              { label:'Retail', color:'#854F0B', desc:'4hr replenishment delay. Vendor delivery waste.' },
+              { label:'Warehouse', color:'#1A7860', desc:'96.8% pick accuracy. Re-slot top 50 error SKUs.' },
+              { label:'Hotel', color:'#3070B8', desc:'62-min room turnover vs 45-min standard.' },
+              { label:'Banking', color:'#0176D3', desc:'18-day loan vs 5-day competitor. 35% doc errors.' },
+              { label:'Construction', color:'#514F4D', desc:'18% MEP first inspection fail. Coordination waste.' },
+              { label:'Contact Centre', color:'#8C44CC', desc:'28% repeat contact. FCR 72% vs 85% target.' },
+              { label:'Marketing', color:'#C0402A', desc:'3.2 revision rounds per campaign. Brief waste.' },
+              { label:'Real Estate', color:'#185FA5', desc:'28% file kickback. 45-day close vs 30-day market.' },
+              { label:'Pharma', color:'#2E844A', desc:'12% OOS rate. Batch release bottleneck.' },
+              { label:'Winery', color:'#6426A0', desc:'6% barrel TCA/VA defect. 80 barrels no tracking.' },
+              { label:'E-Commerce', color:'#854F0B', desc:'4.2% pick error. $8k/month returns.' },
+              { label:'Brewery', color:'#C0402A', desc:'Fermenter capacity ceiling. 6-day ferment.' },
+              { label:'Primary Care', color:'#1A7860', desc:'38-min visit vs 20-min standard. Schedule redesign.' },
             ] as any[]).map((ind: any) => (
               <div key={ind.label} title={ind.desc} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 100, background: `${ind.color}0F`, border: `1px solid ${ind.color}30`, fontSize: 11 }}>
                 <span style={{ fontWeight: 600, color: ind.color }}>{ind.label}</span>

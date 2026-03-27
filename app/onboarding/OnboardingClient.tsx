@@ -455,7 +455,7 @@ export function OnboardingClient({ profile }: Props) {
                     Load reference projects — explore fully-built examples
                   </div>
                   <div style={{ fontSize:11, color:'var(--text3)' }}>
-                    5 industries, every CI tool populated with real data. Best way to see what VeSiMy can do.
+                    18 industries, every CI tool populated — stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, and more. Real bottlenecks, root causes, and countermeasures.
                   </div>
                 </button>
 
