@@ -1,7 +1,6 @@
 // @ts-nocheck
 'use client'
 import { useIndustryLanguage } from '@/hooks/useIndustryLanguage'
-import { useIndustryLanguage } from '@/hooks/useIndustryLanguage'
 // ── components/learn/LearningCenter.tsx ──────────────────────────────────────
 import { useState, useEffect } from 'react'
 interface Props { userId: string }
