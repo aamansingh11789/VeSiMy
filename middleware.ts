@@ -37,14 +37,15 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Protected routes — redirect to login if no valid user
-  if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/project') || pathname.startsWith('/settings'))) {
+  const protectedPaths = ['/dashboard', '/project', '/settings', '/onboarding', '/projects', '/kaizen', '/learn']
+  if (!user && protectedPaths.some(p => pathname.startsWith(p))) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/auth/login'
     loginUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  // Already logged in — redirect away from auth pages to dashboard
+  // Already logged in — redirect away from auth pages
   if (user && (pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup'))) {
     const dashUrl = request.nextUrl.clone()
     dashUrl.pathname = '/dashboard'
@@ -60,7 +61,11 @@ export const config = {
   matcher: [
     '/dashboard/:path*',
     '/project/:path*',
+    '/projects/:path*',
     '/settings/:path*',
+    '/onboarding/:path*',
+    '/kaizen/:path*',
+    '/learn/:path*',
     '/auth/login',
     '/auth/signup',
   ],

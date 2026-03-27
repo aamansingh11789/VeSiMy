@@ -17,6 +17,7 @@ import {
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
 import type { Profile, Project } from '@/lib/store'
+import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
 import { useAnalytics } from '@/hooks/useAnalytics'

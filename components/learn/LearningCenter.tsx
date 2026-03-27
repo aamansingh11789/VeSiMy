@@ -1,5 +1,7 @@
 // @ts-nocheck
 'use client'
+import { useIndustryLanguage } from '@/hooks/useIndustryLanguage'
+import { useIndustryLanguage } from '@/hooks/useIndustryLanguage'
 // ── components/learn/LearningCenter.tsx ──────────────────────────────────────
 import { useState, useEffect } from 'react'
 interface Props { userId: string }
@@ -8,7 +10,7 @@ const MANUAL = [
   { id:'getting-started', icon:'', title:'Getting Started', pro:false, steps:[
     { title:'Create your first project', body:'Click "New Project" on the Dashboard. Enter a name, select your industry, add the product or service name, and set customer demand and working hours. These values drive your Takt Time calculation automatically.' },
     { title:'Set Takt Time', body:'Takt Time = Available Time ÷ Customer Demand. VeSiMy calculates this automatically when you enter working hours and demand in project settings. Every process step is benchmarked against it — steps over Takt are flagged red.' },
-    { title:'Navigate the workspace', body:'Your project has 10 tabs: Builder (add steps), VSM Map (visual stream), Roadmap (kaizen mission control), PDCA (improvement projects), Kaizen (events board), Kanban (task tracking), Simulation Pro, Live Floor Pro, Report, and Branches. Premium tabs require a Pro plan.' },
+    { title:'Navigate the workspace', body:'Your project uses language from your industry. If you selected Healthcare, you\'ll see "patient" instead of "product", "care step" instead of "operation", and so on throughout. You can change your industry in Settings at any time. Your project has tabs: Builder (add steps), VSM Map (visual stream), Roadmap (kaizen mission control), PDCA (improvement projects), Kaizen (events board), Kanban (task tracking), Simulation Pro, Live Floor Pro, Report, and Branches. Premium tabs require a Pro plan.' },
     { title:'Project settings', body:'Click the gear icon in the top bar to edit project details: name, industry, product, customer, supplier, demand, working hours, and shift count. Changes reflect instantly in all VSM calculations.' },
   ]},
   { id:'va-classification', icon:'', title:'VA / NNVA / NVA Classification', pro:false, steps:[
@@ -165,6 +167,7 @@ const FAQS = [
 
 export function LearningCenter({ userId }: Props) {
   const [activeTab,      setActiveTab]      = useState<'manual'|'glossary'|'faqs'>('manual')
+  const { t: indT, industry } = useIndustryLanguage()
   const [activeSection,  setActiveSection]  = useState('getting-started')
   const [expandedStep,   setExpandedStep]   = useState<string|null>(null)
   const [expandedFAQ,    setExpandedFAQ]    = useState<number|null>(null)
@@ -273,7 +276,9 @@ export function LearningCenter({ userId }: Props) {
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{ padding:'18px 20px 14px', borderBottom:'1px solid var(--border)', background:'#FFFFFF', flexShrink:0 }}>
-        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:3 }}>Learning Center</h1>
+        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:3 }}>
+          {industry ? `Learning Center — ${indT.sectorLabel}` : 'Learning Center'}
+        </h1>
         <p style={{ fontSize:12, color:'var(--text3)', margin:'0 0 12px' }}>Master lean CI — PDCA, VSM, Yamazumi, 8D and more.</p>
         <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
           {([['manual','Manual'],['glossary','Glossary'],['faqs','FAQs']] as const).map(([t,label]) => (

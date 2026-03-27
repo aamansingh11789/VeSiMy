@@ -63,14 +63,26 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/auth/login?error=exchange_failed`)
   }
 
-  // ── Step 4: Optionally mark the user as onboarded ─────────────────────────
-  // We do this quietly — don't block the redirect on profile errors
+  // ── Step 4: Check if user has completed onboarding ────────────────────────
+  // Do NOT mark as onboarded here — the onboarding wizard does that after
+  // the user selects their industry and role. New users get sent to /onboarding.
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
-      await supabase.from('profiles').update({ onboarded: true }).eq('id', user.id)
+      const { data: profile } = await supabase
+        .from('profiles').select('onboarded').eq('id', user.id).single()
+      if (profile && !profile.onboarded) {
+        // New user — send to onboarding wizard instead of dashboard
+        const onboardUrl = new URL('/onboarding', origin)
+        const onboardResponse = NextResponse.redirect(onboardUrl.toString())
+        // Copy cookies from the original redirect response to this one
+        response.cookies.getAll().forEach(cookie => {
+          onboardResponse.cookies.set(cookie.name, cookie.value)
+        })
+        return onboardResponse
+      }
     }
-  } catch (_) { /* non-fatal */ }
+  } catch (_) { /* non-fatal — fall through to dashboard */ }
 
   // ── Step 5: Return the response — carries session cookies + redirect ───────
   return response

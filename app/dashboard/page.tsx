@@ -6,7 +6,7 @@ import { Sidebar }    from '@/components/layout/Sidebar'
 import { BottomNav }  from '@/components/layout/BottomNav'
 import { DashboardClient } from './DashboardClient'
 
-export const metadata = { title: 'Dashboard' }
+export const metadata = { title: 'Dashboard — VeSiMy' }
 
 export default async function DashboardPage() {
   const supabase = await createServerSupabase()
