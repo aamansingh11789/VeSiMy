@@ -729,8 +729,7 @@ export function OnboardingClient({ profile }: Props) {
         const refData = await refRes.json()
         setDone(true)
         setTimeout(() => {
-          if (refData?.id) router.push(`/project/${refData.id}`)
-          else router.push('/dashboard')
+          window.location.href = refData?.id ? `/project/${refData.id}` : '/dashboard'
         }, 2000)
         return
       }
@@ -768,8 +767,7 @@ export function OnboardingClient({ profile }: Props) {
 
       setDone(true)
       setTimeout(() => {
-        if (project?.id) router.push(`/project/${project.id}`)
-        else router.push('/dashboard')
+        window.location.href = project?.id ? `/project/${project.id}` : '/dashboard'
       }, 2000)
     } catch (e) {
       toast.error('Something went wrong. Please try again.')
@@ -817,7 +815,7 @@ export function OnboardingClient({ profile }: Props) {
             </div>
           ))}
         </div>
-        <button onClick={() => router.push('/dashboard')} style={{ fontSize:12, color:'var(--text3)', background:'none', border:'none', cursor:'pointer' }}>
+        <button onClick={() => { window.location.href = '/dashboard' }} style={{ fontSize:12, color:'var(--text3)', background:'none', border:'none', cursor:'pointer' }}>
           Skip →
         </button>
       </div>

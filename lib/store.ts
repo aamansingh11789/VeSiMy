@@ -119,9 +119,20 @@ export interface Profile {
   email: string
   full_name?: string
   avatar_url?: string
-  plan_tier: 'free' | 'pro' | 'enterprise'
+  plan_tier: 'free' | 'pro' | 'enterprise' | 'lifetime'
   projects_count: number
   projects_limit: number
+  // Extended fields (added by migrations 004-008)
+  onboarded?: boolean
+  industry?: string
+  role?: string
+  company?: string
+  is_beta?: boolean
+  beta_tier?: string | null
+  beta_expires_at?: string | null
+  lifetime_access?: boolean
+  subscription_status?: string
+  subscription_period_end?: string | null
 }
 
 // ── Store ───────────────────────────────────────────────────────────────────

@@ -2,6 +2,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { analyzeSteps } from '@/lib/supe-engine'
 
+export const maxDuration = 60  // Vercel max execution time (seconds)
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

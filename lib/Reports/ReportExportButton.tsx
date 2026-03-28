@@ -3,7 +3,7 @@
 
 import { createRoot } from 'react-dom/client'
 import IndustrialReport from './IndustrialReport'
-import { buildIndustrialReportData } from '@/lib/reports/buildIndustrialReport'
+import { buildIndustrialReportData } from '@/lib/Reports/buildIndustrialReport'
 
 export default function ReportExportButton({ project, steps, branches, vsmHtml = '' }: any) {
   const handleExport = () => {

@@ -1,14 +1,16 @@
 // @ts-nocheck
 // ── app/api/projects/seed-industry-reference/route.ts ─────────────────────────
 // Seeds ONLY the reference project(s) for the calling user's specific industry.
-// Passes an industryFilter to seed-all-references so no other industry's projects
-// are ever created in this user's account.
-// Called from onboarding finish() and dashboard first-visit.
-// Idempotent — safe to call multiple times.
+// Previously used an internal fetch() to seed-all-references which failed on
+// Vercel because NEXT_PUBLIC_SITE_URL was unset → fell back to localhost:3000.
+// Now calls the POST handler directly as a module import — no HTTP hop.
 
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 import { INDUSTRY_REFERENCE_NAMES } from '@/lib/industry-reference-map'
+import { POST as seedAllPOST } from '@/app/api/projects/seed-all-references/route'
+
+export const maxDuration = 60  // Vercel max execution time (seconds)
 
 export async function POST(_req: NextRequest) {
   try {
@@ -42,14 +44,23 @@ export async function POST(_req: NextRequest) {
       })
     }
 
-    // Seed ONLY this industry — pass filter to seed-all-references
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    await fetch(`${siteUrl}/api/projects/seed-all-references`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', cookie: _req.headers.get('cookie') || '' },
-      body: JSON.stringify({ industryFilter: industry }),
-    })
+    // ── Call the seed handler directly — no internal HTTP fetch ──────────────
+    // Build a synthetic Request that carries the session cookie and industryFilter.
+    // This avoids the localhost:3000 fetch that breaks on Vercel serverless.
+    const syntheticReq = new Request(
+      'http://localhost/api/projects/seed-all-references',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'cookie': _req.headers.get('cookie') || '',
+        },
+        body: JSON.stringify({ industryFilter: industry }),
+      }
+    )
+    await seedAllPOST(syntheticReq as unknown as NextRequest)
 
+    // Fetch the newly created primary project
     const { data: projects } = await supabase
       .from('projects').select('id, name').eq('user_id', user.id)
       .in('name', refNames).order('created_at', { ascending: false }).limit(1)
@@ -57,7 +68,9 @@ export async function POST(_req: NextRequest) {
     const primary = projects?.[0]
     return NextResponse.json({
       id: primary?.id || null, industry, refNames, seeded: refNames,
-      message: primary ? `Reference project ready: ${primary.name}` : `Seeded for ${industry}`,
+      message: primary
+        ? `Reference project ready: ${primary.name}`
+        : `Seeded for ${industry}`,
     })
 
   } catch (err: any) {

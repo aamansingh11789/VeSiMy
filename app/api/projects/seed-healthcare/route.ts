@@ -8,6 +8,8 @@
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
+export const maxDuration = 60  // Vercel max execution time (seconds)
+
 export async function POST(_request: NextRequest) {
   try {
     const supabase = await createServerSupabase()
