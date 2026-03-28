@@ -45,13 +45,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Already logged in — redirect away from auth pages
+  // Already logged in — redirect away from auth pages to dashboard
+  // (dashboard page server-side checks onboarding and redirects to /onboarding if needed)
   if (user && (pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup'))) {
     const dashUrl = request.nextUrl.clone()
     dashUrl.pathname = '/dashboard'
     dashUrl.search = ''
     return NextResponse.redirect(dashUrl)
   }
+
+  // Logged-in user on /onboarding — allow through (onboarding page handles redirect if already done)
 
   // Return the supabaseResponse — it carries any refreshed session cookies
   return supabaseResponse

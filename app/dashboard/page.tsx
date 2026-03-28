@@ -23,6 +23,9 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
+  // Gate: new users who haven't completed onboarding go to the wizard
+  if (!(profile as any).onboarded) redirect('/onboarding')
+
   const wgroup = getWatermarkGroup((profile as any).industry || '')
 
   return (

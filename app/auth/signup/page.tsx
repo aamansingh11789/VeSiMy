@@ -46,8 +46,8 @@ function SignupForm() {
     if (data?.session) {
       if (planKey && planKey !== 'trial') await redirectToCheckout(planKey)
       else {
-        const demo = searchParams.get('demo')
-        window.location.href = demo ? `/dashboard?demo=${demo}` : '/dashboard'
+        // New user — always go to onboarding wizard first
+        window.location.href = '/onboarding'
       }
     } else {
       // Email confirmation required — show instructions instead of redirecting

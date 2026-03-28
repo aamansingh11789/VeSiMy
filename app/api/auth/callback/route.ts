@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     if (user) {
       const { data: profile } = await supabase
         .from('profiles').select('onboarded').eq('id', user.id).single()
-      if (profile && !profile.onboarded) {
+      if (!profile || !profile.onboarded) {
         // New user — send to onboarding wizard instead of dashboard
         const onboardUrl = new URL('/onboarding', origin)
         const onboardResponse = NextResponse.redirect(onboardUrl.toString())

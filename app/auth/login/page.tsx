@@ -64,6 +64,15 @@ function LoginForm() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
+        // Check if this user completed onboarding — if not, send them there first
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          const { data: prof } = await supabase.from('profiles').select('onboarded').eq('id', user.id).single()
+          if (!prof || !prof.onboarded) {
+            window.location.href = '/onboarding'
+            return
+          }
+        }
         window.location.href = redirect
       }
     } catch (err: any) {
