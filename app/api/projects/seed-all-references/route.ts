@@ -72,7 +72,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Automotive Seat Assembly'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Automotive'); primaryId = ex } else {
         const pid = await proj({ name: nm, industry: 'automotive_manufacturing', customer: 'OEM Assembly Plant',
@@ -95,6 +95,7 @@ export async function POST(_request: NextRequest) {
         await td(s5.id, pid, 'yamazumi', { taktTime: 120, operators:[{ stepName:'Material Staging', totalTime:45, tasks:[{ name:'Parts kitting', time:30, va_type:'nva' },{ name:'Scan & confirm', time:15, va_type:'nnva' }] },{ stepName:'Frame Sub-Assembly', totalTime:98, tasks:[{ name:'Frame weld', time:70, va_type:'va' },{ name:'Torque check', time:28, va_type:'nnva' }] },{ stepName:'Foam & Fabric', totalTime:145, tasks:[{ name:'Foam install', time:55, va_type:'va' },{ name:'Fabric clip', time:54, va_type:'va' },{ name:'Walk to rack', time:36, va_type:'nva' }] }] })
         seeded.push('Automotive')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -102,7 +103,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — ED Patient Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Hospital') } else {
         const pid = await proj({ name: nm, industry: 'hospital_acute_care', customer: 'Patient',
@@ -123,6 +124,7 @@ export async function POST(_request: NextRequest) {
         await td(s5.id, pid, 'pdca', { projectTitle:'ED Door-to-Discharge Reduction', problemStatement:'Average door-to-discharge 3.2 hrs vs 2-hr target — driving patient dissatisfaction and bed block.', background:'ED sees 85 patients/day. Mon/Fri 4-8pm surge regularly creates 2-hr physician wait.', team:[{ id:'t1', name:'Medical Director', role:'Sponsor' },{ id:'t2', name:'Charge Nurse', role:'Lead' }], startDate:'2026-03-01', targetDate:'2026-09-01', currentCondition:'3.2-hr door-to-discharge. Physician wait 35 min. 1 physician for 8 beds at peak. Lab TAT 45 min.', targetCondition:'Door-to-discharge under 2 hrs. Physician wait under 15 min. Lab TAT under 30 min.', rootCause:'Fixed staffing model not matched to demand. No concurrent documentation. Medications not at point of care.', hypothesis:'Demand-matched staffing + concurrent documentation + point-of-care meds = 75-min savings.', countermeasures:[{ id:'c1', action:'Install point-of-care medication Pyxis unit', owner:'Charge Nurse', dueDate:'2026-04-15', status:'open' },{ id:'c2', action:'Concurrent discharge documentation pilot', owner:'Medical Director', dueDate:'2026-05-01', status:'open' },{ id:'c3', action:'Demand-matched physician schedule Mon/Fri 4-8pm', owner:'Operations', dueDate:'2026-06-01', status:'open' }], implementation:'Phase 1: medication Pyxis. Phase 2: documentation workflow. Phase 3: staffing schedule.', metrics:[{ id:'m1', name:'Door-to-Discharge', before:'192', after:'', unit:'minutes' },{ id:'m2', name:'Physician Wait Time', before:'35', after:'', unit:'minutes' }], results:'', achieved:'', standardisation:'Update care protocols, train all staff, embed metrics into daily huddle board.', lessonsLearned:'', nextCycle:'After wait-time reduction — target 72-hr readmission rate from 8% to 4%.' })
         seeded.push('Hospital')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -130,7 +132,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Software Feature Delivery'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Software') } else {
         const pid = await proj({ name: nm, industry: 'software_development', customer: 'End User',
@@ -150,6 +152,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'pdca', { projectTitle:'PR Cycle Time Reduction', problemStatement:'14-day average lead time from story start to production deploy. Industry benchmark 3-5 days.', background:'Team of 8 engineers. 2 senior reviewers. 35% review failure rate causing rework loops.', team:[{ id:'t1', name:'Engineering Lead', role:'Sponsor' }], startDate:'2026-03-01', targetDate:'2026-06-01', currentCondition:'14-day lead time. 24-hr review wait. 35% PRs >2 rounds. 2 qualified reviewers only.', targetCondition:'5-day lead time. Review starts within 4 hrs. <1.5 rounds per PR. 6 qualified reviewers.', rootCause:'Insufficient review capacity. No PR template. No 24-hr SLA.', hypothesis:'Template + SLA + 2 new reviewers = review wait drops from 24hrs to 4hrs. Lead time drops from 14 to 5 days.', countermeasures:[{ id:'c1', action:'Implement mandatory PR template', owner:'Engineering Lead', dueDate:'2026-04-01', status:'open' },{ id:'c2', action:'Establish 24-hour review SLA', owner:'Engineering Lead', dueDate:'2026-04-01', status:'open' },{ id:'c3', action:'Junior reviewer shadowing programme', owner:'Engineering Lead', dueDate:'2026-05-01', status:'open' }], implementation:'Sprint 1: template + SLA. Sprint 2: shadowing programme start. Sprint 3: measure and adjust.', metrics:[{ id:'m1', name:'Lead Time', before:'14', after:'', unit:'days' },{ id:'m2', name:'Review Rounds per PR', before:'2.3', after:'', unit:'rounds' }], results:'', achieved:'', standardisation:'Embed PR template in repo, SLA in team charter, review competency in onboarding.', lessonsLearned:'', nextCycle:'After lead time — target deployment frequency from 2x/week to daily.' })
         seeded.push('Software')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -157,7 +160,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Restaurant Service Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Restaurant') } else {
         const pid = await proj({ name: nm, industry: 'restaurant_food_service', customer: 'Dining Guest',
@@ -177,6 +180,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'pdca', { projectTitle:'Kitchen Production Time Reduction', problemStatement:'Kitchen avg 22 min, peak 35 min. 6% wrong orders. Table turn rate 15% below target.', background:'65-cover restaurant, 3 sittings on Fri/Sat. Kitchen team of 5.', team:[{ id:'t1', name:'Head Chef', role:'Lead' },{ id:'t2', name:'FOH Manager', role:'Co-Lead' }], startDate:'2026-03-01', targetDate:'2026-05-01', currentCondition:'22-min avg kitchen time. 35-min peak. 6% wrong orders. No ticket standard.', targetCondition:'18-min avg kitchen time. Under 25 min at peak. Under 1% wrong orders.', rootCause:'No ticket-writing standard. Cross-station motion. No peak-period prep buffer.', hypothesis:'Standard ticket key reduces wrong orders to 1%. Cross-station fridge access removes 8 min of motion per service.', countermeasures:[{ id:'c1', action:'Standard ticket abbreviation key', owner:'FOH Manager', dueDate:'2026-04-01', status:'open' },{ id:'c2', action:'Dedicated peak-period mise en place protocol', owner:'Head Chef', dueDate:'2026-04-15', status:'open' }], implementation:'Ticket key live by 1 April. Mise en place protocol for first Fri/Sat service.', metrics:[{ id:'m1', name:'Kitchen Production Time', before:'22', after:'', unit:'minutes' },{ id:'m2', name:'Wrong Order Rate', before:'6', after:'', unit:'%' }], results:'', achieved:'', standardisation:'Ticket key in staff handbook. Mise en place as daily close checklist.', lessonsLearned:'', nextCycle:'After production time — target food waste percentage from 11% to 5%.' })
         seeded.push('Restaurant')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -184,7 +188,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Craft Brewery Batch Production'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Brewery') } else {
         const pid = await proj({ name: nm, industry: 'craft_brewery', customer: 'Taproom & Wholesale',
@@ -206,6 +210,7 @@ export async function POST(_request: NextRequest) {
         await td(s7.id, pid, 'smed', { stepName:'Packaging Line Changeover', steps:[{ id:'a1', seq:1, name:'Drain and rinse previous batch lines', type:'internal', phase:'pre', time:1200, notes:'Core internal — must be empty before changeover', convertible:false },{ id:'a2', seq:2, name:'Retrieve new labels from storage room', type:'internal', phase:'pre', time:180, notes:'Can be done while previous batch still running', convertible:true },{ id:'a3', seq:3, name:'Load labels into labeller', type:'internal', phase:'during', time:300, notes:'Machine stopped for label change', convertible:false },{ id:'a4', seq:4, name:'Run 20-can fill weight test', type:'internal', phase:'during', time:420, notes:'QC requirement — cannot be external', convertible:false },{ id:'a5', seq:5, name:'Update batch records and transfer logs', type:'waste', phase:'post', time:600, notes:'Done after restart — delays next batch unnecessarily. Move to during or end of prior batch.', convertible:false }] })
         seeded.push('Brewery')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -213,7 +218,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Law Firm Matter Lifecycle'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Law Firm') } else {
         const pid = await proj({ name: nm, industry: 'law_firm', customer: 'Client',
@@ -234,6 +239,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'pdca', { projectTitle:'Matter Drafting Quality Improvement', problemStatement:'40% first-draft revision rate. Partner queue adds 2-day wait. Total matter cycle time 25% above budget.', background:'Practice of 8 fee earners, 2 partners. High revision rate driving write-offs and client delays.', team:[{ id:'t1', name:'Managing Partner', role:'Sponsor' },{ id:'t2', name:'Practice Manager', role:'Lead' }], startDate:'2026-03-01', targetDate:'2026-07-01', currentCondition:'40% first drafts require substantive revision. No instruction template. 2-day partner review queue.', targetCondition:'12% first-draft revision rate. Partner review within 24 hrs. Written instructions before every draft.', rootCause:'No matter workflow standard. Instructions verbal and inconsistent. No pre-submission checklist.', hypothesis:'Standard template + confirmation requirement + partner diary slots = revision rate drops from 40% to 12%.', countermeasures:[{ id:'c1', action:'Standard instruction template per matter type', owner:'Managing Partner', dueDate:'2026-04-15', status:'open' },{ id:'c2', action:'Partner diary review slots', owner:'Practice Manager', dueDate:'2026-05-01', status:'open' }], implementation:'Phase 1: instruction templates. Phase 2: diary slots. Phase 3: measure and standardise.', metrics:[{ id:'m1', name:'First Draft Revision Rate', before:'40', after:'', unit:'%' },{ id:'m2', name:'Matter Cycle Time vs Budget', before:'125', after:'', unit:'%' }], results:'', achieved:'', standardisation:'Instruction templates in practice management system. Diary protocol in partner expectations document.', lessonsLearned:'', nextCycle:'After revision rate — target billing realisation rate from 82% to 92%.' })
         seeded.push('Law Firm')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -241,7 +247,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Retail Store Operations'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Retail') } else {
         const pid = await proj({ name: nm, industry: 'retail_stores', customer: 'Shopper',
@@ -261,6 +267,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'pdca', { projectTitle:'Replenishment Speed Improvement', problemStatement:'4-hr stockroom delay on multi-delivery days. Floor goes bare. Lost sales estimated $800/week.', background:'High-volume retail store. 5 vendors, avg 3 deliveries per week, peaks 5 deliveries Friday.', team:[{ id:'t1', name:'Store Manager', role:'Lead' }], startDate:'2026-03-15', targetDate:'2026-06-01', currentCondition:'240-min replenishment lead time on peak days. 2-associate stockroom only. No advance manifests.', targetCondition:'90-min replenishment lead time any day. Advance manifest from top 5 vendors. 4 trained stockroom associates.', rootCause:'No vendor delivery standard. Staff not cross-trained. No priority replenishment sequence.', hypothesis:'Advance manifests + 2 cross-trained cashiers = capacity matches volume every day.', countermeasures:[{ id:'c1', action:'Advance manifest from top 5 vendors', owner:'Store Manager', dueDate:'2026-04-30', status:'open' },{ id:'c2', action:'Cross-train 2 cashiers', owner:'Store Manager', dueDate:'2026-05-15', status:'open' }], implementation:'Vendor outreach begins week of 1 April. Training starts 15 April.', metrics:[{ id:'m1', name:'Replenishment Lead Time', before:'240', after:'', unit:'minutes' }], results:'', achieved:'', standardisation:'Manifest requirement in vendor agreement. Cross-training in associate handbook.', lessonsLearned:'', nextCycle:'After replenishment speed — target shrinkage rate from 1.8% to 1.0%.' })
         seeded.push('Retail')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -268,7 +275,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Warehouse Fulfilment'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Warehousing') } else {
         const pid = await proj({ name: nm, industry: 'warehousing_distribution', customer: 'E-commerce Retailer',
@@ -289,6 +296,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'pdca', { projectTitle:'Pick Accuracy to 99.5%', problemStatement:'96.8% pick accuracy. $1,400/month chargebacks. Client SLA is 99.5% or contract penalty.', background:'350-order/day warehouse. 6 pickers. 8,500 active SKUs. Client SLA at risk.', team:[{ id:'t1', name:'Warehouse Manager', role:'Lead' }], startDate:'2026-03-15', targetDate:'2026-06-01', currentCondition:'96.8% accuracy. Similar packaging adjacent. No individual tracking. Single scan point.', targetCondition:'99.5% accuracy. Top error SKUs separated. Confirmation scan at pack. Individual tracking by associate.', rootCause:'No slotting review. Similar packaging adjacent by WMS default. No individual accuracy data for coaching.', hypothesis:'Re-slot top 50 + confirmation scan = accuracy from 96.8% to 99.5% within 60 days.', countermeasures:[{ id:'c1', action:'Re-slot top 50 error SKUs', owner:'Warehouse Manager', dueDate:'2026-04-15', status:'open' },{ id:'c2', action:'Confirmation scan at pack station', owner:'WMS Admin', dueDate:'2026-04-01', status:'open' }], implementation:'Scan update live 1 April. Re-slot weekend of 12-13 April.', metrics:[{ id:'m1', name:'Pick Accuracy', before:'96.8', after:'', unit:'%' }], results:'', achieved:'', standardisation:'Slotting review quarterly. Accuracy by associate in daily management system.', lessonsLearned:'', nextCycle:'After accuracy — target lines per hour from 85 to 110.' })
         seeded.push('Warehousing')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -296,7 +304,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Hotel Guest Stay Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Hotel') } else {
         const pid = await proj({ name: nm, industry: 'hotel_hospitality', customer: 'Hotel Guest',
@@ -315,6 +323,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Room Turnover Time', baseline:62, target:42, actual:null, unit:'minutes', status:'in-progress', owner:'Housekeeping Manager', dueDate:'2026-06-01' }] })
         seeded.push('Hotel')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -322,7 +331,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Retail Banking Loan Process'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Banking') } else {
         const pid = await proj({ name: nm, industry: 'retail_banking', customer: 'Loan Applicant',
@@ -342,6 +351,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Application to Funding Time', baseline:18, target:5, actual:null, unit:'days', status:'in-progress', owner:'Operations Manager', dueDate:'2026-09-01' }] })
         seeded.push('Banking')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -349,7 +359,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Construction Build Workflow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Construction') } else {
         const pid = await proj({ name: nm, industry: 'construction', customer: 'Building Owner',
@@ -369,6 +379,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'MEP First Inspection Pass Rate', baseline:82, target:98, actual:null, unit:'%', status:'in-progress', owner:'Site Manager', dueDate:'2026-06-01' }] })
         seeded.push('Construction')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -376,7 +387,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Contact Centre Resolution Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Contact Centre') } else {
         const pid = await proj({ name: nm, industry: 'contact_center', customer: 'Customer',
@@ -395,6 +406,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'First Contact Resolution Rate', baseline:72, target:85, actual:null, unit:'%', status:'in-progress', owner:'Contact Centre Manager', dueDate:'2026-07-01' }] })
         seeded.push('Contact Centre')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -402,7 +414,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Marketing Agency Campaign Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Marketing') } else {
         const pid = await proj({ name: nm, industry: 'marketing_agency', customer: 'Brand Client',
@@ -421,6 +433,7 @@ export async function POST(_request: NextRequest) {
         await td(s4.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Revision Rounds per Campaign', baseline:3.2, target:1.5, actual:null, unit:'rounds', status:'in-progress', owner:'Managing Director', dueDate:'2026-06-01' }] })
         seeded.push('Marketing')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -428,7 +441,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Real Estate Transaction Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Real Estate') } else {
         const pid = await proj({ name: nm, industry: 'real_estate', customer: 'Home Buyer',
@@ -448,6 +461,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'stopwatch', { baseline: 5760, target: 2880, mean: 4320, laps: [2880,5760,4320,7200,3600,4320,5040,4320,2880,4320], notes: 'Negotiation avg 3 days. 35% of first offers rejected. Avg 1.8 rounds of counter-offer.' })
         seeded.push('Real Estate')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -455,7 +469,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Pharmaceutical Batch Release'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Pharma') } else {
         const pid = await proj({ name: nm, industry: 'pharmaceutical_manufacturing', customer: 'Hospital / Pharmacy',
@@ -475,6 +489,7 @@ export async function POST(_request: NextRequest) {
         await td(s4.id, pid, 'improvement', { goals: [{ id:'g1', metric:'OOS Result Rate', baseline:12, target:2, actual:null, unit:'%', status:'in-progress', owner:'QA Manager', dueDate:'2026-09-01' }] })
         seeded.push('Pharma')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -482,7 +497,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Boutique Winery Production'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Winery') } else {
         const pid = await proj({ name: nm, industry: 'winery', customer: 'DTC Wine Club & Wholesale',
@@ -502,6 +517,7 @@ export async function POST(_request: NextRequest) {
         await td(s5.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Barrel Defect Rate', baseline:6, target:1, actual:null, unit:'%', status:'in-progress', owner:'Winemaker', dueDate:'2026-09-01' }] })
         seeded.push('Winery')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -509,7 +525,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — E-Commerce Order Fulfilment'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('E-Commerce') } else {
         const pid = await proj({ name: nm, industry: 'ecommerce_fulfillment', customer: 'Online Shopper',
@@ -529,6 +545,7 @@ export async function POST(_request: NextRequest) {
         await td(s1.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Order Error Rate', baseline:4.2, target:0.8, actual:null, unit:'%', status:'in-progress', owner:'Operations Manager', dueDate:'2026-06-01' }] })
         seeded.push('E-Commerce')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -536,7 +553,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Primary Care Patient Visit'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Primary Care') } else {
         const pid = await proj({ name: nm, industry: 'primary_care_outpatient', customer: 'Patient',
@@ -555,6 +572,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Physician Visit Duration', baseline:38, target:22, actual:null, unit:'minutes', status:'in-progress', owner:'Lead Physician', dueDate:'2026-06-01' }] })
         seeded.push('Primary Care')
       }
+      }
     }
 
 
@@ -563,7 +581,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — General Manufacturing Assembly'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('General Manufacturing') } else {
         const pid = await proj({ name: nm, industry: 'general_manufacturing', customer: 'Distributor',
@@ -584,6 +602,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'pdca', { projectTitle:'Main Assembly CT Reduction', problemStatement:'CT 110s exceeds Takt 90s — creating WIP backlog and daily overtime.', background:'Takt 90s set 2 months ago after customer demand increase. Assembly not rebalanced.', team:[{ id:'t1', name:'Production Manager', role:'Sponsor' },{ id:'t2', name:'IE Engineer', role:'Lead' }], startDate:'2026-03-01', targetDate:'2026-05-01', currentCondition:'CT 110s. 3 operators sharing 1 wrench. No standard work. 3.2% defect rate.', targetCondition:'CT at or below 85s. Dedicated tooling. Standard work at station. Defect rate under 1%.', rootCause:'Shared tooling (15s wait) + no standard work (variation) = 20s over takt.', hypothesis:'Dedicated wrench saves 15s. Standard work saves 5–8s variation. Combined: CT under 85s.', countermeasures:[{ id:'c1', action:'Purchase and assign second torque wrench', owner:'Production Manager', dueDate:'2026-03-25', status:'in-progress' },{ id:'c2', action:'Post and train standard work at assembly station', owner:'IE Engineer', dueDate:'2026-04-15', status:'open' }], implementation:'Week 1: wrench. Week 3: standard work. Week 5: time study to confirm.', metrics:[{ id:'m1', name:'Cycle Time', before:'110', after:'', unit:'seconds' },{ id:'m2', name:'Defect Rate', before:'3.2', after:'', unit:'%' }], results:'', achieved:'', standardisation:'Lock standard work, schedule monthly CT audits, include in PFMEA.', lessonsLearned:'', nextCycle:'Packaging line balance — 2-operator cell with 30s variance.' })
         seeded.push('General Manufacturing')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -591,7 +610,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Aerospace Wing Rib Assembly'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Aerospace') } else {
         const pid = await proj({ name: nm, industry: 'aerospace_manufacturing', customer: 'Aircraft OEM',
@@ -611,6 +630,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'pdca', { projectTitle:'Drill NCR Reduction', problemStatement:'4.5% NCR rate at Drill & Ream costing £14k/month. AS9100 audit finding risk.', background:'Part number X-7741 high-value structural rib. Any escape to OEM triggers customer nonconformance report.', team:[{ id:'t1', name:'Quality Manager', role:'Sponsor' },{ id:'t2', name:'Manufacturing Engineering', role:'Lead' }], startDate:'2026-03-01', targetDate:'2026-07-01', currentCondition:'4.5% NCR. No scheduled tool replacement. Night shift has no Level 3 driller. MRB meets weekly — NCR parts queue avg 3 days.', targetCondition:'NCR rate below 1%. Scheduled tool replacement at 700-hole interval. Level 3 driller on all shifts. MRB same-day for class-1 NCRs.', rootCause:'No tool life analysis — bits replaced on failure. CI resource excluded from headcount. Night shift qualification gap.', hypothesis:'700-hole replacement interval eliminates 60% of NCRs. Level 3 on nights eliminates remaining 40% from operator error.', countermeasures:[{ id:'c1', action:'Set and implement 700-hole drill replacement schedule', owner:'Manufacturing Engineering', dueDate:'2026-04-15', status:'in-progress' },{ id:'c2', action:'Level 3 driller cross-training for 2 night-shift operators', owner:'HR', dueDate:'2026-05-01', status:'open' }], implementation:'Phase 1: tool schedule. Phase 2: qualification programme.', metrics:[{ id:'m1', name:'NCR Rate', before:'4.5', after:'', unit:'%' },{ id:'m2', name:'Rework Cost', before:'14000', after:'', unit:'£/month' }], results:'', achieved:'', standardisation:'Update control plan, AS9100 procedure, tool control sheet.', lessonsLearned:'', nextCycle:'Surface treatment defect rate — 0.8% with no root cause identified.' })
         seeded.push('Aerospace')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -618,7 +638,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Food & Beverage Production Line'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Food & Beverage') } else {
         const pid = await proj({ name: nm, industry: 'food_beverage_manufacturing', customer: 'Retail Distributor',
@@ -638,6 +658,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'pdca', { projectTitle:'Packaging Giveaway Reduction', problemStatement:'Multihead weigher drift causing 4.2% giveaway = £22k/month product loss.', background:'Issue undetected for 3 years — first identified during VSM study. Auto-compensation never configured.', team:[{ id:'t1', name:'Engineering Manager', role:'Lead' },{ id:'t2', name:'QA Manager', role:'Compliance' }], startDate:'2026-03-01', targetDate:'2026-05-01', currentCondition:'4.2% giveaway. No real-time monitoring. Calibration manual every 2 hrs. OEE 72%.', targetCondition:'Giveaway under 1%. Real-time monitoring at station. OEE above 85%.', rootCause:'Auto-compensation not configured at install. FAT did not include giveaway at operating temperature.', hypothesis:'Enabling auto-compensation reduces giveaway to 0.8%. Real-time display enables operator correction.', countermeasures:[{ id:'c1', action:'Enable auto-temperature compensation', owner:'Engineering', dueDate:'2026-03-28', status:'in-progress' },{ id:'c2', action:'Real-time giveaway display at station', owner:'Engineering', dueDate:'2026-04-30', status:'open' }], implementation:'Immediate software change + 2-week monitoring period.', metrics:[{ id:'m1', name:'Giveaway Rate', before:'4.2', after:'', unit:'%' },{ id:'m2', name:'Monthly Loss', before:'22000', after:'', unit:'£' }], results:'', achieved:'', standardisation:'Update PM schedule, FAT protocol, operator training.', lessonsLearned:'', nextCycle:'OEE improvement — Availability 84% to 92% via planned maintenance.' })
         seeded.push('Food & Beverage Mfg')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -645,7 +666,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Operating Room Surgical Pathway'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Surgery / OR') } else {
         const pid = await proj({ name: nm, industry: 'surgery_operating_room', customer: 'Patient',
@@ -665,6 +686,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'improvement', { goals: [{ id:'g1', metric:'First-Case Start Delay', baseline:32, target:5, actual:null, unit:'minutes', status:'in-progress', owner:'OR Manager', dueDate:'2026-06-01', notes:'3pm confirmation + schedule change' }] })
         seeded.push('Surgery / OR')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -672,7 +694,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Pharmacy Prescription Dispensing'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Pharmacy') } else {
         const pid = await proj({ name: nm, industry: 'pharmacy', customer: 'Patient',
@@ -690,6 +712,7 @@ export async function POST(_request: NextRequest) {
         await td(s1.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Patient Wait Time', baseline:45, target:15, actual:null, unit:'minutes', status:'in-progress', owner:'Pharmacy Manager', dueDate:'2026-06-01' }] })
         seeded.push('Pharmacy')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -697,7 +720,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Insurance Claims Processing'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Insurance') } else {
         const pid = await proj({ name: nm, industry: 'insurance', customer: 'Policyholder',
@@ -716,6 +739,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Claims Cycle Time', baseline:22, target:10, actual:null, unit:'days', status:'in-progress', owner:'Head of Claims', dueDate:'2026-09-01' }] })
         seeded.push('Insurance')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -723,7 +747,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — IT Incident Management'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('IT Operations') } else {
         const pid = await proj({ name: nm, industry: 'it_operations', customer: 'Internal Business User',
@@ -741,6 +765,7 @@ export async function POST(_request: NextRequest) {
         await td(s0.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Incident Mis-categorisation Rate', baseline:18, target:4, actual:null, unit:'%', status:'in-progress', owner:'IT Service Manager', dueDate:'2026-06-01' },{ id:'g2', metric:'MTTR (P2)', baseline:252, target:60, actual:null, unit:'minutes', status:'open', owner:'IT Service Manager', dueDate:'2026-08-01' }] })
         seeded.push('IT Operations')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -748,7 +773,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Airline Aircraft Turnaround'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Aviation') } else {
         const pid = await proj({ name: nm, industry: 'airline_aviation', customer: 'Passenger',
@@ -768,6 +793,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Aircraft Turn Time', baseline:52, target:35, actual:null, unit:'minutes', status:'in-progress', owner:'Ground Ops Manager', dueDate:'2026-06-01' }] })
         seeded.push('Aviation')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -775,7 +801,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Freight Delivery Operations'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Freight') } else {
         const pid = await proj({ name: nm, industry: 'freight_trucking', customer: 'Consignee',
@@ -794,6 +820,7 @@ export async function POST(_request: NextRequest) {
         await td(s0.id, pid, 'improvement', { goals: [{ id:'g1', metric:'On-Time Delivery Rate', baseline:78, target:95, actual:null, unit:'%', status:'in-progress', owner:'Operations Director', dueDate:'2026-07-01' }] })
         seeded.push('Freight')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -801,7 +828,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — University Student Enrolment'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Higher Education') } else {
         const pid = await proj({ name: nm, industry: 'higher_education', customer: 'Student',
@@ -820,6 +847,7 @@ export async function POST(_request: NextRequest) {
         await td(s1.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Offer-to-Enrolment Conversion', baseline:78, target:92, actual:null, unit:'%', status:'in-progress', owner:'Registrar', dueDate:'2026-10-01' }] })
         seeded.push('Higher Education')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -827,7 +855,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Corporate Training Programme'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Corporate Training') } else {
         const pid = await proj({ name: nm, industry: 'corporate_training', customer: 'Employee / Line Manager',
@@ -846,6 +874,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Compliance Training Completion Rate', baseline:62, target:95, actual:null, unit:'%', status:'in-progress', owner:'L&D Manager', dueDate:'2026-10-01' }] })
         seeded.push('Corporate Training')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -853,7 +882,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — HR Recruitment Flow'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('HR') } else {
         const pid = await proj({ name: nm, industry: 'human_resources', customer: 'Hiring Manager',
@@ -872,6 +901,7 @@ export async function POST(_request: NextRequest) {
         await td(s4.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Time to Fill', baseline:58, target:28, actual:null, unit:'days', status:'in-progress', owner:'HR Director', dueDate:'2026-09-01' },{ id:'g2', metric:'Offer-Stage Withdrawal Rate', baseline:35, target:10, actual:null, unit:'%', status:'in-progress', owner:'TA Lead', dueDate:'2026-06-01' }] })
         seeded.push('HR')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -879,7 +909,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Power Generation Maintenance'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Power Generation') } else {
         const pid = await proj({ name: nm, industry: 'power_generation_utilities', customer: 'Grid Operator',
@@ -898,6 +928,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Reactive Maintenance Percentage', baseline:42, target:15, actual:null, unit:'%', status:'in-progress', owner:'Maintenance Manager', dueDate:'2026-12-01' }] })
         seeded.push('Power Generation')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -905,7 +936,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Management Consulting Engagement'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Consulting') } else {
         const pid = await proj({ name: nm, industry: 'management_consulting', customer: 'Client Executive',
@@ -924,6 +955,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'improvement', { goals: [{ id:'g1', metric:'On-Time Delivery Rate', baseline:68, target:95, actual:null, unit:'%', status:'in-progress', owner:'Practice Director', dueDate:'2026-09-01' }] })
         seeded.push('Consulting')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -931,7 +963,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Nonprofit Beneficiary Services'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Nonprofit') } else {
         const pid = await proj({ name: nm, industry: 'nonprofit', customer: 'Beneficiary',
@@ -950,6 +982,7 @@ export async function POST(_request: NextRequest) {
         await td(s2.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Intake-to-Service Time', baseline:28, target:7, actual:null, unit:'days', status:'in-progress', owner:'CEO', dueDate:'2026-09-01' }] })
         seeded.push('Nonprofit')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -957,7 +990,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Professional Sports Recruitment'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Sports') } else {
         const pid = await proj({ name: nm, industry: 'professional_sports', customer: 'Club / Head Coach',
@@ -976,6 +1009,7 @@ export async function POST(_request: NextRequest) {
         await td(s4.id, pid, 'improvement', { goals: [{ id:'g1', metric:'Transfer Acquisition Rate', baseline:55, target:80, actual:null, unit:'%', status:'in-progress', owner:'DoF', dueDate:'2026-09-01' }] })
         seeded.push('Sports')
       }
+      }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -983,7 +1017,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Event Management Production'
-      if (!shouldSeed(nm)) { return }
+      if (shouldSeed(nm)) {
       const ex = await exists(nm)
       if (ex) { existing.push('Events') } else {
         const pid = await proj({ name: nm, industry: 'event_management', customer: 'Event Client / Delegate',
@@ -1002,6 +1036,7 @@ export async function POST(_request: NextRequest) {
         await td(s3.id, pid, 'kaizen', { items: [{ id:'kz1', kzId:'KZ-001', title:'30-min full AV test mandatory in every load-in schedule', description:'Add 30-min structured AV test to every load-in. Checklist: all mics, projection, sound levels, backup systems. Known failures fixed before audience arrival.', category:'Quality', priority:'critical', status:'in-progress', owner:'Technical Director', dueDate:'2026-04-15', actions:['Design AV test checklist (15 points)','Add 30-min to all load-in schedules','Brief all technical leads','Track failures: in-test vs live for 10 events'] },{ id:'kz2', kzId:'KZ-002', title:'Supplier confirmation system with automated T-7 and T-2 day reminders', description:'Centralised confirmation tracker. Automated email at T-7 and T-2 days. Auto-alert to PM if unconfirmed at T-2. Eliminates last-minute scramble.', category:'Delivery', priority:'high', status:'open', owner:'Operations Manager', dueDate:'2026-04-30', actions:['Build confirmation tracker (spreadsheet first, tool later)','Configure email reminders','Brief all PMs','Measure non-confirmation rate over 10 events'] }] })
         await td(s3.id, pid, 'improvement', { goals: [{ id:'g1', metric:'AV Failures Per Event', baseline:3.2, target:0.5, actual:null, unit:'failures', status:'in-progress', owner:'Technical Director', dueDate:'2026-07-01' }] })
         seeded.push('Events')
+      }
       }
     }
 
