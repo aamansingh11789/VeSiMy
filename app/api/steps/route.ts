@@ -10,7 +10,9 @@ export async function POST(request: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { projectId, ...form } = body
+
+  // Accept both camelCase (projectId) and snake_case (project_id) from callers
+  const projectId = body.projectId || body.project_id
 
   if (!projectId) return NextResponse.json({ error: 'projectId required' }, { status: 400 })
 
@@ -22,7 +24,10 @@ export async function POST(request: NextRequest) {
     .order('position', { ascending: false })
     .limit(1)
 
-  const position = existing?.length ? existing[0].position + 1 : 0
+  // Use explicit order_index if provided (onboarding template pre-loads), otherwise auto-increment
+  const position = body.order_index !== undefined
+    ? Number(body.order_index)
+    : (existing?.length ? existing[0].position + 1 : 0)
 
   const { data, error } = await supabase
     .from('steps')
@@ -30,19 +35,27 @@ export async function POST(request: NextRequest) {
       project_id:          projectId,
       user_id:             user.id,
       position,
-      name:                form.name                || 'New Step',
-      department:          form.department,
-      operators:           form.operators           ? Number(form.operators)           : 1,
-      uptime:              form.uptime              ? Number(form.uptime)              : null,
-      defect_rate:         form.defect_rate         ? Number(form.defect_rate)         : null,
-      completion_accuracy: form.completion_accuracy ? Number(form.completion_accuracy) : null,
-      wait_time:           form.wait_time           ? Number(form.wait_time)           : 0,
-      trans_time:          form.trans_time          ? Number(form.trans_time)          : 0,
-      wip:                 form.wip                 ? Number(form.wip)                 : 0,
-      flow_type:           form.flow_type           || 'push',
-      sm_min:              form.sm_min              ? Number(form.sm_min)              : null,
-      sm_max:              form.sm_max              ? Number(form.sm_max)              : null,
-      notes:               form.notes,
+      name:                body.name                || 'New Step',
+      department:          body.department,
+      operators:           body.operators           ? Number(body.operators)           : 1,
+      uptime:              body.uptime              ? Number(body.uptime)              : null,
+      defect_rate:         body.defect_rate         ? Number(body.defect_rate)         : null,
+      completion_accuracy: body.completion_accuracy ? Number(body.completion_accuracy) : null,
+      wait_time:           body.wait_time           ? Number(body.wait_time)           : 0,
+      trans_time:          body.trans_time          ? Number(body.trans_time)          : 0,
+      wip:                 body.wip                 ? Number(body.wip)                 : 0,
+      flow_type:           body.flow_type           || 'push',
+      sm_min:              body.sm_min              ? Number(body.sm_min)              : null,
+      sm_max:              body.sm_max              ? Number(body.sm_max)              : null,
+      notes:               body.notes,
+      // V2 fields — only written if the column exists (migration applied)
+      // These are ignored silently by Supabase if the column doesn't exist yet
+      ...(body.step_type        && { step_type:        body.step_type }),
+      ...(body.cycle_time_unit  && { cycle_time_unit:  body.cycle_time_unit }),
+      ...(body.cycle_time_type  && { cycle_time_type:  body.cycle_time_type }),
+      ...(body.tasks            && { tasks:            body.tasks }),
+      ...(body.from_sop         && { from_sop:         body.from_sop }),
+      ...(body.version          && { version:          body.version }),
     })
     .select()
     .single()
@@ -54,3 +67,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ step: { ...data, toolData: {} } }, { status: 201 })
 }
+

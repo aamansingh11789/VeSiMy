@@ -69,11 +69,11 @@ function LoginForm() {
         if (user) {
           const { data: prof } = await supabase.from('profiles').select('onboarded').eq('id', user.id).single()
           if (!prof || !prof.onboarded) {
-            window.location.href = '/onboarding'
+            router.push('/onboarding')
             return
           }
         }
-        window.location.href = redirect
+        router.push(redirect)
       }
     } catch (err: any) {
       toast.error(err.message || 'Authentication failed')

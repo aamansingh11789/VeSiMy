@@ -741,16 +741,24 @@ export function OnboardingClient({ profile }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ name, industry }),
       })
-      const { project } = await res.json()
+      const resData = await res.json()
+      if (!res.ok) throw new Error(resData.error || 'Failed to create project')
+      const { project } = resData
 
-      // 3. Pre-load template steps
+      // 3. Pre-load template steps (send both id forms for compatibility)
       const tpl = templates.find(t => t.id === template)
       if (project?.id && tpl?.steps.length) {
         await Promise.all(tpl.steps.map((stepName, i) =>
           fetch('/api/steps', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ project_id: project.id, name: stepName, order_index: i, cycle_time: 0, wait_time: 0 }),
+            body:    JSON.stringify({
+              projectId:  project.id,
+              project_id: project.id,
+              name:       stepName,
+              order_index: i,
+              wait_time:  0,
+            }),
           })
         ))
       }

@@ -72,12 +72,34 @@ export async function GET(request: NextRequest) {
       const { data: profile } = await supabase
         .from('profiles').select('onboarded').eq('id', user.id).single()
       if (!profile || !profile.onboarded) {
-        // New user — send to onboarding wizard instead of dashboard
-        const onboardUrl = new URL('/onboarding', origin)
-        const onboardResponse = NextResponse.redirect(onboardUrl.toString())
-        // Copy cookies from the original redirect response to this one
-        response.cookies.getAll().forEach(cookie => {
-          onboardResponse.cookies.set(cookie.name, cookie.value)
+        // Rebuild a fresh redirect to /onboarding that carries the same cookies.
+        // We cannot reuse the existing `response` because NextResponse.redirect
+        // replaces the Location header but the cookies are already attached to
+        // the original response object — copying them manually is fragile.
+        // Instead we re-create the client writing onto a new response.
+        const onboardResponse = NextResponse.redirect(new URL('/onboarding', origin).toString())
+        // Re-create client writing cookies onto the new response
+        const supabase2 = createServerClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          {
+            cookies: {
+              getAll() { return request.cookies.getAll() },
+              setAll(cookiesToSet) {
+                cookiesToSet.forEach(({ name, value, options }) => {
+                  onboardResponse.cookies.set(name, value, options)
+                })
+              },
+            },
+          }
+        )
+        // Refresh session onto the new response
+        await supabase2.auth.getUser()
+        // Also copy any cookies already set on the original response
+        response.cookies.getAll().forEach(c => {
+          if (!onboardResponse.cookies.get(c.name)) {
+            onboardResponse.cookies.set(c.name, c.value)
+          }
         })
         return onboardResponse
       }

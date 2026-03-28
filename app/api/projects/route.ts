@@ -42,7 +42,8 @@ export async function POST(request: NextRequest) {
   const body = await request.json()
 
   const { data, error } = await supabase.from('projects').insert({
-      version: 'v2',    user_id:     user.id,
+    user_id:     user.id,
+    version:     'v2',
     name:        body.name || 'New Project',
     description: body.description,
     industry:    body.industry,
