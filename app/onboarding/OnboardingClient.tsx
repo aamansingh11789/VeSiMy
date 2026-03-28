@@ -124,16 +124,552 @@ function getTemplates(industryId: string) {
 }
 
 // ── Roles ─────────────────────────────────────────────────────────────────────
-const ROLES = [
-  { id:'manager',      label:'Manager / Team Lead'         },
-  { id:'analyst',      label:'Process / CI Analyst'        },
-  { id:'ops_engineer', label:'Operations Engineer'         },
-  { id:'quality',      label:'Quality / Compliance'        },
-  { id:'consultant',   label:'Consultant / Advisor'        },
-  { id:'frontline',    label:'Frontline / Practitioner'    },
-  { id:'student',      label:'Student / Learning'          },
-  { id:'other',        label:'Other'                       },
+// ── Industry-specific roles ───────────────────────────────────────────────────
+// Every industry gets roles that match the actual job titles people in that
+// field recognise. Grouped so similar industries share a set.
+
+const INDUSTRY_ROLES: Record<string, Array<{ id: string; label: string }>> = {
+
+  // ── Healthcare ──────────────────────────────────────────────────────────────
+  hospital_acute_care: [
+    { id:'physician',       label:'Physician / Consultant'     },
+    { id:'nurse',           label:'Nurse / Charge Nurse'       },
+    { id:'ops_manager',     label:'Operations / Service Manager'},
+    { id:'quality_patient', label:'Quality & Patient Safety'   },
+    { id:'allied_health',   label:'Allied Health Professional' },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  primary_care_outpatient: [
+    { id:'gp',              label:'GP / Primary Care Physician'},
+    { id:'practice_manager',label:'Practice Manager'           },
+    { id:'nurse',           label:'Nurse / ANP'                },
+    { id:'ops_manager',     label:'Operations Manager'         },
+    { id:'quality_patient', label:'Quality & Patient Safety'   },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  surgery_operating_room: [
+    { id:'surgeon',         label:'Surgeon / Consultant'       },
+    { id:'anaesthetist',    label:'Anaesthetist / CRNA'        },
+    { id:'scrub_nurse',     label:'Scrub Nurse / ODP'          },
+    { id:'or_manager',      label:'OR / Theatre Manager'       },
+    { id:'quality_patient', label:'Quality & Patient Safety'   },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  pharmacy: [
+    { id:'pharmacist',      label:'Pharmacist'                 },
+    { id:'pharmacy_tech',   label:'Pharmacy Technician'        },
+    { id:'pharmacy_mgr',    label:'Pharmacy Manager'           },
+    { id:'quality',         label:'Quality / Regulatory'       },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  clinical_trials: [
+    { id:'cra',             label:'CRA / Monitor'              },
+    { id:'principal_inv',   label:'Principal Investigator'     },
+    { id:'cto_manager',     label:'Clinical Trial Manager'     },
+    { id:'data_manager',    label:'Data Manager / Biostatistician'},
+    { id:'regulatory',      label:'Regulatory Affairs'         },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  research_laboratory: [
+    { id:'researcher',      label:'Researcher / Scientist'     },
+    { id:'lab_manager',     label:'Lab Manager'                },
+    { id:'pi',              label:'Principal Investigator'     },
+    { id:'postdoc',         label:'Postdoc / Research Fellow'  },
+    { id:'lab_tech',        label:'Lab Technician'             },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Legal ───────────────────────────────────────────────────────────────────
+  law_firm: [
+    { id:'partner',         label:'Partner'                    },
+    { id:'solicitor',       label:'Solicitor / Associate'      },
+    { id:'barrister',       label:'Barrister / Counsel'        },
+    { id:'paralegal',       label:'Paralegal'                  },
+    { id:'practice_mgr',    label:'Practice Manager'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Finance & Banking ───────────────────────────────────────────────────────
+  retail_banking: [
+    { id:'relationship_mgr',label:'Relationship Manager'       },
+    { id:'underwriter',     label:'Underwriter'                },
+    { id:'branch_manager',  label:'Branch / Region Manager'    },
+    { id:'ops_manager',     label:'Operations Manager'         },
+    { id:'risk_compliance', label:'Risk & Compliance'          },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  investment_management: [
+    { id:'fund_manager',    label:'Fund / Portfolio Manager'   },
+    { id:'trader',          label:'Trader / Dealer'            },
+    { id:'ops_manager',     label:'Operations Manager'         },
+    { id:'risk_compliance', label:'Risk & Compliance'          },
+    { id:'settlements',     label:'Settlements / Middle Office'},
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  accounting_audit: [
+    { id:'partner',         label:'Partner / Director'         },
+    { id:'manager',         label:'Audit / Accounts Manager'   },
+    { id:'senior',          label:'Senior / Semi-Senior'       },
+    { id:'junior',          label:'Junior / Trainee'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  insurance: [
+    { id:'underwriter',     label:'Underwriter'                },
+    { id:'claims_handler',  label:'Claims Handler'             },
+    { id:'actuary',         label:'Actuary'                    },
+    { id:'ops_manager',     label:'Operations Manager'         },
+    { id:'compliance',      label:'Risk & Compliance'          },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Technology ──────────────────────────────────────────────────────────────
+  software_development: [
+    { id:'eng_lead',        label:'Engineering Lead / Manager' },
+    { id:'developer',       label:'Developer / Engineer'       },
+    { id:'product_manager', label:'Product Manager'            },
+    { id:'qa_engineer',     label:'QA / Test Engineer'         },
+    { id:'scrum_master',    label:'Scrum Master / Agile Coach' },
+    { id:'ci_analyst',      label:'CI / DevOps Analyst'        },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  cybersecurity: [
+    { id:'soc_analyst',     label:'SOC Analyst'                },
+    { id:'soc_manager',     label:'SOC Manager'                },
+    { id:'pen_tester',      label:'Pen Tester / Red Team'      },
+    { id:'ciso',            label:'CISO / Security Director'   },
+    { id:'incident_resp',   label:'Incident Responder'         },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  it_operations: [
+    { id:'sre',             label:'SRE / Platform Engineer'    },
+    { id:'sysadmin',        label:'Sysadmin / IT Manager'      },
+    { id:'noc_engineer',    label:'NOC Engineer'               },
+    { id:'head_it',         label:'Head of IT / CTO'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Education ───────────────────────────────────────────────────────────────
+  higher_education: [
+    { id:'academic',        label:'Academic / Lecturer'        },
+    { id:'head_dept',       label:'Head of Department'         },
+    { id:'registrar',       label:'Registrar / Academic Ops'   },
+    { id:'student_support', label:'Student Support Manager'    },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student'                    },
+    { id:'other',           label:'Other'                      },
+  ],
+  k12_education: [
+    { id:'teacher',         label:'Teacher / Class Teacher'    },
+    { id:'senco',           label:'SENCO / Learning Support'   },
+    { id:'head_teacher',    label:'Headteacher / Principal'    },
+    { id:'pastoral',        label:'Pastoral / Year Head'       },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student'                    },
+    { id:'other',           label:'Other'                      },
+  ],
+  corporate_training: [
+    { id:'ld_manager',      label:'L&D Manager'                },
+    { id:'trainer',         label:'Trainer / Facilitator'      },
+    { id:'instructional',   label:'Instructional Designer'     },
+    { id:'hr_director',     label:'HR / People Director'       },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Government & Public Sector ───────────────────────────────────────────────
+  government_services: [
+    { id:'case_officer',    label:'Case Officer / Processing'  },
+    { id:'service_manager', label:'Service / Team Manager'     },
+    { id:'policy_officer',  label:'Policy Officer'             },
+    { id:'inspector',       label:'Inspector / Enforcement'    },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  emergency_services_fire: [
+    { id:'firefighter',     label:'Firefighter / Crew'         },
+    { id:'watch_manager',   label:'Watch Manager'              },
+    { id:'station_manager', label:'Station Manager'            },
+    { id:'group_manager',   label:'Group / Area Manager'       },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  police: [
+    { id:'officer',         label:'Police Officer / Detective' },
+    { id:'sergeant',        label:'Sergeant / Inspector'       },
+    { id:'supt',            label:'Superintendent / Chief'     },
+    { id:'analyst',         label:'Intelligence Analyst'       },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  military: [
+    { id:'junior_nco',      label:'Junior Rank / NCO'          },
+    { id:'senior_nco',      label:'Senior NCO / WO'            },
+    { id:'officer',         label:'Officer'                    },
+    { id:'reme_tech',       label:'REME / Technical Specialist' },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Hospitality & Food ──────────────────────────────────────────────────────
+  restaurant_food_service: [
+    { id:'head_chef',       label:'Head Chef / Chef de Cuisine'},
+    { id:'sous_chef',       label:'Sous Chef / Kitchen Team'   },
+    { id:'foh_manager',     label:'FOH / Restaurant Manager'   },
+    { id:'gm',              label:'General Manager'            },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  hotel_hospitality: [
+    { id:'gm',              label:'General Manager'            },
+    { id:'housekeeping_mgr',label:'Housekeeping Manager'       },
+    { id:'fom',             label:'Front Office Manager'       },
+    { id:'f_and_b',         label:'F&B Manager'                },
+    { id:'revenue_mgr',     label:'Revenue Manager'            },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  craft_brewery: [
+    { id:'head_brewer',     label:'Head Brewer'                },
+    { id:'brewer',          label:'Brewer / Cellarman'         },
+    { id:'taproom_mgr',     label:'Taproom Manager'            },
+    { id:'owner',           label:'Owner / Director'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  winery: [
+    { id:'winemaker',       label:'Winemaker / Viticulturalist'},
+    { id:'cellarmaster',    label:'Cellarmaster'               },
+    { id:'tasting_room',    label:'Tasting Room Manager'       },
+    { id:'owner',           label:'Owner / Director'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Agriculture & Environment ────────────────────────────────────────────────
+  farming_crop: [
+    { id:'farmer',          label:'Farmer / Owner'             },
+    { id:'farm_manager',    label:'Farm Manager'               },
+    { id:'agronomist',      label:'Agronomist'                 },
+    { id:'harvest_manager', label:'Harvest / Operations Manager'},
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  aquaculture: [
+    { id:'fish_farmer',     label:'Fish Farmer / Owner'        },
+    { id:'prod_manager',    label:'Production Manager'         },
+    { id:'fish_health',     label:'Fish Health Officer'        },
+    { id:'technician',      label:'Aquaculture Technician'     },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Energy & Resources ───────────────────────────────────────────────────────
+  oil_gas: [
+    { id:'drilling_eng',    label:'Drilling Engineer'          },
+    { id:'drilling_supt',   label:'Drilling Superintendent'    },
+    { id:'toolpusher',      label:'Toolpusher / Driller'       },
+    { id:'hse',             label:'HSE Manager'                },
+    { id:'ops_manager',     label:'Operations Manager'         },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  power_generation_utilities: [
+    { id:'plant_operator',  label:'Plant Operator'             },
+    { id:'maintenance_eng', label:'Maintenance Engineer'       },
+    { id:'plant_manager',   label:'Plant / Station Manager'    },
+    { id:'hse',             label:'HSE Manager'                },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Transport ────────────────────────────────────────────────────────────────
+  airline_aviation: [
+    { id:'ground_ops',      label:'Ground Operations Manager'  },
+    { id:'pilot',           label:'Pilot / Captain'            },
+    { id:'cabin_crew',      label:'Cabin Crew / Purser'        },
+    { id:'dispatch',        label:'Dispatcher / Ops Controller'},
+    { id:'maintenance',     label:'Aircraft Maintenance Eng'   },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  rail_passenger: [
+    { id:'train_driver',    label:'Train Driver / Conductor'   },
+    { id:'station_manager', label:'Station Manager'            },
+    { id:'control_room',    label:'Control Room / Ops'         },
+    { id:'performance_mgr', label:'Performance Manager'        },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  port_maritime: [
+    { id:'terminal_ops',    label:'Terminal / Port Operator'   },
+    { id:'crane_operator',  label:'Crane Operator'             },
+    { id:'terminal_mgr',    label:'Terminal Manager'           },
+    { id:'harbour_master',  label:'Harbour Master'             },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Entertainment & Media ────────────────────────────────────────────────────
+  film_tv: [
+    { id:'director',        label:'Director'                   },
+    { id:'producer',        label:'Producer / Line Producer'   },
+    { id:'1st_ad',          label:'1st AD / Production Manager'},
+    { id:'dop',             label:'DOP / Camera'               },
+    { id:'post_producer',   label:'Post-production Supervisor' },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  music_production: [
+    { id:'producer',        label:'Producer'                   },
+    { id:'engineer',        label:'Recording / Mix Engineer'   },
+    { id:'artist_manager',  label:'Artist Manager'             },
+    { id:'studio_mgr',      label:'Studio Manager'             },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  video_games: [
+    { id:'game_director',   label:'Game Director'              },
+    { id:'producer',        label:'Producer / Project Manager' },
+    { id:'lead_developer',  label:'Lead Developer / Engineer'  },
+    { id:'qa_lead',         label:'QA Lead / Tester'           },
+    { id:'ci_analyst',      label:'CI / Agile Coach'           },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Sports & Fitness ──────────────────────────────────────────────────────────
+  sports_team:      [
+    { id:'head_coach',      label:'Head Coach / Manager'       },
+    { id:'sports_scientist',label:'Sports Scientist'           },
+    { id:'physio',          label:'Physiotherapist / Medic'    },
+    { id:'analyst',         label:'Performance Analyst'        },
+    { id:'operations',      label:'Club Operations Manager'    },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  professional_sports: [
+    { id:'head_coach',      label:'Head Coach / Manager'       },
+    { id:'sports_scientist',label:'Sports Scientist'           },
+    { id:'physio',          label:'Physiotherapist / Medic'    },
+    { id:'analyst',         label:'Performance Analyst'        },
+    { id:'operations',      label:'Club Operations Manager'    },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  fitness_clubs: [
+    { id:'personal_trainer',label:'Personal Trainer / Coach'   },
+    { id:'club_manager',    label:'Club / Gym Manager'         },
+    { id:'class_instructor',label:'Class Instructor'           },
+    { id:'membership',      label:'Membership Manager'         },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Social & Nonprofit ────────────────────────────────────────────────────────
+  social_care: [
+    { id:'social_worker',   label:'Social Worker'              },
+    { id:'care_coordinator',label:'Care Coordinator'           },
+    { id:'team_manager',    label:'Team / Service Manager'     },
+    { id:'service_director',label:'Service Director'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  nonprofit: [
+    { id:'programme_mgr',   label:'Programme Manager'          },
+    { id:'service_director',label:'Service / Operations Director'},
+    { id:'fundraising',     label:'Fundraising Manager'        },
+    { id:'frontline',       label:'Frontline Worker'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Real Estate ───────────────────────────────────────────────────────────────
+  real_estate: [
+    { id:'estate_agent',    label:'Estate Agent / Realtor'     },
+    { id:'broker',          label:'Broker / Branch Manager'    },
+    { id:'transaction_coord',label:'Transaction Coordinator'   },
+    { id:'property_mgr',    label:'Property Manager'           },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── Architecture & Design ─────────────────────────────────────────────────────
+  architecture_engineering: [
+    { id:'architect',       label:'Architect / Project Architect'},
+    { id:'structural_eng',  label:'Structural / Civil Engineer' },
+    { id:'project_manager', label:'Project Manager'             },
+    { id:'bim_manager',     label:'BIM / Design Manager'        },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'    },
+    { id:'student',         label:'Student / Learning'          },
+    { id:'other',           label:'Other'                       },
+  ],
+  graphic_design: [
+    { id:'designer',        label:'Designer / Art Director'    },
+    { id:'creative_dir',    label:'Creative Director'          },
+    { id:'studio_mgr',      label:'Studio Manager'             },
+    { id:'brand_manager',   label:'Brand Manager'              },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+
+  // ── HR & People ────────────────────────────────────────────────────────────────
+  human_resources: [
+    { id:'hr_business_partner',label:'HR Business Partner'     },
+    { id:'recruiter',       label:'Recruiter / TA Manager'     },
+    { id:'hr_director',     label:'HR Director / CHRO'         },
+    { id:'people_ops',      label:'People Ops Manager'         },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+  staffing_agency: [
+    { id:'consultant',      label:'Recruitment Consultant'     },
+    { id:'branch_manager',  label:'Branch / Division Manager'  },
+    { id:'delivery_lead',   label:'Delivery Lead / Resource Mgr'},
+    { id:'md',              label:'Managing Director'          },
+    { id:'ci_analyst',      label:'CI / Improvement Analyst'   },
+    { id:'student',         label:'Student / Learning'         },
+    { id:'other',           label:'Other'                      },
+  ],
+}
+
+// ── Default roles (universal fallback) ───────────────────────────────────────
+const DEFAULT_ROLES = [
+  { id:'manager',         label:'Manager / Team Lead'          },
+  { id:'analyst',         label:'Process / CI Analyst'         },
+  { id:'ops_engineer',    label:'Operations Engineer'          },
+  { id:'quality',         label:'Quality / Compliance'         },
+  { id:'consultant',      label:'Consultant / Advisor'         },
+  { id:'frontline',       label:'Frontline / Practitioner'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
 ]
+
+// Manufacturing roles (shared by all manufacturing industry IDs)
+const MFG_ROLES = [
+  { id:'plant_manager',   label:'Plant / Site Manager'         },
+  { id:'lean_engineer',   label:'Lean / CI Engineer'           },
+  { id:'ops_manager',     label:'Operations Manager'           },
+  { id:'quality_manager', label:'Quality Manager'              },
+  { id:'maintenance',     label:'Maintenance Engineer'         },
+  { id:'team_leader',     label:'Team Leader / Supervisor'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
+]
+
+const MFG_IDS = [
+  'general_manufacturing','automotive_manufacturing','aerospace_manufacturing',
+  'pharmaceutical_manufacturing','food_beverage_manufacturing',
+  'medical_device_manufacturing',
+]
+
+// Tech/IT roles shared set
+const TECH_ROLES = [
+  { id:'eng_lead',        label:'Engineering Lead / Manager'   },
+  { id:'developer',       label:'Developer / Engineer'         },
+  { id:'product_manager', label:'Product Manager'              },
+  { id:'qa_engineer',     label:'QA / Test Engineer'           },
+  { id:'devops',          label:'DevOps / SRE'                 },
+  { id:'ci_analyst',      label:'CI / Improvement Analyst'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
+]
+
+// Retail roles shared set
+const RETAIL_ROLES = [
+  { id:'store_manager',   label:'Store / Branch Manager'       },
+  { id:'ops_manager',     label:'Operations Manager'           },
+  { id:'department_mgr',  label:'Department / Category Manager'},
+  { id:'loss_prevention', label:'Loss Prevention / Compliance' },
+  { id:'ci_analyst',      label:'CI / Improvement Analyst'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
+]
+
+// Logistics roles shared set
+const LOGISTICS_ROLES = [
+  { id:'warehouse_manager',label:'Warehouse Manager'           },
+  { id:'ops_manager',     label:'Operations Manager'           },
+  { id:'logistics_coord', label:'Logistics Coordinator'        },
+  { id:'dispatch',        label:'Dispatcher / Planner'         },
+  { id:'ci_analyst',      label:'CI / Improvement Analyst'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
+]
+
+// Marketing / creative shared set
+const MARKETING_ROLES = [
+  { id:'account_manager', label:'Account / Client Manager'     },
+  { id:'marketing_dir',   label:'Marketing Director'           },
+  { id:'campaign_manager',label:'Campaign Manager'             },
+  { id:'creative_dir',    label:'Creative Director'            },
+  { id:'performance',     label:'Performance / Analytics Lead' },
+  { id:'ci_analyst',      label:'CI / Improvement Analyst'     },
+  { id:'student',         label:'Student / Learning'           },
+  { id:'other',           label:'Other'                        },
+]
+
+function getRolesForIndustry(industryId: string) {
+  if (INDUSTRY_ROLES[industryId]) return INDUSTRY_ROLES[industryId]
+  if (MFG_IDS.includes(industryId)) return MFG_ROLES
+  if (['telecommunications','it_operations','cybersecurity'].includes(industryId)) return TECH_ROLES
+  if (['retail_stores','ecommerce_fulfillment','grocery_supermarket'].includes(industryId)) return RETAIL_ROLES
+  if (['warehousing_distribution','freight_trucking','postal_parcel'].includes(industryId)) return LOGISTICS_ROLES
+  if (['marketing_agency','digital_marketing'].includes(industryId)) return MARKETING_ROLES
+  return DEFAULT_ROLES
+}
 
 // ── Industry-specific welcome copy ────────────────────────────────────────────
 function getWelcomeCopy(industryId: string) {
@@ -162,6 +698,7 @@ export function OnboardingClient({ profile }: Props) {
   const [done,     setDone]    = useState(false)
 
   const templates = useMemo(() => getTemplates(industry), [industry])
+  const roles = useMemo(() => getRolesForIndustry(industry), [industry])
   const t = useMemo(() => getIndustryTerms(industry || 'general_manufacturing'), [industry])
   const industryLabel = useMemo(() => getIndustryLabel(industry), [industry])
 
@@ -173,6 +710,7 @@ export function OnboardingClient({ profile }: Props) {
     setIndustry(id)
     setTemplate('')
     setProjName('')
+    setRole('')  // reset role — it changes per industry
   }
 
   async function finish() {
@@ -383,14 +921,14 @@ export function OnboardingClient({ profile }: Props) {
             <div>
               <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 2 of 4 — Your Role</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
-                What best describes<br /><span style={{ color:'#0176D3' }}>what you do?</span>
+                What's your role<br /><span style={{ color:'#0176D3' }}>in {getIndustryLabel(industry) || 'your field'}?</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.65 }}>
-                VeSiMy uses this to tailor its improvement suggestions and coaching to how you work.
+                Select the role that best fits how you work. VeSiMy uses this to personalise its improvement suggestions and coaching.
               </p>
 
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:8, marginBottom:36 }}>
-                {ROLES.map(r => (
+                {roles.map(r => (
                   <button key={r.id} onClick={() => setRole(r.id)} style={{
                     padding:'14px 16px', borderRadius:10, textAlign:'left', cursor:'pointer', transition:'all 0.12s',
                     background: role===r.id ? 'rgba(1,118,211,0.08)' : '#FFFFFF',
@@ -516,7 +1054,7 @@ export function OnboardingClient({ profile }: Props) {
                 <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
                   {[
                     { label:'Industry', value: industryLabel, note:'Your terminology is set' },
-                    { label:'Role', value: ROLES.find(r => r.id===role)?.label || role, note:'' },
+                    { label:'Role', value: roles.find(r => r.id===role)?.label || role, note:'' },
                     { label:template==='sample' ? 'Starting with' : 'First project', value: template==='sample' ? 'Reference projects (5 industries)' : projName, note:'' },
                     { label:'Template', value: [...templates, { id:'sample', label:'Reference projects', steps:[] }].find(t => t.id===template)?.label || '', note:'' },
                   ].filter(row => row.value).map(row => (
