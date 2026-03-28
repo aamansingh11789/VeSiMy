@@ -17,7 +17,7 @@ import {
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
 import type { Profile, Project } from '@/lib/store'
-import { getIndustryTerms, getIndustryLabel, INDUSTRY_OPTIONS, INDUSTRY_SECTORS, getIndustriesBySector } from '@/lib/industry-language'
+import { getIndustryTerms, getIndustryLabel, INDUSTRY_SECTORS, getIndustriesBySector } from '@/lib/industry-language'
 import { getIndustryReferenceNames } from '@/lib/industry-reference-map'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
@@ -480,7 +480,15 @@ function StatCard({
 
 // ── Main component ────────────────────────────────────────────────────────────
 export function DashboardClient({ profile, initialProjects }: Props) {
-  const { identify, track } = useAnalytics()
+  // ── All hooks must be declared before any conditional logic ──────────────
+  const { identify } = useAnalytics()
+  const router = useRouter()
+  const [projects] = useState(initialProjects)
+  const [creating, setCreating] = useState(false)
+  const [showNew, setShowNew] = useState(false)
+  const [form, setForm] = useState({ name: '', industry: '', customer: '' })
+  const [view, setView] = useState<'cards' | 'list'>('cards')
+  const [seedingRef, setSeedingRef] = useState(false)
 
   useEffect(() => {
     if (profile?.id) {
@@ -493,6 +501,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   }, [profile?.id])
 
   // Auto-load demo/reference project from URL param or first visit
+  // NOTE: seedDemoProject / seedReferenceProject are defined below but hoisted
+  // via function declarations, so referencing them here is safe.
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
@@ -501,29 +511,21 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
     if (demo === 'realestate') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)
+      setTimeout(() => seedDemoProject('/api/projects/seed-realestate', 'Real Estate Transaction Flow'), 800)
     } else if (demo === 'healthcare') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)
+      setTimeout(() => seedDemoProject('/api/projects/seed-healthcare', 'Urgent Care Patient Flow'), 800)
     } else if (demo === 'brewery') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)
+      setTimeout(() => seedDemoProject('/api/projects/seed-brewery', 'Craft Brewery Batch Production'), 800)
     } else if (demo === 'winery') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)
+      setTimeout(() => seedDemoProject('/api/projects/seed-winery', 'Boutique Winery Production'), 800)
     } else if (params.get('ref') === '1' || isFirstVisit) {
       sessionStorage.setItem('vesimy_seeded', '1')
       setTimeout(() => seedReferenceProject(), 800)  // seeds only this user's industry
     }
   }, [])
-
-  const router = useRouter()
-  const [projects] = useState(initialProjects)
-  const [creating, setCreating] = useState(false)
-  const [showNew, setShowNew] = useState(false)
-  const [form, setForm] = useState({ name: '', industry: '', customer: '' })
-  const [view, setView] = useState<'cards' | 'list'>('cards')
-  const [seedingRef, setSeedingRef] = useState(false)
 
   const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
   const atLimit = false // Free tier unlimited

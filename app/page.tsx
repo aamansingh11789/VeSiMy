@@ -1363,7 +1363,7 @@ export default function HomePage() {
         <div className="stats-bar-grid" style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
           {[
             ['Any industry', 'Manufacturing to healthcare to real estate'],
-            ['9', 'Process tools, all connected'],
+            ['11+', 'Process tools, all connected'],
             ['ISO 22468', 'Compliant VSM standard'],
             ['Free', 'Unlimited projects forever'],
           ].map(([v,l]) => (
@@ -1391,7 +1391,7 @@ export default function HomePage() {
               { color:'#2A9E82', title:'Measure before you manage', body:'Built-in stopwatch with lap recording. Mean CT, outlier detection, standard deviation — calculated automatically. Times push directly to your VSM.', svg:'<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/>' },
               { color:'#6426A0', title:'Find the root. Fix it once.', body:'5 Why chains stay attached to the step where the problem lives. Root cause, countermeasure, and owner — never in a separate document.', svg:'<circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="10" y2="12"/><line x1="10" y1="12" x2="8.5" y2="15.5"/><circle cx="12" cy="8" r=".8" fill="#6426A0"/>' },
               { color:'#C0402A', title:'Name the waste. Own the fix.', body:'8 DOWNTIME waste categories on every step. Daily cost estimate, VA/NNVA/NVA classification, and a direct path to a kaizen action.', svg:'<polyline points="3 6 5 6 21 6"/><path d="M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2"/><polyline points="19 6 18 20 6 20 5 6"/>' },
-              { color:'#0176D3', title:'Supe — your AI lean mentor', body:'Reads your actual project data and tells you what to fix first. Gap analysis, root cause hypothesis, and executive summary from live numbers — not templates.', svg:'<polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/>' },
+              { color:'#0176D3', title:'Supe — your AI lean mentor', body:'Reads your actual project data and tells you what to fix first. Gap analysis, root cause hypothesis, and executive summary from live numbers — not templates. Powers the one-click V2 analysis report too.', svg:'<polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/>' },
               { color:'#1090D4', title:'One-click A3 export', body:'ISO 9001:2015 compliant A3 report generated from your live data. VSM summary, gap findings, countermeasures — formatted and ready to present.', svg:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
             ] as any[]).map((f:any) => (
               <div key={f.title} className="card-dk" style={{ padding: '30px 26px' }}>
@@ -1532,12 +1532,12 @@ export default function HomePage() {
         <div style={{ maxWidth: 1060, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, marginBottom: 48, flexWrap: 'wrap' }}>
             <div>
-              <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(1,118,211,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4 }}>What's new — Version 3</div>
+              <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(1,118,211,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4 }}>What's new — Version 3.1</div>
               <h2 className="h2-light-shadow" style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,38px)', fontWeight: 700, color: '#1E1B17', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
                 Built for your industry.<br/>Not adapted for it.
               </h2>
               <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 480, lineHeight: 1.8 }}>
-                VeSiMy v3 is the most significant update since launch. Every part of the product now adapts to the industry you work in — your language, your reference projects, your learning content.
+                VeSiMy v3 is the most significant update since launch. The new V2 Process Builder, 66-industry reference projects, and a full industry language engine mean every part of the product now speaks the language of the field you work in.
               </p>
             </div>
             <a href="/changelog" style={{ fontSize: 12, color: 'var(--brand)', fontWeight: 600, textDecoration: 'none', flexShrink: 0, marginTop: 8 }}>Full changelog →</a>
@@ -1546,12 +1546,20 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap: 20 }}>
             {([
               {
+                tag: 'NEW',
+                color: '#0176D3',
+                title: 'V2 Process Builder',
+                date: 'March 2026',
+                body: 'A fully redesigned project builder. Upload a Standard Operating Procedure and VeSiMy parses it into a live value stream map automatically. Every step is enriched with cycle time, operators, defect rates, and waste identification — then analysed by AI in one click.',
+                items: ['SOP upload → auto-parsed step map in seconds', 'AI-powered analysis: bottleneck detection, PCE scoring, gap findings', 'Future State panel: AI generates a recommended improvement map', 'Integrated journal — every insight, action, and decision in one place', 'Select at project creation or migrate any existing V1 project'],
+              },
+              {
                 tag: 'MAJOR',
                 color: '#0176D3',
                 title: '66-industry reference projects',
                 date: 'March 2026',
                 body: "Every supported industry now has a fully built reference project — populated with real bottleneck data, 5 Why root cause analysis, fishbone, kaizen events, improvement goals, and PDCA. You get a complete working example on day one, in your own industry's language.",
-                items: ['All 9 CI tools populated: stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, improvement goals', 'Real root causes, not placeholder text', 'Industry-specific process steps and terminology', 'Serves as a learning tool and a data template'],
+                items: ['All 11 CI tools populated: stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, Kanban, improvement goals', 'Real root causes, not placeholder text', 'Industry-specific process steps and terminology', 'Serves as a learning tool and a data template'],
               },
               {
                 tag: 'MAJOR',
