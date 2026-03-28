@@ -29,7 +29,7 @@ const BLUE_LT = '#D8EDFF'
 const WHITE   = '#FFFFFF'
 const VIOLET  = '#8C44CC'
 
-interface SidebarProps { profile: Profile }
+interface SidebarProps { profile: Profile; collapsed?: boolean }
 
 const NAV = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard'      },
@@ -39,7 +39,7 @@ const NAV = [
   { href: '/learn',     icon: BookIcon,      label: 'Learning Center' },
 ]
 
-export function Sidebar({ profile }: SidebarProps) {
+export function Sidebar({ profile, collapsed: isCollapsed = false }: SidebarProps) {
   const pathname = usePathname()
   const router   = useRouter()
   const supabase = createClient()
@@ -57,7 +57,7 @@ export function Sidebar({ profile }: SidebarProps) {
 
   return (
     <aside style={{
-      width: 240, minHeight: '100vh', position: 'fixed',
+      width: isCollapsed ? 56 : 240, minHeight: '100vh', position: 'fixed',
       left: 0, top: 0, bottom: 0, zIndex: 100,
       background: NAVY[900],
       borderRight: `1px solid ${NAVY[800]}`,

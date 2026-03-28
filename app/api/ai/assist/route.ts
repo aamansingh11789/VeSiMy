@@ -426,6 +426,57 @@ Be specific to the actual steps listed. Reference SMED stages (Shingo methodolog
 
         return NextResponse.json({ result: ruleText, source: 'rule' })
       }
+      case 'supe_brainstorm': {
+        // Supe AI brainstorming for future state planning
+        // Uses full knowledge base + industry context
+        const { prompt, industryId } = data
+        if (!prompt) return NextResponse.json({ result: "Tell me what's happening in this process and what you're trying to achieve.", source: 'rule' })
+
+        const { buildSupeSystemPrompt, KNOWLEDGE_CHUNKS } = await import('@/lib/supe-knowledge')
+        const { getIndustryTerms, getIndustryLabel } = await import('@/lib/industry-language')
+
+        const industryKey = industryId || industry || 'general_manufacturing'
+        const t = getIndustryTerms(industryKey)
+        const indLabel = getIndustryLabel(industryKey)
+
+        // Pull all relevant knowledge chunks for brainstorming context
+        const knowledgeContext = (KNOWLEDGE_CHUNKS as any[])
+          .filter((c: any) => c.tags?.some((tag: string) =>
+            ['vsm','future state','kaizen','pdca','improvement','value stream','waste',
+             'takt time','cycle time','bottleneck','root cause','five why','fishbone',
+             'lean','tps','six sigma'].some(kw => tag.toLowerCase().includes(kw))
+          ))
+          .slice(0, 6)
+          .map((c: any) => c.content?.slice(0, 350))
+          .join('\n---\n')
+
+        const systemPrompt = `You are Supe, a senior lean VSM consultant trained in the Toyota Production System, Lean methodology, and Six Sigma. You have deep knowledge of ISO 22468, ILO standards, and process improvement across 66 industries.
+
+You are conducting a focused brainstorming session with a ${indLabel} professional. Your goal is to understand their process challenges deeply and help them build a realistic future state plan.
+
+INDUSTRY LANGUAGE for this user:
+- Their product is: ${t.product}
+- Their customer is: ${t.customer}
+- Cycle time is called: ${t.cycleTime}
+- Their gemba is: ${t.gemba}
+- A defect is: ${t.defect}
+- Process step is: ${t.processStep}
+- Kaizen means: ${t.kaizen}
+
+LEAN KNOWLEDGE BASE (use this as your source of truth — do not invent methodology):
+${knowledgeContext}
+
+Conduct this brainstorm like an expert consultant — ask ONE focused question at a time, push for specifics, challenge assumptions with data. Maximum 3 sentences per response. Never use generic advice. Everything must relate to their specific process data.`
+
+        const fullPrompt = `${systemPrompt}
+
+USER MESSAGE: ${prompt}`
+
+        const result = await callAI(fullPrompt, 600)
+        return NextResponse.json({ result: result || "What specific data do you have about the bottleneck step? Actual cycle time measurements are essential.", source: 'ai' })
+      }
+
+
 
 
       default:

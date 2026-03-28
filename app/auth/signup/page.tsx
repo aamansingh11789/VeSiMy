@@ -105,11 +105,11 @@ function SignupForm() {
           <div style={{ display:'flex', justifyContent:'center', marginBottom:16 }}>
             <VesimyLogo size={48} showText />
           </div>
-          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your free account</h1>
+          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'free' ? (
             <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name} — ${plan.price}/mo</span>
-              <span style={{ fontSize:12, color:'var(--text3)' }}>· Free forever · Unlimited projects</span>
+              <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>
           ) : (
             <p style={{ color:'var(--text3)', fontSize:14 }}>Free plan · Unlimited projects · All 9 CI tools</p>
@@ -137,7 +137,7 @@ function SignupForm() {
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
                 ? (planKey && planKey !== 'free' ? 'Setting up your account…' : 'Creating your account…')
-                : (planKey && planKey !== 'free' && plan ? `Start ${plan?.name} — free for 14 days` : 'Create free account')}
+                : (planKey && planKey !== 'free' && plan ? `Start ${plan?.name} — trial period` : 'Create account')}
             </button>
           </form>
         </div>

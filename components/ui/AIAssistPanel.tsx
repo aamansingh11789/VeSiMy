@@ -112,7 +112,7 @@ export function AIResultPanel({
             {isError ? 'ERROR' : source === 'ai' ? (title || 'AI ASSIST') : (title || 'SMART ASSIST')}
           </span>
           {source === 'rule' && !isError && (
-            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace' }}>rule-based · free</span>
+            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace' }}>rule-based</span>
           )}
           {source === 'ai' && (
             <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace' }}>AI-powered</span>

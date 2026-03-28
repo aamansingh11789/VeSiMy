@@ -760,7 +760,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
               <div>
                 <div style={{ fontSize: 13, color: '#0176D3', fontWeight: 700 }}>
-                  You’ve reached your free project limit
+                  You’ve reached your project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
                   Upgrade to Pro — up to 10 projects, advanced tools, and premium workflows.
