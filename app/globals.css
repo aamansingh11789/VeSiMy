@@ -4,6 +4,7 @@
 
 /* ── CSS Variables — Salesforce-inspired design system ───────────────── */
 :root {
+  --sidebar-w: 240px;
   /* ── Brand palette — Salesforce Blue ───────────────── */
   --brand:        #0176D3;
   --brand2:       #0a5eaa;
@@ -115,6 +116,8 @@ body {
   min-height: 100vh;
   color: var(--text);
 }
+main { transition: margin-left 0.22s cubic-bezier(.4,0,.2,1); }
+
 
 #__next, main {
   position: relative;

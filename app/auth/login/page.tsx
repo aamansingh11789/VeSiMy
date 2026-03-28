@@ -57,23 +57,25 @@ function LoginForm() {
         // If session returned immediately (email confirm disabled) go to onboarding
         // Otherwise show toast and stay on page so user knows to check email
         if (data?.session) {
-          router.push('/onboarding')
+          window.location.href = '/onboarding'
         } else {
           toast.success('Check your email — click the link to confirm your account', { duration: 8000 })
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        // Check if this user completed onboarding — if not, send them there first
+        // Full page reload required — router.push() is client-side nav and the
+        // server component at /dashboard reads cookies from the HTTP request.
+        // If we don't reload, the server sees no session and kicks user back to login.
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
           const { data: prof } = await supabase.from('profiles').select('onboarded').eq('id', user.id).single()
-          if (!prof || !prof.onboarded) {
-            router.push('/onboarding')
+          if (!prof || !(prof as any).onboarded) {
+            window.location.href = '/onboarding'
             return
           }
         }
-        router.push(redirect)
+        window.location.href = redirect
       }
     } catch (err: any) {
       toast.error(err.message || 'Authentication failed')

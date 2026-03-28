@@ -52,7 +52,7 @@ export default async function ProjectPage({ params }: Props) {
     return (
       <div style={{ display: 'flex', minHeight: '100dvh', background: 'var(--bg)' }}>
         <Sidebar profile={profile} collapsed />
-        <main style={{ marginLeft: 56, flex: 1, minWidth: 0, overflow: 'hidden', height: '100dvh' }}>
+        <main style={{ marginLeft: 'var(--sidebar-w, 56px)', flex: 1, minWidth: 0, overflow: 'hidden', height: '100dvh' }}>
           <V2ProjectClient project={initialProject} profile={profile} steps={steps} />
         </main>
       </div>
@@ -63,7 +63,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <div style={{ display: 'flex', minHeight: '100dvh', background: 'var(--bg)' }}>
       <Sidebar profile={profile} />
-      <main className="project-main" style={{ marginLeft: 240, flex: 1, minWidth: 0, minHeight: '100dvh', overflow: 'visible', position: 'relative' }}>
+      <main className="project-main" style={{ marginLeft: 'var(--sidebar-w, 240px)', flex: 1, minWidth: 0, minHeight: '100dvh', overflow: 'visible', position: 'relative' }}>
         <ProjectClient initialProject={initialProject} profile={profile} />
       </main>
       <BottomNav />

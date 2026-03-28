@@ -168,7 +168,7 @@ function SupeSection() {
   return (
     <section style={{ padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', background:'#F8F6F0' }}>
       <div style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(40px,6vw,80px)', alignItems:'center' }} className="supe-grid">
-        <div>
+        <div className="reveal">
           <p style={{ fontFamily:mono, fontSize:9, letterSpacing:3, color:'rgba(1,118,211,.7)', marginBottom:20, textTransform:'uppercase' }}>05 — Supe AI</p>
           <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,44px)', lineHeight:1.12, fontWeight:400, marginBottom:18 }}>
             Every target is achievable.<br />Supe AI shows you how.
@@ -192,7 +192,7 @@ function SupeSection() {
           </div>
         </div>
 
-        <div style={{ background:'#032D60', borderRadius:16, padding:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(3,45,96,.15)' }}>
+        <div className="reveal d2" style={{ background:'#032D60', borderRadius:16, padding:24, overflow:'hidden', boxShadow:'0 32px 80px rgba(3,45,96,.15)' }}>
           <p style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'rgba(255,255,255,.25)', marginBottom:16 }}>SUPE AI · PRO FEATURE</p>
           <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
             <div style={{ padding:'12px 16px', borderRadius:'10px 10px 3px 10px', background:'rgba(255,255,255,.07)', color:'rgba(255,255,255,.65)', fontSize:13, lineHeight:1.7, alignSelf:'flex-end', maxWidth:'88%' }}>
@@ -206,9 +206,9 @@ function SupeSection() {
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:14 }}>
             <div style={{ display:'flex', gap:3 }}>
-              {[0,1,2].map(i => (
-                <span key={i} style={{ width:4, height:4, borderRadius:'50%', background:'#0176D3', opacity:.5, display:'inline-block', animation:`supeThink .8s ease ${i*.2}s infinite` }} />
-              ))}
+              <div className="think-dot" />
+              <div className="think-dot" />
+              <div className="think-dot" />
             </div>
             <span style={{ fontFamily:mono, fontSize:10, color:'rgba(255,255,255,.25)' }}>Analysing your value stream…</span>
           </div>
@@ -223,7 +223,7 @@ function ReferenceSection() {
   return (
     <section style={{ background:'#F0EDE6', padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', borderTop:'0.5px solid #D8D5CE' }}>
       <div style={{ maxWidth:1100, margin:'0 auto' }}>
-        <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:40, gap:24, flexWrap:'wrap' }}>
+        <div className="reveal" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:40, gap:24, flexWrap:'wrap' }}>
           <div>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(1,118,211,.8)', marginBottom:12, textTransform:'uppercase' }}>06 — Reference projects</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(24px,3vw,40px)', lineHeight:1.12, fontWeight:400, maxWidth:500 }}>
@@ -234,7 +234,7 @@ function ReferenceSection() {
             Load a fully-built example the moment you sign up. Every CI tool populated. Real root causes — not placeholder text.
           </p>
         </div>
-        <div style={{ display:'flex', gap:16, overflowX:'auto', paddingBottom:6, scrollbarWidth:'none' }}>
+        <div className="reveal d1" style={{ display:'flex', gap:16, overflowX:'auto', paddingBottom:6, scrollbarWidth:'none' }}>
           {REFS.map(r => (
             <div key={r.name}
               style={{ flex:'0 0 268px', background:'white', border:'1px solid rgba(1,118,211,.12)', borderRadius:13, padding:20, transition:'all .2s', cursor:'default' }}
@@ -269,6 +269,16 @@ export default function HomePage() {
     return () => clearInterval(t)
   }, [])
 
+  // Scroll reveal — mirrors the HTML reference IntersectionObserver
+  useEffect(() => {
+    const ro = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') }),
+      { threshold: 0.1 }
+    )
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el))
+    return () => ro.disconnect()
+  }, [])
+
   return (
     <div style={{ background:'#F8F6F0', color:'#0D0C0A', fontFamily:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', overflowX:'hidden' }}>
 
@@ -280,6 +290,16 @@ export default function HomePage() {
         @keyframes stripScroll    { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
         @keyframes logoFloat      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
         @keyframes supeThink      { 0%,100%{opacity:.25} 50%{opacity:1} }
+        @keyframes think          { 0%,100%{opacity:.25} 50%{opacity:1} }
+        .think-dot { width:4px;height:4px;border-radius:50%;background:#0176D3;opacity:.5;animation:think .8s ease infinite; }
+        .think-dot:nth-child(2) { animation-delay:.2s; }
+        .think-dot:nth-child(3) { animation-delay:.4s; }
+
+        /* ── Scroll reveal ── */
+        .reveal { opacity:0; transform:translateY(28px); transition:opacity .75s ease, transform .75s ease; }
+        .reveal.in { opacity:1; transform:translateY(0); }
+        .d1 { transition-delay:.1s; } .d2 { transition-delay:.2s; }
+        .d3 { transition-delay:.3s; } .d4 { transition-delay:.4s; }
 
         .nav-link { color:rgba(248,247,245,.55); text-decoration:none; font-size:13px; transition:color .15s; }
         .nav-link:hover { color:#F8F7F5; }
@@ -341,7 +361,7 @@ export default function HomePage() {
         <div className="hero-grid" style={{ maxWidth:1160, margin:'0 auto', width:'100%', display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'center', position:'relative', zIndex:1 }}>
 
           {/* Left */}
-          <div>
+          <div className="reveal">
             <div style={{ marginBottom:24, height:18, overflow:'hidden' }}>
               <span key={eyeIdx} style={{ fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.7)', letterSpacing:2, textTransform:'uppercase', fontWeight:700, animation:'eyeSlide .4s ease both', display:'block' }}>
                 {eyeLines[eyeIdx]}
@@ -370,7 +390,7 @@ export default function HomePage() {
               </a>
             </div>
             {/* Stats */}
-            <div style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
+            <div className="reveal d2" style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
               {[['66','Industries'],['11+','CI Tools'],['62','Reference Projects'],['Free','Forever tier']].map(([v,l]) => (
                 <div key={l}>
                   <div style={{ fontFamily:mono, fontSize:22, fontWeight:600, color:'#0176D3', letterSpacing:-.5 }}>{v}</div>
@@ -381,7 +401,7 @@ export default function HomePage() {
           </div>
 
           {/* Right — static app frame with VSM */}
-          <div className="hero-right">
+          <div className="hero-right reveal d2">
             <div style={{ background:'white', borderRadius:16, border:'1px solid rgba(1,118,211,.12)', boxShadow:'0 32px 100px rgba(3,45,96,.18),0 4px 16px rgba(3,45,96,.06)', overflow:'hidden' }}>
               {/* Titlebar */}
               <div style={{ background:'#242220', padding:'9px 14px', display:'flex', alignItems:'center', gap:10, borderBottom:'1px solid #353330' }}>
@@ -458,7 +478,7 @@ export default function HomePage() {
       <section style={{ background:'#032D60', padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, backgroundImage:"url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='40' height='40' fill='%23ffffff' fill-opacity='0.012'/%3E%3Crect x='40' y='40' width='40' height='40' fill='%23ffffff' fill-opacity='0.012'/%3E%3C/svg%3E\")", pointerEvents:'none' }} />
         <div className="mission-grid" style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(40px,6vw,80px)', alignItems:'center', position:'relative', zIndex:1 }}>
-          <div>
+          <div className="reveal">
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:3, color:'rgba(255,255,255,.3)', marginBottom:20, textTransform:'uppercase' }}>Our philosophy</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(28px,3.5vw,50px)', lineHeight:1.1, color:'white', fontWeight:400, marginBottom:28 }}>
               Toyota built it.<br />
@@ -471,13 +491,13 @@ export default function HomePage() {
               VeSiMy puts 70 years of proven methodology in the hands of any team, any size, in any sector — with AI that adapts the language, loads your reference project, and proves your target is reachable before you start.
             </p>
           </div>
-          <div style={{ display:'flex', flexDirection:'column', gap:24 }}>
+          <div className="reveal d1" style={{ display:'flex', flexDirection:'column', gap:24 }}>
             {[
-              { origin:'TOYOTA PRODUCTION SYSTEM · 1950s', title:"Eliminate everything that isn't value", body:"Taiichi Ohno's insight: most of what happens in any process is waste. Identify the 8 wastes. Map the value stream. Pull, don't push. VeSiMy makes every one of these visible and actionable in any industry." },
-              { origin:'LEAN METHODOLOGY · WOMACK & JONES · 1990s', title:"Define value through the customer's eyes", body:"Lean applied TPS beyond manufacturing — to services, healthcare, logistics, government. Every step either adds value the customer would pay for, or it doesn't. VeSiMy classifies VA, NNVA, and NVA on every step." },
-              { origin:'SIX SIGMA · MOTOROLA / GE · 1980s–2000s', title:'Measure. Prove. Sustain.', body:"Six Sigma added statistical rigour: define, measure, analyse, improve, control. VeSiMy's PDCA, 5 Why, fishbone, and before/after tracking make this achievable without a Black Belt." },
+              { origin:'TOYOTA PRODUCTION SYSTEM · 1950s', title:"Eliminate everything that isn't value", body:"Taiichi Ohno's insight: most of what happens in any process is waste. Identify the 8 wastes. Map the value stream. Pull, don't push. VeSiMy makes every one of these visible and actionable in any industry.", d:'d1' },
+              { origin:'LEAN METHODOLOGY · WOMACK & JONES · 1990s', title:"Define value through the customer's eyes", body:"Lean applied TPS beyond manufacturing — to services, healthcare, logistics, government. Every step either adds value the customer would pay for, or it doesn't. VeSiMy classifies VA, NNVA, and NVA on every step.", d:'d2' },
+              { origin:'SIX SIGMA · MOTOROLA / GE · 1980s–2000s', title:'Measure. Prove. Sustain.', body:"Six Sigma added statistical rigour: define, measure, analyse, improve, control. VeSiMy's PDCA, 5 Why, fishbone, and before/after tracking make this achievable without a Black Belt.", d:'d3' },
             ].map(p => (
-              <div key={p.title} className="mission-pillar">
+              <div key={p.title} className={`mission-pillar reveal ${p.d}`}>
                 <p style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'#0176D3', marginBottom:8 }}>{p.origin}</p>
                 <p style={{ fontSize:15, fontWeight:600, color:'white', marginBottom:6 }}>{p.title}</p>
                 <p style={{ fontSize:13, color:'rgba(255,255,255,.45)', lineHeight:1.65 }}>{p.body}</p>
@@ -490,7 +510,7 @@ export default function HomePage() {
       {/* ── PROBLEM / BEFORE-AFTER ───────────────────────────────────────────── */}
       <section style={{ padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', background:'#F8F6F0' }}>
         <div className="problem-grid" style={{ maxWidth:1160, margin:'0 auto', display:'grid', gridTemplateColumns:'5fr 6fr', gap:'clamp(40px,6vw,80px)', alignItems:'start' }}>
-          <div>
+          <div className="reveal">
             <span style={{ fontFamily:mono, fontSize:10, letterSpacing:2, color:'#6B6760', opacity:.5, display:'block', marginBottom:14 }}>01</span>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,44px)', lineHeight:1.12, fontWeight:400, marginBottom:20 }}>
               Every team knows where the waste is.<br />
@@ -501,7 +521,7 @@ export default function HomePage() {
               VeSiMy closes the gap between "we know this is broken" and "we can prove we fixed it."
             </p>
           </div>
-          <div style={{ borderTop:'1px solid rgba(1,118,211,.1)' }}>
+          <div className="reveal d2" style={{ borderTop:'1px solid rgba(1,118,211,.1)' }}>
             {[
               ['Post-it notes on a whiteboard',        'Live value stream with real cycle times'],
               ['Gut feel root cause',                  '5 Why drilled to the system failure'],
@@ -529,20 +549,20 @@ export default function HomePage() {
       {/* ── HOW IT WORKS ────────────────────────────────────────────────────── */}
       <section id="how" style={{ background:'#F0EDE6', padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', borderTop:'0.5px solid #D8D5CE' }}>
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
-          <div style={{ marginBottom:56 }}>
+          <div className="reveal" style={{ marginBottom:56 }}>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'#0176D3', marginBottom:16 }}>02 — How it works</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,44px)', lineHeight:1.12, fontWeight:400 }}>
               From visible problem to permanent fix.<br />In four steps.
             </h2>
           </div>
-          <div className="how-steps" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', background:'rgba(1,118,211,.08)', gap:1, borderRadius:12, overflow:'hidden' }}>
+          <div className="how-steps reveal d1" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', background:'rgba(1,118,211,.08)', gap:1, borderRadius:12, overflow:'hidden' }}>
             {[
-              { n:'01', title:'Map the value stream', path:'M3 12h18M3 6h18M3 18h10', body:'Add every step. Enter cycle times, WIP, operators, defect rates. The VSM builds in real time. Bottlenecks turn red the moment cycle time crosses takt — no formula required.' },
-              { n:'02', title:'Time every operation',  path:'M12 3a9 9 0 100 18A9 9 0 0012 3zM12 7v5l3 3', body:'The built-in stopwatch records 10+ observations, removes outliers, and calculates a statistically sound mean. Set a baseline. Set a target. Supe AI shows you the gap.' },
-              { n:'03', title:'Find the root cause',   path:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', body:'Fishbone maps every cause category. 5 Why drills through symptoms to the system failure. Every analysis links to the step it came from.' },
-              { n:'04', title:'Prove what changed',    path:'M9 12l2 2 4-4M12 3a9 9 0 100 18A9 9 0 0012 3z', body:'Log kaizen events. Record actual results. PDCA documents before and after. Export an ISO-compliant report — audit-ready, management-ready, in one click.' },
+              { n:'01', title:'Map the value stream', path:'M3 12h18M3 6h18M3 18h10', d:'', body:'Add every step. Enter cycle times, WIP, operators, defect rates. The VSM builds in real time. Bottlenecks turn red the moment cycle time crosses takt — no formula required.' },
+              { n:'02', title:'Time every operation',  path:'M12 3a9 9 0 100 18A9 9 0 0012 3zM12 7v5l3 3', d:'d1', body:'The built-in stopwatch records 10+ observations, removes outliers, and calculates a statistically sound mean. Set a baseline. Set a target. Supe AI shows you the gap.' },
+              { n:'03', title:'Find the root cause',   path:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', d:'d2', body:'Fishbone maps every cause category. 5 Why drills through symptoms to the system failure. Every analysis links to the step it came from.' },
+              { n:'04', title:'Prove what changed',    path:'M9 12l2 2 4-4M12 3a9 9 0 100 18A9 9 0 0012 3z', d:'d3', body:'Log kaizen events. Record actual results. PDCA documents before and after. Export an ISO-compliant report — audit-ready, management-ready, in one click.' },
             ].map(step => (
-              <div key={step.n} className="how-step">
+              <div key={step.n} className={`how-step reveal ${step.d}`}>
                 <span style={{ fontFamily:mono, fontSize:10, color:'#0176D3', opacity:.5, letterSpacing:1, marginBottom:28, display:'block' }}>{step.n} ─────</span>
                 <div className="step-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0176D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -569,7 +589,7 @@ export default function HomePage() {
       {/* ── WHAT'S NEW ──────────────────────────────────────────────────────── */}
       <section style={{ background:'#FFFFFF', padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', borderTop:'0.5px solid #D8D5CE' }}>
         <div style={{ maxWidth:1060, margin:'0 auto' }}>
-          <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:24, marginBottom:48, flexWrap:'wrap' }}>
+          <div className="reveal" style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:24, marginBottom:48, flexWrap:'wrap' }}>
             <div>
               <div style={{ display:'inline-block', fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.8)', letterSpacing:2.5, textTransform:'uppercase', marginBottom:14, fontWeight:700, padding:'4px 12px', background:'rgba(1,118,211,.07)', border:'1px solid rgba(1,118,211,.15)', borderRadius:4 }}>What's new — Version 3.1</div>
               <h2 style={{ fontFamily:serif, fontSize:'clamp(22px,3vw,38px)', fontWeight:400, color:'#1E1B17', lineHeight:1.15, marginBottom:14 }}>
@@ -581,7 +601,7 @@ export default function HomePage() {
             </div>
             <Link href="/changelog" style={{ fontSize:12, color:'#0176D3', fontWeight:600, textDecoration:'none', flexShrink:0, marginTop:8 }}>Full changelog →</Link>
           </div>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap:20 }}>
+          <div className="reveal d1" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap:20 }}>
             {CHANGELOG.map(item => (
               <div key={item.title} style={{ background:'#F8F6F0', border:'1px solid #E8E5E0', borderRadius:14, padding:'22px 22px 20px', display:'flex', flexDirection:'column' }}>
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10 }}>
@@ -607,7 +627,7 @@ export default function HomePage() {
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
       <div style={{ padding:'clamp(64px,7vw,90px) clamp(16px,4vw,48px)', textAlign:'center', background:'#F8F6F0', borderTop:'3px solid #0176D3', position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', top:-40, left:'50%', transform:'translateX(-50%)', fontFamily:serif, fontSize:220, color:'rgba(1,118,211,.05)', lineHeight:1, pointerEvents:'none', userSelect:'none' as any }}>"</div>
-        <div style={{ maxWidth:680, margin:'0 auto', position:'relative', zIndex:1 }}>
+        <div className="reveal" style={{ maxWidth:680, margin:'0 auto', position:'relative', zIndex:1 }}>
           <p style={{ fontFamily:serif, fontSize:'clamp(18px,2.5vw,26px)', lineHeight:1.5, color:'#0D0C0A', fontStyle:'italic', marginBottom:24, fontWeight:400 }}>
             "The ability to add individual steps per operator with times is exactly what we needed. The designator for value-add and non-value-add per step, and the Yamazumi — that's the workflow."
           </p>
@@ -618,14 +638,14 @@ export default function HomePage() {
       {/* ── PRICING ─────────────────────────────────────────────────────────── */}
       <section id="pricing" style={{ padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', background:'#F0EDE6', borderTop:'0.5px solid #D8D5CE' }}>
         <div style={{ maxWidth:980, margin:'0 auto' }}>
-          <div style={{ textAlign:'center', marginBottom:52 }}>
+          <div className="reveal" style={{ textAlign:'center', marginBottom:52 }}>
             <span style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(1,118,211,.8)', display:'block', marginBottom:16, textTransform:'uppercase' }}>Pricing</span>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,42px)', fontWeight:400, color:'#0D0C0A', marginBottom:12 }}>
               Every CI tool, free.<br />Upgrade for AI and advanced exports.
             </h2>
             <p style={{ fontSize:15, color:'#3A3835' }}>No feature gates on the core methodology. VSM, Fishbone, 5 Why, Kaizen, PDCA — free forever.</p>
           </div>
-          <div className="pricing-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16 }}>
+          <div className="pricing-grid reveal d1" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16 }}>
             {(Object.entries(PLANS) as any[]).map(([key, plan]) => {
               const isPro = key === 'pro'; const isLife = key === 'lifetime'; const isEnt = key === 'enterprise'
               return (
@@ -665,13 +685,13 @@ export default function HomePage() {
       <section style={{ padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', textAlign:'center', background:'#1A1714', position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse 80% 50% at 50% 100%,rgba(1,118,211,.09) 0%,transparent 70%)', pointerEvents:'none' }} />
         <div style={{ position:'relative', zIndex:1 }}>
-          <h2 style={{ fontFamily:serif, fontSize:'clamp(36px,5vw,68px)', lineHeight:1.08, marginBottom:16, fontWeight:400, color:'#F8F7F5' }}>
+          <h2 className="reveal" style={{ fontFamily:serif, fontSize:'clamp(36px,5vw,68px)', lineHeight:1.08, marginBottom:16, fontWeight:400, color:'#F8F7F5' }}>
             You have a process.<br />
             You have a target.<br />
             <em style={{ fontStyle:'italic', color:'#0176D3' }}>Now you have VeSiMy.</em>
           </h2>
-          <p style={{ fontSize:16, color:'rgba(248,247,245,.35)', marginBottom:44, fontWeight:300 }}>No card. No setup. No manufacturing jargon if you're not in manufacturing.</p>
-          <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap' }}>
+          <p className="reveal d1" style={{ fontSize:16, color:'rgba(248,247,245,.35)', marginBottom:44, fontWeight:300 }}>No card. No setup. No manufacturing jargon if you're not in manufacturing.</p>
+          <div className="reveal d2" style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap' }}>
             <Link href="/auth/signup" style={{ padding:'15px 38px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'white', border:'none', borderRadius:9, fontSize:16, fontWeight:700, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:8, boxShadow:'0 4px 20px rgba(1,118,211,.3)' }}>
               Create your free account <ArrowRightIcon size={15} color="white" />
             </Link>

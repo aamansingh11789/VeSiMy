@@ -32,7 +32,7 @@ export default async function DashboardPage() {
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)', position: 'relative' }}>
       <Sidebar profile={profile} />
       <IndustryWatermark group={wgroup} />
-      <main style={{ marginLeft: 240, flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>
+      <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>
         <DashboardClient profile={profile} initialProjects={projects || []} />
       </main>
       <BottomNav />

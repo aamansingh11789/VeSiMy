@@ -18,7 +18,7 @@ export default async function SettingsPage() {
   return (
     <div style={{ display:'flex', minHeight:'100vh', background:'var(--bg)' }}>
       <Sidebar profile={profile} />
-      <main style={{ marginLeft: 240, flex:1, minWidth:0 }} className="settings-main">
+      <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex:1, minWidth:0 }} className="settings-main">
         <div style={{ maxWidth:760, padding:'32px 40px' }} className="settings-inner">
           <SettingsClient profile={profile} user={{ email: user.email }} />
         </div>

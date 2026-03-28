@@ -23,7 +23,7 @@ export default async function LearnPage() {
     <div style={{ display:'flex', minHeight:'100vh', background:'var(--bg)', position:'relative' }}>
       <Sidebar profile={profile} />
       <IndustryWatermark group={wgroup} />
-      <main style={{ marginLeft: 240, flex:1, overflow:'hidden', minWidth:0, position:'relative', zIndex:1 }}>
+      <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex:1, overflow:'hidden', minWidth:0, position:'relative', zIndex:1 }}>
         <LearningCenter userId={user.id} />
       </main>
       <BottomNav />
