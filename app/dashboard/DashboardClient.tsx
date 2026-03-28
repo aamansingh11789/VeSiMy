@@ -17,7 +17,8 @@ import {
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
 import type { Profile, Project } from '@/lib/store'
-import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
+import { getIndustryTerms, getIndustryLabel, INDUSTRY_OPTIONS, INDUSTRY_SECTORS, getIndustriesBySector } from '@/lib/industry-language'
+import { getIndustryReferenceNames } from '@/lib/industry-reference-map'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
 import { useAnalytics } from '@/hooks/useAnalytics'
@@ -500,19 +501,19 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
     if (demo === 'realestate') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedDemoProject('/api/projects/seed-realestate', 'Real Estate demo'), 800)
+      setTimeout(() => seedReferenceProject(), 800)
     } else if (demo === 'healthcare') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedDemoProject('/api/projects/seed-healthcare', 'Healthcare demo'), 800)
+      setTimeout(() => seedReferenceProject(), 800)
     } else if (demo === 'brewery') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedDemoProject('/api/projects/seed-brewery', 'Craft Brewery demo'), 800)
+      setTimeout(() => seedReferenceProject(), 800)
     } else if (demo === 'winery') {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedDemoProject('/api/projects/seed-winery', 'Winery demo'), 800)
+      setTimeout(() => seedReferenceProject(), 800)
     } else if (params.get('ref') === '1' || isFirstVisit) {
       sessionStorage.setItem('vesimy_seeded', '1')
-      setTimeout(() => seedReferenceProject(), 800)  // seeds all 5 industries
+      setTimeout(() => seedReferenceProject(), 800)  // seeds only this user's industry
     }
   }, [])
 
@@ -581,7 +582,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   async function seedReferenceProject() {
     setSeedingRef(true)
     try {
-      const res = await fetch('/api/projects/seed-all-references', { method: 'POST' })
+      const res = await fetch('/api/projects/seed-industry-reference', { method: 'POST' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to create reference projects')
       if (data.already_exists) {
@@ -653,7 +654,9 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   fontWeight: 700,
                 }}
               >
-                Operations Intelligence Workspace
+                {getIndustryLabel((profile as any).industry)
+                  ? `${getIndustryLabel((profile as any).industry)} Workspace`
+                  : 'Operations Intelligence Workspace'}
               </span>
             </div>
 
@@ -674,8 +677,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
             <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 620 }}>
               {projects.length === 0
-                ? 'Map your process, identify your wins, and track every improvement toward your targets. Start with your first project.'
-                : `${projects.length} active project${projects.length !== 1 ? 's' : ''} · ${totalSteps} total steps mapped across your workspace.`}
+                ? (() => { const t = getIndustryTerms((profile as any).industry); const l = getIndustryLabel((profile as any).industry); return `Map your ${t.process}, find the ${t.waste}, and build a record of every ${t.improvement}${l ? ' in ' + l : ''}. Start with your first project.` })()
+                : (() => { const t = getIndustryTerms((profile as any).industry); const l = getIndustryLabel((profile as any).industry); return `${projects.length} active project${projects.length !== 1 ? 's' : ''} · ${totalSteps} ${t.processSteps} mapped · ${l || 'your'} workspace.` })()}
             </p>
           </div>
 
@@ -814,52 +817,49 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
         </div>
 
-        {/* ── Reference Projects — all 5 industries ── */}
-        <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(1,118,211,0.10)', border: '1px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
-            <div style={{ flex: 1, minWidth: 200 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>Reference Projects — 5 Industries</div>
-              <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
-                Load fully-built reference projects across every supported industry. Every CI tool populated, real bottlenecks, root causes drilled to source. Use them as guides when building your own process maps.
-              </p>
-            </div>
-            <button
-              onClick={seedReferenceProject}
-              disabled={seedingRef}
-              style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
-            >
-              {seedingRef ? 'Loading…' : 'Load All Reference Projects →'}
-            </button>
-          </div>
-          {/* Industry chips */}
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {([
-  { label:'Automotive', color:'#0176D3', desc:'Seat assembly. CT 145s vs 120s Takt. All 9 tools.' },
-              { label:'Hospital', color:'#2E844A', desc:'ED patient flow. 3.2hr door-to-discharge. PDCA + 5 Why.' },
-              { label:'Software', color:'#6426A0', desc:'PR cycle 14 days. Bottleneck at code review. Kaizen + PDCA.' },
-              { label:'Restaurant', color:'#C0402A', desc:'Kitchen 22 min avg. 6% wrong orders. All tools.' },
-              { label:'Law Firm', color:'#0a5eaa', desc:'40% draft revision rate. 8 tools populated.' },
-              { label:'Retail', color:'#854F0B', desc:'4hr replenishment delay. Vendor delivery waste.' },
-              { label:'Warehouse', color:'#1A7860', desc:'96.8% pick accuracy. Re-slot top 50 error SKUs.' },
-              { label:'Hotel', color:'#3070B8', desc:'62-min room turnover vs 45-min standard.' },
-              { label:'Banking', color:'#0176D3', desc:'18-day loan vs 5-day competitor. 35% doc errors.' },
-              { label:'Construction', color:'#514F4D', desc:'18% MEP first inspection fail. Coordination waste.' },
-              { label:'Contact Centre', color:'#8C44CC', desc:'28% repeat contact. FCR 72% vs 85% target.' },
-              { label:'Marketing', color:'#C0402A', desc:'3.2 revision rounds per campaign. Brief waste.' },
-              { label:'Real Estate', color:'#185FA5', desc:'28% file kickback. 45-day close vs 30-day market.' },
-              { label:'Pharma', color:'#2E844A', desc:'12% OOS rate. Batch release bottleneck.' },
-              { label:'Winery', color:'#6426A0', desc:'6% barrel TCA/VA defect. 80 barrels no tracking.' },
-              { label:'E-Commerce', color:'#854F0B', desc:'4.2% pick error. $8k/month returns.' },
-              { label:'Brewery', color:'#C0402A', desc:'Fermenter capacity ceiling. 6-day ferment.' },
-              { label:'Primary Care', color:'#1A7860', desc:'38-min visit vs 20-min standard. Schedule redesign.' },
-            ] as any[]).map((ind: any) => (
-              <div key={ind.label} title={ind.desc} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 100, background: `${ind.color}0F`, border: `1px solid ${ind.color}30`, fontSize: 11 }}>
-                <span style={{ fontWeight: 600, color: ind.color }}>{ind.label}</span>
+        {/* ── Reference Project — industry-specific ── */}
+        {(() => {
+          const industryId = (profile as any).industry || ''
+          const industryLabel = getIndustryLabel(industryId)
+          const t = getIndustryTerms(industryId)
+          const refNames = getIndustryReferenceNames(industryId)
+          const hasRefs = projects.some(p => refNames.includes(p.name))
+
+          // Only show this card if not all refs are already loaded
+          if (hasRefs) return null
+
+          return (
+            <div style={{ background: '#FFFFFF', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 14, padding: '18px 20px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(1,118,211,0.10)', border: '1px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
+                <div style={{ flex: 1, minWidth: 200 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
+                    {industryLabel ? `${industryLabel} Reference Project` : 'Reference Project'}
+                  </div>
+                  <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
+                    A fully built {industryLabel || 'industry'} {t.process} — every CI tool populated with real bottleneck data, root causes drilled to source, kaizen events and PDCA ready to explore. Load it to see what a complete {t.valueStream || 'value stream'} looks like.
+                  </p>
+                </div>
+                <button
+                  onClick={seedReferenceProject}
+                  disabled={seedingRef}
+                  style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
+                >
+                  {seedingRef ? 'Loading…' : `Load ${industryLabel || 'Industry'} Reference →`}
+                </button>
               </div>
-            ))}
-          </div>
-        </div>
+              {refNames.length > 0 && (
+                <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {refNames.map(name => (
+                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 6, padding: '3px 9px' }}>
+                      {name.replace('Reference — ', '')}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {/* Health overview */}
         {projects.length > 0 && <HealthOverview projects={projects} />}
@@ -1121,8 +1121,12 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                     onChange={(e) => setForm((f) => ({ ...f, industry: e.target.value }))}
                   >
                     <option value="">Select industry…</option>
-                    {INDUSTRIES.map((i) => (
-                      <option key={i}>{i}</option>
+                    {INDUSTRY_SECTORS.map(sector => (
+                      <optgroup key={sector} label={sector}>
+                        {getIndustriesBySector(sector).map(ind => (
+                          <option key={ind.id} value={ind.id}>{ind.label}</option>
+                        ))}
+                      </optgroup>
                     ))}
                   </select>
                 </div>

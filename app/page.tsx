@@ -1526,6 +1526,95 @@ export default function HomePage() {
             {/* ── COMPETITOR COMPARISON ─────────────────────────────────────────────── */}
       <CompetitorTable />
 
+
+      {/* ── CHANGELOG / WHAT'S NEW ──────────────────────────────────────────── */}
+      <section style={{ background: '#FFFFFF', padding: 'clamp(56px,7vh,80px) clamp(16px,4vw,48px)', borderTop: '0.5px solid #D8D5CE', borderBottom: '0.5px solid #D8D5CE' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, marginBottom: 48, flexWrap: 'wrap' }}>
+            <div>
+              <div style={{ display: 'inline-block', fontSize: 9, color: 'rgba(1,118,211,0.8)', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 14, fontWeight: 700, padding: '4px 12px', background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 4 }}>What's new — Version 3</div>
+              <h2 className="h2-light-shadow" style={{ fontFamily: '"Palatino Linotype",Georgia,serif', fontSize: 'clamp(22px,3vw,38px)', fontWeight: 700, color: '#1E1B17', lineHeight: 1.15, marginBottom: 14, letterSpacing: -.5 }}>
+                Built for your industry.<br/>Not adapted for it.
+              </h2>
+              <p style={{ fontSize: 14, color: '#6B6760', maxWidth: 480, lineHeight: 1.8 }}>
+                VeSiMy v3 is the most significant update since launch. Every part of the product now adapts to the industry you work in — your language, your reference projects, your learning content.
+              </p>
+            </div>
+            <a href="/changelog" style={{ fontSize: 12, color: 'var(--brand)', fontWeight: 600, textDecoration: 'none', flexShrink: 0, marginTop: 8 }}>Full changelog →</a>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap: 20 }}>
+            {([
+              {
+                tag: 'MAJOR',
+                color: '#0176D3',
+                title: '66-industry reference projects',
+                date: 'March 2026',
+                body: "Every supported industry now has a fully built reference project — populated with real bottleneck data, 5 Why root cause analysis, fishbone, kaizen events, improvement goals, and PDCA. You get a complete working example on day one, in your own industry's language.",
+                items: ['All 9 CI tools populated: stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, improvement goals', 'Real root causes, not placeholder text', 'Industry-specific process steps and terminology', 'Serves as a learning tool and a data template'],
+              },
+              {
+                tag: 'MAJOR',
+                color: '#2E844A',
+                title: 'Industry language engine',
+                date: 'March 2026',
+                body: 'Your workspace now speaks the language of the field you selected at onboarding. A nurse never sees "WIP". A brewer never sees "takt time" without context. A lawyer never sees "operator". Every term — cycle time, defect, gemba, kaizen — adapts to your industry.',
+                items: ['62 industries, 40+ adapted terms each', 'Applies across dashboard, tools, AI coaching, and learning center', 'No cross-industry terminology bleed', 'Fully reflected in Supe AI responses'],
+              },
+              {
+                tag: 'MAJOR',
+                color: '#8C44CC',
+                title: 'Industry-aware onboarding',
+                date: 'March 2026',
+                body: 'New accounts are now guided through a 4-step onboarding wizard. Industry selection is the first and most important step — it determines everything else: reference projects loaded, language used, templates offered, and learning content shown. No generic start screen.',
+                items: ['4-step wizard: Industry → Role → First Project → Launch', 'Industry-specific process templates (15+ industry groups)', 'Language preview before you confirm', 'Reference project seeded for your industry only — zero cross-industry projects'],
+              },
+              {
+                tag: 'IMPROVEMENT',
+                color: '#C0402A',
+                title: 'Industry watermarks',
+                date: 'March 2026',
+                body: 'Each industry now has a unique SVG watermark displayed as a subtle background element in the workspace. Manufacturing gets interlocking gears. Healthcare gets a stethoscope. Aviation gets an aircraft silhouette. Real estate gets a house. 40+ unique watermarks — one per industry group.',
+                items: ['40+ unique SVG watermarks — one per industry group', 'Fixed position, opacity 0.038 — visible but not distracting', 'Monochrome brand blue', 'Auto-switches when industry changes'],
+              },
+              {
+                tag: 'IMPROVEMENT',
+                color: '#0176D3',
+                title: 'Industry-aware learning center',
+                date: 'March 2026',
+                body: 'The Learning Center now reads your industry and rewrites every explanation, example, and FAQ in your terminology. Takt Time becomes Length of Stay in healthcare. Process step becomes Trade Stage in construction. Defect becomes Adverse Event in clinical settings. Every concept, in your language.',
+                items: ['Manual, Glossary, and FAQs all adapt to industry', 'Examples reference your actual process context', 'No manufacturing language in healthcare accounts', 'Glossary terms defined with industry-specific examples'],
+              },
+              {
+                tag: 'IMPROVEMENT',
+                color: '#2E844A',
+                title: 'Account isolation by industry',
+                date: 'March 2026',
+                body: 'When you select an industry at onboarding, only the reference project for that exact industry is seeded. A brewery account never receives a law firm reference project. Every API call filters by industry. Cross-industry terminology is blocked throughout the account until explicitly overridden.',
+                items: ['Reference projects filtered to your industry only', 'Cross-industry language eliminated', 'Separate projects can be created for other industries', 'Profile-level industry setting drives everything'],
+              },
+            ] as any[]).map((item: any) => (
+              <div key={item.title} style={{ background: '#F8F6F0', border: '1px solid #E8E5E0', borderRadius: 14, padding: '22px 22px 20px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, fontFamily: 'monospace', color: item.color, background: `${item.color}14`, border: `1px solid ${item.color}30`, borderRadius: 4, padding: '3px 8px' }}>{item.tag}</span>
+                  <span style={{ fontSize: 10, color: '#8E8A82', fontFamily: 'monospace' }}>{item.date}</span>
+                </div>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1E1B17', marginBottom: 10, lineHeight: 1.3 }}>{item.title}</h3>
+                <p style={{ fontSize: 12.5, color: '#6B6760', lineHeight: 1.75, marginBottom: 14 }}>{item.body}</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginTop: 'auto' }}>
+                  {item.items.map((pt: string) => (
+                    <div key={pt} style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+                      <div style={{ width: 5, height: 5, borderRadius: '50%', background: item.color, flexShrink: 0, marginTop: 5, opacity: 0.7 }} />
+                      <span style={{ fontSize: 11.5, color: '#514F4D', lineHeight: 1.5 }}>{pt}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── QUOTE ───────────────────────────────────────────────────────────── */}
       <div style={{ padding: 'clamp(40px,5vw,64px) clamp(16px,4vw,48px)', textAlign: 'center', background: '#F8F6F0', borderTop: '3px solid #0176D3' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>

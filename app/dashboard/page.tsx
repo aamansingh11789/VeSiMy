@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation'
 import { Sidebar }    from '@/components/layout/Sidebar'
 import { BottomNav }  from '@/components/layout/BottomNav'
 import { DashboardClient } from './DashboardClient'
+import { IndustryWatermark } from '@/components/ui/IndustryWatermark'
+import { getWatermarkGroup } from '@/lib/industry-reference-map'
 
 export const metadata = { title: 'Dashboard — VeSiMy' }
 
@@ -21,10 +23,13 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
+  const wgroup = getWatermarkGroup((profile as any).industry || '')
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)', position: 'relative' }}>
       <Sidebar profile={profile} />
-      <main style={{ marginLeft: 240, flex: 1, padding: 28, minWidth: 0 }}>
+      <IndustryWatermark group={wgroup} />
+      <main style={{ marginLeft: 240, flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>
         <DashboardClient profile={profile} initialProjects={projects || []} />
       </main>
       <BottomNav />

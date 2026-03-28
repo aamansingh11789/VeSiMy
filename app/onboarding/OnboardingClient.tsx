@@ -187,7 +187,7 @@ export function OnboardingClient({ profile }: Props) {
 
       // 2. Create the first project (unless sample)
       if (template === 'sample') {
-        const refRes = await fetch('/api/projects/seed-all-references', { method: 'POST' })
+        const refRes = await fetch('/api/projects/seed-industry-reference', { method: 'POST' })
         const refData = await refRes.json()
         setDone(true)
         setTimeout(() => {
@@ -218,7 +218,7 @@ export function OnboardingClient({ profile }: Props) {
       }
 
       // 4. Seed reference projects silently in background
-      fetch('/api/projects/seed-all-references', { method: 'POST' }).catch(() => {})
+      fetch('/api/projects/seed-industry-reference', { method: 'POST' }).catch(() => {})
 
       setDone(true)
       setTimeout(() => {

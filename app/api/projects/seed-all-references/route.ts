@@ -50,11 +50,29 @@ export async function POST(_request: NextRequest) {
       if (error) console.error(`[seed] tool_data (${toolName}):`, error.message)
     }
 
+    // ── Industry filter ──────────────────────────────────────────────────────
+    // Pass { industryFilter: 'industry_id' } in POST body to seed only one industry.
+    // Called from seed-industry-reference to avoid seeding all 62 projects.
+    let allowedNames: Set<string> | null = null
+    try {
+      let reqBody: any = {}
+      try { reqBody = await _request.clone().json() } catch { /* no body */ }
+      if (reqBody?.industryFilter) {
+        const { INDUSTRY_REFERENCE_NAMES } = (await import('@/lib/industry-reference-map')) as any
+        const names: string[] = (INDUSTRY_REFERENCE_NAMES as any)[reqBody.industryFilter] || []
+        if (names.length > 0) allowedNames = new Set<string>(names)
+      }
+    } catch { /* non-fatal */ }
+    function shouldSeed(nm: string): boolean {
+      return allowedNames === null || allowedNames.has(nm)
+    }
+
     // ══════════════════════════════════════════════════════════════════════════
     // 1. AUTOMOTIVE MANUFACTURING — Seat Assembly Line
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Automotive Seat Assembly'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Automotive'); primaryId = ex } else {
         const pid = await proj({ name: nm, industry: 'automotive_manufacturing', customer: 'OEM Assembly Plant',
@@ -84,6 +102,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — ED Patient Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Hospital') } else {
         const pid = await proj({ name: nm, industry: 'hospital_acute_care', customer: 'Patient',
@@ -111,6 +130,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Software Feature Delivery'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Software') } else {
         const pid = await proj({ name: nm, industry: 'software_development', customer: 'End User',
@@ -137,6 +157,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Restaurant Service Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Restaurant') } else {
         const pid = await proj({ name: nm, industry: 'restaurant_food_service', customer: 'Dining Guest',
@@ -163,6 +184,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Craft Brewery Batch Production'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Brewery') } else {
         const pid = await proj({ name: nm, industry: 'craft_brewery', customer: 'Taproom & Wholesale',
@@ -191,6 +213,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Law Firm Matter Lifecycle'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Law Firm') } else {
         const pid = await proj({ name: nm, industry: 'law_firm', customer: 'Client',
@@ -218,6 +241,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Retail Store Operations'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Retail') } else {
         const pid = await proj({ name: nm, industry: 'retail_stores', customer: 'Shopper',
@@ -244,6 +268,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Warehouse Fulfilment'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Warehousing') } else {
         const pid = await proj({ name: nm, industry: 'warehousing_distribution', customer: 'E-commerce Retailer',
@@ -271,6 +296,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Hotel Guest Stay Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Hotel') } else {
         const pid = await proj({ name: nm, industry: 'hotel_hospitality', customer: 'Hotel Guest',
@@ -296,6 +322,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Retail Banking Loan Process'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Banking') } else {
         const pid = await proj({ name: nm, industry: 'retail_banking', customer: 'Loan Applicant',
@@ -322,6 +349,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Construction Build Workflow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Construction') } else {
         const pid = await proj({ name: nm, industry: 'construction', customer: 'Building Owner',
@@ -348,6 +376,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Contact Centre Resolution Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Contact Centre') } else {
         const pid = await proj({ name: nm, industry: 'contact_center', customer: 'Customer',
@@ -373,6 +402,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Marketing Agency Campaign Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Marketing') } else {
         const pid = await proj({ name: nm, industry: 'marketing_agency', customer: 'Brand Client',
@@ -398,6 +428,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Real Estate Transaction Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Real Estate') } else {
         const pid = await proj({ name: nm, industry: 'real_estate', customer: 'Home Buyer',
@@ -424,6 +455,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Pharmaceutical Batch Release'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Pharma') } else {
         const pid = await proj({ name: nm, industry: 'pharmaceutical_manufacturing', customer: 'Hospital / Pharmacy',
@@ -450,6 +482,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Boutique Winery Production'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Winery') } else {
         const pid = await proj({ name: nm, industry: 'winery', customer: 'DTC Wine Club & Wholesale',
@@ -476,6 +509,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — E-Commerce Order Fulfilment'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('E-Commerce') } else {
         const pid = await proj({ name: nm, industry: 'ecommerce_fulfillment', customer: 'Online Shopper',
@@ -502,6 +536,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Primary Care Patient Visit'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Primary Care') } else {
         const pid = await proj({ name: nm, industry: 'primary_care_outpatient', customer: 'Patient',
@@ -528,6 +563,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — General Manufacturing Assembly'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('General Manufacturing') } else {
         const pid = await proj({ name: nm, industry: 'general_manufacturing', customer: 'Distributor',
@@ -555,6 +591,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Aerospace Wing Rib Assembly'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Aerospace') } else {
         const pid = await proj({ name: nm, industry: 'aerospace_manufacturing', customer: 'Aircraft OEM',
@@ -581,6 +618,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Food & Beverage Production Line'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Food & Beverage') } else {
         const pid = await proj({ name: nm, industry: 'food_beverage_manufacturing', customer: 'Retail Distributor',
@@ -607,6 +645,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Operating Room Surgical Pathway'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Surgery / OR') } else {
         const pid = await proj({ name: nm, industry: 'surgery_operating_room', customer: 'Patient',
@@ -633,6 +672,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Pharmacy Prescription Dispensing'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Pharmacy') } else {
         const pid = await proj({ name: nm, industry: 'pharmacy', customer: 'Patient',
@@ -657,6 +697,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Insurance Claims Processing'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Insurance') } else {
         const pid = await proj({ name: nm, industry: 'insurance', customer: 'Policyholder',
@@ -682,6 +723,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — IT Incident Management'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('IT Operations') } else {
         const pid = await proj({ name: nm, industry: 'it_operations', customer: 'Internal Business User',
@@ -706,6 +748,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Airline Aircraft Turnaround'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Aviation') } else {
         const pid = await proj({ name: nm, industry: 'airline_aviation', customer: 'Passenger',
@@ -732,6 +775,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Freight Delivery Operations'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Freight') } else {
         const pid = await proj({ name: nm, industry: 'freight_trucking', customer: 'Consignee',
@@ -757,6 +801,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — University Student Enrolment'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Higher Education') } else {
         const pid = await proj({ name: nm, industry: 'higher_education', customer: 'Student',
@@ -782,6 +827,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Corporate Training Programme'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Corporate Training') } else {
         const pid = await proj({ name: nm, industry: 'corporate_training', customer: 'Employee / Line Manager',
@@ -807,6 +853,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — HR Recruitment Flow'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('HR') } else {
         const pid = await proj({ name: nm, industry: 'human_resources', customer: 'Hiring Manager',
@@ -832,6 +879,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Power Generation Maintenance'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Power Generation') } else {
         const pid = await proj({ name: nm, industry: 'power_generation_utilities', customer: 'Grid Operator',
@@ -857,6 +905,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Management Consulting Engagement'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Consulting') } else {
         const pid = await proj({ name: nm, industry: 'management_consulting', customer: 'Client Executive',
@@ -882,6 +931,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Nonprofit Beneficiary Services'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Nonprofit') } else {
         const pid = await proj({ name: nm, industry: 'nonprofit', customer: 'Beneficiary',
@@ -907,6 +957,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Professional Sports Recruitment'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Sports') } else {
         const pid = await proj({ name: nm, industry: 'professional_sports', customer: 'Club / Head Coach',
@@ -932,6 +983,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     {
       const nm = 'Reference — Event Management Production'
+      if (!shouldSeed(nm)) { return }
       const ex = await exists(nm)
       if (ex) { existing.push('Events') } else {
         const pid = await proj({ name: nm, industry: 'event_management', customer: 'Event Client / Delegate',
@@ -953,7 +1005,554 @@ export async function POST(_request: NextRequest) {
       }
     }
 
-    // ── Response ───────────────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // 36. MEDICAL DEVICE MANUFACTURING
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Medical Device Assembly'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Medical Device')}else{
+      const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Hospital / Surgeon',description:'Class II device assembly. Bottleneck at sterile packaging — 9% sterility failure rate triggers full lot quarantine.'})
+      const s0=await st(pid,0,{name:'Component Incoming Inspection',operators:1,cycle_time:120,wait_time:1440,wip:8,uptime:100,defect_rate:3})
+      const s1=await st(pid,1,{name:'Sub-component Assembly',operators:3,cycle_time:180,wait_time:60,wip:5,uptime:95,defect_rate:2})
+      const s2=await st(pid,2,{name:'Final Assembly & Functional Test',operators:2,cycle_time:240,wait_time:120,wip:4,uptime:93,defect_rate:4})
+      const s3=await st(pid,3,{name:'Sterile Packaging',operators:2,cycle_time:90,wait_time:180,wip:6,uptime:96,defect_rate:9,notes:'BOTTLENECK — 9% sterility failure. Each triggers lot quarantine costing $18k.'})
+      const s4=await st(pid,4,{name:'EtO Sterilisation',operators:1,cycle_time:2880,wait_time:1440,wip:10,uptime:100,defect_rate:1})
+      const s5=await st(pid,5,{name:'Release Testing & QP Review',operators:1,cycle_time:1440,wait_time:2880,wip:5,uptime:100,defect_rate:6})
+      await sw(s3.id,pid,120,60,90,laps(90),'Sterile packaging avg 90 min/batch. 9% sterility failure — heat sealer temperature drifting mid-shift.')
+      await ika(s3.id,pid,'9% sterility failure rate at packaging','6M Manufacturing',{Machine:['Heat sealer calibration drifts mid-shift','Seal integrity tester not validated at current film spec'],Method:['Visual inspection only — no 100% seal integrity test','Pouch loaded before clean room environmental monitoring confirmed in spec'],Material:['Pouch film lot-to-lot thickness variation causes seal parameter drift','Packaging material not pre-conditioned before use'],Manpower:['Packaging operators not recertified since spec change 18 months ago'],Measurement:['Seal strength sampled only — not 100% tested'],'Mother Nature':['Clean room humidity spikes on warm days']})
+      await fw(s3.id,pid,'9% sterility failure rate',[why('Why 9% failure?','Seal integrity below IQ limit — heat sealer temperature drifting mid-shift.'),why('Why drifting?','Calibration only at start-of-shift — drift not caught during 8-hr run.'),why('Why not mid-shift?','SOP written for 4-hr shifts. Now running 8-hr shifts — SOP not updated.'),why('Why not updated?','SOP change control not triggered when shift pattern changed.'),why('Why not triggered?','ROOT CAUSE: Shift pattern change not recognised as a process change requiring SOP review.')],'Shift pattern change not treated as a process change — SOP update trigger not fired.','1. Immediate: mid-shift calibration check. 2. SOP update through change control. 3. 100% seal integrity test implementation.','Quality Manager','2026-04-15')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'9% failure rate — $18k lot quarantine per event plus 3-5 day delay',Waiting:'Quarantined lots wait 5 days for deviation review board',Overprocessing:'Full lot destroyed when only 1 sub-lot failed — overblown quarantine scope'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Mid-shift sealer calibration check','Add calibration verification at 4-hr mark on all 8-hr shifts. Implement immediately under deviation control.','Quality','critical','in-progress','Quality Manager','2026-04-01',['Amend batch record','Add calibration step to packaging SOP','File formal change control','Track sterility failure rate weekly'])])
+      await im(s3.id,pid,[goal('Sterility Failure Rate','9','1','%','Quality Manager','2026-07-01')])
+      seeded.push('Medical Device')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 37. RESEARCH LABORATORY
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Research Laboratory Assay Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Research Lab')}else{
+      const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Principal Investigator',description:'Sample to result. 6 steps. 35% assay repeat rate from contamination and equipment failure.'})
+      const s0=await st(pid,0,{name:'Sample Receipt & Registration',operators:1,cycle_time:20,wait_time:120,wip:30,uptime:100,defect_rate:5})
+      const s1=await st(pid,1,{name:'Sample Preparation',operators:2,cycle_time:45,wait_time:60,wip:15,uptime:100,defect_rate:8})
+      const s2=await st(pid,2,{name:'Assay Execution',operators:2,cycle_time:240,wait_time:120,wip:10,uptime:88,defect_rate:35,notes:'BOTTLENECK — 35% repeat rate. Instrument downtime 12%.'})
+      const s3=await st(pid,3,{name:'Data Acquisition & QC',operators:1,cycle_time:60,wait_time:60,wip:8,uptime:100,defect_rate:10})
+      const s4=await st(pid,4,{name:'Data Analysis & Interpretation',operators:1,cycle_time:120,wait_time:480,wip:6,uptime:100,defect_rate:5})
+      const s5=await st(pid,5,{name:'Report Drafting & Review',operators:1,cycle_time:180,wait_time:2880,wip:4,uptime:100,defect_rate:8})
+      await sw(s2.id,pid,360,240,240,laps(240),'Assay avg 4 hrs. 35% repeat — instrument failure and contamination main causes.')
+      await ika(s2.id,pid,'35% assay repeat rate','6M Manufacturing',{Machine:['HPLC column degraded — 18% of failures','Centrifuge rotor imbalance causing sample loss'],Method:['No pre-assay instrument check protocol','Samples loaded before controls confirmed acceptable'],Material:['Reagent lots not tested on receipt','Buffer concentration varies between preparers'],Manpower:['New postdoc running assay from memory — no formal training sign-off'],Measurement:['Pass/fail criteria applied retrospectively — not defined before assay run'],'Mother Nature':['Temperature gradient in lab — inconsistent assay conditions by bench position']})
+      await fw(s2.id,pid,'35% assay repeat rate',[why('Why 35%?','Reagent failures and instrument downtime discovered mid-assay — too late.'),why('Why discovered mid-assay?','No pre-assay checklist — instrument and reagent status assumed OK.'),why('Why assumed?','No SOP for assay setup.'),why('Why no SOP?','Lab operates informally — experienced scientists carry protocols in memory.'),why('Why memory-based?','ROOT CAUSE: No SOP for assay setup. Lab run by individual expertise, not documented process.')],'No SOP for assay setup — lab run by individual expertise, not documented process.','1. Pre-assay checklist (instrument, reagents, controls). 2. Reagent incoming QC. 3. Instrument PM schedule.','Lab Manager','2026-05-01')
+      await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'35% repeat — 4 hrs scientist time + materials wasted per repeat',Waiting:'Instrument queue when HPLC down — samples wait 3+ hrs','Non-Utilisation':'Postdoc competency not validated — error rate elevated'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Pre-assay checklist','Mandatory checklist: instrument status, reagent QC, control readiness. Target: repeat from 35% to 10%.','Quality','critical','in-progress','Lab Manager','2026-04-30',['Draft checklist with scientists','Pilot 4 weeks','Measure repeat rate','Formalise as SOP'])])
+      await im(s2.id,pid,[goal('Assay Repeat Rate','35','10','%','Lab Manager','2026-07-01')])
+      seeded.push('Research Lab')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 38. INVESTMENT MANAGEMENT
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Investment Management Trade Settlement'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Investment Management')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Investor',description:'Order to settled trade. 8% settlement fail rate. Bottleneck at trade confirmation.'})
+      const s0=await st(pid,0,{name:'Order Generation & Validation',operators:1,cycle_time:5,wait_time:2,wip:50,uptime:100,defect_rate:2})
+      const s1=await st(pid,1,{name:'Pre-trade Compliance Check',operators:1,cycle_time:8,wait_time:3,wip:30,uptime:100,defect_rate:4})
+      const s2=await st(pid,2,{name:'Trade Execution',operators:2,cycle_time:3,wait_time:1,wip:20,uptime:99,defect_rate:1})
+      const s3=await st(pid,3,{name:'Trade Confirmation & Matching',operators:2,cycle_time:15,wait_time:30,wip:25,uptime:100,defect_rate:8,notes:'BOTTLENECK — 8% fail. Counterparty SSI data mismatch.'})
+      const s4=await st(pid,4,{name:'Settlement',operators:1,cycle_time:20,wait_time:1440,wip:15,uptime:100,defect_rate:3})
+      const s5=await st(pid,5,{name:'Reconciliation & Reporting',operators:2,cycle_time:60,wait_time:240,wip:10,uptime:100,defect_rate:5})
+      await sw(s3.id,pid,30,10,15,laps(15),'Trade matching avg 15 min. 8% settlement fail — counterparty SSI data mismatch most common cause.')
+      await ika(s3.id,pid,'8% settlement fail rate','8P Service',{People:['Operations manually matching — no STP','New staff not trained on counterparty ID formats'],Process:['No automated SSI validation before trade submission','Fails investigated FIFO — not by settlement date priority'],Policy:['Settlement fails reported T+2 — too late for same-day resolution'],Place:['3 separate systems — data re-keyed between them'],'Products/Services':['SSI data not updated quarterly — stale data causes mismatches'],Price:['STP investment not approved — manual reconciliation maintained'],Promotion:['Counterparties not contacted until fail confirmed — 24-hr delay'],'Physical evidence':['No fail dashboard — fails discovered in morning batch only']})
+      await fw(s3.id,pid,'8% settlement fail rate',[why('Why 8% fail?','Counterparty SSI mismatch between internal systems.'),why('Why mismatch?','SSI data not synchronised across 3 internal systems.'),why('Why not synchronised?','No golden source for SSI — each system maintains its own.'),why('Why no golden source?','Systems built independently over 10 years — no data governance.'),why('Why no governance?','ROOT CAUSE: No data governance framework. SSI ownership undefined.')],'No data governance framework — SSI maintained independently in 3 systems.','1. Designate golden source for SSI. 2. Automated validation before trade submission. 3. Real-time fail dashboard.','Head of Operations','2026-06-01')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'8% fail — 2 hrs operations investigation per event',Waiting:'Fails discovered morning batch — 18-hr delay before intervention',Overprocessing:'Manual re-keying of trade data between 3 systems — 100% duplicate entry'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Golden source SSI + automated validation','Single source for SSI. Automated pre-trade validation. Target: fail from 8% to 1%.','Quality','critical','in-progress','Head of Operations','2026-06-01',['Map all SSI sources','Design golden source','Migrate data','Build automated validation'])])
+      await im(s3.id,pid,[goal('Settlement Fail Rate','8','1','%','Head of Operations','2026-09-01')])
+      seeded.push('Investment Management')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 39. ACCOUNTING & AUDIT
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Accounting & Audit Engagement'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Accounting & Audit')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Business Client',description:'Financial statement audit. 40% working paper return rate. Bottleneck at manager review.'})
+      const s0=await st(pid,0,{name:'Client Data Collection',operators:1,cycle_time:120,wait_time:4320,wip:8,uptime:100,defect_rate:30})
+      const s1=await st(pid,1,{name:'Risk Assessment & Planning',operators:2,cycle_time:240,wait_time:480,wip:5,uptime:100,defect_rate:10})
+      const s2=await st(pid,2,{name:'Substantive Testing',operators:3,cycle_time:960,wait_time:240,wip:6,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Working Paper Review',operators:1,cycle_time:480,wait_time:1440,wip:10,uptime:100,defect_rate:40,notes:'BOTTLENECK — 40% papers returned. 1-day manager queue.'})
+      const s4=await st(pid,4,{name:'Partner Sign-off',operators:1,cycle_time:120,wait_time:2880,wip:6,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Report Issuance & Billing',operators:1,cycle_time:60,wait_time:480,wip:4,uptime:100,defect_rate:5})
+      await sw(s3.id,pid,720,300,480,laps(480),'Working paper review avg 8 hrs. 40% returned to preparer. 1-day manager queue.')
+      await ika(s3.id,pid,'40% working paper return rate at manager review','8P Service',{People:['Juniors unclear on evidence standard per assertion','Managers review informally — no consistent checklist'],Process:['No pre-review self-check step by preparer','Prepared without reviewing prior-year manager comments'],Policy:['No maximum review turnaround SLA for managers'],Place:['Remote team — questions by email only'],'Products/Services':['Audit methodology changed but training not updated'],Price:['Fixed-fee engagement — coaching time not budgeted'],Promotion:['Client data quality poor — incomplete records add preparation time'],'Physical evidence':['No WIP status dashboard — manager unaware of queue volume']})
+      await fw(s3.id,pid,'40% working paper return rate',[why('Why 40% returned?','Papers lack sufficient evidence to support the audit conclusion.'),why('Why insufficient?','Juniors unclear on evidence standard per assertion type.'),why('Why unclear?','Evidence standard communicated verbally — not documented per assertion.'),why('Why not documented?','Methodology gives general guidance but no assertion-level evidence matrix.'),why('Why no matrix?','ROOT CAUSE: Methodology designed at partner level — no operational guide for preparers.')],'Methodology designed at partner level — no operational evidence matrix for preparers.','1. Per-assertion evidence matrix. 2. Mandatory preparer self-review. 3. Manager 48-hr review SLA.','Audit Manager','2026-05-01')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'40% return — 4-6 hrs rework per loop',Waiting:'1-day manager queue. 2-day at busy season.',Overprocessing:'Managers re-explaining same comments — same errors repeat because root cause unfixed'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Per-assertion evidence matrix','One-page guide per assertion: required evidence, quality standard, common failures. Target: return from 40% to 12%.','Quality','critical','in-progress','Audit Manager','2026-04-15',['Map top 5 return reasons','Design evidence matrix per assertion','Train juniors pre-busy season','Measure return rate weekly'])])
+      await im(s3.id,pid,[goal('Working Paper Return Rate','40','12','%','Audit Manager','2026-09-01')])
+      seeded.push('Accounting & Audit')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 40. CYBERSECURITY
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Cybersecurity Threat Response'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Cybersecurity')}else{
+      const pid=await pr({name:nm,industry:'it_operations',customer:'Organisation',description:'Alert to remediation. MTTD 3.8 hrs. 72% false positive rate creating analyst fatigue.'})
+      const s0=await st(pid,0,{name:'Alert Detection',operators:1,cycle_time:5,wait_time:10,wip:80,uptime:100,defect_rate:72,notes:'72% false positive rate'})
+      const s1=await st(pid,1,{name:'Triage & Classification',operators:2,cycle_time:15,wait_time:20,wip:30,uptime:100,defect_rate:15})
+      const s2=await st(pid,2,{name:'Investigation & Threat Analysis',operators:2,cycle_time:120,wait_time:60,wip:10,uptime:100,defect_rate:25,notes:'BOTTLENECK — 120 min avg. Missing threat intel context.'})
+      const s3=await st(pid,3,{name:'Containment & Isolation',operators:2,cycle_time:45,wait_time:30,wip:5,uptime:100,defect_rate:8})
+      const s4=await st(pid,4,{name:'Eradication & Remediation',operators:2,cycle_time:180,wait_time:60,wip:4,uptime:100,defect_rate:10})
+      const s5=await st(pid,5,{name:'Recovery & Lessons Learned',operators:1,cycle_time:60,wait_time:240,wip:3,uptime:100,defect_rate:0})
+      await sw(s2.id,pid,240,60,120,laps(120),'Investigation avg 120 min. 72% alert false positive. MTTD 3.8 hrs vs <1-hr target.')
+      await ika(s2.id,pid,'MTTD 3.8 hrs — 72% false positive rate','8P Service',{People:['2 Tier-2 analysts covering 24-hr SOC','Analysts averaging 400 alerts/day — cognitive overload'],Process:['No threat-intel enrichment before investigation','Investigation same procedure for P1 and P3'],Policy:['Escalation requires manager approval — 30-60 min delay'],Place:['SIEM, EDR, and threat intel in 3 separate tools'],'Products/Services':['SIEM tuning not reviewed since initial deployment'],Price:['Threat intel subscription lapsed — analysts on public OSINT only'],Promotion:['No playbook for top 10 attack techniques'],'Physical evidence':['No incident timeline dashboard — reconstructed from memory']})
+      await fw(s2.id,pid,'MTTD 3.8 hrs vs <1-hr target',[why('Why 3.8-hr MTTD?','72% false positive rate — genuine threats buried in noise.'),why('Why 72%?','SIEM alert rules not tuned since initial deployment 2 years ago.'),why('Why not tuned?','No SIEM tuning process — alerts added but never retired.'),why('Why no process?','SOC focused entirely on reactive response — no time for proactive tuning.'),why('Why no time?','ROOT CAUSE: SOC headcount insufficient for response and proactive improvement. No dedicated tuning resource.')],'SOC headcount insufficient. No dedicated tuning resource.','1. 30-day SIEM tuning sprint — reduce FP by 50%. 2. Playbooks for top 10 MITRE ATT&CK. 3. Automated threat-intel enrichment.','SOC Manager','2026-05-01')
+      await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'25% investigations escalated due to missing context',Waiting:'Escalation approval 30-60 min — threat actor dwell time increases',Overprocessing:'Analysts manually enriching IOCs from 3 tools — automated enrichment takes seconds'})
+      await kz(s2.id,pid,[kzItem('KZ-001','30-day SIEM tuning sprint','Reduce false positive from 72% to 20%. Review top 50 rules by volume.','Quality','critical','in-progress','SOC Manager','2026-04-30',['Pull 30-day FP data by rule','Adjust or retire top rules','Measure FP rate weekly'])])
+      await im(s2.id,pid,[goal('Alert False Positive Rate','72','20','%','SOC Manager','2026-07-01')])
+      seeded.push('Cybersecurity')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 41. TELECOMMUNICATIONS
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Telecoms Service Provisioning'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Telecommunications')}else{
+      const pid=await pr({name:nm,industry:'it_operations',customer:'Enterprise Customer',description:'Order to active service. 22-day average vs 5-day SLA. Bottleneck at network provisioning.'})
+      const s0=await st(pid,0,{name:'Order Receipt & Validation',operators:1,cycle_time:30,wait_time:120,wip:40,uptime:100,defect_rate:18})
+      const s1=await st(pid,1,{name:'Credit Check',operators:1,cycle_time:20,wait_time:240,wip:25,uptime:100,defect_rate:5})
+      const s2=await st(pid,2,{name:'Network Capacity Check',operators:1,cycle_time:45,wait_time:480,wip:20,uptime:100,defect_rate:12})
+      const s3=await st(pid,3,{name:'Network Provisioning',operators:3,cycle_time:240,wait_time:4320,wip:15,uptime:88,defect_rate:25,notes:'BOTTLENECK — 3-day wait. 25% require field visit adding 7 more days.'})
+      const s4=await st(pid,4,{name:'Customer Equipment Config',operators:2,cycle_time:90,wait_time:1440,wip:8,uptime:100,defect_rate:8})
+      const s5=await st(pid,5,{name:'Service Acceptance & Billing',operators:1,cycle_time:60,wait_time:480,wip:5,uptime:100,defect_rate:4})
+      await sw(s3.id,pid,10080,1440,4320,laps(4320),'Network provisioning avg 3-day wait. 25% require field visit. Order-to-active 22 days vs 5-day SLA.')
+      await fw(s3.id,pid,'22-day order-to-active vs 5-day SLA',[why('Why 22 days?','3-day queue + 7-day field visit on 25% of orders.'),why('Why 3-day queue?','3 engineers, 40 orders/week, manual process.'),why('Why manual?','OSS not integrated to network management — engineer logs into both separately.'),why('Why not integrated?','Integration project deprioritised in 2022.'),why('Why deprioritised?','ROOT CAUSE: ROI case not structured for business approval. IT and ops presented separately.')],'OSS-NMS integration deprioritised. ROI case not structured for business.','1. Remote retry protocol before field dispatch. 2. OSS-NMS integration business case. 3. Order status visibility to customers.','Head of Network Operations','2026-06-01')
+      await wa(s3.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'3-day queue + 7-day field visit on 25% of orders',Defects:'25% provisioning failures — $450 field dispatch cost per event',Overprocessing:'Engineers logging into 2 systems per provisioning action'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Remote retry before field dispatch','3 remote retry attempts before field dispatch triggered. Target: field dispatch from 25% to 8%.','Delivery','critical','in-progress','Head of Network Ops','2026-04-15',['Document retry procedure','Train provisioning engineers','Track field dispatch rate','Measure order-to-active'])])
+      await im(s3.id,pid,[goal('Order-to-Active Time','22','5','days','Head of Network Ops','2026-09-01')])
+      seeded.push('Telecommunications')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 42. GROCERY & SUPERMARKET
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Grocery Store Operations'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Grocery')}else{
+      const pid=await pr({name:nm,industry:'retail_stores',customer:'Shopper',description:'Supplier delivery to customer checkout. On-shelf availability 91% vs 98% target.'})
+      const s0=await st(pid,0,{name:'Delivery Receiving & Temp Check',operators:2,cycle_time:45,wait_time:60,wip:8,uptime:100,defect_rate:5})
+      const s1=await st(pid,1,{name:'Backroom Sort & Date Check',operators:2,cycle_time:30,wait_time:30,wip:25,uptime:100,defect_rate:3})
+      const s2=await st(pid,2,{name:'Category Replenishment',operators:4,cycle_time:20,wait_time:120,wip:40,uptime:100,defect_rate:2,notes:'BOTTLENECK — OSA 91% vs 98%.'})
+      const s3=await st(pid,3,{name:'Promotional Display',operators:2,cycle_time:60,wait_time:30,wip:5,uptime:100,defect_rate:8})
+      const s4=await st(pid,4,{name:'Checkout & Customer Service',operators:6,cycle_time:4,wait_time:3,wip:30,uptime:98,defect_rate:1})
+      const s5=await st(pid,5,{name:'Waste & Markdown Processing',operators:1,cycle_time:30,wait_time:0,wip:0,uptime:100,defect_rate:0})
+      await sw(s2.id,pid,25,15,20,laps(20),'Replenishment cycle avg 20 min/category. OSA 91% vs 98%.')
+      await fw(s2.id,pid,'OSA 91% — consistently OOS on promoted SKUs',[why('Why OOS on promoted SKUs?','Promotional volumes ordered at standard forecast — not uplifted.'),why('Why not uplifted?','Promotional uplift calculated by buying team — not communicated to store.'),why('Why not communicated?','Promotional brief sent to regional manager — store manager not on distribution.'),why('Why excluded?','Promotional briefing process never included store-level communication.'),why('Why not?','ROOT CAUSE: Process designed by central buying without store operations input.')],'Promotional planning designed by buying without store input.','1. Store manager on promotional brief distribution. 2. 48-hr advance order uplift notification. 3. Velocity-based replenishment prioritisation.','Store Manager','2026-04-30')
+      await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'OSA 91% — promoted OOS creates £2,200/week estimated lost sales',Waiting:'Associates wait for backroom trolley — 1 trolley for 4 associates','Non-Utilisation':'8 min per run locating stock in disorganised backroom'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Store manager on promotional brief distribution','Add store manager to buying brief. 48-hr advance notice enables order uplift. Target: OSA from 91% to 98%.','Delivery','critical','in-progress','Store Manager','2026-04-01',['Request buying team add store to brief','Define 48-hr uplift window','Calculate uplift for top 10 promotions','Measure promoted OSA weekly'])])
+      await im(s2.id,pid,[goal('On-Shelf Availability','91','98','%','Store Manager','2026-06-01')])
+      seeded.push('Grocery')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 43. POSTAL & PARCEL DELIVERY
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Postal & Parcel Delivery'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Postal & Parcel')}else{
+      const pid=await pr({name:nm,industry:'warehousing_distribution',customer:'Sender / Recipient',description:'Collection to delivered. First attempt delivery 78% vs 95% target.'})
+      const s0=await st(pid,0,{name:'Collection',operators:1,cycle_time:3,wait_time:0,wip:300,uptime:100,defect_rate:2})
+      const s1=await st(pid,1,{name:'Sorting Hub',operators:8,cycle_time:2,wait_time:60,wip:2000,uptime:92,defect_rate:1})
+      const s2=await st(pid,2,{name:'Route Planning & Loading',operators:2,cycle_time:45,wait_time:30,wip:180,uptime:100,defect_rate:4,notes:'BOTTLENECK — 22% parcels in wrong delivery sequence.'})
+      const s3=await st(pid,3,{name:'Final Mile Delivery',operators:1,cycle_time:2,wait_time:0,wip:150,uptime:100,defect_rate:22})
+      const s4=await st(pid,4,{name:'Failed Delivery & Carding',operators:1,cycle_time:3,wait_time:0,wip:35,uptime:100,defect_rate:0})
+      const s5=await st(pid,5,{name:'Reattempt or Collection Point',operators:1,cycle_time:5,wait_time:1440,wip:25,uptime:100,defect_rate:5})
+      await sw(s2.id,pid,90,30,45,laps(45),'Route planning avg 45 min. 22% parcels wrong sequence. First attempt delivery 78%.')
+      await fw(s2.id,pid,'First attempt delivery 78% — 22% missed deliveries',[why('Why 22% missed?','Recipients not home — no advance notification of delivery day.'),why('Why no notification?','Delivery notification system not activated — sender not subscribed.'),why('Why not subscribed?','E-commerce clients not aware notification subscription available.'),why('Why not aware?','Notification feature not in client onboarding documentation.'),why('Why not in onboarding?','ROOT CAUSE: Documentation last updated before notification feature launched. Feature siloed in product team.')],'Notification feature not in client onboarding. Product and sales operating independently.','1. Notification subscription in all client onboarding. 2. Retrofit to existing clients. 3. 2-hr delivery window pilot.','Operations Director','2026-05-01')
+      await wa(s2.id,pid,['Defects','Waiting','Motion'],{Defects:'22% failed first attempt — £4.50 reattempt × 800 parcels/day = £3,600/day',Waiting:'Parcels wait 1 day at depot before reattempt',Motion:'Drivers backtrack on routes — poor sequence adds 35 min per round'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Pre-delivery notification for all clients','Activate notification for all clients. SMS/email day-before with window. Target: first attempt from 78% to 90%.','Delivery','critical','in-progress','Operations Director','2026-04-30',['Pull client list without notification','Outreach to activate','Measure first attempt rate'])])
+      await im(s2.id,pid,[goal('First Attempt Delivery Rate','78','92','%','Operations Director','2026-07-01')])
+      seeded.push('Postal & Parcel')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 44. ARCHITECTURE & ENGINEERING DESIGN
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Architecture & Engineering Design'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Architecture & Engineering')}else{
+      const pid=await pr({name:nm,industry:'construction',customer:'Building Owner / Contractor',description:'Client brief to permit-ready drawings. 38% of drawings have coordination clashes.'})
+      const s0=await st(pid,0,{name:'Client Brief & Programme',operators:1,cycle_time:240,wait_time:1440,wip:5,uptime:100,defect_rate:20})
+      const s1=await st(pid,1,{name:'Concept & Schematic Design',operators:3,cycle_time:960,wait_time:480,wip:3,uptime:100,defect_rate:15})
+      const s2=await st(pid,2,{name:'Design Development',operators:5,cycle_time:1440,wait_time:480,wip:4,uptime:100,defect_rate:38,notes:'BOTTLENECK — 38% drawings have coordination clash.'})
+      const s3=await st(pid,3,{name:'Construction Documents',operators:4,cycle_time:1200,wait_time:480,wip:3,uptime:100,defect_rate:20})
+      const s4=await st(pid,4,{name:'Permit Submission',operators:2,cycle_time:240,wait_time:14400,wip:2,uptime:100,defect_rate:25})
+      const s5=await st(pid,5,{name:'Tender & Contractor Selection',operators:1,cycle_time:960,wait_time:4320,wip:2,uptime:100,defect_rate:5})
+      await sw(s2.id,pid,2880,1440,1440,laps(1440),'Design development avg 24 hrs/package. 38% have coordination clashes discovered 2 stages too late.')
+      await fw(s2.id,pid,'38% drawing rework from coordination clashes',[why('Why 38% clash?','Architectural and structural models not coordinated weekly — clashes accumulate for 4 weeks.'),why('Why monthly only?','BIM coordination scheduled monthly to manage consultant availability.'),why('Why not more frequent?','Coordination frequency not in BIM execution plan.'),why('Why not specified?','BEP produced by architect without input from engineering consultants.'),why('Why no input?','ROOT CAUSE: BEP produced without engineering input — coordination responsibilities assumed, not agreed.')],'BEP produced without engineering input — coordination frequency not agreed.','1. Weekly automated clash detection report. 2. Bi-weekly coordination meeting all disciplines. 3. BEP revision with coordination protocol.','Project Architect','2026-04-30')
+      await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'38% clash — each rework adds 24-40 hrs per drawing package',Waiting:'Clash discovered in construction documents — 2 stages too late',Overprocessing:'Each discipline producing separate coordination drawings — BIM should automate this'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Weekly automated clash detection report','BIM coordinator runs clash detection every Monday. Target: clash from 38% to 8%.','Quality','critical','in-progress','Project Architect','2026-04-15',['Configure clash detection','Automate weekly export','Share with all disciplines','Track clash count by discipline'])])
+      await im(s2.id,pid,[goal('Drawing Clash Rate','38','8','%','Project Architect','2026-07-01')])
+      seeded.push('Architecture & Engineering')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 45. K-12 EDUCATION
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — K-12 Student Support Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('K-12 Education')}else{
+      const pid=await pr({name:nm,industry:'higher_education',customer:'Student',description:'Referral to intervention. 6-week wait from identification to support — statutory target 1 week.'})
+      const s0=await st(pid,0,{name:'Attendance & Academic Monitoring',operators:4,cycle_time:15,wait_time:2880,wip:80,uptime:100,defect_rate:25})
+      const s1=await st(pid,1,{name:'SENCO Referral',operators:2,cycle_time:30,wait_time:4320,wip:20,uptime:100,defect_rate:10})
+      const s2=await st(pid,2,{name:'Assessment & Learning Plan',operators:2,cycle_time:120,wait_time:14400,wip:15,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Intervention Delivery',operators:6,cycle_time:60,wait_time:20160,wip:12,uptime:100,defect_rate:20,notes:'BOTTLENECK — 6-week wait from identification.'})
+      const s4=await st(pid,4,{name:'Progress Monitoring',operators:3,cycle_time:30,wait_time:10080,wip:10,uptime:100,defect_rate:30})
+      const s5=await st(pid,5,{name:'Review & Exit',operators:2,cycle_time:60,wait_time:20160,wip:8,uptime:100,defect_rate:10})
+      await sw(s3.id,pid,20160,5040,20160,laps(20160),'Intervention wait avg 6 weeks (20,160 min). Target 1 week. SENCO caseload 42 students per coordinator.')
+      await fw(s3.id,pid,'6-week intervention wait',[why('Why 6-week wait?','Assessment must complete before intervention allocated — queue builds.'),why('Why assessment before support?','Policy requires formal assessment before resource allocation.'),why('Why?','Resource allocation policy prevents over-assignment — not optimised for speed.'),why('Why not optimised?','Policy written 2016. SEND volume increased 60% since.'),why('Why not reviewed?','ROOT CAUSE: No SEND policy review cycle. Reactive updates after Ofsted findings only.')],'SEND policy written 2016. No review cycle. Volume increased 60%.','1. Interim support starts immediately on referral — assessment concurrent. 2. Digital SEND tracking. 3. TA deployment to targeted intervention during lessons.','SENCO / Headteacher','2026-05-01')
+      await wa(s3.id,pid,['Waiting','Non-Utilisation','Defects'],{Waiting:'6-week gap — academic gap widens during wait','Non-Utilisation':'TAs in passive support role — targeted intervention capacity unused',Defects:'30% progress monitoring reviews missed'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Interim support starts on referral day','TA interim support from Day 1 of referral while formal assessment runs concurrently. Target: support from week 6 to week 1.','Delivery','critical','in-progress','SENCO','2026-04-15',['Redesign SEND flow','Train TAs on interim approaches','Track referral-to-support lead time','Measure academic progress rate'])])
+      await im(s3.id,pid,[goal('Referral to Intervention Start','42','7','days','SENCO','2026-06-01')])
+      seeded.push('K-12 Education')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 46. GOVERNMENT SERVICES — PERMIT & LICENSING
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Government Permit & Licensing'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Government Services')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Citizen / Applicant',description:'Application to permit issued. 28 days vs 10-day target. 42% applications incomplete on receipt.'})
+      const s0=await st(pid,0,{name:'Application Receipt & Log',operators:2,cycle_time:20,wait_time:1440,wip:80,uptime:100,defect_rate:42,notes:'42% incomplete on receipt'})
+      const s1=await st(pid,1,{name:'Completeness Check',operators:2,cycle_time:30,wait_time:2880,wip:50,uptime:100,defect_rate:10})
+      const s2=await st(pid,2,{name:'Technical Review',operators:3,cycle_time:120,wait_time:5760,wip:30,uptime:100,defect_rate:15,notes:'BOTTLENECK — 4-day queue.'})
+      const s3=await st(pid,3,{name:'Decision & Conditions',operators:2,cycle_time:60,wait_time:2880,wip:15,uptime:100,defect_rate:8})
+      const s4=await st(pid,4,{name:'Notification to Applicant',operators:1,cycle_time:20,wait_time:480,wip:12,uptime:100,defect_rate:5})
+      const s5=await st(pid,5,{name:'Permit Issue & Record',operators:1,cycle_time:15,wait_time:240,wip:10,uptime:100,defect_rate:2})
+      await sw(s2.id,pid,7200,1440,5760,laps(5760),'Technical review avg 4-day wait. 28-day total vs 10-day target. 42% incomplete applications restart the clock.')
+      await fw(s2.id,pid,'28-day processing vs 10-day target',[why('Why 28 days?','42% incomplete applications add 5-10 days each.'),why('Why incomplete?','Applicants not understanding what information is required.'),why('Why unclear?','Guidance notes generic — not specific to permit type.'),why('Why generic?','Single document covers all 5 permit types.'),why('Why single?','ROOT CAUSE: Guidance written by policy team without operational input. Common failure points not built in.')],'Guidance written by policy without operational input.','1. Per-permit-type guidance and checklist. 2. Online portal validation before submission. 3. Status tracker for applicants.','Service Manager','2026-05-01')
+      await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'42% incomplete — each adds 5-10 days',Waiting:'4-day technical review queue — 30 applications pending',Overprocessing:'Officers manually checking completeness at technical review — should be done at receipt'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Per-permit checklist + online validation','Online portal validates required fields before submission. Target: incomplete from 42% to 5%.','Quality','critical','in-progress','Service Manager','2026-06-01',['Map required fields per permit type','Build portal validation','Measure incomplete rate'])])
+      await im(s2.id,pid,[goal('Permit Processing Time','28','10','days','Service Manager','2026-09-01')])
+      seeded.push('Government Services')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 47. EMERGENCY SERVICES — FIRE & RESCUE
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Fire & Rescue Emergency Response'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Fire & Rescue')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Member of Public',description:'Call to scene clearance. Mobilisation 90s avg vs 60s target. 8-min standard met 72% vs 80%.'})
+      const s0=await st(pid,0,{name:'Emergency Call Receipt',operators:2,cycle_time:45,wait_time:15,wip:3,uptime:100,defect_rate:3})
+      const s1=await st(pid,1,{name:'Mobilisation & Alerting',operators:1,cycle_time:90,wait_time:10,wip:2,uptime:100,defect_rate:5,notes:'BOTTLENECK — 90s mobilisation. Target 60s.'})
+      const s2=await st(pid,2,{name:'Response — En Route',operators:4,cycle_time:360,wait_time:0,wip:1,uptime:98,defect_rate:2})
+      const s3=await st(pid,3,{name:'Incident Management',operators:4,cycle_time:1800,wait_time:0,wip:1,uptime:100,defect_rate:5})
+      const s4=await st(pid,4,{name:'Scene Clearance',operators:4,cycle_time:180,wait_time:0,wip:1,uptime:100,defect_rate:3})
+      const s5=await st(pid,5,{name:'Return to Station & Debrief',operators:4,cycle_time:120,wait_time:0,wip:1,uptime:100,defect_rate:0})
+      await sw(s1.id,pid,180,60,90,laps(90),'Mobilisation avg 90s. Target 60s. 8-min standard met 72% vs 80% target.')
+      await fw(s1.id,pid,'Mobilisation 90s vs 60s target',[why('Why 90s avg?','PPE donning takes 25s — crew not in pre-donning position at time of call.'),why('Why not pre-positioned?','No standard for where crew should be between calls.'),why('Why no standard?','Watch manager sets own routines — no brigade standard.'),why('Why no brigade standard?','Mobilisation improvement not identified as priority until OTD analysis 2023.'),why('Why only 2023?','ROOT CAUSE: No regular response time trend analysis at station level. Aggregate data only reviewed at brigade.')],'No station-level response time analysis. Aggregate data masks station-specific mobilisation failures.','1. Standard pre-donning position during stand-down. 2. PPE pre-positioned at appliance. 3. Monthly station-level mobilisation debrief.','Station Manager','2026-04-30')
+      await wa(s1.id,pid,['Waiting','Motion','Non-Utilisation'],{Waiting:'8-second alerting delay — 13% of 60s target consumed before tone sounds',Motion:'Crew moving from various station locations to appliance','Non-Utilisation':'Stand-down time not used for readiness — no pre-donning standard'})
+      await kz(s1.id,pid,[kzItem('KZ-001','Pre-donning position + PPE at appliance','Crew in or adjacent to appliance bay during stand-down. PPE hung on appliance. Target: mobilisation from 90s to 60s.','Safety','critical','in-progress','Station Manager','2026-04-01',['Define pre-donning position standard','Confirm with watch managers','Install PPE hooks at appliance','Monitor mobilisation time weekly'])])
+      await im(s1.id,pid,[goal('Mobilisation Time','90','60','seconds','Station Manager','2026-06-01')])
+      seeded.push('Fire & Rescue')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 48. POLICE & LAW ENFORCEMENT
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Police Crime Investigation'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Police')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Victim / Complainant',description:'Crime report to case outcome. 38% of CPS files returned for more information.'})
+      const s0=await st(pid,0,{name:'Initial Report & Triage',operators:2,cycle_time:30,wait_time:60,wip:40,uptime:100,defect_rate:8})
+      const s1=await st(pid,1,{name:'Scene Attendance & Evidence',operators:2,cycle_time:120,wait_time:480,wip:20,uptime:100,defect_rate:15})
+      const s2=await st(pid,2,{name:'Investigation',operators:2,cycle_time:2880,wait_time:4320,wip:15,uptime:100,defect_rate:20})
+      const s3=await st(pid,3,{name:'Case File Preparation',operators:1,cycle_time:480,wait_time:2880,wip:10,uptime:100,defect_rate:38,notes:'BOTTLENECK — 38% returned by CPS.'})
+      const s4=await st(pid,4,{name:'Charge Decision & CPS Submission',operators:1,cycle_time:120,wait_time:4320,wip:8,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Court Preparation & Outcome',operators:2,cycle_time:240,wait_time:28800,wip:12,uptime:100,defect_rate:10})
+      await sw(s3.id,pid,960,360,480,laps(480),'Case file preparation avg 8 hrs. 38% returned by CPS. Each return adds 2-3 weeks.')
+      await fw(s3.id,pid,'38% CPS file return rate',[why('Why 38% returns?','Files missing evidence required under updated CPS charging standards.'),why('Why missing?','Officers not aware of 18-month-old CPS standard update.'),why('Why not aware?','Training on CPS update not delivered to this team.'),why('Why not delivered?','Responsibility with L&D — not linked to CPS update cycle.'),why('Why not linked?','ROOT CAUSE: No process for CPS updates to automatically trigger training. L&D and CPS liaison work independently.')],'No trigger process for CPS updates to generate training.','1. Immediate briefing on CPS update. 2. Per-offence-type file checklist. 3. Supervisor quality gate before CPS submission.','Detective Sergeant','2026-04-30')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'38% CPS return — 2-3 weeks added per file',Waiting:'Files wait 3 days in queue before supervisor review',Overprocessing:'Officers over-documenting matters CPS does not require'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Per-offence-type file checklist','Checklist of required evidence per top-10 offence types. Target: CPS return from 38% to 10%.','Quality','critical','in-progress','Detective Sergeant','2026-04-15',['Map top 10 offence types','List CPS evidence requirements','Design 1-page checklist','Pilot 1 month','Measure return rate'])])
+      await im(s3.id,pid,[goal('CPS File Return Rate','38','10','%','Detective Sergeant','2026-07-01')])
+      seeded.push('Police')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 49. MILITARY & DEFENSE
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Military Equipment Readiness'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Military')}else{
+      const pid=await pr({name:nm,industry:'aerospace_manufacturing',customer:'Command Authority',description:'Equipment readiness and maintenance cycle. Availability 72% vs 85% target.'})
+      const s0=await st(pid,0,{name:'Mission Planning & Resource Check',operators:4,cycle_time:120,wait_time:240,wip:8,uptime:100,defect_rate:8})
+      const s1=await st(pid,1,{name:'Equipment Pre-mission Check',operators:6,cycle_time:180,wait_time:120,wip:6,uptime:100,defect_rate:10})
+      const s2=await st(pid,2,{name:'Mission Execution',operators:20,cycle_time:480,wait_time:0,wip:4,uptime:95,defect_rate:5})
+      const s3=await st(pid,3,{name:'Post-mission PMCS',operators:4,cycle_time:240,wait_time:2880,wip:10,uptime:100,defect_rate:18,notes:'BOTTLENECK — 72% availability. 18% post-mission checks find P1 faults.'})
+      const s4=await st(pid,4,{name:'Repair & Parts Requisition',operators:3,cycle_time:480,wait_time:4320,wip:8,uptime:100,defect_rate:12})
+      const s5=await st(pid,5,{name:'Return to Readiness',operators:2,cycle_time:60,wait_time:480,wip:5,uptime:100,defect_rate:3})
+      await sw(s3.id,pid,480,180,240,laps(240),'Post-mission PMCS avg 4 hrs. 18% P1 fault rate. Parts wait avg 3 days.')
+      await fw(s3.id,pid,'Equipment availability 72% — P1 fault rate 18%',[why('Why 18% P1?','Developing faults not caught at pre-mission PMCS — checklist outdated.'),why('Why outdated?','PMCS written 8 years ago for previous operating environment.'),why('Why not updated?','PMCS update requires DEME(A) approval — 18-month process.'),why('Why 18 months?','No fast-track for operational environment changes.'),why('Why no fast-track?','ROOT CAUSE: Maintenance governance designed for peacetime. No mechanism for operational environment to accelerate revision.')],'Maintenance governance designed for peacetime. No fast-track for operational PMCS revision.','1. Supplementary PMCS card for current environment (CO-authorised). 2. Forward stock of top-10 P1 parts. 3. Submit formal PMCS revision.','REME WO2','2026-05-01')
+      await wa(s3.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'Parts wait 3-5 days — equipment grounded',Defects:'18% P1 fault rate — each grounds vehicle avg 2.5 days','Non-Utilisation':'REME technicians reactive only — no proactive condition monitoring'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Supplementary PMCS card — current environment','CO-authorised supplementary checks for dust, heat, and mission profile. Target: P1 fault from 18% to 8%.','Quality','critical','in-progress','REME WO2','2026-04-01',['Draft supplementary checks','CO authorisation','Brief all operators','Monitor P1 fault rate weekly'])])
+      await im(s3.id,pid,[goal('Equipment Availability Rate','72','85','%','REME WO2','2026-07-01')])
+      seeded.push('Military')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 50. STAFFING & RECRUITMENT AGENCY
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Staffing Agency Placement Process'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Staffing Agency')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Client Company / Candidate',description:'Job order to placement. Fill rate 22% vs 65% industry average.'})
+      const s0=await st(pid,0,{name:'Job Order Intake & Qualification',operators:1,cycle_time:30,wait_time:60,wip:25,uptime:100,defect_rate:20})
+      const s1=await st(pid,1,{name:'Candidate Sourcing',operators:3,cycle_time:120,wait_time:240,wip:15,uptime:100,defect_rate:15})
+      const s2=await st(pid,2,{name:'Candidate Screening',operators:2,cycle_time:60,wait_time:480,wip:10,uptime:100,defect_rate:25})
+      const s3=await st(pid,3,{name:'Submission to Client',operators:1,cycle_time:30,wait_time:2880,wip:8,uptime:100,defect_rate:22,notes:'BOTTLENECK — 22% fill rate. 78% client rejections.'})
+      const s4=await st(pid,4,{name:'Client Interview & Selection',operators:1,cycle_time:60,wait_time:4320,wip:3,uptime:100,defect_rate:30})
+      const s5=await st(pid,5,{name:'Placement & Start',operators:1,cycle_time:30,wait_time:1440,wip:2,uptime:100,defect_rate:15})
+      await sw(s3.id,pid,240,60,30,laps(30),'Submission prep avg 30 min. 78% rejected by client. Fill rate 22% vs 65% industry average.')
+      await fw(s3.id,pid,'Fill rate 22% — 78% client rejection rate',[why('Why 78% rejection?','Candidates do not match client requirements precisely.'),why('Why not matching?','Brief taken verbally — key requirements not captured.'),why('Why not captured?','No structured brief document.'),why('Why no structure?','Brief process designed when agency was 3 people. Scale exposed the gap.'),why('Why not updated?','ROOT CAUSE: KPI is submissions, not fill rate. Consultants incentivised to submit fast, not accurately.')],'KPI incentivises volume not quality. Perverse incentive.','1. Replace submissions KPI with fill rate. 2. Structured brief document. 3. Consultant phone screen mandatory before submission.','Managing Director','2026-05-01')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'78% rejection — 30 min wasted per rejected submission + relationship damage',Waiting:'Client review 2 days — good candidates accept elsewhere',Overprocessing:'8-10 candidates sourced per role when 2-3 well-matched would fill it'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Structured brief + fill rate KPI','12-field structured brief for all roles. Fill rate replaces submissions as primary KPI. Target: fill from 22% to 50%.','Quality','critical','in-progress','Managing Director','2026-04-30',['Design brief document','Change KPI to fill rate','Train consultants','Measure weekly'])])
+      await im(s3.id,pid,[goal('Placement Fill Rate','22','50','%','Managing Director','2026-07-01')])
+      seeded.push('Staffing Agency')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 51. DIGITAL MARKETING
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Digital Marketing Campaign Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Digital Marketing')}else{
+      const pid=await pr({name:nm,industry:'marketing_agency',customer:'Client Business',description:'Strategy to measurable outcome. ROAS 1.8x vs 3.5x target. Bottleneck at optimisation.'})
+      const s0=await st(pid,0,{name:'Strategy & Audience Research',operators:2,cycle_time:480,wait_time:2880,wip:5,uptime:100,defect_rate:25})
+      const s1=await st(pid,1,{name:'Creative Development',operators:3,cycle_time:480,wait_time:1440,wip:4,uptime:100,defect_rate:30})
+      const s2=await st(pid,2,{name:'Platform Setup & Launch',operators:2,cycle_time:120,wait_time:480,wip:3,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Monitoring & Optimisation',operators:2,cycle_time:60,wait_time:1440,wip:8,uptime:100,defect_rate:40,notes:'BOTTLENECK — reactive not systematic. ROAS 1.8x vs 3.5x.'})
+      const s4=await st(pid,4,{name:'Reporting & Client Review',operators:1,cycle_time:120,wait_time:1440,wip:5,uptime:100,defect_rate:20})
+      const s5=await st(pid,5,{name:'Scale & Budget Reallocation',operators:1,cycle_time:60,wait_time:2880,wip:3,uptime:100,defect_rate:15})
+      await sw(s3.id,pid,120,45,60,laps(60),'Campaign optimisation avg 60 min/session. ROAS 1.8x avg vs 3.5x target. No optimisation cadence.')
+      await fw(s3.id,pid,'ROAS 1.8x vs 3.5x target',[why('Why ROAS 1.8x?','Underperforming ad sets running 3 weeks before budget reallocated.'),why('Why 3 weeks?','Budget reviewed monthly — no mid-month reallocation protocol.'),why('Why no mid-month?','No structured optimisation cadence.'),why('Why no cadence?','No optimisation framework — each specialist works independently.'),why('Why no framework?','ROOT CAUSE: Agency scaled client base without scaling operations. No head of performance to define standards.')],'Agency scaled clients without scaling operations.','1. Weekly optimisation checklist per account. 2. Budget reallocation threshold. 3. A/B test every creative launch.','Head of Performance','2026-05-01')
+      await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'40% optimisation actions do not improve ROAS — no test-and-learn',Waiting:'Underperforming ads run 3 weeks before budget pulled',Overprocessing:'Specialists pulling platform reports manually — automation would eliminate'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Weekly optimisation checklist + automated alerts','8-step checklist for all accounts. Automated alert when ROAS drops 20%. Target: ROAS from 1.8x to 3.2x.','Quality','critical','in-progress','Head of Performance','2026-04-30',['Design 8-step checklist','Configure automated alerts','Train specialists','Review compliance weekly'])])
+      await im(s3.id,pid,[goal('Return on Ad Spend','1.8','3.2','x','Head of Performance','2026-07-01')])
+      seeded.push('Digital Marketing')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 52. SOCIAL CARE & WELFARE
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Social Care Assessment Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Social Care')}else{
+      const pid=await pr({name:nm,industry:'hospital_acute_care',customer:'Service User',description:'Referral to care plan active. 38% of assessments outside statutory 28-day timeframe.'})
+      const s0=await st(pid,0,{name:'Referral Receipt & Triage',operators:2,cycle_time:30,wait_time:1440,wip:50,uptime:100,defect_rate:10})
+      const s1=await st(pid,1,{name:'Allocation to Social Worker',operators:1,cycle_time:20,wait_time:4320,wip:30,uptime:100,defect_rate:8})
+      const s2=await st(pid,2,{name:'Initial Visit & Assessment',operators:5,cycle_time:240,wait_time:7200,wip:25,uptime:100,defect_rate:38,notes:'BOTTLENECK — 38% outside 28-day statutory window. Caseloads 45+.'})
+      const s3=await st(pid,3,{name:'Care Plan Development',operators:5,cycle_time:180,wait_time:2880,wip:20,uptime:100,defect_rate:20})
+      const s4=await st(pid,4,{name:'Service Commissioning',operators:2,cycle_time:120,wait_time:4320,wip:15,uptime:100,defect_rate:12})
+      const s5=await st(pid,5,{name:'Review & Case Closure',operators:5,cycle_time:120,wait_time:20160,wip:80,uptime:100,defect_rate:25})
+      await sw(s2.id,pid,7200,2880,7200,laps(7200),'Assessment wait avg 5 days. 38% outside 28-day window. Workers carry 45 cases vs 30-case maximum.')
+      await fw(s2.id,pid,'38% statutory assessment breach',[why('Why 38% breach?','Workers cannot complete 45 assessments within 28-day window.'),why('Why 45 cases?','2 vacancies unfilled for 6 months — caseload redistributed.'),why('Why vacancies unfilled?','Recruitment takes 6 months — candidates withdraw.'),why('Why 6 months?','3 interview stages + DBS + references run sequentially.'),why('Why sequentially?','ROOT CAUSE: HR process requires each stage complete before next — no parallel running.')],'Sequential recruitment takes 6 months — candidates withdraw. Parallel stages would halve time-to-hire.','1. Parallel DBS with interview process. 2. Statutory compliance dashboard with 21-day alert. 3. Review caseloads — close cases inactive 60+ days.','Service Manager','2026-05-01')
+      await wa(s2.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'Service users wait 5 days avg for initial visit',Defects:'38% statutory breach — generates formal compliance report',Overprocessing:'Workers maintaining 15% of cases no longer active — caseload artificially inflated'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Statutory compliance dashboard + 21-day alert','Real-time dashboard of open assessments with deadline. Alert at 21 days for manager intervention. Target: breach from 38% to 8%.','Quality','critical','in-progress','Service Manager','2026-04-30',['Spec dashboard in case management system','Configure 21-day alert','Pilot with 1 team','Roll out to all teams'])])
+      await im(s2.id,pid,[goal('Statutory Assessment Compliance Rate','62','92','%','Service Manager','2026-07-01')])
+      seeded.push('Social Care')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 53. FARMING & CROP PRODUCTION
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Farming & Crop Production'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Farming')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Processor / Wholesaler',description:'Land prep to delivery. 12% crop rejected at grading. Harvest timing variation main cause.'})
+      const s0=await st(pid,0,{name:'Land Preparation',operators:3,cycle_time:960,wait_time:20160,wip:5,uptime:95,defect_rate:3})
+      const s1=await st(pid,1,{name:'Seeding / Planting',operators:4,cycle_time:480,wait_time:2880,wip:3,uptime:100,defect_rate:5})
+      const s2=await st(pid,2,{name:'Growing & Crop Management',operators:3,cycle_time:240,wait_time:201600,wip:2,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Harvest',operators:8,cycle_time:480,wait_time:0,wip:10,uptime:90,defect_rate:12,notes:'BOTTLENECK — 12% rejected at grading. Delayed harvest causes over-maturity.'})
+      const s4=await st(pid,4,{name:'Post-harvest Handling',operators:4,cycle_time:120,wait_time:480,wip:8,uptime:96,defect_rate:5})
+      const s5=await st(pid,5,{name:'Grading & Packing',operators:6,cycle_time:60,wait_time:240,wip:6,uptime:100,defect_rate:8})
+      const s6=await st(pid,6,{name:'Despatch & Delivery',operators:2,cycle_time:30,wait_time:480,wip:4,uptime:100,defect_rate:2})
+      await sw(s3.id,pid,600,400,480,laps(480),'Harvest avg 8 hrs/day. 12% rejected at grading. Delayed harvest = over-maturity.')
+      await fw(s3.id,pid,'12% crop rejection at grading',[why('Why 12%?','Crops harvested 10 days late — over-maturity causes quality failure.'),why('Why 10 days late?','Harvest calendar from previous variety — new variety has shorter window.'),why('Why not updated?','Variety changed 18 months ago. Calendar not reviewed at changeover.'),why('Why not reviewed?','No formal variety change review process.'),why('Why no process?','ROOT CAUSE: Agronomist contract covers planting only. Harvest timing not in scope of engagement.')],'Agronomist engagement excludes harvest timing. Variety change not triggering calendar review.','1. Extend agronomist scope to harvest timing. 2. Brix measurement protocol. 3. Staggered harvest plan by field maturity.','Farm Manager','2026-04-30')
+      await wa(s3.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'12% rejection — at £0.45/kg × 800 tonnes = £43,000 season loss',Waiting:'10% harvester breakdown — crop matures further during wait','Non-Utilisation':'Brix meter in store unused — visual assessment causes harvest timing errors'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Brix measurement protocol','Daily Brix readings from 3 field zones in final 3 weeks. Harvest triggered by Brix target not calendar date. Target: rejection from 12% to 4%.','Quality','critical','in-progress','Farm Manager','2026-04-15',['Define Brix target for variety','Implement daily measurement','Staggered harvest by field Brix','Track rejection rate by field'])])
+      await im(s3.id,pid,[goal('Crop Rejection Rate','12','4','%','Farm Manager','2026-10-01')])
+      seeded.push('Farming')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 54. AQUACULTURE & FISHERIES
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Aquaculture Production Cycle'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Aquaculture')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Processor / Retailer',description:'Stocking to market-ready. FCR 1.9 vs 1.5 target. 8% mortality from disease events.'})
+      const s0=await st(pid,0,{name:'Hatchery & Juvenile Production',operators:3,cycle_time:480,wait_time:40320,wip:5,uptime:100,defect_rate:10})
+      const s1=await st(pid,1,{name:'Stocking & Transfer',operators:3,cycle_time:120,wait_time:1440,wip:4,uptime:100,defect_rate:5})
+      const s2=await st(pid,2,{name:'Grow-out & Feeding',operators:4,cycle_time:240,wait_time:0,wip:20,uptime:100,defect_rate:8,notes:'BOTTLENECK — 8% mortality. FCR 1.9 vs 1.5 target.'})
+      const s3=await st(pid,3,{name:'Health Monitoring & Treatment',operators:2,cycle_time:120,wait_time:480,wip:5,uptime:100,defect_rate:15})
+      const s4=await st(pid,4,{name:'Harvest & Processing',operators:8,cycle_time:360,wait_time:240,wip:3,uptime:92,defect_rate:5})
+      const s5=await st(pid,5,{name:'Quality Check & Despatch',operators:2,cycle_time:60,wait_time:240,wip:2,uptime:100,defect_rate:3})
+      await sw(s2.id,pid,0,0,240,laps(240),'Grow-out monitoring avg 4 hrs/day. 8% mortality — two significant disease events per season.')
+      await fw(s2.id,pid,'8% mortality + FCR 1.9',[why('Why 8% mortality?','Disease events detected 48-72 hrs after onset — too late for effective treatment.'),why('Why detected late?','Health monitoring is visual inspection — sub-clinical signs missed.'),why('Why visual only?','No biosensor or real-time water quality monitoring in pens.'),why('Why no sensor?','Capital expenditure not approved — mortality cost not quantified.'),why('Why not quantified?','ROOT CAUSE: Mortality cost never presented. Sensor investment case not made.')],'Mortality cost never quantified and presented. Sensor ROI case not made.','1. Quantify mortality cost. 2. Present sensor ROI case. 3. Interim: twice-daily health observation protocol.','Production Manager','2026-05-01')
+      await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'8% mortality — season revenue loss per cage',Waiting:'Disease response delayed 6 hrs — fish health officer at another site',Overprocessing:'Feed applied on weekly fixed rate — daily temperature adjustment would improve FCR'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Twice-daily health observation + temperature-adjusted feeding','Morning and afternoon structured health observation. Temperature-adjusted feed table. Target: mortality from 8% to 3%, FCR from 1.9 to 1.6.','Quality','critical','in-progress','Production Manager','2026-04-30',['Design observation checklist','Implement temperature-adjusted feed table','Train grow-out staff','Track FCR and mortality weekly'])])
+      await im(s2.id,pid,[goal('Grow-out Mortality Rate','8','3','%','Production Manager','2026-10-01')])
+      seeded.push('Aquaculture')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 55. OIL & GAS
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Oil & Gas Drilling Operations'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Oil & Gas')}else{
+      const pid=await pr({name:nm,industry:'aerospace_manufacturing',customer:'Production Operations',description:'Spud to total depth. NPT 18% vs 8% industry benchmark.'})
+      const s0=await st(pid,0,{name:'Well Planning & Engineering',operators:5,cycle_time:2880,wait_time:20160,wip:3,uptime:100,defect_rate:12})
+      const s1=await st(pid,1,{name:'Rig Mobilisation & Setup',operators:15,cycle_time:1440,wait_time:2880,wip:1,uptime:100,defect_rate:8})
+      const s2=await st(pid,2,{name:'Drilling Operations',operators:20,cycle_time:2880,wait_time:0,wip:1,uptime:82,defect_rate:18,notes:'BOTTLENECK — NPT 18%. Stuck pipe most common cause.'})
+      const s3=await st(pid,3,{name:'Formation Evaluation & Logging',operators:6,cycle_time:960,wait_time:480,wip:1,uptime:100,defect_rate:8})
+      const s4=await st(pid,4,{name:'Completion & Well Integrity',operators:8,cycle_time:1440,wait_time:480,wip:1,uptime:96,defect_rate:10})
+      const s5=await st(pid,5,{name:'Well Handover to Production',operators:4,cycle_time:480,wait_time:480,wip:1,uptime:100,defect_rate:5})
+      await sw(s2.id,pid,3600,2880,2880,laps(2880),'Drilling avg 48 hrs/section. NPT 18%. Stuck pipe 11% of total NPT. Each event avg 8 hrs recovery.')
+      await fw(s2.id,pid,'NPT 18% — stuck pipe 11% of drilling time',[why('Why 18% NPT?','Stuck pipe from differential sticking — mud weight too high.'),why('Why too high?','Mud weight adjusted to plan not actual pore pressure.'),why('Why not real-time?','Mud engineer reviews every 4 hours — pore pressure changes in minutes.'),why('Why 4-hourly?','Protocol written 2019 — real-time capability installed 2022 but protocol not updated.'),why('Why not updated?','ROOT CAUSE: Real-time data capability installed but monitoring protocol not updated. Technology adoption without process redesign.')],'Real-time data capability installed but monitoring protocol not updated.','1. Continuous pore pressure monitoring protocol. 2. Real-time mud adjustment response. 3. Pre-drill stuck pipe probability model per section.','Drilling Superintendent','2026-04-30')
+      await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'NPT 18% — at $85k/day rig rate = $15,300/day waste',Waiting:'Stuck pipe recovery avg 8 hrs — rig on standby','Non-Utilisation':'Real-time drilling data available but reviewed 4-hourly only'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Continuous pore pressure monitoring protocol','Real-time pore pressure from LWD. Mud weight adjusted in real-time. Target: NPT from 18% to 8%.','Quality','critical','in-progress','Drilling Superintendent','2026-04-01',['Update monitoring protocol to continuous','Brief mud engineer and team','Define response threshold','Track NPT weekly by cause code'])])
+      await im(s2.id,pid,[goal('Non-Productive Time (NPT)','18','8','%','Drilling Superintendent','2026-07-01')])
+      seeded.push('Oil & Gas')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 56. RAIL PASSENGER SERVICES
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Rail Passenger Service Operations'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Rail')}else{
+      const pid=await pr({name:nm,industry:'retail_banking',customer:'Commuter / Passenger',description:'Service planning to delivered journey. Punctuality 72% vs 92% target. Primary cause: dwell time exceedance.'})
+      const s0=await st(pid,0,{name:'Service Planning & Timetabling',operators:5,cycle_time:480,wait_time:43200,wip:10,uptime:100,defect_rate:8})
+      const s1=await st(pid,1,{name:'Train Preparation & Dispatch',operators:4,cycle_time:30,wait_time:15,wip:3,uptime:100,defect_rate:5})
+      const s2=await st(pid,2,{name:'Station Calling — Dwell',operators:2,cycle_time:60,wait_time:0,wip:1,uptime:100,defect_rate:22,notes:'BOTTLENECK — 22% of dwells exceed planned time.'})
+      const s3=await st(pid,3,{name:'On-board Service',operators:3,cycle_time:0,wait_time:0,wip:1,uptime:98,defect_rate:8})
+      const s4=await st(pid,4,{name:'Fault Response & Recovery',operators:6,cycle_time:45,wait_time:30,wip:2,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Performance Review & Report',operators:3,cycle_time:120,wait_time:1440,wip:1,uptime:100,defect_rate:0})
+      await sw(s2.id,pid,90,60,60,laps(60),'Dwell avg 60s. Planned 45s. 22% of stations exceed 75s. Punctuality 72% vs 92%.')
+      await fw(s2.id,pid,'Dwell time exceedance causing punctuality 72% vs 92%',[why('Why 22% dwell exceedance?','80% of passengers arrive in final 20 min — 10 gates insufficient for volume.'),why('Why arrive simultaneously?','No early arrival incentive.'),why('Why no incentive?','Ticketing system sets single gate-open time for all tickets.'),why('Why not variable?','Ticketing system not configured for time-banded entry.'),why('Why not configured?','ROOT CAUSE: Ticketing configured by marketing without operations input. Time-banded entry capability not utilised.')],'Ticketing configured by marketing without operations input.','1. Time-banded ticket zones. 2. Early arrival incentive. 3. Digital ticket scanning at all gates.','Performance Director','2026-05-01')
+      await wa(s2.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'22% dwell exceedance — passengers miss connections downstream',Defects:'72% punctuality — regulatory penalty risk','Non-Utilisation':'2 gates unstaffed at peak — capacity wasted'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Time-banded entry zones + early arrival incentive','3 arrival bands. Concourse voucher for early arrival. Target: peak queue from 38 min to 12 min. Punctuality target 88%.','Delivery','critical','in-progress','Performance Director','2026-04-30',['Spec time-banding with ticketing supplier','Design incentive','Pilot next 3 events','Measure peak queue time'])])
+      await im(s2.id,pid,[goal('Service Punctuality','72','88','%','Performance Director','2026-07-01')])
+      seeded.push('Rail')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 57. PORT & MARITIME OPERATIONS
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Port & Maritime Container Operations'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Port & Maritime')}else{
+      const pid=await pr({name:nm,industry:'warehousing_distribution',customer:'Shipping Line / Cargo Owner',description:'Vessel arrival to departure. Crane productivity 22 moves/hr vs 28-move target.'})
+      const s0=await st(pid,0,{name:'Vessel Arrival & Berthing',operators:4,cycle_time:90,wait_time:120,wip:3,uptime:100,defect_rate:8})
+      const s1=await st(pid,1,{name:'Stevedoring Setup',operators:6,cycle_time:45,wait_time:30,wip:2,uptime:100,defect_rate:5})
+      const s2=await st(pid,2,{name:'Crane Operations — Discharge',operators:8,cycle_time:2,wait_time:1,wip:500,uptime:88,defect_rate:3,notes:'BOTTLENECK — 22 moves/hr vs 28-move target. Crane downtime 12%.'})
+      const s3=await st(pid,3,{name:'Container Gate & Yard Management',operators:10,cycle_time:15,wait_time:30,wip:200,uptime:100,defect_rate:4})
+      const s4=await st(pid,4,{name:'Crane Operations — Load',operators:8,cycle_time:2,wait_time:1,wip:400,uptime:88,defect_rate:3})
+      const s5=await st(pid,5,{name:'Vessel Departure & Documentation',operators:3,cycle_time:60,wait_time:30,wip:1,uptime:100,defect_rate:5})
+      await sw(s2.id,pid,0,0,2,laps(2),'Crane productivity 22 moves/hr. Target 28. Crane downtime 12%. Each hour below target = $4,200 vessel delay cost.')
+      await ika(s2.id,pid,'Crane productivity 22 moves/hr vs 28 target — 12% downtime','6M Manufacturing',{Machine:['Crane 3 and 5 overdue preventive maintenance — operating beyond PM interval','Spreader misalignment causes miss-pick — 3% of lifts'],Method:['No planned maintenance during vessel gap — PM only when crane breaks','Crane drivers not briefed on vessel stow plan before operation starts'],Material:['Container weight distribution uneven — crane load varies causing speed adjustment'],Manpower:['2 crane drivers covering 3 cranes simultaneously at peak — productivity compromised'],Measurement:['Moves/hr tracked per shift but not by crane — underperforming crane invisible'],'Mother Nature':['Wind speed >18 knots forces crane to slow — no forecast-based planning']})
+      await fw(s2.id,pid,'Crane productivity 22 moves/hr vs 28 target',[why('Why 22 moves/hr?','Cranes 3 and 5 operating below rated capacity — PM overdue.'),why('Why PM overdue?','PM scheduled at 2,500 operating hours — hours not tracked per crane.'),why('Why not tracked?','CMMS system tracks fleet total hours, not per-crane.'),why('Why not per-crane?','CMMS configured at fleet level when installed in 2018.'),why('Why not updated?','ROOT CAUSE: CMMS configuration never reviewed since installation. Crane availability data not informing PM scheduling.')],'CMMS configured at fleet level — per-crane hours not tracked. PM scheduling blind.','1. Configure per-crane hours in CMMS. 2. Overdue PM on cranes 3 and 5 immediately. 3. Plan PM during vessel gaps, not reactively.','Terminal Manager','2026-04-30')
+      await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'3% miss-pick rate — container damage and re-lift adds 4 min per event',Waiting:'PM downtime unplanned — vessel waits at berth at $4,200/hr',Overprocessing:'Crane drivers manually tracking position — terminal OS should handle allocation'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Per-crane hours tracking + planned PM schedule','Configure CMMS per crane. Overdue PM on cranes 3 & 5 immediately. Future PM during vessel gaps. Target: productivity from 22 to 27 moves/hr.','Quality','critical','in-progress','Terminal Manager','2026-04-15',['Configure per-crane hours in CMMS','Schedule overdue PM cranes 3 & 5','Set PM calendar aligned to vessel schedule','Track moves/hr per crane weekly'])])
+      await im(s2.id,pid,[goal('Crane Productivity','22','27','moves/hr','Terminal Manager','2026-07-01')])
+      seeded.push('Port & Maritime')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 58. ENGINEERING & TECHNICAL CONSULTING
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Engineering Consulting Delivery'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Engineering Consulting')}else{
+      const pid=await pr({name:nm,industry:'management_consulting',customer:'Client Organisation',description:'Brief to accepted deliverable. 32% of reports require revision. Bottleneck at technical review.'})
+      const s0=await st(pid,0,{name:'Client Brief & Scoping',operators:2,cycle_time:240,wait_time:2880,wip:5,uptime:100,defect_rate:20})
+      const s1=await st(pid,1,{name:'Data Collection & Site Survey',operators:3,cycle_time:480,wait_time:1440,wip:4,uptime:100,defect_rate:12})
+      const s2=await st(pid,2,{name:'Analysis & Calculation',operators:2,cycle_time:960,wait_time:480,wip:3,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Technical Review & Check',operators:1,cycle_time:480,wait_time:2880,wip:6,uptime:100,defect_rate:32,notes:'BOTTLENECK — 32% reports require revision. Single checker on all work.'})
+      const s4=await st(pid,4,{name:'Report Drafting',operators:2,cycle_time:360,wait_time:480,wip:4,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Client Delivery & Sign-off',operators:1,cycle_time:60,wait_time:2880,wip:3,uptime:100,defect_rate:8})
+      await sw(s3.id,pid,960,360,480,laps(480),'Technical review avg 8 hrs. 32% returned. 3-day queue — single checker.')
+      await fw(s3.id,pid,'32% report revision rate — single checker bottleneck',[why('Why 32%?','Calculations contain errors in assumptions and boundary conditions.'),why('Why errors in assumptions?','Brief not formally confirmed in writing before analysis begins.'),why('Why not confirmed?','No written brief confirmation step in project workflow.'),why('Why not in workflow?','Workflow designed by finance not by engineering.'),why('Why not by engineering?','ROOT CAUSE: Project workflow designed at firm founding. Engineering team never involved in workflow design.')],'Project workflow designed by finance — engineering requirements not captured.','1. Written brief confirmation before analysis. 2. Calculation assumption checklist. 3. Second checker for high-complexity work.','Technical Director','2026-05-01')
+      await wa(s3.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'32% revision rate — 4-6 hrs rework per report',Waiting:'3-day queue — single checker is the rate limiter',Overprocessing:'Full calculation redone when only 1 assumption wrong — no targeted correction'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Written brief confirmation + assumption checklist','Client confirms brief in writing. Assumption checklist completed before analysis. Target: revision from 32% to 10%.','Quality','critical','in-progress','Technical Director','2026-04-30',['Design brief confirmation form','Design assumption checklist','Pilot on next 5 projects','Measure revision rate'])])
+      await im(s3.id,pid,[goal('Report Revision Rate','32','10','%','Technical Director','2026-07-01')])
+      seeded.push('Engineering Consulting')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 59. ACADEMIC RESEARCH
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Academic Research Publication Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Academic Research')}else{
+      const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Academic Community / Funder',description:'Research question to published finding. 6 stages. Bottleneck at peer review — 58% of papers rejected at first submission.'})
+      const s0=await st(pid,0,{name:'Hypothesis & Study Design',operators:2,cycle_time:480,wait_time:10080,wip:5,uptime:100,defect_rate:25})
+      const s1=await st(pid,1,{name:'Data Collection',operators:3,cycle_time:960,wait_time:4320,wip:4,uptime:100,defect_rate:20})
+      const s2=await st(pid,2,{name:'Data Analysis',operators:2,cycle_time:720,wait_time:2880,wip:3,uptime:100,defect_rate:18})
+      const s3=await st(pid,3,{name:'Manuscript Writing',operators:2,cycle_time:960,wait_time:1440,wip:3,uptime:100,defect_rate:30})
+      const s4=await st(pid,4,{name:'Peer Review & Revision',operators:1,cycle_time:2880,wait_time:40320,wip:4,uptime:100,defect_rate:58,notes:'BOTTLENECK — 58% rejected first submission. Avg 3.2 rounds of revision.'})
+      const s5=await st(pid,5,{name:'Publication & Dissemination',operators:1,cycle_time:480,wait_time:20160,wip:2,uptime:100,defect_rate:5})
+      await sw(s4.id,pid,5760,2880,2880,laps(2880),'Peer review avg 28-day wait. 58% rejected first submission. 3.2 revision rounds. Time-to-publication avg 18 months.')
+      await fw(s4.id,pid,'58% rejection at first submission',[why('Why 58% rejection?','Methodology and contribution not clearly differentiated from prior literature.'),why('Why not differentiated?','Literature review not current — papers from 2+ years ago only.'),why('Why not current?','Literature review done at study outset — not updated before submission.'),why('Why not updated?','No pre-submission literature refresh step in research workflow.'),why('Why no step?','ROOT CAUSE: Research workflow informal — based on supervisor preference, not structured protocol.')],'Research workflow informal — supervisor preference, not structured protocol.','1. Pre-submission literature refresh step. 2. Target journal identified before writing begins. 3. Internal peer review before submission.','Principal Investigator','2026-06-01')
+      await wa(s4.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'58% first rejection — avg 3.2 revision rounds, each 28-day wait',Waiting:'40,320 min (28 day) avg peer review wait',Overprocessing:'Full manuscript written before checking target journal fit — misaligned scope causes rejection'})
+      await kz(s4.id,pid,[kzItem('KZ-001','Pre-submission internal peer review','Lab internal peer review before journal submission. Target: rejection from 58% to 25%.','Quality','critical','in-progress','Principal Investigator','2026-04-30',['Establish internal review protocol','Assign 2 reviewers per manuscript','Complete before submission','Measure external rejection rate'])])
+      await im(s4.id,pid,[goal('First-Submission Rejection Rate','58','25','%','Principal Investigator','2026-09-01')])
+      seeded.push('Academic Research')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 60. CLINICAL TRIALS & MEDICAL RESEARCH
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Clinical Trial Operations'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Clinical Trials')}else{
+      const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Regulatory Agency / Pharma Client',description:'Protocol to regulatory submission. Bottleneck at site activation — avg 6.8 months vs 3-month target.'})
+      const s0=await st(pid,0,{name:'Protocol Development & Approval',operators:4,cycle_time:2880,wait_time:20160,wip:3,uptime:100,defect_rate:20})
+      const s1=await st(pid,1,{name:'Site Selection & Feasibility',operators:3,cycle_time:1440,wait_time:10080,wip:5,uptime:100,defect_rate:15})
+      const s2=await st(pid,2,{name:'Site Activation',operators:4,cycle_time:2880,wait_time:40320,wip:8,uptime:100,defect_rate:35,notes:'BOTTLENECK — 6.8-month avg vs 3-month target. IRB delays main cause.'})
+      const s3=await st(pid,3,{name:'Patient Recruitment',operators:6,cycle_time:480,wait_time:20160,wip:12,uptime:100,defect_rate:40})
+      const s4=await st(pid,4,{name:'Data Collection & Monitoring',operators:5,cycle_time:240,wait_time:4320,wip:10,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Database Lock & Regulatory Submission',operators:4,cycle_time:2880,wait_time:10080,wip:3,uptime:100,defect_rate:12})
+      await sw(s2.id,pid,100800,40320,40320,laps(40320),'Site activation avg 6.8 months (40,320 min). IRB submission wait 3.2 months on average. Each month delay costs $280k.')
+      await fw(s2.id,pid,'Site activation 6.8 months vs 3-month target',[why('Why 6.8 months?','IRB submission wait averages 3.2 months — IRB queue at site institutions.'),why('Why long queue?','IRB submissions not prioritised — submitted without pre-IRB engagement.'),why('Why no pre-engagement?','No pre-submission IRB meeting standard in activation process.'),why('Why no standard?','Site activation SOP written 2017 — pre-engagement not included.'),why('Why not included?','ROOT CAUSE: SOP written based on regulatory minimum requirements only. IRB engagement best practice not incorporated.')], 'Site activation SOP based on regulatory minimum only. IRB pre-engagement best practice not incorporated.','1. Pre-submission IRB meeting for all sites. 2. Parallel IRB and contract negotiation. 3. Site readiness tracker dashboard.','Clinical Operations Manager','2026-05-01')
+      await wa(s2.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'40,320-min avg site activation — each month delay costs $280k per study',Defects:'35% of sites have activation issues — documents incomplete or IRB queries',Overprocessing:'Contract negotiation starts after IRB approval — sequential when both could run parallel'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Pre-submission IRB meeting for all sites','Schedule IRB pre-submission meeting 30 days before formal submission. Reduce query rate and queue time. Target: activation from 6.8 to 3.5 months.','Delivery','critical','in-progress','Clinical Operations Manager','2026-05-01',['Define pre-submission meeting protocol','Add to site activation SOP','Schedule meetings for all open sites','Track activation time monthly'])])
+      await im(s2.id,pid,[goal('Site Activation Time','6.8','3.5','months','Clinical Operations Manager','2026-09-01')])
+      seeded.push('Clinical Trials')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 61. PROJECT MANAGEMENT — GENERAL
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Project Management Delivery'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Project Management')}else{
+      const pid=await pr({name:nm,industry:'management_consulting',customer:'Project Sponsor',description:'Initiation to closure. 62% of projects delivered late or over budget. Bottleneck at planning — scope creep unchecked.'})
+      const s0=await st(pid,0,{name:'Initiation & Charter',operators:2,cycle_time:240,wait_time:2880,wip:5,uptime:100,defect_rate:20})
+      const s1=await st(pid,1,{name:'Planning & Scheduling',operators:3,cycle_time:960,wait_time:1440,wip:4,uptime:100,defect_rate:35,notes:'BOTTLENECK — 35% of plans do not include risk register or change control.'})
+      const s2=await st(pid,2,{name:'Execution & Work Package Delivery',operators:10,cycle_time:480,wait_time:240,wip:8,uptime:100,defect_rate:25})
+      const s3=await st(pid,3,{name:'Monitoring & Change Control',operators:2,cycle_time:120,wait_time:480,wip:6,uptime:100,defect_rate:40})
+      const s4=await st(pid,4,{name:'Stakeholder Reporting',operators:1,cycle_time:120,wait_time:1440,wip:5,uptime:100,defect_rate:15})
+      const s5=await st(pid,5,{name:'Closure & Lessons Learned',operators:2,cycle_time:180,wait_time:480,wip:3,uptime:100,defect_rate:50,notes:'50% of projects skip lessons learned — same mistakes recur'})
+      await sw(s1.id,pid,1440,480,960,laps(960),'Planning avg 16 hrs. 35% of plans missing risk register. 62% of projects late or over budget.')
+      await fw(s1.id,pid,'62% of projects delivered late or over budget',[why('Why 62% fail?','Scope changes accepted without impact assessment — budget and schedule overrun.'),why('Why accepted?','No formal change control process — PMs agree scope informally.'),why('Why informal?','Change control not in project management methodology.'),why('Why not in methodology?','Methodology written by PMO but not enforced — sponsor bypasses PM.'),why('Why bypasses?','ROOT CAUSE: Sponsor authority not defined. PMO methodology has no executive mandate.')], 'PMO methodology has no executive mandate — sponsors bypass change control.','1. Executive mandate for change control. 2. Risk register mandatory in project charter. 3. Change impact assessment template.','PMO Director','2026-05-01')
+      await wa(s1.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'62% late/over-budget — avg 28% cost overrun per project',Waiting:'Decisions wait 5+ days for sponsor — no defined escalation path',Overprocessing:'Weekly status reports prepared but never read by 40% of stakeholders — reporting waste'})
+      await kz(s1.id,pid,[kzItem('KZ-001','Executive mandate for change control + risk register','Board-mandated change control. Risk register required in charter. Target: late/over-budget from 62% to 25%.','Quality','critical','in-progress','PMO Director','2026-04-30',['Draft board mandate document','Gain executive sign-off','Update project charter template','Train all PMs'])])
+      await im(s1.id,pid,[goal('Projects Delivered On Time & Budget','38','75','%','PMO Director','2026-09-01')])
+      seeded.push('Project Management')
+    }}
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 62. GRAPHIC DESIGN & BRAND
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm='Reference — Graphic Design Studio Flow'; if(!shouldSeed(nm)){return}
+    const id=await ex(nm); if(id){existing.push('Graphic Design')}else{
+      const pid=await pr({name:nm,industry:'marketing_agency',customer:'Brand Owner / Marketing Manager',description:'Brief to approved deliverable. 42% of projects exceed original scope. 2.8 revision rounds average.'})
+      const s0=await st(pid,0,{name:'Brief Intake & Clarification',operators:1,cycle_time:60,wait_time:1440,wip:8,uptime:100,defect_rate:35,notes:'35% of briefs require clarification before design can start'})
+      const s1=await st(pid,1,{name:'Concept Development',operators:2,cycle_time:360,wait_time:480,wip:5,uptime:100,defect_rate:20})
+      const s2=await st(pid,2,{name:'Design Execution',operators:3,cycle_time:480,wait_time:240,wip:6,uptime:100,defect_rate:15})
+      const s3=await st(pid,3,{name:'Internal Review',operators:1,cycle_time:120,wait_time:480,wip:8,uptime:100,defect_rate:25})
+      const s4=await st(pid,4,{name:'Client Presentation & Approval',operators:1,cycle_time:60,wait_time:2880,wip:10,uptime:100,defect_rate:42,notes:'BOTTLENECK — 42% require revision. 2.8 rounds average.'})
+      const s5=await st(pid,5,{name:'Production & File Delivery',operators:1,cycle_time:60,wait_time:240,wip:4,uptime:100,defect_rate:5})
+      await sw(s4.id,pid,7200,2880,2880,laps(2880),'Client approval wait avg 2 days. 42% require revision. 2.8 rounds average.')
+      await fw(s4.id,pid,'42% client revision rate — 2.8 rounds average',[why('Why 42%?','Client approving without involving all decision-makers — late-stage feedback reverses direction.'),why('Why not all involved?','Brief meeting with marketing manager only — brand director sees work at presentation.'),why('Why brand director excluded?','No protocol requiring final approver at brief stage.'),why('Why no protocol?','Brief process designed by account management without design input.'),why('Why no input?','ROOT CAUSE: No design representative in account management process design. Operations and design siloed.')],'No design input in account management process. Brief process designed in silo.','1. Final decision-maker attends or approves brief before design starts. 2. Brand guidelines reviewed before every project. 3. Revision limit in scope of work.','Creative Director','2026-05-01')
+      await wa(s4.id,pid,['Defects','Waiting','Overproduction'],{Defects:'42% revision rate — avg 4 hrs rework per round × 2.8 rounds = 11 hrs per project',Waiting:'Client approval wait 2 days — designer idle between rounds',Overproduction:'3 concepts presented when 1 well-briefed concept would have higher first-pass rate'})
+      await kz(s4.id,pid,[kzItem('KZ-001','Final approver at brief stage','Decision-maker signs off brief before concept begins. Target: revision rounds from 2.8 to 1.2.','Quality','critical','in-progress','Creative Director','2026-04-30',['Add final approver step to brief template','Require signature before design starts','Track revision rounds by project','Measure client satisfaction'])])
+      await im(s4.id,pid,[goal('Revision Rounds per Project','2.8','1.2','rounds','Creative Director','2026-06-01')])
+      seeded.push('Graphic Design')
+    }}
+
+    // ── Response ──────────────────────────────────────────────────────────────
     const allExisted = seeded.length === 0
     return NextResponse.json({
       id: primaryId,
