@@ -1,5 +1,5 @@
-'use client'
 // @ts-nocheck
+'use client'
 // ── app/page.tsx — VeSiMy Homepage (v3.1 merged) ──────────────────────────────
 // Philosophy: target achievement through process improvement.
 // CI tool interactive previews removed. Mission-first structure.

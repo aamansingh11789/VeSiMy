@@ -1,5 +1,5 @@
-'use client'
 // @ts-nocheck
+'use client'
 // ── components/ui/Logo.tsx ─────────────────────────────────────────────────
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
@@ -12,7 +12,8 @@ interface LogoProps {
 
 // ── 3D extruded V mark ────────────────────────────────────────────────────────
 export function VLogoMark({ size = 40 }: { size?: number }) {
-  const u = `v3d-${size}`
+  // Static ID prefix — avoids SSR/hydration mismatch on dynamic IDs
+  const u = 'v3d'
   return (
     <svg
       width={size}
