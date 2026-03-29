@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import React from 'react'
 import { BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ── components/v2/V2MapCanvas.tsx ──────────────────────────────────────────────
 // Interactive SVG VSM map canvas.
@@ -204,7 +205,7 @@ function FlowArrow({ fromX, fromY, toX, flowType }: any) {
 
 // ── Main canvas ────────────────────────────────────────────────────────────
 export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, onAddStep, onDeleteStep, missingCount }: any) {
-  const [expandedSteps, setExpandedSteps] = React.useState<Record<string, boolean>>({})
+  const [expandedSteps, setExpandedSteps] = useState<Record<string, boolean>>({})
   const toggleExpand = (id: string) => setExpandedSteps(prev => ({ ...prev, [id]: !prev[id] }))
   const expandAll = () => {
     const all: Record<string, boolean> = {}

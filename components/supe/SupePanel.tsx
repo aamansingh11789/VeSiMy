@@ -2,6 +2,7 @@
 'use client'
 // ── components/supe/SupePanel.tsx ─────────────────────────────────────────────
 
+import type React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { analyzeSteps, ISSUE_LABEL, SEV_COLOR } from '@/lib/supe-engine'
 import type { Step } from '@/lib/store'

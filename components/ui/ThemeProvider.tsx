@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import type React from 'react'
 import { createContext, useContext } from 'react'
 
 // Slate theme is now the single permanent theme — no toggle needed.
