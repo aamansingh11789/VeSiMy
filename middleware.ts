@@ -45,13 +45,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Already logged in — redirect away from auth pages to dashboard
-  // (dashboard page server-side checks onboarding and redirects to /onboarding if needed)
-  if (user && (pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup'))) {
-    const dashUrl = request.nextUrl.clone()
-    dashUrl.pathname = '/dashboard'
-    dashUrl.search = ''
-    return NextResponse.redirect(dashUrl)
+  // Already logged in — redirect away from auth pages, but only if genuinely authenticated.
+  // Do NOT redirect if user came directly to /auth/login or /auth/signup from homepage.
+  // Only redirect if they navigated there while an active dashboard session exists
+  // (i.e. they bookmarked /auth/login while logged in).
+  if (user && pathname === '/auth/login') {
+    // Check if this is a fresh navigation (no referer) or came from within the app
+    const referer = request.headers.get('referer') || ''
+    const host = request.headers.get('host') || ''
+    const isInternalNav = referer.includes(host) && !referer.includes('/auth/')
+    if (isInternalNav) {
+      const dashUrl = request.nextUrl.clone()
+      dashUrl.pathname = '/dashboard'
+      dashUrl.search = ''
+      return NextResponse.redirect(dashUrl)
+    }
   }
 
   // Logged-in user on /onboarding — allow through (onboarding page handles redirect if already done)

@@ -23,6 +23,17 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
   const [sopDismissed, setSopDismissed] = useState(false)
   const supabase = createClient()
 
+  // ── Reset form when a DIFFERENT step is clicked (step.id changes) ──────────
+  // useState only initialises once — without this, clicking step B shows step A's data
+  useEffect(() => {
+    setForm({ ...step, tasks: Array.isArray(step.tasks) ? step.tasks : [] })
+    setNewTask('')
+    setSopChanged(false)
+    setSopDismissed(false)
+    setShowCIMenu(false)
+    setActiveCITool(null)
+  }, [step.id])  // key: reset on ID change, not every re-render
+
   // Detect SOP diff — show prompt when user edits a parsed step
   useEffect(() => {
     if (form.from_sop && !sopDismissed) {
@@ -118,7 +129,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       {/* Scrollable body */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px' }}>
 
-        {section('STEP TYPE & CLASSIFICATION', (
+        {section('STEP TYPE & VALUE CLASSIFICATION', (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
               {iLabel('Step Type')}
@@ -142,7 +153,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </div>
         ))}
 
-        {section('TASKS — What physically happens here', (
+        {section('WORK ELEMENTS — Physical tasks at this step', (
           <>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 8 }}>
               {(form.tasks || []).map((task: string, i: number) => (
@@ -169,7 +180,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </>
         ))}
 
-        {section('CYCLE TIME & PARAMETERS', (
+        {section('CYCLE TIME & PROCESS PARAMETERS', (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 8 }}>
               <div>
@@ -204,9 +215,9 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               )}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-              <div>{iLabel('Wait time')}{ia('wait_time', '0', 'number')}</div>
-              <div>{iLabel('Operators')}{ia('operators', '1', 'number')}</div>
-              <div>{iLabel('Defect rate %')}{ia('defect_rate', '0', 'number')}</div>
+              <div>{iLabel(t?.waitTime || 'Queue Time')}{ia('wait_time', '0', 'number')}</div>
+              <div>{iLabel(t?.operator ? t.operator + 's' : 'Operators')}{ia('operators', '1', 'number')}</div>
+              <div>{iLabel(t?.defectRate || 'Defect Rate %')}{ia('defect_rate', '0', 'number')}</div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               <div>{iLabel('WIP')}{ia('wip', '0', 'number')}</div>
@@ -215,7 +226,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </div>
         ))}
 
-        {section('FLOW TYPE', (
+        {section('MATERIAL FLOW TYPE (ISO 22468 §5.4)', (
           <div style={{ display: 'flex', gap: 6 }}>
             {[{ id: 'push', label: '→ Push', desc: 'Upstream pushes regardless of demand' },
               { id: 'supermarket', label: '⟵ Pull/Supermarket', desc: 'Downstream pulls when ready' }].map(opt => (
@@ -228,7 +239,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </div>
         ))}
 
-        {section('GOVERNING ENTITY (Process Control)', (
+        {section('PROCESS CONTROL — Governing Entity (ISO 22468)', (
           <>
             <input
               value={form.governing_entity || ''}
@@ -246,7 +257,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           ia('department', `e.g. ${t?.gemba || 'Operations'}, Quality, Finance, Nursing…`)
         ))}
 
-        {section('NOTES', (
+        {section('OBSERVATIONS & NOTES', (
           <textarea value={form.notes || ''} onChange={e => update({ notes: e.target.value })}
             placeholder="Observations, constraints, issues, context…"
             style={{ width: '100%', minHeight: 70, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, fontFamily: 'inherit', resize: 'vertical', color: 'var(--text)', background: 'var(--sl-50)' }}/>

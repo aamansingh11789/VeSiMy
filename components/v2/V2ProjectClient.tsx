@@ -15,9 +15,10 @@ import { V2AnalysisReport } from './V2AnalysisReport'
 import { V2FutureStatePanel } from './V2FutureStatePanel'
 import { V2Journal } from './V2Journal'
 import { SupePanel } from '@/components/supe/SupePanel'
+import { createBranch, fetchBranches } from '@/lib/db'
 import toast from 'react-hot-toast'
 
-type V2Tab = 'map' | 'analyze' | 'journal' | 'future'
+type V2Tab = 'map' | 'analyze' | 'journal' | 'future' | 'branches'
 
 export interface V2Step {
   id: string; project_id: string; name: string; position: number
@@ -57,11 +58,34 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   const [showStartModal, setShowStartModal] = useState(steps.length === 0)
   const [parsing, setParsing] = useState(false)
   const [showFuturePanel, setShowFuturePanel] = useState(false)
+  const [branches, setBranches] = useState<any[]>([])
+  const [showAddBranch, setShowAddBranch] = useState(false)
+  const [newBranchName, setNewBranchName] = useState('')
+
+  const handleCreateBranch = async () => {
+    if (!newBranchName.trim()) return
+    try {
+      const nb = await createBranch(project.id, {
+        name: newBranchName.trim(),
+        description: 'Sub-process / alternate path',
+        branch_type: 'subprocess',
+        color: '#0176D3',
+      })
+      setBranches(prev => [...prev, nb])
+      setNewBranchName('')
+      setShowAddBranch(false)
+      toast.success('Sub-process branch created')
+    } catch { toast.error('Could not create branch') }
+  }
 
   const isPaid = ['pro','lifetime','enterprise'].includes(profile.plan_tier) ||
     profile.lifetime_access || profile.is_beta
 
   // ── Load reports from DB on mount ────────────────────────────────────────
+  useEffect(() => {
+    fetchBranches(project.id).then(setBranches).catch(() => {})
+  }, [project.id])
+
   useEffect(() => {
     supabase.from('analysis_reports')
       .select('*').eq('project_id', project.id)
@@ -220,6 +244,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
   const TABS: { id: V2Tab; label: string }[] = [
     { id: 'map', label: 'Process Map' },
+    { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}` },
     { id: 'analyze', label: 'Analysis' },
     { id: 'journal', label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}` },
     { id: 'future', label: 'Future State' },
@@ -247,11 +272,26 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         <div style={{ display: 'flex', gap: 2, flex: 1, justifyContent: 'center' }}>
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)} style={{
-              padding: '5px 14px', borderRadius: 6, border: 'none', cursor: 'pointer',
-              fontSize: 12, fontWeight: tab === t.id ? 700 : 400,
-              background: tab === t.id ? 'rgba(1,118,211,.1)' : 'transparent',
+              padding: '6px 16px',
+              /* ISO/TPS standard — rectangular process box shape, no rounded corners */
+              borderRadius: 0,
+              border: '1px solid',
+              borderColor: tab === t.id ? BRAND : 'var(--border)',
+              borderBottom: tab === t.id ? '1px solid white' : '1px solid var(--border)',
+              cursor: 'pointer',
+              fontSize: 11,
+              fontWeight: tab === t.id ? 700 : 400,
+              fontFamily: 'monospace',
+              letterSpacing: 0.5,
+              background: tab === t.id ? 'white' : 'var(--sl-50)',
               color: tab === t.id ? BRAND : 'var(--text3)',
-              transition: 'all .15s',
+              /* Shadow on active = 3D depth per TPS visual conventions */
+              boxShadow: tab === t.id ? '0 2px 6px rgba(1,118,211,.15)' : 'none',
+              position: 'relative',
+              zIndex: tab === t.id ? 2 : 1,
+              marginBottom: tab === t.id ? -1 : 0,
+              transition: 'all .1s',
+              textTransform: 'uppercase',
             }}>{t.label}</button>
           ))}
         </div>
@@ -362,6 +402,67 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                 }}>← Go to map</button>
               </div>
             )}
+          </div>
+        )}
+
+        {/* BRANCHES TAB */}
+        {tab === 'branches' && (
+          <div style={{ flex:1, overflowY:'auto', padding:28 }}>
+            <div style={{ maxWidth:760, margin:'0 auto' }}>
+              <div style={{ marginBottom:24, display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16 }}>
+                <div>
+                  <div style={{ fontSize:9, fontFamily:'monospace', letterSpacing:2, color:'#0176D3', marginBottom:6 }}>SUB-PROCESSES & BRANCHES</div>
+                  <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Alternate paths & sub-processes</h2>
+                  <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.7 }}>
+                    In TPS and lean VSM, branches represent alternate process paths — rework loops, exception flows, sub-assembly lines, and parallel processes that feed into the main value stream.
+                  </p>
+                </div>
+                <button onClick={() => setShowAddBranch(v => !v)} style={{
+                  padding:'8px 16px', borderRadius:0, border:'1px solid #0176D3',
+                  background:'#0176D3', color:'white', fontSize:12, fontWeight:700,
+                  cursor:'pointer', flexShrink:0, fontFamily:'monospace', letterSpacing:1,
+                }}>+ ADD BRANCH</button>
+              </div>
+              {showAddBranch && (
+                <div style={{ marginBottom:20, padding:18, background:'white', border:'1px solid var(--border)', borderRadius:0 }}>
+                  <div style={{ fontSize:10, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:10 }}>NEW SUB-PROCESS</div>
+                  <div style={{ display:'flex', gap:10 }}>
+                    <input value={newBranchName} onChange={e => setNewBranchName(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleCreateBranch()}
+                      placeholder="e.g. Rework Loop, Sub-assembly, Exception Path…"
+                      style={{ flex:1, padding:'8px 12px', border:'1px solid var(--border)', borderRadius:0, fontSize:13, fontFamily:'inherit' }}/>
+                    <button onClick={handleCreateBranch} style={{ padding:'8px 16px', background:'#0176D3', color:'white', border:'none', fontSize:12, fontWeight:700, cursor:'pointer' }}>Create</button>
+                    <button onClick={() => setShowAddBranch(false)} style={{ padding:'8px 12px', background:'var(--sl-100)', color:'var(--text2)', border:'1px solid var(--border)', fontSize:12, cursor:'pointer' }}>Cancel</button>
+                  </div>
+                </div>
+              )}
+              {branches.length === 0 && !showAddBranch ? (
+                <div style={{ textAlign:'center', padding:60, color:'var(--text3)' }}>
+                  <div style={{ fontSize:32, marginBottom:12 }}>⬡</div>
+                  <p style={{ fontSize:14, lineHeight:1.7 }}>No sub-processes yet.<br/>Add branches for rework loops, sub-assembly lines, or alternate paths.</p>
+                </div>
+              ) : (
+                <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                  {branches.map((b: any) => (
+                    <div key={b.id} style={{ background:'white', border:'1px solid var(--border)', borderRadius:0, padding:18 }}>
+                      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+                        <div style={{ width:4, height:32, background:'#0176D3', flexShrink:0 }}/>
+                        <div>
+                          <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{b.name}</div>
+                          <div style={{ fontSize:11, color:'var(--text3)' }}>{b.description || 'Sub-process branch'}</div>
+                        </div>
+                        <div style={{ marginLeft:'auto', fontSize:9, fontFamily:'monospace', color:'var(--text3)', letterSpacing:1 }}>
+                          {b.steps?.length || 0} STEPS
+                        </div>
+                      </div>
+                      <div style={{ fontSize:12, color:'var(--text3)', paddingLeft:14, lineHeight:1.7 }}>
+                        This branch is mapped independently. Steps added here appear as a sub-process lane feeding into the main value stream.
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 

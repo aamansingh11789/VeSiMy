@@ -28,7 +28,7 @@ const BOX_H = 48
 const GAP = 80  // horizontal gap between steps
 
 // ── Per-step VSM box ───────────────────────────────────────────────────────
-function StepBox({ step, index, total, isSelected, onClick, t }: any) {
+function StepBox({ step, index, total, isSelected, onClick, t, expanded, onToggleExpand }: any) {
   const sym = STEP_SYMBOLS[step.step_type || 'process'] || STEP_SYMBOLS.process
   const hasMissing = (step.missing_info_flags || []).length > 0
   const hasWIP = (step.wip || 0) > 0
@@ -61,27 +61,7 @@ function StepBox({ step, index, total, isSelected, onClick, t }: any) {
         </>
       )}
 
-      {/* WIP triangle (between steps, ISO standard) */}
-      {hasWIP && index > 0 && (
-        <g>
-          <polygon
-            points={`${X - 26},${Y + 10} ${X - 14},${Y + 10} ${X - 20},${Y - 2}`}
-            fill="#FEF3C7" stroke={AMBER} strokeWidth="1.2"/>
-          <text x={X - 20} y={Y + 20} textAnchor="middle" fontSize="7" fill={AMBER} fontFamily="monospace">
-            {step.wip}
-          </text>
-        </g>
-      )}
-
-      {/* Supermarket symbol (ISO) */}
-      {isSupermarket && index > 0 && (
-        <g>
-          <rect x={X - 30} y={Y} width={10} height={20} fill="none" stroke={BRAND} strokeWidth="1.5"/>
-          <rect x={X - 27} y={Y + 6} width={4} height={4} fill={BRAND} opacity=".4"/>
-          <rect x={X - 27} y={Y + 12} width={4} height={4} fill={BRAND} opacity=".4"/>
-          <text x={X - 25} y={Y + 28} fontSize="6" fill={BRAND} fontFamily="monospace" textAnchor="middle">SM</text>
-        </g>
-      )}
+      {/* WIP and supermarket rendered at canvas level for correct z-order */}
 
       {/* Main step shape */}
       {sym.shape === 'rect' && (
@@ -137,19 +117,38 @@ function StepBox({ step, index, total, isSelected, onClick, t }: any) {
         fill={step.is_value_added === 'va' ? GREEN : step.is_value_added === 'nva' ? RED : step.is_value_added === 'nnva' ? AMBER : '#ddd'}/>
 
       {/* DATA BOX below step (ISO standard — metrics box) */}
-      <rect x={X} y={Y + BOX_H + 4} width={BOX_W} height={32}
-        fill="white" stroke="#D8D5CE" strokeWidth="1" rx="3"/>
-      <text x={X + 4} y={Y + BOX_H + 15} fontSize="7" fill="#888" fontFamily="monospace">
-        {t?.cycleTime?.slice(0,2) || 'CT'}: {step.cycle_time ? fmtCT(step.cycle_time, step.cycle_time_unit) : '?'}
+      <rect x={X} y={Y + BOX_H + 4} width={BOX_W} height={expanded ? 72 : 36}
+        fill="white" stroke="#D8D5CE" strokeWidth="1" rx="0"/>
+      <text x={X + 4} y={Y + BOX_H + 14} fontSize="7" fill="#555" fontFamily="monospace">
+        {t?.cycleTime?.slice(0,2) || 'CT'}: {step.cycle_time ? fmtCT(step.cycle_time, step.cycle_time_unit) : '—'}
         {step.cycle_time_type === 'assumed' ? ' ~' : ''}
       </text>
-      <text x={X + 4} y={Y + BOX_H + 25} fontSize="7" fill="#888" fontFamily="monospace">
+      <text x={X + 4} y={Y + BOX_H + 24} fontSize="7" fill="#888" fontFamily="monospace">
         Wait: {step.wait_time ? fmtCT(step.wait_time, step.cycle_time_unit) : '0'}
       </text>
-      {(step.defect_rate || 0) > 0 && (
-        <text x={X + 4} y={Y + BOX_H + 34} fontSize="7" fill={RED} fontFamily="monospace">
-          Defect: {step.defect_rate}%
-        </text>
+      <text x={X + 4} y={Y + BOX_H + 33} fontSize="7" fill={(step.defect_rate||0)>0 ? RED : '#aaa'} fontFamily="monospace">
+        Defect: {step.defect_rate || 0}% | Ops: {step.operators || 1}
+      </text>
+      {/* Expand toggle — ▼ / ▲ */}
+      <text x={X + BOX_W - 8} y={Y + BOX_H + 23} fontSize="9" fill={BRAND} fontFamily="monospace"
+        style={{ cursor:'pointer' }} onClick={(e) => { e.stopPropagation(); onToggleExpand?.(step.id) }}>
+        {expanded ? '▲' : '▼'}
+      </text>
+      {/* Expanded detail — tasks and governing entity */}
+      {expanded && (
+        <g>
+          <line x1={X} y1={Y + BOX_H + 39} x2={X + BOX_W} y2={Y + BOX_H + 39} stroke="#E8E5E0" strokeWidth="0.8"/>
+          {step.governing_entity && (
+            <text x={X + 4} y={Y + BOX_H + 50} fontSize="6.5" fill="#0176D3" fontFamily="monospace">
+              ⊕ {step.governing_entity.slice(0,16)}
+            </text>
+          )}
+          {(step.tasks || []).slice(0,3).map((task: string, ti: number) => (
+            <text key={ti} x={X + 4} y={Y + BOX_H + 60 + ti * 9} fontSize="6" fill="#333" fontFamily="sans-serif">
+              {(ti+1)}. {task.slice(0, 17)}{task.length > 17 ? '…' : ''}
+            </text>
+          ))}
+        </g>
       )}
 
       {/* Amber warning badge — missing info */}
@@ -205,6 +204,14 @@ function FlowArrow({ fromX, fromY, toX, flowType }: any) {
 
 // ── Main canvas ────────────────────────────────────────────────────────────
 export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, onAddStep, onDeleteStep, missingCount }: any) {
+  const [expandedSteps, setExpandedSteps] = React.useState<Record<string, boolean>>({})
+  const toggleExpand = (id: string) => setExpandedSteps(prev => ({ ...prev, [id]: !prev[id] }))
+  const expandAll = () => {
+    const all: Record<string, boolean> = {}
+    steps.forEach((s: any) => { all[s.id] = true })
+    setExpandedSteps(all)
+  }
+  const collapseAll = () => setExpandedSteps({})
   const CANVAS_W = Math.max(900, 60 + steps.length * (BOX_W + GAP) + 120)
   const CANVAS_H = 520
 
@@ -238,12 +245,22 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
 
   return (
     <div style={{ flex: 1, overflow: 'auto', background: '#FAFAF8', position: 'relative' }}>
+      {/* Expand/Collapse all controls */}
+      <div style={{ position:'absolute', top:10, left:14, display:'flex', gap:6, zIndex:10 }}>
+        <button onClick={expandAll} style={{ fontSize:9, fontFamily:'monospace', letterSpacing:1,
+          padding:'3px 8px', border:'1px solid var(--border)', borderRadius:0, background:'white',
+          cursor:'pointer', color:'var(--text2)' }}>EXPAND ALL</button>
+        <button onClick={collapseAll} style={{ fontSize:9, fontFamily:'monospace', letterSpacing:1,
+          padding:'3px 8px', border:'1px solid var(--border)', borderRadius:0, background:'white',
+          cursor:'pointer', color:'var(--text2)' }}>COLLAPSE</button>
+      </div>
+
       {/* ISO VSM legend */}
       <div style={{ position: 'absolute', top: 10, right: 14, display: 'flex', gap: 8, zIndex: 10, flexWrap: 'wrap', maxWidth: 320 }}>
         {[
-          { color: GREEN, label: 'Value-Add' },
-          { color: AMBER, label: 'Necessary NVA' },
-          { color: RED, label: 'Non-Value-Add' },
+          { color: GREEN, label: 'VA — Value-Add' },
+          { color: AMBER, label: 'NNVA — Necessary Non-Value-Add' },
+          { color: RED, label: 'NVA — Waste (Muda)' },
           { color: '#ddd', label: 'Unclassified' },
         ].map(({ color, label }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: 'var(--text3)', background: 'white', border: '1px solid var(--border)', borderRadius: 4, padding: '2px 7px' }}>
@@ -293,6 +310,8 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
           <StepBox
             key={step.id} step={step} index={i} total={steps.length}
             isSelected={step.id === selectedStepId} t={t}
+            expanded={!!expandedSteps[step.id]}
+            onToggleExpand={toggleExpand}
             onClick={() => onStepClick(step)}
           />
         ))}
@@ -363,7 +382,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
 
               {/* Lead time label */}
               <text x={CANVAS_W / 2} y={TL_Y + 58} textAnchor="middle" fontSize="9" fill="#888" fontFamily="monospace">
-                {t?.cycleTime || 'VA'}: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {pce}%
+                {t?.cycleTime || 'Cycle Time'}: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {pce}%
               </text>
 
               {/* Takt line */}
@@ -382,6 +401,51 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
             </g>
           )
         })()}
+
+        {/* ── WIP triangles, supermarket, inventory — rendered OVER arrows (correct z-order) ── */}
+        {steps.map((step: any, i: number) => {
+          if (i === 0) return null
+          const X = 60 + i * (BOX_W + GAP)
+          const Y = 200
+          const hasWIP = (step.wip || 0) > 0
+          const isSM = step.flow_type === 'supermarket'
+          const hasInventory = step.step_type === 'storage' || (step.sm_min > 0 || step.sm_max > 0)
+          return (
+            <g key={`overlay-${step.id}`}>
+              {/* WIP inventory triangle (ISO 22468) — inverted triangle between steps */}
+              {hasWIP && (
+                <g>
+                  <polygon
+                    points={`${X - 30},${Y + 14} ${X - 10},${Y + 14} ${X - 20},${Y - 2}`}
+                    fill="#FEF3C7" stroke={AMBER} strokeWidth="1.5"/>
+                  <text x={X - 20} y={Y + 26} textAnchor="middle" fontSize="8" fill={AMBER}
+                    fontFamily="monospace" fontWeight="700">{step.wip}</text>
+                  <text x={X - 20} y={Y + 35} textAnchor="middle" fontSize="6" fill={AMBER}
+                    fontFamily="monospace">WIP</text>
+                </g>
+              )}
+              {/* Supermarket / pull symbol (ISO 22468) */}
+              {isSM && (
+                <g>
+                  <rect x={X - 42} y={Y + 2} width={12} height={22} fill="none" stroke={BRAND} strokeWidth="1.5"/>
+                  <rect x={X - 40} y={Y + 7} width={4} height={4} fill={BRAND} opacity=".5"/>
+                  <rect x={X - 40} y={Y + 14} width={4} height={4} fill={BRAND} opacity=".5"/>
+                  <text x={X - 36} y={Y + 33} fontSize="6" fill={BRAND} fontFamily="monospace" textAnchor="middle">SPMK</text>
+                </g>
+              )}
+              {/* Inventory / storage triangle (ISO 22468) */}
+              {hasInventory && !isSM && !hasWIP && (
+                <g>
+                  <polygon
+                    points={`${X - 30},${Y + 14} ${X - 10},${Y + 14} ${X - 20},${Y - 2}`}
+                    fill="#F0EEF8" stroke="#8C44CC" strokeWidth="1.2"/>
+                  <text x={X - 20} y={Y + 26} textAnchor="middle" fontSize="6" fill="#8C44CC"
+                    fontFamily="monospace">INV</text>
+                </g>
+              )}
+            </g>
+          )
+        })}
 
         {/* Add step button at end */}
         {(() => {
