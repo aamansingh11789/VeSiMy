@@ -1,8 +1,9 @@
 // @ts-nocheck
+'use client'
+import React from 'react'
 // ── components/ui/FieldTip.tsx ─────────────────────────────────────────────
 // Reusable "?" tooltip button + label wrapper used across all CI tool forms.
 // Plain-English definitions for every term a new user might encounter.
-'use client'
 
 import { useEffect, useRef, useState } from 'react'
 

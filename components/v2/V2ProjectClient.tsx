@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
-import { BRAND } from './v2-constants'
+import React from 'react'
+import { BRAND, SERIF } from './v2-constants'
 // ── components/v2/V2ProjectClient.tsx ─────────────────────────────────────────
 // V2 Project Builder: SOP upload → interactive map → analyze → future state
 // Single source of truth. Everything else is downstream of the map.

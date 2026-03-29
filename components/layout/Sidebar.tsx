@@ -1,9 +1,9 @@
 // @ts-nocheck
+'use client'
 // ── components/layout/Sidebar.tsx ─────────────────────────────────────────
 // Self-contained collapsible sidebar. Manages its own open/closed state and
 // writes --sidebar-w to document.documentElement so every page layout reacts
 // automatically without any server-side props changes.
-'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'

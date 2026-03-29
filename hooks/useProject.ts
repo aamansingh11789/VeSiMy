@@ -1,8 +1,8 @@
+'use client'
 // ── hooks/useProject.ts ────────────────────────────────────────────────────
 // Central hook for cloud-synced project state
 // Replaces localStorage-based useLocalStorage from v1 demo
 
-'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
 import toast from 'react-hot-toast'

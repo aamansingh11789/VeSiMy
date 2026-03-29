@@ -1,8 +1,8 @@
 // @ts-nocheck
+'use client'
 // ── components/ui/IndustrySelector.tsx ───────────────────────────────────────
 // Per-account industry picker. Saves to profiles.industry.
 // Used in Settings and optionally in Onboarding.
-'use client'
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase'

@@ -292,7 +292,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
         {futureReports.length > 0 && (
           <div style={{ marginBottom: 24 }}>
             <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: GREEN, marginBottom: 12 }}>FUTURE STATE REPORTS</div>
-            {futureReports.map(r => <ReportCard key={r.id} report={r} />)}
+            {futureReports.map(r => <ReportCard key={r.id} report={r as any} />)}
           </div>
         )}
 
@@ -300,7 +300,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
         {currentReports.length > 0 && (
           <div>
             <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>CURRENT STATE REPORTS</div>
-            {currentReports.map(r => <ReportCard key={r.id} report={r} />)}
+            {currentReports.map(r => <ReportCard key={r.id} report={r as any} />)}
           </div>
         )}
       </div>

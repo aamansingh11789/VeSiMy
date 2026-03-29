@@ -1,9 +1,9 @@
 // @ts-nocheck
+'use client'
 // ── hooks/useIndustryLanguage.ts ──────────────────────────────────────────────
 // Reads the current user's industry from their profile and returns translated terms.
 // Usage: const { t } = useIndustryLanguage()
 //        then use t.product, t.cycleTime, t.kaizen etc. everywhere in the UI.
-'use client'
 
 import { useEffect, useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'

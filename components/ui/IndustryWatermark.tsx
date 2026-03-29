@@ -1,8 +1,9 @@
 // @ts-nocheck
+'use client'
+import React from 'react'
 // ── components/ui/IndustryWatermark.tsx ───────────────────────────────────────
 // Industry-specific SVG watermarks rendered as a fixed background element.
 // Opacity 0.038, monochrome brand blue. Unique illustration per industry group.
-'use client'
 
 export type WatermarkGroup =
   | 'manufacturing' | 'aerospace' | 'pharma' | 'food' | 'brewery' | 'winery'

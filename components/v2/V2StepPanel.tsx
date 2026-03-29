@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import React from 'react'
 import { SERIF, CI_TOOLS, STEP_TYPES, VA_OPTIONS, CT_UNITS, BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ── components/v2/V2StepPanel.tsx ──────────────────────────────────────────────
 // Slide-in right panel for editing a step.

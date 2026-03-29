@@ -1,6 +1,7 @@
 // @ts-nocheck
-// ── app/auth/login/page.tsx ────────────────────────────────────────────────
 'use client'
+import React from 'react'
+// ── app/auth/login/page.tsx ────────────────────────────────────────────────
 
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
