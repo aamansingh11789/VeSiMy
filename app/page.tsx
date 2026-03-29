@@ -7,7 +7,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/stripe'
+import { PLANS } from '@/lib/plans'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = '"DM Serif Display",Palatino Linotype,Georgia,serif'
@@ -94,10 +94,12 @@ function IndustryStrip() {
 // ── Industry terminology switcher ─────────────────────────────────────────────
 function IndustryTerms() {
   const [active, setActive] = useState(TERM_KEYS[0])
+  const [mounted, setMounted] = useState(false)
   const timerRef = useRef<any>(null)
   const idxRef   = useRef(0)
 
   useEffect(() => {
+    setMounted(true)
     timerRef.current = setInterval(() => {
       idxRef.current = (idxRef.current + 1) % TERM_KEYS.length
       setActive(TERM_KEYS[idxRef.current])
@@ -148,7 +150,7 @@ function IndustryTerms() {
           </div>
 
           <div style={{ background:'rgba(255,255,255,.04)', border:'1px solid rgba(255,255,255,.08)', borderRadius:16, padding:'28px 26px' }}>
-            <p style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'rgba(255,255,255,.3)', marginBottom:20 }}>TERMINOLOGY PREVIEW — {active}</p>
+            <p suppressHydrationWarning style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'rgba(255,255,255,.3)', marginBottom:20 }}>TERMINOLOGY PREVIEW — {mounted ? active : TERM_KEYS[0]}</p>
             {rows.map(([lean, val], i) => (
               <div key={lean} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 0', borderBottom: i < rows.length - 1 ? '1px solid rgba(255,255,255,.06)' : 'none', gap:8 }}>
                 <span style={{ fontSize:12, color:'rgba(255,255,255,.3)', flexShrink:0 }}>{lean}</span>
@@ -259,31 +261,33 @@ function ReferenceSection() {
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   const [eyeIdx, setEyeIdx] = useState(0)
+  const [mounted, setMounted] = useState(false)
   const eyeLines = [
     'Manufacturing · Logistics · Healthcare · Real Estate · Legal',
     'For lean engineers · CI coordinators · operations managers',
     'Any process. Any industry. Any team size.',
   ]
   useEffect(() => {
+    setMounted(true)
     const t = setInterval(() => setEyeIdx(i => (i + 1) % eyeLines.length), 3400)
     return () => clearInterval(t)
   }, [])
 
   // Scroll reveal — mirrors the HTML reference IntersectionObserver
   useEffect(() => {
+    if (!mounted) return
     const ro = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') }),
       { threshold: 0.1 }
     )
     document.querySelectorAll('.reveal').forEach(el => ro.observe(el))
     return () => ro.disconnect()
-  }, [])
+  }, [mounted])
 
   return (
     <div style={{ background:'#F8F6F0', color:'#0D0C0A', fontFamily:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', overflowX:'hidden' }}>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
         @keyframes breathe        { 0%,100%{opacity:1} 50%{opacity:.3} }
         @keyframes eyeSlide       { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
@@ -363,8 +367,8 @@ export default function HomePage() {
           {/* Left */}
           <div className="reveal">
             <div style={{ marginBottom:24, height:18, overflow:'hidden' }}>
-              <span key={eyeIdx} style={{ fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.7)', letterSpacing:2, textTransform:'uppercase', fontWeight:700, animation:'eyeSlide .4s ease both', display:'block' }}>
-                {eyeLines[eyeIdx]}
+              <span key={mounted ? eyeIdx : 0} suppressHydrationWarning style={{ fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.7)', letterSpacing:2, textTransform:'uppercase', fontWeight:700, animation:'eyeSlide .4s ease both', display:'block' }}>
+                {mounted ? eyeLines[eyeIdx] : eyeLines[0]}
               </span>
             </div>
             <h1 style={{ fontFamily:serif, fontSize:'clamp(42px,5.5vw,72px)', lineHeight:1.05, color:'#F8F7F5', marginBottom:16, fontWeight:400, letterSpacing:-.5 }}>
