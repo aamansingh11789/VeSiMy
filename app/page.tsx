@@ -348,7 +348,7 @@ export default function HomePage() {
             Sign in
           </Link>
           <Link href="/auth/signup" style={{ padding:'7px 18px', background:'#0176D3', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none' }}>
-            Start free →
+            Start mapping →
           </Link>
         </div>
       </nav>
@@ -382,7 +382,7 @@ export default function HomePage() {
             </p>
             <div style={{ display:'flex', alignItems:'center', gap:14, flexWrap:'wrap', marginBottom:44 }}>
               <Link href="/auth/signup" style={{ background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'white', padding:'14px 28px', borderRadius:9, fontSize:15, fontWeight:600, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:8, boxShadow:'0 4px 20px rgba(1,118,211,.3)' }}>
-                Start mapping free <ArrowRightIcon size={14} color="white" />
+                Start mapping <ArrowRightIcon size={14} color="white" />
               </Link>
               <a href="#how" style={{ color:'rgba(248,247,245,.55)', fontSize:14, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:5, fontWeight:500 }}
                 onMouseEnter={e => (e.currentTarget.style.color='#F8F7F5')} onMouseLeave={e => (e.currentTarget.style.color='rgba(248,247,245,.55)')}>
@@ -391,7 +391,7 @@ export default function HomePage() {
             </div>
             {/* Stats */}
             <div className="reveal d2" style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
-              {[['66','Industries'],['11+','CI Tools'],['62','Reference Projects'],['Free','Forever tier']].map(([v,l]) => (
+              {[['66','Industries'],['11+','CI Tools'],['62','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
                 <div key={l}>
                   <div style={{ fontFamily:mono, fontSize:22, fontWeight:600, color:'#0176D3', letterSpacing:-.5 }}>{v}</div>
                   <div style={{ fontFamily:mono, fontSize:10, color:'#6B6760', letterSpacing:.5 }}>{l}</div>
@@ -400,109 +400,66 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — static app frame with VSM */}
+          {/* Right — Process improvement results panel */}
           <div className="hero-right reveal d2">
             <div style={{ background:'white', borderRadius:16, border:'1px solid rgba(1,118,211,.12)', boxShadow:'0 32px 100px rgba(3,45,96,.18),0 4px 16px rgba(3,45,96,.06)', overflow:'hidden' }}>
-              {/* Titlebar */}
+              {/* Header */}
               <div style={{ background:'#242220', padding:'9px 14px', display:'flex', alignItems:'center', gap:10, borderBottom:'1px solid #353330' }}>
                 <div style={{ display:'flex', gap:5 }}>
-                  {['#C0402A','#0176D3','#1DD1A1'].map((c,i) => <div key={i} style={{ width:9,height:9,borderRadius:'50%',background:c,opacity:.7 }} />)}
+                  {['#C0402A','#0176D3','#1DD1A1'].map((col,i) => <div key={i} style={{ width:9,height:9,borderRadius:'50%',background:col,opacity:.7 }} />)}
                 </div>
-                <span style={{ fontFamily:mono, fontSize:9, color:'#8E8A82', flex:1, textAlign:'center', letterSpacing:.5 }}>VSM Builder · Seat Assembly Line · Current State</span>
-                <span style={{ fontFamily:mono, fontSize:7, fontWeight:700, padding:'2px 7px', borderRadius:4, background:'#EEF4FB', color:'#1A4F8A', letterSpacing:.5 }}>ISO 22468</span>
+                <span style={{ fontFamily:mono, fontSize:9, color:'#8E8A82', flex:1, textAlign:'center', letterSpacing:.5 }}>Process Intelligence Report · Seat Assembly Line</span>
+                <span style={{ fontFamily:mono, fontSize:7, fontWeight:700, padding:'2px 7px', borderRadius:4, background:'rgba(46,132,74,.2)', color:'#1DD1A1', letterSpacing:.5 }}>AFTER</span>
               </div>
-              {/* KPI bar */}
+              {/* KPI strip */}
               <div style={{ display:'flex', borderBottom:'1px solid #E8E5E0', background:'white' }}>
-                {[['LEAD TIME','14m 40s','#6B6760'],['TAKT','2m 00s','#0176D3'],['PCE','34%','#C0402A'],['BOTTLENECK','Foam & Fabric','#C0402A']].map(([l,v,c],i,arr) => (
+                {[['LEAD TIME','4m 22s','#2E844A'],['PCE','68%','#2E844A'],['DEFECTS','0.4%','#2E844A'],['TARGET','✓ MET','#2E844A']].map(([l,v,col],i,arr) => (
                   <div key={l} style={{ flex:1, padding:'8px 6px', borderRight: i<arr.length-1?'1px solid #E8E5E0':'none', textAlign:'center' }}>
                     <div style={{ fontFamily:mono, fontSize:6.5, color:'#8E8A82', letterSpacing:.8, marginBottom:2 }}>{l}</div>
-                    <div style={{ fontSize:l==='BOTTLENECK'?10:13, fontWeight:700, color:c, lineHeight:1 }}>{v}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:col, lineHeight:1 }}>{v}</div>
                   </div>
                 ))}
               </div>
-              {/* VSM SVG */}
-              <div style={{ padding:12, background:'#FAFAF8', overflowX:'auto' }}>
-                <div style={{ minWidth:440 }}>
-                  <svg viewBox="0 0 500 148" style={{ width:'100%', display:'block', background:'#fff', border:'1px solid #E8E5E0', borderRadius:8 }}>
-                    <defs><marker id="arr" markerWidth="5" markerHeight="4" refX="4" refY="2" orient="auto"><polygon points="0 0,5 2,0 4" fill="#374151"/></marker></defs>
-                    <rect x="8" y="8" width="40" height="30" fill="#5B7FA6" stroke="#3A5A7C" strokeWidth="1" rx="1"/>
-                    <polygon points="8,17 28,8 48,17" fill="#4A6A8F"/>
-                    <text x="28" y="48" textAnchor="middle" fill="#1F2937" fontSize="6" fontWeight="700" fontFamily="sans-serif">Supplier</text>
-                    <line x1="48" y1="23" x2="63" y2="23" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <g><rect x="64" y="8" width="60" height="40" fill="#CCFBF1" stroke="#0D9488" strokeWidth="1" rx="1"/><text x="94" y="18" textAnchor="middle" fill="#065F46" fontSize="7" fontWeight="700">Staging</text><rect x="64" y="48" width="60" height="36" fill="#fff" stroke="#0D9488" strokeWidth="1"/><text x="68" y="60" fill="#6B7280" fontSize="6" fontFamily="monospace">C/T = 45s</text><text x="68" y="71" fill="#6B7280" fontSize="6" fontFamily="monospace">Up = 95%</text></g>
-                    <polygon points="128,16 134,8 140,16" fill="#FEF3C7" stroke="#D97706" strokeWidth="1"/><text x="134" y="14" textAnchor="middle" fill="#92400E" fontSize="5" fontWeight="700">12</text>
-                    <line x1="124" y1="28" x2="146" y2="28" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <g><rect x="148" y="8" width="62" height="40" fill="#CCFBF1" stroke="#0D9488" strokeWidth="1" rx="1"/><text x="179" y="18" textAnchor="middle" fill="#065F46" fontSize="7" fontWeight="700">Frame Asm</text><rect x="148" y="48" width="62" height="36" fill="#fff" stroke="#0D9488" strokeWidth="1"/><text x="152" y="60" fill="#6B7280" fontSize="6" fontFamily="monospace">C/T = 98s</text><text x="152" y="71" fill="#6B7280" fontSize="6" fontFamily="monospace">Up = 92%</text></g>
-                    <polygon points="214,16 220,8 226,16" fill="#FEF3C7" stroke="#D97706" strokeWidth="1"/><text x="220" y="14" textAnchor="middle" fill="#92400E" fontSize="5" fontWeight="700">6</text>
-                    <line x1="210" y1="28" x2="232" y2="28" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <g><rect x="234" y="8" width="64" height="40" fill="#FEE2E2" stroke="#DC2626" strokeWidth="2" rx="1"/><text x="266" y="17" textAnchor="middle" fill="#7F1D1D" fontSize="6.5" fontWeight="700">Foam &amp;</text><text x="266" y="25" textAnchor="middle" fill="#7F1D1D" fontSize="6.5" fontWeight="700">Fabric</text><text x="294" y="17" textAnchor="end" fill="#DC2626" fontSize="5.5" fontWeight="700">▲TAKT</text><rect x="234" y="48" width="64" height="36" fill="#fff" stroke="#DC2626" strokeWidth="1"/><text x="238" y="60" fill="#6B7280" fontSize="6" fontFamily="monospace">C/T = <tspan fill="#DC2626" fontWeight="700">145s</tspan></text><text x="238" y="71" fill="#6B7280" fontSize="6" fontFamily="monospace">Up = 88%</text></g>
-                    <polygon points="302,16 308,8 314,16" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1"/><text x="308" y="14" textAnchor="middle" fill="#7F1D1D" fontSize="5" fontWeight="700">18</text>
-                    <line x1="298" y1="28" x2="320" y2="28" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <g><rect x="322" y="8" width="58" height="40" fill="#CCFBF1" stroke="#0D9488" strokeWidth="1" rx="1"/><text x="351" y="18" textAnchor="middle" fill="#065F46" fontSize="7" fontWeight="700">Electrical</text><rect x="322" y="48" width="58" height="36" fill="#fff" stroke="#0D9488" strokeWidth="1"/><text x="326" y="60" fill="#6B7280" fontSize="6" fontFamily="monospace">C/T = 88s</text></g>
-                    <line x1="380" y1="28" x2="398" y2="28" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <g><rect x="400" y="8" width="52" height="40" fill="#CCFBF1" stroke="#0D9488" strokeWidth="1" rx="1"/><text x="426" y="18" textAnchor="middle" fill="#065F46" fontSize="7" fontWeight="700">Final QC</text><rect x="400" y="48" width="52" height="36" fill="#fff" stroke="#0D9488" strokeWidth="1"/><text x="404" y="60" fill="#6B7280" fontSize="6" fontFamily="monospace">C/T = 72s</text></g>
-                    <line x1="452" y1="28" x2="472" y2="28" stroke="#374151" strokeWidth="1" markerEnd="url(#arr)"/>
-                    <rect x="474" y="8" width="16" height="30" fill="#5B7FA6" stroke="#3A5A7C" strokeWidth="1" rx="1"/>
-                    <text x="482" y="48" textAnchor="middle" fill="#1F2937" fontSize="6" fontWeight="700">Cust.</text>
-                    <line x1="58" y1="100" x2="94" y2="100" stroke="#0176D3" strokeWidth="5" opacity=".7"/>
-                    <line x1="94" y1="100" x2="148" y2="100" stroke="#8E8A82" strokeWidth="2" opacity=".35"/>
-                    <line x1="148" y1="100" x2="179" y2="100" stroke="#0176D3" strokeWidth="5" opacity=".7"/>
-                    <line x1="179" y1="100" x2="234" y2="100" stroke="#8E8A82" strokeWidth="2" opacity=".35"/>
-                    <line x1="234" y1="100" x2="266" y2="100" stroke="#DC2626" strokeWidth="5" opacity=".8"/>
-                    <text x="250" y="113" textAnchor="middle" fill="#DC2626" fontSize="5.5" fontFamily="monospace" fontWeight="700">145s ▲</text>
-                    <line x1="266" y1="100" x2="322" y2="100" stroke="#8E8A82" strokeWidth="2" opacity=".35"/>
-                    <line x1="322" y1="100" x2="351" y2="100" stroke="#0176D3" strokeWidth="5" opacity=".7"/>
-                    <line x1="351" y1="100" x2="400" y2="100" stroke="#8E8A82" strokeWidth="2" opacity=".35"/>
-                    <line x1="400" y1="100" x2="426" y2="100" stroke="#0176D3" strokeWidth="5" opacity=".7"/>
-                    <line x1="426" y1="100" x2="460" y2="100" stroke="#0176D3" strokeWidth="1"/>
-                    <line x1="58" y1="118" x2="460" y2="118" stroke="#C0402A" strokeWidth="1" strokeDasharray="4,3" opacity=".5"/>
-                    <text x="456" y="116" textAnchor="end" fill="#C0402A" fontSize="5.5" fontFamily="monospace">TAKT=120s</text>
-                    <text x="250" y="136" textAnchor="middle" fill="#8E8A82" fontSize="6" fontFamily="monospace">VA: 448s · Wait: 372s · PCE: 34% · Lead Time: 14m 40s</text>
-                  </svg>
-                </div>
+              {/* Before/after bar charts */}
+              <div style={{ padding:'20px 20px 12px' }}>
+                <div style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'#8E8A82', marginBottom:16 }}>BEFORE → AFTER</div>
+                {[
+                  { label:'Lead Time', before:'14m 40s', after:'4m 22s', beforePct:100, afterPct:30, color:'#2E844A' },
+                  { label:'Defect Rate', before:'8.2%', after:'0.4%', beforePct:100, afterPct:5, color:'#F4A623' },
+                  { label:'Process Cycle Efficiency', before:'34%', after:'68%', beforePct:34, afterPct:68, color:'#0176D3' },
+                ].map(row => (
+                  <div key={row.label} style={{ marginBottom:18 }}>
+                    <div style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
+                      <span style={{ fontSize:11, fontWeight:600, color:'#1E1B17' }}>{row.label}</span>
+                      <span style={{ fontSize:11, fontFamily:mono, color:'#2E844A', fontWeight:700 }}>{row.before} → {row.after}</span>
+                    </div>
+                    <div style={{ marginBottom:4 }}>
+                      <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:4 }}>
+                        <span style={{ fontSize:8, fontFamily:mono, color:'#8E8A82', width:32, textAlign:'right' }}>BEFORE</span>
+                        <div style={{ flex:1, height:20, borderRadius:3, background:'rgba(0,0,0,.05)', overflow:'hidden' }}>
+                          <div style={{ width:`${row.beforePct}%`, height:'100%', background:'#C0402A', opacity:.65, borderRadius:3, display:'flex', alignItems:'center', paddingLeft:6 }}>
+                            <span style={{ fontSize:9, fontFamily:mono, color:'white', fontWeight:700 }}>{row.before}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                        <span style={{ fontSize:8, fontFamily:mono, color:'#8E8A82', width:32, textAlign:'right' }}>AFTER</span>
+                        <div style={{ flex:1, height:20, borderRadius:3, background:'rgba(0,0,0,.05)', overflow:'hidden' }}>
+                          <div style={{ width:`${row.afterPct}%`, height:'100%', background:row.color, borderRadius:3, display:'flex', alignItems:'center', paddingLeft:6 }}>
+                            <span style={{ fontSize:9, fontFamily:mono, color:'white', fontWeight:700 }}>{row.after}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
               {/* Supe hint bar */}
               <div style={{ padding:'10px 12px', background:'#EEF4FB', borderTop:'1px solid #D8E8F8', display:'flex', alignItems:'center', gap:8 }}>
                 <div style={{ width:6, height:6, borderRadius:'50%', background:'#0176D3', animation:'breathe 1.5s ease infinite', flexShrink:0 }} />
-                <span style={{ fontSize:11, color:'#1A4F8A', fontWeight:500 }}>Supe AI — <strong>Foam & Fabric is 25s over takt. Root cause identified. PFMEA gate missing material flow audit.</strong></span>
+                <span style={{ fontSize:11, color:'#1A4F8A', fontWeight:500 }}>Supe AI — <strong>Root cause confirmed. Action plan complete. Target achieved.</strong></span>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── INDUSTRY STRIP ──────────────────────────────────────────────────── */}
-      <IndustryStrip />
-
-      {/* ── MISSION ─────────────────────────────────────────────────────────── */}
-      <section style={{ background:'#032D60', padding:'clamp(64px,8vh,100px) clamp(16px,4vw,48px)', position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', inset:0, backgroundImage:"url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='40' height='40' fill='%23ffffff' fill-opacity='0.012'/%3E%3Crect x='40' y='40' width='40' height='40' fill='%23ffffff' fill-opacity='0.012'/%3E%3C/svg%3E\")", pointerEvents:'none' }} />
-        <div className="mission-grid" style={{ maxWidth:1100, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(40px,6vw,80px)', alignItems:'center', position:'relative', zIndex:1 }}>
-          <div className="reveal">
-            <p style={{ fontFamily:mono, fontSize:9, letterSpacing:3, color:'rgba(255,255,255,.3)', marginBottom:20, textTransform:'uppercase' }}>Our philosophy</p>
-            <h2 style={{ fontFamily:serif, fontSize:'clamp(28px,3.5vw,50px)', lineHeight:1.1, color:'white', fontWeight:400, marginBottom:28 }}>
-              Toyota built it.<br />
-              Six Sigma{' '}<em style={{ fontStyle:'italic', color:'rgba(1,118,211,.9)' }}>proved</em> it.<br />
-              We made it available<br />to everyone.
-            </h2>
-            <p style={{ fontSize:15, lineHeight:1.9, color:'rgba(255,255,255,.5)', fontWeight:300 }}>
-              For 70 years, the tools that eliminate waste, reduce defects, and hit performance targets were locked behind six-figure consulting engagements and manufacturing-only jargon.<br /><br />
-              <strong style={{ color:'rgba(255,255,255,.82)', fontWeight:500 }}>They work just as well in emergency departments. Law firms. Craft breweries. Oil rigs. Police stations.</strong><br /><br />
-              VeSiMy puts 70 years of proven methodology in the hands of any team, any size, in any sector — with AI that adapts the language, loads your reference project, and proves your target is reachable before you start.
-            </p>
-          </div>
-          <div className="reveal d1" style={{ display:'flex', flexDirection:'column', gap:24 }}>
-            {[
-              { origin:'TOYOTA PRODUCTION SYSTEM · 1950s', title:"Eliminate everything that isn't value", body:"Taiichi Ohno's insight: most of what happens in any process is waste. Identify the 8 wastes. Map the value stream. Pull, don't push. VeSiMy makes every one of these visible and actionable in any industry.", d:'d1' },
-              { origin:'LEAN METHODOLOGY · WOMACK & JONES · 1990s', title:"Define value through the customer's eyes", body:"Lean applied TPS beyond manufacturing — to services, healthcare, logistics, government. Every step either adds value the customer would pay for, or it doesn't. VeSiMy classifies VA, NNVA, and NVA on every step.", d:'d2' },
-              { origin:'SIX SIGMA · MOTOROLA / GE · 1980s–2000s', title:'Measure. Prove. Sustain.', body:"Six Sigma added statistical rigour: define, measure, analyse, improve, control. VeSiMy's PDCA, 5 Why, fishbone, and before/after tracking make this achievable without a Black Belt.", d:'d3' },
-            ].map(p => (
-              <div key={p.title} className={`mission-pillar reveal ${p.d}`}>
-                <p style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'#0176D3', marginBottom:8 }}>{p.origin}</p>
-                <p style={{ fontSize:15, fontWeight:600, color:'white', marginBottom:6 }}>{p.title}</p>
-                <p style={{ fontSize:13, color:'rgba(255,255,255,.45)', lineHeight:1.65 }}>{p.body}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -641,9 +598,9 @@ export default function HomePage() {
           <div className="reveal" style={{ textAlign:'center', marginBottom:52 }}>
             <span style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(1,118,211,.8)', display:'block', marginBottom:16, textTransform:'uppercase' }}>Pricing</span>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,42px)', fontWeight:400, color:'#0D0C0A', marginBottom:12 }}>
-              Every CI tool, free.<br />Upgrade for AI and advanced exports.
+              Every CI tool, no paywall.<br />Upgrade for AI and advanced exports.
             </h2>
-            <p style={{ fontSize:15, color:'#3A3835' }}>No feature gates on the core methodology. VSM, Fishbone, 5 Why, Kaizen, PDCA — free forever.</p>
+            <p style={{ fontSize:15, color:'#3A3835' }}>No feature gates on the core methodology. VSM, Fishbone, 5 Why, Kaizen, PDCA — available from day one.</p>
           </div>
           <div className="pricing-grid reveal d1" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16 }}>
             {(Object.entries(PLANS) as any[]).map(([key, plan]) => {
@@ -653,7 +610,7 @@ export default function HomePage() {
                   {(isPro||isLife) && <div style={{ position:'absolute', top:-11, left:'50%', transform:'translateX(-50%)', background:'#0176D3', color:'white', fontFamily:mono, fontSize:8, letterSpacing:2, padding:'3px 14px', borderRadius:100, whiteSpace:'nowrap' }}>{isLife?'BEST VALUE':'MOST POPULAR'}</div>}
                   <span style={{ fontFamily:mono, fontSize:9, letterSpacing:2, color:'#6B6760', marginBottom:14, display:'block' }}>{plan.name}</span>
                   <div style={{ fontFamily:serif, fontSize:44, color:'#0D0C0A', lineHeight:1, marginBottom:4 }}>
-                    {isEnt?'Custom':plan.price===0?'Free':`$${plan.price}`}
+                    {isEnt?'Custom':plan.price===0?'$0':`$${plan.price}`}
                     {!isEnt&&plan.price!==null&&Number(plan.price)>0&&<span style={{ fontSize:14, color:'#6B6760', fontWeight:400 }}>{isLife?' once':'/mo'}</span>}
                   </div>
                   <p style={{ fontSize:13, color:'#6B6760', marginBottom:22, lineHeight:1.6, borderBottom:'1px solid rgba(1,118,211,.12)', paddingBottom:18 }}>{plan.description}</p>
@@ -693,7 +650,7 @@ export default function HomePage() {
           <p className="reveal d1" style={{ fontSize:16, color:'rgba(248,247,245,.35)', marginBottom:44, fontWeight:300 }}>No card. No setup. No manufacturing jargon if you're not in manufacturing.</p>
           <div className="reveal d2" style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap' }}>
             <Link href="/auth/signup" style={{ padding:'15px 38px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'white', border:'none', borderRadius:9, fontSize:16, fontWeight:700, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:8, boxShadow:'0 4px 20px rgba(1,118,211,.3)' }}>
-              Create your free account <ArrowRightIcon size={15} color="white" />
+              Create your account <ArrowRightIcon size={15} color="white" />
             </Link>
             <Link href="/auth/signup?ref=1" style={{ padding:'15px 24px', background:'transparent', color:'rgba(255,255,255,.5)', border:'1px solid rgba(255,255,255,.14)', borderRadius:9, fontSize:15, textDecoration:'none' }}>
               Explore a fully-built sample project →

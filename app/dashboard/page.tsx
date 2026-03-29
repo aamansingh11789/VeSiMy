@@ -23,8 +23,11 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
-  // Gate: new users who haven't completed onboarding go to the wizard
-  if (!(profile as any).onboarded) redirect('/onboarding')
+  // Gate: only send genuinely new users to onboarding.
+  // Existing users who already have an industry set are considered onboarded
+  // even if the column was added after they signed up (onboarded defaults false).
+  const isNewUser = !(profile as any).onboarded && !(profile as any).industry
+  if (isNewUser) redirect('/onboarding')
 
   const wgroup = getWatermarkGroup((profile as any).industry || '')
 

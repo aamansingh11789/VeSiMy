@@ -1383,8 +1383,8 @@ export const INDUSTRY_OPTIONS = [
   { id: 'surgery_operating_room',     label: 'Surgery / Operating Room',     sector: 'Healthcare' },
   { id: 'pharmacy',                   label: 'Pharmacy',                     sector: 'Healthcare' },
   // Financial
-  { id: 'retail_banking',             label: 'Retail Banking',               sector: 'Financial Services' },
-  { id: 'insurance',                  label: 'Insurance',                    sector: 'Financial Services' },
+  { id: 'retail_banking',             label: 'Retail Banking',               sector: 'Finance' },
+  { id: 'insurance',                  label: 'Insurance',                    sector: 'Finance' },
   // Technology
   { id: 'software_development',       label: 'Software Development',         sector: 'Technology' },
   { id: 'it_operations',              label: 'IT Operations',                sector: 'Technology' },
@@ -1392,37 +1392,37 @@ export const INDUSTRY_OPTIONS = [
   { id: 'retail_stores',              label: 'Retail Stores',                sector: 'Retail' },
   { id: 'ecommerce_fulfillment',      label: 'E-Commerce / Fulfillment',     sector: 'Retail' },
   // Hospitality
-  { id: 'restaurant_food_service',    label: 'Restaurant / Food Service',    sector: 'Hospitality' },
-  { id: 'hotel_hospitality',          label: 'Hotel / Hospitality',          sector: 'Hospitality' },
-  { id: 'airline_aviation',           label: 'Airline / Aviation',           sector: 'Hospitality' },
+  { id: 'restaurant_food_service',    label: 'Restaurant / Food Service',    sector: 'Hospitality & Travel' },
+  { id: 'hotel_hospitality',          label: 'Hotel / Hospitality',          sector: 'Hospitality & Travel' },
+  { id: 'airline_aviation',           label: 'Airline / Aviation',           sector: 'Hospitality & Travel' },
   // Logistics
   { id: 'warehousing_distribution',   label: 'Warehousing & Distribution',   sector: 'Logistics' },
   { id: 'freight_trucking',           label: 'Freight & Trucking',           sector: 'Logistics' },
   // Construction
   { id: 'construction',               label: 'Construction',                 sector: 'Construction' },
   // Education
-  { id: 'higher_education',           label: 'Higher Education',             sector: 'Education' },
-  { id: 'k12_education',              label: 'K-12 Education',               sector: 'Education' },
-  { id: 'corporate_training',         label: 'Corporate Training / L&D',     sector: 'Education' },
+  { id: 'higher_education',           label: 'Higher Education',             sector: 'Education & Research' },
+  { id: 'k12_education',              label: 'K-12 Education',               sector: 'Education & Research' },
+  { id: 'corporate_training',         label: 'Corporate Training / L&D',     sector: 'Education & Research' },
   // Legal
-  { id: 'law_firm',                   label: 'Law Firm / Legal Services',    sector: 'Legal' },
+  { id: 'law_firm',                   label: 'Law Firm / Legal Services',    sector: 'Professional Services' },
   // HR
-  { id: 'human_resources',            label: 'Human Resources',              sector: 'HR & Staffing' },
+  { id: 'human_resources',            label: 'Human Resources',              sector: 'Professional Services' },
   // Marketing
-  { id: 'marketing_agency',           label: 'Marketing Agency',             sector: 'Marketing' },
+  { id: 'marketing_agency',           label: 'Marketing Agency',             sector: 'Professional Services' },
   // Energy
-  { id: 'power_generation_utilities', label: 'Power Generation / Utilities', sector: 'Energy' },
+  { id: 'power_generation_utilities', label: 'Power Generation / Utilities', sector: 'Energy & Utilities' },
   // Beverage
-  { id: 'craft_brewery',              label: 'Craft Brewery',                sector: 'Food & Beverage' },
-  { id: 'winery',                     label: 'Winery',                       sector: 'Food & Beverage' },
+  { id: 'craft_brewery',              label: 'Craft Brewery',                sector: 'Hospitality & Travel' },
+  { id: 'winery',                     label: 'Winery',                       sector: 'Hospitality & Travel' },
   // Services
   { id: 'management_consulting',      label: 'Management Consulting',        sector: 'Professional Services' },
-  { id: 'contact_center',             label: 'Contact Centre',               sector: 'Customer Service' },
-  { id: 'project_management',         label: 'Project Management',           sector: 'Cross-Industry' },
-  { id: 'event_management',           label: 'Event Management',             sector: 'Events' },
-  { id: 'professional_sports',        label: 'Professional Sports',          sector: 'Sports' },
-  { id: 'real_estate',                label: 'Real Estate',                  sector: 'Real Estate' },
-  { id: 'nonprofit',                  label: 'Nonprofit / Social Services',  sector: 'Non-profit' },
+  { id: 'contact_center',             label: 'Contact Centre',               sector: 'Professional Services' },
+  { id: 'project_management',         label: 'Project Management',           sector: 'Other' },
+  { id: 'event_management',           label: 'Event Management',             sector: 'Entertainment & Media' },
+  { id: 'professional_sports',        label: 'Professional Sports',          sector: 'Sports & Fitness' },
+  { id: 'real_estate',                label: 'Real Estate',                  sector: 'Professional Services' },
+  { id: 'nonprofit',                  label: 'Nonprofit / Social Services',  sector: 'Health & Social Services' },
   { id: 'other',                      label: 'Other / Custom',               sector: 'Other' },
   { id: 'medical_device_manufacturing', label: 'Medical Device Manufacturing', sector: 'Healthcare' },
   { id: 'research_laboratory', label: 'Research Laboratory', sector: 'Healthcare' },
@@ -1461,24 +1461,24 @@ export const INDUSTRY_OPTIONS = [
 
 // ── Group options by sector for the picker UI ────────────────────────────────
 export const INDUSTRY_SECTORS = [
-  'Manufacturing & Industrial',
-  'Healthcare',
+  'Agriculture & Natural Resources',
+  'Construction',
+  'Creative & Media',
+  'Education & Research',
+  'Energy & Utilities',
+  'Entertainment & Media',
   'Finance',
-  'Technology',
-  'Retail',
+  'Government & Public Sector',
+  'Health & Social Services',
+  'Healthcare',
   'Hospitality & Travel',
   'Logistics',
-  'Construction',
-  'Education & Research',
-  'Government & Public Sector',
-  'Entertainment & Media',
-  'Sports & Fitness',
+  'Manufacturing',
   'Professional Services',
-  'Health & Social Services',
-  'Agriculture & Natural Resources',
-  'Energy & Utilities',
+  'Retail',
+  'Sports & Fitness',
+  'Technology',
   'Transport',
-  'Creative & Media',
 ]
 
 export function getIndustriesBySector(sector: string) {
