@@ -262,6 +262,25 @@ function ReferenceSection() {
 export default function HomePage() {
   const [eyeIdx, setEyeIdx] = useState(0)
   const [mounted, setMounted] = useState(false)
+  const [showPromo, setShowPromo] = useState(false)
+
+  useEffect(() => {
+    try {
+      const dismissed = localStorage.getItem('vesimy_spring25_dismissed')
+      const expired = new Date() > new Date('2026-04-21T00:00:00')
+      if (!dismissed && !expired) setShowPromo(true)
+    } catch {}
+  }, [])
+
+  function dismissPromo() {
+    try { localStorage.setItem('vesimy_spring25_dismissed', '1') } catch {}
+    setShowPromo(false)
+  }
+
+  function copyPromoCode() {
+    navigator.clipboard.writeText('SPRING25').catch(() => {})
+  }
+
   const eyeLines = [
     'Manufacturing · Logistics · Healthcare · Real Estate · Legal',
     'For lean engineers · CI coordinators · operations managers',
