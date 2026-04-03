@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
     users >= 50   ? 'high'       : 'standard'
 
   // ── Save quote ─────────────────────────────────────────────────────────────
+  const { data: { user } } = await supabase.auth.getUser()
   const { data: quote, error } = await supabase.from('enterprise_quotes').insert({
     company_name, contact_email, contact_name, company_size: company_size || 'unknown',
     num_users: users, num_projects: parseInt(num_projects) || 20,
@@ -74,6 +75,7 @@ export async function POST(req: NextRequest) {
     final_price_monthly:  final_monthly,
     annual_price:         annual,
     annual_savings:       annual_savings,
+    submitted_by:         user?.id || null,
     notes,
   }).select().single()
 

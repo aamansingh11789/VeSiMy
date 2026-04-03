@@ -40,15 +40,14 @@ import {
 } from '@/components/ui/Icons'
 
 const TABS: { id: ProjectTab; label: string; Icon: any; premium?: boolean }[] = [
-  { id: 'builder',   label: 'Process Steps',       Icon: PlusIcon,        premium: false },
-  { id: 'vsm',       label: 'Value Stream',       Icon: VSMIcon,         premium: false },
-  { id: 'branches',  label: 'Sub-Processes', Icon: BranchIcon,      premium: false },
-  { id: 'roadmap',   label: 'Kaizen Plan',       Icon: RoadmapIcon,     premium: false },
-  { id: 'pdca',      label: 'PDCA',          Icon: PDCAIcon,        premium: false },
-  { id: 'kaizen',    label: 'Kaizen',        Icon: KaizenIcon,      premium: false },
-  { id: 'kanban',    label: 'Kanban',        Icon: KanbanIcon,      premium: false },
-  { id: 'simulation',label: 'Simulation',    Icon: SimulationIcon,  premium: true  },
-  { id: 'live',      label: 'Gemba Monitor',    Icon: LiveFloorIcon,   premium: true  },
+  { id: 'builder',  label: 'Builder',    Icon: PlusIcon,        premium: false },
+  { id: 'vsm',      label: 'VSM Map',    Icon: VSMIcon,         premium: false },
+  { id: 'roadmap',  label: 'Roadmap',    Icon: RoadmapIcon,     premium: false },
+  { id: 'pdca',     label: 'PDCA',       Icon: PDCAIcon,        premium: false },
+  { id: 'kaizen',   label: 'Kaizen',     Icon: KaizenIcon,      premium: false },
+  { id: 'kanban',   label: 'Kanban',     Icon: KanbanIcon,      premium: false },
+  { id: 'simulation',label: 'Simulation',Icon: SimulationIcon,  premium: true  },
+  { id: 'live',     label: 'Live Floor', Icon: LiveFloorIcon,   premium: true  },
   { id: 'report',   label: 'Report',     Icon: ReportIcon,      premium: false },
   { id: 'branches', label: 'Branches',   Icon: BranchIcon,      premium: false },
 ]
@@ -107,6 +106,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
   const isPaid =
     (profile as any).plan_tier === 'pro' ||
+    (profile as any).plan_tier === 'lifetime' ||
     (profile as any).plan_tier === 'enterprise' ||
     (profile as any).lifetime_access ||
     (profile as any).is_beta
@@ -220,7 +220,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
     const reordered = [...steps.filter(s => s.is_main_flow !== false)]
     const [moved] = reordered.splice(dragIdx, 1)
     reordered.splice(toIdx, 0, moved)
-    const branchSteps = steps.filter(s => s.is_main_flow === false)
+    const branchSteps = steps.filter(s =>
+      s.is_main_flow === false ||
+      (s.branch_id !== null && s.branch_id !== undefined && s.is_main_flow !== true)
+    )
     setSteps([...reordered, ...branchSteps])
     setDragIdx(null)
     try {
@@ -510,18 +513,16 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 5,
-                padding: '7px 14px',
+                padding: '9px 14px',
                 fontSize: 11,
-                fontWeight: active ? 700 : 400,
+                fontWeight: active ? 600 : 400,
+                background: 'none',
+                border: 'none',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                color: active ? '#1E3A5F' : locked ? 'var(--sl-300)' : 'var(--sl-500)',
-                background: active ? '#FFFFFF' : 'transparent',
-                border: active ? '1px solid #CBD5E1' : '1px solid transparent',
-                borderBottom: active ? '1px solid #FFFFFF' : '1px solid transparent',
-                borderRadius: '4px 4px 0 0',
-                marginBottom: active ? -1 : 0,
-                boxShadow: active ? '0 -1px 3px rgba(0,0,0,0.06)' : 'none',
+                color: active ? 'var(--brand)' : locked ? 'var(--sl-300)' : 'var(--sl-500)',
+                borderBottom: `2px solid ${active ? '#0176D3' : 'transparent'}`,
+                marginBottom: -1,
               }}
             >
               <TIcon size={11} color="currentColor" />
@@ -606,6 +607,13 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 project={project}
                 takt={takt}
                 pce={pceNum}
+                onSaveRoadmap={async (phases) => {
+                  const { createClient } = await import('@/lib/supabase')
+                  const db = createClient()
+                  await db.from('projects')
+                    .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
+                    .eq('id', project.id)
+                }}
               />
             </div>
           )}
@@ -700,7 +708,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           {tab === 'live' && (
             isPaid
               ? <div style={{ padding: 24 }}><LiveFloorPanel steps={steps} projectId={project.id} /></div>
-              : <PaywallGate feature="Gemba Monitor" />
+              : <PaywallGate feature="Live Floor Monitor" />
           )}
         </div>
 
@@ -965,7 +973,6 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
       {showStepModal && (
         <StepModal
-          key={editingStep?.id ?? 'new-step'}
           step={editingStep}
           onSave={async form => {
             if (editingStep) {
@@ -1043,8 +1050,18 @@ export function ProjectClient({ initialProject, profile }: Props) {
         <PDCATool
           steps={steps}
           project={project}
-          initialData={pdcaData}
-          onSave={(data) => { setPdcaData(data); setShowPDCA(false) }}
+          initialData={pdcaData || steps[0]?.toolData?.pdca_project || null}
+          onSave={async (data) => {
+            setPdcaData(data)
+            if (steps[0]?.id) {
+              try {
+                await saveToolData(steps[0].id, 'pdca_project', data)
+              } catch (e) {
+                console.error('PDCA save error:', e)
+              }
+            }
+            setShowPDCA(false)
+          }}
           onClose={() => setShowPDCA(false)}
         />
       )}
@@ -1131,15 +1148,6 @@ function PaywallGate({ feature }: { feature: string }) {
 
 function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDragStart, onDrop, onImportSOP }: BuilderTabProps) {
   const mainSteps = steps.filter(s => s.is_main_flow !== false).sort((a, b) => a.position - b.position)
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
-  const allExpanded = mainSteps.length > 0 && expandedIds.size === mainSteps.length
-  function toggleStep(id: string) {
-    setExpandedIds(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n })
-  }
-  function toggleAll() {
-    if (allExpanded) setExpandedIds(new Set())
-    else setExpandedIds(new Set(mainSteps.map(s => s.id)))
-  }
 
   if (mainSteps.length === 0) {
     return (
@@ -1197,14 +1205,6 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {mainSteps.length > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{mainSteps.length} STEPS</span>
-          <button onClick={toggleAll} style={{ fontSize: 11, color: 'var(--brand)', background: 'none', border: '1px solid rgba(1,118,211,0.3)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}>
-            {allExpanded ? '▲ Collapse All' : '▼ Expand All'}
-          </button>
-        </div>
-      )}
       {mainSteps.map((step, idx) => (
         <StepCard
           key={step.id}
@@ -1215,8 +1215,6 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
           onTool={tool => onTool(tool, step.id)}
           onDragStart={() => onDragStart(idx)}
           onDrop={() => onDrop(idx)}
-          expanded={expandedIds.has(step.id)}
-          onToggle={() => toggleStep(step.id)}
         />
       ))}
 
@@ -1253,22 +1251,26 @@ interface StepCardProps {
   onDrop: () => void
 }
 
-function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {
+function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop }: StepCardProps) {
   const [over, setOver] = useState(false)
   const sw = step.toolData?.stopwatch
   const wastes = step.toolData?.waste?.selected?.length || 0
   const kzOpen = (step.toolData?.kaizen?.items || []).filter((i: any) => i.status !== 'complete').length
   const isSM = step.flow_type === 'supermarket'
-  const ct = sw?.mean || Number(step.cycle_time) || 0
-  const isBN = false // bottleneck calculated at map level
 
   return (
     <div
       draggable
       onDragStart={onDragStart}
-      onDragOver={e => { e.preventDefault(); setOver(true) }}
+      onDragOver={e => {
+        e.preventDefault()
+        setOver(true)
+      }}
       onDragLeave={() => setOver(false)}
-      onDrop={() => { setOver(false); onDrop() }}
+      onDrop={() => {
+        setOver(false)
+        onDrop()
+      }}
       style={{
         background: over ? 'rgba(1,118,211,0.03)' : 'var(--bg2)',
         border: `1px solid ${over ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
@@ -1276,102 +1278,81 @@ function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop, 
         overflow: 'hidden',
       }}
     >
-      {/* ── Header row ── */}
       <div
         style={{
-          display: 'flex', alignItems: 'center', gap: 10,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
           padding: '11px 14px',
           background: 'var(--bg3)',
-          borderBottom: expanded ? '1px solid var(--border)' : 'none',
+          borderBottom: '1px solid var(--border)',
         }}
       >
         <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--border2)' }}>
           <DragHandleIcon size={14} color="currentColor" />
         </span>
+
         <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'monospace', minWidth: 22, flexShrink: 0 }}>
           {String(index + 1).padStart(2, '0')}
         </span>
+
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 13, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
             {step.name}
             {isSM && (
-              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(100,38,160,0.15)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.3)', fontWeight: 700, letterSpacing: 1 }}>SM</span>
+              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(100,38,160,0.15)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.3)', fontWeight: 700, letterSpacing: 1 }}>
+                SM
+              </span>
             )}
           </div>
           {step.department && <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 1 }}>{step.department}</div>}
         </div>
-        {/* Quick KPIs */}
+
         <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap', flexShrink: 0 }}>
-          {ct > 0 && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(ct)}</span>}
-          {step.wip > 0 && <span style={{ color: '#D97706' }}>WIP:{step.wip}</span>}
+          {sw?.mean && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(sw.mean)}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
           {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
-          {kzOpen > 0 && <span style={{ color: '#F4A623', fontWeight: 700 }}>{kzOpen}KZ</span>}
+          {kzOpen > 0 && <span style={{ fontSize:10, fontWeight:700, color:'#F4A623', marginLeft:4 }}>{kzOpen}</span>}
         </div>
-        {/* Expand toggle */}
-        <button onClick={onToggle} title={expanded ? 'Collapse' : 'Expand details'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex', fontSize: 12 }}>
-          {expanded ? '▲' : '▼'}
-        </button>
+
         <button onClick={onEdit} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
           <EditIcon size={13} color="currentColor" />
         </button>
+
         <button onClick={onDelete} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex' }}>
           <TrashIcon size={13} color="currentColor" />
         </button>
       </div>
 
-      {/* ── Expanded detail panel ── */}
-      {expanded && (
-        <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 8, marginBottom: 12 }}>
-            {[
-              { label: 'Cycle Time', value: ct ? fmtS(ct) : '—', color: 'var(--brand)' },
-              { label: 'Wait Time',  value: step.wait_time ? fmtS(Number(step.wait_time)) : '—' },
-              { label: 'WIP',        value: step.wip ?? '—', color: step.wip > 0 ? '#D97706' : undefined },
-              { label: 'Operators',  value: step.operators ?? '—' },
-              { label: 'Uptime',     value: step.uptime != null ? `${step.uptime}%` : '—' },
-              { label: 'Defect Rate',value: step.defect_rate != null ? `${step.defect_rate}%` : '—' },
-              { label: 'Flow Type',  value: step.flow_type || 'push' },
-              { label: 'VA Type',    value: step.va_type || 'VA' },
-            ].map(({ label, value, color }) => (
-              <div key={label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 7, padding: '7px 10px' }}>
-                <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 0.8, marginBottom: 3 }}>{label}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: color || 'var(--text)' }}>{String(value)}</div>
-              </div>
-            ))}
-          </div>
-          {step.notes && (
-            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>NOTES</span>
-              {step.notes}
-            </div>
-          )}
-          {/* CI Tool buttons */}
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-            {CI_TOOLS.map(t => {
-              const has = !!step.toolData?.[t.id] && Object.keys(step.toolData[t.id]).length > 0
-              const TIcon = t.Icon
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => onTool(t.id)}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 4,
-                    padding: '6px 10px', fontSize: 11, borderRadius: 6, cursor: 'pointer',
-                    background: has ? 'rgba(1,118,211,0.08)' : 'var(--bg2)',
-                    border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
-                    color: has ? '#0176D3' : 'var(--sl-400)',
-                  }}
-                >
-                  <TIcon size={11} color="currentColor" />
-                  {t.label}
-                  {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#0176D3', display: 'inline-block', marginLeft: 1 }} />}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      <div style={{ display: 'flex', gap: 5, padding: '9px 14px', flexWrap: 'wrap' }}>
+        {CI_TOOLS.map(t => {
+          const has = !!step.toolData?.[t.id] && Object.keys(step.toolData[t.id]).length > 0
+          const TIcon = t.Icon
+          return (
+            <button
+              key={t.id}
+              onClick={() => onTool(t.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                padding: '6px 10px',
+                fontSize: 11,
+                borderRadius: 6,
+                cursor: 'pointer',
+                background: has ? 'rgba(1,118,211,0.10)' : 'transparent',
+                border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
+                background: has ? 'rgba(1,118,211,0.08)' : 'var(--bg2)',
+                color: has ? '#0176D3' : 'var(--sl-400)',
+              }}
+            >
+              <TIcon size={11} color="currentColor" />
+              {t.label}
+              {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#0176D3', display: 'inline-block', marginLeft: 1 }} />}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }

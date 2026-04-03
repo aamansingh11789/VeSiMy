@@ -1,6 +1,5 @@
 // @ts-nocheck
 // ── app/privacy/page.tsx ──────────────────────────────────────────────────────
-import type React from 'react'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
 

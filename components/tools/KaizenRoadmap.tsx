@@ -1,7 +1,8 @@
 // @ts-nocheck
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { createClient } from '@/lib/supabase'
 
 interface Props {
   steps: any[]
@@ -36,6 +37,22 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
   const [newEvent, setNewEvent] = useState({ title: '', stepId: '', target_ct: '', target_wip: '', owner: '', dueDate: '', expected_pce_gain: '' })
 
   const currentPCE = pce !== null ? pce : 0
+
+  // Debounced auto-save to Supabase whenever phases change
+  const saveTimer = useRef<any>(null)
+  const supabase = createClient()
+  useEffect(() => {
+    if (!project?.id) return
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(async () => {
+      await supabase
+        .from('projects')
+        .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
+        .eq('id', project.id)
+      if (onSaveRoadmap) onSaveRoadmap({ phases })
+    }, 1500)
+    return () => clearTimeout(saveTimer.current)
+  }, [phases, project?.id])
 
   const totalEvents = phases.flatMap(p => p.events).length
   const completeEvents = phases.flatMap(p => p.events).filter(e => e.status === 'complete').length

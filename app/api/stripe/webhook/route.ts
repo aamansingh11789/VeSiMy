@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       subscription_id:         sub.id,
       subscription_status:     status,
       subscription_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-      plan_tier:               status === 'active' || status === 'trialing' ? plan : 'trial_expired',
+      plan_tier:               status === 'active' ? plan : status === 'trialing' ? 'trialing' : 'trial_expired',
       projects_limit:          status === 'active' ? 999999 : status === 'trialing' ? 999999 : 999999, // all plans unlimited
       stripe_customer_id:      sub.customer as string,
     }).eq('id', userId)

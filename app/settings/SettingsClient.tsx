@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/components/ui/Icons'
 
 
@@ -26,8 +26,8 @@ export function SettingsClient({ profile, user }: Props) {
   const [name,          setName]          = useState(profile?.full_name || '')
 
   const planKey    = (profile?.plan_tier || 'trial') as keyof typeof PLANS
-  const plan       = PLANS[planKey] || PLANS.free
-  const isPaid     = planKey !== 'free'
+  const plan       = PLANS[planKey as keyof typeof PLANS] || PLANS.trial
+  const isPaid     = ['pro', 'lifetime', 'enterprise'].includes(planKey)
   const isBeta     = profile?.is_beta || profile?.lifetime_access
   const subStatus  = profile?.subscription_status || 'free'
   const periodEnd  = profile?.subscription_period_end ? new Date(profile.subscription_period_end).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : null
@@ -189,7 +189,7 @@ export function SettingsClient({ profile, user }: Props) {
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
             {[
-              ['Projects', `${profile?.projects_count || 0} · unlimited`, '#1DD1A1'],
+              ['Projects', `${profile?.projects_count || 0} / ${planKey === 'pro' ? 10 : planKey === 'lifetime' ? 30 : planKey === 'enterprise' ? '∞' : profile?.projects_limit || 3}`, '#1DD1A1'],
               ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || 'var(--text3)'],
               ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (

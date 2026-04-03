@@ -494,7 +494,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
     if (profile?.id) {
       identify(profile.id, {
         email:    profile.email,
-        plan:     profile.plan_tier || 'free',
+        plan:     profile.plan_tier || 'trial',
         projects: profile.projects_count || 0,
       })
     }
@@ -528,7 +528,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   }, [])
 
   const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
-  const atLimit = false // Free tier unlimited
+  const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(profile.plan_tier)
+  const atLimit = !isUnlimited && profile.projects_count >= (profile.projects_limit || 3)
 
   async function createProject() {
     if (!form.name.trim()) {
@@ -762,7 +763,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
               <div>
                 <div style={{ fontSize: 13, color: '#0176D3', fontWeight: 700 }}>
-                  You’ve reached your project limit
+                  You’ve reached your trial project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
                   Upgrade to Pro — up to 10 projects, advanced tools, and premium workflows.
@@ -865,6 +866,26 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
         {/* Health overview */}
         {projects.length > 0 && <HealthOverview projects={projects} />}
+
+        {/* Spring 2026 promo nudge */}
+        {!isPro && new Date() < new Date('2026-04-21T00:00:00') && (
+          <div style={{
+            background: '#FFFFFF', border: '0.5px solid var(--border)',
+            borderRadius: 10, padding: '12px 16px', display: 'flex',
+            alignItems: 'center', gap: 12, flexWrap: 'wrap',
+          }}>
+            <span style={{ fontSize: 16 }}>🌱</span>
+            <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
+              <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
+              {' '}20% off Pro — use <code style={{ color: '#C49B2E', fontWeight: 700 }}>SPRING25</code>
+              {' '}at checkout. Ends 20 April.
+            </span>
+            <Link href="/pricing" style={{
+              fontSize: 12, fontWeight: 700, color: '#C49B2E',
+              textDecoration: 'none', whiteSpace: 'nowrap',
+            }}>View pricing →</Link>
+          </div>
+        )}
 
         {/* Projects */}
         {projects.length === 0 ? (

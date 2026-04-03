@@ -1,6 +1,5 @@
 // @ts-nocheck
 'use client'
-import type React from 'react'
 import { TipLabel, FieldTip } from '@/components/ui/FieldTip'
 // ── components/tools/SMEDTool.tsx ────────────────────────────────────────────
 // Single-Minute Exchange of Die (SMED) Calculator

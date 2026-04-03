@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error:'Missing fields' }, { status:400 })
 
   const { data, error } = await supabase.from('live_metrics')
-    .insert({ step_id, project_id, metric_type, value:Number(value), notes:notes||null, operator_id:user.id })
+    .insert({ step_id, project_id, metric_type, value:Number(value), notes:notes||null, user_id:user.id })
     .select().single()
 
   if (error) return NextResponse.json({ error:error.message }, { status:500 })

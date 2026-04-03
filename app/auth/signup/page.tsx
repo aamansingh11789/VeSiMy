@@ -1,13 +1,12 @@
 // @ts-nocheck
 'use client'
 // ── app/auth/signup/page.tsx ─────────────────────────────────────────────────
-import type React from 'react'
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 
 function SignupForm() {
   const router       = useRouter()
@@ -24,7 +23,7 @@ function SignupForm() {
       const res  = await fetch('/api/stripe/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ plan: key }) })
       const data = await res.json()
       if (data.url) window.location.href = data.url
-      else try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'free' }) } catch {}
+      else try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'trial' }) } catch {}
       window.location.href = '/dashboard'
     } catch { window.location.href = '/dashboard' }
   }
@@ -107,13 +106,13 @@ function SignupForm() {
             <VesimyLogo size={48} showText />
           </div>
           <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
-          {plan && planKey !== 'free' ? (
+          {plan && planKey !== 'trial' ? (
             <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name} — ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>
           ) : (
-            <p style={{ color:'var(--text3)', fontSize:14 }}>Free plan · Unlimited projects · All 9 CI tools</p>
+            <p style={{ color:'var(--text3)', fontSize:14 }}>14-day free trial · 3 projects · No credit card required</p>
           )}
         </div>
 
@@ -137,8 +136,8 @@ function SignupForm() {
             {error && <p style={{ color:'#FF6B6B', fontSize:13, background:'rgba(255,107,107,0.08)', padding:'8px 12px', borderRadius:8 }}>{error}</p>}
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
-                ? (planKey && planKey !== 'free' ? 'Setting up your account…' : 'Creating your account…')
-                : (planKey && planKey !== 'free' && plan ? `Start ${plan?.name} — trial period` : 'Create account')}
+                ? (planKey && planKey !== 'trial' ? 'Setting up your account…' : 'Creating your account…')
+                : (planKey && planKey !== 'trial' && plan ? `Start ${plan?.name} — trial period` : 'Create account')}
             </button>
           </form>
         </div>

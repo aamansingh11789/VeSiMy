@@ -3,7 +3,7 @@
 // Loose types — prevents strict Supabase client type conflicts
 
 export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
-export type PlanTier = 'free' | 'pro' | 'enterprise'
+export type PlanTier = 'trial' | 'trialing' | 'trial_expired' | 'pro' | 'lifetime' | 'enterprise'
 
 // Loose Database type — allows all operations without 'never' type errors
 export interface Database {

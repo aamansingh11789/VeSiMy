@@ -31,13 +31,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     industry:       body.industry,
     state:          body.state,
     status:         body.status,
-    product:        body.product,
     customer:       body.customer,
-    supplier:       body.supplier,
-    demand:         body.demand,
-    working_hours:  body.working_hours,
-    takt_time:      body.takt_time,
-    shifts:         body.shifts,
     updated_at:     new Date().toISOString(),
   }
   // Remove undefined keys

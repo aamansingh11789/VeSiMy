@@ -6,9 +6,11 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
+import { createClient } from '@/lib/supabase'
 
 const serif = '"DM Serif Display",Palatino Linotype,Georgia,serif'
 const mono  = '"IBM Plex Mono",ui-monospace,monospace'
@@ -58,11 +60,11 @@ const CHANGELOG = [
   { tag:'NEW',         color:'#0176D3', title:'V2 Process Builder',            date:'March 2026',
     body:'Upload a Standard Operating Procedure and VeSiMy parses it into a live value stream map automatically. Every step enriched with cycle time, operators, defect rates — then analysed by AI in one click.',
     items:['SOP upload → auto-parsed step map in seconds','AI analysis: bottleneck detection, PCE scoring, gap findings','Future State panel: AI generates a recommended improvement map','Integrated journal — every insight and action in one place'] },
-  { tag:'MAJOR',       color:'#0176D3', title:'62-industry reference projects', date:'March 2026',
+  { tag:'MAJOR',       color:'#0176D3', title:'66-industry reference projects', date:'March 2026',
     body:'Every industry has a fully built reference project — populated with real bottleneck data, root causes drilled to system failure, kaizen events, and PDCA cycles. Your industry only — no cross-industry contamination.',
     items:['All CI tools populated on every reference project','Real root causes — not placeholder text','Industry-specific steps, terminology, and metrics','Seeded for your industry only at onboarding'] },
   { tag:'MAJOR',       color:'#2E844A', title:'Industry language engine',       date:'March 2026',
-    body:'Your workspace speaks the language of the field you work in. A nurse never sees "WIP". A brewer never sees "takt time" without context. 62 industries, 40+ adapted terms each.',
+    body:'Your workspace speaks the language of the field you work in. A nurse never sees "WIP". A brewer never sees "takt time" without context. 66 industries, 40+ adapted terms each.',
     items:['Applies across dashboard, tools, AI, and learning center','Zero cross-industry terminology bleed','Fully reflected in every Supe AI response','Language preview before you confirm at signup'] },
   { tag:'MAJOR',       color:'#8C44CC', title:'Industry-aware onboarding',      date:'March 2026',
     body:'A 4-step wizard guides every new user. Industry selection is first — it determines everything: reference project seeded, language applied, learning content loaded. No generic start screen.',
@@ -94,12 +96,10 @@ function IndustryStrip() {
 // ── Industry terminology switcher ─────────────────────────────────────────────
 function IndustryTerms() {
   const [active, setActive] = useState(TERM_KEYS[0])
-  const [mounted, setMounted] = useState(false)
   const timerRef = useRef<any>(null)
   const idxRef   = useRef(0)
 
   useEffect(() => {
-    setMounted(true)
     timerRef.current = setInterval(() => {
       idxRef.current = (idxRef.current + 1) % TERM_KEYS.length
       setActive(TERM_KEYS[idxRef.current])
@@ -150,7 +150,7 @@ function IndustryTerms() {
           </div>
 
           <div style={{ background:'rgba(255,255,255,.04)', border:'1px solid rgba(255,255,255,.08)', borderRadius:16, padding:'28px 26px' }}>
-            <p suppressHydrationWarning style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'rgba(255,255,255,.3)', marginBottom:20 }}>TERMINOLOGY PREVIEW — {mounted ? active : TERM_KEYS[0]}</p>
+            <p style={{ fontFamily:mono, fontSize:8, letterSpacing:2, color:'rgba(255,255,255,.3)', marginBottom:20 }}>TERMINOLOGY PREVIEW — {active}</p>
             {rows.map(([lean, val], i) => (
               <div key={lean} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 0', borderBottom: i < rows.length - 1 ? '1px solid rgba(255,255,255,.06)' : 'none', gap:8 }}>
                 <span style={{ fontSize:12, color:'rgba(255,255,255,.3)', flexShrink:0 }}>{lean}</span>
@@ -229,7 +229,7 @@ function ReferenceSection() {
           <div>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(1,118,211,.8)', marginBottom:12, textTransform:'uppercase' }}>06 — Reference projects</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(24px,3vw,40px)', lineHeight:1.12, fontWeight:400, maxWidth:500 }}>
-              62 reference projects. Real bottlenecks.<br />Your industry's language. Day one.
+              66 reference projects. Real bottlenecks.<br />Your industry's language. Day one.
             </h2>
           </div>
           <p style={{ fontSize:13, color:'#6B6760', maxWidth:220, lineHeight:1.6, textAlign:'right' }}>
@@ -261,33 +261,47 @@ function ReferenceSection() {
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   const [eyeIdx, setEyeIdx] = useState(0)
-  const [mounted, setMounted] = useState(false)
   const eyeLines = [
     'Manufacturing · Logistics · Healthcare · Real Estate · Legal',
     'For lean engineers · CI coordinators · operations managers',
     'Any process. Any industry. Any team size.',
   ]
+  const [showPromo, setShowPromo] = useState(false)
+
   useEffect(() => {
-    setMounted(true)
+    const dismissed = localStorage.getItem('vesimy_spring25_dismissed')
+    const expired = new Date() > new Date('2026-04-21T00:00:00')
+    if (!dismissed && !expired) setShowPromo(true)
+  }, [])
+
+  function dismissPromo() {
+    localStorage.setItem('vesimy_spring25_dismissed', '1')
+    setShowPromo(false)
+  }
+
+  function copyPromoCode() {
+    navigator.clipboard.writeText('SPRING25').catch(() => {})
+  }
+  useEffect(() => {
     const t = setInterval(() => setEyeIdx(i => (i + 1) % eyeLines.length), 3400)
     return () => clearInterval(t)
   }, [])
 
   // Scroll reveal — mirrors the HTML reference IntersectionObserver
   useEffect(() => {
-    if (!mounted) return
     const ro = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') }),
       { threshold: 0.1 }
     )
     document.querySelectorAll('.reveal').forEach(el => ro.observe(el))
     return () => ro.disconnect()
-  }, [mounted])
+  }, [])
 
   return (
     <div style={{ background:'#F8F6F0', color:'#0D0C0A', fontFamily:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', overflowX:'hidden' }}>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
         @keyframes breathe        { 0%,100%{opacity:1} 50%{opacity:.3} }
         @keyframes eyeSlide       { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
@@ -348,12 +362,25 @@ export default function HomePage() {
           ))}
         </div>
         <div style={{ display:'flex', gap:8, alignItems:'center' }}>
-          <Link href="/auth/login" style={{ padding:'7px 16px', background:'transparent', border:'1px solid rgba(255,255,255,.14)', borderRadius:8, fontSize:13, color:'rgba(248,247,245,.6)', textDecoration:'none' }}>
-            Sign in
-          </Link>
-          <Link href="/auth/signup" style={{ padding:'7px 18px', background:'#0176D3', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none' }}>
-            Start mapping →
-          </Link>
+          {authedUser ? (
+            <>
+              <span style={{ fontSize:13, color:'rgba(248,247,245,.5)', maxWidth:160, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+                {authedUser.name || authedUser.email}
+              </span>
+              <Link href="/dashboard" style={{ padding:'7px 18px', background:'#0176D3', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none' }}>
+                Go to Dashboard →
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/auth/login" style={{ padding:'7px 16px', background:'transparent', border:'1px solid rgba(255,255,255,.14)', borderRadius:8, fontSize:13, color:'rgba(248,247,245,.6)', textDecoration:'none' }}>
+                Sign in
+              </Link>
+              <Link href="/auth/signup" style={{ padding:'7px 18px', background:'#0176D3', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none' }}>
+                Start mapping →
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -367,8 +394,8 @@ export default function HomePage() {
           {/* Left */}
           <div className="reveal">
             <div style={{ marginBottom:24, height:18, overflow:'hidden' }}>
-              <span key={mounted ? eyeIdx : 0} suppressHydrationWarning style={{ fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.7)', letterSpacing:2, textTransform:'uppercase', fontWeight:700, animation:'eyeSlide .4s ease both', display:'block' }}>
-                {mounted ? eyeLines[eyeIdx] : eyeLines[0]}
+              <span key={eyeIdx} style={{ fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.7)', letterSpacing:2, textTransform:'uppercase', fontWeight:700, animation:'eyeSlide .4s ease both', display:'block' }}>
+                {eyeLines[eyeIdx]}
               </span>
             </div>
             <h1 style={{ fontFamily:serif, fontSize:'clamp(42px,5.5vw,72px)', lineHeight:1.05, color:'#F8F7F5', marginBottom:16, fontWeight:400, letterSpacing:-.5 }}>
@@ -395,7 +422,7 @@ export default function HomePage() {
             </div>
             {/* Stats */}
             <div className="reveal d2" style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
-              {[['66','Industries'],['11+','CI Tools'],['62','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
+              {[['66','Industries'],['11+','CI Tools'],['66','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
                 <div key={l}>
                   <div style={{ fontFamily:mono, fontSize:22, fontWeight:600, color:'#0176D3', letterSpacing:-.5 }}>{v}</div>
                   <div style={{ fontFamily:mono, fontSize:10, color:'#6B6760', letterSpacing:.5 }}>{l}</div>
@@ -557,7 +584,7 @@ export default function HomePage() {
                 Built for your industry.<br />Not adapted for it.
               </h2>
               <p style={{ fontSize:14, color:'#6B6760', maxWidth:480, lineHeight:1.8 }}>
-                VeSiMy v3 is the most significant update since launch. The new V2 Process Builder, 62-industry reference projects, and a full industry language engine mean every part of the product now speaks the language of your field.
+                VeSiMy v3 is the most significant update since launch. The new V2 Process Builder, 66-industry reference projects, and a full industry language engine mean every part of the product now speaks the language of your field.
               </p>
             </div>
             <Link href="/changelog" style={{ fontSize:12, color:'#0176D3', fontWeight:600, textDecoration:'none', flexShrink:0, marginTop:8 }}>Full changelog →</Link>
@@ -641,6 +668,37 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── SPRING25 PROMO BANNER ────────────────────────────────────────────── */}
+      {showPromo && (
+        <div style={{ padding: '0 clamp(16px,4vw,48px)', background: '#F8F6F0' }}>
+          <div style={{
+            maxWidth: 1200, margin: '0 auto', padding: '24px 0',
+          }}>
+            <div style={{
+              background: 'rgba(196,155,46,0.08)', border: '1px solid rgba(196,155,46,0.3)',
+              borderRadius: 10, padding: '14px 18px',
+              display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap',
+            }}>
+              <span style={{ fontSize: 20 }}>🌱</span>
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <strong style={{ color: '#0D0C0A' }}>Spring CI Sprint</strong>
+                <span style={{ color: '#6B6760', fontSize: 14 }}> — 20% off your first payment. Use code </span>
+                <code style={{ background: 'rgba(196,155,46,0.12)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, color: '#C49B2E' }}>SPRING25</code>
+                <span style={{ color: '#9B9690', fontSize: 13 }}> · Expires Easter Sunday, 20 April</span>
+              </div>
+              <button onClick={copyPromoCode} style={{
+                padding: '7px 14px', borderRadius: 8, border: '1px solid #D8D5CE',
+                background: '#fff', cursor: 'pointer', fontSize: 13, color: '#6B6760', fontWeight: 600,
+              }}>Copy code</button>
+              <button onClick={dismissPromo} style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: '#9B9690', fontSize: 22, lineHeight: 1, padding: '0 4px',
+              }}>×</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── FINAL CTA ───────────────────────────────────────────────────────── */}
       <section style={{ padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', textAlign:'center', background:'#1A1714', position:'relative', overflow:'hidden' }}>

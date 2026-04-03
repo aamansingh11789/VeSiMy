@@ -2,7 +2,6 @@
 'use client'
 
 // The real Modal lives in Modal.tsx — re-export it so both import paths work
-import type React from 'react'
 export { Modal } from '@/components/ui/Modal'
 
 import { useEffect, useRef, useState } from 'react'

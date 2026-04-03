@@ -48,6 +48,8 @@ export async function POST(request: NextRequest) {
       sm_min:              body.sm_min              ? Number(body.sm_min)              : null,
       sm_max:              body.sm_max              ? Number(body.sm_max)              : null,
       notes:               body.notes,
+      va_type:             body.va_type || 'va',
+      op_steps:            body.op_steps || [],
       // V2 fields — only written if the column exists (migration applied)
       // These are ignored silently by Supabase if the column doesn't exist yet
       ...(body.step_type        && { step_type:        body.step_type }),

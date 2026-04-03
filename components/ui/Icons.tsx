@@ -46,7 +46,6 @@ const V = ({ size=20, style, className, children }:any) => {
 // UI / NAV ICONS — clean stroke
 // ══════════════════════════════════════════════════════════════════════════════
 
-import type React from 'react'
 export const DashboardIcon    = (p:P) => <L {...p}><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></L>
 export const FolderIcon       = (p:P) => <L {...p}><path d="M3 7a2 2 0 0 1 2-2h3.17a2 2 0 0 1 1.42.59L10.83 7H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></L>
 export const SettingsIcon     = (p:P) => <L {...p}><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></L>

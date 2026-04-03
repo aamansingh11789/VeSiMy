@@ -25,6 +25,8 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     sm_min:       body.sm_min      !== undefined ? body.sm_min      : undefined,
     sm_max:       body.sm_max      !== undefined ? body.sm_max      : undefined,
     notes:        body.notes       !== undefined ? body.notes       : undefined,
+    va_type:      body.va_type     !== undefined ? body.va_type     : undefined,
+    op_steps:     body.op_steps    !== undefined ? body.op_steps    : undefined,
     position:     body.position    !== undefined ? body.position    : undefined,
     branch_id:    body.branch_id   !== undefined ? body.branch_id   : undefined,
     updated_at:   new Date().toISOString(),

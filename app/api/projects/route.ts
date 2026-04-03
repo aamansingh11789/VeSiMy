@@ -29,14 +29,27 @@ export async function POST(request: NextRequest) {
   // Check plan limits
   const { data: profile } = await supabase
     .from('profiles')
-    .select('projects_count, projects_limit, plan_tier')
+    .select('projects_count, projects_limit, plan_tier, is_beta')
     .eq('id', user.id)
     .single()
 
-  const isActive = profile && ['pro','lifetime','enterprise','trialing'].includes(profile.plan_tier) || (profile?.plan_tier === 'trial' && profile?.is_beta)
-  const overLimit = false // Free tier is now unlimited — no project gate
-  if (overLimit && !['pro','lifetime','enterprise'].includes(profile?.plan_tier)) {
-    // // Project limit removed — free tier is now unlimited
+  const tier       = profile?.plan_tier || 'trial'
+  const limit      = profile?.projects_limit ?? 3
+  const count      = profile?.projects_count ?? 0
+  const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(tier)
+  const isTrialing  = ['trialing', 'trial'].includes(tier) || profile?.is_beta
+
+  if (!isUnlimited && !isTrialing && count >= limit) {
+    return NextResponse.json({
+      error: `Project limit reached. Your plan allows ${limit} projects.`,
+      code: 'LIMIT_REACHED',
+    }, { status: 403 })
+  }
+  if (!isUnlimited && isTrialing && count >= limit) {
+    return NextResponse.json({
+      error: 'Trial limit reached (3 projects). Upgrade to Pro to continue.',
+      code: 'LIMIT_REACHED',
+    }, { status: 403 })
   }
 
   const body = await request.json()

@@ -1,11 +1,16 @@
 // @ts-nocheck
 import { NextResponse, type NextRequest } from 'next/server'
 import { analyzeSteps } from '@/lib/supe-engine'
+import { createServerSupabase } from '@/lib/supabase-server'
 
 export const maxDuration = 60  // Vercel max execution time (seconds)
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createServerSupabase()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
     const body = await request.json()
     const { project_id, steps, question, chat_history } = body
 

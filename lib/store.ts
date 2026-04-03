@@ -30,10 +30,15 @@ export interface Step {
   wait_time?: number
   trans_time?: number
   wip?: number
-  flow_type: 'push' | 'supermarket'
+  flow_type: 'push' | 'supermarket' | 'fifo' | 'queue'
   sm_min?: number
   sm_max?: number
   notes?: string
+  va_type?: 'va' | 'nnva' | 'nva'
+  op_steps?: Array<{ id: string; name: string; time: number; va_type: 'va' | 'nnva' | 'nva' }>
+  is_bottleneck?: boolean
+  health_status?: string
+  setup_time?: number
   // Branching
   branch_id?:        string | null
   branch_label?:     string | null
@@ -101,14 +106,8 @@ export interface Project {
   industry?: string
   state: 'current' | 'future'
   status: 'active' | 'archived'
-  product?: string
   customer?: string
-  supplier?: string
-  demand?: number
-  working_hours?: number
-  available_time_sec?: number
-  takt_time?: number
-  shifts?: number
+  kaizen_roadmap?: Record<string, any>
   steps?: Step[]
   created_at: string
   updated_at: string
@@ -119,7 +118,7 @@ export interface Profile {
   email: string
   full_name?: string
   avatar_url?: string
-  plan_tier: 'free' | 'pro' | 'enterprise' | 'lifetime'
+  plan_tier: 'trial' | 'trialing' | 'trial_expired' | 'pro' | 'lifetime' | 'enterprise'
   projects_count: number
   projects_limit: number
   // Extended fields (added by migrations 004-008)
