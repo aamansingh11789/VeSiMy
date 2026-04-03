@@ -266,9 +266,14 @@ export default function HomePage() {
     'For lean engineers · CI coordinators · operations managers',
     'Any process. Any industry. Any team size.',
   ]
+  const [authedUser, setAuthedUser] = useState<{ name?: string; email?: string } | null>(null)
   const [showPromo, setShowPromo] = useState(false)
 
   useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) setAuthedUser({ email: user.email, name: user.user_metadata?.full_name })
+    })
     const dismissed = localStorage.getItem('vesimy_spring25_dismissed')
     const expired = new Date() > new Date('2026-04-21T00:00:00')
     if (!dismissed && !expired) setShowPromo(true)
