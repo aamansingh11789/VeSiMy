@@ -66,10 +66,10 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     if (!newBranchName.trim()) return
     try {
       const nb = await createBranch(project.id, {
-        name: newBranchName.trim(),
-        description: 'Sub-process / alternate path',
-        branch_type: 'subprocess',
+        label: newBranchName.trim(),
         color: '#0176D3',
+        parent_step_id: null,
+        merge_step_id: null,
       })
       setBranches(prev => [...prev, nb])
       setNewBranchName('')
@@ -556,7 +556,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                       <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
                         <div style={{ width:4, height:32, background:'#0176D3', flexShrink:0 }}/>
                         <div>
-                          <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{b.name}</div>
+                          <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{b.label || b.name}</div>
                           <div style={{ fontSize:11, color:'var(--text3)' }}>{b.description || 'Sub-process branch'}</div>
                         </div>
                         <div style={{ marginLeft:'auto', fontSize:9, fontFamily:'monospace', color:'var(--text3)', letterSpacing:1 }}>
