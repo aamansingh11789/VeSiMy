@@ -58,11 +58,11 @@ const CHANGELOG = [
   { tag:'NEW',         color:'#0176D3', title:'V2 Process Builder',            date:'March 2026',
     body:'Upload a Standard Operating Procedure and VeSiMy parses it into a live value stream map automatically. Every step enriched with cycle time, operators, defect rates — then analysed by AI in one click.',
     items:['SOP upload → auto-parsed step map in seconds','AI analysis: bottleneck detection, PCE scoring, gap findings','Future State panel: AI generates a recommended improvement map','Integrated journal — every insight and action in one place'] },
-  { tag:'MAJOR',       color:'#0176D3', title:'62-industry reference projects', date:'March 2026',
+  { tag:'MAJOR',       color:'#0176D3', title:'68-industry, 70 reference projects', date:'March 2026',
     body:'Every industry has a fully built reference project — populated with real bottleneck data, root causes drilled to system failure, kaizen events, and PDCA cycles. Your industry only — no cross-industry contamination.',
     items:['All CI tools populated on every reference project','Real root causes — not placeholder text','Industry-specific steps, terminology, and metrics','Seeded for your industry only at onboarding'] },
   { tag:'MAJOR',       color:'#2E844A', title:'Industry language engine',       date:'March 2026',
-    body:'Your workspace speaks the language of the field you work in. A nurse never sees "WIP". A brewer never sees "takt time" without context. 62 industries, 40+ adapted terms each.',
+    body:'Your workspace speaks the language of the field you work in. A nurse never sees "WIP". A brewer never sees "takt time" without context. 68 industries, 40+ adapted terms each.',
     items:['Applies across dashboard, tools, AI, and learning center','Zero cross-industry terminology bleed','Fully reflected in every Supe AI response','Language preview before you confirm at signup'] },
   { tag:'MAJOR',       color:'#8C44CC', title:'Industry-aware onboarding',      date:'March 2026',
     body:'A 4-step wizard guides every new user. Industry selection is first — it determines everything: reference project seeded, language applied, learning content loaded. No generic start screen.',
@@ -133,7 +133,7 @@ function IndustryTerms() {
               A nurse never sees "WIP".<br />A brewer never sees "takt"<br />without context.
             </h2>
             <p style={{ fontSize:15, lineHeight:1.85, color:'rgba(255,255,255,.5)', fontWeight:300, maxWidth:380, marginBottom:32 }}>
-              Select your industry at signup. Every term — cycle time to kaizen — is translated into the language your team already uses. 66 industries. Built for each field, not adapted from manufacturing.
+              Select your industry at signup. Every term — cycle time to kaizen — is translated into the language your team already uses. 68 industries. Built for each field, not adapted from manufacturing.
             </p>
             <div style={{ display:'flex', flexWrap:'wrap', gap:7 }}>
               {TERM_KEYS.map(key => (
@@ -229,7 +229,7 @@ function ReferenceSection() {
           <div>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(1,118,211,.8)', marginBottom:12, textTransform:'uppercase' }}>06 — Reference projects</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(24px,3vw,40px)', lineHeight:1.12, fontWeight:400, maxWidth:500 }}>
-              62 reference projects. Real bottlenecks.<br />Your industry's language. Day one.
+              70 reference projects. Real bottlenecks.<br />Your industry's language. Day one.
             </h2>
           </div>
           <p style={{ fontSize:13, color:'#6B6760', maxWidth:220, lineHeight:1.6, textAlign:'right' }}>
@@ -414,7 +414,7 @@ export default function HomePage() {
             </div>
             {/* Stats */}
             <div className="reveal d2" style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
-              {[['66','Industries'],['11+','CI Tools'],['62','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
+              {[['68','Industries'],['11+','CI Tools'],['70','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
                 <div key={l}>
                   <div style={{ fontFamily:mono, fontSize:22, fontWeight:600, color:'#0176D3', letterSpacing:-.5 }}>{v}</div>
                   <div style={{ fontFamily:mono, fontSize:10, color:'#6B6760', letterSpacing:.5 }}>{l}</div>
@@ -576,7 +576,7 @@ export default function HomePage() {
                 Built for your industry.<br />Not adapted for it.
               </h2>
               <p style={{ fontSize:14, color:'#6B6760', maxWidth:480, lineHeight:1.8 }}>
-                VeSiMy v3 is the most significant update since launch. The new V2 Process Builder, 62-industry reference projects, and a full industry language engine mean every part of the product now speaks the language of your field.
+                VeSiMy v3 is the most significant update since launch. The new V2 Process Builder, 68-industry, 70 reference projects, and a full industry language engine mean every part of the product now speaks the language of your field.
               </p>
             </div>
             <Link href="/changelog" style={{ fontSize:12, color:'#0176D3', fontWeight:600, textDecoration:'none', flexShrink:0, marginTop:8 }}>Full changelog →</Link>
