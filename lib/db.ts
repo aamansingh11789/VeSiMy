@@ -6,7 +6,7 @@
 import { createClient } from '@/lib/supabase'
 import type { Project, Step, KanbanCard, KanbanColumn } from './store'
 
-// ── Singleton client — prevents auth token refresh races ─────────────────────
+// ── Singleton client ─────────────────────────────────────────────────────────
 let _dbClient: ReturnType<typeof createClient> | null = null
 function getClient() {
   if (!_dbClient) _dbClient = createClient()

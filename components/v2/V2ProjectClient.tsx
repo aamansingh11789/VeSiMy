@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 import React from 'react'
-import { BRAND, SERIF } from './v2-constants'
+import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 // ── components/v2/V2ProjectClient.tsx ─────────────────────────────────────────
 // V2 Project Builder: SOP upload → interactive map → analyze → future state
 // Single source of truth. Everything else is downstream of the map.
@@ -246,7 +246,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     { id: 'map', label: 'Process Map' },
     { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}` },
     { id: 'analyze', label: 'Analysis' },
-    { id: 'journal', label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}` },
+    { id: 'journal', label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}` },
     { id: 'future', label: 'Future State' },
   ]
 
@@ -345,6 +345,114 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
       {/* ── BODY ─────────────────────────────────────────────────────────── */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+
+        {/* ── COLLAPSIBLE LEFT SIDEBAR ─────────────────────────────────── */}
+        {tab === 'map' && (
+          <div style={{
+            width: sidebarCollapsed ? 40 : 220,
+            flexShrink: 0,
+            background: '#FFFFFF',
+            borderRight: '1px solid var(--border)',
+            display: 'flex',
+            flexDirection: 'column',
+            transition: 'width .2s ease',
+            overflow: 'hidden',
+            position: 'relative',
+            zIndex: 5,
+          }}>
+            {/* Collapse toggle */}
+            <button
+              onClick={() => setSidebarCollapsed(v => !v)}
+              title={sidebarCollapsed ? 'Expand step list' : 'Collapse step list'}
+              style={{
+                width: '100%', height: 36, border: 'none', borderBottom: '1px solid var(--border)',
+                background: 'var(--sl-50)', cursor: 'pointer', display: 'flex',
+                alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'flex-end',
+                paddingRight: sidebarCollapsed ? 0 : 10, flexShrink: 0, color: 'var(--text3)',
+                fontSize: 13, fontWeight: 700,
+              }}>
+              {sidebarCollapsed ? '›' : '‹'}
+            </button>
+
+            {/* Steps list */}
+            {!sidebarCollapsed && (
+              <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
+                {steps.length === 0 ? (
+                  <div style={{ padding: '16px 12px', fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
+                    No steps yet.<br/>Add a step to begin.
+                  </div>
+                ) : steps.map((step, i) => {
+                  const isSelected = step.id === selectedStep?.id
+                  const vaColor = step.va_type === 'va' ? GREEN : step.va_type === 'nva' ? RED : step.va_type === 'nnva' ? AMBER : '#ccc'
+                  const hasMissing = (step.missing_info_flags || []).length > 0
+                  return (
+                    <div
+                      key={step.id}
+                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8,
+                        padding: '7px 10px 7px 8px', cursor: 'pointer',
+                        background: isSelected ? 'rgba(1,118,211,.07)' : 'transparent',
+                        borderLeft: `3px solid ${isSelected ? BRAND : 'transparent'}`,
+                        transition: 'background .1s',
+                      }}
+                      onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLDivElement).style.background = 'var(--sl-50)' }}
+                      onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLDivElement).style.background = 'transparent' }}
+                    >
+                      {/* VA dot */}
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: vaColor, flexShrink: 0 }}/>
+                      {/* Step number */}
+                      <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--text3)', flexShrink: 0, width: 14 }}>{i + 1}</span>
+                      {/* Name */}
+                      <span style={{
+                        fontSize: 12, color: isSelected ? BRAND : 'var(--text)',
+                        fontWeight: isSelected ? 700 : 400, flex: 1, overflow: 'hidden',
+                        textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                      }}>{step.name}</span>
+                      {/* Missing badge */}
+                      {hasMissing && (
+                        <span style={{ fontSize: 9, background: AMBER, color: 'white', borderRadius: 3, padding: '1px 4px', flexShrink: 0, fontWeight: 700 }}>
+                          {(step.missing_info_flags || []).length}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+
+                {/* Add step link */}
+                <div
+                  onClick={() => addStep(steps.length - 1)}
+                  style={{ padding: '8px 10px', fontSize: 12, color: BRAND, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, borderTop: '1px solid var(--border)', marginTop: 4 }}
+                >
+                  + Add Step
+                </div>
+              </div>
+            )}
+
+            {/* Collapsed icon strip */}
+            {sidebarCollapsed && (
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 8, gap: 4, overflowY: 'auto' }}>
+                {steps.map((step) => {
+                  const vaColor = step.va_type === 'va' ? GREEN : step.va_type === 'nva' ? RED : step.va_type === 'nnva' ? AMBER : '#ccc'
+                  const isSelected = step.id === selectedStep?.id
+                  return (
+                    <div
+                      key={step.id}
+                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
+                      title={step.name}
+                      style={{
+                        width: 8, height: 8, borderRadius: '50%', background: vaColor,
+                        cursor: 'pointer', flexShrink: 0,
+                        outline: isSelected ? `2px solid ${BRAND}` : 'none',
+                        outlineOffset: 2,
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* MAP TAB */}
         {tab === 'map' && (

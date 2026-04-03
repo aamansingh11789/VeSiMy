@@ -869,21 +869,14 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
         {/* Spring 2026 promo nudge */}
         {!isPro && new Date() < new Date('2026-04-21T00:00:00') && (
-          <div style={{
-            background: '#FFFFFF', border: '0.5px solid var(--border)',
-            borderRadius: 10, padding: '12px 16px', display: 'flex',
-            alignItems: 'center', gap: 12, flexWrap: 'wrap',
-          }}>
+          <div style={{ background: '#FFFFFF', border: '0.5px solid var(--border)', borderRadius: 10, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 16 }}>🌱</span>
             <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
               <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
               {' '}20% off Pro — use <code style={{ color: '#C49B2E', fontWeight: 700 }}>SPRING25</code>
               {' '}at checkout. Ends 20 April.
             </span>
-            <Link href="/pricing" style={{
-              fontSize: 12, fontWeight: 700, color: '#C49B2E',
-              textDecoration: 'none', whiteSpace: 'nowrap',
-            }}>View pricing →</Link>
+            <Link href="/pricing" style={{ fontSize: 12, fontWeight: 700, color: '#C49B2E', textDecoration: 'none', whiteSpace: 'nowrap' }}>View pricing →</Link>
           </div>
         )}
 

@@ -1,5 +1,6 @@
 // @ts-nocheck
 // ── app/layout.tsx ─────────────────────────────────────────────────────────
+import type React from 'react'
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -109,6 +110,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* MS Tile for Windows pinned sites */}
         <meta name="msapplication-TileColor" content="var(--bg)" />
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+        {/* Google Fonts — DM Serif Display + IBM Plex Mono for homepage/reports */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
         <PostHogProvider>

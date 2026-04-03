@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
 
+import type React from 'react'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 

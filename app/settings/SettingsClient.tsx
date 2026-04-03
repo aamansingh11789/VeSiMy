@@ -189,7 +189,7 @@ export function SettingsClient({ profile, user }: Props) {
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
             {[
-              ['Projects', `${profile?.projects_count || 0} / ${planKey === 'pro' ? 10 : planKey === 'lifetime' ? 30 : planKey === 'enterprise' ? '∞' : profile?.projects_limit || 3}`, '#1DD1A1'],
+              ['Projects', `${profile?.projects_count || 0} · unlimited`, '#1DD1A1'],
               ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || 'var(--text3)'],
               ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (

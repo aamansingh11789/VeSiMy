@@ -2,12 +2,13 @@
 'use client'
 // ── app/pricing/page.tsx ──────────────────────────────────────────────────────
 
+import type React from 'react'
+import toast from 'react-hot-toast'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/stripe'
-import toast from 'react-hot-toast'
+import { PLANS } from '@/lib/plans'
 import {
   ArrowLeftIcon,
   SparkleIcon,
@@ -674,15 +675,9 @@ export default function PricingPage() {
         <div style={{ marginTop: 34, textAlign: 'center' }}>
           <PricingToggle annual={annual} setAnnual={setAnnual} />
         </div>
-      </div>
-
       {showPromo && (
-        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 16px 0', marginBottom: 0 }}>
-          <div style={{
-            background: 'rgba(196,155,46,0.08)', border: '1px solid rgba(196,155,46,0.3)',
-            borderRadius: 10, padding: '14px 18px', marginBottom: 28,
-            display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap',
-          }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 16px', marginBottom: 0 }}>
+          <div style={{ background: 'rgba(196,155,46,0.08)', border: '1px solid rgba(196,155,46,0.3)', borderRadius: 10, padding: '14px 18px', marginBottom: 28, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 20 }}>🌱</span>
             <div style={{ flex: 1, minWidth: 200 }}>
               <strong style={{ color: 'var(--text)' }}>Spring CI Sprint</strong>
@@ -690,17 +685,13 @@ export default function PricingPage() {
               <code style={{ background: 'rgba(196,155,46,0.12)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, color: '#C49B2E' }}>SPRING25</code>
               <span style={{ color: 'var(--text3)', fontSize: 13 }}> · Expires Easter Sunday, 20 April</span>
             </div>
-            <button onClick={copyPromoCode} style={{
-              padding: '7px 14px', borderRadius: 8, border: '1px solid var(--border)',
-              background: '#fff', cursor: 'pointer', fontSize: 13, color: 'var(--text2)', fontWeight: 600,
-            }}>Copy code</button>
-            <button onClick={dismissPromo} style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: 'var(--text3)', fontSize: 22, lineHeight: 1, padding: '0 4px',
-            }}>×</button>
+            <button onClick={copyPromoCode} style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid var(--border)', background: '#fff', cursor: 'pointer', fontSize: 13, color: 'var(--text2)', fontWeight: 600 }}>Copy code</button>
+            <button onClick={dismissPromo} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', fontSize: 22, lineHeight: 1, padding: '0 4px' }}>×</button>
           </div>
         </div>
       )}
+
+      </div>
 
       <div
         style={{

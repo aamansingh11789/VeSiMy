@@ -38,15 +38,13 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
   const currentPCE = pce !== null ? pce : 0
 
-  // Debounced auto-save to Supabase whenever phases change
   const saveTimer = useRef<any>(null)
   const supabase = createClient()
   useEffect(() => {
     if (!project?.id) return
     if (saveTimer.current) clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(async () => {
-      await supabase
-        .from('projects')
+      await supabase.from('projects')
         .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
         .eq('id', project.id)
       if (onSaveRoadmap) onSaveRoadmap({ phases })

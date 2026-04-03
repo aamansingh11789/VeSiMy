@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
 // ── app/auth/signup/page.tsx ─────────────────────────────────────────────────
+import type React from 'react'
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'

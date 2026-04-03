@@ -34,22 +34,22 @@ const FIELD_HELP = {
     example: '1 operator on a solo task · 2 operators on a high-volume assembly step',
   },
   wip: {
-    title: 'WIP — Work In Progress',
+    title: 'WIP / Inventory (units)',
     body: 'The average number of items (units, patients, cases, batches, files) that are waiting or currently being processed at this step. High WIP is a signal of a bottleneck, batch processing, or unbalanced flow. In VSM notation, WIP is shown as an inventory triangle with a number inside.',
     example: '2 units = healthy flow · 20 units = likely bottleneck upstream',
   },
   cycle_time: {
-    title: 'Cycle Time (seconds)',
+    title: 'Cycle Time — ISO 22468 §5.2',
     body: 'The actual time it takes to complete one unit of work at this step — from when work starts to when it is finished and ready to pass to the next step. Measured in seconds. If your Cycle Time is higher than your Takt Time, this step cannot keep up with demand and is a bottleneck. Use the built-in Time Study tool to measure it accurately rather than estimating.',
     example: 'Welding a joint = 45 seconds · Filling out a loan application = 7,200 seconds (2 hrs)',
   },
   wait_time: {
-    title: 'Wait / Queue Time (seconds)',
+    title: 'Queue Time — ISO 22468 §5.3',
     body: 'The time work spends waiting before this step begins — sitting in a queue, waiting for an operator, waiting for a machine, waiting for approval, or waiting for the previous step to finish. Wait time is always Non-Value-Add. It is often the biggest contributor to long lead times. This time appears as the "valleys" on the VSM timeline.',
     example: 'Parts sitting at a bottleneck machine · A patient waiting in the waiting room · A document waiting for review',
   },
   setup_time: {
-    title: 'Setup / Changeover Time (seconds)',
+    title: 'Changeover Time (C/O) — SMED',
     body: 'The time required to prepare this step before processing can begin — switching from one product to another, setting up a machine, loading a fixture, or configuring a process. Setup time is typically Necessary NVA. The SMED methodology focuses on reducing this. Enter the total setup time per changeover event.',
     example: 'Tool change between products = 600 seconds (10 min) · Reconfiguring a software environment = 300 seconds',
   },
@@ -354,7 +354,7 @@ export function StepModal({ step, onSave, onClose }) {
               hint="Number of people assigned to this step at one time" />
           </div>
           <div>
-            <FieldLabel field="wip">WIP — Work In Progress</FieldLabel>
+            <FieldLabel field="wip">WIP / Inventory (units)</FieldLabel>
             <ValidatedInput field="wip" value={form.wip} onChange={v => upd('wip', v)}
               inputMode="numeric" placeholder="e.g. 5"
               hint="Average items waiting or in process at this step" />
@@ -370,7 +370,7 @@ export function StepModal({ step, onSave, onClose }) {
               hint="Time to complete one unit — if higher than Takt Time, this is a bottleneck" />
           </div>
           <div>
-            <FieldLabel field="wait_time">Wait / Queue Time (seconds)</FieldLabel>
+            <FieldLabel field="wait_time">Queue Time (seconds)</FieldLabel>
             <ValidatedInput field="wait_time" value={form.wait_time} onChange={v => upd('wait_time', v)}
               inputMode="decimal" placeholder="e.g. 300"
               hint="Time work sits idle before this step begins" />
@@ -380,7 +380,7 @@ export function StepModal({ step, onSave, onClose }) {
         {/* ── Setup Time + Transport Time ── */}
         <div className="vesimy-mobile-grid">
           <div>
-            <FieldLabel field="setup_time">Setup / Changeover Time (seconds)</FieldLabel>
+            <FieldLabel field="setup_time">Changeover Time C/O (seconds)</FieldLabel>
             <ValidatedInput field="setup_time" value={form.setup_time} onChange={v => upd('setup_time', v)}
               inputMode="decimal" placeholder="e.g. 600"
               hint="Time to prepare or switch before processing starts" />
@@ -411,7 +411,7 @@ export function StepModal({ step, onSave, onClose }) {
 
         {/* ── Completion Accuracy ── */}
         <div>
-          <FieldLabel field="completion_accuracy">Completion Accuracy / First Pass Yield (%)</FieldLabel>
+          <FieldLabel field="completion_accuracy">First Pass Yield / FPY / First Pass Yield (%)</FieldLabel>
           <ValidatedInput field="completion_accuracy" value={form.completion_accuracy} onChange={v => upd('completion_accuracy', v)}
             inputMode="decimal" placeholder="e.g. 97"
             hint="% of items that exit correctly first time, no rework needed (capped at 100)" />

@@ -3,7 +3,6 @@
 // PROMO: SPRING25 — 20% off first payment — expires 2026-04-21
 // Setup: Stripe Dashboard > Coupons > create 20% off first_time_transaction
 // Then:  Promotions > create code SPRING25 linking to that coupon
-// allow_promotion_codes: true in checkout already enables field at checkout
 import Stripe from 'stripe'
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

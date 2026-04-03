@@ -45,28 +45,35 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
   const router   = useRouter()
   const supabase = createClient()
 
-  // If parent forces collapsed (e.g. V2 project page), respect that permanently.
-  // Otherwise use local storage to persist user's preference.
-  const [collapsed, setCollapsed] = useState(() => {
-    if (forcedCollapsed) return true
-    if (typeof window === 'undefined') return false
-    return localStorage.getItem(LS_KEY) === 'true'
-  })
+  // Always start uncollapsed — read localStorage only in useEffect (after hydration).
+  // Reading localStorage in useState() causes SSR/client hydration mismatch because
+  // Next.js 14 runs 'use client' components on the server too.
+  const [collapsed, setCollapsed] = useState(forcedCollapsed)
+  const [mounted, setMounted] = useState(false)
 
-  // Sync CSS variable and localStorage whenever collapsed changes
   useEffect(() => {
-    const w = collapsed ? W_COLLAPSED : W_OPEN
-    document.documentElement.style.setProperty('--sidebar-w', `${w}px`)
+    setMounted(true)
     if (!forcedCollapsed) {
-      localStorage.setItem(LS_KEY, String(collapsed))
+      const saved = localStorage.getItem(LS_KEY) === 'true'
+      if (saved) setCollapsed(true)
     }
-  }, [collapsed, forcedCollapsed])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Set the CSS var on first paint (before any toggle)
+  // Sync CSS variable + localStorage on every change (after mount)
   useEffect(() => {
+    if (!mounted) return
     const w = collapsed ? W_COLLAPSED : W_OPEN
     document.documentElement.style.setProperty('--sidebar-w', `${w}px`)
-  }, [])
+    if (!forcedCollapsed) localStorage.setItem(LS_KEY, String(collapsed))
+  }, [collapsed, mounted, forcedCollapsed])
+
+  // Set CSS var immediately on first paint to avoid layout flash
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--sidebar-w',
+      `${forcedCollapsed ? W_COLLAPSED : W_OPEN}px`
+    )
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function toggle() {
     if (forcedCollapsed) return
