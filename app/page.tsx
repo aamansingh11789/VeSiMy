@@ -7,7 +7,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
 const serif = '"DM Serif Display",Palatino Linotype,Georgia,serif'

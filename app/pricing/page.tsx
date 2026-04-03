@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
-import { PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import {
   ArrowLeftIcon,
   SparkleIcon,
