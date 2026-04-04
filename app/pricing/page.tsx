@@ -32,6 +32,15 @@ const PLAN_META: Record<
     accent: string
   }
 > = {
+  trial: {
+    icon: SparkleIcon,
+    border: 'rgba(184,180,172,0.6)',
+    bg: 'rgba(248,247,245,0.97)',
+    badge: null,
+    highlight: false,
+    gold: false,
+    accent: 'var(--text2)',
+  },
   free: {
     icon: SparkleIcon,
     border: 'rgba(184,180,172,0.6)',

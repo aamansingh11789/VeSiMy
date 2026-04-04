@@ -67,7 +67,7 @@ export default function AboutPage() {
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(1,118,211,0.4),rgba(100,38,160,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#0176D3', fontFamily: 'Palatino Linotype,serif' }}>M</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#0176D3', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY LTD · UNITED KINGDOM</div>
+              <div style={{ fontSize: 13, color: '#0176D3', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
                 Building VeSiMy from the ground up — product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every manufacturer in the world.
               </p>
@@ -88,7 +88,7 @@ export default function AboutPage() {
         {/* Company facts */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, marginBottom: 56 }}>
           {[
-            { label: 'Registration', value: 'United Kingdom' },
+            { label: 'Location', value: 'United States' },
             { label: 'Founded', value: '2026' },
             { label: 'Stage', value: 'Pre-Seed' },
             { label: 'Users', value: 'Growing daily' },
