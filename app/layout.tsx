@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card:        'summary_large_image',
     title:       'VeSiMy — AI Operations Intelligence Platform',
-    description: 'VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps in one place. Unlimited projects, free forever. Built for lean and CI practitioners.',
+    description: 'VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps in one place. 14-day free trial, all CI tools. Built for lean and CI practitioners.',
     images:      ['/api/og'],
   },
 
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@type": "Offer",
               "price": "0",
               "priceCurrency": "USD",
-              "description": "Free plan with unlimited projects"
+              "description": "14-day free trial · 3 projects · No credit card required"
             },
             "url": "https://www.vesimy.com",
             "author": {

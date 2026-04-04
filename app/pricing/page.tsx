@@ -669,7 +669,7 @@ export default function PricingPage() {
               priced for real operators.
             </>
           }
-          subtitle="The free plan gives you unlimited projects and all 9 CI tools — no credit card, no expiry. Upgrade to Pro for Supe AI, process simulation, and the A3 export. First upgrade includes a 14-day free trial."
+          subtitle="Start with a 14-day free trial — 3 projects, all CI tools, no credit card. Upgrade to Pro for Supe AI, process simulation, and A3 export."
         />
 
         <div style={{ marginTop: 34, textAlign: 'center' }}>
@@ -798,8 +798,8 @@ export default function PricingPage() {
             'Yes — upgrade or downgrade anytime from your account settings. Changes apply immediately.',
           ],
           [
-            'Is the Free plan really free forever?',
-            "Yes. The Free plan gives you unlimited projects with all 9 CI tools — forever, no credit card needed. When you upgrade to Pro, you get a 14-day free trial before your card is charged, with a reminder 3 days before.",
+            'What do I get on the free trial?',
+            "The 14-day free trial gives you full access to all CI tools across up to 3 projects — no credit card needed. When you upgrade to Pro, your card is only charged after the 14-day trial period, with a reminder 3 days before.",
           ],
           [
             'Is my process data secure?',

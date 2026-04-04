@@ -161,7 +161,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               background: NAVY[800], border: `1px solid ${NAVY[700]}`,
               borderRadius: 8, padding: '8px 10px',
             }}>
-              <span style={{ fontSize: 11, color: NAVY[300], fontWeight: 600 }}>Free Plan</span>
+              <span style={{ fontSize: 11, color: NAVY[300], fontWeight: 600 }}>14-Day Trial</span>
               <Link href="/pricing" style={{
                 fontSize: 11, color: BLUE_LT, fontWeight: 700,
                 textDecoration: 'none',

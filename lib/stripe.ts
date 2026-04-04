@@ -11,12 +11,26 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 // ── Plans ───────────────────────────────────────────────────────────────────
-// Free:       $0 · unlimited projects · all 9 CI tools · no card required
-// Pro:        $29/mo · unlimited projects · Supe AI + A3 export · 14-day trial on first upgrade
-// Lifetime:   $99 once · unlimited projects · all Pro features · no monthly fee
+// Trial:      $0 · 14-day · 3 projects · all CI tools · no card required
+// Pro:        $29/mo · 10 projects · Supe AI + A3 export · simulation
+// Lifetime:   $99 once · 30 projects · all Pro features · no monthly fee
 // Enterprise: custom · unlimited · SSO + SLA + admin dashboard
 
 export const PLANS = {
+  trial: {
+    name:        'Trial',
+    price:       0,
+    description: '14-day free trial. Full access. No credit card required.',
+    features: [
+      'Up to 3 projects',
+      'All CI tools',
+      'V2 Process Builder',
+      'Reference projects',
+      'No credit card',
+    ],
+    projects_limit: 3,
+    cta: 'Start free trial',
+  },
   pro: {
     name:        'Pro',
     price:       29,

@@ -18,8 +18,8 @@ const entries = [
     items: [
       'All 9 CI tools live: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA',
       'Supe AI — AI mentor that reads your real VSM data and surfaces improvement priorities',
-      'Free plan: unlimited projects, all CI tools, no credit card required',
-      'Pro plan at $29/mo — Supe AI, process simulation, A3 export. First upgrade includes a 14-day free trial.',
+      '14-day free trial: 3 projects, all CI tools, no credit card required',
+      'Pro plan at $29/mo — 10 projects, Supe AI, process simulation, A3 export. Trial period on first upgrade.',
       'Lifetime plan at $99 — all Pro features, no monthly fee, all future releases included',
       'Enterprise pricing page with inquiry form',
       'Mobile-responsive across all tools',

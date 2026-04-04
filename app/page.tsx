@@ -414,7 +414,7 @@ export default function HomePage() {
             </div>
             {/* Stats */}
             <div className="reveal d2" style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(1,118,211,.15)', flexWrap:'wrap' }}>
-              {[['68','Industries'],['11+','CI Tools'],['70','Reference Projects'],['$0','Forever tier']].map(([v,l]) => (
+              {[['68','Industries'],['11+','CI Tools'],['70','Reference Projects'],['$0','14-Day Trial']].map(([v,l]) => (
                 <div key={l}>
                   <div style={{ fontFamily:mono, fontSize:22, fontWeight:600, color:'#0176D3', letterSpacing:-.5 }}>{v}</div>
                   <div style={{ fontFamily:mono, fontSize:10, color:'#6B6760', letterSpacing:.5 }}>{l}</div>

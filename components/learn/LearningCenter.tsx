@@ -372,7 +372,7 @@ function buildContent(t: any, industry: string) {
     { q: `What is Standard Work and why does it matter?`, a: `Standard Work is the documented current best method for performing a ${ps} — the safest, highest quality, lowest ${waste} repeatable method. It is the baseline for all improvement. Without Standard Work, you cannot measure whether a ${kz} actually improved anything.` },
     { q: `What is in the ISO-compliant export?`, a: `All VeSiMy exports include: document title, document ID, revision number, date, prepared by, project name, and relevant ISO standard references in a document control block. Standards referenced include ISO 9001:2015, ISO 22468:2020 (VSM), ISO 31000:2018 (root cause analysis), and ILO work measurement standards.` },
     { q: `Can multiple people collaborate on the same project?`, a: `Real-time multi-user collaboration is in development. Currently each user manages their own projects. Enterprise plans include team workspace features. Contact founder@vesimy.com to discuss your team setup.` },
-    { q: `How do I upgrade from Free to Pro?`, a: `Go to Settings → Subscription and click "Upgrade to Pro", or visit the Pricing page. Payment is processed securely through Stripe. Pro features — Supe AI, Process Simulation, Live Floor Monitor — activate immediately after payment.` },
+    { q: `How do I upgrade from Trial to Pro?`, a: `Go to Settings → Subscription and click "Upgrade to Pro", or visit the Pricing page. Payment is processed securely through Stripe. Pro features — Supe AI, Process Simulation, Live Floor Monitor — activate immediately after payment.` },
   ]
 
   return { MANUAL, GLOSSARY, FAQS }

@@ -806,7 +806,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
           <StatCard
             label="Plan"
-            value={isPro ? 'Pro' : 'Free'}
+            value={isPro ? (profile.plan_tier === 'lifetime' ? 'Lifetime' : profile.plan_tier === 'enterprise' ? 'Enterprise' : 'Pro') : (profile.plan_tier === 'trial_expired' ? 'Expired' : 'Trial')}
             icon={CrownIcon}
             color="#6CB9FC"
             hint={isPro ? 'Premium access active' : 'Starter tier'}

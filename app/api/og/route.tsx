@@ -58,7 +58,7 @@ export async function GET() {
 
         {/* Bottom stats */}
         <div style={{ position: 'absolute', bottom: '56px', left: '88px', display: 'flex', gap: '40px' }}>
-          {[['8', 'CI Tools'], ['Free', 'To Start'], ['24/7', 'AI Monitoring']].map(([val, label]) => (
+          {[['8', 'CI Tools'], ['14-Day', 'Free Trial'], ['24/7', 'AI Monitoring']].map(([val, label]) => (
             <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ fontSize: '32px', fontWeight: 900, color: '#0176D3', display: 'flex' }}>{val}</div>
               <div style={{ fontSize: '13px', color: '#52507A', letterSpacing: '2px', display: 'flex' }}>{label.toUpperCase()}</div>
