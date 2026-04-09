@@ -5,6 +5,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 // GET /api/projects — list all projects for the current user
 export async function GET() {
+  try {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -18,10 +19,15 @@ export async function GET() {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ projects: data })
-}
+
+  } catch (err: any) {
+    console.error("[projects]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}
 
 // POST /api/projects — create a new project
 export async function POST(request: NextRequest) {
+  try {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -61,4 +67,8 @@ export async function POST(request: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ project: data }, { status: 201 })
-}
+
+  } catch (err: any) {
+    console.error("[projects]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}

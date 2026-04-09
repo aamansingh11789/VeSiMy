@@ -69,6 +69,60 @@ export async function POST(_request: NextRequest) {
       return allowedNames === null || allowedNames.has(nm)
     }
 
+    // ── Compact helper aliases for the second-half blocks ────────────────────
+    const ex  = exists
+    const pr  = proj
+    const st  = stp
+
+    // Generate realistic stopwatch laps around a mean value
+    function laps(mean: number, count = 10): number[] {
+      return Array.from({ length: count }, (_, i) => Math.round(mean * (0.93 + (i % 5) * 0.035)))
+    }
+
+    // Stopwatch tool data helper
+    async function sw(stepId: string, pid: string, baseline: number, target: number, mean: number, lapArr: number[], notes: string) {
+      await td(stepId, pid, 'stopwatch', { baseline, target, mean, laps: lapArr, notes })
+    }
+
+    // Ishikawa/fishbone helper
+    async function ika(stepId: string, pid: string, problem: string, framework: string, causes: Record<string, string[]>) {
+      await td(stepId, pid, 'ishikawa', { problem, framework, causes })
+    }
+
+    // Build a why step object
+    function why(q: string, a: string) { return { q, a } }
+
+    // Five why helper
+    async function fw(stepId: string, pid: string, problem: string, whys: {q:string,a:string}[], rootCause: string, countermeasure: string, owner: string, dueDate: string) {
+      await td(stepId, pid, 'fivewhy', { problem, whys, rootCause, countermeasure, owner, dueDate })
+    }
+
+    // Waste identification helper
+    async function wa(stepId: string, pid: string, selected: string[], notes: Record<string, string>) {
+      await td(stepId, pid, 'waste', { selected, notes })
+    }
+
+    // Build a kaizen item object
+    function kzItem(kzId: string, title: string, description: string, category: string, priority: string, status: string, owner: string, dueDate: string, actions: string[]) {
+      return { id: kzId.toLowerCase(), kzId, title, description, category, priority, status, owner, dueDate, actions }
+    }
+
+    // Kaizen helper
+    async function kz(stepId: string, pid: string, items: ReturnType<typeof kzItem>[]) {
+      await td(stepId, pid, 'kaizen', { items })
+    }
+
+    // Build an improvement goal object
+    function goal(metric: string, baseline: string, target: string, unit: string, owner: string, dueDate: string) {
+      return { id: `g-${metric.toLowerCase().replace(/\s+/g,'-')}`, metric, baseline: Number(baseline), target: Number(target), actual: null, unit, status: 'in-progress', owner, dueDate, notes: '' }
+    }
+
+    // Improvement goals helper
+    async function im(stepId: string, pid: string, goals: ReturnType<typeof goal>[]) {
+      await td(stepId, pid, 'improvement', { goals })
+    }
+    // ────────────────────────────────────────────────────────────────────────
+
     // ══════════════════════════════════════════════════════════════════════════
     // 1. AUTOMOTIVE MANUFACTURING — Seat Assembly Line
     // ══════════════════════════════════════════════════════════════════════════
@@ -889,6 +943,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'3-day queue + 7-day field visit on 25% of orders',Defects:'25% provisioning failures — $450 field dispatch cost per event',Overprocessing:'Engineers logging into 2 systems per provisioning action'})
       await kz(s3.id,pid,[kzItem('KZ-001','Remote retry before field dispatch','3 remote retry attempts before field dispatch triggered. Target: field dispatch from 25% to 8%.','Delivery','critical','in-progress','Head of Network Ops','2026-04-15',['Document retry procedure','Train provisioning engineers','Track field dispatch rate','Measure order-to-active'])])
       await im(s3.id,pid,[goal('Order-to-Active Time','22','5','days','Head of Network Ops','2026-09-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Overprocessing'],{'Waiting':'Order stuck in provisioning queue avg 4.2 days before engineer assigned','Defects':'23% of provisioning orders have configuration errors requiring rework','Overprocessing':'Manual validation of auto-generated config — full review of 200-line config for 2-field change'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Auto-assign provisioning engineer on order receipt','Route orders to engineer queue automatically on CRM submission. Target: queue wait from 4.2 days to same-day assignment.','Delivery','critical','in-progress','Service Ops Manager','2026-04-30',['Define routing rules', 'Configure CRM workflow', 'Pilot 2-week trial', 'Measure queue wait before/after']),kzItem('KZ-002','Configuration error-proofing template','Pre-validated config templates per service type. Engineer selects template — eliminates manual config for standard orders (75% of volume).','Quality','high','open','Network Engineering','2026-05-15',['Map standard service types', 'Build template per type', 'Validate against known error patterns', 'Train provisioning team'])])
       seeded.push('Telecommunications')
     }}
 
@@ -909,6 +966,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'OSA 91% — promoted OOS creates £2,200/week estimated lost sales',Waiting:'Associates wait for backroom trolley — 1 trolley for 4 associates','Non-Utilisation':'8 min per run locating stock in disorganised backroom'})
       await kz(s2.id,pid,[kzItem('KZ-001','Store manager on promotional brief distribution','Add store manager to buying brief. 48-hr advance notice enables order uplift. Target: OSA from 91% to 98%.','Delivery','critical','in-progress','Store Manager','2026-04-01',['Request buying team add store to brief','Define 48-hr uplift window','Calculate uplift for top 10 promotions','Measure promoted OSA weekly'])])
       await im(s2.id,pid,[goal('On-Shelf Availability','91','98','%','Store Manager','2026-06-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Motion', 'Inventory'],{'Waiting':'Checkout queue avg 6.2 mins at peak — 3 of 8 lanes staffed','Motion':'Associates walk avg 420m per replenishment trip — product stored by supplier, not by velocity','Inventory':'14% of ambient SKUs have >45-day stock cover — cash tied up, blocking space for faster movers'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Velocity-based shelf slotting for top-200 SKUs','Re-slot top-200 SKUs to closest pick locations in back store. Reduce replenishment walk by est. 35%.','Productivity','critical','in-progress','Store Manager','2026-04-15',['Pull top-200 velocity report', 'Map current vs ideal slot', 'Execute restock during overnight shift', 'Measure replenishment time before/after']),kzItem('KZ-002','Dynamic checkout staffing trigger','Deploy additional cashier when queue exceeds 4 customers. Simple visual trigger — no tech needed.','Delivery','high','open','Shift Supervisor','2026-05-01',['Define queue trigger (4 customers)', 'Brief all supervisors', 'Track queue length hourly for 2 weeks', 'Measure avg checkout wait'])])
       seeded.push('Grocery')
     }}
 
@@ -929,6 +989,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Motion'],{Defects:'22% failed first attempt — £4.50 reattempt × 800 parcels/day = £3,600/day',Waiting:'Parcels wait 1 day at depot before reattempt',Motion:'Drivers backtrack on routes — poor sequence adds 35 min per round'})
       await kz(s2.id,pid,[kzItem('KZ-001','Pre-delivery notification for all clients','Activate notification for all clients. SMS/email day-before with window. Target: first attempt from 78% to 90%.','Delivery','critical','in-progress','Operations Director','2026-04-30',['Pull client list without notification','Outreach to activate','Measure first attempt rate'])])
       await im(s2.id,pid,[goal('First Attempt Delivery Rate','78','92','%','Operations Director','2026-07-01')])
+      
+      await wa(s3.id,pid,['Waiting', 'Defects', 'Motion'],{'Waiting':'Parcels sit in depot sort area avg 14 hrs before dispatch to delivery routes','Defects':'8.4% failed first-attempt delivery — redelivery cost £4.20/item','Motion':'Driver route sequencing manual — suboptimal sequences add avg 22 mins/round'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Route optimisation software deployment','Implement automated route sequencing. Eliminate manual planning (45 mins/driver/day). Target: 22-min route saving + fuel reduction.','Productivity','critical','in-progress','Operations Manager','2026-04-30',['Evaluate 3 routing tools', 'Pilot with 5 drivers 2 weeks', 'Measure actual vs planned route time', 'Calculate fuel and time savings']),kzItem('KZ-002','Pre-notification SMS 30 min before delivery','Automated SMS notification triggers when driver is 3 stops away. Target: first-attempt success from 91.6% to 97%.','Quality','high','open','IT Manager','2026-05-15',['Configure notification trigger in route system', 'Pilot on 1 depot 1 month', 'Track first-attempt delivery rate', 'Measure redelivery cost reduction'])])
       seeded.push('Postal & Parcel')
     }}
 
@@ -949,6 +1012,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'38% clash — each rework adds 24-40 hrs per drawing package',Waiting:'Clash discovered in construction documents — 2 stages too late',Overprocessing:'Each discipline producing separate coordination drawings — BIM should automate this'})
       await kz(s2.id,pid,[kzItem('KZ-001','Weekly automated clash detection report','BIM coordinator runs clash detection every Monday. Target: clash from 38% to 8%.','Quality','critical','in-progress','Project Architect','2026-04-15',['Configure clash detection','Automate weekly export','Share with all disciplines','Track clash count by discipline'])])
       await im(s2.id,pid,[goal('Drawing Clash Rate','38','8','%','Project Architect','2026-07-01')])
+      
+      await wa(s2.id,pid,['Defects', 'Waiting', 'Overprocessing'],{'Defects':'38% of design packages require client revision — avg 2.4 revision rounds per package','Waiting':'Client approval gating adds avg 12 days to each design phase','Overprocessing':'Stage 3 detail drawings produced before Stage 2 sign-off in 22% of projects — rework when client changes brief'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Mandatory Stage 2 sign-off gate before Stage 3 work begins','Hard gate: no Stage 3 resource allocation until signed Stage 2 approval received. Eliminates rework from brief changes late in design.','Quality','critical','in-progress','Design Director','2026-04-30',['Update project protocol', 'Brief all project managers', 'Add gate to project tracking system', 'Track rework rate before/after']),kzItem('KZ-002','Client brief template with mandatory scope fields','Structured brief requiring client to complete programme, budget, planning constraints, and sign-off authority before design starts.','Quality','high','open','Client Relationship Manager','2026-05-01',['Design brief template', 'Test with 3 new projects', 'Measure revision rate', 'Survey client experience'])])
       seeded.push('Architecture & Engineering')
     }}
 
@@ -969,6 +1035,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Waiting','Non-Utilisation','Defects'],{Waiting:'6-week gap — academic gap widens during wait','Non-Utilisation':'TAs in passive support role — targeted intervention capacity unused',Defects:'30% progress monitoring reviews missed'})
       await kz(s3.id,pid,[kzItem('KZ-001','Interim support starts on referral day','TA interim support from Day 1 of referral while formal assessment runs concurrently. Target: support from week 6 to week 1.','Delivery','critical','in-progress','SENCO','2026-04-15',['Redesign SEND flow','Train TAs on interim approaches','Track referral-to-support lead time','Measure academic progress rate'])])
       await im(s3.id,pid,[goal('Referral to Intervention Start','42','7','days','SENCO','2026-06-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Referral to first support session avg 34 days — student need unmet during this period','Defects':'42% of support plans require revision after 6-week review — initial assessment incomplete','Non-Utilisation':'SENCO spending 60% of time on admin and paperwork — specialist expertise not applied to students'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Fast-track assessment for urgent referrals','Triage at referral: urgent cases (safeguarding, acute distress) seen within 48 hrs. Standard referrals enter planned queue.','Delivery','critical','in-progress','SENCO','2026-04-30',['Define triage criteria', 'Create 48-hr response pathway', 'Brief referral staff', 'Track referral-to-first-contact time']),kzItem('KZ-002','Standardised assessment template per support type','Structured initial assessment for the 5 most common support needs. Reduces plan revision from 42% target <15%.','Quality','high','open','Educational Psychologist','2026-05-15',['Map 5 most common support needs', 'Co-design template with SENCOs', 'Pilot with 10 new referrals', 'Measure plan revision rate'])])
       seeded.push('K-12 Education')
     }}
 
@@ -989,6 +1058,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'42% incomplete — each adds 5-10 days',Waiting:'4-day technical review queue — 30 applications pending',Overprocessing:'Officers manually checking completeness at technical review — should be done at receipt'})
       await kz(s2.id,pid,[kzItem('KZ-001','Per-permit checklist + online validation','Online portal validates required fields before submission. Target: incomplete from 42% to 5%.','Quality','critical','in-progress','Service Manager','2026-06-01',['Map required fields per permit type','Build portal validation','Measure incomplete rate'])])
       await im(s2.id,pid,[goal('Permit Processing Time','28','10','days','Service Manager','2026-09-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Overprocessing'],{'Waiting':'Applications queued avg 28 days before first officer review — purely administrative delay','Defects':'31% of applications incomplete on submission — triggers back-and-forth adding 15 days per application','Overprocessing':'Senior officer sign-off required on all applications regardless of complexity — 75% are low-risk and could be delegated'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Digital pre-screening with mandatory fields','Online portal validates completeness before submission accepted. Target: incomplete applications from 31% to under 5%.','Quality','critical','in-progress','Digital Services Manager','2026-04-30',['Map all mandatory fields by permit type', 'Build validation into online form', 'Test with applicants', 'Track submission completeness rate']),kzItem('KZ-002','Risk-based approval delegation','Low-risk permit category (define criteria) approved by Officer. Medium by Senior Officer. Only complex/high-risk to Director. Reduce average approval time by 40%.','Delivery','high','open','Head of Licensing','2026-05-01',['Define risk tiering criteria', 'Draft delegation policy', 'Legal sign-off', 'Train officers', 'Track cycle time by tier'])])
       seeded.push('Government Services')
     }}
 
@@ -1009,6 +1081,9 @@ export async function POST(_request: NextRequest) {
       await wa(s1.id,pid,['Waiting','Motion','Non-Utilisation'],{Waiting:'8-second alerting delay — 13% of 60s target consumed before tone sounds',Motion:'Crew moving from various station locations to appliance','Non-Utilisation':'Stand-down time not used for readiness — no pre-donning standard'})
       await kz(s1.id,pid,[kzItem('KZ-001','Pre-donning position + PPE at appliance','Crew in or adjacent to appliance bay during stand-down. PPE hung on appliance. Target: mobilisation from 90s to 60s.','Safety','critical','in-progress','Station Manager','2026-04-01',['Define pre-donning position standard','Confirm with watch managers','Install PPE hooks at appliance','Monitor mobilisation time weekly'])])
       await im(s1.id,pid,[goal('Mobilisation Time','90','60','seconds','Station Manager','2026-06-01')])
+      
+      await wa(s1.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Average mobilisation time 3.2 mins against 1.0-min target — pre-alerting not triggered consistently','Defects':'14% of first-attendance appliances arrive without correct equipment for incident type — requires second resource','Non-Utilisation':'Crew training time fragmented — 40% of planned training cancelled due to operational demand, not replaced'})
+      await kz(s1.id,pid,[kzItem('KZ-001','Automatic pre-alerting on high-probability call types','System pre-alerts crew 15-30 seconds before full mobilisation on structure fire and RTC call types — cuts mobilisation time.','Delivery','critical','in-progress','Watch Commander','2026-04-15',['Identify qualifying call types', 'Configure MDT pre-alert logic', 'Trial on watch for 4 weeks', 'Measure mobilisation time before/after']),kzItem('KZ-002','Incident-type equipment checklist on MDT','Digital checklist on mobile data terminal confirms correct equipment loaded for specific incident type before departure.','Quality','high','open','Station Manager','2026-05-01',['Map equipment requirements per incident type', 'Build checklist in MDT system', 'Train crews', 'Track equipment adequacy at first attendance'])])
       seeded.push('Fire & Rescue')
     }}
 
@@ -1029,6 +1104,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'38% CPS return — 2-3 weeks added per file',Waiting:'Files wait 3 days in queue before supervisor review',Overprocessing:'Officers over-documenting matters CPS does not require'})
       await kz(s3.id,pid,[kzItem('KZ-001','Per-offence-type file checklist','Checklist of required evidence per top-10 offence types. Target: CPS return from 38% to 10%.','Quality','critical','in-progress','Detective Sergeant','2026-04-15',['Map top 10 offence types','List CPS evidence requirements','Design 1-page checklist','Pilot 1 month','Measure return rate'])])
       await im(s3.id,pid,[goal('CPS File Return Rate','38','10','%','Detective Sergeant','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'File from investigation to CPS review waits avg 42 days in queue — no visibility of CPS workload','Defects':'28% of files returned by CPS requiring additional evidence or documentation','Non-Utilisation':'Detectives spending estimated 35% of time on administrative tasks that could be handled by investigation support staff'})
+      await kz(s2.id,pid,[kzItem('KZ-001','File quality checklist before CPS submission','Structured pre-submission checklist aligned to CPS charging standards. Target: file return rate from 28% to under 8%.','Quality','critical','in-progress','Detective Inspector','2026-04-30',['Map most common return reasons (last 6 months)', 'Build checklist targeting those reasons', 'Pilot with 10 files', 'Measure return rate']),kzItem('KZ-002','Admin task transfer to investigation support','Audit detective time: identify tasks (CCTV requests, system entries, correspondence) transferable to support staff. Free detective capacity.','Productivity','high','open','Detective Chief Inspector','2026-05-15',['Time-and-motion study of detective activities (1 week)', 'Identify transferable tasks', 'Define new support role scope', 'Implement and measure detective hours freed'])])
       seeded.push('Police')
     }}
 
@@ -1049,6 +1127,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'Parts wait 3-5 days — equipment grounded',Defects:'18% P1 fault rate — each grounds vehicle avg 2.5 days','Non-Utilisation':'REME technicians reactive only — no proactive condition monitoring'})
       await kz(s3.id,pid,[kzItem('KZ-001','Supplementary PMCS card — current environment','CO-authorised supplementary checks for dust, heat, and mission profile. Target: P1 fault from 18% to 8%.','Quality','critical','in-progress','REME WO2','2026-04-01',['Draft supplementary checks','CO authorisation','Brief all operators','Monitor P1 fault rate weekly'])])
       await im(s3.id,pid,[goal('Equipment Availability Rate','72','85','%','REME WO2','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Inventory'],{'Waiting':'Parts on backorder average 18-day delay — unplanned maintenance holds equipment offline','Defects':'12% of maintenance tasks have to be repeated within 30 days — quality of initial repair not meeting standard','Inventory':'23% of held spare parts have zero usage in 24 months — capital tied up, space consumed, catalogue management burden'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Critical spare parts pre-positioning based on failure history','Analyse 24-month failure data: pre-position top-20 failure parts at unit level. Target: AOG (aircraft/vehicle on ground) wait from 18 days to 4 days.','Delivery','critical','in-progress','Logistics Officer','2026-04-30',['Pull 24-month failure parts data', 'Identify top 20 critical spares', 'Calculate pre-positioning quantity', 'Arrange forward positioning']),kzItem('KZ-002','Post-maintenance 7-day quality check','Mandatory system check 7 days after any maintenance task >4 hours. Catches latent faults before next operational use.','Quality','high','open','Maintenance Controller','2026-05-01',['Define qualifying task types', 'Add 7-day check to job card', 'Assign check responsibility', 'Track repeat maintenance rate'])])
       seeded.push('Military')
     }}
 
@@ -1069,6 +1150,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'78% rejection — 30 min wasted per rejected submission + relationship damage',Waiting:'Client review 2 days — good candidates accept elsewhere',Overprocessing:'8-10 candidates sourced per role when 2-3 well-matched would fill it'})
       await kz(s3.id,pid,[kzItem('KZ-001','Structured brief + fill rate KPI','12-field structured brief for all roles. Fill rate replaces submissions as primary KPI. Target: fill from 22% to 50%.','Quality','critical','in-progress','Managing Director','2026-04-30',['Design brief document','Change KPI to fill rate','Train consultants','Measure weekly'])])
       await im(s3.id,pid,[goal('Placement Fill Rate','22','50','%','Managing Director','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Average time-to-submit shortlist 6.2 days — client expects 48 hours','Defects':'34% of submitted candidates rejected at first client screen — brief misalignment at intake','Non-Utilisation':'Consultants spending 45% of time re-entering data across CRM, job board, and client portals — no integration'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Structured intake brief with mandatory criteria fields','Intake form requiring hiring manager to confirm: must-have skills, nice-to-have skills, deal-breakers, and decision-maker chain. Reduces rejection rate from 34%.','Quality','critical','in-progress','Practice Lead','2026-04-30',['Design intake template', 'Brief all consultants', 'Enforce on next 20 mandates', 'Track first-screen rejection rate']),kzItem('KZ-002','CRM integration to eliminate duplicate data entry','Single data entry in CRM auto-populates job boards and generates client-formatted shortlist. Target: save 2.5 hours/consultant/day.','Productivity','high','open','Operations Manager','2026-05-15',['Map current data entry touchpoints', 'Evaluate CRM integration tools', 'Build and test integration', 'Measure time saved per placement'])])
       seeded.push('Staffing Agency')
     }}
 
@@ -1089,6 +1173,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'40% optimisation actions do not improve ROAS — no test-and-learn',Waiting:'Underperforming ads run 3 weeks before budget pulled',Overprocessing:'Specialists pulling platform reports manually — automation would eliminate'})
       await kz(s3.id,pid,[kzItem('KZ-001','Weekly optimisation checklist + automated alerts','8-step checklist for all accounts. Automated alert when ROAS drops 20%. Target: ROAS from 1.8x to 3.2x.','Quality','critical','in-progress','Head of Performance','2026-04-30',['Design 8-step checklist','Configure automated alerts','Train specialists','Review compliance weekly'])])
       await im(s3.id,pid,[goal('Return on Ad Spend','1.8','3.2','x','Head of Performance','2026-07-01')])
+      
+      await wa(s2.id,pid,['Defects', 'Waiting', 'Overprocessing'],{'Defects':'38% of campaign briefs require revision after creative review — brief quality at intake is insufficient','Waiting':'Client approval on campaign assets takes avg 8.4 days — no structured review window','Overprocessing':'Full legal and brand review on every asset including minor social media variations — 80% pass unchanged'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Campaign brief quality gate before creative briefing','Brief must score 8/10 on standardised brief quality rubric before being passed to creative. Eliminates most revision cycles at source.','Quality','critical','in-progress','Account Director','2026-04-30',['Build brief quality rubric (10 criteria)', 'Train account managers', 'Pilot on next 5 campaigns', 'Track revision rate']),kzItem('KZ-002','Tiered asset review process by risk level','Low-risk assets (organic social, internal) — account manager approves. Medium (paid social) — creative director. High (above-line, OOH) — legal and brand. Eliminates full review on 60% of assets.','Productivity','high','open','Creative Director','2026-05-15',['Define risk tiers', 'Map approval matrix', 'Brief all teams', 'Track approval cycle time by tier'])])
       seeded.push('Digital Marketing')
     }}
 
@@ -1109,6 +1196,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'Service users wait 5 days avg for initial visit',Defects:'38% statutory breach — generates formal compliance report',Overprocessing:'Workers maintaining 15% of cases no longer active — caseload artificially inflated'})
       await kz(s2.id,pid,[kzItem('KZ-001','Statutory compliance dashboard + 21-day alert','Real-time dashboard of open assessments with deadline. Alert at 21 days for manager intervention. Target: breach from 38% to 8%.','Quality','critical','in-progress','Service Manager','2026-04-30',['Spec dashboard in case management system','Configure 21-day alert','Pilot with 1 team','Roll out to all teams'])])
       await im(s2.id,pid,[goal('Statutory Assessment Compliance Rate','62','92','%','Service Manager','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Referral to initial assessment avg 24 days — statutory 45-day target being missed for 28% of cases','Defects':'41% of assessments require follow-up visit for missing information — incomplete referral data at intake','Non-Utilisation':'Social workers spending estimated 42% of time on recording and admin — direct service time constrained'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Referral completeness checker before acceptance','Digital or paper checklist at point of referral: mandatory fields per referral type. Incomplete referrals returned before entering queue.','Quality','critical','in-progress','Service Manager','2026-04-30',['Map minimum data requirements by referral type', 'Build checker', 'Brief referral sources', 'Track completeness rate and follow-up visits']),kzItem('KZ-002','Standard recording templates per assessment type','Pre-formatted recording templates for the 6 most common assessment types. Reduces recording time by est. 35% per assessment.','Productivity','high','open','Practice Development Lead','2026-05-01',['Map 6 most common assessment types', 'Co-design templates with social workers', 'Pilot with 5 workers 4 weeks', 'Measure recording time before/after'])])
       seeded.push('Social Care')
     }}
 
@@ -1130,6 +1220,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'12% rejection — at £0.45/kg × 800 tonnes = £43,000 season loss',Waiting:'10% harvester breakdown — crop matures further during wait','Non-Utilisation':'Brix meter in store unused — visual assessment causes harvest timing errors'})
       await kz(s3.id,pid,[kzItem('KZ-001','Brix measurement protocol','Daily Brix readings from 3 field zones in final 3 weeks. Harvest triggered by Brix target not calendar date. Target: rejection from 12% to 4%.','Quality','critical','in-progress','Farm Manager','2026-04-15',['Define Brix target for variety','Implement daily measurement','Staggered harvest by field Brix','Track rejection rate by field'])])
       await im(s3.id,pid,[goal('Crop Rejection Rate','12','4','%','Farm Manager','2026-10-01')])
+      
+      await wa(s3.id,pid,['Waiting', 'Defects', 'Motion'],{'Waiting':'Harvest machinery idle avg 3.1 hrs/day waiting for trailer exchange — trailer supply not synchronised with harvest rate','Defects':'7.2% crop rejection at intake — predominantly from variable harvest timing (over/under-ripe)','Motion':'Machinery repositioning between field sections adds avg 45 mins/day — field sequence not optimised for harvest order'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Trailer rotation synchronisation with harvest rate','Match trailer pool size and rotation cycle to combine output rate. Add dedicated tractor-trailer loop. Target: idle time from 3.1 hrs to under 45 mins/day.','Productivity','critical','in-progress','Farm Manager','2026-04-15',['Time study combine output rate vs trailer cycle time', 'Calculate required trailer pool size', 'Arrange additional trailer if needed', 'Measure daily idle time']),kzItem('KZ-002','Brix monitoring protocol for harvest timing','Measure Brix (sugar content) daily in the 7 days before target harvest. Decision rule: harvest when Brix hits target range. Reduces rejection from variable maturity.','Quality','high','open','Agronomist','2026-05-01',['Define Brix target range per variety', 'Procure refractometers', 'Train harvest team on protocol', 'Track rejection rate vs previous season'])])
       seeded.push('Farming')
     }}
 
@@ -1150,6 +1243,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'8% mortality — season revenue loss per cage',Waiting:'Disease response delayed 6 hrs — fish health officer at another site',Overprocessing:'Feed applied on weekly fixed rate — daily temperature adjustment would improve FCR'})
       await kz(s2.id,pid,[kzItem('KZ-001','Twice-daily health observation + temperature-adjusted feeding','Morning and afternoon structured health observation. Temperature-adjusted feed table. Target: mortality from 8% to 3%, FCR from 1.9 to 1.6.','Quality','critical','in-progress','Production Manager','2026-04-30',['Design observation checklist','Implement temperature-adjusted feed table','Train grow-out staff','Track FCR and mortality weekly'])])
       await im(s2.id,pid,[goal('Grow-out Mortality Rate','8','3','%','Production Manager','2026-10-01')])
+      
+      await wa(s3.id,pid,['Defects', 'Waiting', 'Non-Utilisation'],{'Defects':'4.8% mortality rate in grow-out phase — primarily from sea lice infestation and oxygen depletion events','Waiting':'Harvest-to-processing delay averages 8.6 hours — ice packs depleted on long hauls, quality impact','Non-Utilisation':'Feed conversion ratio 1.42 against industry benchmark 1.18 — overfeeding and uneaten feed waste'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Automated oxygen monitoring with alert threshold','Deploy dissolved oxygen sensors with automatic alert at <7 mg/L. Operator response protocol: increase aeration within 15 mins. Target: eliminate hypoxia mortality events.','Quality','critical','in-progress','Farm Manager','2026-04-15',['Source oxygen monitoring sensors', 'Install and calibrate', 'Set alert threshold and recipient list', 'Train operators on response protocol', 'Track mortality rate monthly']),kzItem('KZ-002','Precision feeding protocol based on appetite monitoring','Use underwater camera or AI feed waste monitor to adjust feed rate to actual appetite. Target: FCR from 1.42 to 1.25 within 90 days.','Productivity','high','open','Production Manager','2026-05-01',['Evaluate appetite monitoring options', 'Pilot on 2 pens', 'Develop decision rules', 'Track FCR weekly'])])
       seeded.push('Aquaculture')
     }}
 
@@ -1170,6 +1266,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'NPT 18% — at $85k/day rig rate = $15,300/day waste',Waiting:'Stuck pipe recovery avg 8 hrs — rig on standby','Non-Utilisation':'Real-time drilling data available but reviewed 4-hourly only'})
       await kz(s2.id,pid,[kzItem('KZ-001','Continuous pore pressure monitoring protocol','Real-time pore pressure from LWD. Mud weight adjusted in real-time. Target: NPT from 18% to 8%.','Quality','critical','in-progress','Drilling Superintendent','2026-04-01',['Update monitoring protocol to continuous','Brief mud engineer and team','Define response threshold','Track NPT weekly by cause code'])])
       await im(s2.id,pid,[goal('Non-Productive Time (NPT)','18','8','%','Drilling Superintendent','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Decision-making delays account for 38% of NPT — waiting for engineering, procurement, or management approval during drilling problems','Defects':'Stuck pipe contributes 11% of total NPT — root cause: PM protocol on BHA not updated since 2019','Non-Utilisation':'Drill crew idle during bit trips for formation evaluation — evaluation could be performed during trip rather than additional dedicated time'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Decision authority matrix for common NPT scenarios','Pre-defined decision tree for top-8 NPT causes: drill crew has authority to act within defined parameters without waiting for offshore company man. Target: decision delay from 4.2 hrs avg to under 45 mins.','Delivery','critical','in-progress','Drilling Superintendent','2026-04-30',['Map top-8 NPT causes from last 24 months', 'Define decision parameters for each', 'Issue authority matrix to drill crew', 'Debrief after each NPT event']),kzItem('KZ-002','BHA PM protocol update and compliance tracking','Update BHA PM procedure to reflect current formation and wellbore conditions. Add compliance check at each BHA pull.','Quality','high','open','Drilling Engineer','2026-05-01',['Review current BHA PM protocol vs actual conditions', 'Update procedure', 'Issue formal change control', 'Add compliance check to BHA pull checklist'])])
       seeded.push('Oil & Gas')
     }}
 
@@ -1190,6 +1289,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'22% dwell exceedance — passengers miss connections downstream',Defects:'72% punctuality — regulatory penalty risk','Non-Utilisation':'2 gates unstaffed at peak — capacity wasted'})
       await kz(s2.id,pid,[kzItem('KZ-001','Time-banded entry zones + early arrival incentive','3 arrival bands. Concourse voucher for early arrival. Target: peak queue from 38 min to 12 min. Punctuality target 88%.','Delivery','critical','in-progress','Performance Director','2026-04-30',['Spec time-banding with ticketing supplier','Design incentive','Pilot next 3 events','Measure peak queue time'])])
       await im(s2.id,pid,[goal('Service Punctuality','72','88','%','Performance Director','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Overprocessing'],{'Waiting':'Platform dwell time exceeds timetable allocation by avg 2.4 mins at 3 key interchange stations — cascades downstream','Defects':'18% of trains arrive with reported faults carried over from previous duty — defect not cleared at depot','Overprocessing':'Train preparation at depot includes 14-step checklist — 6 steps are duplicates of driver pre-departure checks'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Dwell time reduction at 3 key interchange stations','Timetable revision + passenger boarding distribution improvements (door allocation signage). Target: dwell time to timetable allocation at all stations.','Delivery','critical','in-progress','Service Delivery Manager','2026-04-30',['Analyse dwell time data by station and TOD', 'Identify root causes per station', 'Pilot boarding distribution signage', 'Measure dwell time weekly']),kzItem('KZ-002','Carry-forward fault zero tolerance protocol','No train to depart depot with a reported fault unless fault cleared or risk-assessed and documented. Reduces in-service failures.','Quality','high','open','Fleet Manager','2026-05-01',['Audit current carry-forward fault volume', 'Define acceptable vs unacceptable carry-forward', 'Issue protocol to depot teams', 'Track carry-forward faults weekly'])])
       seeded.push('Rail')
     }}
 
@@ -1211,6 +1313,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'3% miss-pick rate — container damage and re-lift adds 4 min per event',Waiting:'PM downtime unplanned — vessel waits at berth at $4,200/hr',Overprocessing:'Crane drivers manually tracking position — terminal OS should handle allocation'})
       await kz(s2.id,pid,[kzItem('KZ-001','Per-crane hours tracking + planned PM schedule','Configure CMMS per crane. Overdue PM on cranes 3 & 5 immediately. Future PM during vessel gaps. Target: productivity from 22 to 27 moves/hr.','Quality','critical','in-progress','Terminal Manager','2026-04-15',['Configure per-crane hours in CMMS','Schedule overdue PM cranes 3 & 5','Set PM calendar aligned to vessel schedule','Track moves/hr per crane weekly'])])
       await im(s2.id,pid,[goal('Crane Productivity','22','27','moves/hr','Terminal Manager','2026-07-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Inventory'],{'Waiting':'Vessel waiting time at anchorage avg 14.2 hours — berth allocation not communicated until vessel inside pilot waters','Defects':'6.8% of containers have documentation errors requiring manual intervention — delays customs clearance','Inventory':'Container dwell time in yard avg 4.8 days — industry benchmark 2.1 days — import containers blocking space'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Advance berth allocation notification 24 hours out','Confirm berth slot 24 hours before vessel arrival. Allows stevedore pre-planning. Target: reduce anchorage wait from 14.2 to under 4 hours.','Delivery','critical','in-progress','Port Operations Manager','2026-04-30',['Map current berth allocation process', 'Identify decision points causing delay', 'Build 24-hr advance notification workflow', 'Track anchorage wait time weekly']),kzItem('KZ-002','Digital documentation pre-clearance portal','Importers submit customs documentation 48 hours before vessel arrival. Pre-clearance eliminates 70% of documentation hold-ups.','Quality','high','open','Customs Liaison Manager','2026-05-15',['Define pre-clearance document set', 'Build or integrate portal', 'Pilot with 10 regular importers', 'Track documentation error rate'])])
       seeded.push('Port & Maritime')
     }}
 
@@ -1231,6 +1336,9 @@ export async function POST(_request: NextRequest) {
       await wa(s3.id,pid,['Defects','Waiting','Non-Utilisation'],{Defects:'32% revision rate — 4-6 hrs rework per report',Waiting:'3-day queue — single checker is the rate limiter',Overprocessing:'Full calculation redone when only 1 assumption wrong — no targeted correction'})
       await kz(s3.id,pid,[kzItem('KZ-001','Written brief confirmation + assumption checklist','Client confirms brief in writing. Assumption checklist completed before analysis. Target: revision from 32% to 10%.','Quality','critical','in-progress','Technical Director','2026-04-30',['Design brief confirmation form','Design assumption checklist','Pilot on next 5 projects','Measure revision rate'])])
       await im(s3.id,pid,[goal('Report Revision Rate','32','10','%','Technical Director','2026-07-01')])
+      
+      await wa(s2.id,pid,['Defects', 'Waiting', 'Overprocessing'],{'Defects':'44% of deliverables require at least one revision round after client submission — scope interpretation varies between engineers','Waiting':'Client sign-off on interim deliverables adds avg 11 days per project phase — no structured review window agreed at project start','Overprocessing':'Full QA review on all deliverables including minor interim outputs — review effort not calibrated to deliverable significance'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Deliverable scope definition checklist at project kick-off','Mandatory scope definition session for each deliverable at project start: format, level of detail, acceptance criteria. Reduces revision rate from 44%.','Quality','critical','in-progress','Technical Director','2026-04-30',['Design scope definition template', 'Brief all project engineers', 'Enforce on next 5 projects', 'Track revision rate']),kzItem('KZ-002','Structured client review window in project schedule','Book 5-day client review window into project schedule at proposal stage. Client commits to response within window. Eliminates open-ended review delays.','Delivery','high','open','Project Manager','2026-05-01',['Draft client review commitment clause', 'Add to standard proposal template', 'Brief account managers', 'Track review turnaround time'])])
       seeded.push('Engineering Consulting')
     }}
 
@@ -1251,6 +1359,9 @@ export async function POST(_request: NextRequest) {
       await wa(s4.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'58% first rejection — avg 3.2 revision rounds, each 28-day wait',Waiting:'40,320 min (28 day) avg peer review wait',Overprocessing:'Full manuscript written before checking target journal fit — misaligned scope causes rejection'})
       await kz(s4.id,pid,[kzItem('KZ-001','Pre-submission internal peer review','Lab internal peer review before journal submission. Target: rejection from 58% to 25%.','Quality','critical','in-progress','Principal Investigator','2026-04-30',['Establish internal review protocol','Assign 2 reviewers per manuscript','Complete before submission','Measure external rejection rate'])])
       await im(s4.id,pid,[goal('First-Submission Rejection Rate','58','25','%','Principal Investigator','2026-09-01')])
+      
+      await wa(s3.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Peer review response time avg 68 days — with no visibility of reviewer status after submission','Defects':'62% of submitted manuscripts require major revisions — methodology or presentation issues identifiable pre-submission','Non-Utilisation':'Researchers spending est. 35% of time on grant administration and reporting — research time displaced'})
+      await kz(s3.id,pid,[kzItem('KZ-001','Internal pre-submission peer review','Structured internal review by 2 lab colleagues before journal submission. Target: major revision rate from 62% to under 30%.','Quality','critical','in-progress','Principal Investigator','2026-05-01',['Define internal review criteria (methods, stats, presentation)', 'Assign review pairs', 'Enforce before next 3 submissions', 'Track revision rate']),kzItem('KZ-002','Grant admin delegation to research administrator','Audit PI time on grant admin tasks. Transfer routine reporting and compliance tasks to dedicated research administrator.','Productivity','high','open','Head of Department','2026-05-15',['Time study PI activities over 2 weeks', 'Identify transferable admin tasks', 'Define research admin role scope', 'Measure PI research time freed'])])
       seeded.push('Academic Research')
     }}
 
@@ -1271,6 +1382,9 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Waiting','Defects','Overprocessing'],{Waiting:'40,320-min avg site activation — each month delay costs $280k per study',Defects:'35% of sites have activation issues — documents incomplete or IRB queries',Overprocessing:'Contract negotiation starts after IRB approval — sequential when both could run parallel'})
       await kz(s2.id,pid,[kzItem('KZ-001','Pre-submission IRB meeting for all sites','Schedule IRB pre-submission meeting 30 days before formal submission. Reduce query rate and queue time. Target: activation from 6.8 to 3.5 months.','Delivery','critical','in-progress','Clinical Operations Manager','2026-05-01',['Define pre-submission meeting protocol','Add to site activation SOP','Schedule meetings for all open sites','Track activation time monthly'])])
       await im(s2.id,pid,[goal('Site Activation Time','6.8','3.5','months','Clinical Operations Manager','2026-09-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Non-Utilisation'],{'Waiting':'Site activation avg 8.4 months from protocol finalisation — regulatory and ethics submissions sequential rather than parallel','Defects':'18% of data queries from monitor — source document inconsistencies and protocol deviations','Non-Utilisation':'Coordinators spending 55% of time on data entry and query resolution — patient-facing time constrained'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Parallel regulatory and ethics submission','Submit to regulatory authority and ethics committee simultaneously rather than sequentially. Target: site activation from 8.4 months to 5.5 months.','Delivery','critical','in-progress','Clinical Operations Director','2026-04-30',['Identify parallel submission feasibility per jurisdiction', 'Agree parallel process with regulatory affairs', 'Pilot on next 2 sites', 'Measure activation timeline']),kzItem('KZ-002','Source data verification checklist for coordinators','Site-level checklist for coordinators to self-check data entries before monitor visit. Target: data query rate from 18% to under 6%.','Quality','high','open','Clinical Research Associate','2026-05-01',['Analyse most common query types from last 3 audits', 'Build self-check checklist targeting those types', 'Train site coordinators', 'Track query rate per site'])])
       seeded.push('Clinical Trials')
     }}
 
@@ -1291,6 +1405,9 @@ export async function POST(_request: NextRequest) {
       await wa(s1.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'62% late/over-budget — avg 28% cost overrun per project',Waiting:'Decisions wait 5+ days for sponsor — no defined escalation path',Overprocessing:'Weekly status reports prepared but never read by 40% of stakeholders — reporting waste'})
       await kz(s1.id,pid,[kzItem('KZ-001','Executive mandate for change control + risk register','Board-mandated change control. Risk register required in charter. Target: late/over-budget from 62% to 25%.','Quality','critical','in-progress','PMO Director','2026-04-30',['Draft board mandate document','Gain executive sign-off','Update project charter template','Train all PMs'])])
       await im(s1.id,pid,[goal('Projects Delivered On Time & Budget','38','75','%','PMO Director','2026-09-01')])
+      
+      await wa(s2.id,pid,['Waiting', 'Defects', 'Overprocessing'],{'Waiting':'Sponsor approval of change requests avg 14 days — no dedicated decision window in governance calendar','Defects':'38% of deliverables miss acceptance criteria on first submission — criteria not defined clearly at project outset','Overprocessing':'Weekly status report takes PM avg 3.5 hours to produce — format not standardised, data pulled from multiple systems manually'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Fortnightly sponsor decision window in project calendar','Book 60-min fortnightly decision meeting in sponsor diary at project kick-off. All CRs and escalations batched to this window. Target: CR approval from 14 days to under 7 days.','Delivery','critical','in-progress','Programme Manager','2026-04-30',['Add decision window to project initiation checklist', 'Brief project sponsors', 'Track CR cycle time']),kzItem('KZ-002','Standardised weekly status report template','Single-page RAG status template with auto-populated data from project tool. PM time from 3.5 hours to 45 mins.','Productivity','high','open','PMO Lead','2026-05-01',['Design 1-page template (RAG, milestones, risks, decisions needed)', 'Connect to project tool for auto-data pull', 'Brief all PMs', 'Measure time to produce status report'])])
       seeded.push('Project Management')
     }}
 
@@ -1311,6 +1428,9 @@ export async function POST(_request: NextRequest) {
       await wa(s4.id,pid,['Defects','Waiting','Overproduction'],{Defects:'42% revision rate — avg 4 hrs rework per round × 2.8 rounds = 11 hrs per project',Waiting:'Client approval wait 2 days — designer idle between rounds',Overproduction:'3 concepts presented when 1 well-briefed concept would have higher first-pass rate'})
       await kz(s4.id,pid,[kzItem('KZ-001','Final approver at brief stage','Decision-maker signs off brief before concept begins. Target: revision rounds from 2.8 to 1.2.','Quality','critical','in-progress','Creative Director','2026-04-30',['Add final approver step to brief template','Require signature before design starts','Track revision rounds by project','Measure client satisfaction'])])
       await im(s4.id,pid,[goal('Revision Rounds per Project','2.8','1.2','rounds','Creative Director','2026-06-01')])
+      
+      await wa(s2.id,pid,['Defects', 'Waiting', 'Non-Utilisation'],{'Defects':'2.8 average revision rounds per project — brief ambiguity at intake is the primary cause','Waiting':'Client approval delays avg 7.2 days per round — no structured response window','Non-Utilisation':'Senior designers spending 30% of time on production tasks (file prep, export, resizing) that could be handled by junior staff or automation'})
+      await kz(s2.id,pid,[kzItem('KZ-001','Creative brief sign-off before any design work begins','No design resource allocated until signed brief received. Brief must include: objective, audience, format, reference examples, and approval chain.','Quality','critical','in-progress','Creative Director','2026-04-30',['Design brief template', 'Brief all account handlers', 'Enforce on next 10 projects', 'Track revision rounds per project']),kzItem('KZ-002','Production task delegation to junior designer','Audit senior designer activity: identify production tasks (file export, resize, template population) to delegate. Target: free 25% of senior time for concept and creative direction.','Productivity','high','open','Studio Manager','2026-05-01',['Log senior designer tasks for 1 week', 'Identify delegation candidates', 'Brief junior designers', 'Measure senior creative time freed'])])
       seeded.push('Graphic Design')
     }}
 
@@ -1472,7 +1592,9 @@ export async function POST(_request: NextRequest) {
     const s4=await stp(pid,4,{name:'Outage Return & Performance Testing',department:'Operations',operators:4,cycle_time:240,wait_time:60,wip:0,flow_type:'push',uptime:100,defect_rate:6,notes:'6% fail first-fire test after outage — workmanship issues during maintenance.'})
     await td(s2.id,pid,'ishikawa',{problem:'Availability 89% vs 94% target — 3.2% forced outage rate',framework:'6M Manufacturing',causes:{Machine:['HP turbine blade erosion rate higher than design — fuel quality related','Inlet air filter change interval too long — pressure drop increases heat rate'],Method:['Vibration monitoring monthly only — not continuous','No oil analysis programme — bearing condition unknown between planned outages'],Material:['Fuel calorific value variation ±3% — affects combustion stability','Replacement parts lead time 16 weeks — forced outage extended by parts wait'],Manpower:['2 of 6 experienced operators retiring this year — knowledge transfer incomplete','Night shift has 1 fewer operator — slower fault response'],Measurement:['Performance degradation not trended between outages — heat rate drift not acted upon'],Mother_Nature:['Ambient temperature peaks above 38°C — output de-rate 8% in summer']}})
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Continuous vibration monitoring on GT train',description:'Install online vibration monitoring. Alarm thresholds for bearing wear. Planned intervention before forced outage. Target: forced outage from 6 to 3 per year.',category:'Quality',priority:'critical',status:'in-progress',owner:'Plant Manager',dueDate:'2026-05-01',actions:['Procure online monitoring system','Install on GT and ST','Set alarm thresholds','Train operators on alert response','Review after 3 months']},{id:'kz2',kzId:'KZ-002',title:'Critical spares pre-positioned for top 5 failure modes',description:'Stock 1 set of critical spares for top 5 forced outage causes. Eliminates 16-week wait. Reduces forced outage duration from avg 48 to 24 hrs.',category:'Productivity',priority:'high',status:'open',owner:'Maintenance Manager',dueDate:'2026-05-15',actions:['Identify top 5 outage causes by frequency','Cost spare stockholding vs outage cost','Procure critical spares','Define reorder protocol','Annual review of stocking list']}]})
-    seeded.push('Power Generation'); if(!primaryId)primaryId=pid
+    
+      await wa(s2.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'Scheduled maintenance sits in planning queue avg 11 days — poor prioritisation',Defects:'8.2% maintenance callback within 14 days — repair not meeting standard first time',Non_Utilisation:'Turbine running at 84% MCR — de-rating from fouled compressor blades cleaned only at annual outage'})
+      seeded.push('Power Generation'); if(!primaryId)primaryId=pid
     }}
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -1487,7 +1609,9 @@ export async function POST(_request: NextRequest) {
     const s4=await stp(pid,4,{name:'Employment Placement & Follow-up',department:'Employment Team',operators:3,cycle_time:120,wait_time:0,wip:12,flow_type:'push',uptime:100,defect_rate:15,notes:'15% lose employment within 90 days — in-work support insufficient.'})
     await td(s1.id,pid,'fivewhy',{problem:'52% employment rate vs 70% target',whys:[{q:'Why only 52% reach employment?',a:'Beneficiaries disengage from programme before completing — motivation loss.'},{q:'Why motivation loss?',a:'3.5-day wait for needs assessment. 15% disengage before first appointment.'},{q:'Why 3.5-day wait?',a:'4 case workers for 28 in assessment queue. Capacity insufficient during referral peaks.'},{q:'Why capacity insufficient?',a:'Referrals arrive in batches — grant funded projects close at same time each year.'},{q:'Why no surge capacity?',a:'ROOT CAUSE: No flexible staffing model. All staff on fixed contracts. Cannot scale to referral peaks.'}],rootCause:'Fixed staffing model cannot absorb referral peaks. Assessment wait causes early disengagement.',countermeasure:'1. Triage — phone needs assessment within 24 hrs. 2. Casual/sessional assessment staff for peaks. 3. Automated engagement touchpoints during wait.',owner:'Programme Director',dueDate:'2026-05-01'})
     await td(s1.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'24-hr phone triage replaces 3.5-day wait',description:'Case worker calls within 24 hrs for 20-min phone triage. Full needs assessment within 5 days. Prevents disengagement during wait. Target: pre-assessment dropout from 15% to 5%.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Operations Manager',dueDate:'2026-04-30',actions:['Design phone triage protocol','Train case workers','Reconfigure appointment system','Measure dropout rate weekly']},{id:'kz2',kzId:'KZ-002',title:'Standardised matching tool for programme selection',description:'Decision support tool based on needs assessment data matches to programme. Reduces case worker inconsistency. Target: reassignment rate from 18% to <8%.',category:'Quality',priority:'high',status:'open',owner:'Programme Manager',dueDate:'2026-05-15',actions:['Map matching criteria for each programme','Build decision tree','Pilot with 2 case workers','Measure reassignment rate before/after']}]})
-    seeded.push('Nonprofit'); if(!primaryId)primaryId=pid
+    
+      await wa(s1.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'3.5-day wait for assessment — 15% of beneficiaries disengage before being seen',Defects:'18% matched to wrong programme requiring reassessment within 4 weeks',Non_Utilisation:'Case workers spending 48% of time on admin reporting — direct service time constrained'})
+      seeded.push('Nonprofit'); if(!primaryId)primaryId=pid
     }}
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -1619,7 +1743,9 @@ export async function POST(_request: NextRequest) {
     const s4=await stp(pid,4,{name:'Platform Submission & Release',department:'Publishing',operators:2,cycle_time:480,wait_time:7200,wip:1,flow_type:'push',uptime:100,defect_rate:18,notes:'18% of submissions rejected by App Store / Google Play — policy compliance or metadata errors.'})
     await td(s2.id,pid,'fivewhy',{problem:'Bug backlog growing — 340 open, adding 4/day net',whys:[{q:'Why is bug backlog growing?',a:'QA find-rate (12/day) exceeds engineering fix-rate (8/day) — net +4 bugs/day.'},{q:'Why fix-rate only 8/day?',a:'Engineers context-switch between bug fixing and new feature development simultaneously.'},{q:'Why context-switching?',a:'No separation between bug-fix sprint and feature sprint. All work in same sprint.'},{q:'Why no separation?',a:'Product roadmap pressure — product team adds features each sprint regardless of bug count.'},{q:'Why no bug threshold gate?',a:'ROOT CAUSE: No definition of done that includes bug count. Release criteria do not reference backlog size.'}],rootCause:'No bug-count gate in release criteria. Features prioritised over stability. Backlog grows unchecked.',countermeasure:'1. Add bug threshold to sprint planning (no new features if P1/P2 backlog >50). 2. Dedicated bug-fix sprint each quarter. 3. Fix-rate KPI for engineering team.',owner:'Engineering Manager',dueDate:'2026-04-30'})
     await td(s1.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Definition of ready — acceptance criteria mandatory at sprint start',description:'Ticket cannot enter sprint without 3 user stories and 5 acceptance criteria. QA sign-off on criteria before development starts. Target: QA return rate from 22% to 8%.',category:'Quality',priority:'critical',status:'in-progress',owner:'Scrum Master',dueDate:'2026-04-15',actions:['Define DoR template','Train product owners','Configure Jira mandatory fields','Measure return rate per sprint']},{id:'kz2',kzId:'KZ-002',title:'Bug-fix sprint every Q — no feature development',description:'Dedicated 2-week bug-fix sprint each quarter. Engineering 100% on backlog reduction. Target: reduce open bugs from 340 to <80.',category:'Productivity',priority:'high',status:'open',owner:'Product Director',dueDate:'2026-05-01',actions:['Schedule Q2 bug sprint in roadmap','Communicate to stakeholders','Define exit criteria (P1 zero, P2 <20)','Track backlog during sprint']}]})
-    seeded.push('Video Games'); if(!primaryId)primaryId=pid
+    
+      await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'340 open bugs — find-rate 12/day vs fix-rate 8/day. Bug backlog growing each sprint.',Waiting:'QA queue wait avg 4.8 days per build submission — QA team under-resourced vs build frequency',Overprocessing:'Full 8-hour regression run on every build including minor UI text changes'})
+      seeded.push('Video Games'); if(!primaryId)primaryId=pid
     }}
 
 

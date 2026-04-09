@@ -4,6 +4,7 @@ import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
+  try {
   const supabase = await createServerSupabase()
   const {
     data: { user },
@@ -95,4 +96,8 @@ export async function POST(request: NextRequest) {
     .eq('user_id', user.id)
 
   return NextResponse.json({ toolData: result })
-}
+
+  } catch (err: any) {
+    console.error("[tools]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}

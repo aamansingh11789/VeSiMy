@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 import { analyzeSteps, ISSUE_LABEL, SEV_COLOR } from '@/lib/supe-engine'
 import type { Step } from '@/lib/store'
 
-interface Props { steps: Step[]; projectId: string }
+interface Props { steps: Step[]; projectId: string; industry?: string; projectName?: string }
 
 type ChatMsg = { role: 'user' | 'assistant'; content: string }
 
@@ -32,7 +32,7 @@ const SUGGESTED_QUESTIONS = [
   'How do I fix my defect rate?',
 ]
 
-export function SupePanel({ steps, projectId }: Props) {
+export function SupePanel({ steps, projectId, industry, projectName }: Props) {
   const isDemo   = !steps?.length || !steps.some(s => s.cycle_time || s.toolData?.stopwatch?.mean > 0)
   const [recs,      setRecs]      = useState(() => isDemo ? DEMO_RECS : analyzeSteps(steps))
   const [resolved,  setResolved]  = useState<Set<string>>(new Set())
@@ -72,7 +72,9 @@ export function SupePanel({ steps, projectId }: Props) {
           project_id:   projectId,
           steps:        isDemo ? [] : steps,
           question,
-          chat_history: chat.slice(-6), // last 6 messages for context
+          chat_history: chat.slice(-6),
+          industry:     industry || null,
+          project_name: projectName || null,
         }),
       })
       const d = await res.json()
@@ -221,14 +223,25 @@ export function SupePanel({ steps, projectId }: Props) {
 
             {loading && (
               <div style={{ display:'flex', alignItems:'flex-start' }}>
-                <div style={{ padding:'9px 14px', borderRadius:'12px 12px 12px 2px', background:'var(--sl-100)', border:'1px solid var(--border)' }}>
-                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>SUPE</div>
-                  <div style={{ display:'flex', gap:4, alignItems:'center' }}>
-                    {[0,1,2].map(i => (
-                      <div key={i} style={{ width:5, height:5, borderRadius:'50%', background:'#8C44CC', opacity:0.6,
-                        animation:`pulse 1.2s ease-in-out ${i*0.2}s infinite` }} />
+                <div style={{ padding:'10px 14px', borderRadius:'12px 12px 12px 2px', background:'rgba(140,68,204,0.08)', border:'1px solid rgba(140,68,204,0.15)', backdropFilter:'blur(8px)' }}>
+                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:8 }}>⚡ SUPE THINKING</div>
+                  {/* Waveform animation */}
+                  <div style={{ display:'flex', gap:3, alignItems:'center', height:20 }}>
+                    {[0,1,2,3,4,5,6,7].map(i => (
+                      <div key={i} style={{
+                        width: 3, borderRadius: 2, background:'#8C44CC',
+                        animation: `supeBar 1.1s ease-in-out ${i * 0.1}s infinite alternate`,
+                        opacity: 0.7,
+                      }} />
                     ))}
                   </div>
+                  <style>{`
+                    @keyframes supeBar {
+                      0%   { height: 3px; opacity: 0.3; }
+                      50%  { height: 18px; opacity: 1; }
+                      100% { height: 5px; opacity: 0.4; }
+                    }
+                  `}</style>
                 </div>
               </div>
             )}

@@ -8,6 +8,7 @@ import { createServerSupabase }           from '@/lib/supabase-server'
 const BASE_PER_USER = 15  // $15/user/month base
 
 export async function POST(req: NextRequest) {
+  try {
   const body = await req.json()
   const {
     company_name, contact_email, contact_name, company_size,
@@ -99,4 +100,8 @@ export async function POST(req: NextRequest) {
     },
     valid_until: quote.valid_until,
   })
-}
+
+  } catch (err: any) {
+    console.error("[enterprise/quote]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}

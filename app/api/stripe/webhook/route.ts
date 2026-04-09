@@ -53,12 +53,23 @@ export async function POST(request: NextRequest) {
       const plan    = session.metadata?.plan
       if (userId && plan === 'lifetime' && session.payment_status === 'paid') {
         await supabase.from('profiles').update({
-          lifetime_access:       true,
-          lifetime_activated_at: new Date().toISOString(),
-          beta_tier:             'gold_standard',
-          plan_tier:             'lifetime',
-          projects_limit:        30,
-          stripe_customer_id:    session.customer as string,
+          lifetime_access:         true,
+          lifetime_activated_at:   new Date().toISOString(),
+          beta_tier:               'gold_standard',
+          plan_tier:               'lifetime',
+          projects_limit:          30,
+          subscription_status:     'active',
+          stripe_customer_id:      session.customer as string,
+          founding_member:         true,
+        }).eq('id', userId)
+      }
+      // Also handle pro checkout.session.completed for non-subscription flows
+      if (userId && plan === 'pro' && session.payment_status === 'paid') {
+        await supabase.from('profiles').update({
+          plan_tier:           'pro',
+          projects_limit:      10,
+          subscription_status: 'active',
+          stripe_customer_id:  session.customer as string,
         }).eq('id', userId)
       }
       break

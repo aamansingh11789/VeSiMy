@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase'
+import { CommandPaletteTrigger } from '@/components/ui/CommandPalette'
 import {
   DashboardIcon, FolderIcon, ZapIcon, SettingsIcon,
   LogOutIcon, CrownIcon, BookIcon,
@@ -208,6 +209,10 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
 
       {/* ── Nav links ─────────────────────────────────────────────────── */}
       <nav style={{ padding: collapsed ? '8px 0' : '0 8px', flex: 1, overflowY: 'auto' }}>
+        {/* ⌘K search trigger */}
+        <div style={{ padding: collapsed ? '4px 6px' : '4px 0', marginBottom: 4 }}>
+          <CommandPaletteTrigger collapsed={collapsed} />
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {NAV.map(({ href, icon: Icon, label }) => {
             const active = pathname === href || pathname.startsWith(href + '/')

@@ -2,6 +2,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { analyzeSteps } from '@/lib/supe-engine'
 import { createServerSupabase } from '@/lib/supabase-server'
+import { buildSupeSystemPrompt } from '@/lib/supe-knowledge'
 
 export const maxDuration = 60  // Vercel max execution time (seconds)
 
@@ -12,7 +13,7 @@ export async function POST(request: NextRequest) {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
     const body = await request.json()
-    const { project_id, steps, question, chat_history } = body
+    const { project_id, steps, question, chat_history, industry, project_name } = body
 
     if (!project_id) {
       return NextResponse.json({ error: 'project_id required' }, { status: 400 })
@@ -43,15 +44,17 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      const systemPrompt = `You are Supe, a world-class lean manufacturing AI mentor built into VeSiMy. Precise, direct, practical — seasoned lean consultant tone, not a textbook.
+      // Build rich system prompt from RAG knowledge base + industry context
+      const systemPrompt = buildSupeSystemPrompt({
+        industryKey:   industry || null,
+        projectName:   project_name || undefined,
+        stepContext:   `PCE: ${pce}% | Issues: ${recs.map(r => `${r.severity.toUpperCase()} ${r.principle} @ ${r.step_name || 'process'}`).join(', ') || 'none'}`,
+      }) + `
 
 PROCESS DATA:
 ${stepSummary}
 
-PCE: ${pce}%
-Issues detected: ${recs.map(r => `${r.severity.toUpperCase()} - ${r.principle} @ ${r.step_name || 'process'}`).join(', ') || 'none'}
-
-Rules: tie advice to actual step data, use lean terms correctly, be specific with numbers, under 150 words unless calculation needed, no filler phrases.`
+Rules: tie advice to actual step data, be specific with numbers, under 150 words unless calculation needed, no filler phrases.`
 
       const messages = question
         ? [...(chat_history || []).map(m => ({ role: m.role, content: m.content })), { role: 'user', content: question }]

@@ -43,6 +43,7 @@ function scoreApplication(data: any): { score: number; breakdown: Record<string,
 }
 
 export async function POST(req: NextRequest) {
+  try {
   const data = await req.json()
 
   const required = ['email', 'full_name', 'role', 'industry', 'lean_experience', 'pain_point', 'use_case']
@@ -94,4 +95,8 @@ export async function POST(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true, score, status, windowOpen })
-}
+
+  } catch (err: any) {
+    console.error("[beta/apply]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}

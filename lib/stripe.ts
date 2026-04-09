@@ -29,6 +29,7 @@ export const PLANS = {
       'No credit card',
     ],
     projects_limit: 3,
+    priceId: null,
     cta: 'Start free trial',
   },
   pro: {

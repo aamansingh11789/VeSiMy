@@ -8,6 +8,7 @@ import { PostHogProvider } from '@/components/analytics/PostHogProvider'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { InstallPrompt } from '@/components/ui/InstallPrompt'
+import { CommandPalette } from '@/components/ui/CommandPalette'
 import { PostHogPageView } from '@/components/analytics/PostHogPageView'
 import { ServiceWorkerRegistration } from '@/components/ui/ServiceWorkerRegistration'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
@@ -127,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* PWA components — invisible, run in background */}
         <ServiceWorkerRegistration />
         <InstallPrompt />
+        <CommandPalette />
 
         <Toaster
           position="top-right"

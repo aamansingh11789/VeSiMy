@@ -6,7 +6,12 @@ import { NextResponse, type NextRequest } from 'next/server'
 interface Params { params: { id: string } }
 
 // GET /api/projects/[id]
-export async function GET(_: NextRequest, { params }: Params) {
+export async function GET(_: NextRequest, {
+  try { params 
+  } catch (err: any) {
+    console.error("[projects/[id]]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}: Params) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -19,7 +24,12 @@ export async function GET(_: NextRequest, { params }: Params) {
 }
 
 // PATCH /api/projects/[id]
-export async function PATCH(request: NextRequest, { params }: Params) {
+export async function PATCH(request: NextRequest, {
+  try { params 
+  } catch (err: any) {
+    console.error("[projects/[id]]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}: Params) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -45,7 +55,12 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 }
 
 // DELETE /api/projects/[id]
-export async function DELETE(_: NextRequest, { params }: Params) {
+export async function DELETE(_: NextRequest, {
+  try { params 
+  } catch (err: any) {
+    console.error("[projects/[id]]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}: Params) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

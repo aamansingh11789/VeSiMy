@@ -115,6 +115,10 @@ body {
   background: var(--bg);
   min-height: 100vh;
   color: var(--text);
+  /* Subtle noise texture for depth */
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
 }
 main { transition: margin-left 0.22s cubic-bezier(.4,0,.2,1); }
 
@@ -155,16 +159,28 @@ p {
 @layer components {
   .card {
     @apply border;
-    background: #FFFFFF;
-    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.95);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset;
     transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    pointer-events: none;
   }
   .card:hover {
-    transform: translateY(-1px);
-    border-color: var(--brand);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: rgba(1, 118, 211, 0.25);
+    box-shadow: 0 8px 28px rgba(1,118,211,0.1), 0 1px 0 rgba(255,255,255,0.9) inset;
   }
 
   /* ── Salesforce-style buttons ── */

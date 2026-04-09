@@ -37,8 +37,24 @@ function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand
   const hasMissing = (step.missing_info_flags || []).length > 0
   const X = 80 + index * (BOX_W + GAP)
   const Y = 200
+
+  // Health glow — driven by defect rate, missing flags, and bottleneck status
+  const defect = step.defect_rate || 0
+  const missingCount = (step.missing_info_flags || []).length
+  const isBottleneck = step.is_bottleneck
+  let glowColor = null
+  let glowOpacity = 0
+  if (isBottleneck) { glowColor = RED; glowOpacity = 0.55 }
+  else if (defect > 8) { glowColor = RED; glowOpacity = 0.4 }
+  else if (defect > 3 || missingCount > 2) { glowColor = AMBER; glowOpacity = 0.35 }
+  else if (step.va_type === 'va' && defect === 0 && missingCount === 0) { glowColor = GREEN; glowOpacity = 0.2 }
+
   const sc = { stroke: isSelected ? BRAND : sym.stroke, strokeWidth: isSelected ? 2.5 : 1.5 }
-  const shadow = isSelected ? 'drop-shadow(0 0 8px rgba(1,118,211,.35))' : 'none'
+  const shadow = isSelected
+    ? 'drop-shadow(0 0 10px rgba(1,118,211,.5))'
+    : glowColor
+      ? `drop-shadow(0 0 8px ${glowColor}80)`
+      : 'none'
 
   return (
     <g style={{ cursor: 'pointer' }} onClick={() => onClick(step)}>
@@ -51,6 +67,13 @@ function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand
           </text>
           <line x1={X+BOX_W/2} y1={Y-30} x2={X+BOX_W/2} y2={Y} stroke="#888" strokeWidth="1" strokeDasharray="3 2"/>
         </>
+      )}
+
+      {/* Health glow halo — pulsing bloom behind step */}
+      {glowColor && (
+        <rect x={X-4} y={Y-4} width={BOX_W+8} height={BOX_H+8} rx="8"
+          fill="none" stroke={glowColor} strokeWidth="2" opacity={glowOpacity}
+          style={{ animation: isBottleneck ? 'healthPulse 1.4s ease-in-out infinite' : 'healthBreath 2.8s ease-in-out infinite' }}/>
       )}
 
       {sym.shape==='rect'     && <rect x={X} y={Y} width={BOX_W} height={BOX_H} fill={sym.fill} {...sc} rx="4" style={{filter:shadow}}/>}
@@ -203,6 +226,10 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
 
   return (
     <div style={{flex:1,position:'relative',overflow:'hidden',background:'#FAFAF8'}}>
+      <style>{`
+        @keyframes healthPulse { 0%,100%{opacity:0.55;stroke-width:2} 50%{opacity:0.9;stroke-width:3} }
+        @keyframes healthBreath { 0%,100%{opacity:0.2} 50%{opacity:0.5} }
+      `}</style>
 
       {/* KPI + controls HUD */}
       <div style={{position:'absolute',top:10,left:12,zIndex:20,display:'flex',flexDirection:'column',gap:6,pointerEvents:'none'}}>

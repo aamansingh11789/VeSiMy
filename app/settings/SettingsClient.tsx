@@ -17,6 +17,35 @@ interface Props {
   user:    { email?: string }
 }
 
+function IndustrySelector({ profileId, currentIndustry }: { profileId: string; currentIndustry?: string }) {
+  const [industry, setIndustry] = useState(currentIndustry || '')
+  const [saving, setSaving] = useState(false)
+
+  async function save(val: string) {
+    setSaving(true)
+    setIndustry(val)
+    const { error } = await createClient().from('profiles').update({ industry: val }).eq('id', profileId)
+    if (error) toast.error('Failed to update industry.')
+    else toast.success('Industry updated!')
+    setSaving(false)
+  }
+
+  return (
+    <select
+      className="input"
+      value={industry}
+      onChange={e => save(e.target.value)}
+      disabled={saving}
+      style={{ opacity: saving ? 0.6 : 1 }}
+    >
+      <option value="">Select your industry…</option>
+      {INDUSTRY_OPTIONS.map((opt: any) => (
+        <option key={opt.id} value={opt.id}>{opt.label}</option>
+      ))}
+    </select>
+  )
+}
+
 const PLAN_COLOR: Record<string,string> = { free:'var(--text3)', trial:'var(--text3)', trialing:'#0176D3', trial_expired:'#C0402A', pro:'#0176D3', lifetime:'#C49B2E', enterprise:'#6CB9FC' }
 
 export function SettingsClient({ profile, user }: Props) {
@@ -28,9 +57,13 @@ export function SettingsClient({ profile, user }: Props) {
   const planKey    = (profile?.plan_tier || 'trial') as keyof typeof PLANS
   const plan       = PLANS[planKey as keyof typeof PLANS] || PLANS.trial
   const isPaid     = ['pro', 'lifetime', 'enterprise'].includes(planKey)
+  const isLifetime = planKey === 'lifetime' || profile?.lifetime_access
+  const isFounder  = profile?.founding_member
   const isBeta     = profile?.is_beta || profile?.lifetime_access
   const subStatus  = profile?.subscription_status || 'trial'
   const periodEnd  = profile?.subscription_period_end ? new Date(profile.subscription_period_end).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : null
+
+  const planDisplayName = isFounder ? 'Founding Member — Lifetime' : isLifetime ? 'Lifetime Access' : plan.name
 
   async function openPortal() {
     setPortalLoading(true)
@@ -68,8 +101,11 @@ export function SettingsClient({ profile, user }: Props) {
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
                 <CrownIcon size={18} color={PLAN_COLOR[planKey] || 'var(--text3)'} />
                 <span style={{ fontSize:20, fontWeight:700, color:PLAN_COLOR[planKey] || 'var(--text)', fontFamily:'Palatino Linotype,serif' }}>
-                  {isBeta ? 'Lifetime Beta Access' : plan.name}
+                  {planDisplayName}
                 </span>
+                {isFounder && (
+                  <span style={{ fontSize:10, background:'rgba(196,155,46,0.15)', color:'#C49B2E', border:'1px solid rgba(196,155,46,0.3)', borderRadius:100, padding:'2px 10px', fontWeight:700 }}>FOUNDING MEMBER</span>
+                )}
                 {(subStatus === 'trialing') && (
                   <span style={{ fontSize:10, background:'rgba(29,209,161,0.12)', color:'#1DD1A1', border:'1px solid rgba(29,209,161,0.2)', borderRadius:100, padding:'2px 10px' }}>TRIAL</span>
                 )}
@@ -190,8 +226,8 @@ export function SettingsClient({ profile, user }: Props) {
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
             {[
               ['Projects', `${profile?.projects_count || 0} / ${planKey === 'pro' ? 10 : planKey === 'lifetime' ? 30 : planKey === 'enterprise' ? '∞' : profile?.projects_limit || 3}`, '#1DD1A1'],
-              ['Plan',      plan.name,                                                                                     PLAN_COLOR[planKey] || 'var(--text3)'],
-              ['Status',    isBeta ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),                 isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
+              ['Plan',      planDisplayName,                                                                        PLAN_COLOR[planKey] || 'var(--text3)'],
+              ['Status',    isLifetime ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),     isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (
               <div key={label} style={{ textAlign:'center' }}>
                 <div style={{ fontSize:22, fontWeight:700, color, fontFamily:'Palatino Linotype,serif' }}>{val}</div>

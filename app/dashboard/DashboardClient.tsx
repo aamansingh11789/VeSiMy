@@ -420,57 +420,53 @@ function StatCard({
 }) {
   return (
     <div
-      className="card"
       style={{
         padding: '18px 18px 16px',
         minHeight: 116,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        background: 'rgba(255,255,255,0.82)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255,255,255,0.95)',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: `0 2px 12px rgba(0,0,0,0.05), 0 1px 0 rgba(255,255,255,0.9) inset`,
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLDivElement
+        el.style.transform = 'translateY(-3px)'
+        el.style.boxShadow = `0 12px 28px ${color}18, 0 1px 0 rgba(255,255,255,0.9) inset`
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLDivElement
+        el.style.transform = 'translateY(0)'
+        el.style.boxShadow = `0 2px 12px rgba(0,0,0,0.05), 0 1px 0 rgba(255,255,255,0.9) inset`
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 12,
-        }}
-      >
-        <span
-          style={{
-            fontSize: 10,
-            color: 'var(--text2)',
-            letterSpacing: 1.2,
-            textTransform: 'uppercase',
-            fontFamily: 'monospace',
-          }}
-        >
+      {/* Accent bar top */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${color},${color}88,transparent)`, borderRadius:'var(--radius-lg) var(--radius-lg) 0 0' }}/>
+      {/* Glow blob */}
+      <div style={{ position:'absolute', top:-20, right:-20, width:80, height:80, borderRadius:'50%', background:`${color}0A`, pointerEvents:'none' }}/>
+
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12 }}>
+        <span style={{ fontSize:10, color:'var(--text2)', letterSpacing:1.2, textTransform:'uppercase', fontFamily:'monospace' }}>
           {label}
         </span>
-
-        <div
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: 9,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: `${color}14`,
-            border: `1px solid ${color}25`,
-          }}
-        >
+        <div style={{ width:28, height:28, borderRadius:9, display:'flex', alignItems:'center', justifyContent:'center', background:`${color}14`, border:`1px solid ${color}25` }}>
           <Icon size={13} color={color} />
         </div>
       </div>
 
-      <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--text)', lineHeight: 1.1 }}>
+      <div style={{ fontSize:26, fontWeight:700, color:'var(--text)', lineHeight:1.1 }}>
         {value}
       </div>
 
       {hint && (
-        <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 10 }}>
+        <div style={{ fontSize:11, color:'var(--text3)', marginTop:10 }}>
           {hint}
         </div>
       )}

@@ -5,6 +5,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 // POST /api/steps — create a new step
 export async function POST(request: NextRequest) {
+  try {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -68,5 +69,9 @@ export async function POST(request: NextRequest) {
   await supabase.from('projects').update({ updated_at: new Date().toISOString() }).eq('id', projectId)
 
   return NextResponse.json({ step: { ...data, toolData: {} } }, { status: 201 })
-}
+
+  } catch (err: any) {
+    console.error("[steps]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}
 

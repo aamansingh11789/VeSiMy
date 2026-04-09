@@ -792,7 +792,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
               <div style={{ flex: 1, overflow: 'auto' }}>
                 {isPaid ? (
-                  <SupePanel steps={steps} projectId={project.id} />
+                  <SupePanel steps={steps} projectId={project.id} industry={(project as any).industry} projectName={project.name} />
                 ) : (
                   <div style={{ padding: 20, textAlign: 'center' }}>
                     
@@ -887,7 +887,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
             <div style={{ flex: 1, overflow: 'auto' }}>
               {isPaid ? (
-                <SupePanel steps={steps} projectId={project.id} />
+                <SupePanel steps={steps} projectId={project.id} industry={(project as any).industry} projectName={project.name} />
               ) : (
                 <div style={{ padding: 32, textAlign: 'center' }}>
                   

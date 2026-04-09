@@ -7,6 +7,7 @@ import { createServerSupabase } from '@/lib/supabase-server'
 import { createAdminClient }    from '@/lib/supabase'
 
 export async function POST() {
+  try {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ success: false, message: 'Not authenticated' }, { status: 401 })
@@ -55,4 +56,8 @@ export async function POST() {
   ])
 
   return NextResponse.json({ success: true, expiresAt, windowLabel: win?.label || 'Early Access' })
-}
+
+  } catch (err: any) {
+    console.error("[beta/claim]", err)
+    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+  }}

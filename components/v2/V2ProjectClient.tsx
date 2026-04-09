@@ -242,12 +242,12 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     return Math.round((complete / steps.length) * 100)
   }, [steps])
 
-  const TABS: { id: V2Tab; label: string }[] = [
-    { id: 'map', label: 'Process Map' },
-    { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}` },
-    { id: 'analyze', label: 'Analysis' },
-    { id: 'journal', label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}` },
-    { id: 'future', label: 'Future State' },
+  const TABS: { id: V2Tab; label: string; icon: string }[] = [
+    { id: 'map',      label: 'Process Map',    icon: '🗺' },
+    { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
+    { id: 'analyze',  label: 'Analysis',       icon: '⚡' },
+    { id: 'journal',  label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: '📓' },
+    { id: 'future',   label: 'Future State',   icon: '🎯' },
   ]
 
   return (
@@ -268,32 +268,31 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           </span>
         </div>
 
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: 2, flex: 1, justifyContent: 'center' }}>
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => setTab(t.id)} style={{
-              padding: '6px 16px',
-              /* ISO/TPS standard — rectangular process box shape, no rounded corners */
-              borderRadius: 0,
-              border: '1px solid',
-              borderColor: tab === t.id ? BRAND : 'var(--border)',
-              borderBottom: tab === t.id ? '1px solid white' : '1px solid var(--border)',
-              cursor: 'pointer',
-              fontSize: 11,
-              fontWeight: tab === t.id ? 700 : 400,
-              fontFamily: 'monospace',
-              letterSpacing: 0.5,
-              background: tab === t.id ? 'white' : 'var(--sl-50)',
-              color: tab === t.id ? BRAND : 'var(--text3)',
-              /* Shadow on active = 3D depth per TPS visual conventions */
-              boxShadow: tab === t.id ? '0 2px 6px rgba(1,118,211,.15)' : 'none',
-              position: 'relative',
-              zIndex: tab === t.id ? 2 : 1,
-              marginBottom: tab === t.id ? -1 : 0,
-              transition: 'all .1s',
-              textTransform: 'uppercase',
-            }}>{t.label}</button>
-          ))}
+        {/* Floating glass dock — replaces flat tab bar */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{
+            display: 'flex', gap: 2, padding: '4px', borderRadius: 12,
+            background: 'rgba(3,45,96,0.08)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(1,118,211,0.12)',
+            boxShadow: '0 2px 12px rgba(1,118,211,0.08)',
+          }}>
+            {TABS.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)} style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '5px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                fontSize: 11, fontWeight: tab === t.id ? 700 : 500,
+                fontFamily: 'monospace', letterSpacing: 0.5, textTransform: 'uppercase',
+                background: tab === t.id ? BRAND : 'transparent',
+                color: tab === t.id ? 'white' : 'var(--text3)',
+                boxShadow: tab === t.id ? `0 2px 8px rgba(1,118,211,0.35)` : 'none',
+                transition: 'all .15s',
+              }}>
+                <span style={{ fontSize: 13 }}>{t.icon}</span>
+                <span>{t.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Right controls */}
@@ -593,7 +592,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         {/* Supe panel */}
         {showSupe && isPaid && (
           <div style={{ width: 380, flexShrink: 0, borderLeft: '1px solid var(--border)', background: 'white', overflow: 'hidden' }}>
-            <SupePanel steps={steps} projectId={project.id} />
+            <SupePanel steps={steps} projectId={project.id} industry={(project as any).industry} projectName={project.name} />
           </div>
         )}
       </div>

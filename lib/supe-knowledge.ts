@@ -87,15 +87,98 @@ function buildRelevantKnowledge(industryKey?: string | null, specific?: string[]
   ]
   
   const industrySpecific: Record<string, string[]> = {
-    hospital_acute_care:     ['lean_healthcare'],
-    primary_care_outpatient: ['lean_healthcare'],
-    surgery_operating_room:  ['lean_healthcare'],
-    pharmacy:                ['lean_healthcare'],
-    craft_brewery:           ['lean_brewing'],
-    winery:                  ['lean_brewing'],
-    real_estate:             ['lean_real_estate'],
-    software_development:    ['kanban', 'smed'],
-    it_operations:           ['kanban'],
+    // Healthcare
+    hospital_acute_care:           ['lean_healthcare'],
+    primary_care_outpatient:       ['lean_healthcare'],
+    surgery_operating_room:        ['lean_healthcare'],
+    pharmacy:                      ['lean_healthcare'],
+    medical_devices:               ['lean_manufacturing_general'],
+    pharmaceutical_manufacturing:  ['lean_manufacturing_general'],
+    // Brewing / Beverages
+    craft_brewery:                 ['lean_brewing'],
+    winery:                        ['lean_brewing'],
+    // Services / Real Estate
+    real_estate:                   ['lean_real_estate'],
+    // Software & Tech
+    software_development:          ['lean_software_tech', 'kanban', 'smed'],
+    it_operations:                 ['lean_software_tech', 'kanban'],
+    cybersecurity:                 ['lean_software_tech', 'kanban'],
+    // Manufacturing (all types)
+    automotive_manufacturing:      ['lean_manufacturing_general', 'smed', 'tpm'],
+    aerospace_manufacturing:       ['lean_manufacturing_general', 'smed'],
+    food_beverage_manufacturing:   ['lean_manufacturing_general'],
+    general_manufacturing:         ['lean_manufacturing_general', 'smed', 'tpm'],
+    electronics_manufacturing:     ['lean_manufacturing_general'],
+    industrial_manufacturing:      ['lean_manufacturing_general', 'tpm'],
+    // Professional services
+    law_firm:                      ['lean_professional_services'],
+    management_consulting:         ['lean_professional_services'],
+    accounting_audit:              ['lean_professional_services'],
+    architecture_engineering:      ['lean_professional_services'],
+    engineering_consulting:        ['lean_professional_services'],
+    // Retail & E-commerce
+    retail_stores:                 ['lean_retail_ecommerce'],
+    ecommerce_fulfillment:         ['lean_retail_ecommerce'],
+    grocery:                       ['lean_retail_ecommerce'],
+    // Logistics & Transport
+    warehousing_distribution:      ['lean_logistics_freight'],
+    freight_trucking:              ['lean_logistics_freight'],
+    postal_parcel:                 ['lean_logistics_freight'],
+    rail_operations:               ['lean_logistics_freight'],
+    port_maritime:                 ['lean_logistics_freight'],
+    airline_aviation:              ['lean_logistics_freight', 'smed'],
+    // Hospitality
+    restaurant_food_service:       ['lean_hospitality_food_service'],
+    hotel_hospitality:             ['lean_hospitality_food_service'],
+    // Financial services
+    retail_banking:                ['lean_financial_services'],
+    insurance:                     ['lean_financial_services'],
+    investment_management:         ['lean_financial_services'],
+    // Public sector
+    government_services:           ['lean_public_sector'],
+    fire_rescue:                   ['lean_public_sector'],
+    police:                        ['lean_public_sector'],
+    military:                      ['lean_public_sector'],
+    // Agriculture
+    farming_crop:                  ['lean_agriculture'],
+    aquaculture:                   ['lean_agriculture'],
+    // Media & Creative
+    film_tv:                       ['lean_media_creative'],
+    music_production:              ['lean_media_creative'],
+    video_games:                   ['lean_media_creative'],
+    publishing:                    ['lean_media_creative'],
+    graphic_design:                ['lean_media_creative'],
+    digital_marketing:             ['lean_media_creative'],
+    // HR & Staffing
+    human_resources:               ['lean_hr_staffing'],
+    staffing_agency:               ['lean_hr_staffing'],
+    // Education & Training
+    k12_education:                 ['lean_education_training'],
+    higher_education:              ['lean_education_training'],
+    corporate_training:            ['lean_education_training'],
+    academic_research:             ['lean_education_training'],
+    // Nonprofit & Social
+    nonprofit:                     ['lean_nonprofit_social'],
+    social_care:                   ['lean_nonprofit_social'],
+    // Energy
+    power_generation_utilities:    ['lean_energy_utilities', 'tpm'],
+    oil_gas:                       ['lean_energy_utilities'],
+    // Sports & Events
+    professional_sports:           ['lean_sports_fitness'],
+    sports_team:                   ['lean_sports_fitness'],
+    sports_venue:                  ['lean_sports_fitness'],
+    fitness_clubs:                 ['lean_sports_fitness'],
+    live_events:                   ['lean_sports_fitness'],
+    event_management:              ['lean_sports_fitness'],
+    // Contact centre / Telecoms
+    contact_center:                ['lean_professional_services', 'kanban'],
+    telecoms:                      ['lean_software_tech'],
+    // Construction
+    construction:                  ['lean_manufacturing_general'],
+    // Clinical / Research
+    clinical_trials:               ['lean_healthcare'],
+    // Project Management
+    project_management:            ['lean_professional_services'],
   }
 
   const toInclude = new Set([
@@ -238,3 +321,103 @@ EIGHTH WASTE: Unused human potential — not involving people in improvement. Th
 
 // Export a lookup by ID
 export const CHUNK_BY_ID = Object.fromEntries(KNOWLEDGE_CHUNKS.map(c => [c.id, c]))
+
+// ── Extended industry-specific knowledge chunks ───────────────────────────────
+// Appended: covers the remaining 65 industries not in the original set
+
+KNOWLEDGE_CHUNKS.push(
+
+{
+  id: 'lean_manufacturing_general',
+  section: 'Lean in General Manufacturing & Industrial',
+  tags: ['manufacturing','industrial','OEE','assembly','production','general manufacturing','automotive','aerospace','electronics','food beverage'],
+  content: `Manufacturing lean focuses on flow from raw material to finished goods. Takt time drives every decision — it is the drumbeat of the operation. Setup reduction (SMED) unlocks flexibility. OEE tracks the three losses: availability (unplanned stops), performance (speed loss), and quality (defects). 5S creates the foundation — a clean, organised, standard workplace is the precondition for every other improvement. Autonomous maintenance puts operators in charge of basic care. Standard work is the current best method, always being improved. Line balancing ensures no operator is overloaded or idle relative to takt.`
+},
+{
+  id: 'lean_professional_services',
+  section: 'Lean in Professional Services (Law, Consulting, Accounting, Architecture)',
+  tags: ['law firm','consulting','accounting','audit','architecture','engineering consulting','professional services','knowledge work'],
+  content: `Professional services translate lean perfectly. The product is a deliverable (contract, report, design, advice). Value is added when the professional is applying expertise toward the client's outcome. Waiting waste dominates — waiting for client input, partner review, regulatory approval, or information. Rework waste is the silent killer — revision cycles add 40-60% to total effort in many firms. Takt time = available billable hours / client demand. VSM maps the matter/engagement lifecycle from instruction to delivery. Standard work in professional services is templates, checklists, and defined review stages. Kanban boards for work in progress limit multitasking and make bottlenecks visible.`
+},
+{
+  id: 'lean_software_tech',
+  section: 'Lean in Software Development & IT Operations',
+  tags: ['software development','it operations','cybersecurity','DevOps','agile','tech','code review','deployment'],
+  content: `Software development waste: partially done work (inventory), extra features (overproduction), relearning (motion), handoffs (transportation), defects (bugs requiring rework), task switching (waiting). Cycle time in software = time from work started to value delivered to users. Lead time includes queue time before work starts. WIP limits prevent teams from starting more than they can finish. Code review queues are the most common bottleneck — visible on Kanban boards. Definition of Done is the standard work equivalent. CI/CD pipelines reduce batch size and deployment risk. Retrospectives are the kaizen equivalent. Incident response (IT/cybersecurity) maps as a VSM: detection → triage → containment → resolution → post-mortem.`
+},
+{
+  id: 'lean_retail_ecommerce',
+  section: 'Lean in Retail, E-Commerce & Grocery',
+  tags: ['retail','e-commerce','grocery','store operations','fulfilment','warehouse','order picking'],
+  content: `Retail lean targets: shrinkage (defect waste), stockouts (waiting waste), overstocking (inventory waste), and excessive associate motion (motion waste). In e-commerce fulfilment, pick-pack-ship is the value stream. Pick accuracy and units-per-hour are the primary metrics. Top-50 SKU slotting at prime pick locations reduces motion. Kanban for replenishment prevents stockouts without overstocking. Grocery: scan-based trading and vendor-managed inventory are pull systems. Store lean: shelf availability, checkout wait time (takt = customers per hour / checkout lanes), and receiving dock flow. 5S transforms the backroom and reduces the time staff spend searching for product.`
+},
+{
+  id: 'lean_logistics_freight',
+  section: 'Lean in Logistics, Freight & Postal Operations',
+  tags: ['logistics','freight','trucking','postal','parcel','delivery','3PL','warehousing','rail','port','maritime'],
+  content: `Logistics lean targets lead time from order to delivery. The value stream spans: order receipt → warehouse pick → load → transit → delivery → proof of delivery. Waiting waste: dwell time at loading docks, driver wait at shipper, customs delays. Motion waste: inefficient route sequencing. Overproduction: running partial loads because of poor demand aggregation. Rail and port operations use takt to schedule berth utilisation and train slots. Container dwell time at ports is the primary waste metric — measured in days. 5S in the warehouse is the foundation. Milk-run delivery routes reduce inventory at receiving facilities. Standardised trailer loading reduces damage defects.`
+},
+{
+  id: 'lean_hospitality_food_service',
+  section: 'Lean in Hospitality, Restaurants & Food Service',
+  tags: ['restaurant','hotel','hospitality','food service','kitchen','front of house','catering'],
+  content: `Restaurant lean: the kitchen is a production cell. Takt time = covers per service / available preparation time. Waiting waste dominates: tables waiting to be turned, food sitting at the pass, guests waiting for bills. Motion waste: poorly organised mise en place forces cooks to reach and walk mid-service. Standard work in the kitchen is the recipe and prep list executed in the correct sequence. Hotel lean: housekeeping room turnaround is a SMED problem — every minute of turn time is capacity. Front desk check-in is a value stream. Kaizen events in hospitality typically focus on checklist compliance, not tool repositioning.`
+},
+{
+  id: 'lean_financial_services',
+  section: 'Lean in Financial Services (Banking, Insurance, Investment)',
+  tags: ['retail banking','insurance','investment management','financial services','claims','loan processing'],
+  content: `Financial services lean targets transaction processing cycle time. Loan approval, claims processing, and trade settlement share the same waste profile: waiting for approvals (waiting waste), multiple data entry (motion waste), rework from incomplete applications (defect waste), and over-checking by multiple reviewers (overprocessing waste). Takt = applications per day / available processing hours. Error-proofing (poka-yoke) in financial services: mandatory fields, validation rules, digital forms that prevent bad data entry. Kanban: claims queue boards make WIP visible and prevent batch processing. Standard work for insurance adjusters dramatically reduces cycle time variation.`
+},
+{
+  id: 'lean_public_sector',
+  section: 'Lean in Government, Emergency Services & Public Sector',
+  tags: ['government','permit','licensing','fire rescue','police','military','public sector','emergency response'],
+  content: `Public sector lean targets citizen/resident service cycle time. Government permitting: value stream from application to decision. Waiting waste is endemic — applications sit in queues between departments. Standard work for reviewers reduces variation. Emergency services lean: Fire & Rescue targets response time from call to on-scene. Dispatch protocol standardisation and apparatus positioning are the primary levers. Police: crime investigation VSM from report to charge. Military equipment readiness: preventive maintenance cycles, MTTR (mean time to repair), and parts availability are the KPIs. Kaizen in public sector requires framing improvement as service improvement to citizens, not cost reduction.`
+},
+{
+  id: 'lean_agriculture',
+  section: 'Lean in Agriculture, Farming & Aquaculture',
+  tags: ['farming','crop production','aquaculture','agriculture','harvest'],
+  content: `Agriculture lean: the value stream runs from field preparation through harvest to market. Waiting waste is structural (crop growth time) but the surrounding processes — planting, irrigation, harvest logistics, and post-harvest processing — are highly improvable. SMED applies to harvest equipment changeover between crops. 5S in machinery sheds and packing sheds reduces defects and downtime. Aquaculture: the value stream is spawn to harvest. Feed conversion ratio is the primary efficiency metric. Mortality rate is the defect metric. Biosecurity protocols are standard work with zero tolerance for deviation. Batch tracking and water quality monitoring are poka-yoke equivalents.`
+},
+{
+  id: 'lean_media_creative',
+  section: 'Lean in Media, Creative, Publishing & Entertainment',
+  tags: ['film','tv','music production','video games','publishing','graphic design','digital marketing','creative'],
+  content: `Creative industry lean: the value stream ends at published/delivered/released work. Revision cycles are rework waste and are the dominant source of lead time. Scope creep is overproduction. Brief clarity at the start of a project is the poka-yoke — incomplete briefs generate near-certain rework. Film/TV production VSM: script → pre-production → shoot → edit → delivery. Setup (location, lighting, equipment) is changeover time — SMED principles apply. Publishing: manuscript to print. Video game development: feature → build → test → release cycle. Kanban boards for sprint work are universal across creative industries. Daily standups are the andon equivalent.`
+},
+{
+  id: 'lean_hr_staffing',
+  section: 'Lean in HR, Recruitment & Staffing',
+  tags: ['human resources','recruitment','onboarding','hr','staffing agency'],
+  content: `Recruitment lean: value stream from role requisition to candidate start date. Time-to-fill is the lead time metric. Interview scheduling is frequently a waiting waste bottleneck — automated scheduling tools eliminate it. Rework waste: candidates dropped after final stage because role requirements were unclear at the start. Standard work: structured interview guides, consistent scoring rubrics, defined offer approval levels. Onboarding: time to productivity is the metric. Checklist-driven onboarding with defined Day 1/Week 1/Month 1 deliverables is standard work. Staffing agencies: VSM from client order to placed candidate. Defect = poor placement (early departure or client complaint).`
+},
+{
+  id: 'lean_education_training',
+  section: 'Lean in Education, Training & L&D',
+  tags: ['education','k12','higher education','corporate training','learning development','university','academic'],
+  content: `Education lean: the value stream produces learning outcomes and qualifications. Student throughput (enrolment to graduation) is the lead time metric. Dropout is the defect metric. Waiting waste: enrolment queues, financial aid delays, advisor unavailability. Standard work in education: lesson plans, assessment rubrics, onboarding checklists. L&D: training programme lead time from identified need to certified competency. 30% pre-programme dropout is a common waste — automated scheduling and reminders reduce it. E-learning completion rates below 70% indicate design problems, not learner problems. Kirkpatrick Level 4 (business impact) measurement is the equivalent of measuring actual defect reduction after a quality intervention.`
+},
+{
+  id: 'lean_nonprofit_social',
+  section: 'Lean in Nonprofit, Social Care & Healthcare Adjacent',
+  tags: ['nonprofit','social care','beneficiary services','charity','community services'],
+  content: `Nonprofit lean: resources are scarce by definition — every waste matters more. The value stream runs from referral or need identification to service delivery and outcome. Waiting waste: long waits for assessment, approval, or caseworker capacity. Defect waste: incomplete referral forms requiring re-contact. Standard work for caseworkers ensures consistent quality regardless of experience level. Triage models (low complexity vs. high complexity pathways) are the kanban equivalent — right resource to right need. Outcome measurement is the quality metric. Overhead reduction through process improvement is more sustainable than budget cuts.`
+},
+{
+  id: 'lean_energy_utilities',
+  section: 'Lean in Power Generation, Oil & Gas & Utilities',
+  tags: ['power generation','oil gas','utilities','energy','drilling','maintenance'],
+  content: `Energy sector lean: planned vs unplanned maintenance is the primary OEE lever. Planned shutdowns follow SMED principles — minimise duration through pre-staged materials and parallel work sequences. Oil & gas: NPT (non-productive time) is the waste metric. Stuck pipe, equipment failure, and waiting on decisions are the top NPT causes. Root cause analysis (5 Why and fishbone) on each NPT event builds a pattern that drives PM procedure updates. Power generation: forced outage rate and heat rate efficiency are the KPIs. Planned outage management is a project VSM. TPM in power stations: operators own the first-line checks on rotating equipment.`
+},
+{
+  id: 'lean_sports_fitness',
+  section: 'Lean in Sports, Fitness & Live Events',
+  tags: ['professional sports','sports team','sports venue','fitness clubs','live events','event management'],
+  content: `Sports operations lean: athlete performance support is a production process — training stimulus, recovery, medical clearance, match-day preparation. Bottlenecks appear as athlete unavailability (injury) and data latency (delayed GPS/biometric feedback). Fitness clubs: member check-in, class scheduling, and equipment availability follow service lean principles. Retention rate is the quality metric. Live events: production VSM from brief to event delivery. Technical rehearsal is the changeover. Defects = technical failures during live performance. Sports venue: fan experience VSM from car park entry to seat to concession to exit — queue time at each point is the waste. Takt = spectators / available flow paths.`
+},
+
+)
+
+// Update industrySpecific map in buildRelevantKnowledge to cover remaining industries
