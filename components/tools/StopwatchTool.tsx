@@ -48,6 +48,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
   useEffect(() => {
     if (running) {
+      // Only reset startRef when starting fresh (not every elapsed change)
       startRef.current = Date.now() - elapsed
 
       const tick = () => {
@@ -61,7 +62,8 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
     }
 
     return () => cancelAnimationFrame(rafRef.current)
-  }, [running, elapsed])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [running])  // intentionally omit `elapsed` — startRef handles continuity
 
   const lap = () => {
     if (!running) return

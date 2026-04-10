@@ -113,7 +113,7 @@ html {
 
 body {
   background: var(--bg);
-  min-height: 100vh;
+  min-height: 100dvh;
   color: var(--text);
   /* Subtle noise texture for depth */
   background-image:

@@ -15,6 +15,10 @@ import { V2AnalysisReport } from './V2AnalysisReport'
 import { V2FutureStatePanel } from './V2FutureStatePanel'
 import { V2Journal } from './V2Journal'
 import { SupePanel } from '@/components/supe/SupePanel'
+import { ToolModal } from '@/components/tools/ToolModal'
+import { PDFExportButton } from '@/components/export/PDFExport'
+import { saveToolData, upsertV2Step, deleteV2Step, createV2Step, updateV2Project } from '@/lib/db'
+import { isPaidProfile } from '@/lib/require-plan'
 import { createBranch, fetchBranches } from '@/lib/db'
 import toast from 'react-hot-toast'
 
@@ -58,6 +62,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   const [showStartModal, setShowStartModal] = useState(steps.length === 0)
   const [parsing, setParsing] = useState(false)
   const [showFuturePanel, setShowFuturePanel] = useState(false)
+  const [activeTool, setActiveTool] = useState<{ tool: string; stepId: string } | null>(null)
   const [branches, setBranches] = useState<any[]>([])
   const [showAddBranch, setShowAddBranch] = useState(false)
   const [newBranchName, setNewBranchName] = useState('')
@@ -78,8 +83,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     } catch { toast.error('Could not create branch') }
   }
 
-  const isPaid = ['pro','lifetime','enterprise'].includes(profile.plan_tier) ||
-    profile.lifetime_access || profile.is_beta
+  const isPaid = isPaidProfile(profile)
 
   // ── Load reports from DB on mount ────────────────────────────────────────
   useEffect(() => {
@@ -88,61 +92,86 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
   useEffect(() => {
     supabase.from('analysis_reports')
-      .select('*').eq('project_id', project.id)
+      .select('*').eq('project_id', project.id).eq('user_id', profile.id)
       .order('generated_at', { ascending: false })
       .then(({ data }) => { if (data) setReports(data) })
   }, [project.id])
 
   // ── Save step to DB ───────────────────────────────────────────────────────
   const saveStep = useCallback(async (step: V2Step) => {
-    const { id, toolData, ...data } = step
-    const { error } = await supabase.from('steps').upsert({ id, ...data, version: 'v2' })
-    if (error) toast.error('Save failed: ' + error.message)
-    return !error
-  }, [supabase])
+    try {
+      await upsertV2Step(step)
+      return true
+    } catch (err: any) {
+      toast.error('Save failed: ' + (err?.message || 'Unknown error'))
+      return false
+    }
+  }, [])
 
   // ── Create new step ───────────────────────────────────────────────────────
   const addStep = useCallback(async (afterPosition?: number) => {
     const pos = afterPosition !== undefined ? afterPosition + 1 : steps.length
-    const { data, error } = await supabase.from('steps').insert({
-      project_id: project.id,
-      user_id: profile.id,
-      name: `Step ${pos + 1}`,
-      position: pos,
-      step_type: 'process',
-      tasks: [],
-      version: 'v2',
-      cycle_time_unit: 'seconds',
-      cycle_time_type: 'assumed',
-      missing_info_flags: ['cycle_time', 'operators', 'defect_rate'],
-      from_sop: false,
-    }).select('*').single()
-
-    if (error) { toast.error('Could not add step'); return }
-    const newStep = { ...data, tasks: [], missing_info_flags: data.missing_info_flags || [] }
-    setSteps(prev => {
-      const updated = [...prev]
-      updated.splice(pos, 0, newStep)
-      return updated.map((s, i) => ({ ...s, position: i }))
-    })
-    setSelectedStep(newStep)
-    setPanelOpen(true)
-  }, [steps, project.id, profile.id, supabase])
+    try {
+      const newStep = await createV2Step({
+        project_id: project.id,
+        name: `Step ${pos + 1}`,
+        position: pos,
+        step_type: 'process',
+        tasks: [],
+        cycle_time_unit: 'seconds',
+        cycle_time_type: 'assumed',
+        missing_info_flags: ['cycle_time', 'operators', 'defect_rate'],
+        from_sop: false,
+      })
+      setSteps(prev => {
+        const updated = [...prev]
+        updated.splice(pos, 0, newStep)
+        return updated.map((s, i) => ({ ...s, position: i }))
+      })
+      setSelectedStep(newStep)
+      setPanelOpen(true)
+    } catch {
+      toast.error('Could not add step')
+    }
+  }, [steps, project.id])
 
   // ── Update step locally + save ────────────────────────────────────────────
+  const handleSaveToolData = async (stepId: string, tool: string, data: Record<string, any>) => {
+    await saveToolData(stepId, tool, data)
+    setSteps(prev => prev.map(s =>
+      s.id === stepId ? { ...s, toolData: { ...(s.toolData || {}), [tool]: data } } : s
+    ))
+    // If the step is currently selected, update it too
+    if (activeTool?.stepId === stepId) {
+      setSelectedStep(prev => prev && prev.id === stepId
+        ? { ...prev, toolData: { ...(prev.toolData || {}), [tool]: data } }
+        : prev
+      )
+    }
+  }
+
   const updateStep = useCallback(async (updated: V2Step) => {
+    // Optimistic update
     setSteps(prev => prev.map(s => s.id === updated.id ? updated : s))
     setSelectedStep(updated)
-    await saveStep(updated)
+    const ok = await saveStep(updated)
+    if (!ok) {
+      // Rollback local state on save failure
+      setSteps(prev => prev.map(s => s.id === updated.id ? (s) : s))
+      toast.error('Save failed — your changes were not persisted. Please try again.')
+    }
   }, [saveStep])
 
   // ── Delete step ───────────────────────────────────────────────────────────
   const deleteStep = useCallback(async (stepId: string) => {
-    const { error } = await supabase.from('steps').delete().eq('id', stepId)
-    if (error) { toast.error('Delete failed'); return }
-    setSteps(prev => prev.filter(s => s.id !== stepId).map((s, i) => ({ ...s, position: i })))
-    if (selectedStep?.id === stepId) { setSelectedStep(null); setPanelOpen(false) }
-  }, [supabase, selectedStep])
+    try {
+      await deleteV2Step(stepId)
+      setSteps(prev => prev.filter(s => s.id !== stepId).map((s, i) => ({ ...s, position: i })))
+      if (selectedStep?.id === stepId) { setSelectedStep(null); setPanelOpen(false) }
+    } catch {
+      toast.error('Delete failed')
+    }
+  }, [selectedStep])
 
   // ── SOP Upload → parse → populate steps ──────────────────────────────────
   const handleSopUpload = useCallback(async (file?: File, manualText?: string) => {
@@ -161,42 +190,43 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       toast.success(`Parsed "${filename}" — ${parsed.steps.length} steps extracted`)
 
       // Save raw text + parsed steps to project
-      await supabase.from('projects').update({
+      await updateV2Project(project.id, {
         sop_raw_text: data.raw_text_preview,
         sop_filename: filename,
         sop_parsed_at: new Date().toISOString(),
         description: parsed.process_description || project.description,
         version: 'v2',
-      }).eq('id', project.id)
+      })
 
-      // Insert all parsed steps
+      // Insert all parsed steps via db.ts for consistent user_id enforcement
       const insertedSteps: V2Step[] = []
       for (let i = 0; i < parsed.steps.length; i++) {
         const ps = parsed.steps[i]
-        const { data: stepData } = await supabase.from('steps').insert({
-          project_id: project.id,
-          user_id: profile.id,
-          position: i,
-          name: ps.name,
-          step_type: ps.step_type || 'process',
-          tasks: ps.tasks || [],
-          governing_entity: ps.governing_entity || '',
-          department: ps.department || '',
-          notes: ps.notes || '',
-          cycle_time_type: 'assumed',
-          cycle_time_unit: ps.cycle_time_unit || 'seconds',
-          operators: ps.operators || 1,
-          defect_rate: ps.defect_rate || 0,
-          wait_time: ps.wait_time || 0,
-          wip: ps.wip || 0,
-          flow_type: ps.flow_type || 'push',
-          missing_info_flags: ps.missing_info_flags || ['cycle_time'],
-          from_sop: true,
-          sop_original_text: ps.sop_original_text || ps.name,
-          version: 'v2',
-        }).select('*').single()
-
-        if (stepData) insertedSteps.push({ ...stepData, tasks: stepData.tasks || [], missing_info_flags: stepData.missing_info_flags || [] })
+        try {
+          const stepData = await createV2Step({
+            project_id: project.id,
+            position: i,
+            name: ps.name,
+            step_type: ps.step_type || 'process',
+            tasks: ps.tasks || [],
+            governing_entity: ps.governing_entity || '',
+            department: ps.department || '',
+            notes: ps.notes || '',
+            cycle_time_type: 'assumed',
+            cycle_time_unit: ps.cycle_time_unit || 'seconds',
+            operators: ps.operators || 1,
+            defect_rate: ps.defect_rate || 0,
+            wait_time: ps.wait_time || 0,
+            wip: ps.wip || 0,
+            flow_type: ps.flow_type || 'push',
+            missing_info_flags: ps.missing_info_flags || ['cycle_time'],
+            from_sop: true,
+            sop_original_text: ps.sop_original_text || ps.name,
+          })
+          insertedSteps.push(stepData as V2Step)
+        } catch (e) {
+          console.error('[sop] step insert failed:', e)
+        }
       }
 
       setSteps(insertedSteps)
@@ -316,6 +346,15 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             }}>
               + Add Step
             </button>
+          )}
+
+          {/* PDF Export */}
+          {steps.length > 0 && (
+            <PDFExportButton
+              project={project}
+              steps={steps}
+              isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
+            />
           )}
 
           {/* Analyze button */}
@@ -476,6 +515,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                 onUpdate={updateStep}
                 onDelete={() => deleteStep(selectedStep.id)}
                 onClose={() => { setPanelOpen(false); setSelectedStep(null) }}
+                onTool={(tool: string) => setActiveTool({ tool, stepId: selectedStep.id })}
               />
             )}
           </>
@@ -627,6 +667,23 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           </div>
         </div>
       )}
+
+      {/* ── CI Tool modals ─────────────────────────────────────────────── */}
+      {activeTool && (() => {
+        const step = steps.find(s => s.id === activeTool.stepId)
+        if (!step) return null
+        return (
+          <ToolModal
+            tool={activeTool.tool}
+            step={step}
+            onSave={async (data) => {
+              await handleSaveToolData(activeTool.stepId, activeTool.tool, data)
+              setActiveTool(null)
+            }}
+            onClose={() => setActiveTool(null)}
+          />
+        )
+      })()}
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg) } }

@@ -6,11 +6,41 @@ import { buildSupeSystemPrompt } from '@/lib/supe-knowledge'
 
 export const maxDuration = 60  // Vercel max execution time (seconds)
 
+// ── Simple in-memory rate limiter — 20 requests per user per minute ──────────
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+function checkRateLimit(userId: string): boolean {
+  const now = Date.now()
+  const entry = rateLimitMap.get(userId)
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(userId, { count: 1, resetAt: now + 60_000 })
+    return true
+  }
+  if (entry.count >= 20) return false
+  entry.count++
+  return true
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+    if (!checkRateLimit(user.id)) {
+      return NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 })
+    }
+
+    // Verify paid plan (Supe AI is a Pro feature)
+    const { data: supeProfile } = await supabase.from('profiles')
+      .select('plan_tier, lifetime_access, is_beta').eq('id', user.id).single()
+    const supeIsPaid = ['pro','lifetime','enterprise'].includes(supeProfile?.plan_tier) ||
+      supeProfile?.lifetime_access || supeProfile?.is_beta
+    if (!supeIsPaid) {
+      return NextResponse.json({
+        recommendations: [], insights: [], issues_found: 0,
+        answer: 'Supe AI is a Pro feature. Upgrade to unlock AI-powered process analysis.',
+      })
+    }
 
     const body = await request.json()
     const { project_id, steps, question, chat_history, industry, project_name } = body
@@ -84,13 +114,11 @@ Rules: tie advice to actual step data, be specific with numbers, under 150 words
         }
       } else {
         console.error('[supe] API error', res.status, responseText.slice(0, 500))
-        let msg = responseText
-        try { msg = JSON.parse(responseText)?.error?.message || responseText } catch {}
-        answer = `Supe API error (${res.status}): ${msg.slice(0, 200)}`
+        answer = "Supe is temporarily unavailable. Please try again in a moment."
       }
     } catch (e) {
       console.error('[supe] fetch failed:', e)
-      answer = `Supe connection error: ${e?.message || 'Unknown'}. Check Vercel logs.`
+      answer = "Supe is temporarily unavailable. Please try again in a moment."
     }
 
     return NextResponse.json({ recommendations: recs, insights, answer, issues_found: recs.length })

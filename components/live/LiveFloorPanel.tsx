@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 // ── components/live/LiveFloorPanel.tsx ───────────────────────────────────────
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import type { Step } from '@/lib/store'
@@ -24,21 +24,25 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
   const [live,    setLive]    = useState(false)
   const [saving,  setSaving]  = useState(false)
 
+  // ONE client instance shared across fetch, subscribe, and cleanup
+  const supabase = useRef(createClient())
+
   useEffect(() => {
     if (!steps.length) return
-    createClient().from('live_metrics').select('*').eq('project_id', projectId)
+    supabase.current.from('live_metrics').select('*').eq('project_id', projectId)
       .order('timestamp', { ascending:false }).limit(10)
       .then(({ data }) => setRecent(data||[]))
   }, [projectId])
 
   useEffect(() => {
     if (!live) return
-    const sub = createClient().channel(`live-${projectId}`)
+    const sub = supabase.current.channel(`live-${projectId}`)
       .on('postgres_changes',
         { event:'INSERT', schema:'public', table:'live_metrics', filter:`project_id=eq.${projectId}` },
         p => setRecent(prev => [p.new as Metric, ...prev].slice(0,10)))
       .subscribe()
-    return () => { createClient().removeChannel(sub) }
+    // Cleanup uses the SAME client instance that created the channel
+    return () => { supabase.current.removeChannel(sub) }
   }, [live, projectId])
 
   async function log() {
@@ -57,6 +61,11 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
 
   return (
     <div>
+      {/* Session-only notice */}
+      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 14 }}>
+        ⚠ Live floor metrics are session-only and not saved between sessions.
+      </div>
+
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
         <h3 style={{ margin:0, fontFamily:'var(--font-serif)', fontSize:18, color:'var(--text)' }}>Live Floor Metrics</h3>
         <button onClick={() => setLive(l=>!l)} style={{ fontSize:10, padding:'3px 10px', borderRadius:100, border:'1px solid', cursor:'pointer',

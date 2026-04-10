@@ -6,11 +6,9 @@
 import { createClient } from '@/lib/supabase'
 import type { Project, Step, KanbanCard, KanbanColumn } from './store'
 
-// ── Singleton client ─────────────────────────────────────────────────────────
-let _dbClient: ReturnType<typeof createClient> | null = null
+// ── Fresh client per call (no singleton — avoids session bleed) ──────────────
 function getClient() {
-  if (!_dbClient) _dbClient = createClient()
-  return _dbClient
+  return createClient()
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -278,22 +276,18 @@ export async function reorderSteps(projectId: string, orderedIds: string[]): Pro
   const db = getClient()
   const user = await getCurrentUser(db)
 
-  const results = await Promise.all(
-    orderedIds.map((id, position) =>
-      db
-        .from('steps')
-        .update({
-          position,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', id)
-        .eq('project_id', projectId)
-        .eq('user_id', user.id)
-    )
-  )
-
-  const failed = results.find((r: any) => r.error)
-  if (failed?.error) throw failed.error
+  // Sequential updates preserve ordering integrity.
+  // Parallel Promise.all() would race and produce inconsistent positions
+  // under slow network or DB load.
+  for (let i = 0; i < orderedIds.length; i++) {
+    const { error } = await db
+      .from('steps')
+      .update({ position: i, updated_at: new Date().toISOString() })
+      .eq('id', orderedIds[i])
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+    if (error) throw error
+  }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -773,4 +767,63 @@ export async function seedDefaultKanbanColumns(
 
   if (error) throw error
   return (data || []).map((c: any) => ({ ...c, cards: [] })) as KanbanColumn[]
+}
+// ══════════════════════════════════════════════════════════════════════════════
+// V2 STEPS — used by V2ProjectClient. All writes go through here to enforce
+// user_id ownership at the data layer, not the component layer.
+// ══════════════════════════════════════════════════════════════════════════════
+
+export async function upsertV2Step(step: Record<string, any>): Promise<void> {
+  const db = getClient()
+  const user = await getCurrentUser(db)
+
+  // Strip client-only fields that don't exist in the DB schema
+  const { toolData, ...data } = step
+
+  const { error } = await db
+    .from('steps')
+    .upsert({ ...data, user_id: user.id, version: 'v2' })
+    .eq('user_id', user.id)  // RLS double-enforcement
+
+  if (error) throw error
+}
+
+export async function deleteV2Step(stepId: string): Promise<void> {
+  const db = getClient()
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('steps')
+    .delete()
+    .eq('id', stepId)
+    .eq('user_id', user.id)  // user must own the step
+
+  if (error) throw error
+}
+
+export async function createV2Step(form: Record<string, any>): Promise<Record<string, any>> {
+  const db = getClient()
+  const user = await getCurrentUser(db)
+
+  const { data, error } = await db
+    .from('steps')
+    .insert({ ...form, user_id: user.id, version: 'v2' })
+    .select('*')
+    .single()
+
+  if (error) throw error
+  return { ...data, tasks: data.tasks || [], missing_info_flags: data.missing_info_flags || [], toolData: {} }
+}
+
+export async function updateV2Project(projectId: string, updates: Record<string, any>): Promise<void> {
+  const db = getClient()
+  const user = await getCurrentUser(db)
+
+  const { error } = await db
+    .from('projects')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+
+  if (error) throw error
 }

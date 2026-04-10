@@ -11,9 +11,9 @@ import { createClient } from '@/lib/supabase'
 import { saveToolData } from '@/lib/db'
 import toast from 'react-hot-toast'
 
-interface Props { step: any; project: any; profile: any; t: any; onUpdate: (s: any) => void; onDelete: () => void; onClose: () => void }
+interface Props { step: any; project: any; profile: any; t: any; onUpdate: (s: any) => void; onDelete: () => void; onClose: () => void; onTool?: (tool: string) => void }
 
-export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onClose }: Props) {
+export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onClose, onTool }: Props) {
   const [form, setForm] = useState({ ...step, tasks: step.tasks || [] })
   const [newTask, setNewTask] = useState('')
   const [showCIMenu, setShowCIMenu] = useState(false)
@@ -277,7 +277,11 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
             {showCIMenu && (
               <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 30, background: 'white', border: '1px solid var(--border)', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,.12)', marginTop: 4, overflow: 'hidden' }}>
                 {CI_TOOLS.map(tool => (
-                  <button key={tool.id} onClick={() => { setActiveCITool(tool.id); setShowCIMenu(false) }}
+                  <button key={tool.id} onClick={() => {
+                    setActiveCITool(tool.id)
+                    setShowCIMenu(false)
+                    if (onTool) onTool(tool.id)
+                  }}
                     style={{ width: '100%', padding: '10px 14px', background: activeCITool === tool.id ? 'rgba(1,118,211,.06)' : 'white', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid var(--border)' }}>
                     <span style={{ fontSize: 18 }}>{tool.icon}</span>
                     <div>
@@ -289,14 +293,14 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               </div>
             )}
             {activeCITool && (
-              <div style={{ marginTop: 10, padding: '10px 12px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 8, fontSize: 12, color: 'var(--text2)' }}>
-                <strong>{CI_TOOLS.find(c => c.id === activeCITool)?.icon} {CI_TOOLS.find(c => c.id === activeCITool)?.label}</strong> selected.
-                Save this step first, then open the tool from the step card in the builder tab.
-                <button onClick={() => setActiveCITool(null)} style={{ marginLeft: 8, fontSize: 10, color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer' }}>Clear</button>
+              <div style={{ marginTop: 6, padding: '6px 10px', background: 'rgba(1,118,211,.05)', borderRadius: 6, fontSize: 11, color: BRAND, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <span><strong>{CI_TOOLS.find(c => c.id === activeCITool)?.icon} {CI_TOOLS.find(c => c.id === activeCITool)?.label}</strong> selected</span>
+                {onTool && (
+                  <button onClick={() => onTool(activeCITool)} style={{ fontSize: 10, padding: '2px 8px', background: BRAND, color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600 }}>Open →</button>
+                )}
+                <button onClick={() => setActiveCITool(null)} style={{ fontSize: 10, color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', marginLeft: 'auto' }}>Clear</button>
               </div>
             )}
-          </div>
-        ))}
 
         {/* Delete */}
         <div style={{ paddingTop: 8, borderTop: '1px solid var(--border)' }}>

@@ -4,7 +4,7 @@
 // No seat limits — uses admin client to bypass RLS on launch_window
 import { NextResponse }         from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
-import { createAdminClient }    from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase-admin'
 
 export async function POST() {
   try {

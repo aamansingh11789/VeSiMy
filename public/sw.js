@@ -9,7 +9,6 @@ const OFFLINE_URL   = '/offline'
 // Static assets to pre-cache on install
 const PRECACHE_URLS = [
   '/',
-  '/dashboard',
   '/offline',
   '/manifest.json',
   '/icons/icon-192x192.png',

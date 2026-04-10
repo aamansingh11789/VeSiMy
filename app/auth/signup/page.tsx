@@ -23,10 +23,18 @@ function SignupForm() {
     try {
       const res  = await fetch('/api/stripe/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ plan: key }) })
       const data = await res.json()
-      if (data.url) window.location.href = data.url
-      else try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'trial' }) } catch {}
+      if (data.url) {
+        window.location.href = data.url
+        return
+      }
+      // No checkout URL — either free trial or checkout failed
+      try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'trial' }) } catch {}
       window.location.href = '/dashboard'
-    } catch { window.location.href = '/dashboard' }
+    } catch (err: any) {
+      console.error('[signup/checkout]', err)
+      // Show error rather than silently dropping to dashboard without payment
+      window.location.href = '/dashboard?error=checkout_failed'
+    }
   }
 
   const [done,    setDone]    = useState(false)

@@ -83,7 +83,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   // 5 Why from toolData.fiveWhy
   const rootCauses: any[] = []
   steps.forEach(s => {
-    const fw = s.toolData?.fiveWhy
+    const fw = s.toolData?.fivewhy
     if (fw?.problem) rootCauses.push({ step: s.name, problem: fw.problem, whys: fw.whys || [], rootCause: fw.rootCause || '', action: fw.action || '', owner: fw.owner || '' })
   })
 
@@ -98,7 +98,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   const timeStudies: any[] = []
   steps.forEach(s => {
     const ts = s.toolData?.stopwatch
-    if (ts?.readings?.length) timeStudies.push({ step: s.name, ...ts })
+    if (ts?.laps?.length || ts?.mean) timeStudies.push({ step: s.name, ...ts })
   })
 
   const now    = fmtDate()
@@ -206,7 +206,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   // ── Time Study section ─────────────────────────────────────────────────────
   const timeStudySection = timeStudies.length
     ? timeStudies.map((ts, i) => {
-        const readings: number[] = ts.readings || []
+        const readings: number[] = (ts.laps || []).map((l: any) => typeof l === 'object' ? l.t : l)
         const avg = readings.length ? (readings.reduce((a: number, b: number) => a + b, 0) / readings.length).toFixed(1) : '—'
         const min = readings.length ? Math.min(...readings).toFixed(1) : '—'
         const max = readings.length ? Math.max(...readings).toFixed(1) : '—'
@@ -244,7 +244,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   // ── Fishbone section ───────────────────────────────────────────────────────
   const fishboneSection = fishbones.length
     ? fishbones.map((fb, i) => {
-        const cats: Record<string, string[]> = fb.categories || {}
+        const cats: Record<string, string[]> = fb.causes || fb.categories || {}
         return `
         <div style="margin-bottom:14px;border:1px solid #CBD5E1;border-radius:4px;overflow:hidden">
           <div style="background:#FFF7ED;padding:7px 14px;border-bottom:1px solid #CBD5E1">
@@ -253,8 +253,8 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
           </div>
           <table style="width:100%;border-collapse:collapse">
             <tr>
-              ${['Man', 'Machine', 'Method', 'Material', 'Measurement', 'Environment'].map((cat, ci) => {
-                const causes: string[] = cats[cat] || cats[cat.toLowerCase()] || []
+              ${(Object.keys(cats).length ? Object.keys(cats) : ['Machine','Method','Material','Manpower','Measurement','Mother Nature']).map((cat, ci) => {
+                const causes: string[] = cats[cat] || []
                 return `
                 <td style="padding:8px 10px;border:1px solid #E2E8F0;vertical-align:top;width:16.6%">
                   <div style="font-size:9px;font-weight:700;color:#C2410C;font-family:${MONO};margin-bottom:5px">${cat.toUpperCase()}</div>

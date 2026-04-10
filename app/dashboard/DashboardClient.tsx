@@ -525,7 +525,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
   const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
   const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(profile.plan_tier)
-  const atLimit = !isUnlimited && profile.projects_count >= (profile.projects_limit || 3)
+  const atLimit = !isUnlimited && projects.length >= (profile.projects_limit || 3)
 
   async function createProject() {
     if (!form.name.trim()) {
@@ -610,7 +610,19 @@ export function DashboardClient({ profile, initialProjects }: Props) {
         <UpgradeToast />
       </Suspense>
 
-      <div>
+      <div style={{
+        backgroundImage: 'url(/sensario-texture.jpg)',
+        backgroundSize: '600px auto',
+        backgroundRepeat: 'repeat-y',
+        backgroundPosition: 'right -100px top',
+        backgroundAttachment: 'fixed',
+        backgroundBlendMode: 'luminosity',
+        opacity: 1,
+        position: 'relative',
+      }}>
+        {/* Overlay to control texture opacity without affecting children */}
+        <div style={{ position: 'absolute', inset: 0, background: 'var(--bg)', opacity: 0.92, pointerEvents: 'none', zIndex: 0 }}/>
+        <div style={{ position: 'relative', zIndex: 1 }}>
         <BetaBanner
           userId={profile.id}
           isBeta={(profile as any).is_beta}
@@ -1174,7 +1186,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             </div>
           </div>
         )}
-      </div>
+      </div>{/* /zIndex:1 wrapper */}
+      </div>{/* /texture wrapper */}
     </>
   )
 }

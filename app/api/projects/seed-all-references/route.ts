@@ -824,7 +824,7 @@ export async function POST(_request: NextRequest) {
     // ══════════════════════════════════════════════════════════════════════════
     // 36. MEDICAL DEVICE MANUFACTURING
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Medical Device Assembly'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Medical Device Assembly'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Medical Device')}else{
       const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Hospital / Surgeon',description:'Class II device assembly. Bottleneck at sterile packaging — 9% sterility failure rate triggers full lot quarantine.'})
       const s0=await st(pid,0,{name:'Component Incoming Inspection',operators:1,cycle_time:120,wait_time:1440,wip:8,uptime:100,defect_rate:3})
@@ -841,11 +841,12 @@ export async function POST(_request: NextRequest) {
       await im(s3.id,pid,[goal('Sterility Failure Rate','9','1','%','Quality Manager','2026-07-01')])
       seeded.push('Medical Device')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 37. RESEARCH LABORATORY
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Research Laboratory Assay Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Research Laboratory Assay Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Research Lab')}else{
       const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Principal Investigator',description:'Sample to result. 6 steps. 35% assay repeat rate from contamination and equipment failure.'})
       const s0=await st(pid,0,{name:'Sample Receipt & Registration',operators:1,cycle_time:20,wait_time:120,wip:30,uptime:100,defect_rate:5})
@@ -862,11 +863,12 @@ export async function POST(_request: NextRequest) {
       await im(s2.id,pid,[goal('Assay Repeat Rate','35','10','%','Lab Manager','2026-07-01')])
       seeded.push('Research Lab')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 38. INVESTMENT MANAGEMENT
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Investment Management Trade Settlement'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Investment Management Trade Settlement'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Investment Management')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Investor',description:'Order to settled trade. 8% settlement fail rate. Bottleneck at trade confirmation.'})
       const s0=await st(pid,0,{name:'Order Generation & Validation',operators:1,cycle_time:5,wait_time:2,wip:50,uptime:100,defect_rate:2})
@@ -883,11 +885,12 @@ export async function POST(_request: NextRequest) {
       await im(s3.id,pid,[goal('Settlement Fail Rate','8','1','%','Head of Operations','2026-09-01')])
       seeded.push('Investment Management')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 39. ACCOUNTING & AUDIT
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Accounting & Audit Engagement'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Accounting & Audit Engagement'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Accounting & Audit')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Business Client',description:'Financial statement audit. 40% working paper return rate. Bottleneck at manager review.'})
       const s0=await st(pid,0,{name:'Client Data Collection',operators:1,cycle_time:120,wait_time:4320,wip:8,uptime:100,defect_rate:30})
@@ -904,11 +907,12 @@ export async function POST(_request: NextRequest) {
       await im(s3.id,pid,[goal('Working Paper Return Rate','40','12','%','Audit Manager','2026-09-01')])
       seeded.push('Accounting & Audit')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 40. CYBERSECURITY
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Cybersecurity Threat Response'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Cybersecurity Threat Response'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Cybersecurity')}else{
       const pid=await pr({name:nm,industry:'it_operations',customer:'Organisation',description:'Alert to remediation. MTTD 3.8 hrs. 72% false positive rate creating analyst fatigue.'})
       const s0=await st(pid,0,{name:'Alert Detection',operators:1,cycle_time:5,wait_time:10,wip:80,uptime:100,defect_rate:72,notes:'72% false positive rate'})
@@ -925,11 +929,12 @@ export async function POST(_request: NextRequest) {
       await im(s2.id,pid,[goal('Alert False Positive Rate','72','20','%','SOC Manager','2026-07-01')])
       seeded.push('Cybersecurity')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 41. TELECOMMUNICATIONS
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Telecoms Service Provisioning'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Telecoms Service Provisioning'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Telecommunications')}else{
       const pid=await pr({name:nm,industry:'it_operations',customer:'Enterprise Customer',description:'Order to active service. 22-day average vs 5-day SLA. Bottleneck at network provisioning.'})
       const s0=await st(pid,0,{name:'Order Receipt & Validation',operators:1,cycle_time:30,wait_time:120,wip:40,uptime:100,defect_rate:18})
@@ -948,11 +953,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Auto-assign provisioning engineer on order receipt','Route orders to engineer queue automatically on CRM submission. Target: queue wait from 4.2 days to same-day assignment.','Delivery','critical','in-progress','Service Ops Manager','2026-04-30',['Define routing rules', 'Configure CRM workflow', 'Pilot 2-week trial', 'Measure queue wait before/after']),kzItem('KZ-002','Configuration error-proofing template','Pre-validated config templates per service type. Engineer selects template — eliminates manual config for standard orders (75% of volume).','Quality','high','open','Network Engineering','2026-05-15',['Map standard service types', 'Build template per type', 'Validate against known error patterns', 'Train provisioning team'])])
       seeded.push('Telecommunications')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 42. GROCERY & SUPERMARKET
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Grocery Store Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Grocery Store Operations'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Grocery')}else{
       const pid=await pr({name:nm,industry:'retail_stores',customer:'Shopper',description:'Supplier delivery to customer checkout. On-shelf availability 91% vs 98% target.'})
       const s0=await st(pid,0,{name:'Delivery Receiving & Temp Check',operators:2,cycle_time:45,wait_time:60,wip:8,uptime:100,defect_rate:5})
@@ -971,11 +977,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Velocity-based shelf slotting for top-200 SKUs','Re-slot top-200 SKUs to closest pick locations in back store. Reduce replenishment walk by est. 35%.','Productivity','critical','in-progress','Store Manager','2026-04-15',['Pull top-200 velocity report', 'Map current vs ideal slot', 'Execute restock during overnight shift', 'Measure replenishment time before/after']),kzItem('KZ-002','Dynamic checkout staffing trigger','Deploy additional cashier when queue exceeds 4 customers. Simple visual trigger — no tech needed.','Delivery','high','open','Shift Supervisor','2026-05-01',['Define queue trigger (4 customers)', 'Brief all supervisors', 'Track queue length hourly for 2 weeks', 'Measure avg checkout wait'])])
       seeded.push('Grocery')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 43. POSTAL & PARCEL DELIVERY
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Postal & Parcel Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Postal & Parcel Delivery'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Postal & Parcel')}else{
       const pid=await pr({name:nm,industry:'warehousing_distribution',customer:'Sender / Recipient',description:'Collection to delivered. First attempt delivery 78% vs 95% target.'})
       const s0=await st(pid,0,{name:'Collection',operators:1,cycle_time:3,wait_time:0,wip:300,uptime:100,defect_rate:2})
@@ -994,11 +1001,12 @@ export async function POST(_request: NextRequest) {
       await kz(s3.id,pid,[kzItem('KZ-001','Route optimisation software deployment','Implement automated route sequencing. Eliminate manual planning (45 mins/driver/day). Target: 22-min route saving + fuel reduction.','Productivity','critical','in-progress','Operations Manager','2026-04-30',['Evaluate 3 routing tools', 'Pilot with 5 drivers 2 weeks', 'Measure actual vs planned route time', 'Calculate fuel and time savings']),kzItem('KZ-002','Pre-notification SMS 30 min before delivery','Automated SMS notification triggers when driver is 3 stops away. Target: first-attempt success from 91.6% to 97%.','Quality','high','open','IT Manager','2026-05-15',['Configure notification trigger in route system', 'Pilot on 1 depot 1 month', 'Track first-attempt delivery rate', 'Measure redelivery cost reduction'])])
       seeded.push('Postal & Parcel')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 44. ARCHITECTURE & ENGINEERING DESIGN
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Architecture & Engineering Design'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Architecture & Engineering Design'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Architecture & Engineering')}else{
       const pid=await pr({name:nm,industry:'construction',customer:'Building Owner / Contractor',description:'Client brief to permit-ready drawings. 38% of drawings have coordination clashes.'})
       const s0=await st(pid,0,{name:'Client Brief & Programme',operators:1,cycle_time:240,wait_time:1440,wip:5,uptime:100,defect_rate:20})
@@ -1017,11 +1025,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Mandatory Stage 2 sign-off gate before Stage 3 work begins','Hard gate: no Stage 3 resource allocation until signed Stage 2 approval received. Eliminates rework from brief changes late in design.','Quality','critical','in-progress','Design Director','2026-04-30',['Update project protocol', 'Brief all project managers', 'Add gate to project tracking system', 'Track rework rate before/after']),kzItem('KZ-002','Client brief template with mandatory scope fields','Structured brief requiring client to complete programme, budget, planning constraints, and sign-off authority before design starts.','Quality','high','open','Client Relationship Manager','2026-05-01',['Design brief template', 'Test with 3 new projects', 'Measure revision rate', 'Survey client experience'])])
       seeded.push('Architecture & Engineering')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 45. K-12 EDUCATION
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — K-12 Student Support Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — K-12 Student Support Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('K-12 Education')}else{
       const pid=await pr({name:nm,industry:'higher_education',customer:'Student',description:'Referral to intervention. 6-week wait from identification to support — statutory target 1 week.'})
       const s0=await st(pid,0,{name:'Attendance & Academic Monitoring',operators:4,cycle_time:15,wait_time:2880,wip:80,uptime:100,defect_rate:25})
@@ -1040,11 +1049,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Fast-track assessment for urgent referrals','Triage at referral: urgent cases (safeguarding, acute distress) seen within 48 hrs. Standard referrals enter planned queue.','Delivery','critical','in-progress','SENCO','2026-04-30',['Define triage criteria', 'Create 48-hr response pathway', 'Brief referral staff', 'Track referral-to-first-contact time']),kzItem('KZ-002','Standardised assessment template per support type','Structured initial assessment for the 5 most common support needs. Reduces plan revision from 42% target <15%.','Quality','high','open','Educational Psychologist','2026-05-15',['Map 5 most common support needs', 'Co-design template with SENCOs', 'Pilot with 10 new referrals', 'Measure plan revision rate'])])
       seeded.push('K-12 Education')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 46. GOVERNMENT SERVICES — PERMIT & LICENSING
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Government Permit & Licensing'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Government Permit & Licensing'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Government Services')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Citizen / Applicant',description:'Application to permit issued. 28 days vs 10-day target. 42% applications incomplete on receipt.'})
       const s0=await st(pid,0,{name:'Application Receipt & Log',operators:2,cycle_time:20,wait_time:1440,wip:80,uptime:100,defect_rate:42,notes:'42% incomplete on receipt'})
@@ -1063,11 +1073,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Digital pre-screening with mandatory fields','Online portal validates completeness before submission accepted. Target: incomplete applications from 31% to under 5%.','Quality','critical','in-progress','Digital Services Manager','2026-04-30',['Map all mandatory fields by permit type', 'Build validation into online form', 'Test with applicants', 'Track submission completeness rate']),kzItem('KZ-002','Risk-based approval delegation','Low-risk permit category (define criteria) approved by Officer. Medium by Senior Officer. Only complex/high-risk to Director. Reduce average approval time by 40%.','Delivery','high','open','Head of Licensing','2026-05-01',['Define risk tiering criteria', 'Draft delegation policy', 'Legal sign-off', 'Train officers', 'Track cycle time by tier'])])
       seeded.push('Government Services')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 47. EMERGENCY SERVICES — FIRE & RESCUE
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Fire & Rescue Emergency Response'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Fire & Rescue Emergency Response'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Fire & Rescue')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Member of Public',description:'Call to scene clearance. Mobilisation 90s avg vs 60s target. 8-min standard met 72% vs 80%.'})
       const s0=await st(pid,0,{name:'Emergency Call Receipt',operators:2,cycle_time:45,wait_time:15,wip:3,uptime:100,defect_rate:3})
@@ -1086,11 +1097,12 @@ export async function POST(_request: NextRequest) {
       await kz(s1.id,pid,[kzItem('KZ-001','Automatic pre-alerting on high-probability call types','System pre-alerts crew 15-30 seconds before full mobilisation on structure fire and RTC call types — cuts mobilisation time.','Delivery','critical','in-progress','Watch Commander','2026-04-15',['Identify qualifying call types', 'Configure MDT pre-alert logic', 'Trial on watch for 4 weeks', 'Measure mobilisation time before/after']),kzItem('KZ-002','Incident-type equipment checklist on MDT','Digital checklist on mobile data terminal confirms correct equipment loaded for specific incident type before departure.','Quality','high','open','Station Manager','2026-05-01',['Map equipment requirements per incident type', 'Build checklist in MDT system', 'Train crews', 'Track equipment adequacy at first attendance'])])
       seeded.push('Fire & Rescue')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 48. POLICE & LAW ENFORCEMENT
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Police Crime Investigation'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Police Crime Investigation'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Police')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Victim / Complainant',description:'Crime report to case outcome. 38% of CPS files returned for more information.'})
       const s0=await st(pid,0,{name:'Initial Report & Triage',operators:2,cycle_time:30,wait_time:60,wip:40,uptime:100,defect_rate:8})
@@ -1109,11 +1121,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','File quality checklist before CPS submission','Structured pre-submission checklist aligned to CPS charging standards. Target: file return rate from 28% to under 8%.','Quality','critical','in-progress','Detective Inspector','2026-04-30',['Map most common return reasons (last 6 months)', 'Build checklist targeting those reasons', 'Pilot with 10 files', 'Measure return rate']),kzItem('KZ-002','Admin task transfer to investigation support','Audit detective time: identify tasks (CCTV requests, system entries, correspondence) transferable to support staff. Free detective capacity.','Productivity','high','open','Detective Chief Inspector','2026-05-15',['Time-and-motion study of detective activities (1 week)', 'Identify transferable tasks', 'Define new support role scope', 'Implement and measure detective hours freed'])])
       seeded.push('Police')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 49. MILITARY & DEFENSE
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Military Equipment Readiness'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Military Equipment Readiness'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Military')}else{
       const pid=await pr({name:nm,industry:'aerospace_manufacturing',customer:'Command Authority',description:'Equipment readiness and maintenance cycle. Availability 72% vs 85% target.'})
       const s0=await st(pid,0,{name:'Mission Planning & Resource Check',operators:4,cycle_time:120,wait_time:240,wip:8,uptime:100,defect_rate:8})
@@ -1132,11 +1145,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Critical spare parts pre-positioning based on failure history','Analyse 24-month failure data: pre-position top-20 failure parts at unit level. Target: AOG (aircraft/vehicle on ground) wait from 18 days to 4 days.','Delivery','critical','in-progress','Logistics Officer','2026-04-30',['Pull 24-month failure parts data', 'Identify top 20 critical spares', 'Calculate pre-positioning quantity', 'Arrange forward positioning']),kzItem('KZ-002','Post-maintenance 7-day quality check','Mandatory system check 7 days after any maintenance task >4 hours. Catches latent faults before next operational use.','Quality','high','open','Maintenance Controller','2026-05-01',['Define qualifying task types', 'Add 7-day check to job card', 'Assign check responsibility', 'Track repeat maintenance rate'])])
       seeded.push('Military')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 50. STAFFING & RECRUITMENT AGENCY
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Staffing Agency Placement Process'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Staffing Agency Placement Process'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Staffing Agency')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Client Company / Candidate',description:'Job order to placement. Fill rate 22% vs 65% industry average.'})
       const s0=await st(pid,0,{name:'Job Order Intake & Qualification',operators:1,cycle_time:30,wait_time:60,wip:25,uptime:100,defect_rate:20})
@@ -1155,11 +1169,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Structured intake brief with mandatory criteria fields','Intake form requiring hiring manager to confirm: must-have skills, nice-to-have skills, deal-breakers, and decision-maker chain. Reduces rejection rate from 34%.','Quality','critical','in-progress','Practice Lead','2026-04-30',['Design intake template', 'Brief all consultants', 'Enforce on next 20 mandates', 'Track first-screen rejection rate']),kzItem('KZ-002','CRM integration to eliminate duplicate data entry','Single data entry in CRM auto-populates job boards and generates client-formatted shortlist. Target: save 2.5 hours/consultant/day.','Productivity','high','open','Operations Manager','2026-05-15',['Map current data entry touchpoints', 'Evaluate CRM integration tools', 'Build and test integration', 'Measure time saved per placement'])])
       seeded.push('Staffing Agency')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 51. DIGITAL MARKETING
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Digital Marketing Campaign Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Digital Marketing Campaign Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Digital Marketing')}else{
       const pid=await pr({name:nm,industry:'marketing_agency',customer:'Client Business',description:'Strategy to measurable outcome. ROAS 1.8x vs 3.5x target. Bottleneck at optimisation.'})
       const s0=await st(pid,0,{name:'Strategy & Audience Research',operators:2,cycle_time:480,wait_time:2880,wip:5,uptime:100,defect_rate:25})
@@ -1178,11 +1193,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Campaign brief quality gate before creative briefing','Brief must score 8/10 on standardised brief quality rubric before being passed to creative. Eliminates most revision cycles at source.','Quality','critical','in-progress','Account Director','2026-04-30',['Build brief quality rubric (10 criteria)', 'Train account managers', 'Pilot on next 5 campaigns', 'Track revision rate']),kzItem('KZ-002','Tiered asset review process by risk level','Low-risk assets (organic social, internal) — account manager approves. Medium (paid social) — creative director. High (above-line, OOH) — legal and brand. Eliminates full review on 60% of assets.','Productivity','high','open','Creative Director','2026-05-15',['Define risk tiers', 'Map approval matrix', 'Brief all teams', 'Track approval cycle time by tier'])])
       seeded.push('Digital Marketing')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 52. SOCIAL CARE & WELFARE
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Social Care Assessment Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Social Care Assessment Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Social Care')}else{
       const pid=await pr({name:nm,industry:'hospital_acute_care',customer:'Service User',description:'Referral to care plan active. 38% of assessments outside statutory 28-day timeframe.'})
       const s0=await st(pid,0,{name:'Referral Receipt & Triage',operators:2,cycle_time:30,wait_time:1440,wip:50,uptime:100,defect_rate:10})
@@ -1201,11 +1217,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Referral completeness checker before acceptance','Digital or paper checklist at point of referral: mandatory fields per referral type. Incomplete referrals returned before entering queue.','Quality','critical','in-progress','Service Manager','2026-04-30',['Map minimum data requirements by referral type', 'Build checker', 'Brief referral sources', 'Track completeness rate and follow-up visits']),kzItem('KZ-002','Standard recording templates per assessment type','Pre-formatted recording templates for the 6 most common assessment types. Reduces recording time by est. 35% per assessment.','Productivity','high','open','Practice Development Lead','2026-05-01',['Map 6 most common assessment types', 'Co-design templates with social workers', 'Pilot with 5 workers 4 weeks', 'Measure recording time before/after'])])
       seeded.push('Social Care')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 53. FARMING & CROP PRODUCTION
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Farming & Crop Production'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Farming & Crop Production'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Farming')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Processor / Wholesaler',description:'Land prep to delivery. 12% crop rejected at grading. Harvest timing variation main cause.'})
       const s0=await st(pid,0,{name:'Land Preparation',operators:3,cycle_time:960,wait_time:20160,wip:5,uptime:95,defect_rate:3})
@@ -1225,11 +1242,12 @@ export async function POST(_request: NextRequest) {
       await kz(s3.id,pid,[kzItem('KZ-001','Trailer rotation synchronisation with harvest rate','Match trailer pool size and rotation cycle to combine output rate. Add dedicated tractor-trailer loop. Target: idle time from 3.1 hrs to under 45 mins/day.','Productivity','critical','in-progress','Farm Manager','2026-04-15',['Time study combine output rate vs trailer cycle time', 'Calculate required trailer pool size', 'Arrange additional trailer if needed', 'Measure daily idle time']),kzItem('KZ-002','Brix monitoring protocol for harvest timing','Measure Brix (sugar content) daily in the 7 days before target harvest. Decision rule: harvest when Brix hits target range. Reduces rejection from variable maturity.','Quality','high','open','Agronomist','2026-05-01',['Define Brix target range per variety', 'Procure refractometers', 'Train harvest team on protocol', 'Track rejection rate vs previous season'])])
       seeded.push('Farming')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 54. AQUACULTURE & FISHERIES
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Aquaculture Production Cycle'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Aquaculture Production Cycle'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Aquaculture')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Processor / Retailer',description:'Stocking to market-ready. FCR 1.9 vs 1.5 target. 8% mortality from disease events.'})
       const s0=await st(pid,0,{name:'Hatchery & Juvenile Production',operators:3,cycle_time:480,wait_time:40320,wip:5,uptime:100,defect_rate:10})
@@ -1248,11 +1266,12 @@ export async function POST(_request: NextRequest) {
       await kz(s3.id,pid,[kzItem('KZ-001','Automated oxygen monitoring with alert threshold','Deploy dissolved oxygen sensors with automatic alert at <7 mg/L. Operator response protocol: increase aeration within 15 mins. Target: eliminate hypoxia mortality events.','Quality','critical','in-progress','Farm Manager','2026-04-15',['Source oxygen monitoring sensors', 'Install and calibrate', 'Set alert threshold and recipient list', 'Train operators on response protocol', 'Track mortality rate monthly']),kzItem('KZ-002','Precision feeding protocol based on appetite monitoring','Use underwater camera or AI feed waste monitor to adjust feed rate to actual appetite. Target: FCR from 1.42 to 1.25 within 90 days.','Productivity','high','open','Production Manager','2026-05-01',['Evaluate appetite monitoring options', 'Pilot on 2 pens', 'Develop decision rules', 'Track FCR weekly'])])
       seeded.push('Aquaculture')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 55. OIL & GAS
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Oil & Gas Drilling Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Oil & Gas Drilling Operations'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Oil & Gas')}else{
       const pid=await pr({name:nm,industry:'aerospace_manufacturing',customer:'Production Operations',description:'Spud to total depth. NPT 18% vs 8% industry benchmark.'})
       const s0=await st(pid,0,{name:'Well Planning & Engineering',operators:5,cycle_time:2880,wait_time:20160,wip:3,uptime:100,defect_rate:12})
@@ -1271,11 +1290,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Decision authority matrix for common NPT scenarios','Pre-defined decision tree for top-8 NPT causes: drill crew has authority to act within defined parameters without waiting for offshore company man. Target: decision delay from 4.2 hrs avg to under 45 mins.','Delivery','critical','in-progress','Drilling Superintendent','2026-04-30',['Map top-8 NPT causes from last 24 months', 'Define decision parameters for each', 'Issue authority matrix to drill crew', 'Debrief after each NPT event']),kzItem('KZ-002','BHA PM protocol update and compliance tracking','Update BHA PM procedure to reflect current formation and wellbore conditions. Add compliance check at each BHA pull.','Quality','high','open','Drilling Engineer','2026-05-01',['Review current BHA PM protocol vs actual conditions', 'Update procedure', 'Issue formal change control', 'Add compliance check to BHA pull checklist'])])
       seeded.push('Oil & Gas')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 56. RAIL PASSENGER SERVICES
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Rail Passenger Service Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Rail Passenger Service Operations'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Rail')}else{
       const pid=await pr({name:nm,industry:'retail_banking',customer:'Commuter / Passenger',description:'Service planning to delivered journey. Punctuality 72% vs 92% target. Primary cause: dwell time exceedance.'})
       const s0=await st(pid,0,{name:'Service Planning & Timetabling',operators:5,cycle_time:480,wait_time:43200,wip:10,uptime:100,defect_rate:8})
@@ -1294,11 +1314,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Dwell time reduction at 3 key interchange stations','Timetable revision + passenger boarding distribution improvements (door allocation signage). Target: dwell time to timetable allocation at all stations.','Delivery','critical','in-progress','Service Delivery Manager','2026-04-30',['Analyse dwell time data by station and TOD', 'Identify root causes per station', 'Pilot boarding distribution signage', 'Measure dwell time weekly']),kzItem('KZ-002','Carry-forward fault zero tolerance protocol','No train to depart depot with a reported fault unless fault cleared or risk-assessed and documented. Reduces in-service failures.','Quality','high','open','Fleet Manager','2026-05-01',['Audit current carry-forward fault volume', 'Define acceptable vs unacceptable carry-forward', 'Issue protocol to depot teams', 'Track carry-forward faults weekly'])])
       seeded.push('Rail')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 57. PORT & MARITIME OPERATIONS
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Port & Maritime Container Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Port & Maritime Container Operations'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Port & Maritime')}else{
       const pid=await pr({name:nm,industry:'warehousing_distribution',customer:'Shipping Line / Cargo Owner',description:'Vessel arrival to departure. Crane productivity 22 moves/hr vs 28-move target.'})
       const s0=await st(pid,0,{name:'Vessel Arrival & Berthing',operators:4,cycle_time:90,wait_time:120,wip:3,uptime:100,defect_rate:8})
@@ -1318,11 +1339,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Advance berth allocation notification 24 hours out','Confirm berth slot 24 hours before vessel arrival. Allows stevedore pre-planning. Target: reduce anchorage wait from 14.2 to under 4 hours.','Delivery','critical','in-progress','Port Operations Manager','2026-04-30',['Map current berth allocation process', 'Identify decision points causing delay', 'Build 24-hr advance notification workflow', 'Track anchorage wait time weekly']),kzItem('KZ-002','Digital documentation pre-clearance portal','Importers submit customs documentation 48 hours before vessel arrival. Pre-clearance eliminates 70% of documentation hold-ups.','Quality','high','open','Customs Liaison Manager','2026-05-15',['Define pre-clearance document set', 'Build or integrate portal', 'Pilot with 10 regular importers', 'Track documentation error rate'])])
       seeded.push('Port & Maritime')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 58. ENGINEERING & TECHNICAL CONSULTING
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Engineering Consulting Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Engineering Consulting Delivery'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Engineering Consulting')}else{
       const pid=await pr({name:nm,industry:'management_consulting',customer:'Client Organisation',description:'Brief to accepted deliverable. 32% of reports require revision. Bottleneck at technical review.'})
       const s0=await st(pid,0,{name:'Client Brief & Scoping',operators:2,cycle_time:240,wait_time:2880,wip:5,uptime:100,defect_rate:20})
@@ -1341,11 +1363,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Deliverable scope definition checklist at project kick-off','Mandatory scope definition session for each deliverable at project start: format, level of detail, acceptance criteria. Reduces revision rate from 44%.','Quality','critical','in-progress','Technical Director','2026-04-30',['Design scope definition template', 'Brief all project engineers', 'Enforce on next 5 projects', 'Track revision rate']),kzItem('KZ-002','Structured client review window in project schedule','Book 5-day client review window into project schedule at proposal stage. Client commits to response within window. Eliminates open-ended review delays.','Delivery','high','open','Project Manager','2026-05-01',['Draft client review commitment clause', 'Add to standard proposal template', 'Brief account managers', 'Track review turnaround time'])])
       seeded.push('Engineering Consulting')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 59. ACADEMIC RESEARCH
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Academic Research Publication Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Academic Research Publication Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Academic Research')}else{
       const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Academic Community / Funder',description:'Research question to published finding. 6 stages. Bottleneck at peer review — 58% of papers rejected at first submission.'})
       const s0=await st(pid,0,{name:'Hypothesis & Study Design',operators:2,cycle_time:480,wait_time:10080,wip:5,uptime:100,defect_rate:25})
@@ -1364,11 +1387,12 @@ export async function POST(_request: NextRequest) {
       await kz(s3.id,pid,[kzItem('KZ-001','Internal pre-submission peer review','Structured internal review by 2 lab colleagues before journal submission. Target: major revision rate from 62% to under 30%.','Quality','critical','in-progress','Principal Investigator','2026-05-01',['Define internal review criteria (methods, stats, presentation)', 'Assign review pairs', 'Enforce before next 3 submissions', 'Track revision rate']),kzItem('KZ-002','Grant admin delegation to research administrator','Audit PI time on grant admin tasks. Transfer routine reporting and compliance tasks to dedicated research administrator.','Productivity','high','open','Head of Department','2026-05-15',['Time study PI activities over 2 weeks', 'Identify transferable admin tasks', 'Define research admin role scope', 'Measure PI research time freed'])])
       seeded.push('Academic Research')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 60. CLINICAL TRIALS & MEDICAL RESEARCH
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Clinical Trial Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Clinical Trial Operations'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Clinical Trials')}else{
       const pid=await pr({name:nm,industry:'pharmaceutical_manufacturing',customer:'Regulatory Agency / Pharma Client',description:'Protocol to regulatory submission. Bottleneck at site activation — avg 6.8 months vs 3-month target.'})
       const s0=await st(pid,0,{name:'Protocol Development & Approval',operators:4,cycle_time:2880,wait_time:20160,wip:3,uptime:100,defect_rate:20})
@@ -1387,11 +1411,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Parallel regulatory and ethics submission','Submit to regulatory authority and ethics committee simultaneously rather than sequentially. Target: site activation from 8.4 months to 5.5 months.','Delivery','critical','in-progress','Clinical Operations Director','2026-04-30',['Identify parallel submission feasibility per jurisdiction', 'Agree parallel process with regulatory affairs', 'Pilot on next 2 sites', 'Measure activation timeline']),kzItem('KZ-002','Source data verification checklist for coordinators','Site-level checklist for coordinators to self-check data entries before monitor visit. Target: data query rate from 18% to under 6%.','Quality','high','open','Clinical Research Associate','2026-05-01',['Analyse most common query types from last 3 audits', 'Build self-check checklist targeting those types', 'Train site coordinators', 'Track query rate per site'])])
       seeded.push('Clinical Trials')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 61. PROJECT MANAGEMENT — GENERAL
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Project Management Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Project Management Delivery'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Project Management')}else{
       const pid=await pr({name:nm,industry:'management_consulting',customer:'Project Sponsor',description:'Initiation to closure. 62% of projects delivered late or over budget. Bottleneck at planning — scope creep unchecked.'})
       const s0=await st(pid,0,{name:'Initiation & Charter',operators:2,cycle_time:240,wait_time:2880,wip:5,uptime:100,defect_rate:20})
@@ -1410,11 +1435,12 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Fortnightly sponsor decision window in project calendar','Book 60-min fortnightly decision meeting in sponsor diary at project kick-off. All CRs and escalations batched to this window. Target: CR approval from 14 days to under 7 days.','Delivery','critical','in-progress','Programme Manager','2026-04-30',['Add decision window to project initiation checklist', 'Brief project sponsors', 'Track CR cycle time']),kzItem('KZ-002','Standardised weekly status report template','Single-page RAG status template with auto-populated data from project tool. PM time from 3.5 hours to 45 mins.','Productivity','high','open','PMO Lead','2026-05-01',['Design 1-page template (RAG, milestones, risks, decisions needed)', 'Connect to project tool for auto-data pull', 'Brief all PMs', 'Measure time to produce status report'])])
       seeded.push('Project Management')
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // 62. GRAPHIC DESIGN & BRAND
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Graphic Design Studio Flow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Graphic Design Studio Flow'; if(shouldSeed(nm)){
     const id=await ex(nm); if(id){existing.push('Graphic Design')}else{
       const pid=await pr({name:nm,industry:'marketing_agency',customer:'Brand Owner / Marketing Manager',description:'Brief to approved deliverable. 42% of projects exceed original scope. 2.8 revision rounds average.'})
       const s0=await st(pid,0,{name:'Brief Intake & Clarification',operators:1,cycle_time:60,wait_time:1440,wip:8,uptime:100,defect_rate:35,notes:'35% of briefs require clarification before design can start'})
@@ -1433,10 +1459,11 @@ export async function POST(_request: NextRequest) {
       await kz(s2.id,pid,[kzItem('KZ-001','Creative brief sign-off before any design work begins','No design resource allocated until signed brief received. Brief must include: objective, audience, format, reference examples, and approval chain.','Quality','critical','in-progress','Creative Director','2026-04-30',['Design brief template', 'Brief all account handlers', 'Enforce on next 10 projects', 'Track revision rounds per project']),kzItem('KZ-002','Production task delegation to junior designer','Audit senior designer activity: identify production tasks (file export, resize, template population) to delegate. Target: free 25% of senior time for concept and creative direction.','Productivity','high','open','Studio Manager','2026-05-01',['Log senior designer tasks for 1 week', 'Identify delegation candidates', 'Brief junior designers', 'Measure senior creative time freed'])])
       seeded.push('Graphic Design')
     }}
+    }
 
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — General Manufacturing Production Cell'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — General Manufacturing Production Cell'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('General Manufacturing')}else{
     const pid=await proj({name:nm,industry:'general_manufacturing',customer:'Distribution Centre',
       description:'General manufacturing production cell. Machine utilisation 68%. Setup waste dominant bottleneck.'})
@@ -1452,9 +1479,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Tool life monitoring system',description:'Track tool life by part count. Replace at 80% of failure life. Reduce scrap from tool wear to zero.',category:'Quality',priority:'critical',status:'in-progress',owner:'Production Manager',dueDate:'2026-04-30',actions:['Set tool life limits per tool type','Add part counter to CNC program','Alert at 80% life','Log and review monthly']},{id:'kz2',kzId:'KZ-002',title:'SMED — Stage tooling before shutdown',description:'Stage next job tooling at machine during last 15 min of current run. Target: setup from 90 to 45 min.',category:'Productivity',priority:'high',status:'open',owner:'Setup Lead',dueDate:'2026-05-15',actions:['Map convertible vs non-convertible steps','Design shadow board at machine','Trial on one machine for 2 weeks','Measure before/after']}]})
     seeded.push('General Manufacturing'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Aerospace Component Assembly'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Aerospace Component Assembly'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Aerospace')}else{
     const pid=await proj({name:nm,industry:'aerospace_manufacturing',customer:'Aircraft OEM',
       description:'Aerospace structural component assembly. AS9100 certified. First-article inspection bottleneck.'})
@@ -1469,9 +1497,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Risk-based FAI — critical features only on CMM',description:'Classify all features as critical/non-critical. CMM only critical. Hand gauge non-critical. Target: CMM time from 240 to 120 min, queue from 3 days to 1 day.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Chief Inspector',dueDate:'2026-05-01',actions:['Classify all features per AS9100','Define critical feature list','Update inspection plan','Pilot on 2 part numbers','Measure queue reduction']},{id:'kz2',kzId:'KZ-002',title:'Concurrent FAI — inspect sub-assemblies before final',description:'Begin FAI on sub-assemblies during build. Final FAI only covers final-assembly-specific features. Eliminates 3-day hold at final inspection.',category:'Productivity',priority:'high',status:'open',owner:'QA Manager',dueDate:'2026-05-15',actions:['Redesign inspection plan','Train inspectors','Trial on 1 product line','Measure total FAI calendar time']}]})
     seeded.push('Aerospace'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Insurance Policy Issuance'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Insurance Policy Issuance'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Insurance')}else{
     const pid=await proj({name:nm,industry:'insurance',customer:'Policy Applicant',
       description:'Personal lines insurance policy issuance. 8-day average. Target 2 days.'})
@@ -1485,9 +1514,10 @@ export async function POST(_request: NextRequest) {
     await td(s1.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Straight-through processing for standard risks',description:'Risks scoring above 70 in automated model bypass underwriter queue. Auto-approve and issue. Target: 40% of volume (34 cases/day) processed same-day without manual review.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Underwriting Manager',dueDate:'2026-04-30',actions:['Define STP eligibility criteria','IT configuration for auto-approval','Pilot 100 cases','Measure approval accuracy vs manual','Extend to full volume']},{id:'kz2',kzId:'KZ-002',title:'Mandatory completeness check at point of submission',description:'Broker portal validates mandatory fields before submission accepted. Eliminates 18% incomplete application rework.',category:'Quality',priority:'high',status:'open',owner:'Operations Manager',dueDate:'2026-05-15',actions:['Map mandatory fields by product','Configure portal validation','Communicate to brokers','Measure incomplete rate monthly']}]})
     seeded.push('Insurance'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — IT Incident Resolution'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — IT Incident Resolution'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('IT Operations')}else{
     const pid=await proj({name:nm,industry:'it_operations',customer:'Internal User',
       description:'IT service desk incident resolution. P2 average 18 hrs. ITIL-aligned.'})
@@ -1501,9 +1531,10 @@ export async function POST(_request: NextRequest) {
     await td(s1.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'KB update mandatory at L2 resolution',description:'L2 cannot close ticket without selecting KB article updated/created. Target: L1 resolution rate from 65% to 78% in 90 days.',category:'Quality',priority:'critical',status:'in-progress',owner:'L2 Team Lead',dueDate:'2026-04-15',actions:['Add KB link field to closure form','Train L2 on KB authoring','Monthly KB champion review','Track L1 resolution rate weekly']},{id:'kz2',kzId:'KZ-002',title:'AI-suggested KB articles at L1 triage',description:'Surface top 3 KB matches as agent types incident description. Reduces escalation by giving L1 resolution path at first touch.',category:'Productivity',priority:'high',status:'open',owner:'IT Manager',dueDate:'2026-05-01',actions:['Evaluate ITSM AI assist plugins','Pilot with 2 L1 agents','Measure escalation rate before/after','Full rollout if >5% improvement']}]})
     seeded.push('IT Operations'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Retail Pharmacy Dispensing'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Retail Pharmacy Dispensing'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Pharmacy')}else{
     const pid=await proj({name:nm,industry:'pharmacy',customer:'Patient',
       description:'Retail pharmacy prescription dispensing. Avg 22-min wait. Target 10 min.'})
@@ -1517,9 +1548,10 @@ export async function POST(_request: NextRequest) {
     await td(s1.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'SMS notification — prescriptions ready',description:'Auto-SMS when prescription verified and ready. Patients do not arrive before ready. Eliminates will-call queue pressure and perception of long wait.',category:'Quality',priority:'critical',status:'in-progress',owner:'Pharmacy Manager',dueDate:'2026-04-15',actions:['Configure SMS in pharmacy system','Patient opt-in at drop-off','Pilot 2 weeks','Survey patient wait perception']},{id:'kz2',kzId:'KZ-002',title:'Segregate DUR-flagged from routine at data entry',description:'Flag DUR-likely prescriptions (polypharmacy, high-alert drugs) at data entry. Route to dedicated DUR workflow. Routine Rx flow uninterrupted. Target: reduce routine wait from 22 to 10 min.',category:'Productivity',priority:'high',status:'open',owner:'Lead Pharmacist',dueDate:'2026-05-01',actions:['Define DUR-risk criteria','Update workflow routing','Train technicians','Measure routine vs complex cycle time split']}]})
     seeded.push('Pharmacy'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Freight & Trucking Load Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Freight & Trucking Load Delivery'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Freight & Trucking')}else{
     const pid=await proj({name:nm,industry:'freight_trucking',customer:'Shipper',
       description:'Full truckload delivery cycle. On-time delivery 81% vs 95% target.'})
@@ -1533,9 +1565,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Dock appointment system at top 10 shippers',description:'Negotiate dock appointment windows with top 10 shippers (62% of volume). Eliminate FCFS queue. Target: shipper dwell from 180 to 45 min.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Operations Manager',dueDate:'2026-04-30',actions:['Identify top 10 shippers by volume','Present dwell cost data to each','Negotiate appointment windows','Configure in TMS','Measure dwell weekly']},{id:'kz2',kzId:'KZ-002',title:'Automated BoL via EDI with key shippers',description:'EDI 204/211 integration with top 5 shippers eliminates manual BoL. 8% discrepancy rate eliminated at source.',category:'Quality',priority:'high',status:'open',owner:'IT Manager',dueDate:'2026-05-15',actions:['Map EDI capability by shipper','Prioritise top 5 by volume','IT integration project','Test with 50 loads','Full rollout']}]})
     seeded.push('Freight & Trucking'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — University Student Journey'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — University Student Journey'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Higher Education')}else{
     const pid=await proj({name:nm,industry:'higher_education',customer:'Student',
       description:'University student experience from enrolment to graduation. Dropout rate 18%.'})
@@ -1549,9 +1582,10 @@ export async function POST(_request: NextRequest) {
     await td(s3.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Attendance tracking early warning system',description:'Flag students with <80% attendance in any week to personal tutor automatically. Proactive contact within 48 hrs. Target: reduce Year 1 dropout from 18% to 12%.',category:'Quality',priority:'critical',status:'in-progress',owner:'Head of Student Services',dueDate:'2026-04-30',actions:['Procure attendance tracking system','Define at-risk thresholds','Train personal tutors on early contact protocol','Measure contact rate and dropout correlation']},{id:'kz2',kzId:'KZ-002',title:'Same-week academic support slots reserved for at-risk',description:'Reserve 20% of advisor slots for same-week at-risk referrals. Eliminate 7-day wait for students flagged by tutors.',category:'Productivity',priority:'high',status:'open',owner:'Student Services Manager',dueDate:'2026-05-01',actions:['Audit current appointment utilisation','Reserve 20% of slots','Configure booking system','Measure wait time for at-risk referrals']}]})
     seeded.push('Higher Education'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — HR Recruitment & Onboarding'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — HR Recruitment & Onboarding'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Human Resources')}else{
     const pid=await proj({name:nm,industry:'human_resources',customer:'Hiring Manager',
       description:'End-to-end recruitment and onboarding. Time-to-productivity 67 days vs 30-day target.'})
@@ -1564,9 +1598,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Self-schedule interview booking for candidates',description:'Candidates book own interview slot via Calendly-style link. Eliminates 5-day scheduling lag. Target: time-to-interview from 5 days to 1 day.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Talent Acquisition Lead',dueDate:'2026-04-15',actions:['Set up scheduling tool','Add link to interview invitation','Pilot with next 5 roles','Measure scheduling time before/after']},{id:'kz2',kzId:'KZ-002',title:'Role brief workshop — 1hr with hiring manager before posting',description:'Structured 1-hr brief with hiring manager using standard template. Reduces revision rate from 35% to target <10%.',category:'Quality',priority:'high',status:'open',owner:'HRBP',dueDate:'2026-05-01',actions:['Design brief template','Train HRBPs on facilitation','Mandate for all roles','Track revision rate monthly']}]})
     seeded.push('Human Resources'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Corporate L&D Programme Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Corporate L&D Programme Delivery'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Corporate Training')}else{
     const pid=await proj({name:nm,industry:'corporate_training',customer:'Learner / Business Unit',
       description:'Corporate L&D programme design and delivery. Completion rate 54% vs 85% target.'})
@@ -1579,9 +1614,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Automated scheduling and reminders',description:'LMS auto-schedules based on delegate availability. 3 automated reminders before start. Target: pre-programme dropout from 30% to 12%.',category:'Productivity',priority:'critical',status:'in-progress',owner:'L&D Manager',dueDate:'2026-04-30',actions:['Configure LMS scheduling automation','Set reminder sequence','Pilot next cohort','Measure dropout rate before/after']},{id:'kz2',kzId:'KZ-002',title:'Mandatory TNA for all new programme requests',description:'No programme enters design without completed TNA template signed off by sponsor. Reduces revision rate from 25% to target <10%.',category:'Quality',priority:'high',status:'open',owner:'Head of L&D',dueDate:'2026-05-01',actions:['Design TNA template','Brief all business stakeholders','Configure as mandatory in LMS request form','Track revision rate quarterly']}]})
     seeded.push('Corporate Training'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Power Generation Operations'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Power Generation Operations'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Power Generation')}else{
     const pid=await proj({name:nm,industry:'power_generation_utilities',customer:'Grid Operator',
       description:'Combined cycle gas turbine plant. Availability 89% vs 94% target. Forced outage 3.2%.'})
@@ -1596,9 +1632,10 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'Scheduled maintenance sits in planning queue avg 11 days — poor prioritisation',Defects:'8.2% maintenance callback within 14 days — repair not meeting standard first time',Non_Utilisation:'Turbine running at 84% MCR — de-rating from fouled compressor blades cleaned only at annual outage'})
       seeded.push('Power Generation'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Nonprofit Programme Delivery'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Nonprofit Programme Delivery'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Nonprofit')}else{
     const pid=await proj({name:nm,industry:'nonprofit',customer:'Beneficiary',
       description:'Nonprofit employment support programme. 52% beneficiaries reach employment within 6 months vs 70% target.'})
@@ -1613,11 +1650,12 @@ export async function POST(_request: NextRequest) {
       await wa(s1.id,pid,['Waiting','Defects','Non-Utilisation'],{Waiting:'3.5-day wait for assessment — 15% of beneficiaries disengage before being seen',Defects:'18% matched to wrong programme requiring reassessment within 4 weeks',Non_Utilisation:'Case workers spending 48% of time on admin reporting — direct service time constrained'})
       seeded.push('Nonprofit'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // FITNESS CLUBS — Member Journey
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Fitness Club Member Journey'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Fitness Club Member Journey'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Fitness Clubs')}else{
     const pid=await proj({name:nm,industry:'fitness_clubs',customer:'Member',
       description:'Fitness club member lifecycle. Monthly churn 4.2% vs 2% target. NPS 28.'})
@@ -1630,9 +1668,10 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Induction on join day — 15-min floor walkthrough',description:'Staff member walks every new member through equipment on signup day — no PT required. Full induction in first week. Target: induction completion from 55% to 90%.',category:'Quality',priority:'critical',status:'in-progress',owner:'Club Manager',dueDate:'2026-04-15',actions:['Design 15-min induction script','Train all floor staff','Add to joining process checklist','Measure completion rate weekly']},{id:'kz2',kzId:'KZ-002',title:'Visit frequency alert — proactive contact at 10-day no-show',description:'System flags members with no visit in 10 days. Staff calls within 24 hrs. Personal check-in. Target: monthly churn from 4.2% to 2.5%.',category:'Productivity',priority:'high',status:'open',owner:'Membership Manager',dueDate:'2026-05-01',actions:['Configure visit tracking alert','Design call script','Train membership team','Measure churn rate monthly by contact vs no-contact group']}]})
     seeded.push('Fitness Clubs'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Live Events Production'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Live Events Production'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Live Events')}else{
     const pid=await proj({name:nm,industry:'live_events',customer:'Event Client',
       description:'Live corporate events production. On-time delivery 78%. Post-event rework 35%.'})
@@ -1645,9 +1684,10 @@ export async function POST(_request: NextRequest) {
     await td(s3.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Structured brief template — 30 mandatory fields',description:'Client brief template with 30 mandatory fields. No concept presented until complete. Target: concept revision from 42% to 15%.',category:'Quality',priority:'critical',status:'in-progress',owner:'Account Director',dueDate:'2026-04-30',actions:['Design template with client-facing language','Pilot with 3 clients','Measure revision rate','Refine and roll out to all accounts']},{id:'kz2',kzId:'KZ-002',title:'Technical integration test 48 hrs before event',description:'Full AV walkthrough 48 hrs before live. All integration points tested. Snag list resolved day before. Target: rehearsal overrun from 15% to 3%.',category:'Productivity',priority:'high',status:'open',owner:'Technical Director',dueDate:'2026-05-01',actions:['Add pre-event test to all production schedules','Technical checklist for integration points','Log and resolve snags before event day','Measure rehearsal overrun rate']}]})
     seeded.push('Live Events'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Professional Sports Performance'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Professional Sports Performance'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Professional Sports')}else{
     const pid=await proj({name:nm,industry:'professional_sports',customer:'Club / Athlete',
       description:'Elite sports performance programme. Injury rate 28 per 1000 training hours vs target 15.'})
@@ -1660,11 +1700,12 @@ export async function POST(_request: NextRequest) {
     await td(s3.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Individual acute:chronic workload ratio dashboard',description:'Real-time dashboard per player. Automated alert when ratio exceeds 1.3. Proactive load reduction before injury threshold. Target: injury rate from 28 to 18 per 1000 hrs.',category:'Quality',priority:'critical',status:'in-progress',owner:'Head of Sports Science',dueDate:'2026-04-30',actions:['Configure GPS data pipeline to dashboard','Set individual alert thresholds','Brief coaching staff on protocol','Review weekly with coaching team','Track injury rate monthly']},{id:'kz2',kzId:'KZ-002',title:'RTT sign-off protocol — consultant approval required',description:'Return to full training requires sign-off from physio AND consultant. Dual-gate prevents premature return. Target: re-injury from 18% to 8%.',category:'Quality',priority:'high',status:'open',owner:'Head Physio',dueDate:'2026-05-01',actions:['Design RTT sign-off form','Agree with coaching staff and medical team','Implement for all returning players','Track re-injury rate by RTT protocol adherence']}]})
     seeded.push('Professional Sports'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // SPORTS VENUE — Management
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Sports Venue Management'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Sports Venue Management'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Sports Venue')}else{
     const pid=await proj({name:nm,industry:'sports_venue',customer:'Fan / Event Organiser',
       description:'40,000-seat sports venue. Fan satisfaction 6.8/10 vs 8.0 target. Queue times primary issue.'})
@@ -1677,11 +1718,12 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Mobile ordering app — F&B to seat',description:'Mobile app order to seat. Eliminates concourse queue for 30% of transactions. Target: concourse queue from 12 to 7 min. Revenue recovery £180k/year.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Commercial Director',dueDate:'2026-04-30',actions:['Evaluate mobile ordering platforms','Integrate with POS system','Pilot in 2 sections','Measure queue time and revenue per head','Full venue rollout']},{id:'kz2',kzId:'KZ-002',title:'Staggered exit — section-by-section announcement',description:'Announce exit by section via PA and app. Stagger 2-min intervals. Reduces car park queue from 25 to 10 min. Fan satisfaction +0.4 pts.',category:'Quality',priority:'high',status:'open',owner:'Operations Manager',dueDate:'2026-05-01',actions:['Design announcement sequence','Brief PA operator','Trial at next 3 events','Survey fan exit experience']}]})
     seeded.push('Sports Venue'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // PUBLISHING — Editorial Workflow
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Publishing Editorial Workflow'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Publishing Editorial Workflow'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Publishing')}else{
     const pid=await proj({name:nm,industry:'publishing',customer:'Reader / Platform',
       description:'Digital and print publishing editorial workflow. Time-to-publish avg 31 days vs 14-day target.'})
@@ -1694,11 +1736,12 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Tiered editorial review — junior editors handle standard content',description:'Classify content by complexity. Junior editors handle 60% of standard content. Senior reviews complex only. Target: editorial queue from 4 days to 1 day.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Editor in Chief',dueDate:'2026-04-30',actions:['Define content complexity criteria','Train junior editors','Pilot tiered workflow for 1 month','Measure queue time before/after']},{id:'kz2',kzId:'KZ-002',title:'Written design brief standard for all commissions',description:'Design brief template completed at commission stage. Designer has written spec before content delivered. Target: proof rounds from 2.2 to 1.1.',category:'Quality',priority:'high',status:'open',owner:'Creative Director',dueDate:'2026-05-01',actions:['Design brief template','Train editors','Add to commission workflow','Track proof rounds monthly']}]})
     seeded.push('Publishing'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // FILM & TV — Production
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Film & TV Production'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Film & TV Production'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Film & TV')}else{
     const pid=await proj({name:nm,industry:'film_tv',customer:'Broadcaster / Distributor',
       description:'TV drama production. Average 18% over budget. Schedule overrun 3.2 days per episode.'})
@@ -1711,11 +1754,12 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Parallel setup — 2nd unit camera preps next location',description:'2nd unit camera crew pre-lights next location while 1st unit shoots. Reduces location move dead time from 45 to 15 min. Target: shoot day overrun from 15% to 5%.',category:'Productivity',priority:'critical',status:'in-progress',owner:'Line Producer',dueDate:'2026-04-30',actions:['Budget for 2nd unit camera operator','Schedule location moves with overlap','Trial on 2-location shoot days','Measure dead time before/after']},{id:'kz2',kzId:'KZ-002',title:'Broadcaster brief alignment meeting before script commission',description:'1-hr structured alignment with broadcaster exec before script room opens. 30 mandatory agreement points. Target: major revision rate from 40% to 15%.',category:'Quality',priority:'high',status:'open',owner:'Executive Producer',dueDate:'2026-05-01',actions:['Design alignment meeting agenda','Add to commissioning process','Pilot on next 2 productions','Track revision rate']}]})
     seeded.push('Film & TV'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // MUSIC PRODUCTION — Recording
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Music Production & Recording'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Music Production & Recording'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Music Production')}else{
     const pid=await proj({name:nm,industry:'music_production',customer:'Artist / Label',
       description:'Commercial music production. Average 2.4 revisions per track. Studio utilisation 58%.'})
@@ -1728,11 +1772,12 @@ export async function POST(_request: NextRequest) {
     await td(s2.id,pid,'kaizen',{items:[{id:'kz1',kzId:'KZ-001',title:'Pre-production direction lock — 10-point agreement',description:'10-point creative direction document signed before tracking begins. Reference tracks, tempo range, key, arrangement style, vocal tone. Target: production revision from 35% to 12%.',category:'Quality',priority:'critical',status:'in-progress',owner:'Lead Producer',dueDate:'2026-04-30',actions:['Design direction document template','Introduce for all new projects','Train A&R team on facilitation','Track revision rate monthly']},{id:'kz2',kzId:'KZ-002',title:'Session prep checklist — completed day before',description:'Engineer completes full session prep checklist 24 hrs before. All outboard patched, templates loaded, headphone mixes set. Target: session start from 45-min late to on-time.',category:'Productivity',priority:'high',status:'open',owner:'Studio Manager',dueDate:'2026-05-01',actions:['Design checklist by session type','Train all engineers','Add to booking confirmation','Measure session start time weekly']}]})
     seeded.push('Music Production'); if(!primaryId)primaryId=pid
     }}
+    }
 
     // ══════════════════════════════════════════════════════════════════════════
     // VIDEO GAMES — Development
     // ══════════════════════════════════════════════════════════════════════════
-    { const nm='Reference — Video Game Development'; if(!shouldSeed(nm)){return}
+    { const nm='Reference — Video Game Development'; if(shouldSeed(nm)){
     const ex=await exists(nm); if(ex){existing.push('Video Games')}else{
     const pid=await proj({name:nm,industry:'video_games',customer:'Player / Platform',
       description:'Mobile game development studio. Release cycle 6 months vs 3-month target. Bug backlog 340 open.'})
@@ -1747,6 +1792,7 @@ export async function POST(_request: NextRequest) {
       await wa(s2.id,pid,['Defects','Waiting','Overprocessing'],{Defects:'340 open bugs — find-rate 12/day vs fix-rate 8/day. Bug backlog growing each sprint.',Waiting:'QA queue wait avg 4.8 days per build submission — QA team under-resourced vs build frequency',Overprocessing:'Full 8-hour regression run on every build including minor UI text changes'})
       seeded.push('Video Games'); if(!primaryId)primaryId=pid
     }}
+    }
 
 
         // ── Response ──────────────────────────────────────────────────────────────
@@ -1763,6 +1809,146 @@ export async function POST(_request: NextRequest) {
 
   } catch (err: any) {
     console.error('[seed-all-references]', err)
+    // ══════════════════════════════════════════════════════════════════════════
+    // METAL FINISHING — Job Flow: Order Receipt to Shipment
+    // ══════════════════════════════════════════════════════════════════════════
+    { const nm = 'Reference — Metal Finishing Job Flow'
+      if (shouldSeed(nm)) {
+      const ex = await exists(nm); if (ex) { existing.push('Metal Finishing') } else {
+        const pid = await proj({
+          name: nm,
+          industry: 'metal_finishing',
+          customer: 'OEM / Distributor',
+          description: 'Electroplating job shop. 6-stage tank line. First pass yield 87% vs 96% target. Bottleneck at zinc plating — chemistry drift causing 13% reject rate.'
+        })
+
+        const s0 = await stp(pid, 0, { name: 'Order Receipt & Job Scheduling', department: 'Office', operators: 1, cycle_time: 20, wait_time: 14400, wip: 45, flow_type: 'push', uptime: 100, defect_rate: 4, notes: 'Jobs queued avg 10 hrs before scheduling confirmed. 4% of orders have spec errors — caught at inspection, not at intake.' })
+        const s1 = await stp(pid, 1, { name: 'Racking & Pre-Inspection', department: 'Rack Room', operators: 2, cycle_time: 15, wait_time: 1800, wip: 18, flow_type: 'push', uptime: 100, defect_rate: 3, notes: 'Rack contact failure is root cause of 35% of plating defects. No standard rack inspection checklist — operator-dependent.' })
+        const s2 = await stp(pid, 2, { name: 'Pre-Treatment (Clean & Etch)', department: 'Tank Line', operators: 2, cycle_time: 25, wait_time: 600, wip: 12, flow_type: 'push', uptime: 97, defect_rate: 2, notes: 'Alkaline clean → acid etch → rinse. Bath chemistry tested manually twice/shift. pH drift between tests not caught in time.' })
+        const s3 = await stp(pid, 3, { name: 'Zinc Electroplating', department: 'Tank Line', operators: 2, cycle_time: 45, wait_time: 900, wip: 20, flow_type: 'push', uptime: 94, defect_rate: 13, notes: 'BOTTLENECK. 13% first-pass reject rate — zinc chemistry drifting outside spec mid-shift. Each reject = strip, re-rack, re-plate. Cost: 2× chemistry, 2× tank time, 2× operator time.' })
+        const s4 = await stp(pid, 4, { name: 'Chromate Conversion & Rinse', department: 'Tank Line', operators: 1, cycle_time: 12, wait_time: 300, wip: 8, flow_type: 'push', uptime: 100, defect_rate: 1, notes: 'Trivalent chromate passivation. Rinse tank contamination check weekly — should be daily given reject history.' })
+        const s5 = await stp(pid, 5, { name: 'Final Inspection & Pack', department: 'Inspection', operators: 2, cycle_time: 18, wait_time: 3600, wip: 25, flow_type: 'push', uptime: 100, defect_rate: 2, notes: 'Visual and thickness inspection. 2% escape rate — parts shipped with borderline thickness. Customer complaint rate 1.8/month.' })
+
+        // Stopwatch — zinc plating bottleneck
+        await sw(s3.id, pid, 55, 40, 45,
+          laps(45, 10),
+          'Zinc plating avg 45 min/rack. 13% reject rate — chemistry drift discovered only at end-of-shift test. Each reject adds 90 min re-plate cycle.')
+
+        // Fishbone — zinc plating defects
+        await ika(s3.id, pid,
+          '13% zinc plating reject rate — chemistry out of specification',
+          '6M Manufacturing',
+          {
+            Machine: [
+              'Rectifier current density drifts ±12% from setpoint during long runs',
+              'Anode baskets not inspected between shifts — depleted anodes not caught',
+              'No automated chemistry dosing — manual addition only'
+            ],
+            Method: [
+              'Chemistry tested only twice per shift — 4-hour gap allows drift to go undetected',
+              'No real-time zinc concentration monitoring between manual tests',
+              'Reject determination made by operator judgement, not instrument measurement'
+            ],
+            Material: [
+              'Zinc anode purity varies between supplier batches',
+              'Incoming parts not fully degreased — oil contamination carryover into plating bath'
+            ],
+            Manpower: [
+              'New operators add zinc brightener by eye, not by measured dose',
+              'Chemistry adjustment training not standardised — relies on experienced operator knowledge'
+            ],
+            Measurement: [
+              'Hull cell test not run on every shift — test skipped when line is busy',
+              'Thickness measurement sampled only — not 100% tested at inspection'
+            ],
+            'Mother Nature': [
+              'Bath temperature drops 4–6°C in winter months — affects plating efficiency and deposit quality',
+              'Humidity changes affect drying time between stages'
+            ]
+          }
+        )
+
+        // Five Why
+        await fw(s3.id, pid,
+          '13% zinc plating reject rate — bath out of specification',
+          [
+            why('Why 13% reject rate?', 'Zinc bath chemistry drifting outside specification — pH and brightener concentration outside acceptable range.'),
+            why('Why is chemistry drifting?', 'Manual chemistry tests only twice per shift — 4-hour gap means drift runs uncorrected for up to 4 hours.'),
+            why('Why only twice per shift?', 'No automated monitoring — lab technician manually tests between other duties. Testing frequency not formally specified.'),
+            why('Why no automated monitoring?', 'Inline monitoring equipment not purchased. No specification requiring continuous chemistry monitoring in current process spec.'),
+            why('Why not in the specification?', 'ROOT CAUSE: Process specification written when reject rate was 3% on lower-volume runs. Specification not reviewed when throughput doubled 18 months ago.')
+          ],
+          'Process specification not reviewed when throughput volume doubled — test frequency insufficient for current production rate.',
+          '1. Immediate: Increase manual chemistry tests to every 90 minutes. 2. Short-term: Install inline pH and zinc concentration monitor. 3. Permanent: Rewrite process specification to include monitoring frequency requirements tied to throughput rate.',
+          'Quality Manager',
+          '2026-04-30'
+        )
+
+        // Waste
+        await wa(s3.id, pid,
+          ['Defects', 'Waiting', 'Overprocessing'],
+          {
+            Defects: '13% reject rate at zinc plating — each reject consumes 2× chemistry, 2× tank time, 2× operator time. Monthly cost est. $14,000 in rework.',
+            Waiting: 'Rejected jobs wait avg 4.5 hours in strip queue before re-processing — further delays customer shipments.',
+            Overprocessing: 'Full rack stripped and re-plated when only partial rack fails — individual part failure triggers whole-rack reprocess.'
+          }
+        )
+
+        // Kaizen
+        await kz(s3.id, pid, [
+          kzItem('KZ-001',
+            'Install inline zinc bath monitoring',
+            'Continuous pH and zinc concentration monitoring with alert when parameters drift outside 90% of spec range. Operator notified immediately — eliminates 4-hour gap between manual tests. Target: reject rate from 13% to under 4%.',
+            'Quality', 'critical', 'in-progress', 'Quality Manager', '2026-05-15',
+            [
+              'Source inline zinc/pH monitor (3 vendors to quote)',
+              'Install and calibrate against manual test method',
+              'Set alert thresholds at 90% of specification limits',
+              'Train operators on alarm response protocol',
+              'Track daily reject rate for 30 days post-installation',
+              'Report to Management: cost saving vs equipment cost'
+            ]
+          ),
+          kzItem('KZ-002',
+            'Standard rack inspection checklist before plating',
+            'Pre-plate rack check: contact point condition, anode basket level, job count vs rack capacity. 5-minute check eliminates rack contact failures (root cause of 35% of rejects). Standard work document posted at racking station.',
+            'Quality', 'high', 'open', 'Line Supervisor', '2026-04-30',
+            [
+              'Design 8-point rack inspection checklist',
+              'Validate with experienced racking operator',
+              'Laminate and post at racking station',
+              'Trial for 2 weeks — track rack-related defects',
+              'Update process specification'
+            ]
+          ),
+          kzItem('KZ-003',
+            'Throughput calculator — jobs per hour by process mix',
+            'Build a simple spreadsheet or in-app calculator: enter job type, rack configuration, and tank times — output expected jobs per hour and shift throughput. Identifies scheduling conflicts before jobs hit the floor.',
+            'Productivity', 'high', 'open', 'Process Engineer', '2026-05-01',
+            [
+              'Map all job types and their tank time requirements',
+              'Build throughput model (tank time × jobs per rack / racks)',
+              'Identify bottleneck tank for each job mix scenario',
+              'Connect to scheduling system or daily plan board',
+              'Test against actual throughput for 4 weeks'
+            ]
+          )
+        ])
+
+        // Improvement goals
+        await im(s5.id, pid, [
+          goal('First Pass Yield', '87', '96', '%', 'Quality Manager', '2026-07-01'),
+          goal('Zinc Reject Rate', '13', '3', '%', 'Quality Manager', '2026-05-31'),
+          goal('Job Lead Time', '18', '10', 'hours', 'Operations Manager', '2026-06-30'),
+          goal('On-Time Delivery', '84', '97', '%', 'Operations Manager', '2026-07-01')
+        ])
+
+        seeded.push('Metal Finishing')
+        if (!primaryId) primaryId = pid
+      }
+      }
+    }
+
     return NextResponse.json({ error: err?.message || 'Failed to seed reference projects' }, { status: 500 })
   }
 }

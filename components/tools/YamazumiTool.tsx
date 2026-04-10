@@ -70,6 +70,10 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
       title="Yamazumi Chart — Operator Balance"
       onClose={onClose}
     >
+      {/* View-only notice */}
+      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 12 }}>
+        View only — this chart reads from your step data. Edit cycle times and op steps in each step to update it.
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
         {/* Legend */}

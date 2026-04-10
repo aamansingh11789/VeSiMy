@@ -13,7 +13,15 @@ interface Props { params: { id: string } }
 
 export async function generateMetadata({ params }: Props) {
   const supabase = await createServerSupabase()
-  const { data } = await supabase.from('projects').select('name').eq('id', params.id).single()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { title: 'Project — VeSiMy' }
+  // Include user_id guard so project names of other users cannot be enumerated
+  const { data } = await supabase
+    .from('projects')
+    .select('name')
+    .eq('id', params.id)
+    .eq('user_id', user.id)
+    .single()
   return { title: data?.name ? `${data.name} — VeSiMy` : 'Project — VeSiMy' }
 }
 
@@ -44,7 +52,11 @@ export default async function ProjectPage({ params }: Props) {
       tool_data: undefined,
     }))
 
-  const initialProject = { ...project, steps }
+  // Strip steps from project object — steps are managed separately in useState.
+  // This prevents any child component from reading project.steps and getting
+  // the frozen server-render snapshot instead of live state.
+  const { steps: _strippedSteps, ...projectWithoutSteps } = { ...project, steps }
+  const initialProject = { ...projectWithoutSteps, steps }
   const isV2 = project.version === 'v2'
 
   // ── V2 project — new builder ───────────────────────────────────────────────

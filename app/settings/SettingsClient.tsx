@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { isPaidProfile } from '@/lib/require-plan'
 import { INDUSTRY_OPTIONS, getIndustryLabel } from '@/lib/industry-language'
 // ── app/settings/SettingsClient.tsx ──────────────────────────────────────────
 
@@ -10,6 +11,7 @@ import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
 import { PLANS } from '@/lib/stripe'
 import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/components/ui/Icons'
+import { IndustrySelector } from '@/components/ui/IndustrySelector'
 
 
 interface Props {
@@ -17,38 +19,7 @@ interface Props {
   user:    { email?: string }
 }
 
-function IndustrySelector({ profileId, currentIndustry }: { profileId: string; currentIndustry?: string }) {
-  const [industry, setIndustry] = useState(currentIndustry || '')
-  const [saving, setSaving] = useState(false)
-
-  async function save(val: string) {
-    setSaving(true)
-    setIndustry(val)
-    const { error } = await createClient().from('profiles').update({ industry: val }).eq('id', profileId)
-    if (error) toast.error('Failed to update industry.')
-    else toast.success('Industry updated!')
-    setSaving(false)
-  }
-
-  return (
-    <select
-      className="input"
-      value={industry}
-      onChange={e => save(e.target.value)}
-      disabled={saving}
-      style={{ opacity: saving ? 0.6 : 1 }}
-    >
-      <option value="">Select your industry…</option>
-      {INDUSTRY_OPTIONS.map((opt: any) => (
-        <option key={opt.id} value={opt.id}>{opt.label}</option>
-      ))}
-    </select>
-  )
-}
-
-const PLAN_COLOR: Record<string,string> = { free:'var(--text3)', trial:'var(--text3)', trialing:'#0176D3', trial_expired:'#C0402A', pro:'#0176D3', lifetime:'#C49B2E', enterprise:'#6CB9FC' }
-
-export function SettingsClient({ profile, user }: Props) {
+export function SettingsClient({ projectCount = 0, profile, user }: Props) {
   const router   = useRouter()
   const [portalLoading, setPortalLoading] = useState(false)
   const [saving,        setSaving]        = useState(false)
@@ -56,7 +27,7 @@ export function SettingsClient({ profile, user }: Props) {
 
   const planKey    = (profile?.plan_tier || 'trial') as keyof typeof PLANS
   const plan       = PLANS[planKey as keyof typeof PLANS] || PLANS.trial
-  const isPaid     = ['pro', 'lifetime', 'enterprise'].includes(planKey)
+  const isPaid = isPaidProfile(profile)
   const isLifetime = planKey === 'lifetime' || profile?.lifetime_access
   const isFounder  = profile?.founding_member
   const isBeta     = profile?.is_beta || profile?.lifetime_access
@@ -223,9 +194,9 @@ export function SettingsClient({ profile, user }: Props) {
       <section style={{ marginBottom:32 }}>
         <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Usage</h2>
         <div className="card" style={{ padding:24 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(100px,1fr))', gap:20 }}>
             {[
-              ['Projects', `${profile?.projects_count || 0} / ${planKey === 'pro' ? 10 : planKey === 'lifetime' ? 30 : planKey === 'enterprise' ? '∞' : profile?.projects_limit || 3}`, '#1DD1A1'],
+              ['Projects', `${projectCount} / ${planKey === 'pro' ? 10 : planKey === 'lifetime' ? 30 : planKey === 'enterprise' ? '∞' : profile?.projects_limit || 3}`, '#1DD1A1'],
               ['Plan',      planDisplayName,                                                                        PLAN_COLOR[planKey] || 'var(--text3)'],
               ['Status',    isLifetime ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),     isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (

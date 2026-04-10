@@ -13,12 +13,3 @@ export function createClient() {
   return createBrowserClient(SUPABASE_URL, SUPABASE_ANON)
 }
 
-// ── Admin client (server only — never expose to client) ───────────────────
-export function createAdminClient() {
-  const { createClient: createAdminSupabase } = require('@supabase/supabase-js')
-  return createAdminSupabase(
-    SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}

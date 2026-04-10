@@ -32,24 +32,23 @@ export async function POST(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // Check plan limits
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('projects_count, projects_limit, plan_tier')
-    .eq('id', user.id)
-    .single()
+  // Check plan limits — count live from DB, not stale profile.projects_count
+  const [{ data: profile }, { count: liveCount }] = await Promise.all([
+    supabase.from('profiles').select('projects_limit, plan_tier, lifetime_access, is_beta').eq('id', user.id).single(),
+    supabase.from('projects').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'active'),
+  ])
 
-  const tier       = profile?.plan_tier || 'trial'
-  const limit      = profile?.projects_limit ?? 3
-  const count      = profile?.projects_count ?? 0
-  const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(tier)
+  const tier        = profile?.plan_tier || 'trial'
+  const limit       = profile?.projects_limit ?? 3
+  const count       = liveCount ?? 0
+  const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(tier) || profile?.lifetime_access
   const isTrialing  = ['trialing', 'trial'].includes(tier) || profile?.is_beta
 
-  if (!isUnlimited && !isTrialing && count >= limit) {
-    return NextResponse.json({ error: `Project limit reached. Your plan allows ${limit} projects.`, code: 'LIMIT_REACHED' }, { status: 403 })
-  }
-  if (!isUnlimited && isTrialing && count >= limit) {
-    return NextResponse.json({ error: 'Trial limit reached (3 projects). Upgrade to Pro to continue.', code: 'LIMIT_REACHED' }, { status: 403 })
+  if (!isUnlimited && count >= limit) {
+    const msg = isTrialing
+      ? 'Trial limit reached (3 projects). Upgrade to Pro to continue.'
+      : `Project limit reached. Your plan allows ${limit} projects.`
+    return NextResponse.json({ error: msg, code: 'LIMIT_REACHED' }, { status: 403 })
   }
 
   const body = await request.json()

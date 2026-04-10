@@ -44,6 +44,10 @@ export function ProcessSimulation({ steps, projectId }: Props) {
     <div>
       {/* Summary */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(110px,1fr))', gap:10, marginBottom:20 }}>
+      {/* Session-only notice */}
+      <div style={{ padding: '6px 16px', background: 'rgba(244,166,35,0.1)', border: '1px solid rgba(244,166,35,0.25)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, fontSize: 12, color: '#F4A623' }}>
+        <span>⚠</span> Simulation results are session-only and not saved. Results will be lost on page refresh.
+      </div>
         {[['Current LT',fmt(curLT),'var(--text2)'],['Future LT',fmt(futLT),'#1DD1A1'],
           ['Time Saved',saved>0?fmt(saved):'—','var(--brand)'],
           ['PCE',`${curPCE}% → ${futPCE}%`,'var(--steel)']].map(([l,v,c]) => (

@@ -8,7 +8,6 @@ import { SERIF, BRAND, GREEN, AMBER, RED, NAVY } from './v2-constants'
 // Step 3: Generate future state VSM + report + action plan
 
 import { useState, useRef, useEffect } from 'react'
-import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 
 
@@ -31,8 +30,6 @@ interface Props {
 }
 
 export function V2FutureStatePanel({ project, profile, t, indLabel, currentReport, steps, isPaid, onReportGenerated }: Props) {
-  const supabase = createClient()
-
   // Stage: 'target' → 'brainstorm' → 'generating' → 'done'
   const [stage, setStage] = useState<'target' | 'brainstorm' | 'generating' | 'done'>('target')
 

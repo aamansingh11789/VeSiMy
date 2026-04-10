@@ -11,6 +11,7 @@ import { InstallPrompt } from '@/components/ui/InstallPrompt'
 import { CommandPalette } from '@/components/ui/CommandPalette'
 import { PostHogPageView } from '@/components/analytics/PostHogPageView'
 import { ServiceWorkerRegistration } from '@/components/ui/ServiceWorkerRegistration'
+import { ProfileRefresh } from '@/components/ui/ProfileRefresh'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import './globals.css'
 
@@ -39,14 +40,14 @@ export const metadata: Metadata = {
     title:       'VeSiMy — AI Operations Intelligence Platform for Manufacturing',
     description: 'Monitor, record, analyze and suggest process improvements automatically. Free VSM, Kaizen, 5 Why, Fishbone tools — with AI that never clocks out.',
     url:         'https://www.vesimy.com',
-    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — AI Operations Intelligence Platform' }],
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — Process Intelligence for 70 Industries' }],
   },
 
   // ── Twitter Card ───────────────────────────────────────────────────────────
   twitter: {
     card:        'summary_large_image',
     title:       'VeSiMy — AI Operations Intelligence Platform',
-    description: 'VeSiMy connects your time studies, root cause analyses, Kaizen logs, and value stream maps in one place. 14-day free trial, all CI tools. Built for lean and CI practitioners.',
+    description: 'VSM mapping, Time Study, Fishbone, 5 Why, Kaizen, and Waste ID — unified under one AI mentor, adapted for 70 industries. Your bottleneck has a name. Now you can prove it.',
     images:      ['/api/og'],
   },
 
@@ -127,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* PWA components — invisible, run in background */}
         <ServiceWorkerRegistration />
+        <ProfileRefresh />
         <InstallPrompt />
         <CommandPalette />
 

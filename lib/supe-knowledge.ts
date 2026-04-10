@@ -108,6 +108,7 @@ function buildRelevantKnowledge(industryKey?: string | null, specific?: string[]
     aerospace_manufacturing:       ['lean_manufacturing_general', 'smed'],
     food_beverage_manufacturing:   ['lean_manufacturing_general'],
     general_manufacturing:         ['lean_manufacturing_general', 'smed', 'tpm'],
+    metal_finishing:               ['lean_metal_finishing', 'lean_manufacturing_general', 'smed', 'tpm'],
     electronics_manufacturing:     ['lean_manufacturing_general'],
     industrial_manufacturing:      ['lean_manufacturing_general', 'tpm'],
     // Professional services
@@ -421,3 +422,27 @@ KNOWLEDGE_CHUNKS.push(
 )
 
 // Update industrySpecific map in buildRelevantKnowledge to cover remaining industries
+
+// ── Metal Finishing industry knowledge ────────────────────────────────────────
+KNOWLEDGE_CHUNKS.push({
+  id: 'lean_metal_finishing',
+  section: 'Lean in Metal Finishing & Surface Treatment',
+  tags: ['metal finishing','surface treatment','electroplating','anodizing','powder coating','tank line','throughput','job shop','plating','chemical treatment'],
+  content: `Metal finishing is a job shop / batch process. Terminology: product = job (the part being finished); customer = end customer or OEM; value stream = order receipt to shipment; cycle time = stage time in each tank or process step; takt time = required throughput rate (jobs per hour or shift to meet demand); defect = reject or strip-and-reprocess; gemba = tank line / finishing floor.
+
+Value-added stages: active process steps where chemistry or mechanical action transforms the surface — pre-treatment (alkaline clean, acid etch), electroplating or coating, conversion coating, sealing. Non-value-added: queue time between tanks, manual handling and racking, inspection hold time, waiting for chemistry lab results.
+
+Key waste types in metal finishing:
+1. WAITING — jobs queuing between stages. Most lead time is wait time. Root cause: imbalanced tank capacity vs actual job mix.
+2. DEFECTS — rejects requiring strip and re-process. High cost: chemistry consumed twice, tank capacity consumed twice. Root causes: chemistry out of spec, rack contact failure, contamination, incorrect amperage or time.
+3. TRANSPORTATION — manual job movement between tanks. Overhead crane and conveyor lines reduce this.
+4. OVERPROCESSING — longer tank times than specification requires. Occurs when operators lack real-time chemistry data.
+5. WAITING (chemistry) — waiting for lab analysis before starting jobs. Inline monitoring eliminates this wait.
+
+Throughput model: Total capacity = (tank time per job × jobs per rack) / number of racks running. Bottleneck = tank with highest utilisation vs takt. Takt time = daily demand in jobs / available shift time in minutes.
+
+SMED in metal finishing applies to: rack changeover between job types, chemistry changeover between specifications, anode change, filter changes. Target: all changeovers under 10 minutes.
+
+Key process failure modes: anode passivation, bath contamination from tramp metals, pH and temperature drift, current density variation across rack, rack contact resistance. Each should appear in the Fishbone for any quality problem.`
+})
+

@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
 
     for (const update of stepUpdates) {
       const { id, ...data } = update
-      await supabase.from('steps').update(data).eq('id', id)
+      await supabase.from('steps').update(data).eq('id', id).eq('user_id', user.id)
     }
 
-    // Mark project as V2
-    await supabase.from('projects').update({ version: 'v2' }).eq('id', project_id)
+    // Mark project as V2 — with user ownership check
+    await supabase.from('projects').update({ version: 'v2' }).eq('id', project_id).eq('user_id', user.id)
 
     return NextResponse.json({
       success: true, project_id,

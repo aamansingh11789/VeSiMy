@@ -112,6 +112,15 @@ function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
 function AuroraHero() {
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+      {/* Sensario photo — your photo, used as texture layer */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: 'url(/sensario-hero.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 40%',
+        opacity: 0.07,
+        mixBlendMode: 'luminosity',
+      }}/>
       {/* Noise texture */}
       <svg style={{ position:'absolute',inset:0,width:'100%',height:'100%',opacity:.045,mixBlendMode:'overlay'}} aria-hidden>
         <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -299,11 +308,11 @@ function IndustryTerms() {
           <div>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(56,189,248,0.7)', marginBottom:16, textTransform:'uppercase' }}>Industry Language Engine</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,42px)', lineHeight:1.12, fontWeight:400, marginBottom:20, color:'#F1F5F9' }}>
-              Select your industry.<br />
-              <em style={{ fontStyle:'italic', color:'#38BDF8' }}>Every word changes.</em>
+              Your team shouldn't have to<br />
+              <em style={{ fontStyle:'italic', color:'#38BDF8' }}>translate lean into their language.</em>
             </h2>
             <p style={{ fontSize:14, lineHeight:1.85, color:'rgba(248,247,245,0.45)', fontWeight:300, maxWidth:380 }}>
-              Select your industry at signup. Every term — cycle time to kaizen — is translated into the language your team already uses. 68 industries. Built for each field, not adapted from manufacturing.
+              A nurse doesn't have WIP. A brewer doesn't have takt time. A lawyer doesn't have a gemba walk. VeSiMy speaks the language of your field from day one — 69 industries, every term adapted.
             </p>
             <div style={{ marginTop:28, display:'flex', flexWrap:'wrap', gap:6 }}>
               {TERM_KEYS.map(k => (
@@ -553,9 +562,9 @@ export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null)
 
   const eyeLines = [
-    'Manufacturing · Logistics · Healthcare · Real Estate · Legal',
-    'For lean engineers · CI coordinators · operations managers',
-    'Any process. Any industry. Any team size.',
+    'Your defect rate has a root cause. Find it.',
+    'Your lead time has waste in it. Map it.',
+    'Your improvement needs proof. Track it.',
   ]
 
   useEffect(() => {
@@ -688,17 +697,13 @@ export default function HomePage() {
                 </span>
               </div>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(42px,5.5vw,74px)', lineHeight:1.04, color:'#F1F5F9', marginBottom:20, fontWeight:400, letterSpacing:-.5 }}>
-                You have a process.<br />
-                You have a target.<br />
-                <span style={{ fontStyle:'italic', color:'#38BDF8' }}>You have VeSiMy.</span>
+                Your bottleneck has a name.<br />
+                Your reject rate has a cause.<br />
+                <span style={{ fontStyle:'italic', color:'#38BDF8' }}>Now you can prove both.</span>
               </h1>
-              <p style={{ fontFamily:mono, fontSize:11, letterSpacing:2, color:'rgba(56,189,248,0.4)', marginBottom:28, paddingBottom:28, borderBottom:'1px solid rgba(56,189,248,0.1)' }}>
-                LEAN · TPS · SIX SIGMA · FOR EVERY INDUSTRY
-              </p>
               <p style={{ fontSize:16, lineHeight:1.85, color:'rgba(241,245,249,.5)', marginBottom:40, fontWeight:300, maxWidth:460 }}>
-                The methodology behind Toyota. The rigour of Six Sigma. The clarity of lean.{' '}
-                <strong style={{ color:'rgba(241,245,249,.8)', fontWeight:500 }}>Now available to every team, every sector, every size — with AI that proves your targets are achievable</strong>{' '}
-                and tracks every step of the improvement that gets you there.
+                Every operations team knows where the waste is. The problem is turning that gut feeling into a number, a root cause, and a fix that sticks.{' '}
+                <strong style={{ color:'rgba(241,245,249,.8)', fontWeight:500 }}>VeSiMy maps your process, finds what's holding it back, and tracks the improvement until the target is hit.</strong>
               </p>
               <div style={{ display:'flex', alignItems:'center', gap:16, flexWrap:'wrap', marginBottom:48 }}>
                 <Link ref={magnetCTA as any} href="/auth/signup" style={{
@@ -747,39 +752,87 @@ export default function HomePage() {
       {/* ── DUAL TICKER ──────────────────────────────────────────────────── */}
       <DualTicker />
 
-      {/* ── PROBLEM / BEFORE-AFTER ───────────────────────────────────────── */}
+      {/* ── PAIN SECTION — doctor framing ─────────────────────────────────── */}
       <section style={{ padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', background:'#F8F6F0' }}>
-        <div style={{ maxWidth:1160, margin:'0 auto', display:'grid', gridTemplateColumns:'5fr 6fr', gap:'clamp(40px,6vw,80px)', alignItems:'start' }}>
-          <div className="reveal">
-            <span style={{ fontFamily:mono, fontSize:10, letterSpacing:2, color:'#6B6760', opacity:.5, display:'block', marginBottom:14 }}>01</span>
-            <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,44px)', lineHeight:1.12, fontWeight:400, color:'#0D0C0A', marginBottom:20 }}>
-              Every team knows where the waste is.<br />
-              <em style={{ fontStyle:'italic', color:'#0176D3' }}>Nobody can prove it.</em>
+        <div style={{ maxWidth:1160, margin:'0 auto' }}>
+
+          {/* Opening diagnosis */}
+          <div className="reveal" style={{ textAlign:'center', marginBottom:64 }}>
+            <span style={{ fontFamily:mono, fontSize:10, letterSpacing:2, color:'#6B6760', opacity:.5, display:'block', marginBottom:16 }}>THE PROBLEM</span>
+            <h2 style={{ fontFamily:serif, fontSize:'clamp(28px,3.5vw,50px)', lineHeight:1.1, fontWeight:400, color:'#0D0C0A', maxWidth:780, margin:'0 auto 20px' }}>
+              You already know what's wrong.<br />
+              <em style={{ fontStyle:'italic', color:'#0176D3' }}>You just can't prove it yet.</em>
             </h2>
-            <p style={{ fontSize:15, lineHeight:1.85, color:'#3A3835', fontWeight:300, maxWidth:380 }}>
-              VeSiMy closes the gap between "we know this is broken" and "we can prove we fixed it." The bottleneck is visible to everyone — the proof never makes it into a report. Until now.
+            <p style={{ fontSize:16, lineHeight:1.85, color:'#3A3835', fontWeight:300, maxWidth:560, margin:'0 auto' }}>
+              The bottleneck is obvious to anyone who walks the floor. The root cause is debated in every meeting. The improvement gets started, loses momentum, and the problem comes back. Not because your team isn't capable — because there's no system connecting the problem to the proof.
             </p>
           </div>
-          <div className="reveal d2" style={{ borderTop:'1px solid rgba(1,118,211,.1)' }}>
+
+          {/* Symptom cards */}
+          <div className="reveal d1" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16, marginBottom:64 }}>
             {[
-              ['Post-it notes on a whiteboard', 'Live value stream with real cycle times'],
-              ['Gut feel root cause', '5 Why drilled to the system failure'],
-              ['Improvement in someone\'s head', 'Kaizen events with owners and due dates'],
-              ['"I think it\'s getting better"', 'Before/after baseline with ISO proof'],
-              ['Manufacturing jargon in a hospital', 'Care pathway. Patient. Discharge.'],
-            ].map(([before, after]) => (
-              <div key={before} style={{ display:'grid', gridTemplateColumns:'1fr auto 1fr', gap:16, alignItems:'center', padding:'16px 0', borderBottom:'1px solid rgba(1,118,211,.08)' }}>
-                <div>
-                  <div style={{ fontFamily:mono, fontSize:7, letterSpacing:2, color:'#6B6760', opacity:.6, marginBottom:4 }}>BEFORE</div>
-                  <div style={{ fontSize:12.5, color:'#6B6760', textDecoration:'line-through', textDecorationColor:'rgba(192,64,42,.45)', textDecorationThickness:'1.5px', lineHeight:1.4 }}>{before}</div>
-                </div>
-                <div style={{ fontFamily:mono, fontSize:11, color:'#0176D3', opacity:.5, flexShrink:0 }}>→</div>
-                <div>
-                  <div style={{ fontFamily:mono, fontSize:7, letterSpacing:2, color:'#6B6760', opacity:.6, marginBottom:4 }}>AFTER</div>
-                  <div style={{ fontSize:12.5, color:'#0D0C0A', fontWeight:500, lineHeight:1.4 }}>{after}</div>
+              {
+                symptom: 'Your reject rate is climbing',
+                detail: 'You have a theory. Your team has three different theories. Without a structured root cause analysis linked to real process data, you're solving symptoms, not causes.',
+                fix: 'Fishbone + 5 Why linked to your actual process step',
+                color: '#C0402A',
+              },
+              {
+                symptom: 'Your cycle time keeps drifting',
+                detail: 'The standard says 90 seconds. The floor runs at 145. The gap is obvious but the cause — setup waste, motion, wait time — has never been measured properly.',
+                fix: 'Time study with outlier removal + takt comparison',
+                color: '#F4A623',
+              },
+              {
+                symptom: 'Improvements don't stick',
+                detail: 'The kaizen event ran, the post-its went up, and three months later the problem is back. No one owns it. No one measured the before. No one recorded the after.',
+                fix: 'Kaizen tracker with owners, targets, and close-out evidence',
+                color: '#0176D3',
+              },
+              {
+                symptom: 'Lead time nobody can explain',
+                detail: 'The order takes 4 days. Active work takes 40 minutes. The other 23 hours 20 minutes are queue, wait, and batch — invisible until you map them.',
+                fix: 'Value stream map showing every second of wait and work',
+                color: '#8C44CC',
+              },
+              {
+                symptom: 'Every team uses different language',
+                detail: 'A nurse doesn't have WIP. A brewer doesn't have takt time. A lawyer doesn't have a gemba. Generic tools speak factory — your team doesn't.',
+                fix: 'Industry language engine — 69 industries, native terminology',
+                color: '#2E844A',
+              },
+              {
+                symptom: 'Management wants proof, not opinions',
+                detail: 'You know the fix. Getting the budget approved means showing before and after in a format that speaks to leadership. That report doesn't write itself.',
+                fix: 'ISO-compliant PDCA, A3, and 8D exports in one click',
+                color: '#38BDF8',
+              },
+            ].map((card) => (
+              <div key={card.symptom} style={{
+                background:'white', border:'1px solid rgba(1,118,211,.1)', borderRadius:14,
+                padding:'24px 22px', borderTop:`3px solid ${card.color}`,
+                boxShadow:'0 2px 12px rgba(0,0,0,.05)',
+                transition:'transform .2s ease, box-shadow .2s ease',
+              }}
+              onMouseEnter={e=>{(e.currentTarget as HTMLDivElement).style.transform='translateY(-4px)';(e.currentTarget as HTMLDivElement).style.boxShadow='0 12px 28px rgba(0,0,0,.1)'}}
+              onMouseLeave={e=>{(e.currentTarget as HTMLDivElement).style.transform='';(e.currentTarget as HTMLDivElement).style.boxShadow='0 2px 12px rgba(0,0,0,.05)'}}>
+                <h3 style={{ fontSize:16, fontWeight:700, color:'#0D0C0A', marginBottom:12, lineHeight:1.3 }}>{card.symptom}</h3>
+                <p style={{ fontSize:13, color:'#6B6760', lineHeight:1.75, marginBottom:16 }}>{card.detail}</p>
+                <div style={{ display:'flex', alignItems:'flex-start', gap:8, padding:'10px 12px', background:`${card.color}08`, borderRadius:8, border:`1px solid ${card.color}18` }}>
+                  <div style={{ width:4, height:4, borderRadius:'50%', background:card.color, flexShrink:0, marginTop:5 }}/>
+                  <span style={{ fontSize:12, color:card.color, fontWeight:600, lineHeight:1.5 }}>{card.fix}</span>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Transition line */}
+          <div className="reveal" style={{ textAlign:'center' }}>
+            <p style={{ fontFamily:mono, fontSize:10, letterSpacing:2.5, color:'rgba(1,118,211,.6)', textTransform:'uppercase', marginBottom:12 }}>The same system that found the problem tracks the fix</p>
+            <h3 style={{ fontFamily:serif, fontSize:'clamp(22px,2.5vw,34px)', fontWeight:400, color:'#0D0C0A' }}>
+              Every tool linked to the same step.<br />
+              <em style={{ fontStyle:'italic', color:'#0176D3' }}>Every finding in one place.</em>
+            </h3>
           </div>
         </div>
       </section>
@@ -790,7 +843,7 @@ export default function HomePage() {
           <div className="reveal" style={{ marginBottom:56 }}>
             <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:'rgba(56,189,248,0.7)', marginBottom:16 }}>02 — How it works</p>
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,44px)', lineHeight:1.12, fontWeight:400, color:'#F1F5F9' }}>
-              From visible problem to permanent fix.<br />In four steps.
+              From symptom to fixed — and proven.<br />Four steps.
             </h2>
           </div>
           <div className="how-steps reveal d1" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', background:'rgba(255,255,255,0.02)', gap:1, borderRadius:16, overflow:'hidden', border:'1px solid rgba(255,255,255,0.06)' }}>
@@ -867,9 +920,9 @@ export default function HomePage() {
         <div style={{ position:'absolute', top:-40, left:'50%', transform:'translateX(-50%)', fontFamily:serif, fontSize:220, color:'rgba(56,189,248,0.04)', lineHeight:1, pointerEvents:'none', userSelect:'none' as any }}>"</div>
         <div className="reveal" style={{ maxWidth:680, margin:'0 auto', position:'relative', zIndex:1 }}>
           <p style={{ fontFamily:serif, fontSize:'clamp(18px,2.5vw,26px)', lineHeight:1.5, color:'rgba(241,245,249,0.75)', fontStyle:'italic', marginBottom:24, fontWeight:400 }}>
-            "The ability to add individual steps per operator with times is exactly what we needed. The designator for value-add and non-value-add per step, and the Yamazumi — that's the workflow."
+            "The ability to add individual steps per operator with times is exactly what we needed. The VA/NVA designator per step and the Yamazumi chart — that's the workflow we've been looking for."
           </p>
-          <p style={{ fontFamily:mono, fontSize:10, letterSpacing:1.5, color:'rgba(56,189,248,0.4)' }}>CI PRACTITIONER · LEAN MANUFACTURING · EARLY USER</p>
+          <p style={{ fontFamily:mono, fontSize:10, letterSpacing:1.5, color:'rgba(56,189,248,0.4)' }}>CI PRACTITIONER · LEAN MANUFACTURING · FOUNDING MEMBER</p>
         </div>
       </div>
 
@@ -946,12 +999,12 @@ export default function HomePage() {
         <AuroraHero />
         <div style={{ position:'relative', zIndex:1 }}>
           <h2 className="reveal" style={{ fontFamily:serif, fontSize:'clamp(36px,5vw,72px)', lineHeight:1.06, marginBottom:20, fontWeight:400, color:'#F1F5F9' }}>
-            You have a process.<br />
-            You have a target.<br />
-            <em style={{ fontStyle:'italic', color:'#38BDF8' }}>Now you have VeSiMy.</em>
+            Your process has a bottleneck.<br />
+            It has a name.<br />
+            <em style={{ fontStyle:'italic', color:'#38BDF8' }}>Now you can find it.</em>
           </h2>
           <p className="reveal d1" style={{ fontSize:16, color:'rgba(241,245,249,.35)', marginBottom:52, fontWeight:300 }}>
-            No card. No setup. No manufacturing jargon if you're not in manufacturing.
+            Free to start. No credit card. No manufacturing jargon if you're not in manufacturing.
           </p>
           <div className="reveal d2" style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
             <Link href="/auth/signup" style={{ padding:'16px 42px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'white', border:'none', borderRadius:12, fontSize:17, fontWeight:700, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:10, boxShadow:'0 4px 24px rgba(1,118,211,0.45), 0 0 0 1px rgba(1,118,211,0.5)' }}>

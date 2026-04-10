@@ -2,7 +2,7 @@
 // ── app/api/beta/window/route.ts ──────────────────────────────────────────────
 // Returns current launch window status (public — no auth required)
 import { NextResponse }      from 'next/server'
-import { createAdminClient } from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase-admin'
 
 export async function GET() {
   try {

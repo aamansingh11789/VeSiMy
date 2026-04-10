@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef} from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store'
 import type { Project, Step, Branch, Profile, KanbanColumn, ProjectTab } from '@/lib/store'
@@ -11,6 +11,7 @@ import {
   fetchBranches, createBranch, updateBranch, deleteBranch, createBranchStep,
   fetchKanbanBoard,
 } from '@/lib/db'
+import { isPaidProfile } from '@/lib/require-plan'
 import { StepModal } from '@/components/tools/StepModal'
 import { BranchModal } from '@/components/tools/BranchModal'
 import { ToolModal } from '@/components/tools/ToolModal'
@@ -83,17 +84,17 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [showVSMCoaching,  setShowVSMCoaching]  = useState(false)
   const [showPDCA,         setShowPDCA]         = useState(false)
   const [pdcaData,         setPdcaData]         = useState<any>(null)
-  const {
-    showToast, setActiveTool, activeTool,
-    setShowStepModal, showStepModal,
-    setEditingStep, editingStep,
-  } = useStore()
+  const {showToast, setActiveTool, activeTool} = useStore()
 
-  const [project, setProject] = useState(initialProject)
-  const [steps, setSteps] = useState<Step[]>(initialProject.steps || [])
+  // Project state holds metadata only — steps live in their own state below
+  const { steps: _initialSteps, ...projectMeta } = initialProject
+  const [project, setProject] = useState(projectMeta)
+  const [steps, setSteps] = useState<Step[]>(_initialSteps || [])
   const [branches, setBranches] = useState<Branch[]>([])
   const [kanbanColumns, setKanbanColumns] = useState<KanbanColumn[]>([])
   const [kanbanLoaded, setKanbanLoaded] = useState(false)
+  const [showStepModal, setShowStepModal] = useState(false)
+  const [editingStep, setEditingStep] = useState<Step | null>(null)
   const [showBranchModal, setShowBranchModal] = useState(false)
   const [editingBranch, setEditingBranch] = useState<Branch | null>(null)
   const [activeBranchId, setActiveBranchId] = useState<string | null>(null)
@@ -101,16 +102,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [saving, setSaving] = useState(false)
   const [showSOPUpload, setShowSOPUpload] = useState(false)
   const [dragIdx, setDragIdx] = useState<number | null>(null)
+  const reorderTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [showProjectEdit, setShowProjectEdit] = useState(false)
   const [showSupe, setShowSupe] = useState(false)
   const [supeOpen, setSupeOpen] = useState(true)
 
-  const isPaid =
-    (profile as any).plan_tier === 'pro' ||
-    (profile as any).plan_tier === 'lifetime' ||
-    (profile as any).plan_tier === 'enterprise' ||
-    (profile as any).lifetime_access ||
-    (profile as any).is_beta
+  const isPaid = isPaidProfile(profile)
 
   useEffect(() => {
     fetchBranches(project.id).then(setBranches).catch(() => {})
@@ -163,10 +160,20 @@ export function ProjectClient({ initialProject, profile }: Props) {
   }
 
   const handleSaveToolData = async (stepId: string, tool: string, data: Record<string, any>) => {
-    await saveToolData(stepId, tool, data)
+    // Capture previous state for rollback
+    const previousSteps = steps
+    // Optimistic update
     setSteps(ss => ss.map(s =>
       s.id === stepId ? { ...s, toolData: { ...(s.toolData || {}), [tool]: data } } : s
     ))
+    try {
+      await saveToolData(stepId, tool, data)
+    } catch (err: any) {
+      // Rollback on failure — user sees their previous data
+      setSteps(previousSteps)
+      showToast('Save failed — your changes were not persisted', 'error')
+      throw err  // re-throw so tool modal stays open
+    }
   }
 
   const handleCreateBranch = async (form: Partial<Branch>) => {
@@ -227,11 +234,15 @@ export function ProjectClient({ initialProject, profile }: Props) {
     )
     setSteps([...reordered, ...branchSteps])
     setDragIdx(null)
-    try {
-      await reorderSteps(project.id, reordered.map(s => s.id))
-    } catch {
-      showToast('Reorder failed', 'error')
-    }
+    // Debounce reorder — wait 300ms in case user is still dragging
+    if (reorderTimeoutRef.current) clearTimeout(reorderTimeoutRef.current)
+    reorderTimeoutRef.current = setTimeout(async () => {
+      try {
+        await reorderSteps(project.id, reordered.map(s => s.id))
+      } catch {
+        showToast('Reorder failed', 'error')
+      }
+    }, 300)
   }
 
   const handleSOPSteps = async (sopSteps: any[]) => {
@@ -1054,11 +1065,13 @@ export function ProjectClient({ initialProject, profile }: Props) {
         <PDCATool
           steps={steps}
           project={project}
-          initialData={pdcaData || steps[0]?.toolData?.pdca_project || null}
+          initialData={pdcaData || mainSteps[0]?.toolData?.pdca_project || steps[0]?.toolData?.pdca_project || null}
           onSave={async (data) => {
             setPdcaData(data)
-            if (steps[0]?.id) {
-              try { await saveToolData(steps[0].id, 'pdca_project', data) }
+            // Save against first main-flow step — fallback to any first step
+            const pdcaStep = mainSteps[0] || steps[0]
+            if (pdcaStep?.id) {
+              try { await saveToolData(pdcaStep.id, 'pdca_project', data) }
               catch (e) { console.error('PDCA save error:', e) }
             }
             setShowPDCA(false)

@@ -47,6 +47,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
       await supabase.from('projects')
         .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
         .eq('id', project.id)
+        .eq('user_id', project.user_id)
       if (onSaveRoadmap) onSaveRoadmap({ phases })
     }, 1500)
     return () => clearTimeout(saveTimer.current)

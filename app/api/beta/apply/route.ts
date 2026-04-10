@@ -4,7 +4,7 @@
 // Scoring kept for analytics / future use
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerSupabase }           from '@/lib/supabase-server'
-import { createAdminClient }              from '@/lib/supabase'
+import { createAdminClient } from '@/lib/supabase-admin'
 
 function scoreApplication(data: any): { score: number; breakdown: Record<string, number> } {
   const b: Record<string, number> = {}

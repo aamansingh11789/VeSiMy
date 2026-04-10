@@ -106,6 +106,35 @@ export const INDUSTRY_LANGUAGE: Record<string, IndustryTerms> = {
 
   // ── MANUFACTURING ─────────────────────────────────────────────────────────────
   'general_manufacturing':     MFG_DEFAULT,
+  'metal_finishing': {
+    ...MFG_DEFAULT,
+    product: 'job', products: 'jobs',
+    customer: 'end customer', customers: 'customers',
+    process: 'finishing process', processStep: 'finishing stage', processSteps: 'finishing stages',
+    cycleTime: 'Stage Time', waitTime: 'Queue Time', leadTime: 'Job Lead Time',
+    taktTime: 'Required Throughput Rate', setupTime: 'Tank Changeover Time',
+    wip: 'jobs in process', wipUnit: 'job', inventory: 'job queue',
+    bottleneck: 'capacity constraint', throughput: 'jobs per hour', flow: 'job flow',
+    defect: 'reject / rework', defects: 'rejects', defectRate: 'First Pass Yield',
+    rework: 'strip and re-process', quality: 'finish quality',
+    operator: 'line operator', operators: 'line operators',
+    gemba: 'finishing floor / tank line',
+    standardWork: 'Process Specification', valueAdded: 'Value-Add (active finishing)',
+    nonValueAdded: 'Non-Value-Add',
+    kaizen: 'process improvement', kaizenEvent: 'improvement event',
+    waste: 'waste', valueStream: 'job-to-shipment flow',
+    vsmTool: 'Job Flow Map', timStudyTool: 'Stage Time Study',
+    fiveWhyTool: '5 Why Analysis', fishboneTool: 'Fishbone Diagram',
+    wasteTool: 'Waste Identification', kaizenTool: 'Kaizen Tracker',
+    yamazumiTool: 'Operator Balance Chart', standardWorkTool: 'Process Spec Sheet',
+    project: 'project', projects: 'projects',
+    step: 'stage', steps: 'stages',
+    target: 'target', targets: 'targets',
+    improvement: 'improvement', improvements: 'improvements',
+    metric: 'metric', metrics: 'metrics',
+    sectorLabel: 'Metal Finishing',
+    gembaLabel: 'Go to the tank line',
+  },
   'automotive_manufacturing': {
     ...MFG_DEFAULT,
     product: 'vehicle', products: 'vehicles',
@@ -1373,6 +1402,7 @@ export function getIndustryTerms(industryKey?: string | null): IndustryTerms {
 export const INDUSTRY_OPTIONS = [
   // Manufacturing
   { id: 'general_manufacturing',      label: 'General Manufacturing',        sector: 'Manufacturing' },
+  { id: 'metal_finishing',            label: 'Metal Finishing / Surface Treatment', sector: 'Manufacturing' },
   { id: 'automotive_manufacturing',   label: 'Automotive Manufacturing',     sector: 'Manufacturing' },
   { id: 'aerospace_manufacturing',    label: 'Aerospace & Defence',          sector: 'Manufacturing' },
   { id: 'pharmaceutical_manufacturing',label: 'Pharmaceutical Manufacturing',sector: 'Manufacturing' },

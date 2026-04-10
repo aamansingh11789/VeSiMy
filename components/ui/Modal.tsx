@@ -2,7 +2,7 @@
 'use client'
 
 import type React from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 interface ModalProps {
@@ -77,10 +77,17 @@ export function Modal({
     }
   }, [])
 
-  // ── NO isMobile state — detect synchronously via matchMedia ─────────────
-  // Using state caused a false first-render with desktop styles; iOS locked
-  // onto that layout before useEffect could correct it.
-  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  // ── SSR-safe mobile detection ────────────────────────────────────────────
+  // Start with false (matches server). Flip to true on mount if mobile.
+  // This avoids hydration mismatch while still giving mobile layout on first paint.
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   const content = (
     <div

@@ -33,6 +33,7 @@ export type WatermarkGroup =
 export const INDUSTRY_REFERENCE_NAMES: Record<string, string[]> = {
   // ── Manufacturing & Industrial ─────────────────────────────────────────────
   general_manufacturing:         ['Reference — General Manufacturing Production Cell'],
+  metal_finishing:               ['Reference — Metal Finishing Job Flow'],
   automotive_manufacturing:      ['Reference — Automotive Seat Assembly'],
   aerospace_manufacturing:       ['Reference — Aerospace Component Assembly'],
   pharmaceutical_manufacturing:  ['Reference — Pharmaceutical Batch Release'],
@@ -149,6 +150,7 @@ export const INDUSTRY_REFERENCE_NAMES: Record<string, string[]> = {
 export const INDUSTRY_WATERMARK_GROUP: Record<string, WatermarkGroup> = {
   // Manufacturing & Industrial
   general_manufacturing:         'manufacturing',
+  metal_finishing:               'manufacturing',
   automotive_manufacturing:      'manufacturing',
   aerospace_manufacturing:       'aerospace',
   pharmaceutical_manufacturing:  'pharma',
