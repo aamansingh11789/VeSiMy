@@ -296,11 +296,13 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               <div style={{ marginTop: 6, padding: '6px 10px', background: 'rgba(1,118,211,.05)', borderRadius: 6, fontSize: 11, color: BRAND, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <span><strong>{CI_TOOLS.find(c => c.id === activeCITool)?.icon} {CI_TOOLS.find(c => c.id === activeCITool)?.label}</strong> selected</span>
                 {onTool && (
-                  <button onClick={() => onTool(activeCITool)} style={{ fontSize: 10, padding: '2px 8px', background: BRAND, color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600 }}>Open →</button>
+                  <button onClick={() => onTool(activeCITool)} style={{ fontSize: 10, padding: '2px 8px', background: BRAND, color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600 }}>Open &rarr;</button>
                 )}
                 <button onClick={() => setActiveCITool(null)} style={{ fontSize: 10, color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', marginLeft: 'auto' }}>Clear</button>
               </div>
             )}
+          </div>
+        ))}
 
         {/* Delete */}
         <div style={{ paddingTop: 8, borderTop: '1px solid var(--border)' }}>

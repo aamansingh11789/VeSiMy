@@ -773,7 +773,7 @@ export default function HomePage() {
             {[
               {
                 symptom: 'Your reject rate is climbing',
-                detail: 'You have a theory. Your team has three different theories. Without a structured root cause analysis linked to real process data, you're solving symptoms, not causes.',
+                detail: "You have a theory. Your team has three different theories. Without a structured root cause analysis linked to real process data, you're solving symptoms, not causes.",
                 fix: 'Fishbone + 5 Why linked to your actual process step',
                 color: '#C0402A',
               },
@@ -784,7 +784,7 @@ export default function HomePage() {
                 color: '#F4A623',
               },
               {
-                symptom: 'Improvements don't stick',
+                symptom: "Improvements don't stick",
                 detail: 'The kaizen event ran, the post-its went up, and three months later the problem is back. No one owns it. No one measured the before. No one recorded the after.',
                 fix: 'Kaizen tracker with owners, targets, and close-out evidence',
                 color: '#0176D3',
@@ -797,13 +797,13 @@ export default function HomePage() {
               },
               {
                 symptom: 'Every team uses different language',
-                detail: 'A nurse doesn't have WIP. A brewer doesn't have takt time. A lawyer doesn't have a gemba. Generic tools speak factory — your team doesn't.',
+                detail: "A nurse doesn't have WIP. A brewer doesn't have takt time. A lawyer doesn't have a gemba. Generic tools speak factory — your team doesn't.",
                 fix: 'Industry language engine — 69 industries, native terminology',
                 color: '#2E844A',
               },
               {
                 symptom: 'Management wants proof, not opinions',
-                detail: 'You know the fix. Getting the budget approved means showing before and after in a format that speaks to leadership. That report doesn't write itself.',
+                detail: "You know the fix. Getting the budget approved means showing before and after in a format that speaks to leadership. That report doesn't write itself.",
                 fix: 'ISO-compliant PDCA, A3, and 8D exports in one click',
                 color: '#38BDF8',
               },
