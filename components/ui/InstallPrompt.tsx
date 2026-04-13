@@ -179,7 +179,7 @@ export function InstallPrompt() {
         {[
           { icon: '⬆', text: 'Tap the Share button at the bottom of Safari' },
           { icon: '＋', text: 'Scroll down and tap "Add to Home Screen"' },
-          { icon: text: 'Tap "Add" — Vesimy appears on your home screen' },
+          { icon: '✓', text: 'Tap "Add" — Vesimy appears on your home screen' },
         ].map((step, i) => (
           <div key={i} style={{
             display:    'flex',
