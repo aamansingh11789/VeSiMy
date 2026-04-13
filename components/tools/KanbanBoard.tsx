@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon, EditIcon } from '@/components/ui/Icons'
 // ── components/tools/KanbanBoard.tsx ────────────────────────────────────────
 // Production Kanban Board
 // - Columns map to VSM process steps (or stand-alone: Backlog / Done)
@@ -237,7 +238,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'var(--sl-400)' }}>
             {card.id.slice(0, 8).toUpperCase()}
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 16 }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 16 }}><XIcon size={12}/></button>
         </div>
 
         {/* Title */}
@@ -653,9 +654,9 @@ export function KanbanBoard({
                   </div>
                   <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                     <button onClick={() => setColForm({ open: true, editing: col })}
-                      style={{ background: 'none', border: 'none', color: 'var(--sl-400)', cursor: 'pointer', fontSize: 12 }}>✎</button>
+                      style={{ background: 'none', border: 'none', color: 'var(--sl-400)', cursor: 'pointer', fontSize: 12 }}><EditIcon size={12}/></button>
                     <button onClick={() => handleDeleteCol(col)}
-                      style={{ background: 'none', border: 'none', color: 'var(--sl-400)', cursor: 'pointer', fontSize: 12 }}>✕</button>
+                      style={{ background: 'none', border: 'none', color: 'var(--sl-400)', cursor: 'pointer', fontSize: 12 }}><XIcon size={12}/></button>
                   </div>
                 </div>
 

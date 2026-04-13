@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon } from '@/components/ui/Icons'
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase'
@@ -154,9 +155,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           <button
             onClick={onClose}
             style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px' }}
-          >
-            ✕
-          </button>
+          ><span style={{fontSize:12,lineHeight:1}}>✕</span></button>
         </div>
 
         {/* Entries */}

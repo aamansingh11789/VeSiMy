@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { CheckIcon, XIcon, InfoIcon } from '@/components/ui/Icons'
 
 // The real Modal lives in Modal.tsx — re-export it so both import paths work
 import type React from 'react'
@@ -58,7 +59,7 @@ export function ToastContainer() {
                   }),
           }}
         >
-          <span>{t.type === 'success' ? '✓' : t.type === 'error' ? '✕' : '◈'}</span>
+          <span>{t.type === 'success' ? <CheckIcon size={13} color='#2E844A'/> : t.type === 'error' ? <XIcon size={13} color='#C0402A'/> : <InfoIcon size={13}/>}</span>
           {t.message}
         </div>
       ))}

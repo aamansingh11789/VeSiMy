@@ -316,7 +316,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   .section { margin-bottom:26px; page-break-inside:avoid; }
   .section-title { font-size:10px; font-weight:700; color:#1E3A5F; letter-spacing:1.5px; font-family:${MONO}; text-transform:uppercase; border-bottom:2px solid #1E3A5F; padding-bottom:5px; margin-bottom:12px; }
   table { border-collapse:collapse; width:100%; }
-  th { background:#1E3A5F !important; color:#FFFFFF !important; font-size:10px; font-weight:700; padding:7px 8px; text-align:left; letter-spacing:0.4px; border:1px solid #1E3A5F; }
+  th { background:#1B4F8A !important; color:#FFFFFF !important; font-size:10px; font-weight:700; padding:7px 8px; text-align:left; letter-spacing:0.4px; border:1px solid #1E3A5F; }
   .kpi-val { font-family:${SERIF}; font-size:22px; font-weight:700; line-height:1; }
   .mono { font-family:${MONO}; }
 </style>

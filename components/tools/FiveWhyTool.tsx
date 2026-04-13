@@ -111,10 +111,10 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
       <table class="data-table">
         <thead><tr><th>Criterion</th><th>Status</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td>Problem clearly stated</td><td>${problem ? '✓ Complete' : '✗ Incomplete'}</td><td>${problem ? 'Documented above' : 'Document the observable problem with data'}</td></tr>
-          <tr><td>5 Why chain completed</td><td>${filledWhys.length >= 5 ? '✓ Complete' : filledWhys.length + '/5 Complete'}</td><td>${filledWhys.length >= 3 ? 'Sufficient depth achieved' : 'Continue interrogation to reach systemic root cause'}</td></tr>
-          <tr><td>Root cause identified</td><td>${rootCause ? '✓ Complete' : '✗ Incomplete'}</td><td>${rootCause ? 'Root cause documented' : 'Required for corrective action'}</td></tr>
-          <tr><td>Corrective action defined</td><td>${action ? '✓ Complete' : '✗ Incomplete'}</td><td>${action ? 'Action defined' : 'Must address root cause, not symptom'}</td></tr>
+          <tr><td>Problem clearly stated</td><td>${problem ? 'Complete' : 'Incomplete'}</td><td>${problem ? 'Documented above' : 'Document the observable problem with data'}</td></tr>
+          <tr><td>5 Why chain completed</td><td>${filledWhys.length >= 5 ? 'Complete' : filledWhys.length + '/5 Complete'}</td><td>${filledWhys.length >= 3 ? 'Sufficient depth achieved' : 'Continue interrogation to reach systemic root cause'}</td></tr>
+          <tr><td>Root cause identified</td><td>${rootCause ? 'Complete' : 'Incomplete'}</td><td>${rootCause ? 'Root cause documented' : 'Required for corrective action'}</td></tr>
+          <tr><td>Corrective action defined</td><td>${action ? 'Complete' : 'Incomplete'}</td><td>${action ? 'Action defined' : 'Must address root cause, not symptom'}</td></tr>
           <tr><td>Owner assigned</td><td>${owner ? '✓ ' + owner : '✗ Not assigned'}</td><td>ISO 9001 §5.3 requires clear responsibility</td></tr>
           <tr><td>Target date set</td><td>${dueDate ? '✓ ' + dueDate : '✗ Not set'}</td><td>Required for follow-up per §10.2.2</td></tr>
         </tbody>

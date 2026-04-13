@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon } from '@/components/ui/Icons'
 import React from 'react'
 import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 // ── components/v2/V2ProjectClient.tsx ─────────────────────────────────────────
@@ -273,11 +274,11 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   }, [steps])
 
   const TABS: { id: V2Tab; label: string; icon: string }[] = [
-    { id: 'map',      label: 'Process Map',    icon: '🗺' },
+    { id: 'map',      label: 'Process Map',    icon: 'map' },
     { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
-    { id: 'analyze',  label: 'Analysis',       icon: '⚡' },
-    { id: 'journal',  label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: '📓' },
-    { id: 'future',   label: 'Future State',   icon: '🎯' },
+    { id: 'analyze',  label: 'Analysis',       icon: 'zap' },
+    { id: 'journal',  label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'journal' },
+    { id: 'future',   label: 'Future State',   icon: '→' },
   ]
 
   return (
@@ -367,7 +368,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           }}>
             {analyzing ? (
               <><span style={{ width: 10, height: 10, border: '2px solid rgba(255,255,255,.3)', borderTopColor: 'white', borderRadius: '50%', display: 'inline-block', animation: 'spin 1s linear infinite' }}/> Analysing…</>
-            ) : '⚡ Analyze'}
+            ) : 'Analyze'}
           </button>
 
           {/* Supe */}
@@ -376,7 +377,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               width: 32, height: 32, borderRadius: 7, border: '1px solid var(--border)',
               background: showSupe ? 'rgba(1,118,211,.1)' : 'white', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15,
-            }}>⚡</button>
+            }}><ZapIcon size={14}/></button>
           )}
         </div>
       </div>
@@ -538,7 +539,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             )}
             {!analyzing && !currentReport && (
               <div style={{ textAlign: 'center', padding: 60 }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>⚡</div>
+                <div style={{ marginBottom: 16, display:"flex", justifyContent:"center" }}><ZapIcon size={40} color="var(--brand)"/></div>
                 <h3 style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, marginBottom: 10 }}>Ready to analyse</h3>
                 <p style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
                   Complete your {t.valueStream} map then click Analyze to generate your current state report.
@@ -546,7 +547,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                 <button onClick={() => setTab('map')} style={{
                   padding: '10px 20px', borderRadius: 8, border: '1px solid var(--border)',
                   background: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                }}>← Go to map</button>
+                }}>&larr; Go to map</button>
               </div>
             )}
           </div>
@@ -714,7 +715,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
           }}
           onMouseEnter={e => e.currentTarget.style.borderColor = '#0176D3'}
           onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(1,118,211,.3)'}>
-            <span style={{ fontSize: 24 }}>📄</span>
+            <PDFIcon size={22} color="var(--text2)"/>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Upload SOP / Process Document</div>
               <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>PDF, Word, text file — the AI extracts every step, task, and governing entity. You review and fill in what's missing.</div>
@@ -727,7 +728,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
           }}
           onMouseEnter={e => e.currentTarget.style.borderColor = '#0176D3'}
           onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
-            <span style={{ fontSize: 24 }}>✏️</span>
+            <EditIcon size={22} color="var(--text2)"/>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Build step by step manually</div>
               <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>Add each {t.processStep} yourself. Best if you know the process and want full control from the start.</div>
@@ -738,7 +739,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
             borderRadius: 12, border: '1.5px solid var(--border)', background: 'white',
             cursor: 'pointer', textAlign: 'left', transition: 'all .15s', opacity: .7,
           }}>
-            <span style={{ fontSize: 24 }}>🗂️</span>
+            <FolderIcon size={22} color="var(--text2)"/>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Load reference project</div>
               <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>See how a completed {indLabel} map looks. Use as a template or to understand the tool.</div>
@@ -781,7 +782,7 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
               color: mode === m ? BRAND : 'var(--text2)',
               fontWeight: mode === m ? 700 : 400, fontSize: 13, cursor: 'pointer',
             }}>
-              {m === 'file' ? '📎 Upload file' : '📋 Paste text'}
+              {m === 'file' ? 'Upload file' : 'Paste text'}
             </button>
           ))}
         </div>
@@ -799,7 +800,7 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
                 background: dragOver ? 'rgba(1,118,211,.04)' : 'var(--sl-50)',
                 transition: 'all .15s', marginBottom: 12,
               }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>📄</div>
+              <div style={{ marginBottom: 12, display:"flex", justifyContent:"center" }}><PDFIcon size={34} color="var(--text2)"/></div>
               <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Drop your SOP here</p>
               <p style={{ fontSize: 12, color: 'var(--text3)' }}>PDF, Word, TXT, RTF, Markdown, CSV, ODT</p>
               <p style={{ fontSize: 11, color: BRAND, marginTop: 10, fontWeight: 600 }}>or click to browse</p>

@@ -86,7 +86,7 @@ function buildReport(data: PDCAData, format: string, linkedData: any): string {
           <td>${c.action}</td>
           <td>${c.owner || '—'}</td>
           <td>${c.dueDate || '—'}</td>
-          <td style="color:${c.status === 'done' ? '#15803D' : '#B45309'};font-weight:700">${c.status === 'done' ? '✓ Complete' : 'Open'}</td>
+          <td style="color:${c.status === 'done' ? '#15803D' : '#B45309'};font-weight:700">${c.status === 'done' ? 'Complete' : 'Open'}</td>
         </tr>`).join('')}</tbody>
     </table>` : '<p>(No countermeasures recorded)</p>'
 
@@ -122,7 +122,7 @@ function buildReport(data: PDCAData, format: string, linkedData: any): string {
     <h2>3. Check — Results Measurement</h2>
     <h3>Before vs After Metrics</h3>${metricsTable}
     <h3>Results Summary</h3><p>${data.results || '—'}</p>
-    <p><strong>Target Achieved:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : data.achieved === 'partial' ? '#B45309' : '#DC2626'}">${data.achieved === 'yes' ? '✓ Yes — target met' : data.achieved === 'partial' ? '⚠ Partially — continue improvement' : data.achieved === 'no' ? '✕ No — return to Plan' : 'Not assessed'}</span></p>
+    <p><strong>Target Achieved:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : data.achieved === 'partial' ? '#B45309' : '#DC2626'}">${data.achieved === 'yes' ? 'Yes — target met' : data.achieved === 'partial' ? 'Partially — continue improvement' : data.achieved === 'no' ? 'No — return to Plan' : 'Not assessed'}</span></p>
     <h2>4. Act — Standardise or Adjust</h2>
     <h3>Standardisation Actions</h3><p>${data.standardisation || '—'}</p>
     <h3>Lessons Learned</h3><p>${data.lessonsLearned || '—'}</p>

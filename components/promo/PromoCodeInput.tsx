@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { CheckIcon, XIcon } from '@/components/ui/Icons'
 // ── components/promo/PromoCodeInput.tsx ──────────────────────────────────────
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase'
@@ -57,7 +58,7 @@ export function PromoCodeInput({ onApply }: Props) {
       </div>
       {message && (
         <p style={{ marginTop:6, fontSize:11, color:msgColor, display:'flex', alignItems:'center', gap:4 }}>
-          {status==='valid' ? '✓' : '✕'} {message}
+          {status==='valid' ? <CheckIcon size={12} color='#2E844A'/> : <XIcon size={12} color='#C0402A'/>} {message}
         </p>
       )}
     </div>

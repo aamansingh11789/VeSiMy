@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon, CheckIcon } from '@/components/ui/Icons'
 // ── components/ui/InstallPrompt.tsx ──────────────────────────────────────────
 // Shows an install banner when the browser fires the beforeinstallprompt event
 // Works on Chrome/Edge (desktop + Android). iOS shows separate instructions.
@@ -171,14 +172,14 @@ export function InstallPrompt() {
           <button onClick={handleDismiss} style={{
             background: 'none', border: 'none', color: 'var(--text3)',
             fontSize: 20, cursor: 'pointer', padding: '0 4px',
-          }}>✕</button>
+          }}><XIcon size={13}/></button>
         </div>
 
         {/* Steps */}
         {[
           { icon: '⬆', text: 'Tap the Share button at the bottom of Safari' },
           { icon: '＋', text: 'Scroll down and tap "Add to Home Screen"' },
-          { icon: '✓',  text: 'Tap "Add" — Vesimy appears on your home screen' },
+          { icon: text: 'Tap "Add" — Vesimy appears on your home screen' },
         ].map((step, i) => (
           <div key={i} style={{
             display:    'flex',

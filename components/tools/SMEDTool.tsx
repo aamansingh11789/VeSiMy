@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { ActivityIcon } from '@/components/ui/Icons'
 import type React from 'react'
 import { TipLabel, FieldTip } from '@/components/ui/FieldTip'
 // ── components/tools/SMEDTool.tsx ────────────────────────────────────────────
@@ -199,7 +200,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           <td style="font-weight:600;">${s.name || '(unnamed step)'}</td>
           <td style="text-align:center;color:${meta.color};font-weight:700;">${meta.label}</td>
           <td style="text-align:center;font-family:monospace;font-weight:600;">${fmtS(s.time)}</td>
-          <td style="text-align:center;">${s.type === 'internal' ? (s.convertible ? '✓ Yes' : '✗ No') : '—'}</td>
+          <td style="text-align:center;">${s.type === 'internal' ? (s.convertible ? 'Yes' : 'No') : '—'}</td>
           <td style="font-size:9pt;color:#555;">${s.notes || '—'}</td>
         </tr>`
     }).join('')
@@ -362,8 +363,8 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             {wasteTime > 0     && <div style={{ width: `${smWastePct}%`,    background: '#8C44CC', transition: 'width .4s' }} title={`Waste: ${fmtS(wasteTime)}`}     />}
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 4, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap' }}>
-            <span style={{ color: '#C0402A' }}>● Internal {smInternalPct}%</span>
-            <span style={{ color: '#1A7A5E' }}>● External {smExternalPct}%</span>
+            <span style={{ color: '#C0402A' }}>■ Internal {smInternalPct}%</span>
+            <span style={{ color: '#1A7A5E' }}>■ External {smExternalPct}%</span>
             <span style={{ color: '#8C44CC' }}>● Waste/NVA {smWastePct}%</span>
           </div>
         </div>
@@ -465,7 +466,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                       }}
                       title={isTimingThis ? 'Stop timer & record' : 'Start timer'}
                     >
-                      {isTimingThis ? '■' : '▶'}
+                      {isTimingThis ? '■ Stop' : '▶ Start'}
                     </button>
                   </div>
 

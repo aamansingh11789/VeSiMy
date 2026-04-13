@@ -55,9 +55,13 @@ export async function POST(request: NextRequest) {
     const totalWait  = safeSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
     const pce        = totalCT + totalWait > 0 ? ((totalCT / (totalCT + totalWait)) * 100).toFixed(1) : '0'
     const stepSummary = safeSteps.length
-      ? safeSteps.map(s =>
-          `• ${s.name}: CT=${s.cycle_time || s.toolData?.stopwatch?.mean || 0}s, Wait=${s.wait_time || 0}s, Ops=${s.operators || 1}, Defect=${s.defect_rate || 0}%, Uptime=${s.uptime || 100}%`
-        ).join('\n')
+      ? safeSteps.map(s => {
+          const ct = s.toolData?.stopwatch?.mean || s.cycle_time || 0
+          const vaLabel = s.va_type === 'va' ? 'VA' : s.va_type === 'nva' ? 'NVA' : s.va_type === 'nnva' ? 'NNVA' : 'unclassified'
+          const tools = Object.keys(s.toolData || {}).filter(k => k !== 'stopwatch').join(',')
+          const waste = (s.toolData?.waste?.selected || []).join(',')
+          return `• ${s.name} [${vaLabel}]: CT=${ct}s, Wait=${s.wait_time||0}s, Ops=${s.operators||1}, Defect=${s.defect_rate||0}%, Uptime=${s.uptime||100}%, Setup=${(s as any).setup_time||0}s, WIP=${s.wip||0}${tools ? `, tools=[${tools}]` : ''}${waste ? `, wastes=[${waste}]` : ''}`
+        }).join('\n')
       : 'No steps added yet — user is exploring in demo mode.'
 
     let answer   = ''
@@ -75,9 +79,14 @@ export async function POST(request: NextRequest) {
 
     try {
       // Build rich system prompt from RAG knowledge base + industry context
+      // Pull live project data for richer context
+      const { data: liveProject } = await supabase.from('projects')
+        .select('name,description,industry,state,status,kaizen_roadmap')
+        .eq('id', project_id).single()
+
       const systemPrompt = buildSupeSystemPrompt({
-        industryKey:   industry || null,
-        projectName:   project_name || undefined,
+        industryKey:   industry || liveProject?.industry || null,
+        projectName:   project_name || liveProject?.name || undefined,
         stepContext:   `PCE: ${pce}% | Issues: ${recs.map(r => `${r.severity.toUpperCase()} ${r.principle} @ ${r.step_name || 'process'}`).join(', ') || 'none'}`,
       }) + `
 

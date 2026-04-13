@@ -749,7 +749,7 @@ export async function seedDefaultKanbanColumns(
   const COLORS = ['#4E4B45', '#1090D4', '#C49B2E', '#6426A0', '#2A9E82', '#F4A623', '#C0402A', '#3070B8']
 
   const cols = [
-    { title: 'Backlog', color: '#38385C', wip_limit: null, step_id: null, position: 0 },
+    { title: 'Backlog', color: '#4E4B45', wip_limit: null, step_id: null, position: 0 },
     ...steps.map((s, i) => ({
       title: s.name,
       color: COLORS[(i + 1) % COLORS.length],

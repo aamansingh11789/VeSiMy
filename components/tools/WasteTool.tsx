@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { CheckIcon } from '@/components/ui/Icons'
 import { FieldTip } from '@/components/ui/FieldTip'
 
 import { useMemo, useState } from 'react'

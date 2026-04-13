@@ -8,7 +8,7 @@ export interface HealthScore {
 }
 
 export function calcHealth(steps: Step[]): HealthScore {
-  if (!steps?.length) return { total:0, label:'No Data', color:'#38385C', lead_time:0, bottleneck:0, waiting:0, defect:0 }
+  if (!steps?.length) return { total:0, label:'No Data', color:'#4E4B45', lead_time:0, bottleneck:0, waiting:0, defect:0 }
 
   const totalCT   = steps.reduce((a,s) => a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0), 0)
   const totalWait = steps.reduce((a,s) => a+(Number(s.wait_time)||0), 0)

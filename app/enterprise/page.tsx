@@ -94,7 +94,7 @@ export default function EnterprisePage() {
                   <input className="input" type="number" min="1" value={form.num_users}
                     onChange={e=>set('num_users',e.target.value)} />
                   {volDisc > 0 && <div style={{ fontSize:11, color:'#1DD1A1', marginTop:4 }}>
-                    ✓ {Math.round(volDisc*100)}% volume discount applied
+                    {Math.round(volDisc*100)}% volume discount applied
                   </div>}
                 </div>
                 <div>
@@ -207,7 +207,7 @@ export default function EnterprisePage() {
 
               {volDisc > 0 && (
                 <div style={{ background:'rgba(29,209,161,0.08)', border:'1px solid rgba(29,209,161,0.2)', borderRadius:8, padding:'8px 12px', marginBottom:14 }}>
-                  <span style={{ fontSize:12, color:'#1DD1A1' }}>✓ {Math.round(volDisc*100)}% volume discount applied</span>
+                  <span style={{ fontSize:12, color:'#1DD1A1' }}>{Math.round(volDisc*100)}% volume discount applied</span>
                 </div>
               )}
 
@@ -217,7 +217,7 @@ export default function EnterprisePage() {
                   <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'monospace', marginBottom:6 }}>OFFICIAL QUOTE</div>
                   <div style={{ fontSize:13, color:'var(--text)', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
                   {quote.breakdown.code_discount && (
-                    <div style={{ fontSize:12, color:'#1DD1A1', marginBottom:4 }}>✓ {quote.breakdown.code_discount} applied</div>
+                    <div style={{ fontSize:12, color:'#1DD1A1', marginBottom:4 }}>{quote.breakdown.code_discount} applied</div>
                   )}
                   <div style={{ display:'flex', justifyContent:'space-between', marginTop:8 }}>
                     <span style={{ fontSize:12, color:'var(--text3)' }}>Final monthly</span>
@@ -233,7 +233,7 @@ export default function EnterprisePage() {
 
               {quote && (
                 <div style={{ marginTop:20, background:'rgba(29,209,161,0.07)', border:'1px solid rgba(29,209,161,0.22)', borderRadius:12, padding:'18px 20px' }}>
-                  <div style={{ fontWeight:700, fontSize:14, color:'#1DD1A1', marginBottom:10 }}>✓ What happens next</div>
+                  <div style={{ fontWeight:700, fontSize:14, color:'#1DD1A1', marginBottom:10 }}>What happens next</div>
                   <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
                     {[
                       ['Within 24 hours','Our team reviews your quote and contacts you to confirm details'],

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import { PLANS } from '@/lib/stripe'
-import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
+import { CheckIcon, ArrowRightIcon, KaizenIcon, FishboneIcon, FiveWhyIcon, WasteIcon, ZapIcon, BarChartIcon, StopwatchIcon, VSMIcon, RoadmapIcon } from '@/components/ui/Icons'
 import { createClient } from '@/lib/supabase'
 
 const serif = '"DM Serif Display",Palatino Linotype,Georgia,serif'
@@ -279,7 +279,7 @@ function VSMPreview3D() {
             <div style={{ display:'flex',gap:3 }}>
               {[0,1,2].map(i=><div key={i} style={{ width:4,height:4,borderRadius:'50%',background:'#22D3EE',animation:`supeWave 1s ease ${i*0.2}s infinite` }}/>)}
             </div>
-            <span style={{ fontFamily:mono,fontSize:9,color:'rgba(34,211,238,0.8)' }}>⚡ Supe — Quality Check is your bottleneck. Takt exceeded by 26%.</span>
+            <span style={{ fontFamily:mono,fontSize:9,color:'rgba(34,211,238,0.8)' }}>Supe — Quality Check is your bottleneck. Takt exceeded by 26%.</span>
           </div>
         </div>
 
@@ -330,7 +330,7 @@ function IndustryTerms() {
             {rows.map(([lean, translated], i) => (
               <div key={lean} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'12px 0', borderBottom: i < rows.length-1 ? '1px solid rgba(255,255,255,0.05)' : 'none', gap:8 }}>
                 <span style={{ fontFamily:mono, fontSize:10, color:'rgba(255,255,255,0.25)', letterSpacing:1, textTransform:'uppercase', width:'38%', flexShrink:0 }}>{lean.replace(/_/g,' ')}</span>
-                <span style={{ fontFamily:mono, fontSize:9, color:'rgba(56,189,248,0.5)', flexShrink:0 }}>→</span>
+                <span style={{ fontFamily:mono, fontSize:9, color:'rgba(56,189,248,0.5)', flexShrink:0 }}>&rarr;</span>
                 <span style={{ fontSize:13, color:'#F1F5F9', fontWeight:500, textAlign:'right', flex:1 }}>{translated}</span>
               </div>
             ))}
@@ -393,7 +393,7 @@ function SupeSection() {
                   ref={el => { if (el) el.style.height = Math.random() > 0.5 ? '16px' : '8px' }}/>
               ))}
             </div>
-            <span style={{ fontFamily:mono, fontSize:10, color:'rgba(34,211,238,0.7)' }}>⚡ Supe is analysing your SMED data…</span>
+            <span style={{ fontFamily:mono, fontSize:10, color:'rgba(34,211,238,0.7)' }}>Supe is analysing your SMED data…</span>
           </div>
         </div>
       </div>
@@ -423,7 +423,7 @@ function ReferenceSection() {
             </h2>
           </div>
           <Link href="/auth/signup" style={{ fontFamily:mono, fontSize:10, letterSpacing:1.5, color:'#0176D3', textDecoration:'none', border:'1px solid rgba(1,118,211,0.3)', padding:'8px 16px', borderRadius:6, whiteSpace:'nowrap', background:'rgba(1,118,211,0.04)' }}>
-            Browse all →
+            Browse all &rarr;
           </Link>
         </div>
         <div className="reveal d1" style={{ display:'flex', gap:14, overflowX:'auto', paddingBottom:8, scrollbarWidth:'none' }}>
@@ -485,14 +485,14 @@ function DualTicker() {
 // ── 3D Bento feature cards ────────────────────────────────────────────────────
 function BentoFeatures() {
   const cards = [
-    { icon:'🗺', title:'Value Stream Mapping', desc:'ISO 22468-compliant VSM with supplier→customer flow, WIP inventory triangles, supermarket pull symbols, and a sawtooth lead-time timeline.', span:2, accent:'#38BDF8' },
-    { icon:'⏱', title:'Time Study', desc:'10+ observation stopwatch with outlier removal and statistically sound mean.', span:1, accent:'#818CF8' },
-    { icon:'🐟', title:'Fishbone Diagram', desc:'8P or 6M framework. Every cause links to the step it came from.', span:1, accent:'#34D399' },
-    { icon:'❓', title:'5 Why Analysis', desc:'System-level root cause. Drill through symptoms to the structural failure.', span:1, accent:'#F59E0B' },
-    { icon:'⚡', title:'Supe AI Mentor', desc:'Built on TPS, VSM, and Six Sigma source material. Asks before it answers. Generates future states from your actual data.', span:2, accent:'#22D3EE' },
-    { icon:'♻️', title:'Waste Identification', desc:'All 8 wastes. Select, annotate, and link to your kaizen backlog.', span:1, accent:'#F87171' },
-    { icon:'🎯', title:'Kaizen Events', desc:'Full event lifecycle: target, owner, actions, evidence, close-out.', span:1, accent:'#A78BFA' },
-    { icon:'📊', title:'PDCA & A3 Export', desc:'ISO-compliant PDCA, A3, 8D, DMAIC, OODA export formats.', span:1, accent:'#6EE7B7' },
+    { icon:'vsm', title:'Value Stream Mapping', desc:'ISO 22468-compliant VSM with supplier→customer flow, WIP inventory triangles, supermarket pull symbols, and a sawtooth lead-time timeline.', span:2, accent:'#38BDF8' },
+    { icon:'stopwatch', title:'Time Study', desc:'10+ observation stopwatch with outlier removal and statistically sound mean.', span:1, accent:'#818CF8' },
+    { icon:'fishbone', title:'Fishbone Diagram', desc:'8P or 6M framework. Every cause links to the step it came from.', span:1, accent:'#34D399' },
+    { icon:'fivewhy', title:'5 Why Analysis', desc:'System-level root cause. Drill through symptoms to the structural failure.', span:1, accent:'#F59E0B' },
+    { icon:'zap', title:'Supe AI Mentor', desc:'Built on TPS, VSM, and Six Sigma source material. Asks before it answers. Generates future states from your actual data.', span:2, accent:'#22D3EE' },
+    { icon:'waste', title:'Waste Identification', desc:'All 8 wastes. Select, annotate, and link to your kaizen backlog.', span:1, accent:'#F87171' },
+    { icon:'kaizen', title:'Kaizen Events', desc:'Full event lifecycle: target, owner, actions, evidence, close-out.', span:1, accent:'#A78BFA' },
+    { icon:'barchart', title:'PDCA & A3 Export', desc:'ISO-compliant PDCA, A3, 8D, DMAIC, OODA export formats.', span:1, accent:'#6EE7B7' },
   ]
   return (
     <section style={{ background:'linear-gradient(180deg,#030812 0%,#060C1F 100%)', padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', position:'relative', overflow:'hidden' }}>
@@ -668,7 +668,7 @@ export default function HomePage() {
             <>
               <span style={{ fontFamily:mono, fontSize:11, color:'rgba(255,255,255,0.35)', maxWidth:140, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{authedUser.name || authedUser.email}</span>
               <Link href="/dashboard" style={{ padding:'7px 18px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none' }}>
-                Dashboard →
+                Dashboard &rarr;
               </Link>
             </>
           ) : (
@@ -677,7 +677,7 @@ export default function HomePage() {
                 Sign in
               </Link>
               <Link href="/auth/signup" style={{ padding:'7px 18px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', border:'none', borderRadius:8, fontSize:13, fontWeight:700, color:'white', textDecoration:'none', boxShadow:'0 4px 14px rgba(1,118,211,0.35)' }}>
-                Start free →
+                Start free &rarr;
               </Link>
             </>
           )}
@@ -888,7 +888,7 @@ export default function HomePage() {
               <div style={{ display:'inline-block', fontFamily:mono, fontSize:9, color:'rgba(1,118,211,.8)', letterSpacing:2.5, marginBottom:14, fontWeight:700, padding:'4px 12px', background:'rgba(1,118,211,.07)', border:'1px solid rgba(1,118,211,.15)', borderRadius:4 }}>What's new — Version 3.1</div>
               <h2 style={{ fontFamily:serif, fontSize:'clamp(22px,3vw,38px)', fontWeight:400, color:'#1E1B17', lineHeight:1.15, marginBottom:14 }}>Built for your industry.<br />Not adapted for it.</h2>
             </div>
-            <Link href="/changelog" style={{ fontSize:12, color:'#0176D3', fontWeight:600, textDecoration:'none', flexShrink:0, marginTop:8 }}>Full changelog →</Link>
+            <Link href="/changelog" style={{ fontSize:12, color:'#0176D3', fontWeight:600, textDecoration:'none', flexShrink:0, marginTop:8 }}>Full changelog &rarr;</Link>
           </div>
           <div className="reveal d1" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap:20 }}>
             {CHANGELOG.map(item => (
@@ -970,7 +970,7 @@ export default function HomePage() {
             })}
           </div>
           <div style={{ textAlign:'center', marginTop:20 }}>
-            <Link href="/pricing" style={{ fontSize:13, color:'#8E8A82', textDecoration:'none', borderBottom:'1px solid #D8D5CE', paddingBottom:2 }}>View full pricing details →</Link>
+            <Link href="/pricing" style={{ fontSize:13, color:'#8E8A82', textDecoration:'none', borderBottom:'1px solid #D8D5CE', paddingBottom:2 }}>View full pricing details &rarr;</Link>
           </div>
         </div>
       </section>
@@ -1011,7 +1011,7 @@ export default function HomePage() {
               Create your account <ArrowRightIcon size={16} color="white" />
             </Link>
             <Link href="/auth/signup?ref=1" style={{ padding:'16px 28px', background:'rgba(255,255,255,0.05)', backdropFilter:'blur(10px)', color:'rgba(255,255,255,.5)', border:'1px solid rgba(255,255,255,.12)', borderRadius:12, fontSize:15, textDecoration:'none' }}>
-              Explore a sample project →
+              Explore a sample project &rarr;
             </Link>
           </div>
           <p style={{ fontFamily:mono, fontSize:11, color:'rgba(255,255,255,.15)', marginTop:24 }}>ISO 9001:2015 · ISO 22468:2020 · IATF 16949 aligned</p>

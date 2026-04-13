@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { AlertIcon, ActivityIcon } from '@/components/ui/Icons'
 // ── components/live/LiveFloorPanel.tsx ───────────────────────────────────────
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase'
@@ -63,7 +64,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
     <div>
       {/* Session-only notice */}
       <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 14 }}>
-        ⚠ Live floor metrics are session-only and not saved between sessions.
+          metrics are session-only and not saved between sessions.
       </div>
 
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
@@ -71,7 +72,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
         <button onClick={() => setLive(l=>!l)} style={{ fontSize:10, padding:'3px 10px', borderRadius:100, border:'1px solid', cursor:'pointer',
           background:live?'rgba(29,209,161,0.1)':'transparent',
           borderColor:live?'#1DD1A1':'var(--border2)', color:live?'#1DD1A1':'var(--text3)' }}>
-          {live ? '● LIVE' : '○ Connect Live'}
+          {live ? '⬤ LIVE' : 'Connect Live'}
         </button>
       </div>
 

@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { ZapIcon, CheckIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import React from 'react'
 import { SERIF, CI_TOOLS, STEP_TYPES, VA_OPTIONS, CT_UNITS, BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ── components/v2/V2StepPanel.tsx ──────────────────────────────────────────────
@@ -271,8 +272,8 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               background: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text2)',
             }}>
-              <span>⚡ Select CI tool for this step…</span>
-              <span style={{ fontSize: 11, color: 'var(--text3)' }}>{showCIMenu ? '▲' : '▼'}</span>
+              <span><ZapIcon size={13}/> Select CI tool for this step…</span>
+              <span style={{ fontSize: 11, color: 'var(--text3)' }}>{showCIMenu ? <ChevronDownIcon size={11} style={{transform:'rotate(180deg)'}}/> : <ChevronDownIcon size={11}/>}</span>
             </button>
             {showCIMenu && (
               <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 30, background: 'white', border: '1px solid var(--border)', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,.12)', marginTop: 4, overflow: 'hidden' }}>
@@ -320,7 +321,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)',
           color: saving ? 'var(--text3)' : 'white', fontSize: 14, fontWeight: 700, cursor: saving ? 'wait' : 'pointer',
         }}>
-          {saving ? 'Saving…' : 'Save step ✓'}
+          {saving ? 'Saving…' : 'Save step'}
         </button>
       </div>
     </div>

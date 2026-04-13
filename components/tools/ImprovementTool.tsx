@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { CheckIcon, XIcon } from '@/components/ui/Icons'
 import { TipLabel, FieldWarn } from '@/components/ui/FieldTip'
 
 import { useMemo, useState } from 'react'
@@ -69,8 +70,8 @@ const STATUS_COL = {
 const STATUS_LBL = {
   open: 'Open',
   'in-progress': 'In Progress',
-  achieved: '✓ Achieved',
-  'not-achieved': '✗ Not Achieved',
+  achieved: 'Achieved',
+  'not-achieved': 'Not Achieved',
 }
 
 export default function ImprovementTool({ stepId, stepName, data, onSave, onClose }: Props) {

@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { VSMIcon } from '@/components/ui/Icons'
 import React from 'react'
 import { BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ── components/v2/V2MapCanvas.tsx ──────────────────────────────────────────────
@@ -90,7 +91,7 @@ function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand
       </text>
 
       {(step.operators||0)>0 && (
-        <text x={X+8} y={Y+BOX_H-6} fontSize="8" fill="#666">●{step.operators}</text>
+        <text x={X+8} y={Y+BOX_H-6} fontSize="8" fill="#666">×{step.operators}</text>
       )}
 
       <rect x={X} y={Y+BOX_H-4} width={BOX_W} height={4}
@@ -172,8 +173,11 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
   const [expandedSteps, setExpandedSteps] = useState<Record<string,boolean>>({})
   const [zoom, setZoom] = useState(1)
   const [pan,  setPan]  = useState({ x:0, y:0 })
-  const dragging  = useRef(false)
-  const lastPos   = useRef({ x:0, y:0 })
+  const [isDragging, setIsDragging] = useState(false)
+  const dragging   = useRef(false)
+  const lastPos    = useRef({ x:0, y:0 })
+  const dragStart  = useRef({ x:0, y:0 })
+  const didDrag    = useRef(false)   // true if pointer moved >4px — suppresses click
   const containerRef = useRef<HTMLDivElement>(null)
 
   const toggleExpand = (id:string) => setExpandedSteps(p=>({...p,[id]:!p[id]}))
@@ -195,13 +199,53 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
     return ()=>el.removeEventListener('wheel',onWheel)
   },[onWheel])
 
-  const onMouseDown = (e:React.MouseEvent) => { if(e.button!==0)return; dragging.current=true; lastPos.current={x:e.clientX,y:e.clientY} }
-  const onMouseMove = (e:React.MouseEvent) => {
-    if(!dragging.current)return
-    setPan(p=>({x:p.x+(e.clientX-lastPos.current.x), y:p.y+(e.clientY-lastPos.current.y)}))
-    lastPos.current={x:e.clientX,y:e.clientY}
+  const onMouseDown = (e:React.MouseEvent) => {
+    if (e.button !== 0) return
+    dragging.current = true
+    didDrag.current  = false
+    dragStart.current = { x: e.clientX, y: e.clientY }
+    lastPos.current   = { x: e.clientX, y: e.clientY }
+    setIsDragging(true)
   }
-  const onMouseUp = () => { dragging.current=false }
+  const onMouseMove = (e:React.MouseEvent) => {
+    if (!dragging.current) return
+    const dx = e.clientX - lastPos.current.x
+    const dy = e.clientY - lastPos.current.y
+    // Mark as a real drag once pointer moves >4px from start
+    const totalDx = e.clientX - dragStart.current.x
+    const totalDy = e.clientY - dragStart.current.y
+    if (Math.abs(totalDx) > 4 || Math.abs(totalDy) > 4) didDrag.current = true
+    setPan(p => ({ x: p.x + dx, y: p.y + dy }))
+    lastPos.current = { x: e.clientX, y: e.clientY }
+  }
+  const onMouseUp = () => {
+    dragging.current = false
+    setIsDragging(false)
+    // didDrag.current stays true until next mouseDown — suppresses click event
+  }
+
+  // Touch support
+  const onTouchStart = (e:React.TouchEvent) => {
+    if (e.touches.length !== 1) return
+    const t = e.touches[0]
+    dragging.current  = true
+    didDrag.current   = false
+    dragStart.current = { x: t.clientX, y: t.clientY }
+    lastPos.current   = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchMove = (e:React.TouchEvent) => {
+    if (!dragging.current || e.touches.length !== 1) return
+    e.preventDefault()
+    const t = e.touches[0]
+    const dx = t.clientX - lastPos.current.x
+    const dy = t.clientY - lastPos.current.y
+    const totalDx = t.clientX - dragStart.current.x
+    const totalDy = t.clientY - dragStart.current.y
+    if (Math.abs(totalDx) > 4 || Math.abs(totalDy) > 4) didDrag.current = true
+    setPan(p => ({ x: p.x + dx, y: p.y + dy }))
+    lastPos.current = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchEnd = () => { dragging.current = false }
 
   const totalCT   = steps.reduce((a:number,s:any)=>a+(s.cycle_time||0),0)
   const totalWait = steps.reduce((a:number,s:any)=>a+(s.wait_time||0),0)
@@ -215,7 +259,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
   if (steps.length===0) {
     return (
       <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:20,background:'#FAFAF8',color:'var(--text3)'}}>
-        <div style={{fontSize:52}}>🗺</div>
+        <VSMIcon size={52}/>
         <div style={{textAlign:'center'}}>
           <h3 style={{fontSize:18,fontWeight:700,color:'var(--text)',marginBottom:8}}>Your {t?.valueStream||'value stream'} map will appear here</h3>
           <p style={{fontSize:14,maxWidth:380,lineHeight:1.7,color:'var(--text2)'}}>Upload an SOP to auto-generate the map, or click <strong>+ Add Step</strong> to start manually.</p>
@@ -280,7 +324,10 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
-        style={{width:'100%',height:'100%',cursor:dragging.current?'grabbing':'grab',userSelect:'none',overflow:'hidden'}}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{width:'100%',height:'100%',cursor:isDragging?'grabbing':'grab',userSelect:'none',overflow:'hidden',touchAction:'none'}}
       >
         <div style={{
           transformOrigin:'top left',
@@ -310,7 +357,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
               <StepBox key={step.id} step={step} index={i} total={steps.length}
                 isSelected={step.id===selectedStepId} t={t}
                 expanded={!!expandedSteps[step.id]} onToggleExpand={toggleExpand}
-                onClick={onStepClick}/>
+                onClick={(step) => { if (!didDrag.current) onStepClick(step) }}/>
             ))}
 
             {steps.slice(0,-1).map((_:any,i:number)=>(

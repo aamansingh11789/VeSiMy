@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { AlertIcon } from '@/components/ui/Icons'
 import React from 'react'
 // ── components/ui/FieldTip.tsx ─────────────────────────────────────────────
 // Reusable "?" tooltip button + label wrapper used across all CI tool forms.
@@ -306,7 +307,7 @@ export function FieldWarn({ msg }: { msg?: string | null }) {
       fontSize: 11, color: '#0176D3', marginTop: 4,
       display: 'flex', alignItems: 'flex-start', gap: 5, lineHeight: 1.5,
     }}>
-      <span style={{ flexShrink: 0, marginTop: 1 }}>⚠</span>
+      <AlertIcon size={13} color="#F4A623"/>
       {msg}
     </div>
   )

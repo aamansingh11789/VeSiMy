@@ -19,6 +19,100 @@ const VA_COLORS = {
   nva:  { bar: '#FF6B6B', label: 'Non-Value Add',            text: '#FF6B6B' },
 }
 
+function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summary: any) {
+  // Build an HTML Yamazumi chart that can be printed/saved as PDF
+  const barH = 240
+  const barW = 64
+  const gap  = 16
+  const padLeft = 60
+  const maxVal = Math.max(takt > 0 ? takt : 0, ...operators.map((op: any) => op.total || 0), 1)
+  const scale  = (barH - 20) / maxVal
+
+  const VA_COLORS: Record<string, string> = { va: '#34D399', nnva: '#FCD34D', nva: '#F87171' }
+  const VA_LABELS: Record<string, string> = { va: 'Value Add', nnva: 'Necessary NVA', nva: 'Non-Value Add' }
+
+  const svgW = padLeft + operators.length * (barW + gap) + 60
+  const svgH = barH + 80
+
+  const bars = operators.map((op: any, idx: number) => {
+    const x = padLeft + idx * (barW + gap)
+    let yOffset = barH
+    const segments = (['nva','nnva','va'] as const).map(type => {
+      const val = op[type] || 0
+      const h   = val * scale
+      yOffset  -= h
+      return h > 0 ? `<rect x="${x}" y="${yOffset}" width="${barW}" height="${h}" fill="${VA_COLORS[type]}" opacity="0.9"/>
+        ${h > 14 ? `<text x="${x + barW/2}" y="${yOffset + h/2 + 4}" text-anchor="middle" font-size="9" fill="white" font-weight="700">${val}s</text>` : ''}` : ''
+    }).join('')
+    const label = `<text x="${x + barW/2}" y="${barH + 16}" text-anchor="middle" font-size="10" fill="#374151" font-weight="600">${op.name || 'Op ' + (idx+1)}</text>
+      <text x="${x + barW/2}" y="${barH + 28}" text-anchor="middle" font-size="9" fill="${op.total > takt && takt > 0 ? '#EF4444' : '#6B7280'}">${op.total || 0}s ${op.pct !== undefined ? '· ' + op.pct + '% VA' : ''}</text>`
+    return segments + label
+  }).join('')
+
+  const taktLine = takt > 0 ? `
+    <line x1="${padLeft - 10}" y1="${barH - takt * scale}" x2="${svgW - 20}" y2="${barH - takt * scale}" stroke="#EF4444" stroke-width="2" stroke-dasharray="6 3"/>
+    <text x="${svgW - 22}" y="${barH - takt * scale - 4}" text-anchor="end" font-size="9" fill="#EF4444" font-weight="700">Takt ${takt}s</text>` : ''
+
+  const yAxis = Array.from({ length: 6 }, (_, i) => {
+    const val = Math.round((maxVal / 5) * i)
+    const y   = barH - val * scale
+    return `<line x1="${padLeft - 6}" y1="${y}" x2="${svgW - 20}" y2="${y}" stroke="#E5E7EB" stroke-width="0.8"/>
+      <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="9" fill="#9CA3AF">${val}s</text>`
+  }).join('')
+
+  const legend = Object.entries(VA_LABELS).map(([k, label]) =>
+    `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:16px;font-size:12px;">
+      <span style="width:12px;height:12px;border-radius:2px;background:${VA_COLORS[k]};display:inline-block;"></span>${label}
+    </span>`
+  ).join('')
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yamazumi Chart — Operator Balance</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system,'Segoe UI',sans-serif; padding: 36px 44px; max-width: 900px; margin: 0 auto; color: #1A1A1A; }
+    .header { border-bottom: 3px solid #0176D3; padding-bottom: 16px; margin-bottom: 24px; }
+    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #0176D3; font-weight: 700; margin-bottom: 6px; }
+    .doc-title { font-size: 22px; font-weight: 700; color: #111; }
+    .metrics { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+    .metric { background: #F8F6F0; border: 1px solid #E8E5E0; border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 100px; }
+    .metric-label { font-size: 9px; font-family: monospace; letter-spacing: 1px; color: #999; margin-bottom: 3px; }
+    .metric-val { font-size: 20px; font-weight: 700; }
+    .legend { margin: 16px 0; }
+    .no-print { background:#EEF4FB;border:1px solid #0176D3;border-radius:6px;padding:8px 14px;font-size:11px;color:#0176D3;margin-bottom:18px; }
+    .footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #E8E5E0; font-size: 10px; color: #999; font-family: monospace; }
+    @media print { .no-print { display: none; } body { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <p class="no-print">TIP: To save as PDF: File → Print → Destination: Save as PDF</p>
+  <div class="header">
+    <div class="doc-type">YAMAZUMI CHART — OPERATOR BALANCE</div>
+    <div class="doc-title">Operator Time Distribution</div>
+  </div>
+  <div class="metrics">
+    ${takt > 0 ? `<div class="metric"><div class="metric-label">TAKT TIME</div><div class="metric-val" style="color:#EF4444">${takt}s</div></div>` : ''}
+    <div class="metric"><div class="metric-label">OPERATORS</div><div class="metric-val">${operators.length}</div></div>
+    <div class="metric"><div class="metric-label">STEPS</div><div class="metric-val">${steps.length}</div></div>
+    ${summary ? `<div class="metric"><div class="metric-label">AVG VA%</div><div class="metric-val" style="color:#34D399">${summary.pct || 0}%</div></div>` : ''}
+  </div>
+  <div class="legend">${legend}</div>
+  <svg width="${svgW}" height="${svgH}" style="display:block;margin:0 auto;">
+    <rect width="${svgW}" height="${svgH}" fill="#FAFAF8" rx="8"/>
+    ${yAxis}
+    <line x1="${padLeft}" y1="10" x2="${padLeft}" y2="${barH}" stroke="#D1D5DB" stroke-width="1.5"/>
+    <line x1="${padLeft}" y1="${barH}" x2="${svgW - 20}" y2="${barH}" stroke="#D1D5DB" stroke-width="1.5"/>
+    ${bars}
+    ${taktLine}
+  </svg>
+  <div class="footer">Generated by VeSiMy — vesimy.com · ${new Date().toISOString().split('T')[0]}</div>
+</body>
+</html>`
+}
+
 export default function YamazumiTool({ steps, takt, onClose }: Props) {
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 
@@ -70,9 +164,24 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
       title="Yamazumi Chart — Operator Balance"
       onClose={onClose}
     >
-      {/* View-only notice */}
-      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 12 }}>
-        View only — this chart reads from your step data. Edit cycle times and op steps in each step to update it.
+      {/* View-only notice + export */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+        <div style={{ flex: 1, padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623' }}>
+          View only — this chart reads from your step data. Edit cycle times and op steps in each step to update it.
+        </div>
+        <button
+          onClick={() => {
+            const html = exportYamazumiHTML(operators, steps, takt, summary)
+            const blob = new Blob([html], { type: 'text/html' })
+            const url  = URL.createObjectURL(blob)
+            const a    = document.createElement('a')
+            a.href = url; a.download = 'yamazumi-chart.html'; a.click()
+            URL.revokeObjectURL(url)
+          }}
+          style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)', whiteSpace: 'nowrap', flexShrink: 0 }}
+        >
+          ↓ Export (PDF)
+        </button>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 

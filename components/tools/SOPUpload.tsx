@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon } from '@/components/ui/Icons'
 // ── components/tools/SOPUpload.tsx ───────────────────────────────────────────
 // Upload a SOP file (PDF or TXT) and auto-generate VSM steps from it
 
@@ -138,7 +139,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                     <span style={{ fontSize:11, color:'var(--text3)', fontFamily:'var(--font-mono)', minWidth:22 }}>{i+1}.</span>
                     <input style={{ flex:1, background:'transparent', border:'none', color:'var(--text)', fontSize:13, outline:'none', fontWeight:600 }}
                       value={s.name} onChange={e => setPreview(p => p.map((x,j) => j===i?{...x,name:e.target.value}:x))} />
-                    <button onClick={() => removeStep(i)} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--red)', fontSize:14, padding:'0 4px', flexShrink:0 }}>✕</button>
+                    <button onClick={() => removeStep(i)} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--red)', fontSize:14, padding:'0 4px', flexShrink:0 }}><XIcon size={14}/></button>
                   </div>
                   {/* Show extracted fields as chips */}
                   {(s.cycle_time||s.wait_time||s.setup_time||s.operators||s.department||s.defect_rate||s.uptime||s.wip) && (

@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 
-import { useState, useEffect, useCallback, useRef} from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store'
 import type { Project, Step, Branch, Profile, KanbanColumn, ProjectTab } from '@/lib/store'
@@ -110,7 +110,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const isPaid = isPaidProfile(profile)
 
   useEffect(() => {
-    fetchBranches(project.id).then(setBranches).catch(() => {})
+    fetchBranches(project.id)
+      .then(setBranches)
+      .catch((err) => {
+        console.error('[ProjectClient] fetchBranches failed:', err)
+        // Non-critical — branches still usable, just empty
+      })
   }, [project.id])
 
   useEffect(() => {
@@ -1161,7 +1166,7 @@ function PaywallGate({ feature }: { feature: string }) {
 }
 
 function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDragStart, onDrop, onImportSOP }: BuilderTabProps) {
-  const mainSteps = steps.filter(s => s.is_main_flow !== false).sort((a, b) => a.position - b.position)
+  const mainSteps = useMemo(() => steps.filter(s => s.is_main_flow !== false).sort((a, b) => a.position - b.position), [steps])
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const allExpanded = mainSteps.length > 0 && expandedIds.size === mainSteps.length
   function toggleStep(id: string) {
@@ -1644,6 +1649,22 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
   onDeleteStep: (id: string) => void
   onTool: (stepId: string, tool: string) => void
 }) {
+
+  // ── Prevent body scroll when any modal is open (mobile UX) ──────────────
+  useEffect(() => {
+    const anyModal = showPDCA || showYamazumi || showStopwatch || showFiveWhy ||
+      showIshikawa || showWaste || showKaizen || showSMED || showImprovement ||
+      showStandardWork || showVSMCoach || showSupe
+    if (anyModal) {
+      document.body.classList.add('modal-open')
+    } else {
+      document.body.classList.remove('modal-open')
+    }
+    return () => document.body.classList.remove('modal-open')
+  }, [showPDCA, showYamazumi, showStopwatch, showFiveWhy, showIshikawa,
+      showWaste, showKaizen, showSMED, showImprovement, showStandardWork,
+      showVSMCoach, showSupe])
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, gap: 16, flexWrap: 'wrap' }}>

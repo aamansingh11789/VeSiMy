@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { FishboneIcon, FiveWhyIcon, StopwatchIcon, ZapIcon, SettingsIcon, BookIcon, RefreshIcon, VSMIcon, CreditCardIcon, FolderIcon } from '@/components/ui/Icons'
 // ── components/ui/CommandPalette.tsx ──────────────────────────────────────────
 // ⌘K command palette — search projects, steps, CI tools, nav.
 // Glass overlay, keyboard navigation, instant results.
@@ -13,17 +14,17 @@ const mono  = '"IBM Plex Mono",ui-monospace,monospace'
 
 const STATIC_COMMANDS = [
   { id:'dashboard',  label:'Go to Dashboard',          icon:'⊞', category:'Navigate',  href:'/dashboard' },
-  { id:'pricing',    label:'View Pricing',              icon:'💳', category:'Navigate',  href:'/pricing' },
-  { id:'settings',  label:'Account Settings',          icon:'⚙', category:'Navigate',  href:'/settings' },
-  { id:'learn',     label:'Learning Center',           icon:'📚', category:'Navigate',  href:'/learn' },
-  { id:'blog',      label:'Blog',                      icon:'✍', category:'Navigate',  href:'/blog' },
+  { id:'pricing',    label:'View Pricing',              icon:'billing', category:'Navigate',  href:'/pricing' },
+  { id:'settings',  label:'Account Settings',          icon:'settings', category:'Navigate',  href:'/settings' },
+  { id:'learn',     label:'Learning Center',           icon:'book', category:'Navigate',  href:'/learn' },
+  { id:'blog',      label:'Blog',                      icon:'edit', category:'Navigate',  href:'/blog' },
   { id:'new',       label:'New Project',               icon:'＋', category:'Action',    href:'/dashboard?new=1' },
-  { id:'vsm',       label:'VSM — Value Stream Mapping',icon:'🗺', category:'CI Tool',   href:'/learn#vsm' },
-  { id:'fishbone',  label:'Fishbone Diagram',          icon:'🐟', category:'CI Tool',   href:'/learn#fishbone' },
-  { id:'5why',      label:'5 Why Analysis',            icon:'❓', category:'CI Tool',   href:'/learn#fivewhy' },
-  { id:'kaizen',    label:'Kaizen Event Tracking',     icon:'⚡', category:'CI Tool',   href:'/learn#kaizen' },
-  { id:'pdca',      label:'PDCA Cycle',                icon:'🔄', category:'CI Tool',   href:'/learn#pdca' },
-  { id:'smed',      label:'SMED Changeover',           icon:'⏱', category:'CI Tool',   href:'/learn#smed' },
+  { id:'vsm',       label:'VSM — Value Stream Mapping',icon:'vsm', category:'CI Tool',   href:'/learn#vsm' },
+  { id:'fishbone',  label:'Fishbone Diagram',          icon:'fishbone', category:'CI Tool',   href:'/learn#fishbone' },
+  { id:'5why',      label:'5 Why Analysis',            icon:'fivewhy', category:'CI Tool',   href:'/learn#fivewhy' },
+  { id:'kaizen',    label:'Kaizen Event Tracking',     icon:'zap', category:'CI Tool',   href:'/learn#kaizen' },
+  { id:'pdca',      label:'PDCA Cycle',                icon:'refresh', category:'CI Tool',   href:'/learn#pdca' },
+  { id:'smed',      label:'SMED Changeover',           icon:'stopwatch', category:'CI Tool',   href:'/learn#smed' },
 ]
 
 interface Result {
@@ -84,7 +85,7 @@ export function CommandPalette() {
         id: `project-${p.id}`,
         label: p.name,
         sublabel: p.industry || 'Project',
-        icon: '📁',
+        icon: 'folder',
         category: 'Project',
         href: `/project/${p.id}`,
       }))

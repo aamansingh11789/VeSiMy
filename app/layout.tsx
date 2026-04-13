@@ -13,6 +13,7 @@ import { PostHogPageView } from '@/components/analytics/PostHogPageView'
 import { ServiceWorkerRegistration } from '@/components/ui/ServiceWorkerRegistration'
 import { ProfileRefresh } from '@/components/ui/ProfileRefresh'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -124,7 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PostHogProvider>
         <ThemeProvider>
         <Suspense><PostHogPageView /></Suspense>
-        {children}
+        <ErrorBoundary name="root">{children}</ErrorBoundary>
 
         {/* PWA components — invisible, run in background */}
         <ServiceWorkerRegistration />

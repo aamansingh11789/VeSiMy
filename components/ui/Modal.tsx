@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon } from '@/components/ui/Icons'
 
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -166,7 +167,7 @@ export function Modal({
             style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px', flexShrink: 0 }}
             onClick={() => onCloseRef.current()}
             type="button"
-          >✕</button>
+          ><XIcon size={14}/></button>
         </div>
 
         {/* ── scrollable body ── */}

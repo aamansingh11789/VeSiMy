@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { CheckIcon } from '@/components/ui/Icons'
 // ── components/learn/LearningCenter.tsx ──────────────────────────────────────
 // Industry-aware learning center.
 // All content adapts to the user's industry terminology from useIndustryLanguage.
@@ -417,7 +418,7 @@ export function LearningCenter({ userId }: Props) {
           <div style={{ background:'rgba(100,38,160,0.06)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:10, padding:'12px 16px', marginBottom:16 }}>
             <p style={{ fontSize:13, color:'#8C44CC', margin:0 }}>
               This feature requires a <strong>Pro or Enterprise plan</strong>.{' '}
-              <a href="/pricing" style={{ color:'var(--brand)', textDecoration:'none' }}>View Pricing →</a>
+              <a href="/pricing" style={{ color:'var(--brand)', textDecoration:'none' }}>View Pricing &rarr;</a>
             </p>
           </div>
         )}
@@ -564,7 +565,7 @@ export function LearningCenter({ userId }: Props) {
                       <span style={{ fontSize:16 }}>{s.icon}</span>
                       <span style={{ flex:1, fontSize:13, fontWeight: activeSection === s.id ? 700 : 400, color: activeSection === s.id ? 'var(--brand)' : 'var(--text)' }}>{s.title}</span>
                       {s.pro && <span style={{ fontSize:9, color:'#8C44CC', background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:4, padding:'2px 5px' }}>PRO</span>}
-                      {activeSection === s.id && <span style={{ color:'var(--brand)' }}>✓</span>}
+                      {activeSection === s.id && <span style={{ color:'var(--brand)' }}><CheckIcon size={13} color='var(--brand)'/></span>}
                     </button>
                   ))}
                 </div>

@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { ZapIcon, ChevronDownIcon, CheckIcon } from '@/components/ui/Icons'
 // ── components/supe/SupePanel.tsx ─────────────────────────────────────────────
 
 import type React from 'react'
@@ -163,7 +164,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
                   </div>
                   <div style={{ display:'flex', alignItems:'center', gap:6 }}>
                     <span style={{ fontSize:9, color:SEV_COLOR[rec.severity], fontFamily:'var(--font-mono)', textTransform:'uppercase' }}>{rec.severity}</span>
-                    <span style={{ fontSize:10, color:'var(--text3)' }}>{isOpen?'▴':'▾'}</span>
+                    <span style={{ fontSize:10, color:'var(--text3)' }}>{isOpen ? <ChevronDownIcon size={10} style={{transform:'rotate(180deg)'}}/> : <ChevronDownIcon size={10}/>}</span>
                   </div>
                 </div>
                 {isOpen && (
@@ -179,7 +180,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
                         {!isDemo && (
                           <button onClick={() => setResolved(p => new Set([...p, rec.key]))}
                             style={{ background:'none', border:'none', color:'#1DD1A1', fontSize:11, cursor:'pointer' }}>
-                            ✓ Resolved
+                            
                           </button>
                         )}
                       </div>
@@ -224,7 +225,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
             {loading && (
               <div style={{ display:'flex', alignItems:'flex-start' }}>
                 <div style={{ padding:'10px 14px', borderRadius:'12px 12px 12px 2px', background:'rgba(140,68,204,0.08)', border:'1px solid rgba(140,68,204,0.15)', backdropFilter:'blur(8px)' }}>
-                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:8 }}>⚡ SUPE THINKING</div>
+                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:8 }}><ZapIcon size={10}/> SUPE THINKING</div>
                   {/* Waveform animation */}
                   <div style={{ display:'flex', gap:3, alignItems:'center', height:20 }}>
                     {[0,1,2,3,4,5,6,7].map(i => (

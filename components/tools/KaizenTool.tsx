@@ -152,7 +152,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
       ${items.filter(i => i.priority === 'critical' || i.priority === 'high').length > 0 ? `
       <h2>5. Escalation Register — High Priority Items</h2>
       <div class="obs-box waste">
-        <div class="obs-label">⚠ Items Requiring Management Attention</div>
+        <div class="obs-label">! Items Requiring Management Attention</div>
         ${items.filter(i => i.priority === 'critical' || i.priority === 'high').map(item => `
           <p><strong>[${item.kzId || item.id.slice(0,6).toUpperCase()}] ${item.title}</strong>
           — Priority: ${item.priority.toUpperCase()} | Status: ${item.status.toUpperCase()} | Owner: ${item.owner || 'Unassigned'} | Due: ${item.dueDate || 'Not set'}

@@ -86,7 +86,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
         <thead><tr><th>Metric</th><th>Value</th><th>Status</th></tr></thead>
         <tbody>
           <tr><td>Takt Time</td><td style="font-family:monospace;">${takt}s</td><td>Customer requirement</td></tr>
-          <tr><td>Cycle Time</td><td style="font-family:monospace;">${totalTime}s</td><td style="color:${totalTime > takt ? '#DC2626' : '#15803D'};font-weight:700;">${totalTime > takt ? '⚠ EXCEEDS TAKT — bottleneck' : '✓ Within takt time'}</td></tr>
+          <tr><td>Cycle Time</td><td style="font-family:monospace;">${totalTime}s</td><td style="color:${totalTime > takt ? '#DC2626' : '#15803D'};font-weight:700;">${totalTime > takt ? 'EXCEEDS TAKT — bottleneck' : 'Within takt time'}</td></tr>
           <tr><td>Available Buffer</td><td style="font-family:monospace;">${takt - totalTime}s</td><td>${takt - totalTime >= 0 ? 'Capacity available' : 'Load-balancing required'}</td></tr>
         </tbody>
       </table>

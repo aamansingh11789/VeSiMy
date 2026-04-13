@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { AlertIcon, SearchIcon, ClockIcon, ZapIcon } from '@/components/ui/Icons'
 import { SERIF, BRAND, GREEN, AMBER, RED, NAVY } from './v2-constants'
 // ── components/v2/V2FutureStatePanel.tsx ──────────────────────────────────────
 // Future State generator.
@@ -180,7 +181,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           {/* No current report warning */}
           {!currentReport && (
             <div style={{ padding: '12px 14px', background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 9, marginBottom: 24, fontSize: 13, color: '#7A5200' }}>
-              ⚠️ Run the current state analysis first (click ⚡ Analyze) for a more accurate future state projection.
+              <AlertIcon size={14} color="#7A5200"/> Run the current state analysis first (click Analyze) for a more accurate future state projection.
             </div>
           )}
 
@@ -250,7 +251,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
                 background: !selfMode ? 'rgba(1,118,211,.04)' : 'white', cursor: 'pointer', textAlign: 'left',
                 opacity: isPaid ? 1 : .5,
               }}>
-                <span style={{ fontSize: 22 }}>⚡</span>
+                <ZapIcon size={20} color="var(--brand)"/>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: !selfMode ? BRAND : 'var(--text)', marginBottom: 3 }}>
                     Supe AI brainstorming session {!isPaid && '(Pro)'}
@@ -265,7 +266,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
                 borderRadius: 10, border: `1.5px solid ${selfMode ? BRAND : 'var(--border)'}`,
                 background: selfMode ? 'rgba(1,118,211,.04)' : 'white', cursor: 'pointer', textAlign: 'left',
               }}>
-                <span style={{ fontSize: 22 }}>🔍</span>
+                <SearchIcon size={20} color="var(--text2)"/>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: selfMode ? BRAND : 'var(--text)', marginBottom: 3 }}>Self-directed analysis</div>
                   <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
@@ -327,7 +328,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
               alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start',
             }}>
               {msg.role === 'supe' && (
-                <div style={{ fontSize: 9, fontFamily: 'monospace', color: 'rgba(255,255,255,.3)', marginBottom: 5, letterSpacing: 1 }}>⚡ SUPE</div>
+                <div style={{ fontSize: 9, fontFamily: 'monospace', color: 'rgba(255,255,255,.3)', marginBottom: 5, letterSpacing: 1 }}><ZapIcon size={14}/> SUPE</div>
               )}
               <div style={{
                 maxWidth: '82%', padding: '12px 16px', borderRadius: msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
@@ -405,7 +406,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
 
           {/* Disclaimer */}
           <div style={{ background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
-            <span style={{ fontSize: 16, flexShrink: 0 }}>⚠️</span>
+            <span style={{ fontSize: 16, flexShrink: 0 }}><AlertIcon size={14} color="#92400E"/></span>
             <div>
               <div style={{ fontSize: 11, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: 'monospace', letterSpacing: 1 }}>DISCLAIMER</div>
               <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{futureReport.disclaimer}</p>
@@ -495,8 +496,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
                       <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 5 }}>{a.title}</div>
                       <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 6 }}>{a.description}</div>
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                        {a.timeframe && <span style={{ fontSize: 11, color: 'var(--text3)' }}>⏱ {a.timeframe}</span>}
-                        {a.ci_tool && <span style={{ fontSize: 11, color: BRAND }}>⚡ {a.ci_tool}</span>}
+                        {a.timeframe && <span style={{ fontSize: 11, color: 'var(--text3)' }}><ClockIcon size={11}/> {a.timeframe}</span>}
+                        {a.ci_tool && <span style={{ fontSize: 11, color: BRAND }}><ZapIcon size={11}/> {a.ci_tool}</span>}
                         {a.expected_outcome && <span style={{ fontSize: 11, color: GREEN }}>→ {a.expected_outcome}</span>}
                       </div>
                       {a.dependencies?.length > 0 && (

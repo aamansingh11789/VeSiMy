@@ -117,7 +117,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
           <div>
             <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', marginBottom: 4 }}>KAIZEN ROADMAP — MISSION CONTROL</div>
             <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{project?.name}</div>
-            <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>Current State → Future State Improvement Plan</div>
+            <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>Current State &rarr; Future State Improvement Plan</div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             {[

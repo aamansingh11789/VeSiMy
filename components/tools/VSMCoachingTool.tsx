@@ -263,7 +263,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.6 }}>{gap.detail}</div>
                 <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 11.5, color: 'var(--text2)', lineHeight: 1.6 }}>
-                  <span style={{ color: '#0176D3', fontWeight: 700 }}>→ Action: </span>{gap.action}
+                  <span style={{ color: '#0176D3', fontWeight: 700 }}>&rarr; Action: </span>{gap.action}
                 </div>
               </div>
             </div>

@@ -524,7 +524,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   }, [])
 
   const isPro = ['pro','lifetime','enterprise'].includes(profile.plan_tier)
-  const isUnlimited = ['pro', 'lifetime', 'enterprise'].includes(profile.plan_tier)
+  const isUnlimited = ['pro', 'lifetime', 'enterprise', 'trialing'].includes(profile.plan_tier)
   const atLimit = !isUnlimited && projects.length >= (profile.projects_limit || 3)
 
   async function createProject() {

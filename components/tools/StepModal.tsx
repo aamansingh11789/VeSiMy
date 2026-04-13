@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { AlertIcon } from '@/components/ui/Icons'
 
 import { useEffect, useMemo, useState, useRef } from 'react'
 import { Modal } from '@/components/ui/Modal'
@@ -198,7 +199,7 @@ function ValidatedInput({ field, value, onChange, hint, ...rest }) {
       )}
       {warn && (
         <div style={{ fontSize: 10, color: '#0176D3', marginTop: 3, display: 'flex', alignItems: 'flex-start', gap: 4, lineHeight: 1.4 }}>
-          <span>⚠</span><span>{warn}</span>
+          <AlertIcon size={13} color="#F4A623"/><span>{warn}</span>
         </div>
       )}
     </div>

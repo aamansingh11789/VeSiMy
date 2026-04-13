@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { XIcon, ExternalLinkIcon } from '@/components/ui/Icons'
 // ── components/vsm/VSMMap.tsx ─────────────────────────────────────────────────
 // ISO 22468:2020-compliant Value Stream Map
 // Process boxes: plain rectangles with data box — no non-ISO decorations.
@@ -427,7 +428,7 @@ export function VSMMap({ steps, branches, project }: Props) {
         ))}
         <button onClick={() => setFullscreen(true)}
           style={{ padding:'8px 14px', borderRadius:8, fontSize:14, cursor:'pointer', background:'transparent', border:'1px solid var(--border)', color:'var(--text2)', alignSelf:'stretch' }}
-          title="Fullscreen">⛶</button>
+          title="Fullscreen"><ExternalLinkIcon size={14}/></button>
       </div>
 
       {/* Fullscreen overlay */}
@@ -437,7 +438,7 @@ export function VSMMap({ steps, branches, project }: Props) {
             <span style={{ fontSize:14, fontWeight:700 }}>{project.name} — Value Stream Map · ISO 22468:2020</span>
             <div style={{ display:'flex', gap:10 }}>
               <span style={{ fontSize:11, opacity:0.5 }}>Esc to exit</span>
-              <button onClick={()=>setFullscreen(false)} style={{ padding:'5px 14px', borderRadius:6, fontSize:13, fontWeight:700, cursor:'pointer', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.25)', color:'#FFF' }}>✕</button>
+              <button onClick={()=>setFullscreen(false)} style={{ padding:'5px 14px', borderRadius:6, fontSize:13, fontWeight:700, cursor:'pointer', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.25)', color:'#FFF' }}><XIcon size={13} color='white'/></button>
             </div>
           </div>
           <div style={{ flex:1, overflow:'auto', padding:20 }}>

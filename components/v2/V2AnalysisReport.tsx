@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { AlertIcon, ZapIcon } from '@/components/ui/Icons'
 import { SERIF, CI_LABELS, BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ── components/v2/V2AnalysisReport.tsx ────────────────────────────────────────
 // Current state analysis report display.
@@ -19,7 +20,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
     <div style={{ maxWidth: 820, margin: '0 auto' }}>
       {/* Disclaimer — always first */}
       <div style={{ background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
-        <span style={{ fontSize: 16, flexShrink: 0 }}>⚠️</span>
+        <span style={{ fontSize: 16, flexShrink: 0 }}><AlertIcon size={14} color="#92400E"/></span>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: 'monospace', letterSpacing: 1 }}>DISCLAIMER</div>
           <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{report.disclaimer}</p>
@@ -97,7 +98,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {missing.slice(0, 8).map((m: any, i: number) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '9px 12px', background: 'rgba(244,166,35,.05)', border: '1px solid rgba(244,166,35,.2)', borderRadius: 7 }}>
-                <span style={{ fontSize: 12, flexShrink: 0 }}>⚠</span>
+                <span style={{ fontSize: 12, flexShrink: 0 }}><AlertIcon size={12} color="#F4A623"/></span>
                 <div>
                   <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{m.step_name}</div>
                   <div style={{ fontSize: 11, color: 'var(--text3)' }}>{m.impact}</div>
@@ -141,7 +142,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
                     {s.priority?.toUpperCase()}
                   </span>
                 </div>
-                <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginBottom: 3 }}>⚡ {CI_LABELS[s.tool] || s.tool}</div>
+                <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginBottom: 3 }}><ZapIcon size={11}/> {CI_LABELS[s.tool] || s.tool}</div>
                 <div style={{ fontSize: 11, color: 'var(--text3)' }}>{s.reason}</div>
               </div>
             ))}

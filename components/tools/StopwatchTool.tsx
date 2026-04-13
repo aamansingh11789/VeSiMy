@@ -1,5 +1,6 @@
 // @ts-nocheck
 'use client'
+import { ClockIcon } from '@/components/ui/Icons'
 import { FieldTip, FieldWarn, TipLabel, clampMin, timeWarn, secToHuman } from '@/components/ui/FieldTip'
 
 import { useEffect, useRef, useState } from 'react'
@@ -144,7 +145,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <div class="kpi-card"><div class="kpi-label">Mean Cycle Time</div><div class="kpi-value">${fmtMs(mean || effectiveMean)}</div><div class="kpi-sub">Validated average</div></div>
         <div class="kpi-card"><div class="kpi-label">Minimum CT</div><div class="kpi-value">${fmtMs(minT || effectiveMean)}</div><div class="kpi-sub">Best cycle observed</div></div>
         <div class="kpi-card"><div class="kpi-label">Maximum CT</div><div class="kpi-value">${fmtMs(maxT || effectiveMean)}</div><div class="kpi-sub">Worst cycle observed</div></div>
-        <div class="kpi-card"><div class="kpi-label">Coeff. of Variation</div><div class="kpi-value">${cv}${cv !== '—' ? '%' : ''}</div><div class="kpi-sub">${cv !== '—' && parseFloat(cv) < 15 ? '✓ Stable process' : cv !== '—' ? '⚠ High variation' : '—'}</div></div>
+        <div class="kpi-card"><div class="kpi-label">Coeff. of Variation</div><div class="kpi-value">${cv}${cv !== '—' ? '%' : ''}</div><div class="kpi-sub">${cv !== '—' && parseFloat(cv) < 15 ? 'Stable process' : cv !== '—' ? 'High variation' : '—'}</div></div>
         ${baselineMs ? `<div class="kpi-card"><div class="kpi-label">Baseline CT</div><div class="kpi-value">${fmtMs(baselineMs)}</div><div class="kpi-sub">${improvement ? (parseFloat(improvement) > 0 ? '▲ +' + improvement + '% improvement' : '▼ ' + improvement + '% regression') : '—'}</div></div>` : ''}
       </div>
 
@@ -179,10 +180,10 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       <table class="data-table">
         <thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th><th>ISO Reference</th></tr></thead>
         <tbody>
-          <tr><td>Sample Size</td><td>${validLaps.length} observations</td><td>${validLaps.length >= 10 ? '✓ Adequate for statistical confidence' : validLaps.length >= 5 ? '⚠ Minimum threshold — collect more' : '✗ Insufficient — collect 10+ observations'}</td><td>ILO §3</td></tr>
+          <tr><td>Sample Size</td><td>${validLaps.length} observations</td><td>${validLaps.length >= 10 ? '✓ Adequate for statistical confidence' : validLaps.length >= 5 ? 'Minimum threshold — collect more' : 'Insufficient — collect 10+ observations'}</td><td>ILO §3</td></tr>
           <tr><td>Mean Cycle Time</td><td>${fmtMs(mean || effectiveMean)}</td><td>Average of all included observations</td><td>ISO 22468 §5.2.4</td></tr>
-          <tr><td>Range (Max − Min)</td><td>${fmtMs(maxT - minT)}</td><td>${(maxT - minT) / mean < 0.3 ? '✓ Low range — consistent' : '⚠ High range — investigate causes'}</td><td>ILO §4.2</td></tr>
-          <tr><td>Coefficient of Variation</td><td>${cv}${cv !== '—' ? '%' : ''}</td><td>${cv !== '—' ? (parseFloat(cv) < 10 ? '✓ Excellent process stability' : parseFloat(cv) < 20 ? '⚠ Acceptable — monitor' : '✗ High variation — requires investigation') : '—'}</td><td>ILO §4.3</td></tr>
+          <tr><td>Range (Max − Min)</td><td>${fmtMs(maxT - minT)}</td><td>${(maxT - minT) / mean < 0.3 ? '✓ Low range — consistent' : 'High range — investigate causes'}</td><td>ILO §4.2</td></tr>
+          <tr><td>Coefficient of Variation</td><td>${cv}${cv !== '—' ? '%' : ''}</td><td>${cv !== '—' ? (parseFloat(cv) < 10 ? '✓ Excellent process stability' : parseFloat(cv) < 20 ? 'Acceptable — monitor' : 'High variation — requires investigation') : '—'}</td><td>ILO §4.3</td></tr>
           ${baselineMs ? `<tr><td>Baseline vs. Observed</td><td>${improvement ? (parseFloat(improvement) > 0 ? '+' + improvement + '%' : improvement + '%') : '—'}</td><td>${improvement ? (parseFloat(improvement) > 0 ? '✓ Improvement confirmed' : '⚠ Performance regression') : '—'}</td><td>ISO 9001 §9.1</td></tr>` : ''}
         </tbody>
       </table>
