@@ -14,6 +14,17 @@ import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/compon
 import { IndustrySelector } from '@/components/ui/IndustrySelector'
 
 
+
+const PLAN_COLOR: Record<string, string> = {
+  trial:        'var(--text3)',
+  trialing:     '#0176D3',
+  pro:          '#0176D3',
+  lifetime:     '#C49B2E',
+  enterprise:   '#8C44CC',
+  trial_expired:'#C0402A',
+  free:         'var(--text3)',
+}
+
 interface Props {
   profile: any
   user:    { email?: string }
