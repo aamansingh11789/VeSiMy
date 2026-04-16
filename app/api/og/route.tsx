@@ -48,20 +48,20 @@ export async function GET() {
 
         {/* New tagline */}
         <div style={{ fontSize: '26px', color: '#0176D3', fontWeight: 700, marginBottom: '28px', letterSpacing: '0.5px', display: 'flex' }}>
-          Your bottleneck has a name. Now you can prove it.
+          You have a process. You have a target. You have VeSiMy.
         </div>
 
         {/* Description */}
         <div style={{ fontSize: '19px', color: '#8888AA', maxWidth: '780px', lineHeight: 1.65, display: 'flex' }}>
-          VSM mapping · Time study · Fishbone · 5 Why · Kaizen · Waste ID — unified under one AI mentor, adapted for your industry.
+          VSM · Kaizen · PDCA · AI Gap Analysis · Standard Work — unified under one AI mentor, adapted for your industry.
         </div>
 
         {/* Bottom stats */}
         <div style={{ position: 'absolute', bottom: '52px', left: '88px', display: 'flex', gap: '48px' }}>
           {[
-            ['70', 'Industries'],
-            ['7', 'CI Tools'],
+            ['12+', 'CI Tools'],
             ['14-Day', 'Free Trial'],
+            ['ISO 22468', ':2020'],
             ['AI', 'Mentor Included'],
           ].map(([val, label]) => (
             <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>

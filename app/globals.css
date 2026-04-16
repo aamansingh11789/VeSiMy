@@ -623,7 +623,8 @@ body.modal-open main { padding-bottom: 0 !important; }
   }
   .tab-bar::-webkit-scrollbar, .ci-tool-strip::-webkit-scrollbar { display: none; }
   .settings-main { padding: 16px !important; }
-  .settings-inner { padding: 0 !important; max-width: 100% !important; }
+  /* Keep horizontal padding 0 but add bottom padding so sign-out is above bottom nav */
+  .settings-inner { padding: 0 0 calc(88px + env(safe-area-inset-bottom, 20px)) 0 !important; max-width: 100% !important; }
   .card { padding: 14px !important; }
   .btn, button { min-height: 40px; }
   input, select, textarea { font-size: 16px !important; }
@@ -726,4 +727,108 @@ body.modal-open {
   overflow: hidden !important;
   position: fixed !important;
   width: 100% !important;
+}
+
+/* ── V2 Tab bar responsive ──────────────────────────────────────────────── */
+.v2-tab-bar      { display: flex !important; }
+.v2-tab-dropdown { display: none !important; }
+.v2-tab-bar::-webkit-scrollbar { display: none; }
+
+/* ── V2 Step panel — right drawer on desktop, bottom sheet on mobile ─────── */
+.v2-step-panel {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 380px;
+}
+
+@media (max-width: 640px) {
+  .v2-tab-bar      { display: none !important; }
+  .v2-tab-dropdown { display: block !important; }
+
+  /* Step panel becomes bottom sheet */
+  .v2-step-panel {
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-height: 80dvh !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    border-radius: 16px 16px 0 0 !important;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.12) !important;
+  }
+}
+
+/* ── Settings page mobile ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Settings sign-out always visible above bottom nav */
+  .settings-inner {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 20px)) !important;
+  }
+  .settings-main {
+    padding-bottom: 0 !important;
+  }
+  /* Settings sections stack cleanly */
+  .settings-inner section { margin-bottom: 20px !important; }
+  .settings-inner .card { border-radius: 10px !important; }
+
+  /* V2 topbar on mobile — compress */
+  .v2-topbar-right > *:not(.v2-topbar-essential) { display: none !important; }
+  .v2-topbar-right .v2-topbar-essential { display: flex !important; }
+
+  /* Tool modal full sheet on mobile */
+  .vesimy-modal {
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px)) !important;
+    height: auto !important;
+    min-height: 60dvh !important;
+  }
+
+  /* Simulation tool on mobile */
+  .sim-scenario-grid { grid-template-columns: 1fr 1fr !important; }
+  .sim-output-grid   { grid-template-columns: 1fr 1fr !important; }
+  .sim-matrix-grid   { grid-template-columns: 1fr 1fr !important; }
+
+  /* VSM steps scroll on mobile */
+  .vsm-steps-row {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 8px !important;
+  }
+  .vsm-steps-row::-webkit-scrollbar { display: none; }
+
+  /* Report / compare tables scroll */
+  .sim-compare-table, .report-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Kanban board mobile */
+  .kanban-board-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Kaizen roadmap mobile */
+  .roadmap-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Health score compact on mobile */
+  .health-score-compact { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  /* Simulation scenario grid single col on small phones */
+  .sim-scenario-grid { grid-template-columns: 1fr !important; }
+  .sim-output-grid   { grid-template-columns: 1fr 1fr !important; }
+
+  /* V2 project name truncate */
+  .v2-project-name {
+    max-width: 120px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
 }

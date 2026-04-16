@@ -93,10 +93,10 @@ export async function POST(req: NextRequest) {
     reviewed_at:      windowOpen ? new Date().toISOString() : null,
   })
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   return NextResponse.json({ success: true, score, status, windowOpen })
 
   } catch (err: any) {
     console.error("[beta/apply]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

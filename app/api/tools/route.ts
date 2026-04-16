@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     }
 
     result = updated
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     }
 
     result = inserted
@@ -99,5 +99,5 @@ export async function POST(request: NextRequest) {
 
   } catch (err: any) {
     console.error("[tools]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

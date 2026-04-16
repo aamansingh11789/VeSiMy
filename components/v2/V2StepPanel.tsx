@@ -92,7 +92,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
   )
 
   return (
-    <div style={{
+    <div className="v2-step-panel" style={{
       position: 'absolute', top: 0, right: 0, bottom: 0, width: 380,
       background: 'white', borderLeft: '1px solid var(--border)',
       display: 'flex', flexDirection: 'column', zIndex: 20,

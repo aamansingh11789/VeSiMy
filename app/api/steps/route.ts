@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     .select()
     .single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
 
   // Update project updated_at
   await supabase.from('projects').update({ updated_at: new Date().toISOString() }).eq('id', projectId)
@@ -72,6 +72,6 @@ export async function POST(request: NextRequest) {
 
   } catch (err: any) {
     console.error("[steps]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}
 

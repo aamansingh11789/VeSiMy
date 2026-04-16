@@ -24,6 +24,10 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null
     const manualText = formData.get('manual_text') as string | null
 
+    if (file && file.size > 5 * 1024 * 1024) {
+      return NextResponse.json({ error: 'File too large. Maximum file size is 5MB.' }, { status: 413 })
+    }
+
     let rawText = ''
     let filename = 'manual_input'
 
@@ -54,6 +58,6 @@ export async function POST(request: NextRequest) {
 
   } catch (err: any) {
     console.error('[parse-sop]', err)
-    return NextResponse.json({ error: err?.message || 'Parse failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

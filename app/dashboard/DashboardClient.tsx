@@ -882,7 +882,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
               <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
               {' '}20% off Pro — use <code style={{ color: '#C49B2E', fontWeight: 700 }}>SPRING25</code>
-              {' '}at checkout. Ends 20 April.
+              {' '}at checkout. Ends 20 April 2026.
             </span>
             <Link href="/pricing" style={{ fontSize: 12, fontWeight: 700, color: '#C49B2E', textDecoration: 'none', whiteSpace: 'nowrap' }}>View pricing →</Link>
           </div>

@@ -59,5 +59,5 @@ export async function POST() {
 
   } catch (err: any) {
     console.error("[beta/claim]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

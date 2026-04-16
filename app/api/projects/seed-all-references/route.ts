@@ -1949,6 +1949,6 @@ export async function POST(_request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ error: err?.message || 'Failed to seed reference projects' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

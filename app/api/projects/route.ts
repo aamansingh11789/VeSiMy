@@ -17,12 +17,12 @@ export async function GET() {
     .eq('status', 'active')
     .order('updated_at', { ascending: false })
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   return NextResponse.json({ projects: data })
 
   } catch (err: any) {
     console.error("[projects]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}
 
 // POST /api/projects — create a new project
@@ -64,10 +64,10 @@ export async function POST(request: NextRequest) {
     status:      'active',
   }).select().single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   return NextResponse.json({ project: data }, { status: 201 })
 
   } catch (err: any) {
     console.error("[projects]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

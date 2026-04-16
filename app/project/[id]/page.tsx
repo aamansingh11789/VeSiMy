@@ -67,6 +67,7 @@ export default async function ProjectPage({ params }: Props) {
         <main style={{ marginLeft: 'var(--sidebar-w, 56px)', flex: 1, minWidth: 0, overflow: 'hidden', height: '100dvh' }}>
           <V2ProjectClient project={initialProject} profile={profile} steps={steps} />
         </main>
+        <BottomNav />
       </div>
     )
   }

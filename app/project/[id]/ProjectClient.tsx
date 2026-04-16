@@ -41,17 +41,16 @@ import {
 } from '@/components/ui/Icons'
 
 const TABS: { id: ProjectTab; label: string; Icon: any; premium?: boolean }[] = [
-  { id: 'builder',   label: 'Process Steps',       Icon: PlusIcon,        premium: false },
-  { id: 'vsm',       label: 'Value Stream',       Icon: VSMIcon,         premium: false },
-  { id: 'branches',  label: 'Sub-Processes', Icon: BranchIcon,      premium: false },
-  { id: 'roadmap',   label: 'Kaizen Plan',       Icon: RoadmapIcon,     premium: false },
-  { id: 'pdca',      label: 'PDCA',          Icon: PDCAIcon,        premium: false },
-  { id: 'kaizen',    label: 'Kaizen',        Icon: KaizenIcon,      premium: false },
-  { id: 'kanban',    label: 'Kanban',        Icon: KanbanIcon,      premium: false },
-  { id: 'simulation',label: 'Simulation',    Icon: SimulationIcon,  premium: true  },
-  { id: 'live',      label: 'Gemba Monitor',    Icon: LiveFloorIcon,   premium: true  },
-  { id: 'report',   label: 'Report',     Icon: ReportIcon,      premium: false },
-  { id: 'branches', label: 'Branches',   Icon: BranchIcon,      premium: false },
+  { id: 'builder',    label: 'Process Steps', Icon: PlusIcon,        premium: false },
+  { id: 'vsm',        label: 'Value Stream',  Icon: VSMIcon,         premium: false },
+  { id: 'branches',   label: 'Sub-Processes', Icon: BranchIcon,      premium: false },
+  { id: 'roadmap',    label: 'Kaizen Plan',   Icon: RoadmapIcon,     premium: false },
+  { id: 'pdca',       label: 'PDCA',          Icon: PDCAIcon,        premium: false },
+  { id: 'kaizen',     label: 'Kaizen',        Icon: KaizenIcon,      premium: false },
+  { id: 'kanban',     label: 'Kanban',        Icon: KanbanIcon,      premium: false },
+  { id: 'simulation', label: 'Simulation',    Icon: SimulationIcon,  premium: false },
+  { id: 'live',       label: 'Gemba Monitor', Icon: LiveFloorIcon,   premium: true  },
+  { id: 'report',     label: 'Report',        Icon: ReportIcon,      premium: false },
 ]
 
 const CI_TOOLS = [
@@ -399,11 +398,16 @@ export function ProjectClient({ initialProject, profile }: Props) {
             <span className="action-btn-label">Import SOP</span>
           </button>
 
-          <PDFExportButton
-            project={project}
-            steps={steps}
-            isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
-          />
+          {isPaid
+            ? <PDFExportButton
+                project={project}
+                steps={steps}
+                isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
+              />
+            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)' }}>
+                PDF ↑ Pro
+              </button>
+          }
 
           <button
             onClick={() => setShowJournal(true)}
@@ -509,12 +513,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
       </div>
 
       <div
+        className="tab-bar"
         style={{
           display: 'flex',
           padding: '0 20px',
           background: 'var(--bg2)',
           borderBottom: '1px solid var(--border)',
           overflowX: 'auto',
+          scrollbarWidth: 'none',
         }}
       >
         {TABS.map(t => {

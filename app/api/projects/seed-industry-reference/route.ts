@@ -75,6 +75,6 @@ export async function POST(_req: NextRequest) {
 
   } catch (err: any) {
     console.error('[seed-industry-reference]', err)
-    return NextResponse.json({ error: err?.message || 'Failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

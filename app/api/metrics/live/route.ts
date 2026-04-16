@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
     .insert({ step_id, project_id, metric_type, value:Number(value), notes:notes||null, user_id:user.id })
     .select().single()
 
-  if (error) return NextResponse.json({ error:error.message }, { status:500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   return NextResponse.json({ success:true, metric:data })
 
   } catch (err: any) {
     console.error("[metrics/live]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

@@ -985,7 +985,7 @@ export default function HomePage() {
                 <strong style={{ color:'#1E1B17' }}>Spring CI Sprint</strong>
                 <span style={{ color:'#6B6760', fontSize:14 }}> — 20% off your first payment. Use code </span>
                 <code style={{ background:'rgba(196,155,46,0.15)', padding:'2px 8px', borderRadius:4, fontWeight:700, color:'#B8860B' }}>SPRING25</code>
-                <span style={{ color:'#9B9690', fontSize:13 }}> · Expires Easter Sunday, 20 April</span>
+                <span style={{ color:'#9B9690', fontSize:13 }}> · Expires Easter Sunday, 20 April 2026</span>
               </div>
               <button onClick={copyPromoCode} style={{ padding:'7px 14px', borderRadius:8, border:'1px solid rgba(196,155,46,0.3)', background:'rgba(255,255,255,0.7)', cursor:'pointer', fontSize:13, color:'#6B6760', fontWeight:600, backdropFilter:'blur(8px)' }}>Copy code</button>
               <button onClick={dismissPromo} style={{ background:'none', border:'none', cursor:'pointer', color:'#9B9690', fontSize:22, lineHeight:1, padding:'0 4px' }}>×</button>

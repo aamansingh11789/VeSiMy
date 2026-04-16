@@ -692,7 +692,7 @@ export default function PricingPage() {
               <strong style={{ color: 'var(--text)' }}>Spring CI Sprint</strong>
               <span style={{ color: 'var(--text2)', fontSize: 14 }}> — 20% off your first payment. Use code </span>
               <code style={{ background: 'rgba(196,155,46,0.12)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, color: '#C49B2E' }}>SPRING25</code>
-              <span style={{ color: 'var(--text3)', fontSize: 13 }}> · Expires Easter Sunday, 20 April</span>
+              <span style={{ color: 'var(--text3)', fontSize: 13 }}> · Expires Easter Sunday, 20 April 2026</span>
             </div>
             <button onClick={copyPromoCode} style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid var(--border)', background: '#fff', cursor: 'pointer', fontSize: 13, color: 'var(--text2)', fontWeight: 600 }}>Copy code</button>
             <button onClick={dismissPromo} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', fontSize: 22, lineHeight: 1, padding: '0 4px' }}>×</button>

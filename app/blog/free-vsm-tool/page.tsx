@@ -52,7 +52,7 @@ export default function FreeVSMPost() {
           {[
             {
               name: 'VeSiMy',
-              price: 'Free (Pro $29/mo)',
+              price: '14-day free trial — then $29/mo Pro or $99 Lifetime',
               best: 'Teams who want AI + all CI tools in one place',
               pros: ['Browser-based, no download', 'Calculates lead time and takt time automatically', 'Connected to Kaizen, 5 Why, and Time Study', 'SOP → VSM in 60 seconds with AI', 'Mobile-friendly', 'Export to PDF'],
               cons: ['Newer platform — still adding advanced symbols'],
@@ -125,7 +125,7 @@ export default function FreeVSMPost() {
               No download. No Visio. No setup. Build your first VSM map in under 5 minutes.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
-              Start free trial — no credit card →
+              Start free trial — no credit card required →
             </Link>
           </div>
         </div>

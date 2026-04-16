@@ -277,6 +277,9 @@ export async function POST(request: NextRequest) {
     } else if (ct.includes('multipart/form-data')) {
       const fd   = await request.formData()
       const file = fd.get('file') as File | null
+      if (file && file.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: 'File too large. Maximum file size is 5MB.' }, { status: 413 })
+      }
       if (file) {
         const name = file.name.toLowerCase()
         const buf  = Buffer.from(await file.arrayBuffer())

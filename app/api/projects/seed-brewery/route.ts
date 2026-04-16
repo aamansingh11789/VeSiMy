@@ -268,6 +268,6 @@ export async function POST(_request: NextRequest) {
 
   } catch (err: any) {
     console.error('[seed-brewery]', err)
-    return NextResponse.json({ error: err?.message || 'Failed to create demo' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

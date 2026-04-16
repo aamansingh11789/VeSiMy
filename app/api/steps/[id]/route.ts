@@ -42,11 +42,11 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       .select()
       .single()
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     return NextResponse.json({ step: data })
   } catch (err: any) {
     console.error('[steps/[id] PATCH]', err)
-    return NextResponse.json({ error: err?.message || 'Request failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }
 
@@ -63,10 +63,10 @@ export async function DELETE(_: NextRequest, { params }: Params) {
       .eq('id', params.id)
       .eq('user_id', user.id)
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     return NextResponse.json({ ok: true })
   } catch (err: any) {
     console.error('[steps/[id] DELETE]', err)
-    return NextResponse.json({ error: err?.message || 'Request failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

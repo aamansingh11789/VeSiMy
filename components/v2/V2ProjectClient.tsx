@@ -1,13 +1,11 @@
 // @ts-nocheck
 'use client'
-import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon } from '@/components/ui/Icons'
-import React from 'react'
-import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 // ── components/v2/V2ProjectClient.tsx ─────────────────────────────────────────
 // V2 Project Builder: SOP upload → interactive map → analyze → future state
-// Single source of truth. Everything else is downstream of the map.
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
+import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon, KaizenIcon, LiveFloorIcon, RoadmapIcon, PDCAIcon, SimulationIcon } from '@/components/ui/Icons'
 import { createClient } from '@/lib/supabase'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import { V2MapCanvas } from './V2MapCanvas'
@@ -18,12 +16,18 @@ import { V2Journal } from './V2Journal'
 import { SupePanel } from '@/components/supe/SupePanel'
 import { ToolModal } from '@/components/tools/ToolModal'
 import { PDFExportButton } from '@/components/export/PDFExport'
-import { saveToolData, upsertV2Step, deleteV2Step, createV2Step, updateV2Project } from '@/lib/db'
+import { saveToolData, upsertV2Step, deleteV2Step, createV2Step, updateV2Project, fetchKanbanBoard, createBranch, fetchBranches } from '@/lib/db'
 import { isPaidProfile } from '@/lib/require-plan'
-import { createBranch, fetchBranches } from '@/lib/db'
 import toast from 'react-hot-toast'
+import { ProcessSimulation } from '@/components/simulation/ProcessSimulation'
+import { LiveFloorPanel } from '@/components/live/LiveFloorPanel'
+import { ProcessHealthScore } from '@/components/health/ProcessHealthScore'
+import { KanbanBoard } from '@/components/tools/KanbanBoard'
+import KaizenRoadmap from '@/components/tools/KaizenRoadmap'
+import PDCATool from '@/components/tools/PDCATool'
+import type { KanbanColumn } from '@/lib/store'
 
-type V2Tab = 'map' | 'analyze' | 'journal' | 'future' | 'branches'
+type V2Tab = 'map' | 'analyze' | 'journal' | 'future' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca' | 'kaizen' | 'kanban' | 'report'
 
 export interface V2Step {
   id: string; project_id: string; name: string; position: number
@@ -67,6 +71,11 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   const [branches, setBranches] = useState<any[]>([])
   const [showAddBranch, setShowAddBranch] = useState(false)
   const [newBranchName, setNewBranchName] = useState('')
+  const [kanbanColumns, setKanbanColumns] = useState<KanbanColumn[]>([])
+  const [kanbanLoaded, setKanbanLoaded] = useState(false)
+  const [showPDCA, setShowPDCA] = useState(false)
+  const [pdcaData, setPdcaData] = useState<any>(null)
+  const [showProjectSettings, setShowProjectSettings] = useState(false)
 
   const handleCreateBranch = async () => {
     if (!newBranchName.trim()) return
@@ -88,17 +97,33 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
   // ── Load reports from DB on mount ────────────────────────────────────────
   useEffect(() => {
-    fetchBranches(project.id).then(setBranches).catch(() => {})
+    let mounted = true
+    fetchBranches(project.id).then(b => { if (mounted) setBranches(b) }).catch(() => {})
+    return () => { mounted = false }
   }, [project.id])
 
   useEffect(() => {
+    let mounted = true
     supabase.from('analysis_reports')
       .select('*').eq('project_id', project.id).eq('user_id', profile.id)
       .order('generated_at', { ascending: false })
-      .then(({ data }) => { if (data) setReports(data) })
+      .then(({ data }) => { if (mounted && data) setReports(data) })
+    return () => { mounted = false }
   }, [project.id])
 
+  // ── Lazy-load kanban columns ──────────────────────────────────────────────
+  useEffect(() => {
+    if (tab !== 'kanban' || kanbanLoaded) return
+    let mounted = true
+    fetchKanbanBoard(project.id)
+      .then(cols => { if (mounted) { setKanbanColumns(cols); setKanbanLoaded(true) } })
+      .catch(() => { if (mounted) setKanbanLoaded(true) })
+    return () => { mounted = false }
+  }, [tab, project.id, kanbanLoaded])
+
   // ── Save step to DB ───────────────────────────────────────────────────────
+  const saveDebounceRef = useRef<Record<string, any>>({})
+
   const saveStep = useCallback(async (step: V2Step) => {
     try {
       await upsertV2Step(step)
@@ -107,6 +132,13 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       toast.error('Save failed: ' + (err?.message || 'Unknown error'))
       return false
     }
+  }, [])
+
+  const debouncedSaveStep = useCallback((step: V2Step) => {
+    if (saveDebounceRef.current[step.id]) clearTimeout(saveDebounceRef.current[step.id])
+    saveDebounceRef.current[step.id] = setTimeout(async () => {
+      try { await upsertV2Step(step) } catch (e) { console.error('Step save failed', e) }
+    }, 800)
   }, [])
 
   // ── Create new step ───────────────────────────────────────────────────────
@@ -274,11 +306,18 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   }, [steps])
 
   const TABS: { id: V2Tab; label: string; icon: string }[] = [
-    { id: 'map',      label: 'Process Map',    icon: 'map' },
-    { id: 'branches', label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
-    { id: 'analyze',  label: 'Analysis',       icon: 'zap' },
-    { id: 'journal',  label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'journal' },
-    { id: 'future',   label: 'Future State',   icon: '→' },
+    { id: 'map',        label: 'Process Map',    icon: 'map' },
+    { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
+    { id: 'analyze',    label: 'Analysis',       icon: 'zap' },
+    { id: 'journal',    label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'journal' },
+    { id: 'future',     label: 'Future State',   icon: '→' },
+    { id: 'roadmap',    label: 'Kaizen Plan',    icon: '🗺' },
+    { id: 'pdca',       label: 'PDCA',           icon: '🔄' },
+    { id: 'kaizen',     label: 'Kaizen',         icon: '⚡' },
+    { id: 'kanban',     label: 'Kanban',         icon: '📋' },
+    { id: 'simulation', label: 'Simulation',     icon: '⚗' },
+    { id: 'live',       label: 'Gemba Monitor',  icon: '📡' },
+    { id: 'report',     label: 'Report',         icon: '📊' },
   ]
 
   return (
@@ -299,35 +338,63 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           </span>
         </div>
 
-        {/* Floating glass dock — replaces flat tab bar */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{
+        {/* Smart tab navigation — scrollable on desktop, dropdown on mobile */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 0 }}>
+          {/* Desktop: scrollable pill tabs */}
+          <div className="v2-tab-bar" style={{
             display: 'flex', gap: 2, padding: '4px', borderRadius: 12,
             background: 'rgba(3,45,96,0.08)',
             backdropFilter: 'blur(12px)',
             border: '1px solid rgba(1,118,211,0.12)',
             boxShadow: '0 2px 12px rgba(1,118,211,0.08)',
+            overflowX: 'auto', maxWidth: '100%', position: 'relative',
+            scrollbarWidth: 'none',
           }}>
             {TABS.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)} style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                padding: '5px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 5,
+                padding: '5px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
                 fontSize: 11, fontWeight: tab === t.id ? 700 : 500,
-                fontFamily: 'monospace', letterSpacing: 0.5, textTransform: 'uppercase',
+                fontFamily: 'monospace', letterSpacing: 0.3, textTransform: 'uppercase',
                 background: tab === t.id ? BRAND : 'transparent',
                 color: tab === t.id ? 'white' : 'var(--text3)',
                 boxShadow: tab === t.id ? `0 2px 8px rgba(1,118,211,0.35)` : 'none',
-                transition: 'all .15s',
+                transition: 'all .15s', whiteSpace: 'nowrap', flexShrink: 0,
               }}>
-                <span style={{ fontSize: 13 }}>{t.icon}</span>
+                <span style={{ fontSize: 12 }}>{t.icon}</span>
                 <span>{t.label}</span>
               </button>
             ))}
           </div>
+          {/* Mobile: dropdown selector */}
+          <div className="v2-tab-dropdown" style={{ display: 'none', width: '100%', maxWidth: 260 }}>
+            <select
+              value={tab}
+              onChange={e => setTab(e.target.value as V2Tab)}
+              style={{
+                width: '100%', padding: '8px 12px', borderRadius: 9,
+                border: `1px solid ${BRAND}44`, background: 'white',
+                fontSize: 13, fontWeight: 600, color: 'var(--text)', cursor: 'pointer',
+                fontFamily: 'inherit', appearance: 'auto',
+              }}
+            >
+              {TABS.map(t => (
+                <option key={t.id} value={t.id}>{t.icon} {t.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Right controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '0 0 auto' }}>
+        <div className="v2-topbar-right" style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '0 0 auto' }}>
+          {/* Process health score — hidden on small mobile */}
+          {steps.length > 0 && (
+            <div className="health-score-compact">
+              <ProcessHealthScore steps={steps} compact />
+            </div>
+          )}
+          {/* Settings button — always visible */}
+          <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>⚙</button>
           {/* Map completeness */}
           {tab === 'map' && steps.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 6, background: 'var(--sl-100)', border: '1px solid var(--border)' }}>
@@ -338,9 +405,9 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             </div>
           )}
 
-          {/* Add step */}
+          {/* Add step — essential on map tab */}
           {tab === 'map' && (
-            <button onClick={() => addStep(steps.length - 1)} style={{
+            <button className="v2-topbar-essential" onClick={() => addStep(steps.length - 1)} style={{
               display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px',
               borderRadius: 7, border: '1px solid var(--border)', background: 'white',
               fontSize: 12, fontWeight: 600, color: 'var(--text2)', cursor: 'pointer',
@@ -351,11 +418,15 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
           {/* PDF Export */}
           {steps.length > 0 && (
-            <PDFExportButton
-              project={project}
-              steps={steps}
-              isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
-            />
+            isPaid
+              ? <PDFExportButton
+                  project={project}
+                  steps={steps}
+                  isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
+                />
+              : <a href="/pricing" style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)', textDecoration:'none' }}>
+                  PDF ↑ Pro
+                </a>
           )}
 
           {/* Analyze button */}
@@ -630,6 +701,114 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           />
         )}
 
+        {/* KAIZEN ROADMAP TAB */}
+        {tab === 'roadmap' && (
+          <div style={{ padding: 24, flex: 1, overflow: 'auto' }}>
+            <KaizenRoadmap
+              steps={steps}
+              project={project}
+              takt={project.takt_time ? Number(project.takt_time) : 0}
+              pce={(() => {
+                const ct = steps.reduce((a, s) => a + (Number(s.cycle_time) || 0), 0)
+                const lt = ct + steps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
+                return lt > 0 ? Math.round(ct / lt * 100) : 0
+              })()}
+              onSaveRoadmap={async (roadmap) => {
+                try {
+                  await updateV2Project(project.id, { kaizen_roadmap: { phases: roadmap } })
+                } catch (e) { console.error('Roadmap save failed', e) }
+              }}
+            />
+          </div>
+        )}
+
+        {/* PDCA TAB */}
+        {tab === 'pdca' && (
+          <div style={{ padding: 24, flex: 1, overflow: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <div>
+                <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>PDCA Projects</div>
+                <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 4 }}>
+                  One data model — export as PDCA, A3, 8D, DMAIC, or OODA
+                </div>
+              </div>
+              <button onClick={() => { setPdcaData(null); setShowPDCA(true) }}
+                style={{ padding: '8px 16px', background: BRAND, color: 'white', borderRadius: 8, fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+                + New PDCA Project
+              </button>
+            </div>
+            {!pdcaData && (
+              <div style={{ textAlign: 'center', padding: 40, color: 'var(--text3)', fontSize: 13 }}>
+                No PDCA projects yet. Create one to track your improvement cycle.
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* KAIZEN BOARD TAB */}
+        {tab === 'kaizen' && (
+          <div style={{ padding: 24, flex: 1, overflow: 'auto' }}>
+            <V2KaizenBoardView steps={steps} />
+          </div>
+        )}
+
+        {/* KANBAN TAB */}
+        {tab === 'kanban' && (
+          <div style={{ flex: 1, overflow: 'auto' }}>
+            <KanbanBoard
+              projectId={project.id}
+              columns={kanbanColumns}
+              steps={steps}
+              onColumnsChange={setKanbanColumns}
+            />
+          </div>
+        )}
+
+        {/* SIMULATION TAB */}
+        {tab === 'simulation' && (
+          <div style={{ flex: 1, overflow: 'auto', padding: 24 }}>
+            {isPaid
+              ? <ProcessSimulation steps={steps} projectId={project.id} isPaid={true} />
+              : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
+                  <div style={{ fontSize: 32 }}>⚗</div>
+                  <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Process Simulation</div>
+                  <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
+                    Run stress scenarios on your value stream. Adjust cycle times, simulate demand spikes, labor shortages, and equipment failures — and see the pressure impact before it hits your floor.
+                  </div>
+                  <a href="/pricing" style={{ padding: '10px 24px', background: BRAND, color: 'white', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Upgrade to Pro →</a>
+                </div>
+              )
+            }
+          </div>
+        )}
+
+        {/* GEMBA MONITOR TAB */}
+        {tab === 'live' && (
+          <div style={{ flex: 1, overflow: 'auto' }}>
+            {isPaid
+              ? <LiveFloorPanel steps={steps} projectId={project.id} />
+              : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
+                  <div style={{ fontSize: 32 }}>📡</div>
+                  <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Gemba Monitor</div>
+                  <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
+                    Monitor your process in real time from the floor. Track live cycle times, flag deviations, and capture observations directly from your phone during a gemba walk.
+                  </div>
+                  <a href="/pricing" style={{ padding: '10px 24px', background: BRAND, color: 'white', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Upgrade to Pro →</a>
+                </div>
+              )
+            }
+          </div>
+        )}
+
+        {/* REPORT TAB */}
+        {tab === 'report' && (
+          <div style={{ padding: 24, flex: 1, overflow: 'auto' }}>
+            <V2ReportTab steps={steps} project={project} />
+          </div>
+        )}
+
         {/* Supe panel */}
         {showSupe && isPaid && (
           <div style={{ width: 380, flexShrink: 0, borderLeft: '1px solid var(--border)', background: 'white', overflow: 'hidden' }}>
@@ -646,6 +825,38 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           onManual={() => { setShowStartModal(false); addStep() }}
           onReference={() => { setShowStartModal(false) /* reference handled separately */ }}
           parsing={parsing}
+        />
+      )}
+
+      {/* ── PDCA modal ───────────────────────────────────────────────────── */}
+      {showPDCA && (
+        <PDCATool
+          steps={steps}
+          project={project}
+          initialData={pdcaData || steps[0]?.toolData?.pdca_project || null}
+          onSave={async (data) => {
+            setPdcaData(data)
+            const firstStep = steps[0]
+            if (firstStep?.id) {
+              try { await saveToolData(firstStep.id, 'pdca_project', data) } catch {}
+            }
+            setShowPDCA(false)
+          }}
+          onClose={() => setShowPDCA(false)}
+        />
+      )}
+
+      {/* ── Project settings modal ───────────────────────────────────────── */}
+      {showProjectSettings && (
+        <V2ProjectSettingsModal
+          project={project}
+          onSave={async (updates) => {
+            await updateV2Project(project.id, updates)
+            setProject((p: any) => ({ ...p, ...updates }))
+            setShowProjectSettings(false)
+          }}
+          onClose={() => setShowProjectSettings(false)}
+          onDelete={async () => { window.location.href = '/dashboard' }}
         />
       )}
 
@@ -835,6 +1046,193 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
             </button>
           </>
         )}
+      </div>
+    </div>
+  )
+}
+
+// ── V2KaizenBoardView ────────────────────────────────────────────────────────
+function V2KaizenBoardView({ steps }: { steps: any[] }) {
+  const allItems = steps.flatMap(s =>
+    (s.toolData?.kaizen?.items || []).map((i: any) => ({ ...i, stepName: s.name }))
+  )
+  const statuses = ['open', 'in-progress', 'complete'] as const
+  const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
+  const sColor = { open: '#FF6B6B', 'in-progress': '#F4A623', complete: '#1DD1A1' }
+  return (
+    <div>
+      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, marginBottom: 20, color: 'var(--text)' }}>
+        Kaizen Board
+      </h2>
+      {allItems.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: 60, color: 'var(--text3)' }}>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>⚡</div>
+          <div style={{ color: 'var(--text2)', fontSize: 13 }}>No kaizen events yet — open the Kaizen tool on any step.</div>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
+          {statuses.map(st => (
+            <div key={st}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: sColor[st], marginBottom: 10, padding: '6px 0', borderBottom: `2px solid ${sColor[st]}33` }}>
+                {sLabel[st]} ({allItems.filter(i => i.status === st).length})
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {allItems.filter(i => i.status === st).map((item: any, ki: number) => (
+                  <div key={ki} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: '12px 14px' }}>
+                    <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 4 }}>{item.title}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text2)' }}>{item.stepName}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── V2ReportTab ──────────────────────────────────────────────────────────────
+function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
+  const [showPDCA, setShowPDCA] = useState(false)
+  const takt = project.takt_time ? Number(project.takt_time) : 0
+  const totalCT = steps.reduce((a: number, s: any) => a + (Number(s.cycle_time) || 0), 0)
+  const totalWT = steps.reduce((a: number, s: any) => a + (Number(s.wait_time) || 0), 0)
+  const pceNum = totalCT + totalWT > 0 ? Math.round(totalCT / (totalCT + totalWT) * 100) : 0
+  const bottleneck = takt > 0
+    ? steps.filter((s: any) => (Number(s.cycle_time) || 0) > takt)
+        .sort((a: any, b: any) => (Number(b.cycle_time) || 0) - (Number(a.cycle_time) || 0))[0]
+    : null
+  const openKaizens = steps.reduce((a: number, s: any) =>
+    a + ((s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete').length), 0)
+
+  return (
+    <div style={{ maxWidth: 860, margin: '0 auto' }}>
+      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 20 }}>
+        CI Report — {project.name}
+      </h2>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 8, marginBottom: 20 }}>
+        {[
+          { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
+          { label: 'Process Cycle Efficiency', val: `${pceNum}%`, color: pceNum >= 60 ? '#1DD1A1' : '#FF6B6B' },
+          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)}min` : '—', color: 'var(--text)' },
+          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
+          { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },
+        ].map(({ label, val, color }) => (
+          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
+            <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color }}>{val}</div>
+          </div>
+        ))}
+      </div>
+      {steps.length > 0 && (
+        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
+          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
+            Process Step Summary
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead>
+                <tr style={{ background: 'var(--bg3)' }}>
+                  {['Step', 'CT', 'Wait', 'VA Type', 'Wastes', 'Open Kaizens', 'Status'].map(h => (
+                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {steps.map((s: any, i: number) => {
+                  const ct = Number(s.cycle_time) || 0
+                  const wt = Number(s.wait_time) || 0
+                  const wastes = (s.toolData?.waste?.selected || []).length
+                  const openK = (s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete').length
+                  const isBN = takt > 0 && ct > takt
+                  return (
+                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--bg3)', borderTop: '1px solid var(--border)' }}>
+                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
+                        {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
+                        {s.name}
+                      </td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? `${ct}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? `${wt}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4,
+                          background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)',
+                          color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#0176D3' }}>
+                          {(s.va_type || 'VA').toUpperCase()}
+                        </span>
+                      </td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#0176D3' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#0176D3' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px' }}>
+                        <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
+                          {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+        <button type="button" onClick={() => setShowPDCA(true)}
+          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+          Open PDCA Report
+        </button>
+      </div>
+      {showPDCA && (
+        <PDCATool steps={steps} project={project} onClose={() => setShowPDCA(false)} />
+      )}
+    </div>
+  )
+}
+
+// ── V2ProjectSettingsModal ────────────────────────────────────────────────────
+function V2ProjectSettingsModal({ project, onSave, onClose, onDelete }: {
+  project: any; onSave: (f: any) => Promise<void>; onClose: () => void; onDelete: () => Promise<void>
+}) {
+  const [form, setForm] = useState({ ...project })
+  const fields = [
+    { key: 'name',          label: 'Project Name',        type: 'text',   span: true  },
+    { key: 'description',   label: 'Description',         type: 'text',   span: true  },
+    { key: 'industry',      label: 'Industry',            type: 'text',   span: false },
+    { key: 'product',       label: 'Product Family',      type: 'text',   span: false },
+    { key: 'customer',      label: 'Customer',            type: 'text',   span: false },
+    { key: 'supplier',      label: 'Supplier',            type: 'text',   span: false },
+    { key: 'demand',        label: 'Demand (units/day)',  type: 'number', span: false },
+    { key: 'working_hours', label: 'Working Hours/Day',   type: 'number', span: false },
+    { key: 'takt_time',     label: 'Takt Time (sec)',     type: 'number', span: false },
+  ]
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 300 }}>
+      <div style={{ background: 'var(--bg2)', borderRadius: 14, padding: 28, width: 520, maxWidth: '95vw', maxHeight: '90vh', overflowY: 'auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <div style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Project Settings</div>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: 'var(--text3)' }}>×</button>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          {fields.map(f => (
+            <div key={f.key} style={f.span ? { gridColumn: '1/-1' } : {}}>
+              <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', display: 'block', marginBottom: 4 }}>{f.label}</label>
+              <input className="input" type={f.type} value={(form as any)[f.key] || ''}
+                onChange={e => setForm((p: any) => ({ ...p, [f.key]: e.target.value }))}
+                style={{ width: '100%' }}
+              />
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20, gap: 8 }}>
+          <button onClick={onDelete} style={{ padding: '8px 16px', borderRadius: 7, border: '1px solid #C0402A', background: 'transparent', color: '#C0402A', fontSize: 13, cursor: 'pointer' }}>
+            Delete Project
+          </button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={onClose} style={{ padding: '8px 16px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
+            <button onClick={() => onSave(form)} style={{ padding: '8px 20px', borderRadius: 7, background: '#0176D3', color: 'white', border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Save</button>
+          </div>
+        </div>
       </div>
     </div>
   )

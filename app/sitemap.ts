@@ -38,5 +38,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/8-wastes-of-lean`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/privacy`,             lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${base}/terms`,               lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
+    { url: `${base}/learn`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 }

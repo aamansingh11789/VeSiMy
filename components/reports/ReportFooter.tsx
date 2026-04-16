@@ -7,7 +7,7 @@ export default function ReportFooter() {
       borderTop:"1px solid #ddd",
       paddingTop:10
     }}>
-      This document was generated using the Vesimy Process Intelligence Platform.
+      This document was generated using the VeSiMy Process Intelligence Platform.
       <br/>
       The document structure follows industrial process analysis practices and
       aligns with guidance from ISO 9001 process management principles and

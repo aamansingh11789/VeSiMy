@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
 import { XIcon } from '@/components/ui/Icons'
+import toast from 'react-hot-toast'
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase'
@@ -85,10 +86,9 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
         .single()
 
       if (dbError) {
-        // Fallback: save locally in state so user sees their note
-        setEntries(prev => [...prev, newEntry])
-        setNote('')
-        setError('journal_local')
+        toast.error('Note could not be saved. Please check your connection and try again.')
+        setSaving(false)
+        return
       } else if (data) {
         setEntries(prev => [...prev, data])
         setNote('')
@@ -171,12 +171,8 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
           )}
 
           {error === 'journal_unavailable' && (
-            <div style={{ textAlign: 'center', padding: '32px 24px', background: 'rgba(1,118,211,0.06)', borderRadius: 12, border: '1px solid rgba(1,118,211,0.2)' }}>
-              
-              <div style={{ fontWeight: 600, color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>Journal table needs to be set up</div>
-              <p style={{ fontSize: 12, color: 'var(--sl-400)', lineHeight: 1.7 }}>
-                Run migration <strong>007_process_journal.sql</strong> in your Supabase dashboard to activate the journal. Notes you add below will be saved locally until then.
-              </p>
+            <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text3)', fontSize: 14 }}>
+              Your journal is empty. Add your first note below.
             </div>
           )}
 

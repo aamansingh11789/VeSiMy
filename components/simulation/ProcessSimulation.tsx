@@ -123,7 +123,7 @@ function calcRecoveryMin(queueRisk: number, totalWIP: number, avgCT: number): nu
   return Math.round((backlogUnits * avgCT) / 60)
 }
 
-export function ProcessSimulation({ steps, projectId, isPaid = true }: Props) {
+export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
   const main = steps.filter(s => s.is_main_flow !== false)
 
   // Tabs
@@ -248,7 +248,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = true }: Props) {
             <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 10, fontWeight: 600 }}>
               SELECT DISRUPTION SCENARIO
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
+            <div className="sim-scenario-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
               {SCENARIOS.map(sc => (
                 <button key={sc.id} onClick={() => setActiveScenario(activeScenario === sc.id ? null : sc.id)} style={{
                   padding: '10px 12px', borderRadius: 8,
@@ -277,7 +277,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = true }: Props) {
           {activeScenario && scenario && (
             <div>
               {/* Scenario output metrics */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: 16 }}>
+              <div className="sim-output-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: 16 }}>
                 {[
                   ['Throughput Impact', `${fmtPct(throughputImpact)}`, throughputImpact > 0 ? '#C0402A' : '#2E844A'],
                   ['Queue Risk',        `${worstQueueRisk.toFixed(2)}`, worstQueueRisk > 0.75 ? '#C0402A' : worstQueueRisk > 0.5 ? '#C49B2E' : '#2E844A'],
@@ -347,7 +347,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = true }: Props) {
               {/* Mitigation priority matrix */}
               <div style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: 16, marginBottom: 16 }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>BENEFIT VS EFFORT — PRIORITY MATRIX</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8, height: 160 }}>
+                <div className="sim-matrix-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8, height: 160 }}>
                   {[
                     { label: 'DO NOW', sub: 'High benefit · Low effort', color: '#2E844A', items: ['Address bottleneck CT', 'Redeploy labor'] },
                     { label: 'PLAN NEXT', sub: 'High benefit · High effort', color: '#0176D3', items: ['Buffer policy reset', 'Release sequencing'] },
@@ -449,7 +449,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = true }: Props) {
       {/* COMPARE TAB                                                       */}
       {/* ══════════════════════════════════════════════════════════════════ */}
       {activeTab === 'compare' && (
-        <div style={{ overflowX: 'auto' }}>
+        <div className="sim-compare-table" style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
             <thead>
               <tr>

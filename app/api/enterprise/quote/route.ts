@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     notes,
   }).select().single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
 
   return NextResponse.json({
     success:     true,
@@ -103,5 +103,5 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error("[enterprise/quote]", err)
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }}

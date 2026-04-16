@@ -9,6 +9,7 @@ import { createServerSupabase } from '@/lib/supabase-server'
 import { callAI } from '@/lib/ai/ai-assist'
 import { KNOWLEDGE_CHUNKS } from '@/lib/supe-knowledge'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
+import { requirePlan } from '@/lib/require-plan'
 
 export const maxDuration = 60
 
@@ -49,6 +50,9 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    const planBlock = await requirePlan(supabase, user, ['pro', 'lifetime', 'enterprise', 'trialing'])
+    if (planBlock) return planBlock
 
     const body = await request.json()
     const { project_id } = body
@@ -219,6 +223,6 @@ Return this JSON only, no markdown:
 
   } catch (err: any) {
     console.error('[analyze]', err)
-    return NextResponse.json({ error: err?.message || 'Analysis failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

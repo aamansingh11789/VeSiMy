@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
   } catch (err: any) {
     console.error('[migrate]', err)
-    return NextResponse.json({ error: err?.message || 'Migration failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }
 

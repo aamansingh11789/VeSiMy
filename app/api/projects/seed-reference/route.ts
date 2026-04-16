@@ -336,9 +336,6 @@ export async function POST(_request: NextRequest) {
 
   } catch (err: any) {
     console.error('[seed-reference]', err)
-    return NextResponse.json(
-      { error: err?.message || 'Failed to create reference project' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

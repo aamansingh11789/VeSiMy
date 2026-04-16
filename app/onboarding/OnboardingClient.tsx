@@ -716,11 +716,14 @@ export function OnboardingClient({ profile }: Props) {
   async function finish() {
     setSaving(true)
     try {
-      // 1. Mark profile onboarded + save role/industry
+      // 1. Mark profile onboarded + save role/industry + ensure correct plan defaults
       await db.from('profiles').update({
         onboarded: true,
         role:      role || 'other',
         industry:  industry,
+        plan_tier: 'trial',
+        subscription_status: 'trial',
+        projects_limit: 3,
       }).eq('id', profile.id)
 
       // 2. Create the first project (unless sample)

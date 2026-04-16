@@ -19,7 +19,7 @@ export async function GET(_: NextRequest, { params }: Params) {
     return NextResponse.json({ project: data })
   } catch (err: any) {
     console.error('[projects/[id] GET]', err)
-    return NextResponse.json({ error: err?.message || 'Request failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }
 
@@ -45,11 +45,11 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     const { data, error } = await supabase
       .from('projects').update(updates).eq('id', params.id).eq('user_id', user.id).select().single()
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     return NextResponse.json({ project: data })
   } catch (err: any) {
     console.error('[projects/[id] PATCH]', err)
-    return NextResponse.json({ error: err?.message || 'Request failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }
 
@@ -63,10 +63,10 @@ export async function DELETE(_: NextRequest, { params }: Params) {
     const { error } = await supabase
       .from('projects').delete().eq('id', params.id).eq('user_id', user.id)
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch (err: any) {
     console.error('[projects/[id] DELETE]', err)
-    return NextResponse.json({ error: err?.message || 'Request failed' }, { status: 500 })
+    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }
