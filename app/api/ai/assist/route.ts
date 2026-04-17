@@ -25,19 +25,24 @@ import {
 async function getUserWithIndustry(req: NextRequest) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { user: null, industry: null }
+  if (!user) return { user: null, industry: null, profile: null, supabase: null }
   const { data: profile } = await supabase
     .from('profiles')
-    .select('industry')
+    .select('industry, plan_tier, lifetime_access, is_beta, beta_expires_at')
     .eq('id', user.id)
     .single()
-  return { user, industry: profile?.industry || null }
+  return { user, industry: profile?.industry || null, profile, supabase }
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────
 export async function POST(request: NextRequest) {
-  const { user, industry } = await getUserWithIndustry(request)
+  const { user, industry, supabase } = await getUserWithIndustry(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  // FIX: plan gate — AI assist is a Pro feature, not available on Trial
+  const { requirePlan } = await import('@/lib/require-plan')
+  const planBlock = await requirePlan(supabase, user, ['pro', 'lifetime', 'enterprise', 'trialing'])
+  if (planBlock) return NextResponse.json({ result: null, source: 'upgrade_required' }, { status: 403 })
 
   const industryLabel = getIndustryLabel(industry || 'general_manufacturing')
   const t = getIndustryTerms(industry)

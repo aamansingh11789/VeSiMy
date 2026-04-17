@@ -30,17 +30,40 @@ interface Props {
 
 function UpgradeToast() {
   const params = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
-    if (params.get('upgraded') === 'true') {
-      const plan = params.get('plan') || 'pro'
-      toast.success(
-        `You're ready to start tracking improvements and hitting your targets.`,
-        { duration: 6000 }
-      )
-      window.history.replaceState({}, '', '/dashboard')
-    }
-  }, [params])
+    if (params.get('upgraded') !== 'true') return
+
+    const plan = params.get('plan') || 'pro'
+    toast.success(
+      `You're now on ${plan.charAt(0).toUpperCase() + plan.slice(1)} — premium features are unlocked.`,
+      { duration: 8000 }
+    )
+    window.history.replaceState({}, '', '/dashboard')
+
+    // FIX: poll for profile update so premium features unlock immediately.
+    // ProfileRefresh uses Supabase Realtime, but if Realtime is not enabled on
+    // the profiles table this is the safety net.
+    let attempts = 0
+    const interval = setInterval(async () => {
+      attempts++
+      try {
+        const res = await fetch('/api/profile/me')
+        if (res.ok) {
+          const { plan_tier, lifetime_access } = await res.json()
+          if (['pro', 'lifetime', 'enterprise'].includes(plan_tier) || lifetime_access) {
+            router.refresh()
+            clearInterval(interval)
+            return
+          }
+        }
+      } catch { /* ignore */ }
+      if (attempts >= 12) clearInterval(interval)  // stop after 60s
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [params, router])
 
   return null
 }
@@ -49,15 +72,22 @@ function UpgradeToast() {
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
 
-function getProjectScore(project: Project) {
-  const count = project.steps?.length || 0
-  return Math.min(
-    100,
-    (count > 0 ? 25 : 0) +
-      (count > 3 ? 20 : 0) +
-      (count > 6 ? 15 : 0) +
-      (project.industry ? 20 : 0) +
-      (new Date(project.updated_at) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) ? 20 : 0)
+function getProjectScore(project: any) {
+  // FIX: uses actual joined step data — was always 0 before because steps weren't fetched
+  const steps      = (project.steps || []) as any[]
+  const mainSteps  = steps.filter(s => s.is_main_flow !== false)
+  const withCT     = mainSteps.filter(s => Number(s.cycle_time) > 0 || Number(s.cycle_time_unit) > 0)
+  const withVA     = mainSteps.filter(s => s.va_type || s.is_value_added)
+  const recentEdit = new Date(project.updated_at) > new Date(Date.now() - 7 * 86400_000)
+
+  return Math.min(100,
+    (mainSteps.length > 0  ? 20 : 0) +
+    (mainSteps.length >= 3 ? 10 : 0) +
+    (mainSteps.length >= 6 ? 10 : 0) +
+    (withCT.length >= Math.max(1, mainSteps.length * 0.5) ? 20 : 0) +
+    (withVA.length > 0     ? 15 : 0) +
+    (project.industry      ? 10 : 0) +
+    (recentEdit            ? 15 : 0)
   )
 }
 

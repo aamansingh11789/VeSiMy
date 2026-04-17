@@ -8,6 +8,8 @@ import { BRAND, RED, GREEN, AMBER } from './v2-constants'
 // ISO 22468 / TPS / lean standard symbols.
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { calcProcessMetrics, fmtPCE, pceColor } from '@/lib/v2/process-metrics'
+import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 
 const STEP_SYMBOLS: Record<string, { shape: string; fill: string; stroke: string }> = {
   process:    { shape: 'rect',     fill: '#EEF4FB', stroke: BRAND       },
@@ -25,6 +27,7 @@ const BOX_H = 48
 const GAP   = 80
 
 function fmtTime(s: number, unit?: string) {
+  // Note: when called with ctSeconds(step) output, unit param can be omitted
   if (!s) return '—'
   const u = unit || 'seconds'
   if (u !== 'seconds') return `${s}${u==='minutes'?'m':u==='hours'?'h':u==='days'?'d':'w'}`
@@ -42,7 +45,7 @@ function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand
   // Health glow — driven by defect rate, missing flags, and bottleneck status
   const defect = step.defect_rate || 0
   const missingCount = (step.missing_info_flags || []).length
-  const isBottleneck = step.is_bottleneck
+  const isBottleneck = step.is_bottleneck || (taktTime > 0 && ctSeconds(step) > taktTime)
   let glowColor = null
   let glowOpacity = 0
   if (isBottleneck) { glowColor = RED; glowOpacity = 0.55 }
@@ -247,14 +250,24 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
   }
   const onTouchEnd = () => { dragging.current = false }
 
-  const totalCT   = steps.reduce((a:number,s:any)=>a+(s.cycle_time||0),0)
-  const totalWait = steps.reduce((a:number,s:any)=>a+(s.wait_time||0),0)
-  const totalLT   = totalCT+totalWait
-  const vaCT      = steps.filter((s:any)=>s.va_type==='va').reduce((a:number,s:any)=>a+(s.cycle_time||0),0)
-  const pce       = totalLT>0 ? Math.round((vaCT/totalLT)*100) : 0
-  const taktTime  = project.takt_time||0
+  // FIX: use canonical calcProcessMetrics — consistent with all other tabs
+  const { mainSteps: _ms, totalCT, totalWait, leadTime: totalLT, vaCT, pce, takt: taktTimeCalc } =
+    calcProcessMetrics(steps, project)
+  const taktTime = taktTimeCalc ?? 0
   const CANVAS_W  = Math.max(1000, 80+steps.length*(BOX_W+GAP)+160)
   const CANVAS_H  = 520
+
+  // FIX: fit canvas to viewport on mobile so users see the full map on first load
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const vw = window.innerWidth
+    if (vw < 768 && CANVAS_W > vw) {
+      const scale = Math.max(0.3, Math.min(0.9, (vw - 24) / CANVAS_W))
+      setZoom(scale)
+      setPan({ x: 0, y: 0 })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [steps.length])
 
   if (steps.length===0) {
     return (
@@ -413,7 +426,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
                     return els
                   })}
                   <text x={CANVAS_W/2} y={TL_Y+58} textAnchor="middle" fontSize="9" fill="#888" fontFamily="monospace">
-                    {t?.cycleTime||'CT'}: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {pce}%
+                    {t?.cycleTime||'CT'}: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {fmtPCE(pce)}
                   </text>
                   {taktTime>0&&(()=>{
                     const tx=60+(taktTime/totalLT)*TL_W

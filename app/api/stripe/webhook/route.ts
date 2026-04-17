@@ -71,15 +71,10 @@ export async function POST(request: NextRequest) {
           founding_member:         true,
         }).eq('id', userId)
       }
-      // Also handle pro checkout.session.completed for non-subscription flows
-      if (userId && plan === 'pro' && session.payment_status === 'paid') {
-        await supabase.from('profiles').update({
-          plan_tier:           'pro',
-          projects_limit:      10,
-          subscription_status: 'active',
-          stripe_customer_id:  session.customer as string,
-        }).eq('id', userId)
-      }
+      // Pro subscriptions are handled by customer.subscription.created/updated —
+      // NOT here. checkout.session.completed for a trial subscription has
+      // payment_status='no_payment_required', so the old 'paid' check was dead code.
+      // Lifetime only is handled above.
       break
     }
 

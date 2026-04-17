@@ -19,6 +19,12 @@ export async function POST(request: NextRequest) {
   if (!step_id||!project_id||!metric_type||value===undefined)
     return NextResponse.json({ error:'Missing fields' }, { status:400 })
 
+  // FIX: verify user owns the step being logged (prevents cross-user metric injection)
+  const { data: stepOwner, error: stepOwnerErr } = await supabase
+    .from('steps').select('id').eq('id', step_id).eq('user_id', user.id).single()
+  if (stepOwnerErr || !stepOwner)
+    return NextResponse.json({ error:'Step not found' }, { status:404 })
+
   const { data, error } = await supabase.from('live_metrics')
     .insert({ step_id, project_id, metric_type, value:Number(value), notes:notes||null, user_id:user.id })
     .select().single()

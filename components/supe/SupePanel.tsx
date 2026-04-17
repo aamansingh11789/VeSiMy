@@ -36,7 +36,22 @@ const SUGGESTED_QUESTIONS = [
 export function SupePanel({ steps, projectId, industry, projectName }: Props) {
   const isDemo   = !steps?.length || !steps.some(s => s.cycle_time || s.toolData?.stopwatch?.mean > 0)
   const [recs,      setRecs]      = useState(() => isDemo ? DEMO_RECS : analyzeSteps(steps))
-  const [resolved,  setResolved]  = useState<Set<string>>(new Set())
+  // FIX: persist resolved findings to localStorage per project so they survive page refresh
+  const [resolved, setResolved] = useState<Set<string>>(() => {
+    if (typeof window === 'undefined') return new Set()
+    try {
+      const saved = localStorage.getItem(`supe-resolved-${projectId}`)
+      return saved ? new Set(JSON.parse(saved)) : new Set()
+    } catch { return new Set() }
+  })
+
+  function resolveItem(key: string) {
+    setResolved(prev => {
+      const next = new Set([...prev, key])
+      try { localStorage.setItem(`supe-resolved-${projectId}`, JSON.stringify([...next])) } catch {}
+      return next
+    })
+  }
   const [expanded,  setExpanded]  = useState<string|null>(null)
   const [tab,       setTab]       = useState<'findings'|'chat'>('findings')
   const [chat,      setChat]      = useState<ChatMsg[]>([])
@@ -48,6 +63,15 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
     if (!isDemo) setRecs(analyzeSteps(steps))
     else setRecs(DEMO_RECS)
   }, [steps, isDemo])
+
+  // Reload resolved state when project changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const saved = localStorage.getItem(`supe-resolved-${projectId}`)
+      setResolved(saved ? new Set(JSON.parse(saved)) : new Set())
+    } catch { setResolved(new Set()) }
+  }, [projectId])
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior:'smooth' })
@@ -178,7 +202,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
                           Ask Supe
                         </button>
                         {!isDemo && (
-                          <button onClick={() => setResolved(p => new Set([...p, rec.key]))}
+                          <button onClick={() => resolveItem(rec.key)}
                             style={{ background:'none', border:'none', color:'#1DD1A1', fontSize:11, cursor:'pointer' }}>
                             
                           </button>

@@ -2,7 +2,6 @@
 'use client'
 
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { createClient } from '@/lib/supabase'
 
 interface Props {
   steps: any[]
@@ -38,17 +37,15 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
   const currentPCE = pce !== null ? pce : 0
 
+  // FIX: removed direct supabase write from client component.
+  // All saves now go through onSaveRoadmap callback (which calls the authenticated API).
+  // The old pattern used project.user_id from props — potentially stale.
   const saveTimer = useRef<any>(null)
-  const supabase = createClient()
   useEffect(() => {
-    if (!project?.id) return
+    if (!project?.id || !onSaveRoadmap) return
     if (saveTimer.current) clearTimeout(saveTimer.current)
-    saveTimer.current = setTimeout(async () => {
-      await supabase.from('projects')
-        .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
-        .eq('id', project.id)
-        .eq('user_id', project.user_id)
-      if (onSaveRoadmap) onSaveRoadmap({ phases })
+    saveTimer.current = setTimeout(() => {
+      onSaveRoadmap({ phases })
     }, 1500)
     return () => clearTimeout(saveTimer.current)
   }, [phases, project?.id])

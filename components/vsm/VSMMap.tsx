@@ -9,6 +9,8 @@ import { XIcon, ExternalLinkIcon } from '@/components/ui/Icons'
 
 import { useState } from 'react'
 import type { Step, Branch, Project } from '@/lib/store'
+import { calcProcessMetrics, fmtPCE, pceColor } from '@/lib/v2/process-metrics'
+import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 
 interface Props { steps: Step[]; branches: Branch[]; project: Project }
 
@@ -160,11 +162,9 @@ export function VSMMap({ steps, branches, project }: Props) {
     : project.demand && project.working_hours ? (Number(project.working_hours)*3600)/Number(project.demand)
     : 0
 
-  const mainCT = mainSteps.reduce((a,s)=>a+(s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),0)
-  const mainWT = mainSteps.reduce((a,s)=>a+(Number(s.wait_time)||0),0)
-  const lt = mainCT + mainWT
-  const pce = lt > 0 ? (mainCT/lt)*100 : 0
-  const totalWIP = steps.reduce((a,s)=>a+(Number(s.wip)||0),0)
+  // FIX: use canonical calcProcessMetrics — consistent with all other tabs
+  const { totalCT: mainCT, totalWait: mainWT, leadTime: lt, pce, totalWIP } =
+    calcProcessMetrics(steps, project)
 
   if (!mainSteps.length) {
     return (
@@ -418,7 +418,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           { l:'Value Added', v:fmtS(mainCT),                    c:'#059669' },
           { l:'NVA / Wait',  v:fmtS(mainWT),                    c:'#6B7280' },
           { l:'Takt Time',   v:takt?fmtS(takt):'—',             c:'#0EA5E9' },
-          { l:'PCE',         v:pce?`${pce.toFixed(1)}%`:'—',   c:pce>25?'#059669':'#F59E0B' },
+          { l:'PCE',         v:fmtPCE(pce),                     c:pceColor(pce) },
           { l:'Total WIP',   v:totalWIP||'—',                   c:totalWIP>0?'#D97706':'#6B7280' },
         ].map(m => (
           <div key={m.l} style={{ flex:'1 1 100px', border:'1px solid var(--border)', borderRadius:8, padding:'8px 12px' }}>

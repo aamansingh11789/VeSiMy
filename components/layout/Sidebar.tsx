@@ -56,7 +56,9 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
     setMounted(true)
     if (!forcedCollapsed) {
       const saved = localStorage.getItem(LS_KEY) === 'true'
-      if (saved) setCollapsed(true)
+      // FIX: always collapse sidebar on mobile so content isn't squeezed
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+      if (saved || isMobile) setCollapsed(true)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

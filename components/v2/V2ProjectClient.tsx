@@ -184,16 +184,20 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   }
 
   const updateStep = useCallback(async (updated: V2Step) => {
-    // Optimistic update
+    // FIX: capture previous state BEFORE optimistic update so rollback actually works
+    const previous = steps.find(s => s.id === updated.id)
     setSteps(prev => prev.map(s => s.id === updated.id ? updated : s))
     setSelectedStep(updated)
     const ok = await saveStep(updated)
     if (!ok) {
-      // Rollback local state on save failure
-      setSteps(prev => prev.map(s => s.id === updated.id ? (s) : s))
-      toast.error('Save failed — your changes were not persisted. Please try again.')
+      // Restore the actual previous value (the old code returned the already-mutated step — bug)
+      if (previous) {
+        setSteps(prev => prev.map(s => s.id === updated.id ? previous : s))
+        setSelectedStep(previous)
+      }
+      toast.error('Save failed — changes reverted. Please try again.')
     }
-  }, [saveStep])
+  }, [saveStep, steps])
 
   // ── Delete step ───────────────────────────────────────────────────────────
   const deleteStep = useCallback(async (stepId: string) => {
@@ -231,8 +235,9 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         version: 'v2',
       })
 
-      // Insert all parsed steps via db.ts for consistent user_id enforcement
+      // FIX: rollback all inserted steps on any failure — prevents partial/corrupted state
       const insertedSteps: V2Step[] = []
+      let insertFailed = false
       for (let i = 0; i < parsed.steps.length; i++) {
         const ps = parsed.steps[i]
         try {
@@ -259,7 +264,15 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           insertedSteps.push(stepData as V2Step)
         } catch (e) {
           console.error('[sop] step insert failed:', e)
+          insertFailed = true
+          break
         }
+      }
+
+      if (insertFailed) {
+        toast.loading('Upload failed — cleaning up partial data…')
+        await Promise.all(insertedSteps.map(s => deleteV2Step(s.id).catch(() => {})))
+        throw new Error('SOP upload failed — please try again. Partial data has been removed.')
       }
 
       setSteps(insertedSteps)
@@ -305,18 +318,18 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     return Math.round((complete / steps.length) * 100)
   }, [steps])
 
-  const TABS: { id: V2Tab; label: string; icon: string }[] = [
+  const TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
     { id: 'map',        label: 'Process Map',    icon: 'map' },
     { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
     { id: 'analyze',    label: 'Analysis',       icon: 'zap' },
-    { id: 'journal',    label: `Process Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'journal' },
-    { id: 'future',     label: 'Future State',   icon: '→' },
+    { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: '📓' },
+    { id: 'future',     label: 'Future State',   icon: '→',  premium: true },
     { id: 'roadmap',    label: 'Kaizen Plan',    icon: '🗺' },
     { id: 'pdca',       label: 'PDCA',           icon: '🔄' },
-    { id: 'kaizen',     label: 'Kaizen',         icon: '⚡' },
+    { id: 'kaizen',     label: 'Kaizen Board',   icon: '⚡' },
     { id: 'kanban',     label: 'Kanban',         icon: '📋' },
-    { id: 'simulation', label: 'Simulation',     icon: '⚗' },
-    { id: 'live',       label: 'Gemba Monitor',  icon: '📡' },
+    { id: 'simulation', label: 'Simulation',     icon: '⚗',  premium: true },
+    { id: 'live',       label: 'Gemba Monitor',  icon: '📡', premium: true },
     { id: 'report',     label: 'Report',         icon: '📊' },
   ]
 
@@ -360,9 +373,13 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                 color: tab === t.id ? 'white' : 'var(--text3)',
                 boxShadow: tab === t.id ? `0 2px 8px rgba(1,118,211,0.35)` : 'none',
                 transition: 'all .15s', whiteSpace: 'nowrap', flexShrink: 0,
+                opacity: (t as any).premium && !isPaid ? 0.65 : 1,
               }}>
                 <span style={{ fontSize: 12 }}>{t.icon}</span>
                 <span>{t.label}</span>
+                {(t as any).premium && !isPaid && (
+                  <span style={{ fontSize: 9, marginLeft: 2, opacity: 0.8 }}>🔒</span>
+                )}
               </button>
             ))}
           </div>
@@ -454,7 +471,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       </div>
 
       {/* ── BODY ─────────────────────────────────────────────────────────── */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+      <div className="v2-body" style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
 
         {/* ── COLLAPSIBLE LEFT SIDEBAR ─────────────────────────────────── */}
         {tab === 'map' && (
@@ -709,9 +726,9 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               project={project}
               takt={project.takt_time ? Number(project.takt_time) : 0}
               pce={(() => {
-                const ct = steps.reduce((a, s) => a + (Number(s.cycle_time) || 0), 0)
-                const lt = ct + steps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
-                return lt > 0 ? Math.round(ct / lt * 100) : 0
+                // FIX: use canonical calcProcessMetrics — branch-filtered, unit-aware
+                const { pce: p } = calcProcessMetrics(steps, project)
+                return p ?? 0
               })()}
               onSaveRoadmap={async (roadmap) => {
                 try {
@@ -838,7 +855,9 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             setPdcaData(data)
             const firstStep = steps[0]
             if (firstStep?.id) {
-              try { await saveToolData(firstStep.id, 'pdca_project', data) } catch {}
+              // FIX: PDCA is project-level data, not step-level.
+              // Saving to firstStep.id caused data loss when steps were reordered/deleted.
+              try { await updateV2Project(project.id, { pdca_data: data }) } catch {}
             }
             setShowPDCA(false)
           }}
@@ -1095,15 +1114,11 @@ function V2KaizenBoardView({ steps }: { steps: any[] }) {
 // ── V2ReportTab ──────────────────────────────────────────────────────────────
 function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
   const [showPDCA, setShowPDCA] = useState(false)
-  const takt = project.takt_time ? Number(project.takt_time) : 0
-  const totalCT = steps.reduce((a: number, s: any) => a + (Number(s.cycle_time) || 0), 0)
-  const totalWT = steps.reduce((a: number, s: any) => a + (Number(s.wait_time) || 0), 0)
-  const pceNum = totalCT + totalWT > 0 ? Math.round(totalCT / (totalCT + totalWT) * 100) : 0
-  const bottleneck = takt > 0
-    ? steps.filter((s: any) => (Number(s.cycle_time) || 0) > takt)
-        .sort((a: any, b: any) => (Number(b.cycle_time) || 0) - (Number(a.cycle_time) || 0))[0]
-    : null
-  const openKaizens = steps.reduce((a: number, s: any) =>
+  // FIX: use canonical calcProcessMetrics — filters branch steps, unit-aware, consistent with map
+  const { mainSteps, totalCT, totalWait: totalWT, leadTime, pce, takt, bottleneck } =
+    calcProcessMetrics(steps, project)
+  const pceNum   = pce
+  const openKaizens = mainSteps.reduce((a: number, s: any) =>
     a + ((s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete').length), 0)
 
   return (
@@ -1114,8 +1129,8 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 8, marginBottom: 20 }}>
         {[
           { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
-          { label: 'Process Cycle Efficiency', val: `${pceNum}%`, color: pceNum >= 60 ? '#1DD1A1' : '#FF6B6B' },
-          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)}min` : '—', color: 'var(--text)' },
+          { label: 'Process Cycle Efficiency', val: fmtPCE(pceNum), color: pceColor(pceNum) },
+          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)} min` : '—', color: 'var(--text)' },
           { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
           { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
           { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },

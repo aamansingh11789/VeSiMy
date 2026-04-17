@@ -4,6 +4,8 @@
 // ISO 9001:2015 / ISO 13053 compliant white-paper VSM analysis report
 
 import { useState } from 'react'
+import { calcProcessMetrics, fmtPCE } from '@/lib/v2/process-metrics'
+import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 import toast from 'react-hot-toast'
 import type { Project, Step } from '@/lib/store'
 import { CheckIcon, DownloadIcon, RefreshIcon } from '@/components/ui/Icons'
@@ -24,26 +26,31 @@ const fmtS = (s: number) => {
 const fmtDate = () =>
   new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
-const docNum = () =>
-  `VSM-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9000) + 1000)}`
+function docNum(projectId: string, reportId?: string): string {
+  // FIX: deterministic — same project always produces same doc number prefix
+  // Uses last 8 chars of project ID (stable, unique per project, no Math.random)
+  const seed = ((projectId || '') + (reportId || '')).replace(/-/g, '').slice(-6).toUpperCase()
+  return `VSM-${new Date().getFullYear()}-${seed || 'XXXXXX'}`
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 function buildISOReport(project: Project, steps: Step[], isGold = false): string {
-  const totalCT    = steps.reduce((a, s) => a + (s.cycle_time || 0), 0)
-  const totalWT    = steps.reduce((a, s) => a + (s.wait_time  || 0), 0)
-  const totalLT    = totalCT + totalWT
-  const totalWIP   = steps.reduce((a, s) => a + (s.wip        || 0), 0)
-  const totalOps   = steps.reduce((a, s) => a + (s.operators  || 0), 0)
-  const avgUptime  = steps.length
-    ? (steps.reduce((a, s) => a + (s.uptime      || 0), 0) / steps.length).toFixed(1)
+  // FIX: use calcProcessMetrics for consistent, unit-aware, branch-filtered calculations
+  const { mainSteps, totalCT, totalWait: totalWT, leadTime: totalLT, pce: pceNum,
+          takt: taktCalc, bottleneck: primaryBN, totalWIP } =
+    calcProcessMetrics(steps as any[], project as any)
+  const pce         = fmtPCE(pceNum)
+  const takt        = taktCalc ?? 0
+  const bottlenecks = takt > 0 ? mainSteps.filter(s => ctSeconds(s as any) > takt * 1.05).length : 0
+  const avgCT       = mainSteps.length ? Math.round(totalCT / mainSteps.length) : 0
+  const totalOps    = mainSteps.reduce((a, s: any) => a + (s.operators || 0), 0)
+  const avgUptime   = mainSteps.length
+    ? (mainSteps.reduce((a, s: any) => a + (s.uptime || 0), 0) / mainSteps.length).toFixed(1)
     : '—'
-  const avgDefect  = steps.length
-    ? (steps.reduce((a, s) => a + (s.defect_rate || 0), 0) / steps.length).toFixed(2)
+  const avgDefect   = mainSteps.length
+    ? (mainSteps.reduce((a, s: any) => a + (s.defect_rate || 0), 0) / mainSteps.length).toFixed(2)
     : '—'
-  const pce        = totalLT > 0 ? ((totalCT / totalLT) * 100).toFixed(1) : '0.0'
-  const takt       = project.takt_time || 0
-  const bottlenecks = steps.filter(s => takt > 0 && (s.cycle_time || 0) > takt * 1.05).length
-  const avgCT      = steps.length ? Math.round(totalCT / steps.length) : 0
+  const bottleneckStep = primaryBN
 
   // Waste from toolData.waste.selected (array of IDs) + label lookup
   const WASTE_LABELS: Record<string, string> = {
@@ -102,7 +109,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   })
 
   const now    = fmtDate()
-  const docRef = docNum()
+  const docRef = docNum(project.id)
   const SERIF  = 'Georgia,"Times New Roman",serif'
   const MONO   = '"Courier New",Courier,monospace'
 
@@ -461,7 +468,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   <div class="section">
     <div class="section-title">4. Constraint and Bottleneck Analysis (Goldratt Theory of Constraints)</div>
     ${steps.filter(s => (s.cycle_time || 0) > 0).sort((a, b) => (b.cycle_time || 0) - (a.cycle_time || 0)).slice(0, 6).map((s, i) => {
-      const ct    = s.cycle_time || 0
+      const ct    = ctSeconds(s as any)
       const over  = takt > 0 && ct > takt
       const pctOfAvg = avgCT > 0 ? ((ct / avgCT) * 100).toFixed(0) : '—'
       const rankColor = i === 0 ? '#DC2626' : i === 1 ? '#D97706' : i === 2 ? '#F59E0B' : '#059669'

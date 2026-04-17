@@ -832,3 +832,33 @@ body.modal-open {
     white-space: nowrap !important;
   }
 }
+
+/* ── FIX: V2 builder mobile — content area clears bottom nav ─────────────── */
+@media (max-width: 768px) {
+  /* The V2 builder uses height:100dvh internally.
+     The scrollable tab content pane needs bottom clearance for the BottomNav. */
+  .v2-tab-content-scroll {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Step panel bottom sheet — save button must clear BottomNav safe area */
+  .v2-step-panel {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ── FIX: V2 tab bar on very small phones (≤375px) ───────────────────────── */
+@media (max-width: 400px) {
+  .v2-tab-dropdown select {
+    font-size: 14px !important;  /* prevent iOS auto-zoom on focus */
+  }
+}
+
+/* ── FIX: V2 body area on mobile — account for bottom nav ───────────────── */
+@media (max-width: 768px) {
+  .v2-body {
+    /* BottomNav is 64px + safe area — body must not be obscured */
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    overflow-y: auto !important;
+  }
+}

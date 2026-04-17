@@ -48,14 +48,21 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
 
   const save = async () => {
     setSaving(true)
-    const missing: string[] = []
-    if (!form.cycle_time || form.cycle_time === 0) missing.push('cycle_time')
-    if (!form.operators || form.operators === 0) missing.push('operators')
-    if (!form.department) missing.push('department')
-    const updated = { ...form, missing_info_flags: missing }
-    await onUpdate(updated)
-    toast.success('Step saved')
-    setSaving(false)
+    try {
+      const missing: string[] = []
+      if (!form.cycle_time && form.cycle_time !== 0) missing.push('cycle_time')
+      if (!form.operators || form.operators === 0) missing.push('operators')
+      if (!form.department) missing.push('department')
+      const updated = { ...form, missing_info_flags: missing }
+      await onUpdate(updated)
+      // FIX: toast.success only fires if onUpdate resolves without error.
+      // updateStep handles its own error toast + rollback — no double-fire.
+      toast.success('Step saved')
+    } catch {
+      // onUpdate already showed error toast and reverted state — nothing more needed
+    } finally {
+      setSaving(false)
+    }
   }
 
   const addTask = () => {
@@ -71,7 +78,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       type={type}
       placeholder={placeholder}
       value={form[field] ?? ''}
-      onChange={e => update({ [field]: type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value })}
+      onChange={e => update({ [field]: type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value })}
       style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)', ...style }}
     />
   )
@@ -186,8 +193,9 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 8 }}>
               <div>
                 {iLabel(`${t?.cycleTime || 'Cycle Time'} *`, true)}
-                <input type="number" value={form.cycle_time || ''} min="0"
-                  onChange={e => update({ cycle_time: parseFloat(e.target.value) || 0 })}
+                <input type="number" step="any" min="0"
+                  value={form.cycle_time ?? ''}
+                  onChange={e => update({ cycle_time: e.target.value === '' ? null : Number(e.target.value) })}
                   placeholder="0"
                   style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
               </div>

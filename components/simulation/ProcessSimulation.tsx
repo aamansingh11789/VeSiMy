@@ -13,6 +13,7 @@
 import { useState, useMemo, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
+import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 import type { Step } from '@/lib/store'
 import { AlertIcon, ZapIcon, ActivityIcon, BarChartIcon, RefreshIcon } from '@/components/ui/Icons'
 

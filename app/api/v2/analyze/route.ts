@@ -10,6 +10,8 @@ import { callAI } from '@/lib/ai/ai-assist'
 import { KNOWLEDGE_CHUNKS } from '@/lib/supe-knowledge'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import { requirePlan } from '@/lib/require-plan'
+import { calcProcessMetrics, fmtPCE } from '@/lib/v2/process-metrics'
+import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 
 export const maxDuration = 60
 
@@ -34,7 +36,7 @@ function getAnalysisKnowledge(forTags?: string[]): string {
 function determineCITool(step: any, taktTime = 0): { tool: string; reason: string } {
   if ((step.defect_rate || 0) > 5)
     return { tool: 'fishbone', reason: `Defect rate ${step.defect_rate}% — map root causes across all categories` }
-  if (taktTime > 0 && (step.cycle_time || 0) > taktTime)
+  if (taktTime2 && taktTime2 > 0 && ctSeconds(step) > taktTime2)
     return { tool: 'stopwatch', reason: 'Cycle time exceeds takt — time study needed to establish accurate baseline' }
   if ((step.wait_time || 0) > (step.cycle_time || 1) * 2)
     return { tool: 'waste', reason: 'Wait time exceeds process time — significant waiting waste identified' }
@@ -71,20 +73,18 @@ export async function POST(request: NextRequest) {
     const industryLabel = getIndustryLabel(industry)
     const knowledge = getAnalysisKnowledge()
 
-    // ── Calculate preliminary metrics ─────────────────────────────────────
+    // ── Calculate preliminary metrics (canonical utility) ─────────────────
     const totalSteps = steps?.length || 0
-    const stepsWithCT = steps?.filter(s => s.cycle_time > 0) || []
-    const totalCT = stepsWithCT.reduce((a: number, s: any) => a + (s.cycle_time || 0), 0)
-    const totalWait = steps?.reduce((a: number, s: any) => a + (s.wait_time || 0), 0) || 0
-    const leadTime = totalCT + totalWait
-    const vaSteps = steps?.filter(s => s.is_value_added === 'va') || []
-    const vaCT = vaSteps.reduce((a: number, s: any) => a + (s.cycle_time || 0), 0)
-    const pce = leadTime > 0 ? Math.round((vaCT / leadTime) * 100) : 0
-    const missingCT = steps?.filter(s => !s.cycle_time || s.cycle_time === 0) || []
-    const stepsWithDefects = steps?.filter(s => (s.defect_rate || 0) > 3) || []
+    const metrics = calcProcessMetrics(steps || [], project)
+    const { mainSteps, totalCT, totalWait, leadTime, vaCT, pce, takt: taktTime2, bottleneck: primaryBN } = metrics
+
+    // Backwards-compat names for prompt / report assembly below
+    const vaSteps    = mainSteps.filter((s: any) => s.va_type === 'va' || s.is_value_added === 'va')
+    const missingCT  = mainSteps.filter((s: any) => ctSeconds(s) === 0)
+    const stepsWithDefects = mainSteps.filter((s: any) => (s.defect_rate || 0) > 3)
 
     // ── Per-step CI suggestions (rule-based first) ─────────────────────────
-    const taktTime = project.takt_time || 0
+    // taktTime is now taktTime2 from calcProcessMetrics
     const ciSuggestions = steps?.map((s: any) => ({
       step_id: s.id,
       step_name: s.name,
@@ -173,16 +173,16 @@ Return this JSON only, no markdown:
       project_id,
       user_id: user.id,
       report_type: 'current_state',
-      report_version: 1,
+      report_version: nextVersion,
       summary: aiFindings.process_summary || `${project.name} — ${totalSteps} steps mapped across ${industryLabel} process.`,
       process_description: project.description || '',
       total_steps: totalSteps,
-      va_ratio: `${pce}%`,
+      va_ratio: fmtPCE(pce),  // null shows as '—', not '0%'
       estimated_lead_time: formatLeadTime(leadTime),
       improvement_potential: aiFindings.improvement_potential || {
         conservative: `${Math.max(10, Math.round((1 - pce/100) * 30))}–${Math.max(15, Math.round((1 - pce/100) * 45))}%`,
         optimistic: `${Math.max(20, Math.round((1 - pce/100) * 50))}–${Math.max(30, Math.round((1 - pce/100) * 70))}%`,
-        basis: `Based on ${pce}% PCE, ${missingCT.length} steps without ${t.cycleTime}, and ${stepsWithDefects.length} high-defect steps`,
+        basis: `Based on ${pce != null ? pce.toFixed(1) : "unknown"}% PCE, ${missingCT.length} steps without ${t.cycleTime}, and ${stepsWithDefects.length} high-defect steps`,
         primary_lever: missingCT.length > 0 ? `Complete ${t.cycleTime} data for all steps` : 'Address identified bottleneck',
       },
       bottlenecks: ciSuggestions.filter(s => s.priority === 'critical'),
@@ -202,6 +202,7 @@ Return this JSON only, no markdown:
         expected_gain: a.expected_gain,
         ci_tool: ciSuggestions.find(c => c.step_name === a.step)?.tool || 'kaizen',
       })),
+      ai_analysis_used: Object.keys(aiFindings).length > 0,
       disclaimer: 'This report is based solely on the data entered by the user. Missing steps, incorrect parameters, or incomplete data will affect the accuracy of findings and recommendations. All improvement estimates carry inherent uncertainty and should be validated with direct observation at the process (gemba).',
       raw_ai_response: JSON.stringify(aiFindings),
     }

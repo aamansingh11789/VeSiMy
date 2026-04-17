@@ -17,8 +17,12 @@ export default async function DashboardPage() {
 
   const [{ data: profile }, { data: projects }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
-    supabase.from('projects').select('*').eq('user_id', user.id)
-             .eq('status', 'active').order('updated_at', { ascending: false }).limit(20),
+    supabase.from('projects')
+      .select('*, steps(id, cycle_time, cycle_time_unit, wait_time, is_main_flow, va_type, defect_rate)')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .order('updated_at', { ascending: false })
+      .limit(20),
   ])
 
   if (!profile) redirect('/auth/login')
