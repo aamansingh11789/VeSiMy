@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 import { redirect }             from 'next/navigation'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { Sidebar }              from '@/components/layout/Sidebar'

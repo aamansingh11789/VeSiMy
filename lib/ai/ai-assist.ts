@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/ai/ai-assist.ts ──────────────────────────────────────────────────────
 // Unified AI helper for all tool assist features.
 // Priority: Anthropic (if ANTHROPIC_API_KEY set) → Gemini (if GEMINI_API_KEY set)

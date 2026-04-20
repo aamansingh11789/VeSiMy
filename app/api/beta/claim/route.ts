@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/beta/claim/route.ts ───────────────────────────────────────────────
 // Early Access Beta: open to everyone while the window is active
 // No seat limits — uses admin client to bypass RLS on launch_window

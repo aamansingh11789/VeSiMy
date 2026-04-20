@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── hooks/useAnalytics.ts ─────────────────────────────────────────────────────
 // Safe analytics hook — uses window.posthog when available, no-ops otherwise.

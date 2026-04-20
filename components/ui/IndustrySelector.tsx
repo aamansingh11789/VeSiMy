@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/ui/IndustrySelector.tsx ───────────────────────────────────────
 // Per-account industry picker. Saves to profiles.industry.

@@ -553,11 +553,60 @@ function BentoFeatures() {
 }
 
 // ── Main page ─────────────────────────────────────────────────────────────────
+
+// ── FAQ section ────────────────────────────────────────────
+const FAQS = [
+  { q: 'Is VeSiMy actually free?', a: 'Yes. Core CI tools are free with no time limit on up to 3 projects. Supe AI, Simulation, and ISO exports are Pro features.' },
+  { q: 'How is this different from Excel?', a: 'Excel stores data. VeSiMy connects it. Your cycle time study flows into your VSM. Your Fishbone links to your Kaizen. Your PDCA tracks the result. One project, one source of truth.' },
+  { q: 'How does Supe AI work?', a: 'Supe is grounded in a 33-chunk RAG knowledge base built from ISO 22468:2020, TPS principles, and lean methodology. It reasons about your specific process data — cycle times, defect rates, takt, and step structure.' },
+  { q: 'Can teams use this together?', a: 'Collaboration is on the roadmap. Right now each account is a single workspace. Enterprise plans include multi-user access.' },
+  { q: 'What does the Lifetime plan include?', a: 'Everything in Pro permanently. All current CI tools, Supe AI, simulation, gemba monitor, advanced exports, and all future tool releases. At $99 once vs $29/month, breakeven is 3.4 months.' },
+  { q: 'What industries is this built for?', a: 'All 68 in the platform. Healthcare, manufacturing, software, law, food & bev, construction, logistics, hospitality. VeSiMy adapts terminology and reference projects to your field during onboarding.' },
+]
+
+function FAQSection() {
+  const [open, setOpen] = useState<number | null>(null)
+  return (
+    <section id="faq" style={{ padding:"clamp(80px,10vh,120px) clamp(16px,4vw,48px)", background:"#F8F6F0", borderTop:"0.5px solid #D8D5CE" }}>
+      <div style={{ maxWidth:780, margin:"0 auto" }}>
+        <div className="reveal" style={{ marginBottom:44 }}>
+          <p style={{ fontFamily:mono, fontSize:9, letterSpacing:2.5, color:"rgba(1,118,211,.8)", marginBottom:14 }}>FAQ</p>
+          <h2 style={{ fontFamily:serif, fontSize:"clamp(26px,3vw,42px)", fontWeight:400, color:"#0D0C0A", lineHeight:1.15 }}>
+            Common questions.<br /><em style={{ fontStyle:"italic", color:"#0176D3" }}>Honest answers.</em>
+          </h2>
+        </div>
+        <div className="reveal d1" style={{ display:"flex", flexDirection:"column", gap:0, border:"1px solid #E0DCD4", borderRadius:14, overflow:"hidden" }}>
+          {FAQS.map((faq, i) => (
+            <div key={i} style={{ borderBottom: i < FAQS.length - 1 ? "1px solid #E0DCD4" : "none" }}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                style={{ width:"100%", textAlign:"left", padding:"20px 22px", background:"white", border:"none", cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, transition:"background .15s" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#FAFAF8")}
+                onMouseLeave={e => (e.currentTarget.style.background = "white")}
+                aria-expanded={open === i}
+              >
+                <span style={{ fontSize:15, fontWeight:600, color:"#1E1B17", lineHeight:1.4 }}>{faq.q}</span>
+                <span style={{ fontSize:18, color:"#0176D3", flexShrink:0, transform: open === i ? "rotate(45deg)" : "none", transition:"transform .2s", display:"inline-block", lineHeight:1 }}>+</span>
+              </button>
+              {open === i && (
+                <div style={{ padding:"0 22px 20px", background:"#FAFAF8" }}>
+                  <p style={{ fontSize:14, color:"#3A3835", lineHeight:1.8, margin:0 }}>{faq.a}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
   const [eyeIdx, setEyeIdx] = useState(0)
   const [showPromo, setShowPromo] = useState(false)
   const [authedUser, setAuthedUser] = useState<{email?:string;name?:string}|null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const scrollRef = useRef<number>(0)
   const heroRef = useRef<HTMLElement>(null)
 
@@ -639,6 +688,12 @@ export default function HomePage() {
         .how-step:last-child { border-right:none; }
         .how-step:hover { background:rgba(255,255,255,0.06); border-right-color:rgba(56,189,248,0.15); }
         .hide-mobile { display:flex; }
+        .n-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:8px; margin-left:4px; border-radius:8px; }
+        .n-hamburger span { display:block; width:20px; height:2px; background:rgba(241,245,249,0.55); border-radius:2px; transition:transform .22s,opacity .22s; }
+        .n-mobile-drawer { position:fixed; top:60px; left:0; right:0; background:rgba(3,8,20,0.97); padding:20px 24px 28px; display:flex; flex-direction:column; gap:4px; z-index:199; border-bottom:1px solid rgba(255,255,255,0.08); transform:translateY(-8px); opacity:0; pointer-events:none; transition:transform .22s ease,opacity .22s ease; }
+        .n-mobile-drawer.open { transform:translateY(0); opacity:1; pointer-events:all; }
+        .n-drawer-link { color:rgba(241,245,249,.6); text-decoration:none; font-size:15px; padding:12px 4px; border-bottom:1px solid rgba(255,255,255,0.06); transition:color .15s; }
+        .n-drawer-link:hover { color:#F1F5F9; }
         @media(max-width:900px){
           .hero-grid,.supe-grid,.terms-grid { grid-template-columns:1fr!important; }
           .hero-right { display:none!important; }
@@ -646,6 +701,7 @@ export default function HomePage() {
           .pricing-grid { grid-template-columns:1fr!important; max-width:380px!important; margin:0 auto!important; }
           nav { padding:0 20px!important; }
           .hide-mobile { display:none!important; }
+          .n-hamburger { display:flex!important; }
         }
         @media(max-width:600px){ .how-steps { grid-template-columns:1fr!important; } }
       `}</style>
@@ -659,7 +715,7 @@ export default function HomePage() {
           <VeSiMyWordmark size={18} onDark />
         </Link>
         <div className="hide-mobile" style={{ gap:28 }}>
-          {[['How it works','#how'],['Industries','#industries'],['Pricing','#pricing'],['Learn','/learn'],['Blog','/blog']].map(([l,h]) => (
+          {[['How it works','#how'],['Industries','#industries'],['FAQ','#faq'],['Pricing','#pricing'],['Learn','/learn'],['Blog','/blog']].map(([l,h]) => (
             <a key={l} href={h} className="nav-link">{l}</a>
           ))}
         </div>
@@ -681,8 +737,22 @@ export default function HomePage() {
               </Link>
             </>
           )}
+          <button className="n-hamburger" aria-label="Open navigation menu" onClick={() => setMobileMenuOpen(o => !o)}>
+            <span/><span/><span/>
+          </button>
         </div>
       </nav>
+
+      {/* Mobile nav drawer */}
+      <div className={`n-mobile-drawer${mobileMenuOpen ? ' open' : ''}`} role="dialog" aria-label="Mobile navigation">
+        {[['How it works','#how'],['Industries','#industries'],['FAQ','#faq'],['Pricing','#pricing'],['Learn','/learn'],['Blog','/blog']].map(([l,h]) => (
+          <a key={l} href={h} className="n-drawer-link" onClick={() => setMobileMenuOpen(false)}>{l}</a>
+        ))}
+        <div style={{ marginTop:12, display:'flex', flexDirection:'column', gap:8 }}>
+          <Link href="/auth/login" style={{ padding:'11px 20px', textAlign:'center', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9, fontSize:14, color:'rgba(241,245,249,0.6)', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>Sign in</Link>
+          <Link href="/auth/signup" style={{ padding:'11px 20px', textAlign:'center', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', borderRadius:9, fontSize:14, fontWeight:700, color:'white', textDecoration:'none' }} onClick={() => setMobileMenuOpen(false)}>Start free →</Link>
+        </div>
+      </div>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section ref={heroRef} style={{ minHeight:'100vh', padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px) clamp(60px,8vh,80px)', display:'flex', flexDirection:'column', justifyContent:'center', position:'relative', overflow:'hidden', background:'#030812' }}>
@@ -752,7 +822,27 @@ export default function HomePage() {
       {/* ── DUAL TICKER ──────────────────────────────────────────────────── */}
       <DualTicker />
 
-      {/* ── PAIN SECTION — doctor framing ─────────────────────────────────── */}
+      {/* ── DIFFERENTIATOR BAR */}
+      <div style={{ background:'#0a2d5a', padding:'18px clamp(16px,5vw,72px)' }}>
+        <div style={{ maxWidth:1100, margin:'0 auto', display:'flex', flexWrap:'wrap', gap:24, justifyContent:'space-between', alignItems:'center' }}>
+          {[
+            { icon:'📐', label:'Built on ISO 22468:2020', sub:'VSM by the standard, not convention' },
+            { icon:'🤖', label:'RAG knowledge base', sub:'Supe AI grounded in 33 lean/TPS chunks' },
+            { icon:'🏭', label:'68 industries', sub:'Native terminology — not factory language adapted' },
+            { icon:'🔒', label:"Your data stays yours", sub:'No training on your process data. Ever.' },
+          ].map(d => (
+            <div key={d.label} style={{ display:'flex', alignItems:'center', gap:10, minWidth:180 }}>
+              <span style={{ fontSize:20 }}>{d.icon}</span>
+              <div>
+                <div style={{ fontSize:12, fontWeight:700, color:'rgba(241,245,249,0.9)', lineHeight:1.2 }}>{d.label}</div>
+                <div style={{ fontSize:11, color:'rgba(241,245,249,0.45)', lineHeight:1.4 }}>{d.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+            {/* ── PAIN SECTION — doctor framing ─────────────────────────────────── */}
       <section style={{ padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', background:'#F8F6F0' }}>
         <div style={{ maxWidth:1160, margin:'0 auto' }}>
 
@@ -926,7 +1016,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── PRICING ──────────────────────────────────────────────────────── */}
+      {/* ── FAQ */}
+      <FAQSection />
+
+            {/* ── PRICING ──────────────────────────────────────────────────────── */}
       <section id="pricing" style={{ padding:'clamp(80px,10vh,120px) clamp(16px,4vw,48px)', background:'linear-gradient(180deg,#F0EDE6 0%,#E8E4DC 100%)', borderTop:'0.5px solid #D8D5CE' }}>
         <div style={{ maxWidth:980, margin:'0 auto' }}>
           <div className="reveal" style={{ textAlign:'center', marginBottom:52 }}>
@@ -934,7 +1027,7 @@ export default function HomePage() {
             <h2 style={{ fontFamily:serif, fontSize:'clamp(26px,3vw,42px)', fontWeight:400, color:'#0D0C0A', marginBottom:12 }}>
               Every CI tool, no paywall.<br />Upgrade for AI and advanced exports.
             </h2>
-            <p style={{ fontSize:15, color:'#3A3835' }}>No feature gates on the core methodology. VSM, Fishbone, 5 Why, Kaizen, PDCA — available from day one.</p>
+            <p style={{ fontSize:15, color:'#3A3835' }}>Core CI tools are free with no time limit. AI analysis, simulation, and ISO-format exports unlock on Pro and Lifetime.</p>
           </div>
           <div className="pricing-grid reveal d1" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16 }}>
             {(Object.entries(PLANS) as any[]).filter(([k])=>k!=='trial').map(([key, plan]) => {
@@ -948,6 +1041,7 @@ export default function HomePage() {
                   <div style={{ fontFamily:serif, fontSize:44, color:'#0D0C0A', lineHeight:1, marginBottom:4 }}>
                     {isEnt?'Custom':plan.price===0?'$0':`$${plan.price}`}
                     {!isEnt&&plan.price!==null&&Number(plan.price)>0&&<span style={{ fontSize:14, color:'#6B6760', fontWeight:400 }}>{isLife?' once':'/mo'}</span>}
+                  {isLife && <div style={{ fontSize:11, color:'#0176D3', fontFamily:mono, marginTop:2 }}>3.4 months = breakeven vs Pro</div>}
                   </div>
                   <p style={{ fontSize:13, color:'#6B6760', marginBottom:22, lineHeight:1.6, borderBottom:'1px solid rgba(1,118,211,.12)', paddingBottom:18 }}>{plan.description}</p>
                   <div style={{ display:'flex', flexDirection:'column', gap:9, marginBottom:24 }}>

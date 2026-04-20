@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/auth/callback/route.ts ─────────────────────────────────────────
 // OAuth / magic-link callback — correct Supabase SSR cookie pattern.
 // CRITICAL: build redirect response FIRST, create Supabase client writing to

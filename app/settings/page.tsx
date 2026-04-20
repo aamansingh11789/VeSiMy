@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 // ── app/settings/page.tsx ────────────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { redirect } from 'next/navigation'

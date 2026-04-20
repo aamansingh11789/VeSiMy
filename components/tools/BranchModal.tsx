@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 
 import { useState } from 'react'

@@ -1,11 +1,11 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/ui/Icons.tsx ─────────────────────────────────────────────────
 // VeSiMy Icon System — Professional 3D Greyscale
 // Every icon uses a unique gradient-ID counter to prevent SVG conflicts.
 // UI icons: clean 1.6px stroke-based. CI icons: 3D volume with shadow/highlight.
 
-interface P { size?:number; color?:string; style?:React.CSSProperties; className?:string; stroke?:number }
+interface P { size?:number; color?:string; style?:React.CSSProperties; className?:string; stroke?:number; strokeWidth?:number }
 
 // ── Stroke icon (UI/nav) ──────────────────────────────────────────────────────
 const L = ({ size=18, color='currentColor', stroke=1.65, style, className, children }:any) => (

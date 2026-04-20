@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { VSMIcon } from '@/components/ui/Icons'
 import React from 'react'
@@ -36,7 +36,7 @@ function fmtTime(s: number, unit?: string) {
   return `${Math.round(s)}s`
 }
 
-function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand }: any) {
+function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand, taktTime = 0 }: any) {
   const sym = STEP_SYMBOLS[step.step_type || 'process'] || STEP_SYMBOLS.process
   const hasMissing = (step.missing_info_flags || []).length > 0
   const X = 80 + index * (BOX_W + GAP)
@@ -61,7 +61,15 @@ function StepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand
       : 'none'
 
   return (
-    <g style={{ cursor: 'pointer' }} onClick={() => onClick(step)}>
+    <g
+      style={{ cursor: 'pointer' }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${step.name} — CT: ${ctSeconds(step) ? fmtTime(ctSeconds(step)) : 'not set'}${isBottleneck ? ' — BOTTLENECK' : ''}${hasMissing ? ' — missing data' : ''}`}
+      aria-pressed={isSelected}
+      onClick={() => onClick(step)}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(step) } }}
+    >
       {!!step.governing_entity && (
         <>
           <rect x={X+BOX_W/2-42} y={Y-52} width={84} height={22}
@@ -347,7 +355,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
           transform:`translate(${pan.x}px,${pan.y}px) scale(${zoom})`,
           width:CANVAS_W, height:CANVAS_H, willChange:'transform',
         }}>
-          <svg width={CANVAS_W} height={CANVAS_H} style={{display:'block',userSelect:'none'}}>
+          <svg width={CANVAS_W} height={CANVAS_H} style={{display:'block',userSelect:'none'}} role="region" aria-label="Value stream map canvas" focusable="false">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#EBEBEA" strokeWidth="0.5"/>
@@ -368,7 +376,7 @@ export function V2MapCanvas({ steps, project, t, selectedStepId, onStepClick, on
 
             {steps.map((step:any,i:number)=>(
               <StepBox key={step.id} step={step} index={i} total={steps.length}
-                isSelected={step.id===selectedStepId} t={t}
+                isSelected={step.id===selectedStepId} t={t} taktTime={taktTime}
                 expanded={!!expandedSteps[step.id]} onToggleExpand={toggleExpand}
                 onClick={(step) => { if (!didDrag.current) onStepClick(step) }}/>
             ))}

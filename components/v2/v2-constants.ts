@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 // ── components/v2/v2-constants.ts ─────────────────────────────────────────────
 // Single source of truth for all V2 builder constants.
 // Import from here — never re-declare in individual components.

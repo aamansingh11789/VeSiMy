@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/beta/window/route.ts ──────────────────────────────────────────────
 // Returns current launch window status (public — no auth required)
 import { NextResponse }      from 'next/server'

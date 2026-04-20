@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/export/PDFExport.tsx ──────────────────────────────────────────
 // ISO 9001:2015 / ISO 13053 compliant white-paper VSM analysis report
@@ -366,7 +366,8 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
           ['Total Cycle Time',        fmtS(totalCT),             '#15803D'],
           ['Total Queue / Wait Time', fmtS(totalWT),             '#92400E'],
           ['End-to-End Lead Time',    fmtS(totalLT),             '#1E3A5F'],
-          ['Process Cycle Efficiency',pce + '%',                 +pce >= 30 ? '#15803D' : +pce >= 15 ? '#92400E' : '#991B1B'],
+          // pce is '—' or '42.5%' (already has % sign from fmtPCE); use pceNum for color
+          ['Process Cycle Efficiency', pce,                       pceNum == null ? '#64748B' : pceNum >= 30 ? '#15803D' : pceNum >= 15 ? '#92400E' : '#991B1B'],
         ].map(([l, v, c]) => `
         <td style="border:2px solid #E2E8F0;padding:12px 14px;text-align:center;background:#FAFAFA;width:20%">
           <div style="font-size:8px;color:#64748B;font-family:${MONO};letter-spacing:1px;margin-bottom:4px;text-transform:uppercase">${l}</div>
@@ -455,7 +456,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:center">${avgUptime}%</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:center">${avgDefect}%</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:center">${totalWIP}</td>
-          <td colspan="4" style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:center;color:#1E3A5F">PCE: ${pce}% · Lead Time: ${fmtS(totalLT)}</td>
+          <td colspan="4" style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:center;color:#1E3A5F">PCE: ${pce} · Lead Time: ${fmtS(totalLT)}</td>
         </tr>
       </tfoot>
     </table>

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-healthcare/route.ts ─────────────────────────────────
 // Creates a fully-populated Healthcare demo project.
 // Value stream: Patient Arrival → Triage → Registration → Assessment → Diagnosis

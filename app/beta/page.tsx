@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── app/beta/page.tsx — Early Access Beta ─────────────────────────────────────
 

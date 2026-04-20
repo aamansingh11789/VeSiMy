@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { XIcon, CheckIcon } from '@/components/ui/Icons'
 // ── components/ui/InstallPrompt.tsx ──────────────────────────────────────────

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { ActivityIcon } from '@/components/ui/Icons'
 import type React from 'react'

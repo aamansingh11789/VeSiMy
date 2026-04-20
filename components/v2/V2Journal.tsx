@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { AlertIcon, ZapIcon, BookIcon } from '@/components/ui/Icons'
 import { SERIF, CI_LABELS, BRAND, RED, GREEN, AMBER } from './v2-constants'
@@ -12,6 +12,13 @@ import { useState } from 'react'
 function fmtDate(iso: string) {
   try { return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
   catch { return iso }
+}
+
+function isStale(iso: string, thresholdHours = 24): boolean {
+  try {
+    const ageMs = Date.now() - new Date(iso).getTime()
+    return ageMs > thresholdHours * 3600 * 1000
+  } catch { return false }
 }
 
 function downloadJSON(data: any, filename: string) {
@@ -355,7 +362,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
                 background: isFuture ? 'rgba(46,132,74,.1)' : 'rgba(1,118,211,.08)',
                 color: isFuture ? GREEN : BRAND, fontWeight: 700,
               }}>
-                {isFuture ? 'FUTURE STATE' : 'CURRENT STATE'} v{report.report_version}
+                {isFuture ? 'FUTURE STATE' : 'CURRENT STATE'} v{report.report_version ?? 1}
               </span>
               <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace' }}>
                 {fmtDate(report.generated_at)}

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/ui/Logo.tsx ─────────────────────────────────────────────────
 

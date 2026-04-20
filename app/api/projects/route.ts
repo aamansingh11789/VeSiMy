@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/route.ts ──────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -17,12 +17,12 @@ export async function GET() {
     .eq('status', 'active')
     .order('updated_at', { ascending: false })
 
-  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
   return NextResponse.json({ projects: data })
 
   } catch (err: any) {
     console.error("[projects]", err)
-    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
   }}
 
 // POST /api/projects — create a new project
@@ -64,10 +64,10 @@ export async function POST(request: NextRequest) {
     status:      'active',
   }).select().single()
 
-  if (error) return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
   return NextResponse.json({ project: data }, { status: 201 })
 
   } catch (err: any) {
     console.error("[projects]", err)
-    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
   }}

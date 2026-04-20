@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { XIcon, ExternalLinkIcon } from '@/components/ui/Icons'
 // ── components/vsm/VSMMap.tsx ─────────────────────────────────────────────────
@@ -26,7 +26,7 @@ const fmtS = (s: number) => {
 // Subtle drop shadow for depth (box-shadow equivalent in SVG = filter)
 const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
   const PW = 100, PH = 56, DH = 72
-  const ct  = step.toolData?.stopwatch?.mean || Number(step.cycle_time) || 0
+  const ct  = ctSeconds(step)
   const co  = Number(step.change_over_time) || 0
   const up  = step.uptime != null ? `${step.uptime}%` : '—'
   const dr  = step.defect_rate != null ? `${step.defect_rate}%` : '—'
@@ -267,7 +267,7 @@ export function VSMMap({ steps, branches, project }: Props) {
       const wip = Number(step.wip) || 0
       // Inventory type: supermarket if flow_type='supermarket' or wip>threshold
       const isSM = step.flow_type === 'supermarket' || step.flow_type === 'pull'
-      const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time)||0
+      const ct = ctSeconds(step)   // ms→s normalised
       const isBN = takt>0 && ct>0 && ct>takt*1.05
 
       return (
@@ -319,7 +319,7 @@ export function VSMMap({ steps, branches, project }: Props) {
 
     {/* Takt time reference line */}
     {takt > 0 && (() => {
-      const maxCT = Math.max(...mainSteps.map(s=>s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),1)
+      const maxCT = Math.max(...mainSteps.map(s=>ctSeconds(s)),1)
       const taktH = Math.max(6, Math.min(34,(takt/maxCT)*34))
       return (
         <g>
@@ -331,10 +331,10 @@ export function VSMMap({ steps, branches, project }: Props) {
     })()}
 
     {mainSteps.map((step,i)=>{
-      const ct = step.toolData?.stopwatch?.mean||Number(step.cycle_time)||0
+      const ct = ctSeconds(step)
       const wt = Number(step.wait_time)||0
       const isBN = takt>0&&ct>takt*1.05
-      const maxCT = Math.max(...mainSteps.map(s=>s.toolData?.stopwatch?.mean||Number(s.cycle_time)||0),1)
+      const maxCT = Math.max(...mainSteps.map(s=>ctSeconds(s)),1)
       const ph = ct>0 ? Math.max(5,Math.min(34,(ct/maxCT)*34)) : 3
       const maxWT = Math.max(...mainSteps.map(s=>Number(s.wait_time)||0),1)
       const vh = wt>0 ? Math.max(3,Math.min(16,(wt/maxWT)*16)) : 0
@@ -381,7 +381,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           {ls.map((step,si)=>{
             const bx2 = bfX+si*(PW+GAP)
             const wip = Number(step.wip)||0
-            const ct = step.toolData?.stopwatch?.mean||Number(step.cycle_time)||0
+            const ct = ctSeconds(step)
             const isBN = takt>0&&ct>takt*1.05
             return (
               <g key={step.id}>

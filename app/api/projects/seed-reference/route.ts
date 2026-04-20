@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-reference/route.ts ─────────────────────────────────
 // Creates a fully-populated reference project demonstrating every VeSiMy feature.
 // Idempotent — returns existing project if one already exists for this user.

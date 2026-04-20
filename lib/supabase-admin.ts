@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/supabase-admin.ts ──────────────────────────────────────────────────
 // SERVER ONLY — never import this from client components.
 // Uses the service role key which bypasses all RLS policies.

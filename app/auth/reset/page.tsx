@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── app/auth/reset/page.tsx ───────────────────────────────────────────────────
 import { useState } from 'react'

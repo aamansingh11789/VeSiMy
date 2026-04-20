@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { CheckIcon } from '@/components/ui/Icons'
 // ── components/learn/LearningCenter.tsx ──────────────────────────────────────

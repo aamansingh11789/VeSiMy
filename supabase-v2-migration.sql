@@ -114,3 +114,51 @@ CREATE INDEX IF NOT EXISTS idx_steps_version            ON steps(project_id, ver
 -- 1. Verify in Table Editor that all columns exist
 -- 2. Deploy the app
 -- 3. Test: create a V2 project, add steps, run Analyze
+
+-- ── 9. Missing tables referenced by application code ─────────────────────
+-- process_simulations: stores saved simulation snapshots from ProcessSimulation.tsx
+CREATE TABLE IF NOT EXISTS process_simulations (
+  id                 uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  project_id         uuid        NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  user_id            uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  name               text        NOT NULL DEFAULT 'Simulation',
+  simulation_steps   jsonb       NOT NULL DEFAULT '[]',
+  current_lead_time  numeric,
+  future_lead_time   numeric,
+  lead_time_savings  numeric,
+  scenario_id        text,
+  notes              text,
+  created_at         timestamptz NOT NULL DEFAULT now(),
+  updated_at         timestamptz NOT NULL DEFAULT now()
+);
+
+ALTER TABLE process_simulations ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "process_simulations_user_policy" ON process_simulations;
+CREATE POLICY "process_simulations_user_policy" ON process_simulations
+  FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+CREATE INDEX IF NOT EXISTS idx_process_sims_project ON process_simulations(project_id, user_id);
+
+-- supe_rate_log: per-user request rate limiting for Supe AI endpoint
+-- Without this table the API falls back to an in-memory rate limiter on each cold start.
+CREATE TABLE IF NOT EXISTS supe_rate_log (
+  id         uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+ALTER TABLE supe_rate_log ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "supe_rate_log_user_policy" ON supe_rate_log;
+CREATE POLICY "supe_rate_log_user_policy" ON supe_rate_log
+  FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+-- Auto-delete rate log entries older than 10 minutes (keeps table lean)
+-- Run this in Supabase cron or pg_cron extension:
+-- SELECT cron.schedule('supe-rate-cleanup', '*/10 * * * *',
+--   $$DELETE FROM supe_rate_log WHERE created_at < now() - interval '10 minutes'$$);
+
+CREATE INDEX IF NOT EXISTS idx_supe_rate_log_user_time ON supe_rate_log(user_id, created_at DESC);
+
+-- ── Done (v2 addendum) ────────────────────────────────────────────────────

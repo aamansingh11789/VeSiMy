@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/store-types.ts ──────────────────────────────────────────────────────
 // Entity type definitions used throughout the app.
 // These describe data shapes — they do NOT represent store state.
@@ -86,18 +86,35 @@ export interface KanbanColumn {
 export type ProjectTab = 'builder' | 'vsm' | 'kaizen' | 'kanban' | 'report' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca'
 
 export interface Project {
-  id: string
-  user_id: string
-  name: string
+  id:           string
+  user_id:      string
+  name:         string
   description?: string
-  industry?: string
-  state: 'current' | 'future'
-  status: 'active' | 'archived'
-  customer?: string
+  industry?:    string
+  state:        'current' | 'future'
+  status:       'active' | 'archived'
+  version?:     string
+
+  // VSM / process context
+  product?:    string   // product family / part name
+  customer?:   string
+  supplier?:   string
+
+  // Takt time inputs — all optional; used by calcProcessMetrics and PDFExport
+  demand?:             number | string | null  // units per day
+  working_hours?:      number | string | null  // hours per day
+  shifts?:             number | string | null  // shifts per day
+  available_time_sec?: number | string | null  // pre-computed seconds per day
+  takt_time?:          number | string | null  // override (seconds); bypasses demand calc
+
+  // Kaizen planning
   kaizen_roadmap?: Record<string, any>
-  steps?: Step[]
-  created_at: string
-  updated_at: string
+
+  // Steps are joined server-side when needed
+  steps?:       Step[]
+
+  created_at:   string
+  updated_at:   string
 }
 
 export interface Profile {

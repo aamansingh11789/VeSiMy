@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { AlertIcon, ZapIcon } from '@/components/ui/Icons'
 import { SERIF, CI_LABELS, BRAND, RED, GREEN, AMBER } from './v2-constants'
@@ -8,6 +8,12 @@ import { SERIF, CI_LABELS, BRAND, RED, GREEN, AMBER } from './v2-constants'
 
 
 export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onGoMap }: any) {
+  // Staleness check — warn if analysis is older than 24h or step count changed
+  const generatedAt = report?.generated_at
+  const ageHours = generatedAt
+    ? (Date.now() - new Date(generatedAt).getTime()) / 3600000
+    : 0
+  const isStale = ageHours > 24
   if (!report) return null
   const ip = report.improvement_potential || {}
   const bottlenecks = report.bottlenecks || []
@@ -26,6 +32,30 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
           <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{report.disclaimer}</p>
         </div>
       </div>
+
+      {/* AI availability indicator */}
+      {report.ai_analysis_used === false && (
+        <div style={{ padding: '9px 14px', background: 'rgba(112,110,107,.06)', border: '1px solid rgba(112,110,107,.2)', borderRadius: 9, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--text3)' }}>
+          <span>⚙</span>
+          <span>AI analysis was unavailable — findings below are based on rule-based lean heuristics. Results are directionally accurate but less nuanced than AI-assisted analysis. Re-run when AI is available.</span>
+        </div>
+      )}
+
+      {/* Staleness warning */}
+      {isStale && (
+        <div style={{ padding: '9px 14px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 9, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#0a4d8f' }}>
+          <span>⏱</span>
+          <span>
+            Analysis run {generatedAt ? Math.round(ageHours) + 'h ago' : 'a while ago'}.
+            If you have added or changed steps since then, re-run the analysis for current results.
+          </span>
+          {onGoMap && (
+            <button onClick={onGoMap} style={{ marginLeft: 'auto', fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid rgba(1,118,211,.4)', background: 'transparent', color: '#0176D3', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
+              Re-analyse →
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Process summary */}
       <div style={{ marginBottom: 28 }}>

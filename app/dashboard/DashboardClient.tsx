@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── app/dashboard/DashboardClient.tsx ────────────────────────────────────────
 
@@ -63,7 +63,10 @@ function UpgradeToast() {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [params, router])
+  // FIX: router removed from deps — same issue as ProfileRefresh.
+  // router is a new object on every render; keeping it in deps restarted the polling loop.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params])
 
   return null
 }
@@ -73,10 +76,14 @@ function UpgradeToast() {
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
 
 function getProjectScore(project: any) {
-  // FIX: uses actual joined step data — was always 0 before because steps weren't fetched
+  // Uses actual joined step data for accurate project health scoring.
   const steps      = (project.steps || []) as any[]
   const mainSteps  = steps.filter(s => s.is_main_flow !== false)
-  const withCT     = mainSteps.filter(s => Number(s.cycle_time) > 0 || Number(s.cycle_time_unit) > 0)
+  // Fix I-3: check BOTH cycle_time field AND stopwatch.mean — users who capture
+  // CT via the Stopwatch tool store it in toolData, not in cycle_time directly.
+  const withCT     = mainSteps.filter(s =>
+    Number(s.cycle_time) > 0 || Number(s.toolData?.stopwatch?.mean) > 0
+  )
   const withVA     = mainSteps.filter(s => s.va_type || s.is_value_added)
   const recentEdit = new Date(project.updated_at) > new Date(Date.now() - 7 * 86400_000)
 

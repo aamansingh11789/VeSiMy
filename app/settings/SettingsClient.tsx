@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { isPaidProfile } from '@/lib/require-plan'
 import { INDUSTRY_OPTIONS, getIndustryLabel } from '@/lib/industry-language'
@@ -26,8 +26,9 @@ const PLAN_COLOR: Record<string, string> = {
 }
 
 interface Props {
-  profile: any
-  user:    { email?: string }
+  profile:      any
+  user:         { email?: string }
+  projectCount?: number
 }
 
 export function SettingsClient({ projectCount = 0, profile, user }: Props) {

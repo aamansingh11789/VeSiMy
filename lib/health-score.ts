@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // lib/health-score.ts — uses canonical process-metrics for all calculations.
 import { calcProcessMetrics } from '@/lib/v2/process-metrics'
 import { ctSeconds } from '@/lib/v2/cycle-time-utils'

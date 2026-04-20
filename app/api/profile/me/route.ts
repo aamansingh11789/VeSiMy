@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // app/api/profile/me/route.ts
 // Lightweight endpoint to re-fetch the current user's plan fields.
 // Used by post-Stripe upgrade polling to check when the webhook has fired.

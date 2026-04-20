@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/v2/sop-parser.ts ─────────────────────────────────────────────────────
 
 import { callAI } from '@/lib/ai/ai-assist'

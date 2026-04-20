@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { AlertIcon, SearchIcon, ClockIcon, ZapIcon } from '@/components/ui/Icons'
 import { SERIF, BRAND, GREEN, AMBER, RED, NAVY } from './v2-constants'
@@ -108,7 +108,8 @@ Ask the single most important question to understand what's actually stopping th
     setChatLoading(true)
 
     try {
-      const transcript = [...messages, userMsg].map(m => `${m.role === 'user' ? 'User' : 'Supe'}: ${m.text}`).join('\n\n')
+      // FIX: limit transcript to last 12 messages to prevent context overflow
+      const transcript = [...messages, userMsg].slice(-12).map(m => `${m.role === 'user' ? 'User' : 'Supe'}: ${m.text}`).join('\n\n')
       const prompt = `Supe lean VSM brainstorm | Project: ${project.name} | Industry: ${indLabel} | Target: ${targetStatement} | PCE: ${currentReport?.va_ratio || 'unknown'}
 
 CONVERSATION:
@@ -135,7 +136,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
     setGenerating(true)
     setStage('generating')
     try {
-      const transcript = messages.map(m => `${m.role === 'user' ? 'User' : 'Supe'}: ${m.text}`).join('\n\n')
+      // FIX: limit transcript to last 12 messages to prevent context overflow
+      const transcript = messages.slice(-12).map(m => `${m.role === 'user' ? 'User' : 'Supe'}: ${m.text}`).join('\n\n')
       const res = await fetch('/api/v2/future-state', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-all-references/route.ts ─────────────────────────────
 // Seeds reference projects for 18 major industries.
 // Every project has: 5-8 steps, stopwatch, fishbone, 5 Why, waste ID,
@@ -1795,22 +1795,10 @@ export async function POST(_request: NextRequest) {
     }
 
 
-        // ── Response ──────────────────────────────────────────────────────────────
-    const allExisted = seeded.length === 0
-    return NextResponse.json({
-      id: primaryId,
-      seeded,
-      existing,
-      already_exists: allExisted,
-      message: allExisted
-        ? `All ${existing.length} reference projects already loaded`
-        : `${seeded.length} reference project${seeded.length !== 1 ? 's' : ''} added: ${seeded.join(', ')}`,
-    })
 
-  } catch (err: any) {
-    console.error('[seed-all-references]', err)
     // ══════════════════════════════════════════════════════════════════════════
     // METAL FINISHING — Job Flow: Order Receipt to Shipment
+    // (restored from catch block — was unreachable due to structural bug)
     // ══════════════════════════════════════════════════════════════════════════
     { const nm = 'Reference — Metal Finishing Job Flow'
       if (shouldSeed(nm)) {
@@ -1947,8 +1935,22 @@ export async function POST(_request: NextRequest) {
         if (!primaryId) primaryId = pid
       }
       }
-    }
+    } // closes: { const nm = 'Reference — Metal Finishing Job Flow'
 
+    // ── Response ──────────────────────────────────────────────────────────────
+    const allExisted = seeded.length === 0
+    return NextResponse.json({
+      id: primaryId,
+      seeded,
+      existing,
+      already_exists: allExisted,
+      message: allExisted
+        ? `All ${existing.length} reference projects already loaded`
+        : `${seeded.length} reference project${seeded.length !== 1 ? 's' : ''} added: ${seeded.join(', ')}`,
+    })
+
+  } catch (err: any) {
+    console.error('[seed-all-references]', err)
     return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
   }
 }

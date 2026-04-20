@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/analytics/PostHogProvider.tsx ─────────────────────────────────
 // Initialises PostHog after mount. Safe passthrough if posthog-js not installed.

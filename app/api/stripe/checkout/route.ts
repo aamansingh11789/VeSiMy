@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/stripe/checkout/route.ts ──────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { createCheckoutSession, PLANS } from '@/lib/stripe'

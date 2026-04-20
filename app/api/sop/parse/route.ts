@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/sop/parse/route.ts ────────────────────────────────────────────────
 // Universal SOP → VSM step parser.
 // Handles: STEP-prefix, numbered (1.), section X.Y, pipe-table, bullet Step A,

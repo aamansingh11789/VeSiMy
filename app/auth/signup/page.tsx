@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── app/auth/signup/page.tsx ─────────────────────────────────────────────────
 import type React from 'react'

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/ai/assist/route.ts ───────────────────────────────────────────────
 // Unified AI assist endpoint for all tool intelligence features.
 // Uses rule-based engine first (free, instant), escalates to AI for
@@ -325,7 +325,9 @@ Identify overloaded operators, suggest specific tasks to move between operators 
         const ruleResult = diagnoseStep(step || {}, Number(takt) || undefined)
 
         if (aiAvailable() && step) {
-          const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time) || 0
+          // Unit-normalise: stopwatch.mean stored in ms, cycle_time in seconds
+          const swMean = step.toolData?.stopwatch?.mean
+          const ct = swMean && swMean > 0 ? swMean / 1000 : Number(step.cycle_time) || 0
           const wt = Number(step.wait_time) || 0
           const wastes = step.toolData?.waste?.selected || []
           const openKaizens = (step.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete')

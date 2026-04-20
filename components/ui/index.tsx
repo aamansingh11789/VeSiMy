@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { CheckIcon, XIcon, InfoIcon } from '@/components/ui/Icons'
 

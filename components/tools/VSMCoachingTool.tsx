@@ -1,8 +1,9 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 
 import { useState, useCallback } from 'react'
 import { Modal } from '@/components/ui/Modal'
+import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 
 interface Props {
   steps: any[]
@@ -42,11 +43,11 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
   // 2. Takt vs CT violations
   if (takt > 0) {
     const bottlenecks = mainSteps.filter(s => {
-      const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+      const ct = ctSeconds(s)
       return ct > 0 && ct > takt * 1.05
     })
     bottlenecks.forEach(s => {
-      const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+      const ct = ctSeconds(s)
       const excess = Math.round(ct - takt)
       gaps.push({
         severity: 'critical',
@@ -86,7 +87,7 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
 
   // 5. Operator imbalance
   if (takt > 0) {
-    const cts = mainSteps.map(s => s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0).filter(ct => ct > 0)
+    const cts = mainSteps.map(s => ctSeconds(s)).filter(ct => ct > 0)
     if (cts.length > 1) {
       const max = Math.max(...cts)
       const min = Math.min(...cts)
@@ -153,7 +154,7 @@ Target PCE: 95%+
 
 Process Steps (in order):
 ${mainSteps.map((s, i) => {
-  const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+  const ct = ctSeconds(s)
   const wip = Number(s.wip) || 0
   return `${i+1}. ${s.name} | CT: ${ct || 'unknown'}s | WIP: ${wip} | Flow: ${s.flow_type || 'push'} | Classification: ${s.va_type || 'not set'}`
 }).join('\n')}

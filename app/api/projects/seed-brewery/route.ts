@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-brewery/route.ts ────────────────────────────────────
 // Craft Brewery — Batch Production Value Stream
 // Grain-In → Milling → Mashing → Lautering → Boil & Hop Addition

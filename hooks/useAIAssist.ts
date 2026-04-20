@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── hooks/useAIAssist.ts ─────────────────────────────────────────────────────
 // Universal hook for all AI assist features. Handles loading, errors,

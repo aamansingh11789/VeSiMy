@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/health/ProcessHealthScore.tsx ─────────────────────────────────
 import { useMemo } from 'react'

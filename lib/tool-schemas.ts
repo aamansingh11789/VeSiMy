@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/tool-schemas.ts ───────────────────────────────────────────────────────
 // Single source of truth for every tool's data shape.
 // Import these types in BOTH the tool component AND any reader (PDF, Supe, report).

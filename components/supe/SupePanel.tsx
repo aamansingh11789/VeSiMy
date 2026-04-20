@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { ZapIcon, ChevronDownIcon, CheckIcon } from '@/components/ui/Icons'
 // ── components/supe/SupePanel.tsx ─────────────────────────────────────────────
@@ -58,6 +58,16 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
   const [input,     setInput]     = useState('')
   const [loading,   setLoading]   = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
+
+  // Reset chat, tab, and expanded state when the user switches to a different project.
+  // Without this, the previous project's chat history persists as stale context.
+  useEffect(() => {
+    setChat([])
+    setInput('')
+    setExpanded(null)
+    setTab('findings')
+    setLoading(false)
+  }, [projectId])
 
   useEffect(() => {
     if (!isDemo) setRecs(analyzeSteps(steps))

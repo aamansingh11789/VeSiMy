@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/supe-knowledge.ts ─────────────────────────────────────────────────────
 // VeSiMy Supe AI RAG Knowledge Base — 32 discrete knowledge chunks.
 // Supe no longer uses generic web knowledge. It uses THIS as its source of truth.

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/v2/parse-sop/route.ts ─────────────────────────────────────────────
 // Accepts: multipart/form-data with a file (PDF, DOCX, TXT, RTF, MD, CSV)
 // Extracts text, calls Claude to parse into structured VSM steps.

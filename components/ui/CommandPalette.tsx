@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { FishboneIcon, FiveWhyIcon, StopwatchIcon, ZapIcon, SettingsIcon, BookIcon, RefreshIcon, VSMIcon, CreditCardIcon, FolderIcon } from '@/components/ui/Icons'
 // ── components/ui/CommandPalette.tsx ──────────────────────────────────────────

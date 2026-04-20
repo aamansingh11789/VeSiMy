@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/v2/future-state/route.ts ──────────────────────────────────────────
 // Generates a Future/Target State VSM and detailed report.
 // Input: project_id + target statement + Supe conversation transcript
@@ -196,6 +196,6 @@ Return ONLY valid JSON:
 
   } catch (err: any) {
     console.error('[future-state]', err)
-    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: 'Analysis failed. Please check your data and try again.' }, { status: 500 })
   }
 }

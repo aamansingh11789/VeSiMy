@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-industry-reference/route.ts ─────────────────────────
 // Seeds ONLY the reference project(s) for the calling user's specific industry.
 // Previously used an internal fetch() to seed-all-references which failed on

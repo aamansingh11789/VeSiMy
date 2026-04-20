@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { XIcon } from '@/components/ui/Icons'
 // ── components/beta/BetaBanner.tsx ───────────────────────────────────────────

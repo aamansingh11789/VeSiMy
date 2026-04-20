@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { AlertIcon } from '@/components/ui/Icons'
 import React from 'react'

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── hooks/useIndustryLanguage.ts ──────────────────────────────────────────────
 // Reads the current user's industry from their profile and returns translated terms.

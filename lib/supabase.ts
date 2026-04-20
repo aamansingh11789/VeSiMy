@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/supabase.ts ────────────────────────────────────────────────────────
 // Client-side Supabase only — safe to import anywhere including Client Components
 // Server-side client is in lib/supabase-server.ts

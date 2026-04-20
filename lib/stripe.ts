@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/stripe.ts ──────────────────────────────────────────────────────────
 // PROMO: SPRING25 — 20% off first payment — expires 2026-04-21
 // Setup: Stripe Dashboard > Coupons > create 20% off first_time_transaction

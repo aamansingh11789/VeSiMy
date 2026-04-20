@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 'use client'
 
 import ReportFooter from './ReportFooter'

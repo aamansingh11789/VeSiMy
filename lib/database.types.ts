@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/database.types.ts ──────────────────────────────────────────────────
 // Loose types — prevents strict Supabase client type conflicts
 

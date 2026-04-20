@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 // ── components/v2/index.ts ───────────────────────────────────────────────────
 export { V2ProjectClient }    from './V2ProjectClient'
 export { V2MapCanvas }        from './V2MapCanvas'

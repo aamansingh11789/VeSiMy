@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { TipLabel, FieldWarn } from '@/components/ui/FieldTip'
 

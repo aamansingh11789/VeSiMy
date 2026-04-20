@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-winery/route.ts ─────────────────────────────────────
 // Boutique Winery — Annual Production Value Stream
 // Harvest & Crush → Destemming → Primary Fermentation → Pressing

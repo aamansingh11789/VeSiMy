@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── app/onboarding/OnboardingClient.tsx ──────────────────────────────────────
 // 4-step guided onboarding:

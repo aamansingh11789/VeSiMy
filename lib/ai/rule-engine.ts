@@ -1,8 +1,16 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/ai/rule-engine.ts ────────────────────────────────────────────────────
 // Rule-based analysis — free forever, runs in the API route with zero cost.
 // Used as fallback when no AI key is configured, AND as a fast first pass
 // before any AI call.
+
+// Unit normalisation — stopwatch.mean is stored in ms, cycle_time in seconds
+function ruleCtSeconds(step: any): number {
+  const swMean = step.toolData?.stopwatch?.mean
+  if (swMean && swMean > 0) return swMean / 1000
+  const multipliers: Record<string, number> = { seconds: 1, minutes: 60, hours: 3600, days: 86400 }
+  return (Number(step.cycle_time) || 0) * (multipliers[step.cycle_time_unit || 'seconds'] || 1)
+}
 
 // ── Time Study interpreter ───────────────────────────────────────────────────
 export function interpretTimeStudy(laps: number[], mean: number, baseline?: number): string {
@@ -218,7 +226,7 @@ export function diagnoseStep(step: {
   toolData?: { waste?: { selected?: string[] }; fivewhy?: { rootCause?: string }; kaizen?: { items?: any[] } }
 }, takt?: number): string {
   const lines: string[] = []
-  const ct = step.toolData?.stopwatch?.mean || Number(step.cycle_time) || 0
+  const ct = ruleCtSeconds(step)
   const wt = Number(step.wait_time) || 0
   const openKaizens = (step.toolData?.kaizen?.items || []).filter((k:any) => k.status !== 'complete' && k.status !== 'verified')
   const wastes = step.toolData?.waste?.selected || []

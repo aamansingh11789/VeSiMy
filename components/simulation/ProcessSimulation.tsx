@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/simulation/ProcessSimulation.tsx ──────────────────────────────
 // Upgraded simulation with:
@@ -14,10 +14,11 @@ import { useState, useMemo, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import { ctSeconds } from '@/lib/v2/cycle-time-utils'
+import { calcProcessMetrics } from '@/lib/v2/process-metrics'
 import type { Step } from '@/lib/store'
 import { AlertIcon, ZapIcon, ActivityIcon, BarChartIcon, RefreshIcon } from '@/components/ui/Icons'
 
-interface Props { steps: Step[]; projectId: string; isPaid?: boolean }
+interface Props { steps: Step[]; projectId: string; isPaid?: boolean; project?: Record<string, any> }
 
 const fmt = (s: number) => !s ? '0s' : s < 60 ? `${Math.round(s)}s` : `${(s/60).toFixed(1)}m`
 const fmtPct = (n: number) => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`
@@ -124,7 +125,7 @@ function calcRecoveryMin(queueRisk: number, totalWIP: number, avgCT: number): nu
   return Math.round((backlogUnits * avgCT) / 60)
 }
 
-export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
+export function ProcessSimulation({ steps, projectId, isPaid = false, project }: Props) {
   const main = steps.filter(s => s.is_main_flow !== false)
 
   // Tabs
@@ -139,7 +140,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
 
   function getA(s: Step) {
     return adj[s.id] || {
-      fCT: s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0,
+      fCT:   ctSeconds(s),          // ctSeconds handles ms→s conversion for stopwatch
       fWait: Number(s.wait_time) || 0,
     }
   }
@@ -147,14 +148,23 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
     setAdj(p => ({ ...p, [s.id]: { ...getA(s), [k]: v } }))
   }
 
-  // Base metrics
-  const takt = useMemo(() => {
-    const totalCT = main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
-    return totalCT > 0 ? totalCT / main.length : 60
-  }, [main])
+  // ── Canonical base metrics via calcProcessMetrics ────────────────────────
+  // takt: project.takt_time → demand÷available_time → demand÷(working_hours×3600)
+  //   NOT avgCT (which was wrong — avgCT changes as you add steps)
+  // PCE: VA-classified steps only (not all-CT / total-LT)
+  const baseMetrics = useMemo(() => calcProcessMetrics(steps as any[], project), [steps, project])
 
-  const curLT  = useMemo(() => main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) + (Number(s.wait_time) || 0), 0), [main])
-  const curPCE = useMemo(() => curLT > 0 ? (main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0) / curLT * 100) : 0, [main, curLT])
+  const takt   = baseMetrics.takt ?? 0           // real takt; 0 = unknown
+  const curLT  = baseMetrics.leadTime             // totalCT + totalWait
+  const curPCE = baseMetrics.pce ?? 0            // VA-aware; 0 when unclassified
+
+  // avgCT for utilization bar denominator — use real takt if available, else avgCT
+  const avgCT = useMemo(() => main.length > 0
+    ? main.reduce((a, s) => a + ctSeconds(s), 0) / main.length
+    : 0,
+  [main])
+  // Effective takt for pressure bars: project takt first, else avgCT as fallback display only
+  const displayTakt = takt > 0 ? takt : (avgCT > 0 ? avgCT : 60)
 
   // Scenario computed metrics
   const scenario = useMemo(() => SCENARIOS.find(s => s.id === activeScenario), [activeScenario])
@@ -162,36 +172,55 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
   const scenarioSteps = useMemo(() => {
     if (!scenario) return main
     return main.map(s => {
-      const ct   = (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) * scenario.ctMult
+      const ct   = ctSeconds(s) * scenario.ctMult           // ctSeconds normalises ms→s
       const wait = (Number(s.wait_time) || 0) * scenario.waitMult
       return { ...s, _scenCT: ct, _scenWait: wait }
     })
   }, [main, scenario])
 
-  const scenLT       = useMemo(() => scenarioSteps.reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
-  const scenPCE      = useMemo(() => scenLT > 0 ? (scenarioSteps.reduce((a, s) => a + (s._scenCT || 0), 0) / scenLT * 100) : 0, [scenarioSteps, scenLT])
+  const scenLT  = useMemo(() => scenarioSteps.reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
+  // Scenario PCE: only VA steps are value-adding — preserve ratio from base
+  const scenPCE = useMemo(() => {
+    if (scenLT <= 0) return 0
+    const vaCT = scenarioSteps
+      .filter((s: any) => s.va_type === 'va' || s.is_value_added === 'va')
+      .reduce((a: number, s: any) => a + (s._scenCT || 0), 0)
+    return vaCT > 0 ? (vaCT / scenLT) * 100 : (curPCE * (scenLT > 0 ? curLT / scenLT : 1))
+  }, [scenarioSteps, scenLT, curPCE, curLT])
+
   const throughputImpact = useMemo(() => curLT > 0 ? ((scenLT - curLT) / curLT * 100) : 0, [curLT, scenLT])
 
-  const totalWIP     = useMemo(() => main.reduce((a, s) => a + (Number(s.wip) || 0), 0), [main])
-  const avgCT        = useMemo(() => main.length > 0 ? main.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0) / main.length : 0, [main])
+  const totalWIP = useMemo(() => main.reduce((a, s) => a + (Number(s.wip) || 0), 0), [main])
 
   const worstQueueRisk = useMemo(() => {
     if (!scenario) return 0
-    return Math.max(...scenarioSteps.map(s => calcQueueRisk(s._scenCT || 0, s._scenWait || 0, takt)))
-  }, [scenarioSteps, takt, scenario])
+    const risks = scenarioSteps.map(s => calcQueueRisk(s._scenCT || 0, s._scenWait || 0, displayTakt))
+    return risks.length > 0 ? Math.max(...risks) : 0
+  }, [scenarioSteps, displayTakt, scenario])
 
-  const recoveryMin = useMemo(() => calcRecoveryMin(worstQueueRisk, totalWIP || 10, avgCT * (scenario?.ctMult || 1)), [worstQueueRisk, totalWIP, avgCT, scenario])
+  // Fix Sim-3: don't substitute 10 when WIP=0 — use step count as proxy instead
+  const recoveryWIP = totalWIP > 0 ? totalWIP : Math.max(main.length, 1)
+  const recoveryMin = useMemo(() => calcRecoveryMin(worstQueueRisk, recoveryWIP, avgCT * (scenario?.ctMult || 1)), [worstQueueRisk, recoveryWIP, avgCT, scenario])
 
   // Manual sim metrics
   const futLT  = useMemo(() => main.reduce((a, s) => { const a_ = getA(s); return a + a_.fCT + a_.fWait }, 0), [main, adj])
-  const futPCE = useMemo(() => futLT > 0 ? (main.reduce((a, s) => a + getA(s).fCT, 0) / futLT * 100) : 0, [main, adj, futLT])
+  const futPCE = useMemo(() => {
+    if (futLT <= 0) return 0
+    const futureCT = main.reduce((a, s) => a + getA(s).fCT, 0)
+    // Preserve VA ratio from base: if base is VA-classified use VA fraction, else total fraction
+    const vaFraction = curLT > 0 && curPCE > 0 ? (curPCE / 100) : 1
+    return (futureCT * vaFraction / futLT) * 100
+  }, [main, adj, futLT, curPCE, curLT])
   const saved  = curLT - futLT
 
   async function save() {
     setSaving(true)
     const { error } = await createClient().from('process_simulations').insert({
       project_id: projectId, name: activeScenario ? `Stress: ${scenario?.label}` : 'Future State',
-      simulation_steps: Object.entries(adj).map(([id, a]) => ({ step_id: id, ct: a.fCT, wait: a.fWait })),
+      simulation_steps: Object.entries(adj).map(([id, a]) => {
+        const entry = a as { fCT: number; fWait: number }
+        return { step_id: id, ct: entry.fCT, wait: entry.fWait }
+      }),
       current_lead_time: curLT, future_lead_time: futLT, lead_time_savings: saved,
     })
     if (error) toast.error('Save failed')
@@ -213,7 +242,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
           ['Current LT',  fmt(curLT),                        'var(--text2)'],
           ['Current PCE', `${curPCE.toFixed(1)}%`,           'var(--brand)'],
           ['Steps',       String(main.length),                'var(--text2)'],
-          ['Avg Takt',    fmt(takt),                          'var(--text3)'],
+          ['Takt Time',   takt > 0 ? fmt(takt) : `~${fmt(avgCT)} (avg)`,    takt > 0 ? 'var(--text2)' : 'var(--text3)'],
         ].map(([l, v, c]) => (
           <div key={l} style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 3 }}>{l}</div>
@@ -301,7 +330,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
                   {scenarioSteps.map((s: any) => {
                     const ct   = s._scenCT || 0
                     const wait = s._scenWait || 0
-                    const util = takt > 0 ? Math.min((ct / takt) * 100, 100) : 0
+                    const util = Math.min((ct / displayTakt) * 100, 100)
                     const queueDepth = Math.round((wait / (ct || 1)) * (Number(s.wip) || 3))
                     const state = getPressureState(util)
                     const color = PRESSURE_COLOR[state]
@@ -415,9 +444,9 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
           </button>
           {main.map(s => {
             const a = getA(s)
-            const origCT = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+            const origCT = ctSeconds(s)  // ms→s normalised
             const origW  = Number(s.wait_time) || 0
-            const util   = takt > 0 ? Math.min((origCT / takt) * 100, 100) : 0
+            const util   = Math.min((origCT / displayTakt) * 100, 100)
             const state  = getPressureState(util)
             return (
               <div key={s.id} style={{ background: PRESSURE_BG[state], border: `1px solid ${PRESSURE_COLOR[state]}33`, borderRadius: 9, padding: 14, marginBottom: 10 }}>
@@ -462,10 +491,10 @@ export function ProcessSimulation({ steps, projectId, isPaid = false }: Props) {
             <tbody>
               {main.map(s => {
                 const a    = getA(s)
-                const oCT  = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                const oCT  = ctSeconds(s)  // ms→s normalised
                 const oW   = Number(s.wait_time) || 0
                 const dLT  = (a.fCT + a.fWait) - (oCT + oW)
-                const util = takt > 0 ? Math.min((oCT / takt) * 100, 100) : 0
+                const util = Math.min((oCT / displayTakt) * 100, 100)
                 const state = getPressureState(util)
                 return (
                   <tr key={s.id} style={{ borderBottom: '1px solid var(--border)' }}>

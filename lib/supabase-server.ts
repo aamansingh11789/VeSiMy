@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/supabase-server.ts ─────────────────────────────────────────────────
 // Server-side Supabase client — for Server Components and Server Actions only.
 // Route Handlers (like auth/callback) must NOT use this — they need to write

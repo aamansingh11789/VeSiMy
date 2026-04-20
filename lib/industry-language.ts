@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/industry-language.ts ──────────────────────────────────────────────────
 // Industry-specific terminology mapping for VeSiMy.
 // Every lean term is translated to the native language of each industry.

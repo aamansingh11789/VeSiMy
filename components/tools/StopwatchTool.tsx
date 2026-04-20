@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { ClockIcon } from '@/components/ui/Icons'
 import { FieldTip, FieldWarn, TipLabel, clampMin, timeWarn, secToHuman } from '@/components/ui/FieldTip'

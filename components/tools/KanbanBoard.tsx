@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { XIcon, EditIcon } from '@/components/ui/Icons'
 // ── components/tools/KanbanBoard.tsx ────────────────────────────────────────

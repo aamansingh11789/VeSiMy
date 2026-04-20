@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import React from 'react'
 // ── app/auth/login/page.tsx ────────────────────────────────────────────────

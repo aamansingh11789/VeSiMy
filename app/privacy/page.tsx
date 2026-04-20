@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 // ── app/privacy/page.tsx ──────────────────────────────────────────────────────
 import type React from 'react'
 import Link from 'next/link'

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/v2/analyze/route.ts ────────────────────────────────────────────────
 // Generates the Current State Analysis report for a V2 project.
 // Reads all steps + tasks, calls Claude with lean methodology knowledge,
@@ -89,8 +89,8 @@ export async function POST(request: NextRequest) {
       step_id: s.id,
       step_name: s.name,
       step_type: s.step_type,
-      ...determineCITool(s, taktTime),
-      priority: (s.defect_rate > 5 || (s.cycle_time > (project.takt_time || 99999))) ? 'critical' : 'standard',
+      ...determineCITool(s, taktTime2 ?? 0),
+      priority: (s.defect_rate > 5 || (taktTime2 && taktTime2 > 0 && ctSeconds(s) > taktTime2)) ? 'critical' : 'standard',
     })) || []
 
     const missingInfo = steps?.flatMap((s: any) =>
@@ -224,6 +224,6 @@ Return this JSON only, no markdown:
 
   } catch (err: any) {
     console.error('[analyze]', err)
-    return NextResponse.json({ error: 'An error occurred. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: 'Analysis failed. Please check your data and try again.' }, { status: 500 })
   }
 }

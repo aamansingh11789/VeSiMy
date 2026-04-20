@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 // ── app/project/[id]/page.tsx ─────────────────────────────────────────────────
 // Routes to V1 ProjectClient or V2ProjectClient based on project.version.
 

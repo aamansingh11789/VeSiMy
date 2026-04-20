@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { ZapIcon, CheckIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import React from 'react'
@@ -107,6 +107,12 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       animation: 'slideIn .2s ease',
     }}>
       <style>{`@keyframes slideIn { from { transform: translateX(24px); opacity: 0 } to { transform: none; opacity: 1 } }`}</style>
+      {/* Mobile drag handle — only visible on small screens via CSS */}
+      <div style={{
+        display: 'none', // shown via CSS on mobile
+        width: 40, height: 4, background: 'var(--sl-300)',
+        borderRadius: 999, margin: '10px auto 4px', flexShrink: 0,
+      }} className="step-panel-handle" />
 
       {/* Header */}
       <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
@@ -323,7 +329,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       </div>
 
       {/* Save footer */}
-      <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', flexShrink: 0, background: 'white' }}>
+      <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid var(--border)', flexShrink: 0, background: 'white' }}>
         <button onClick={save} disabled={saving} style={{
           width: '100%', padding: '11px 0', borderRadius: 9, border: 'none',
           background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)',

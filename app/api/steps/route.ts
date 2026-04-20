@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/steps/route.ts ───────────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -16,6 +16,20 @@ export async function POST(request: NextRequest) {
   const projectId = body.projectId || body.project_id
 
   if (!projectId) return NextResponse.json({ error: 'projectId required' }, { status: 400 })
+
+  // Security: verify the project belongs to the authenticated user before creating a step.
+  // This is a defence-in-depth check — RLS is the last line, but this prevents
+  // any server-side trust bypass if RLS policies are misconfigured.
+  const { data: projectCheck, error: projectCheckError } = await supabase
+    .from('projects')
+    .select('id')
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+    .single()
+
+  if (projectCheckError || !projectCheck) {
+    return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+  }
 
   // Get max position for this project
   const { data: existing } = await supabase

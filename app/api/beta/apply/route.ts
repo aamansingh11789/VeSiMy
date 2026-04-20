@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/beta/apply/route.ts ───────────────────────────────────────────────
 // Early Access: everyone is auto-approved during the launch window
 // Scoring kept for analytics / future use

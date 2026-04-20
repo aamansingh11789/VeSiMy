@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/ui/ServiceWorkerRegistration.tsx ───────────────────────────────
 // Registers the service worker. Must be a client component.

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import React from 'react'
 // ── components/ui/IndustryWatermark.tsx ───────────────────────────────────────

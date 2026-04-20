@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/v2/migrate/route.ts ────────────────────────────────────────────────
 // Migrates a V1 project to V2 format.
 // Maps existing steps to new V2 columns with sensible defaults.

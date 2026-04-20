@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── hooks/useProject.ts ────────────────────────────────────────────────────
 // Central hook for cloud-synced project state

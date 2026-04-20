@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-realestate/route.ts ─────────────────────────────────
 // Creates a fully-populated Real Estate demo project.
 // Value stream: Lead Inquiry → Qualify → Property Search → Offer → Inspection

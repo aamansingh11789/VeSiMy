@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // lib/supe-engine.ts — rule-based lean analysis engine.
 // Uses main-flow steps only and canonical ctSeconds() for all CT values.
 import { ctSeconds } from '@/lib/v2/cycle-time-utils'

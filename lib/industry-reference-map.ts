@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/industry-reference-map.ts ─────────────────────────────────────────────
 // Single source of truth for:
 //   1. INDUSTRY_REFERENCE_NAMES — maps every industry ID → reference project name(s)

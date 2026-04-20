@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { AlertIcon, ActivityIcon } from '@/components/ui/Icons'
 // ── components/live/LiveFloorPanel.tsx ───────────────────────────────────────

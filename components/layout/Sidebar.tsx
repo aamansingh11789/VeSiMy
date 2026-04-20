@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/layout/Sidebar.tsx ─────────────────────────────────────────
 // Self-contained collapsible sidebar. Manages its own open/closed state and
@@ -56,10 +56,18 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
     setMounted(true)
     if (!forcedCollapsed) {
       const saved = localStorage.getItem(LS_KEY) === 'true'
-      // FIX: always collapse sidebar on mobile so content isn't squeezed
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-      if (saved || isMobile) setCollapsed(true)
+      if (saved || isMobile) {
+        // Set CSS var immediately so main doesn't start at 240px then jump to 56px
+        document.documentElement.style.setProperty('--sidebar-w', `${W_COLLAPSED}px`)
+        setCollapsed(true)
+      }
     }
+    // FIX: add sidebar-ready after state is set — enables the transition animation
+    // only after the initial sidebar width is stable. Prevents the "vibration" on load.
+    requestAnimationFrame(() => {
+      document.documentElement.classList.add('sidebar-ready')
+    })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync CSS variable + localStorage on every change (after mount)

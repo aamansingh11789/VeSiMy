@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled — @ts-nocheck removed as part of quality pass
 // ── lib/db.ts ────────────────────────────────────────────────────────────────
 // Vesimy database access layer
 // All Supabase queries go through here — keeps components clean
@@ -131,13 +131,21 @@ export async function createProject(form: Partial<Project>): Promise<Project> {
   const { data, error } = await db
     .from('projects')
     .insert({
-      user_id: user.id,
-      name: form.name || 'New Project',
-      description: form.description || null,
-      industry: form.industry || null,
-      customer: form.customer || null,
-      state: form.state || 'current',
-      status: 'active',
+      user_id:      user.id,
+      name:         form.name         || 'New Project',
+      description:  form.description  || null,
+      industry:     form.industry     || null,
+      customer:     form.customer     || null,
+      state:        form.state        || 'current',
+      status:       'active',
+      // VSM context fields — persist from creation if provided
+      product:             (form as any).product             || null,
+      supplier:            (form as any).supplier            || null,
+      demand:              (form as any).demand              ? Number((form as any).demand)              : null,
+      working_hours:       (form as any).working_hours       ? Number((form as any).working_hours)       : null,
+      shifts:              (form as any).shifts              ? Number((form as any).shifts)              : null,
+      available_time_sec:  (form as any).available_time_sec  ? Number((form as any).available_time_sec)  : null,
+      takt_time:           (form as any).takt_time           ? Number((form as any).takt_time)           : null,
     })
     .select()
     .single()
@@ -440,7 +448,10 @@ export async function createBranch(projectId: string, form: {
 
   if (projectErr || !projectRow) throw new Error('Project not found')
 
-  const branchId = `branch-${Date.now()}`
+  // FIX: use randomUUID() — Date.now() caused collisions on simultaneous creation
+  const branchId = typeof crypto !== 'undefined' && crypto.randomUUID
+    ? `branch-${crypto.randomUUID()}`
+    : `branch-${Date.now()}-${Math.random().toString(36).slice(2,9)}`
 
   const { data: existing, error: posErr } = await db
     .from('branches')

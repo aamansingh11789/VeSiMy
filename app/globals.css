@@ -120,7 +120,11 @@ body {
     url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
   background-size: 256px 256px;
 }
-main { transition: margin-left 0.22s cubic-bezier(.4,0,.2,1); }
+/* FIX: transition only after sidebar has stabilised (class added by Sidebar after mount)
+   Without this, on mobile the sidebar starts at 240px then collapses to 56px,
+   causing main to slide 184px = the "vibration" users reported */
+main { transition: none; }
+.sidebar-ready main { transition: margin-left 0.22s cubic-bezier(.4,0,.2,1); }
 
 
 #__next, main {
@@ -594,7 +598,7 @@ body.modal-open main { padding-bottom: 0 !important; }
   aside { display: none !important; }
   .bottom-nav { display: flex !important; }
   main {
-    margin-left: 0 !important;
+    margin-left: 0 !important; /* FIX: override the JS-set --sidebar-w var on mobile */
     padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .app-page-wrapper { padding: 12px !important; }
@@ -860,5 +864,177 @@ body.modal-open {
     /* BottomNav is 64px + safe area — body must not be obscured */
     padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
     overflow-y: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE OVERHAUL — All fixes for phone usability
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── FIX: Default --sidebar-w to 0 on mobile so there's no flash-of-240px ── */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 0px !important; }
+}
+
+/* ── FIX: Dashboard cards on mobile — full width, readable ──────────────── */
+@media (max-width: 768px) {
+  /* Project cards stack cleanly */
+  .project-card-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 0 !important;
+  }
+
+  /* Dashboard main padding reduced */
+  .dashboard-main {
+    padding: 16px 14px calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Dashboard header stacks on small screens */
+  .dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* Stat strip scrolls horizontally */
+  .dashboard-stats {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 10px !important;
+  }
+  .dashboard-stats::-webkit-scrollbar { display: none; }
+}
+
+/* ── FIX: V2 Project page mobile layout ─────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Top bar must not wrap or overflow */
+  .v2-topbar-essential {
+    display: flex !important;
+    min-width: 0 !important;
+  }
+
+  /* V2 content area: clear BottomNav */
+  .v2-body {
+    padding-bottom: 0 !important;  /* body is overflow:hidden — child panels scroll */
+  }
+
+  /* V2 tab content panels: add bottom padding for BottomNav */
+  .v2-tab-content-scroll {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* V2 canvas controls: smaller buttons on mobile */
+  .v2-canvas-controls button {
+    font-size: 8px !important;
+    padding: 3px 7px !important;
+    min-height: 28px !important;
+  }
+}
+
+/* ── FIX: V2 Step Panel — bottom sheet on mobile ────────────────────────── */
+@media (max-width: 768px) {
+  .v2-step-panel {
+    position: fixed !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 75dvh !important;
+    max-height: 75dvh !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    border-radius: 18px 18px 0 0 !important;
+    box-shadow: 0 -12px 40px rgba(0,0,0,0.18) !important;
+    z-index: 300 !important;
+    /* Push save button above home indicator */
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ── FIX: Tool modals on mobile — prevent iOS keyboard push ─────────────── */
+@media (max-width: 768px) {
+  /* Modals anchor to bottom, not center — keyboard doesn't push them off screen */
+  .vesimy-modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .vesimy-modal {
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 90dvh !important;
+    width: 100% !important;
+  }
+  /* Tool modal body scrolls independently */
+  .vesimy-modal-body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+}
+
+/* ── FIX: Tab dropdown on mobile — larger touch target ──────────────────── */
+@media (max-width: 768px) {
+  .v2-tab-dropdown select {
+    font-size: 16px !important;   /* prevents iOS auto-zoom on focus */
+    padding: 10px 14px !important;
+    min-height: 44px !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+    background: white !important;
+    border: 1px solid var(--border) !important;
+  }
+}
+
+/* ── FIX: Bottom nav — correct height and safe area ─────────────────────── */
+@media (max-width: 768px) {
+  .bottom-nav {
+    height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+  /* All page main areas must clear the bottom nav */
+  main {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ── FIX: Minimum 44px tap targets everywhere on mobile ─────────────────── */
+@media (max-width: 768px) {
+  button:not(.n-hamburger span),
+  [role="button"],
+  .bottom-nav-item,
+  .nav-link,
+  select {
+    min-height: 44px;
+  }
+  /* Inline icon buttons in V2 can be smaller */
+  .v2-icon-btn { min-height: 32px !important; }
+}
+
+/* ── FIX: Supe panel on mobile — full screen overlay ────────────────────── */
+@media (max-width: 768px) {
+  .supe-desktop-panel { display: none !important; }
+}
+
+/* ── FIX: Page titles on mobile — don't overflow ────────────────────────── */
+@media (max-width: 768px) {
+  h1, h2, .page-title {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+
+/* ── FIX: Prevent overscroll bounce revealing white background ──────────── */
+html, body {
+  overscroll-behavior-y: none;
+  background-color: var(--bg, #F3F3F3);
+}
+
+/* ── FIX: Step panel drag handle (mobile only) ──────────────────────────── */
+@media (max-width: 768px) {
+  .step-panel-handle {
+    display: block !important;
   }
 }

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 import { CheckIcon, XIcon } from '@/components/ui/Icons'
 // ── components/promo/PromoCodeInput.tsx ──────────────────────────────────────

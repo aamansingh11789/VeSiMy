@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
@@ -16,6 +16,8 @@ import { StepModal } from '@/components/tools/StepModal'
 import { BranchModal } from '@/components/tools/BranchModal'
 import { ToolModal } from '@/components/tools/ToolModal'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { calcProcessMetrics, fmtPCE, pceColor as calcPceColor } from '@/lib/v2/process-metrics'
+import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 import { KanbanBoard } from '@/components/tools/KanbanBoard'
 import YamazumiTool from '@/components/tools/YamazumiTool'
 import StandardWorkTool from '@/components/tools/StandardWorkTool'
@@ -107,6 +109,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [supeOpen, setSupeOpen] = useState(true)
 
   const isPaid = isPaidProfile(profile)
+  const { track } = useAnalytics()
 
   useEffect(() => {
     fetchBranches(project.id)
@@ -290,26 +293,30 @@ export function ProjectClient({ initialProject, profile }: Props) {
     }
   }
 
-  const mainSteps = steps.filter(s => s.is_main_flow !== false)
-  const totalCT = mainSteps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
-  const totalWait = mainSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
-  const totalWIP = steps.reduce((a, s) => a + (Number(s.wip) || 0), 0)
+  // ── Canonical metrics — single source of truth ───────────────────────────
+  // All header bar stats, VSM, report, and coaching tools draw from here.
+  // calcProcessMetrics uses VA-only steps for PCE, canonical ctSeconds() for CT,
+  // and correctly prioritises available_time_sec over working_hours for takt.
+  const {
+    mainSteps,
+    totalCT,
+    totalWait,
+    totalWIP,
+    pce: pceNum,
+    takt: taktCalc,
+  } = calcProcessMetrics(steps as any[], project as any)
+
+  const takt = taktCalc ?? 0
+
+  // Open kaizens: exclude both 'complete' AND 'verified'
   const openKZ = steps.reduce((a, s) =>
-    a + (s.toolData?.kaizen?.items?.filter((i: any) => i.status !== 'complete').length || 0), 0)
-  const availSec = project.available_time_sec
-    ? Number(project.available_time_sec)
-    : project.working_hours ? Number(project.working_hours) * 3600 : 0
-  const takt = project.takt_time
-    ? Number(project.takt_time)
-    : (project.demand && availSec ? availSec / Number(project.demand) : 0)
-  const pceNum = totalCT + totalWait > 0
-    ? Math.min(100, (totalCT / (totalCT + totalWait)) * 100)
-    : null
-  const pce = pceNum !== null ? `${pceNum.toFixed(0)}%` : '—'
-  const pceColor = pceNum === null ? '#0176D3'
-    : pceNum >= 90 ? '#1DD1A1'
-    : pceNum >= 60 ? '#0176D3'
-    : '#FF6B6B'
+    a + (s.toolData?.kaizen?.items?.filter(
+      (i: any) => i.status !== 'complete' && i.status !== 'verified'
+    ).length || 0), 0)
+
+  // Display strings
+  const pce = fmtPCE(pceNum)
+  const pceColor = calcPceColor(pceNum)
 
   return (
     <div
@@ -427,7 +434,6 @@ export function ProjectClient({ initialProject, profile }: Props) {
             }}
           >
             Journal
-            <span className="action-btn-label">Journal</span>
           </button>
 
           <button
@@ -578,6 +584,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             <div style={{ padding: 20 }}>
               <BuilderTab
                 steps={steps}
+                takt={takt}
                 dragIdx={dragIdx}
                 onAddStep={() => {
                   setEditingStep(null)
@@ -726,7 +733,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
           {tab === 'simulation' && (
             isPaid
-              ? <div style={{ padding: 24 }}><ProcessSimulation steps={steps} projectId={project.id} /></div>
+              ? <div style={{ padding: 24 }}><ProcessSimulation steps={steps} projectId={project.id} project={project as any} /></div>
               : <PaywallGate feature="Process Simulation" />
           )}
 
@@ -942,7 +949,6 @@ export function ProjectClient({ initialProject, profile }: Props) {
       <div
         className="mobile-fabs"
         style={{
-          display: 'none',
           position: 'fixed',
           bottom: '80px',
           right: '16px',
@@ -1079,11 +1085,18 @@ export function ProjectClient({ initialProject, profile }: Props) {
           initialData={pdcaData || mainSteps[0]?.toolData?.pdca_project || steps[0]?.toolData?.pdca_project || null}
           onSave={async (data) => {
             setPdcaData(data)
-            // Save against first main-flow step — fallback to any first step
+            // Save against first main-flow step, fallback to any step
             const pdcaStep = mainSteps[0] || steps[0]
             if (pdcaStep?.id) {
               try { await saveToolData(pdcaStep.id, 'pdca_project', data) }
-              catch (e) { console.error('PDCA save error:', e) }
+              catch (e) {
+                console.error('PDCA save error:', e)
+                showToast('PDCA save failed — please add at least one step and try again', 'error')
+                return // don't close modal on save failure
+              }
+            } else {
+              // No steps exist — PDCA data held in local state only, warn the user
+              showToast('Add a process step first to persist PDCA data across sessions', 'info')
             }
             setShowPDCA(false)
           }}
@@ -1139,6 +1152,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
 interface BuilderTabProps {
   steps: Step[]
+  takt: number
   dragIdx: number | null
   onAddStep: () => void
   onEdit: (s: Step) => void
@@ -1171,7 +1185,7 @@ function PaywallGate({ feature }: { feature: string }) {
   )
 }
 
-function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDragStart, onDrop, onImportSOP }: BuilderTabProps) {
+function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool, onDragStart, onDrop, onImportSOP }: BuilderTabProps) {
   const mainSteps = useMemo(() => steps.filter(s => s.is_main_flow !== false).sort((a, b) => a.position - b.position), [steps])
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const allExpanded = mainSteps.length > 0 && expandedIds.size === mainSteps.length
@@ -1252,6 +1266,7 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
           key={step.id}
           step={step}
           index={idx}
+          takt={takt}
           onEdit={() => onEdit(step)}
           onDelete={() => onDelete(step.id)}
           onTool={tool => onTool(tool, step.id)}
@@ -1288,6 +1303,7 @@ function BuilderTab({ steps, dragIdx, onAddStep, onEdit, onDelete, onTool, onDra
 interface StepCardProps {
   step: Step
   index: number
+  takt: number
   onEdit: () => void
   onDelete: () => void
   onTool: (t: string) => void
@@ -1295,14 +1311,15 @@ interface StepCardProps {
   onDrop: () => void
 }
 
-function StepCard({ step, index, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {
+function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {
   const [over, setOver] = useState(false)
   const sw = step.toolData?.stopwatch
   const wastes = step.toolData?.waste?.selected?.length || 0
-  const kzOpen = (step.toolData?.kaizen?.items || []).filter((i: any) => i.status !== 'complete').length
+  const kzOpen = (step.toolData?.kaizen?.items || []).filter((i: any) => i.status !== 'complete' && i.status !== 'verified').length
   const isSM = step.flow_type === 'supermarket'
   const ct = sw?.mean || Number(step.cycle_time) || 0
-  const isBN = false // bottleneck calculated at map level
+  // Show bottleneck badge when CT exceeds takt (if takt is known)
+  const isBN = takt > 0 && ct > takt
 
   return (
     <div
@@ -1466,14 +1483,21 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
   const [showPDCA, setShowPDCA] = useState(false)
 
-  const takt = project.takt_time ? Number(project.takt_time) : 0
-  const totalCT = steps.reduce((a, s) => a + (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0), 0)
-  const totalWT = steps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
-  const pceNum = totalCT + totalWT > 0 ? Math.round(totalCT / (totalCT + totalWT) * 100) : 0
-  const bottleneck = takt > 0
-    ? steps.filter(s => (s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0) > takt)
-        .sort((a, b) => (b.toolData?.stopwatch?.mean || Number(b.cycle_time) || 0) - (a.toolData?.stopwatch?.mean || Number(a.cycle_time) || 0))[0]
-    : null
+  // Canonical metrics — main-flow only, VA-aware PCE, correct takt resolution
+  const {
+    mainSteps: reportSteps,
+    totalCT,
+    totalWait: totalWT,
+    pce: pceNum,
+    takt: taktCalc,
+    bottleneck,
+  } = calcProcessMetrics(steps as any[], project as any)
+
+  const takt = taktCalc ?? 0
+  // pceNum is null when no VA-classified steps exist; display as '—' in that case
+  const pceDisplay = pceNum !== null ? Math.round(pceNum) : 0
+
+  // Open kaizens across ALL steps (branches included) — board-level count
   const openKaizens = steps.reduce((a, s) =>
     a + ((s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete' && k.status !== 'verified').length), 0)
 
@@ -1488,7 +1512,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           loading={aiLoading}
           onClick={() => aiAssist('report_summary', {
             projectName: project.name,
-            steps, pce: pceNum, takt,
+            steps: reportSteps, pce: pceDisplay, takt,
             bottleneck: bottleneck?.name,
             totalCT, totalWT, openKaizens,
           })}
@@ -1508,12 +1532,12 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       {/* Key metrics */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 20 }}>
         {[
-          { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
-          { label: 'Process Cycle Efficiency', val: `${pceNum}%`, color: pceNum >= 60 ? '#1DD1A1' : '#FF6B6B' },
-          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)}min` : '—', color: 'var(--text)' },
-          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
-          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },
+          { label: 'Steps Mapped',             val: String(reportSteps.length),                                                                  color: 'var(--text)' },
+          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : '—',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#FF6B6B') : 'var(--text3)' },
+          { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : '—',                                                          color: 'var(--text)' },
+          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : '—',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
+          { label: 'Bottleneck',               val: bottleneck?.name || '—',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
@@ -1522,8 +1546,8 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
         ))}
       </div>
 
-      {/* Step breakdown table */}
-      {steps.length > 0 && (
+      {/* Step breakdown table — main-flow steps only (branches excluded from process report) */}
+      {reportSteps.length > 0 && (
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
           <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
             Process Step Summary
@@ -1538,20 +1562,22 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                 </tr>
               </thead>
               <tbody>
-                {steps.map((s, i) => {
-                  const ct = s.toolData?.stopwatch?.mean || Number(s.cycle_time) || 0
+                {reportSteps.map((s: any, i: number) => {
+                  const ct = ctSeconds(s)   // handles stopwatch ms→s + cycle_time_unit
                   const wt = Number(s.wait_time) || 0
                   const wastes = (s.toolData?.waste?.selected || []).length
                   const openK = (s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete' && k.status !== 'verified').length
-                  const isBN = takt > 0 && ct > takt
+                  // Bottleneck: use takt if set; else flag if CT > 1.5× avg
+                  const avgCT = totalCT / Math.max(reportSteps.length, 1)
+                  const isBN = takt > 0 ? ct > takt : (avgCT > 0 && ct > avgCT * 1.5)
                   return (
                     <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--bg3)', borderTop: '1px solid var(--border)' }}>
                       <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
                         {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? `${ct}s` : '—'}</td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? `${wt}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? fmtS(wt) : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#0176D3' }}>
                           {(s.va_type || 'VA').toUpperCase()}
@@ -1656,20 +1682,9 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
   onTool: (stepId: string, tool: string) => void
 }) {
 
-  // ── Prevent body scroll when any modal is open (mobile UX) ──────────────
-  useEffect(() => {
-    const anyModal = showPDCA || showYamazumi || showStopwatch || showFiveWhy ||
-      showIshikawa || showWaste || showKaizen || showSMED || showImprovement ||
-      showStandardWork || showVSMCoach || showSupe
-    if (anyModal) {
-      document.body.classList.add('modal-open')
-    } else {
-      document.body.classList.remove('modal-open')
-    }
-    return () => document.body.classList.remove('modal-open')
-  }, [showPDCA, showYamazumi, showStopwatch, showFiveWhy, showIshikawa,
-      showWaste, showKaizen, showSMED, showImprovement, showStandardWork,
-      showVSMCoach, showSupe])
+  // Body-scroll locking is handled at the root ProjectClient level via Modal
+  // component. The prior implementation here referenced 13 undefined state
+  // variables from a deleted parent scope — removed to prevent crash on mount.
 
   return (
     <div>

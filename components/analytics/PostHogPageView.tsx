@@ -1,4 +1,4 @@
-// @ts-nocheck
+// TypeScript enabled
 'use client'
 // ── components/analytics/PostHogPageView.tsx ─────────────────────────────────
 // Fires $pageview on every navigation. Uses window.posthog — no hook imports.
