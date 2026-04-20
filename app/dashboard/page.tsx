@@ -22,8 +22,7 @@ export default async function DashboardPage() {
         *,
         steps(
           id, cycle_time, cycle_time_unit, wait_time,
-          is_main_flow, va_type, defect_rate,
-          tool_data(tool, data)
+          is_main_flow, va_type, defect_rate
         )
       `)
       .eq('user_id', user.id)
@@ -34,16 +33,11 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
-  // Hydrate toolData on each step so getProjectScore can read stopwatch.mean
+  // Pass steps directly — tool_data is not fetched here to avoid RLS conflicts.
+  // getProjectScore uses cycle_time and va_type which are on the steps row directly.
   const projects = (rawProjects || []).map((p: any) => ({
     ...p,
-    steps: (p.steps || []).map((s: any) => ({
-      ...s,
-      toolData: Object.fromEntries(
-        (s.tool_data || []).map((td: any) => [td.tool, td.data])
-      ),
-      tool_data: undefined,
-    })),
+    steps: (p.steps || []).map((s: any) => ({ ...s, toolData: {} })),
   }))
 
   // Gate: only send genuinely new users to onboarding.
