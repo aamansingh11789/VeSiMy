@@ -36,7 +36,7 @@ function getAnalysisKnowledge(forTags?: string[]): string {
 function determineCITool(step: any, taktTime = 0): { tool: string; reason: string } {
   if ((step.defect_rate || 0) > 5)
     return { tool: 'fishbone', reason: `Defect rate ${step.defect_rate}% — map root causes across all categories` }
-  if (taktTime2 && taktTime2 > 0 && ctSeconds(step) > taktTime2)
+  if (taktTime && taktTime > 0 && ctSeconds(step) > taktTime)
     return { tool: 'stopwatch', reason: 'Cycle time exceeds takt — time study needed to establish accurate baseline' }
   if ((step.wait_time || 0) > (step.cycle_time || 1) * 2)
     return { tool: 'waste', reason: 'Wait time exceeds process time — significant waiting waste identified' }
