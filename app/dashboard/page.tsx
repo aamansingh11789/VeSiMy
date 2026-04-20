@@ -18,13 +18,7 @@ export default async function DashboardPage() {
   const [{ data: profile }, { data: rawProjects }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('projects')
-      .select(`
-        *,
-        steps(
-          id, cycle_time, cycle_time_unit, wait_time,
-          is_main_flow, va_type, defect_rate
-        )
-      `)
+      .select('*')
       .eq('user_id', user.id)
       .eq('status', 'active')
       .order('updated_at', { ascending: false })
@@ -33,12 +27,9 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
-  // Pass steps directly — tool_data is not fetched here to avoid RLS conflicts.
-  // getProjectScore uses cycle_time and va_type which are on the steps row directly.
-  const projects = (rawProjects || []).map((p: any) => ({
-    ...p,
-    steps: (p.steps || []).map((s: any) => ({ ...s, toolData: {} })),
-  }))
+  // No steps join — avoids RLS conflicts on nested tables.
+  // Project cards on dashboard use project-level metadata only.
+  const projects = (rawProjects || []).map((p: any) => ({ ...p, steps: [] }))
 
   // Gate: only send genuinely new users to onboarding.
   // Existing users who already have an industry set are considered onboarded
