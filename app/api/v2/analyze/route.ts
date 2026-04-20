@@ -81,6 +81,7 @@ export async function POST(request: NextRequest) {
     // Backwards-compat names for prompt / report assembly below
     const vaSteps    = mainSteps.filter((s: any) => s.va_type === 'va' || s.is_value_added === 'va')
     const missingCT  = mainSteps.filter((s: any) => ctSeconds(s) === 0)
+    const stepsWithCT = mainSteps.filter((s: any) => ctSeconds(s) > 0)
     const stepsWithDefects = mainSteps.filter((s: any) => (s.defect_rate || 0) > 3)
 
     // ── Per-step CI suggestions (rule-based first) ─────────────────────────
@@ -167,6 +168,14 @@ Return this JSON only, no markdown:
       if (secs < 172800) return `${(secs/3600).toFixed(1)} hours`
       return `${(secs/86400).toFixed(1)} days`
     }
+
+    // ── Determine next report version for this project ─────────────────────
+    const { count: existingCount } = await supabase
+      .from('analysis_reports')
+      .select('*', { count: 'exact', head: true })
+      .eq('project_id', project_id)
+      .eq('user_id', user.id)
+    const nextVersion = (existingCount ?? 0) + 1
 
     // ── Assemble full report ───────────────────────────────────────────────
     const report = {
