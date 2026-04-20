@@ -21,7 +21,8 @@ export type StepType = 'process'|'decision'|'delay'|'inspection'|'transport'|'st
 export interface ParsedStep {
   position: number; name: string; step_type: StepType
   tasks: string[]; governing_entity: string; department: string; notes: string
-  cycle_time_type: 'measured'|'assumed'; cycle_time_unit: string
+  cycle_time?: number; cycle_time_type: 'measured'|'assumed'; cycle_time_unit: string
+  setup_time?: number; uptime?: number
   missing_info_flags: string[]; from_sop: boolean; sop_original_text: string
   wip: number; operators: number; defect_rate: number; wait_time: number
   flow_type: 'push'|'supermarket'
