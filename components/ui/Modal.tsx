@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom'
 
 interface ModalProps {
   title: string
-  children: React.ReactNode
+  children?: React.ReactNode
   onClose: () => void
   onSave?: () => void
   saveLabel?: string

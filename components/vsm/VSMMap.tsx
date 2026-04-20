@@ -266,7 +266,7 @@ export function VSMMap({ steps, branches, project }: Props) {
       const x = sx(i)
       const wip = Number(step.wip) || 0
       // Inventory type: supermarket if flow_type='supermarket' or wip>threshold
-      const isSM = step.flow_type === 'supermarket' || step.flow_type === 'pull'
+      const isSM = step.flow_type === 'supermarket' || (step.flow_type as string) === 'pull'
       const ct = ctSeconds(step)   // ms→s normalised
       const isBN = takt>0 && ct>0 && ct>takt*1.05
 

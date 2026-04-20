@@ -53,6 +53,9 @@ export async function extractTextFromFile(buffer: Buffer, filename: string, mime
 }
 
 export async function parseSOP(rawText: string, industryId: string): Promise<ParsedSOP> {
+  const t = getIndustryTerms(industryId || 'general_manufacturing')
+  const industryLabel = getIndustryLabel(industryId || 'general_manufacturing')
+
   // Pull from uploaded Supe RAG knowledge base — VSM + lean methodology chunks
   const chunks = (KNOWLEDGE_CHUNKS as any[])
     .filter((c: any) => c.tags?.some((t: string) =>

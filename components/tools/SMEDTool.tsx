@@ -91,7 +91,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
   const [timerActive, setTimerActive] = useState(false)
   const [timerMs,     setTimerMs]     = useState(0)
   const [timerStepId, setTimerStepId] = useState<string | null>(null)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timerStart = useRef(0)
 
   // ── Timer ──────────────────────────────────────────────────────────────────
@@ -623,7 +623,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
               { label: 'Hours available per day',       val: hoursPerDay, set: setHoursPerDay, hint: 'Net productive hours' },
             ].map(({ label, val, set, hint }) => (
               <div key={label}>
-                <label style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>{label}{tipKey && <FieldTip termKey={tipKey} />}</label>
+                <label style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>{label}</label>
                 <input
                   style={inputStyle}
                   type="number"

@@ -111,7 +111,7 @@ const LIMITS = {
 function uid() { return Math.random().toString(36).slice(2, 9) }
 
 // ── FieldLabel: label + ? tooltip button ──────────────────────────────────────
-function FieldLabel({ field, children }) {
+function FieldLabel({ field, children }: { field: any; children?: any }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
   const help = FIELD_HELP[field]

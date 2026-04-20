@@ -284,7 +284,7 @@ export function TipLabel({
 }: {
   termKey: string
   htmlFor?: string
-  children: React.ReactNode
+  children?: React.ReactNode
   style?: React.CSSProperties
 }) {
   return (
