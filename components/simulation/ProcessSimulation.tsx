@@ -178,7 +178,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
     })
   }, [main, scenario])
 
-  const scenLT  = useMemo(() => scenarioSteps.reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
+  const scenLT  = useMemo(() => (scenarioSteps as any[]).reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
   // Scenario PCE: only VA steps are value-adding — preserve ratio from base
   const scenPCE = useMemo(() => {
     if (scenLT <= 0) return 0
@@ -194,7 +194,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
 
   const worstQueueRisk = useMemo(() => {
     if (!scenario) return 0
-    const risks = scenarioSteps.map(s => calcQueueRisk(s._scenCT || 0, s._scenWait || 0, displayTakt))
+    const risks = (scenarioSteps as any[]).map(s => calcQueueRisk(s._scenCT || 0, s._scenWait || 0, displayTakt))
     return risks.length > 0 ? Math.max(...risks) : 0
   }, [scenarioSteps, displayTakt, scenario])
 
