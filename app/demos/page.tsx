@@ -17,6 +17,7 @@ const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 const DEMOS = [
   {
     slug: 'manufacturing',
+    icon: '🏭',
     name: 'Automotive Seat Assembly',
     industry: 'Manufacturing',
     color: '#3070B8',
@@ -33,6 +34,7 @@ const DEMOS = [
   },
   {
     slug: 'healthcare',
+    icon: '🏥',
     name: 'Urgent Care Patient Flow',
     industry: 'Healthcare',
     color: '#2A9E82',
@@ -49,6 +51,7 @@ const DEMOS = [
   },
   {
     slug: 'realestate',
+    icon: '🏡',
     name: 'Real Estate Transaction Flow',
     industry: 'Real Estate',
     color: '#0176D3',
@@ -65,6 +68,7 @@ const DEMOS = [
   },
   {
     slug: 'brewery',
+    icon: '🍺',
     name: 'Craft Brewery Batch Production',
     industry: 'Food & Beverage',
     color: '#C0402A',
@@ -81,6 +85,7 @@ const DEMOS = [
   },
   {
     slug: 'winery',
+    icon: '🍷',
     name: 'Boutique Winery Production',
     industry: 'Food & Beverage',
     color: '#6426A0',
