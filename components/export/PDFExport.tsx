@@ -592,7 +592,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
         </td>
         <td style="width:50%;vertical-align:top;padding-left:10px">
           <table>
-            ${[['Daily Customer Demand', project.demand ? project.demand + ' units/day' : '—'], ['Working Hours / Shift', project.working_hours ? project.working_hours + ' hr' : '—'], ['Shifts per Day', project.shifts || '—'], ['Available Time / Day', project.available_time_sec ? fmtS(project.available_time_sec) : '—'], ['Takt Time', project.takt_time ? fmtS(project.takt_time) : '—'], ['Project State', project.state === 'future' ? 'Future State' : 'Current State']].map(([l, v], i) => `
+            ${[['Daily Customer Demand', project.demand ? project.demand + ' units/day' : '—'], ['Working Hours / Shift', project.working_hours ? project.working_hours + ' hr' : '—'], ['Shifts per Day', project.shifts || '—'], ['Available Time / Day', project.available_time_sec ? fmtS(Number(project.available_time_sec)) : '—'], ['Takt Time', project.takt_time ? fmtS(Number(project.takt_time)) : '—'], ['Project State', project.state === 'future' ? 'Future State' : 'Current State']].map(([l, v], i) => `
             <tr style="background:${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'}">
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#64748B;font-weight:600;width:150px">${l}</td>
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#0F172A;font-weight:600">${v}</td>
