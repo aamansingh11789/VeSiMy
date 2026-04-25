@@ -56,14 +56,17 @@ export default async function DashboardPage() {
   const wgroup = getWatermarkGroup((profile as any).industry || '')
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)', position: 'relative' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg)' }}>
+      {/* Banner must be outside the flex-row so position:sticky works */}
       <VersionBanner />
-      <Sidebar profile={profile} />
-      <IndustryWatermark group={wgroup} />
-      <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>
-        <DashboardClient profile={profile} initialProjects={projects || []} />
-      </main>
-      <BottomNav />
+      <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
+        <Sidebar profile={profile} />
+        <IndustryWatermark group={wgroup} />
+        <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>
+          <DashboardClient profile={profile} initialProjects={projects || []} />
+        </main>
+        <BottomNav />
+      </div>
     </div>
   )
 }
