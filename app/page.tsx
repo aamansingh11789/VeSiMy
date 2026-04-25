@@ -532,6 +532,7 @@ function Pricing() {
         <div className="sans" style={{textAlign:"center",marginTop:32,fontSize:13,color:C.t3}}>
           Start with one process and a real report. No account needed. Upgrade when VeSiMy earns it.
         </div>
+      </div>
     </div>
   );
 }
