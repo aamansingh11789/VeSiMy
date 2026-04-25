@@ -4,10 +4,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Industrial Manufacturing — VeSiMy',
-  description: 'Industrial manufacturing — heavy equipment, job shops, custom fabrication — has some of the largest untapped CI potential of any sector. Here\'s how structured process improvement applies.',
+  description: "Industrial manufacturing — heavy equipment, job shops, custom fabrication — has some of the largest untapped CI potential of any sector. Here\'s how structured process improvement applies.",
   keywords: ['industrial manufacturing process improvement', 'lean industrial manufacturing', 'job shop CI', 'OEE improvement industrial', 'industrial kaizen'],
   openGraph: {
-    title: 'Process Improvement in Industrial Manufacturing: The Machine Doesn\'t Know It\'s Inefficient',
+    title: "Process Improvement in Industrial Manufacturing: The Machine Doesn\'t Know It\'s Inefficient",
     description: 'How VeSiMy brings structured CI methodology to heavy industrial, job shop, and custom fabrication environments.',
     type: 'article',
   },

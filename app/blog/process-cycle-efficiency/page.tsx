@@ -3,12 +3,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Process Cycle Efficiency (PCE): What It Is, How to Calculate It, and What to Do When It\'s Low — VeSiMy',
-  description: 'Process Cycle Efficiency measures how much of your lead time is actually value-adding. Most manufacturers are at 5–30%. World-class is 95%+. Here\'s how to calculate it and improve it.',
+  title: "Process Cycle Efficiency (PCE): What It Is, How to Calculate It, and What to Do When It\'s Low — VeSiMy",
+  description: "Process Cycle Efficiency measures how much of your lead time is actually value-adding. Most manufacturers are at 5–30%. World-class is 95%+. Here\'s how to calculate it and improve it.",
   keywords: ['process cycle efficiency', 'PCE lean', 'process cycle efficiency formula', 'value added time lead time', 'lean manufacturing efficiency', 'VSM efficiency', 'PCE calculation', 'lead time reduction'],
   openGraph: {
     title: 'Process Cycle Efficiency (PCE): Calculate It, Understand It, Improve It',
-    description: 'Most manufacturers run at 5–30% PCE. World-class is 95%+. Here\'s the formula and what to do with the result.',
+    description: "Most manufacturers run at 5–30% PCE. World-class is 95%+. Here\'s the formula and what to do with the result.",
     type: 'article',
   },
 }

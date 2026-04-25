@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Logistics & Warehousing — VeSiMy',
-  description: 'Logistics and warehousing operations are process-intensive environments where small improvements compound into major efficiency gains. Here\'s how structured CI tools apply.',
+  description: "Logistics and warehousing operations are process-intensive environments where small improvements compound into major efficiency gains. Here\'s how structured CI tools apply.",
   keywords: ['logistics process improvement', 'warehouse CI', 'lean logistics', 'warehouse waste reduction', 'fulfillment center improvement'],
   openGraph: {
     title: 'Process Improvement in Logistics: Speed Without Structure Is Just Chaos',

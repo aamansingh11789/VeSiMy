@@ -3,9 +3,10 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Little's Law: The Simple Formula That Validates Your WIP and Lead Time Data — VeSiMy',
+  title: "Little's Law: The Simple Formula That Validates Your WIP and Lead Time Data — VeSiMy",
   description: 'A queueing theorem from 1961 that every lean practitioner should know. If your numbers do not reconcile, your data has a problem.',
-  openGraph: { title: 'Little's Law: The Simple Formula That Validates Your WIP and Lead Time Data', type: 'article' },
+  openGraph: { title: "Little's Law: The Simple Formula That Validates Your WIP and Lead Time Data", type: 'article' },
+},
 }
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'

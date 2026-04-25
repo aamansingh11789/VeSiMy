@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Aerospace Manufacturing — VeSiMy',
-  description: 'Aerospace manufacturing runs on precision, documentation, and zero-tolerance for error. Here\'s how structured CI tools support quality, compliance, and operational efficiency in aerospace.',
+  description: "Aerospace manufacturing runs on precision, documentation, and zero-tolerance for error. Here\'s how structured CI tools support quality, compliance, and operational efficiency in aerospace.",
   keywords: ['aerospace process improvement', 'lean aerospace', 'AS9100 continuous improvement', 'aerospace CAPA', 'aerospace manufacturing CI'],
   openGraph: {
     title: 'Process Improvement in Aerospace: When Zero Defects Is the Floor',

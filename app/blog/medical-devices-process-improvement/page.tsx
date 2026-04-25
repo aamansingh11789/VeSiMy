@@ -4,10 +4,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Medical Device Manufacturing — VeSiMy',
-  description: 'Medical device manufacturing demands CAPA traceability, FDA compliance, and first-time quality. Here\'s how structured CI tools support improvement in a regulated environment.',
+  description: "Medical device manufacturing demands CAPA traceability, FDA compliance, and first-time quality. Here\'s how structured CI tools support improvement in a regulated environment.",
   keywords: ['medical device process improvement', 'lean medical devices', 'CAPA medical device', 'FDA process improvement', 'ISO 13485 CI'],
   openGraph: {
-    title: 'Process Improvement in Medical Devices: FDA Doesn\'t Grade on a Curve',
+    title: "Process Improvement in Medical Devices: FDA Doesn\'t Grade on a Curve",
     description: 'How VeSiMy supports structured root cause analysis, CAPA documentation, and process improvement in medical device manufacturing.',
     type: 'article',
   },

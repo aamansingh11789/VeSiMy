@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Pharmaceutical Manufacturing — VeSiMy',
-  description: 'Pharmaceutical manufacturing requires GMP compliance, batch record accuracy, and structured deviation management. Here\'s how CI tools make continuous improvement systematic and auditable.',
+  description: "Pharmaceutical manufacturing requires GMP compliance, batch record accuracy, and structured deviation management. Here\'s how CI tools make continuous improvement systematic and auditable.",
   keywords: ['pharmaceutical process improvement', 'GMP continuous improvement', 'pharma deviation management', 'pharmaceutical CAPA', 'lean pharma'],
   openGraph: {
     title: 'Process Improvement in Pharmaceuticals: Every Deviation Is a Signal',

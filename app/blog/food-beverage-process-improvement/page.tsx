@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Food & Beverage Manufacturing — VeSiMy',
-  description: 'Food & beverage operations face yield loss, changeover waste, sanitation downtime, and food safety compliance — all on the same line. Here\'s how structured CI addresses these challenges.',
+  description: "Food & beverage operations face yield loss, changeover waste, sanitation downtime, and food safety compliance — all on the same line. Here\'s how structured CI addresses these challenges.",
   keywords: ['food beverage process improvement', 'lean food manufacturing', 'food production waste reduction', 'changeover food production', 'food safety CI'],
   openGraph: {
     title: 'Process Improvement in Food & Beverage: Freshness Is a Process Problem',

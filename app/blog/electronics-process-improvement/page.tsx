@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Process Improvement in Electronics Manufacturing — VeSiMy',
-  description: 'Electronics manufacturing demands precision at micro-scale with margins that make rework economically catastrophic. Here\'s how CI tools address SMT yield, OEE, and defect reduction.',
+  description: "Electronics manufacturing demands precision at micro-scale with margins that make rework economically catastrophic. Here\'s how CI tools address SMT yield, OEE, and defect reduction.",
   keywords: ['electronics process improvement', 'SMT process improvement', 'PCB manufacturing CI', 'electronics lean manufacturing', 'electronics yield improvement'],
   openGraph: {
     title: 'Process Improvement in Electronics: Yield Loss Is a Process Problem',

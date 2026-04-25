@@ -3,9 +3,10 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'The Theory of Constraints in Plain Language: Why You Always Fix the Bottleneck First — VeSiMy',
-  description: 'Eli Goldratt's most important idea, explained without jargon. Why improving anything other than the bottleneck is wasted effort.',
-  openGraph: { title: 'The Theory of Constraints in Plain Language: Why You Always Fix the Bottleneck First', type: 'article' },
+  title: "The Theory of Constraints in Plain Language: Why You Always Fix the Bottleneck First — VeSiMy",
+  description: "Eli Goldratt's most important idea, explained without jargon. Why improving anything other than the bottleneck is wasted effort.",
+  openGraph: { title: "The Theory of Constraints in Plain Language: Why You Always Fix the Bottleneck First", type: 'article' },
+},
 }
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
