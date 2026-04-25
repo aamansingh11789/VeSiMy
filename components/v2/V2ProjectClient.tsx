@@ -595,6 +595,20 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               onAddStep={addStep}
               onDeleteStep={deleteStep}
               missingCount={missingCount}
+              onSaveStopwatch={async (stepId: string, avgSeconds: number, lapCount: number) => {
+                const step = steps.find((s: any) => s.id === stepId)
+                if (!step) return
+                await upsertV2Step({
+                  ...step,
+                  cycle_time: avgSeconds,
+                  cycle_time_unit: 'seconds',
+                  cycle_time_type: 'measured',
+                })
+                setSteps((prev: any[]) => prev.map((s: any) =>
+                  s.id === stepId ? { ...s, cycle_time: avgSeconds, cycle_time_unit: 'seconds', cycle_time_type: 'measured' } : s
+                ))
+                toast.success(`CT saved: ${avgSeconds}s avg (${lapCount} laps)`)
+              }}
             />
             {/* Step panel (slide-in from right) */}
             {panelOpen && selectedStep && (
@@ -625,6 +639,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               <V2AnalysisReport report={currentReport} project={project} t={t} indLabel={indLabel}
                 onGoFuture={() => { setShowFuturePanel(true); setTab('future') }}
                 onGoMap={() => setTab('map')}
+                isPaid={isPaid}
               />
             )}
             {!analyzing && !currentReport && (
@@ -707,7 +722,14 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         {/* JOURNAL TAB */}
         {tab === 'journal' && (
           <V2Journal reports={reports} project={project} t={t} indLabel={indLabel}
-            onLoadReport={(r) => { setCurrentReport(r); setTab('analyze') }}
+            onLoadReport={(r) => {
+              // Merge v4_data into top-level for Section 8 report rendering
+              const hydrated = r.v4_data
+                ? { ...r, ...r.v4_data }
+                : r
+              setCurrentReport(hydrated)
+              setTab('analyze')
+            }}
           />
         )}
 
@@ -886,7 +908,21 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             setShowProjectSettings(false)
           }}
           onClose={() => setShowProjectSettings(false)}
-          onDelete={async () => { window.location.href = '/dashboard' }}
+          onDelete={async () => {
+            if (!window.confirm('Delete this project and all its data? This cannot be undone.')) return
+            try {
+              const res = await fetch(`/api/projects/${project.id}`, { method: 'DELETE' })
+              if (!res.ok) {
+                const err = await res.json().catch(() => ({}))
+                toast.error(err.error || 'Delete failed — please try again')
+                return
+              }
+            } catch {
+              toast.error('Delete failed — please try again')
+              return
+            }
+            window.location.href = '/dashboard'
+          }}
         />
       )}
 

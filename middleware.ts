@@ -27,8 +27,10 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Protected routes — redirect to login if no session
-  const protectedPaths = ['/dashboard', '/project', '/settings', '/onboarding', '/projects', '/kaizen', '/learn']
-  if (!user && protectedPaths.some(p => pathname.startsWith(p))) {
+  const protectedPaths = ['/dashboard', '/project', '/settings', '/onboarding', '/projects', '/kaizen', '/learn', '/guided', '/skill-matrix']
+  // Public routes that should never redirect even if they match a protected prefix
+  const publicPaths = ['/start']
+  if (!user && protectedPaths.some(p => pathname.startsWith(p)) && !publicPaths.some(p => pathname.startsWith(p))) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/auth/login'
     loginUrl.searchParams.set('redirect', pathname)

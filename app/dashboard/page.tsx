@@ -6,6 +6,7 @@ import { Sidebar }    from '@/components/layout/Sidebar'
 import { BottomNav }  from '@/components/layout/BottomNav'
 import { DashboardClient } from './DashboardClient'
 import { IndustryWatermark } from '@/components/ui/IndustryWatermark'
+import { VersionBanner } from '@/components/ui/VersionBanner'
 import { getWatermarkGroup } from '@/lib/industry-reference-map'
 
 export const metadata = { title: 'Dashboard — VeSiMy' }
@@ -18,7 +19,14 @@ export default async function DashboardPage() {
   const [{ data: profile }, { data: rawProjects }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('projects')
-      .select('*')
+      .select(`
+        *,
+        steps(
+          id, cycle_time, cycle_time_unit, wait_time,
+          is_main_flow, va_type, defect_rate,
+          tool_data(tool, data)
+        )
+      `)
       .eq('user_id', user.id)
       .eq('status', 'active')
       .order('updated_at', { ascending: false })
@@ -27,9 +35,17 @@ export default async function DashboardPage() {
 
   if (!profile) redirect('/auth/login')
 
-  // No steps join — avoids RLS conflicts on nested tables.
-  // Project cards on dashboard use project-level metadata only.
-  const projects = (rawProjects || []).map((p: any) => ({ ...p, steps: [] }))
+  // Hydrate toolData on each step so getProjectScore can read stopwatch.mean
+  const projects = (rawProjects || []).map((p: any) => ({
+    ...p,
+    steps: (p.steps || []).map((s: any) => ({
+      ...s,
+      toolData: Object.fromEntries(
+        (s.tool_data || []).map((td: any) => [td.tool, td.data])
+      ),
+      tool_data: undefined,
+    })),
+  }))
 
   // Gate: only send genuinely new users to onboarding.
   // Existing users who already have an industry set are considered onboarded
@@ -41,6 +57,7 @@ export default async function DashboardPage() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)', position: 'relative' }}>
+      <VersionBanner />
       <Sidebar profile={profile} />
       <IndustryWatermark group={wgroup} />
       <main style={{ marginLeft: 'var(--sidebar-w, 240px)', flex: 1, padding: 28, minWidth: 0, position: 'relative', zIndex: 1 }}>

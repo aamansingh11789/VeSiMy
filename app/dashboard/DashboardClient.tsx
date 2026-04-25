@@ -648,7 +648,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       </Suspense>
 
       <div style={{
-        backgroundImage: 'url(/sensario-texture.jpg)',
+        backgroundImage: 'url(/sensario-texture.jpg), linear-gradient(135deg, rgba(1,118,211,0.08), rgba(3,45,96,0.12))',
         backgroundSize: '600px auto',
         backgroundRepeat: 'repeat-y',
         backgroundPosition: 'right -100px top',

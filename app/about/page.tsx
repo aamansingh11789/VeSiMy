@@ -3,8 +3,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About VeSiMy — AI Operations Intelligence for Manufacturing',
-  description: 'VeSiMy is an AI operations intelligence platform built for lean manufacturing teams. Learn about our mission, the team behind the product, and why we built it.',
+  title: 'About VeSiMy — AI Process Intelligence for Every Industry',
+  description: 'VeSiMy is an AI-powered process improvement platform built for lean practitioners, operators, managers, and consultants across 68+ industries. Learn about our mission and the team behind it.',
 }
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
@@ -29,7 +29,7 @@ export default function AboutPage() {
             <span style={{ color: '#0176D3' }}>For practitioners.</span>
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8, maxWidth: 640 }}>
-            VeSiMy started with a simple observation: manufacturing teams were still running their continuous improvement programs on Excel spreadsheets, sticky notes, and $500/month desktop software that hadn't changed in a decade.
+            VeSiMy started with a simple observation: operations teams across every industry were still running their continuous improvement programs on Excel spreadsheets, sticky notes, and $500/month desktop software that hadn't changed in a decade.
           </p>
         </div>
 
@@ -45,13 +45,13 @@ export default function AboutPage() {
         <div style={{ marginBottom: 56 }}>
           <h2 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', marginBottom: 20 }}>What We're Building</h2>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
-            VeSiMy is an AI operations intelligence platform. It doesn't just give you tools — it watches your processes continuously, detects when something is drifting from normal, and tells you exactly what to fix before it costs you money.
+            VeSiMy is an AI operations intelligence platform. It gives you the tools to see your processes clearly, identify where waste is costing you time and money, and take structured action to fix it.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
-            We started with 9 core CI tools — VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, and PDCA — and we're building the AI layer on top — an always-on monitor that learns what your operation looks like when it's running well, and alerts you the moment it starts to drift.
+            We built 9 core CI tools: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, and PDCA. In v4.0 we added OODA, 8D, and DMAIC. The AI layer turns your map data into a consultant-grade improvement report with specific actions, prioritised by impact.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8 }}>
-            The goal: replace the reactive, manual, disconnected world of CI tooling with a proactive, intelligent, connected platform that any manufacturer can afford.
+            The goal: replace the reactive, manual, disconnected world of CI tooling with a proactive, intelligent, connected platform that any operations team can afford.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function AboutPage() {
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
               <div style={{ fontSize: 13, color: '#0176D3', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
-                Building VeSiMy from the ground up — product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every manufacturer in the world.
+                Building VeSiMy from the ground up. Product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every operations team in the world.
               </p>
               <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
                 <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
@@ -107,7 +107,7 @@ export default function AboutPage() {
           </h3>
           <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 28, lineHeight: 1.75 }}>
             We're actively looking for enterprise pilots, lean consultants who want to partner,<br />
-            and investors who believe manufacturing is the next AI frontier.
+            and investors who believe process intelligence is the next AI frontier.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:founder@vesimy.com"

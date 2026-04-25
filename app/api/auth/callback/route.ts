@@ -54,6 +54,17 @@ export async function GET(request: NextRequest) {
   try {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
+      // Remove from Tier 0 nurture email sequence if they signed up from /start
+      if (user.email && process.env.SENDER_API_KEY && process.env.SENDER_TIER0_GROUP_ID) {
+        fetch('https://api.sender.net/v2/subscribers/groups', {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${process.env.SENDER_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: user.email, groups: [process.env.SENDER_TIER0_GROUP_ID] }),
+        }).catch(() => {}) // fire-and-forget, never block auth
+      }
       const { data: profile } = await supabase
         .from('profiles').select('onboarded').eq('id', user.id).single()
 

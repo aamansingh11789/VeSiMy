@@ -1,7 +1,6 @@
 // TypeScript enabled
 // ── components/v2/v2-constants.ts ─────────────────────────────────────────────
-// Single source of truth for all V2 builder constants.
-// Import from here — never re-declare in individual components.
+// v4.0 — Added OODA, 8D, and DMAIC to CI tools
 
 export const BRAND  = '#0176D3'
 export const NAVY   = '#032D60'
@@ -21,16 +20,24 @@ export const CI_LABELS: Record<string, string> = {
   smed:        'SMED (Changeover)',
   pdca:        'PDCA Cycle',
   yamazumi:    'Yamazumi Chart',
+  // v4.0 new tools
+  ooda:        'OODA Loop',
+  eightd:      '8D Report',
+  dmaic:       'DMAIC',
 }
 
 export const CI_TOOLS = [
-  { id: 'stopwatch',   label: 'Time Study',           icon: '⏱', desc: 'Measure actual cycle time with stopwatch' },
+  { id: 'stopwatch',   label: 'Time Study',           icon: '⏱',  desc: 'Measure actual cycle time with stopwatch' },
   { id: 'ishikawa',    label: 'Fishbone Diagram',      icon: '🐟', desc: 'Map causes across all categories' },
   { id: 'fivewhy',     label: '5 Why Analysis',        icon: '❓', desc: 'Drill to system root cause' },
   { id: 'waste',       label: 'Waste Identification',  icon: '♻️', desc: 'Identify the 8 wastes on this step' },
   { id: 'kaizen',      label: 'Kaizen Event',           icon: '⚡', desc: 'Log and track an improvement event' },
   { id: 'improvement', label: 'Improvement Goal',       icon: '🎯', desc: 'Set baseline and target for a metric' },
   { id: 'smed',        label: 'SMED (Changeover)',      icon: '🔄', desc: 'Reduce setup / changeover time' },
+  // v4.0 new tools
+  { id: 'ooda',        label: 'OODA Loop',              icon: '🔁', desc: 'Fast operational decisions — Observe Orient Decide Act' },
+  { id: 'eightd',      label: '8D Report',              icon: '📋', desc: 'Team-based structured response to quality escapes' },
+  { id: 'dmaic',       label: 'DMAIC',                  icon: '📊', desc: 'Six Sigma data-driven problem solving — 5 phases' },
 ]
 
 export const STEP_TYPES = [
@@ -53,7 +60,6 @@ export const VA_OPTIONS = [
 
 export const CT_UNITS = ['seconds', 'minutes', 'hours', 'days', 'weeks']
 
-// Box sizing for the SVG map — must be consistent everywhere
 export const MAP_BOX_W  = 110
 export const MAP_BOX_H  = 48
-export const MAP_GAP    = 80  // horizontal gap between process steps
+export const MAP_GAP    = 80

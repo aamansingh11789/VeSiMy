@@ -1,4 +1,8 @@
 // TypeScript enabled
+// ── components/tools/ToolModal.tsx ────────────────────────────────────────────
+// Dispatcher for all CI tool modals.
+// v4.0: Added OODATool, EightDTool, DMaICTool
+
 'use client'
 
 import StopwatchTool from './StopwatchTool'
@@ -8,6 +12,9 @@ import WasteTool from './WasteTool'
 import KaizenTool from './KaizenTool'
 import ImprovementTool from './ImprovementTool'
 import SMEDTool from './SMEDTool'
+import OODATool from './OODATool'
+import EightDTool from './EightDTool'
+import DMaICTool from './DMaICTool'
 
 export interface ToolModalProps {
   tool: string
@@ -21,13 +28,18 @@ export interface ToolModalProps {
 }
 
 const TOOL_COMPONENTS: Record<string, any> = {
-  stopwatch: StopwatchTool,
-  fivewhy: FiveWhyTool,
-  ishikawa: IshikawaTool,
-  waste: WasteTool,
-  kaizen: KaizenTool,
+  // Existing tools
+  stopwatch:   StopwatchTool,
+  fivewhy:     FiveWhyTool,
+  ishikawa:    IshikawaTool,
+  waste:       WasteTool,
+  kaizen:      KaizenTool,
   improvement: ImprovementTool,
-  smed: SMEDTool,
+  smed:        SMEDTool,
+  // v4.0 new tools
+  ooda:        OODATool,
+  eightd:      EightDTool,
+  dmaic:       DMaICTool,
 }
 
 export function ToolModal({ tool, step, onSave, onClose }: ToolModalProps) {

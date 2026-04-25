@@ -38,17 +38,17 @@ export const metadata: Metadata = {
   openGraph: {
     type:        'website',
     siteName:    'VeSiMy',
-    title:       'VeSiMy — AI Operations Intelligence Platform for Manufacturing',
-    description: 'Monitor, record, analyze and suggest process improvements automatically. Free VSM, Kaizen, 5 Why, Fishbone tools — with AI that never clocks out.',
+    title:       'VeSiMy — AI-Powered Process Improvement for Every Industry',
+    description: 'Map your process, find the bottleneck, and fix it. AI-powered lean tools for 68+ industries. Free to start — no account needed.',
     url:         'https://www.vesimy.com',
-    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — Process Intelligence for 70 Industries' }],
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — AI Process Improvement for Every Industry' }],
   },
 
   // ── Twitter Card ───────────────────────────────────────────────────────────
   twitter: {
     card:        'summary_large_image',
-    title:       'VeSiMy — AI Operations Intelligence Platform',
-    description: 'VSM mapping, Time Study, Fishbone, 5 Why, Kaizen, and Waste ID — unified under one AI mentor, adapted for 70 industries. Your bottleneck has a name. Now you can prove it.',
+    title:       'VeSiMy — AI Process Improvement',
+    description: 'Map your process, identify waste, and take structured action. Lean tools with AI guidance for 68+ industries.',
     images:      ['/api/og'],
   },
 
@@ -117,7 +117,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+          rel="stylesheet"
+        />
+        {/* Satoshi — display font for v4.0 public pages */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"
         />
       </head>

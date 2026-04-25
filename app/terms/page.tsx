@@ -4,7 +4,7 @@ import type React from 'react'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
 
-export const metadata = { title: 'Terms of Service — Vesimy' }
+export const metadata = { title: 'Terms of Service — VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
