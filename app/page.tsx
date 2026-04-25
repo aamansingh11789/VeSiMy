@@ -205,13 +205,21 @@ function Nav() {
           <span style={{fontFamily:C.sans,fontSize:16,fontWeight:700,color:C.t1,letterSpacing:0.3,textShadow:"0 1px 0 rgba(255,255,255,0.04),0 2px 8px rgba(0,0,0,0.8)"}}>Ve<span style={{color:C.blue}}>Si</span>My</span>
         </div>
         <div style={{width:1,height:16,background:C.b2}}/>
-        {["Guided","Tools","Industries","Enterprise","Blog"].map(n=>(
-          <span key={n} className="sans" style={{fontSize:12.5,color:n==="Guided"?C.blueL:C.t3,cursor:"pointer",transition:"color 0.15s",fontWeight:n==="Guided"?600:400}} onMouseEnter={e=>e.target.style.color=C.t1} onMouseLeave={e=>e.target.style.color=n==="Guided"?C.blueL:C.t3}>{n}</span>
+        {[
+          {n:"Guided",    href:"/guided"},
+          {n:"Tools",     href:"/dashboard"},
+          {n:"Industries",href:"/industries"},
+          {n:"Enterprise",href:"/enterprise"},
+          {n:"Blog",      href:"/blog"},
+        ].map(({n,href})=>(
+          <a key={n} href={href} style={{textDecoration:"none"}}>
+            <span className="sans" style={{fontSize:12.5,color:n==="Guided"?C.blueL:C.t3,cursor:"pointer",transition:"color 0.15s",fontWeight:n==="Guided"?600:400}} onMouseEnter={e=>(e.target as HTMLElement).style.color=C.t1} onMouseLeave={e=>(e.target as HTMLElement).style.color=n==="Guided"?C.blueL:C.t3}>{n}</span>
+          </a>
         ))}
       </div>
       <div style={{display:"flex",gap:8}}>
-        <button className="bg" style={{padding:"7px 16px",fontSize:12}}>Sign in</button>
-        <button className="br" style={{padding:"7px 16px",fontSize:12}}>Start free</button>
+        <a href="/auth/login" style={{textDecoration:"none"}}><button className="bg" style={{padding:"7px 16px",fontSize:12}}>Sign in</button></a>
+        <a href="/start" style={{textDecoration:"none"}}><button className="br" style={{padding:"7px 16px",fontSize:12}}>Start free</button></a>
       </div>
     </div>
   );
@@ -241,7 +249,7 @@ function Hero() {
           <MT c={C.blueL} sp={2.5}>Live Lean CI · ISO 22468:2020</MT>
         </div>
 
-        {/* Headline — carved. Spec §3.1 */}
+        {/* Headline : carved. Spec §3.1 */}
         <div className="au1" style={{marginBottom:4}}>
           <h1 className="tc sans" style={{fontSize:50,fontWeight:800,color:C.t1,lineHeight:1.08,letterSpacing:-1.8}}>
             Every operation has a process.<br/>Every process has waste.
@@ -256,7 +264,7 @@ function Hero() {
           Most teams know where the problem is. Almost none can see it clearly enough to fix it and prove it.
         </p>
 
-        {/* Two entry points — spec §3.4 */}
+        {/* Two entry points : spec §3.4 */}
         <div className="au4" style={{display:"flex",flexDirection:"column",gap:10,alignItems:"center",marginBottom:56}}>
           <div style={{display:"flex",gap:12}}>
             <a href="/start" style={{textDecoration:"none"}}>
@@ -358,7 +366,7 @@ function Features() {
     {icon:"◈",title:"Value Stream Mapping",desc:"ISO 22468-compliant VSM with sticky-note canvas, sub-process nesting, and inline data editing.",color:C.blue},
     {icon:"⏱",title:"Stopwatch CT Capture",desc:"Single-tap timing on the floor. 3-lap methodology. Auto-populates your data strip.",color:C.cyan},
     {icon:"⬡",title:"Bottleneck Detection",desc:"AI identifies your constraint using takt comparison, WIP analysis, and Little's Law validation.",color:C.purple},
-    {icon:"⚑",title:"Root Cause Tools",desc:"5 Whys, Fishbone, FMEA, and 8D — each with distinct workflows pre-populated from your map.",color:C.green},
+    {icon:"⚑",title:"Root Cause Tools",desc:"5 Whys, Fishbone, FMEA, and 8D: each with distinct workflows pre-populated from your map.",color:C.green},
     {icon:"◎",title:"SMED Analysis",desc:"Separates internal from external setup. Calculates potential reduction. Shows time savings projection.",color:C.amber},
     {icon:"▦",title:"AI Improvement Report",desc:"Pareto charts, lead time projection, prioritisation matrix. Generated from your map in seconds.",color:"#F472B6"},
   ];
@@ -406,7 +414,7 @@ function SupeSection() {
             <div className="tc-grd sans" style={{fontSize:38,fontWeight:800,letterSpacing:-0.8,marginBottom:20}}>Not just language.</div>
             <div className="sans" style={{fontSize:14,color:C.t2,lineHeight:1.8,marginBottom:28}}>Trained on TPS, VSM, Six Sigma, and ISO 22468 source material. Asks clarifying questions before answering. Generates future states from your actual map data.</div>
             <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {["Bottleneck detection — CT vs takt at every step","Root cause brainstorming — targeted questions first","Future state generation — data-backed improvement map","Gap analysis — every missing field identified"].map(f=>(
+              {["Bottleneck detection: CT vs takt at every step","Root cause brainstorming: targeted questions first","Future state generation : data-backed improvement map","Gap analysis : every missing field identified"].map(f=>(
                 <div key={f} style={{display:"flex",gap:10,alignItems:"flex-start"}}>
                   <div style={{width:5,height:5,borderRadius:"50%",background:C.cyan,marginTop:6,flexShrink:0,boxShadow:`0 0 6px ${C.cyan}80`}}/>
                   <span className="sans" style={{fontSize:13,color:C.t2}}>{f}</span>
@@ -427,11 +435,11 @@ function SupeSection() {
                   <div style={{width:18,height:18,borderRadius:"50%",background:"linear-gradient(145deg,#4A8AFF,#22D3EE)",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.3),0 2px 8px rgba(59,124,255,0.4)"}}>
                     <span className="sans" style={{fontSize:7,fontWeight:800,color:"#fff"}}>S</span>
                   </div>
-                  <div className="sans" style={{fontSize:12,color:"rgba(144,186,255,0.9)",lineHeight:1.65}}>Before I recommend a fix — is Station 4 single-operator, and is the variance consistent across shifts or only during changeover cycles?</div>
+                  <div className="sans" style={{fontSize:12,color:"rgba(144,186,255,0.9)",lineHeight:1.65}}>Before I recommend a fix : is Station 4 single-operator, and is the variance consistent across shifts or only during changeover cycles?</div>
                 </div>
               </div>
               <div style={{background:"rgba(59,124,255,0.08)",border:"1px solid rgba(59,124,255,0.15)",borderRadius:"8px 8px 2px 8px",padding:"10px 14px"}}>
-                <div className="sans" style={{fontSize:12,color:C.blueL,lineHeight:1.6}}>Single operator. High variance — setup changes every 3rd cycle.</div>
+                <div className="sans" style={{fontSize:12,color:C.blueL,lineHeight:1.6}}>Single operator. High variance : setup changes every 3rd cycle.</div>
               </div>
               <div style={{background:"linear-gradient(145deg,rgba(34,211,238,0.07),rgba(59,124,255,0.05))",border:"1px solid rgba(34,211,238,0.12)",borderRadius:"2px 8px 8px 8px",padding:"10px 14px"}}>
                 <div style={{display:"flex",gap:8,alignItems:"flex-start"}}>
@@ -439,7 +447,7 @@ function SupeSection() {
                     <span className="sans" style={{fontSize:7,fontWeight:800,color:"#fff"}}>S</span>
                   </div>
                   <div className="sans" style={{fontSize:12,color:"rgba(144,186,255,0.9)",lineHeight:1.65}}>
-                    <Typewriter text="SMED is the right approach. The changeover variance is your constraint — not operator speed. Start by filming one complete changeover and separating internal from external setup. Typically recovers 40–60% of changeover time." speed={14} delay={300}/>
+                    <Typewriter text="SMED is the right approach. The changeover variance is your constraint : not operator speed. Start by filming one complete changeover and separating internal from external setup. Typically recovers 40–60% of changeover time." speed={14} delay={300}/>
                   </div>
                 </div>
               </div>
@@ -466,7 +474,7 @@ function Pricing() {
           <div className="tc sans" style={{fontSize:38,fontWeight:800,color:C.t1,marginTop:12,letterSpacing:-0.8}}>Start free. Upgrade when VeSiMy earns it.</div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:12,alignItems:"start"}}>
-          {/* Free Start — Tier 0, no account */}
+          {/* Free Start : Tier 0, no account */}
           <div className="c3d" style={{padding:24}}>
             <MT c={C.t4}>Free Start</MT>
             <div className="tc sans" style={{fontSize:26,fontWeight:800,color:C.t1,marginTop:10,marginBottom:3,letterSpacing:-0.8}}>Free</div>
@@ -483,7 +491,7 @@ function Pricing() {
             <div className="sans" style={{fontSize:10,color:C.t4,textAlign:"center",marginTop:8}}>You can create a free account afterwards.</div>
           </div>
 
-          {/* Free Trial — full account, 14 days */}
+          {/* Free Trial : full account, 14 days */}
           <div className="c3d" style={{padding:24,borderTop:`2px solid ${C.green}`}}>
             <MT c={C.green}>Free Trial</MT>
             <div className="tc sans" style={{fontSize:26,fontWeight:800,color:C.t1,marginTop:10,marginBottom:3,letterSpacing:-0.8}}>14 days</div>
@@ -497,7 +505,7 @@ function Pricing() {
             <button className="bg" style={{width:"100%",marginTop:16,padding:"9px 0",fontSize:12,borderColor:"rgba(16,185,129,0.3)"}}>Create free account</button>
           </div>
 
-          {/* Pro — MARBLE */}
+          {/* Pro : MARBLE */}
           <div className="marble" style={{padding:24,position:"relative"}}>
             <div style={{position:"absolute",top:-1,left:"50%",transform:"translateX(-50%)",background:"linear-gradient(90deg,#3B7CFF,#22D3EE)",borderRadius:"0 0 8px 8px",padding:"4px 14px"}}>
               <MT c="#fff" sp={2}>Most Popular</MT>
@@ -528,7 +536,7 @@ function Pricing() {
             <button className="bg" style={{width:"100%",marginTop:16,padding:"9px 0",fontSize:12}}>Get a quote</button>
           </div>
         </div>
-        {/* Positioning line — spec §22.3 */}
+        {/* Positioning line : spec §22.3 */}
         <div className="sans" style={{textAlign:"center",marginTop:32,fontSize:13,color:C.t3}}>
           Start with one process and a real report. No account needed. Upgrade when VeSiMy earns it.
         </div>

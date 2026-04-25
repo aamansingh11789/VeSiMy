@@ -625,6 +625,11 @@ export default function Tier0Flow() {
             <p style={{ color: C.t4, fontSize: 12, lineHeight: 1.6, marginTop: 16 }}>
               Your email is used only to send your report. No spam, unsubscribe anytime.
             </p>
+            {/* Tutorial note per spec §20.4 */}
+            <div style={{ background: `${C.blueGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 16 }}>
+              <div style={{ color: C.blueLight, fontSize: 12, fontWeight: 700, marginBottom: 4 }}>Why we ask for your industry</div>
+              <div style={{ color: C.t2, fontSize: 12, lineHeight: 1.6 }}>VeSiMy calibrates your report against real benchmarks from your industry. A 10-minute cycle time means something different in a hospital than in a warehouse. Knowing your industry makes the recommendation specific to you.</div>
+            </div>
           </div>
         )}
 
@@ -654,12 +659,20 @@ export default function Tier0Flow() {
                   placeholder={`e.g. "Order fulfilment" or "Patient discharge"`}
                   style={inputStyle}
                 />
+                {/* Tutorial note per spec §20.4 */}
+                <div style={{ color: C.t3, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>
+                  Name it the way your team talks about it on the floor.
+                </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', color: C.t2, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
+                <label style={{ display: 'block', color: C.t2, fontSize: 13, fontWeight: 600, marginBottom: 4 }}>
                   What are you trying to improve? *
                 </label>
+                {/* Tutorial note per spec §20.4 */}
+                <div style={{ color: C.t3, fontSize: 12, marginBottom: 10, lineHeight: 1.5 }}>
+                  Every process has a target. Picking one helps VeSiMy judge the process through the right lens.
+                </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {TARGET_OPTIONS.map(opt => (
                     <button
@@ -705,6 +718,11 @@ export default function Tier0Flow() {
               <p style={{ color: C.t2, fontSize: 15, margin: 0 }}>
                 Add 2 to 12 steps in order from start to finish.
               </p>
+              {/* Tutorial note per spec §20.4 */}
+              <div style={{ background: `${C.blueGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 12 }}>
+                <div style={{ color: C.blueLight, fontSize: 12, fontWeight: 700, marginBottom: 3 }}>Write what actually happens today</div>
+                <div style={{ color: C.t2, fontSize: 12, lineHeight: 1.6 }}>Do not write the ideal version. Write the steps the way they actually happen right now. Current state means reality. Example: "Waiting for approval" is a valid step if it happens.</div>
+              </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
@@ -822,6 +840,10 @@ export default function Tier0Flow() {
             }}>
               Skip timings
             </button>
+            {/* Tutorial note per spec §20.4 */}
+            <div style={{ color: C.t3, fontSize: 12, textAlign: 'center', marginTop: 10, lineHeight: 1.5 }}>
+              Timing does not have to be perfect. Even a rough estimate shows where the process slows down.
+            </div>
           </div>
         )}
 
@@ -835,9 +857,13 @@ export default function Tier0Flow() {
               <h2 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
                 Where is the pain?
               </h2>
-              <p style={{ color: C.t2, fontSize: 15, margin: 0 }}>
-                Which step causes the most problems? Optional but improves your report.
+              <p style={{ color: C.t2, fontSize: 15, margin: '0 0 10px' }}>
+                Which step causes the most problems right now?
               </p>
+              {/* Tutorial note per spec §20.4 */}
+              <div style={{ color: C.t3, fontSize: 12, lineHeight: 1.5, padding: '8px 0' }}>
+                Trust your gut. You know your process. The step that causes the most frustration is usually where lean improvement starts.
+              </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
