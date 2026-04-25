@@ -1,9 +1,8 @@
 // TypeScript enabled
 'use client'
 // ── components/v2/V2MapCanvas.tsx ──────────────────────────────────────────────
-// Pro canvas redesign — sticky note aesthetic, phase lane indicators,
-// improved data strips, inline stopwatch, health glow.
-// Spec: VeSiMy v4 Sections 5 + 6
+// Pro canvas redesign — REAL sticky note aesthetic per spec §5.2
+// Physical paper feel: rotation, warm tones, multi-layer shadow, fold corner
 
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { VSMIcon } from '@/components/ui/Icons'
@@ -11,22 +10,32 @@ import { BRAND, RED, GREEN, AMBER } from './v2-constants'
 import { calcProcessMetrics, fmtPCE, pceColor } from '@/lib/v2/process-metrics'
 import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 
-// ── Sticky note color palette (natural muted tones per spec §5.2) ─────────────
-const STICKY: Record<string, { bg: string; border: string; text: string }> = {
-  process:    { bg: '#FFF9C4', border: '#E8D500', text: '#3D3200' }, // yellow — default
-  decision:   { bg: '#FFF3E0', border: '#F4A623', text: '#3D2500' }, // orange
-  delay:      { bg: '#FFEBEE', border: '#EF5350', text: '#3D0000' }, // red-pink
-  inspection: { bg: '#E8F5E9', border: '#66BB6A', text: '#003D00' }, // green
-  transport:  { bg: '#FFF8E1', border: '#FFC107', text: '#3D2C00' }, // amber
-  storage:    { bg: '#F3E5F5', border: '#AB47BC', text: '#2A003D' }, // purple
-  rework:     { bg: '#FFEBEE', border: '#F44336', text: '#3D0000' }, // red
-  start_end:  { bg: '#ECEFF1', border: '#90A4AE', text: '#1A2832' }, // grey
+// ── Natural sticky note palette per spec §5.2 ─────────────────────────────────
+// "Color range limited to natural sticky note palette only. No bright digital
+//  colors. Muted, natural tones." — each has paper bg, fold shade, text color
+const STICKY: Record<string, { bg: string; fold: string; text: string; stripe: string }> = {
+  process:    { bg: '#FEF3C7', fold: '#FDE68A', text: '#3B2F00', stripe: '#F59E0B' }, // warm yellow
+  sub_process:{ bg: '#DBEAFE', fold: '#BFDBFE', text: '#1E3A5F', stripe: '#3B82F6' }, // soft blue
+  decision:   { bg: '#FED7AA', fold: '#FDBA74', text: '#3D1700', stripe: '#F97316' }, // warm orange
+  inspection: { bg: '#FCE7F3', fold: '#FBCFE8', text: '#4A1535', stripe: '#EC4899' }, // soft pink
+  transport:  { bg: '#D1FAE5', fold: '#A7F3D0', text: '#064E3B', stripe: '#10B981' }, // soft green
+  storage:    { bg: '#EDE9FE', fold: '#DDD6FE', text: '#2E1065', stripe: '#7C3AED' }, // soft lavender
+  rework:     { bg: '#FEE2E2', fold: '#FECACA', text: '#450A0A', stripe: '#EF4444' }, // soft red
+  delay:      { bg: '#F3F4F6', fold: '#E5E7EB', text: '#111827', stripe: '#9CA3AF' }, // neutral
+  start_end:  { bg: '#ECEFF1', fold: '#CFD8DC', text: '#1A2832', stripe: '#607D8B' }, // grey-blue
 }
 
-const BOX_W  = 124
-const BOX_H  = 52
-const GAP    = 88
-const STRIP_H = 58
+// Slight rotation per step index — alternating pattern feels physical, not random
+const NOTE_ROTATIONS = [1.2, -0.8, 1.5, -1.1, 0.7, -1.4, 1.0, -0.6, 1.8, -1.2]
+function noteRotation(index: number): number {
+  return NOTE_ROTATIONS[index % NOTE_ROTATIONS.length]
+}
+
+const BOX_W  = 160   // wider for content
+const BOX_H  = 96    // taller for real sticky note feel
+const BOX_H_EXP = 186 // expanded with activities + data strip
+const STRIP_H = 52
+const GAP    = 76
 
 function fmtTime(s: number) {
   if (!s) return '—'
@@ -35,7 +44,7 @@ function fmtTime(s: number) {
   return `${Math.round(s)}s`
 }
 
-// ── Floating stopwatch component ──────────────────────────────────────────────
+// ── Floating stopwatch ─────────────────────────────────────────────────────────
 function FloatingStopwatch({ stepName, onSave, onClose }: {
   stepName: string
   onSave: (avg: number, lapCount: number) => void
@@ -76,7 +85,7 @@ function FloatingStopwatch({ stepName, onSave, onClose }: {
       padding: 20, width: 240, boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
     }}>
       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6CB9FC', letterSpacing: 2, marginBottom: 8 }}>
-        STOPWATCH — {stepName.slice(0, 18)}
+        STOPWATCH: {stepName.slice(0, 18)}
       </div>
       <div style={{ fontFamily: 'monospace', fontSize: 36, fontWeight: 700, color: running ? '#6CB9FC' : '#fff', textAlign: 'center', margin: '8px 0', letterSpacing: '-0.02em' }}>
         {elapsed.toFixed(1)}s
@@ -99,184 +108,262 @@ function FloatingStopwatch({ stepName, onSave, onClose }: {
           )}
         </div>
       )}
-      <div style={{ display: 'flex', gap: 8 }}>
-        <button onClick={toggle} style={{
-          flex: 1, padding: '10px', borderRadius: 8, border: 'none',
-          background: running ? '#C0402A' : '#0176D3',
-          color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer', fontFamily: 'monospace',
-        }}>{running ? '⏹ Stop' : '▶ Start'}</button>
+      <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+        <button onClick={toggle} style={{ flex: 1, background: running ? '#DC2626' : '#3B7CFF', border: 'none', borderRadius: 8, color: '#fff', padding: '8px 0', fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
+          {running ? '⏹ Stop' : laps.length === 0 ? '▶ Start' : '▶ Lap'}
+        </button>
         {laps.length >= 1 && !running && (
-          <button onClick={() => onSave(avg, laps.length)} style={{
-            flex: 1, padding: '10px', borderRadius: 8, border: 'none',
-            background: '#2E844A', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
-          }}>Save {avg}s</button>
+          <button onClick={() => onSave(avg, laps.length)} style={{ flex: 1, background: '#10B981', border: 'none', borderRadius: 8, color: '#fff', padding: '8px 0', fontWeight: 700, cursor: 'pointer', fontSize: 11 }}>
+            Save {avg}s avg
+          </button>
         )}
       </div>
-      <button onClick={onClose} style={{
-        width: '100%', marginTop: 8, padding: '6px', borderRadius: 6,
-        border: '1px solid rgba(255,255,255,0.1)', background: 'transparent',
-        color: '#4B5880', fontSize: 12, cursor: 'pointer',
-      }}>Close</button>
+      <button onClick={onClose} style={{ width: '100%', marginTop: 8, background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#4B5880', padding: '5px 0', cursor: 'pointer', fontSize: 11 }}>
+        Close
+      </button>
     </div>
   )
 }
 
-// ── Sticky note step box ──────────────────────────────────────────────────────
+// ── REAL STICKY NOTE STEP BOX ─────────────────────────────────────────────────
+// Spec §5.2: "Slightly textured surface. Subtle drop shadow. Feels like it is
+// physically on a wall. Color-coded by process type. Natural sticky note palette."
 function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggleExpand, taktTime, onStopwatch }: any) {
   const sc    = STICKY[step.step_type || 'process'] || STICKY.process
   const ct    = ctSeconds(step)
   const isBot = step.is_bottleneck || (taktTime > 0 && ct > taktTime)
   const defect = step.defect_rate || 0
   const missing = (step.missing_info_flags || []).length
-  const glowColor = isBot ? RED : defect > 8 ? RED : defect > 3 || missing > 2 ? AMBER : step.va_type === 'va' ? GREEN : null
-
-  const X = 80 + index * (BOX_W + GAP)
-  const Y = 80
-
-  // Health indicator badge
   const healthColor = isBot ? RED : defect > 5 ? RED : missing > 2 ? AMBER : step.va_type === 'va' ? GREEN : '#9CA3AF'
-
   const vaLabel = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }[step.va_type as string] || '?'
   const vaColor = { va: GREEN, nnva: AMBER, nva: RED }[step.va_type as string] || '#9CA3AF'
 
+  const H   = expanded ? BOX_H_EXP : BOX_H
+  const X   = 80 + index * (BOX_W + GAP)
+  const Y   = 90
+  const cx  = X + BOX_W / 2   // rotation center x
+  const cy  = Y + H / 2        // rotation center y
+  const rot = noteRotation(index)
+
+  // Activities (op_steps or fallback)
+  const activities: string[] = step.op_steps || []
+  const maxActivities = 4
+
+  // Paper texture — subtle diagonal lines for warmth
+  const textureId = `tex-${step.id}`
+  const shadowId  = `shadow-${step.id}`
+
   return (
     <g
+      transform={`rotate(${rot}, ${cx}, ${cy})`}
       style={{ cursor: 'pointer' }}
       role="button"
       tabIndex={0}
-      aria-label={`${step.name}${isBot ? ' — BOTTLENECK' : ''}`}
+      aria-label={`${step.name}${isBot ? ' [BOTTLENECK]' : ''}`}
       aria-pressed={isSelected}
       onClick={() => onClick(step)}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(step) } }}
     >
-      {/* Glow halo */}
-      {glowColor && (
-        <rect x={X - 5} y={Y - 5} width={BOX_W + 10} height={BOX_H + 10} rx={10}
-          fill="none" stroke={glowColor} strokeWidth={isBot ? 2.5 : 1.5}
-          opacity={isBot ? 0.7 : 0.45}
-          style={{ animation: isBot ? 'stickyPulse 1.4s ease-in-out infinite' : 'stickyBreath 2.8s ease-in-out infinite' }} />
+      <defs>
+        {/* Paper texture pattern */}
+        <pattern id={textureId} width="40" height="40" patternUnits="userSpaceOnUse" patternTransform={`rotate(35,${X},${Y})`}>
+          <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(0,0,0,0.025)" strokeWidth="1"/>
+        </pattern>
+        {/* Multi-layer drop shadow filter — physical paper on wall */}
+        <filter id={shadowId} x="-15%" y="-15%" width="140%" height="150%">
+          {/* Layer 1: tight contact shadow */}
+          <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
+          {/* Layer 2: soft ambient shadow */}
+          <feDropShadow dx="3" dy="6" stdDeviation="6" floodColor="rgba(0,0,0,0.12)" />
+          {/* Layer 3: wide diffuse shadow */}
+          <feDropShadow dx="5" dy="10" stdDeviation="12" floodColor="rgba(0,0,0,0.07)" />
+        </filter>
+      </defs>
+
+      {/* Selection / bottleneck glow — outside the note */}
+      {(isSelected || isBot) && (
+        <rect
+          x={X - 4} y={Y - 4} width={BOX_W + 8} height={H + 8} rx={5}
+          fill="none"
+          stroke={isBot ? RED : BRAND}
+          strokeWidth={isBot ? 2.5 : 2}
+          opacity={0.7}
+          style={{ filter: `drop-shadow(0 0 8px ${isBot ? RED : BRAND}80)`, animation: isBot ? 'stickyPulse 1.4s ease-in-out infinite' : 'none' }}
+        />
       )}
 
-      {/* Selection ring */}
-      {isSelected && (
-        <rect x={X - 4} y={Y - 4} width={BOX_W + 8} height={BOX_H + 8} rx={10}
-          fill="none" stroke={BRAND} strokeWidth={2.5}
-          style={{ filter: `drop-shadow(0 0 6px ${BRAND}80)` }} />
-      )}
+      {/* ── NOTE BODY with physical shadow ── */}
+      <rect
+        x={X} y={Y} width={BOX_W} height={H} rx={3}
+        fill={sc.bg}
+        filter={`url(#${shadowId})`}
+      />
 
-      {/* Sticky note body — subtle folded-corner look */}
-      <rect x={X} y={Y} width={BOX_W} height={BOX_H} rx={4}
-        fill={sc.bg} stroke={isSelected ? BRAND : sc.border}
-        strokeWidth={isSelected ? 2 : 1.5}
-        style={{ filter: `drop-shadow(2px 3px 4px rgba(0,0,0,0.2))` }} />
+      {/* Paper texture overlay */}
+      <rect x={X} y={Y} width={BOX_W} height={H} rx={3} fill={`url(#${textureId})`} opacity={0.5} />
 
-      {/* Fold corner top-right */}
-      <path d={`M${X + BOX_W - 10},${Y} L${X + BOX_W},${Y + 10} L${X + BOX_W - 10},${Y + 10} Z`}
-        fill={sc.border} opacity={0.35} />
+      {/* Subtle warm gradient overlay — gives depth to the paper */}
+      <defs>
+        <linearGradient id={`grad-${step.id}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.30)" />
+          <stop offset="60%" stopColor="rgba(255,255,255,0.00)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.04)" />
+        </linearGradient>
+      </defs>
+      <rect x={X} y={Y} width={BOX_W} height={H} rx={3} fill={`url(#grad-${step.id})`} />
 
-      {/* Step type indicator top-left */}
-      <rect x={X} y={Y} width={5} height={BOX_H} rx={4}
-        fill={isBot ? RED : sc.border} opacity={0.7} />
+      {/* Fold corner — top right */}
+      <path
+        d={`M${X + BOX_W - 18},${Y} L${X + BOX_W},${Y + 18} L${X + BOX_W - 18},${Y + 18} Z`}
+        fill={sc.fold}
+        opacity={0.6}
+      />
+      {/* Fold shadow line */}
+      <line x1={X + BOX_W - 18} y1={Y} x2={X + BOX_W} y2={Y + 18} stroke="rgba(0,0,0,0.12)" strokeWidth={0.8} />
 
-      {/* Step name */}
-      <text x={X + 14} y={Y + 17} fontSize={9} fontWeight={700}
-        fill={sc.text} fontFamily="'DM Sans','Satoshi',sans-serif" style={{ pointerEvents: 'none' }}>
-        {step.name.length > 16 ? step.name.slice(0, 16) + '…' : step.name}
+      {/* Color accent stripe — left edge, type indicator */}
+      <rect x={X} y={Y} width={4} height={H} rx={3} fill={sc.stripe} opacity={0.75} />
+
+      {/* ── STEP NAME ── */}
+      <text
+        x={X + 14} y={Y + 18}
+        fontSize={10} fontWeight={700}
+        fill={sc.text}
+        fontFamily="'Satoshi','DM Sans',sans-serif"
+        style={{ pointerEvents: 'none' }}
+      >
+        {step.name.length > 18 ? step.name.slice(0, 17) + '…' : step.name}
       </text>
 
-      {/* CT + operator mini data */}
-      {expanded ? (
-        <>
-          <text x={X + 14} y={Y + 29} fontSize={8} fill={sc.text} fontFamily="monospace" opacity={0.8}>
-            CT: {ct ? fmtTime(ct) : '—'}
-          </text>
-          <text x={X + 70} y={Y + 29} fontSize={8} fill={sc.text} fontFamily="monospace" opacity={0.8}>
-            W: {step.wait_time ? fmtTime(step.wait_time) : '—'}
-          </text>
-          <text x={X + 14} y={Y + 40} fontSize={8} fill={sc.text} fontFamily="monospace" opacity={0.8}>
-            WIP: {step.wip || '—'}  Ops: {step.operators || '—'}
-          </text>
-        </>
-      ) : (
-        <text x={X + 14} y={Y + 32} fontSize={8} fill={sc.text} fontFamily="monospace" opacity={0.8}>
-          {ct ? fmtTime(ct) : 'No CT'}  {step.wip ? `WIP:${step.wip}` : ''}
-        </text>
-      )}
+      {/* ── CT + WIP LINE (always visible) ── */}
+      <text x={X + 14} y={Y + 33} fontSize={8} fill={sc.text} fontFamily="'JetBrains Mono',monospace" opacity={0.85}>
+        {ct ? `CT: ${fmtTime(ct)}` : 'CT: tap ⏱'}
+        {step.wip ? `  WIP: ${step.wip}` : ''}
+      </text>
 
-      {/* VA badge */}
-      <rect x={X + BOX_W - 34} y={Y + BOX_H - 16} width={28} height={12} rx={3} fill={vaColor} opacity={0.2} />
-      <text x={X + BOX_W - 20} y={Y + BOX_H - 7} fontSize={7} fontWeight={700}
+      {/* ── OPERATOR ICON + COUNT ── */}
+      <text x={X + 14} y={Y + 46} fontSize={8} fill={sc.text} fontFamily="'Satoshi',sans-serif" opacity={0.7}>
+        {'👤'.repeat(0)}{step.operators ? `× ${step.operators} op` : ''}
+        {step.wait_time ? `  ⏳ ${fmtTime(step.wait_time)}` : ''}
+      </text>
+
+      {/* ── VA BADGE ── */}
+      <rect x={X + BOX_W - 36} y={Y + H - 18} width={30} height={13} rx={3}
+        fill={vaColor} opacity={0.18} />
+      <text x={X + BOX_W - 21} y={Y + H - 8} fontSize={7.5} fontWeight={700}
         fill={vaColor} textAnchor="middle" fontFamily="monospace">
         {vaLabel}
       </text>
 
-      {/* Bottleneck badge */}
+      {/* ── HEALTH DOT ── */}
+      <circle cx={X + BOX_W - 10} cy={Y + 10} r={5} fill={healthColor} opacity={0.9}
+        style={{ filter: `drop-shadow(0 0 4px ${healthColor}90)` }} />
+
+      {/* ── BOTTLENECK BADGE ── */}
       {isBot && (
-        <>
-          <rect x={X + 14} y={Y + BOX_H - 16} width={32} height={12} rx={3} fill={RED} opacity={0.15} />
-          <text x={X + 30} y={Y + BOX_H - 7} fontSize={6} fontWeight={700}
-            fill={RED} textAnchor="middle" fontFamily="monospace">
-            BOTTLENECK
-          </text>
-        </>
-      )}
-
-      {/* Health dot */}
-      <circle cx={X + BOX_W - 8} cy={Y + 8} r={4} fill={healthColor} opacity={0.9}
-        style={{ filter: `drop-shadow(0 0 3px ${healthColor})` }} />
-
-      {/* Stopwatch tap target */}
-      <rect x={X + BOX_W - 24} y={Y + 20} width={18} height={14} rx={3}
-        fill="rgba(255,255,255,0.4)" stroke={sc.border} strokeWidth={0.8}
-        style={{ cursor: 'pointer' }}
-        onClick={e => { e.stopPropagation(); onStopwatch(step) }} />
-      <text x={X + BOX_W - 15} y={Y + 30} fontSize={9} textAnchor="middle" fill={sc.text}>⏱</text>
-
-      {/* Expand toggle */}
-      <text x={X + BOX_W / 2} y={Y + BOX_H + 10} fontSize={8} textAnchor="middle" fill="#9CA3AF"
-        style={{ cursor: 'pointer' }}
-        onClick={e => { e.stopPropagation(); onToggleExpand(step.id) }}>
-        {expanded ? '▲' : '▼'}
-      </text>
-
-      {/* ISO data strip */}
-      {expanded && (
         <g>
-          <rect x={X} y={Y + BOX_H + 14} width={BOX_W} height={STRIP_H}
-            fill="white" stroke={sc.border} strokeWidth={1} rx={3}
-            style={{ filter: 'drop-shadow(1px 1px 2px rgba(0,0,0,0.1))' }} />
-          {[
-            { label: 'CT',     val: ct ? fmtTime(ct) : '—',                  x: X + 4  },
-            { label: 'WAIT',   val: step.wait_time ? fmtTime(step.wait_time) : '—', x: X + 34 },
-            { label: 'UPTIME', val: step.uptime ? `${step.uptime}%` : '—',   x: X + 68 },
-            { label: 'DEFECT', val: step.defect_rate ? `${step.defect_rate}%` : '—', x: X + 98 },
-          ].map(({ label, val, x }) => (
-            <g key={label}>
-              <text x={x} y={Y + BOX_H + 26} fontSize={6} fill="#9CA3AF" fontFamily="monospace">{label}</text>
-              <text x={x} y={Y + BOX_H + 38} fontSize={9} fontWeight={700} fill="#374151" fontFamily="monospace">{val}</text>
-            </g>
-          ))}
-          {/* Operators row */}
-          <text x={X + 4} y={Y + BOX_H + 52} fontSize={7} fill="#9CA3AF" fontFamily="monospace">
-            Ops: {step.operators || '—'}  Dept: {step.department ? step.department.slice(0, 10) : '—'}
+          <rect x={X + 14} y={Y + H - 18} width={44} height={13} rx={3} fill={RED} opacity={0.15} />
+          <text x={X + 36} y={Y + H - 8} fontSize={6.5} fontWeight={700}
+            fill={RED} textAnchor="middle" fontFamily="monospace">
+            ▲ BOTTLENECK
           </text>
-          {/* Lap count indicator */}
-          {step.lap_count && (
-            <text x={X + BOX_W - 4} y={Y + BOX_H + 52} fontSize={7} fill={BRAND}
-              textAnchor="end" fontFamily="monospace">
-              {step.lap_count} laps
-            </text>
-          )}
         </g>
       )}
+
+      {/* ── STOPWATCH TAP TARGET ── */}
+      <rect
+        x={X + BOX_W - 32} y={Y + 38} width={26} height={18} rx={4}
+        fill="rgba(255,255,255,0.5)"
+        stroke={sc.stripe} strokeWidth={0.8} strokeOpacity={0.4}
+        style={{ cursor: 'pointer' }}
+        onClick={e => { e.stopPropagation(); onStopwatch(step) }}
+      />
+      <text x={X + BOX_W - 19} y={Y + 50} fontSize={11} textAnchor="middle" fill={sc.text}>⏱</text>
+
+      {/* ── EXPANDED: Activity list + Data strip ── */}
+      {expanded && (
+        <g>
+          {/* Separator line */}
+          <line x1={X + 12} y1={Y + 58} x2={X + BOX_W - 12} y2={Y + 58}
+            stroke={sc.fold} strokeWidth={1} opacity={0.6} />
+
+          {/* Activity header */}
+          <text x={X + 14} y={Y + 70} fontSize={7.5} fontWeight={700}
+            fill={sc.text} fontFamily="monospace" opacity={0.6} letterSpacing={1}>
+            ACTIVITIES
+          </text>
+
+          {/* Activity items — bullet list inside the note */}
+          {activities.length === 0 ? (
+            <text x={X + 14} y={Y + 84} fontSize={8} fill={sc.text} opacity={0.45}
+              fontFamily="'Satoshi',sans-serif" fontStyle="italic">
+              No activities added
+            </text>
+          ) : (
+            activities.slice(0, maxActivities).map((act: string, ai: number) => (
+              <g key={ai}>
+                <circle cx={X + 18} cy={Y + 82 + ai * 14} r={2} fill={sc.stripe} opacity={0.7} />
+                <text x={X + 26} y={Y + 86 + ai * 14} fontSize={8}
+                  fill={sc.text} fontFamily="'Satoshi',sans-serif" opacity={0.8}>
+                  {act.length > 20 ? act.slice(0, 19) + '…' : act}
+                </text>
+              </g>
+            ))
+          )}
+          {activities.length > maxActivities && (
+            <text x={X + 14} y={Y + 82 + maxActivities * 14} fontSize={7}
+              fill={sc.stripe} fontFamily="monospace">
+              +{activities.length - maxActivities} more…
+            </text>
+          )}
+
+          {/* Data strip — below the note body, attached */}
+          <g>
+            <rect x={X} y={Y + BOX_H_EXP} width={BOX_W} height={STRIP_H}
+              fill="rgba(255,255,255,0.92)"
+              stroke={sc.fold} strokeWidth={1} rx={3}
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.08))' }}
+            />
+            {[
+              { label: 'CT',     val: ct ? fmtTime(ct) : '—',                           x: X + 6  },
+              { label: 'WAIT',   val: step.wait_time ? fmtTime(step.wait_time) : '—',    x: X + 44 },
+              { label: 'UPTIME', val: step.uptime ? `${step.uptime}%` : '—',             x: X + 86 },
+              { label: 'DEFECT', val: step.defect_rate ? `${step.defect_rate}%` : '—',   x: X + 126 },
+            ].map(({ label, val, x }) => (
+              <g key={label}>
+                <text x={x} y={Y + BOX_H_EXP + 14} fontSize={6} fill="#9CA3AF" fontFamily="monospace" letterSpacing={0.5}>{label}</text>
+                <text x={x} y={Y + BOX_H_EXP + 28} fontSize={10} fontWeight={700} fill="#374151" fontFamily="'JetBrains Mono',monospace">{val}</text>
+              </g>
+            ))}
+            <text x={X + 6} y={Y + BOX_H_EXP + 44} fontSize={7} fill="#9CA3AF" fontFamily="monospace">
+              Ops: {step.operators || '—'}  Dept: {step.department ? step.department.slice(0, 12) : '—'}
+            </text>
+            {step.lap_count && (
+              <text x={X + BOX_W - 6} y={Y + BOX_H_EXP + 44} fontSize={7} fill={BRAND}
+                textAnchor="end" fontFamily="monospace">
+                {step.lap_count} laps
+              </text>
+            )}
+          </g>
+        </g>
+      )}
+
+      {/* ── EXPAND TOGGLE (below the note) ── */}
+      <text
+        x={X + BOX_W / 2} y={Y + H + (expanded ? STRIP_H : 0) + 14}
+        fontSize={8} textAnchor="middle" fill="#9CA3AF"
+        style={{ cursor: 'pointer' }}
+        onClick={e => { e.stopPropagation(); onToggleExpand(step.id) }}>
+        {expanded ? '▲ collapse' : '▼ expand'}
+      </text>
     </g>
   )
 }
 
-// ── Flow arrows (push/pull/supermarket) ──────────────────────────────────────
+// ── Flow arrows ────────────────────────────────────────────────────────────────
 function FlowArrow({ fromX, toX, flowType, wip }: any) {
   const midX = (fromX + BOX_W + toX) / 2
-  const Y    = 80 + BOX_H / 2
+  const Y    = 90 + BOX_H / 2
   const isPull = flowType === 'supermarket' || flowType === 'fifo'
 
   return (
@@ -289,55 +376,51 @@ function FlowArrow({ fromX, toX, flowType, wip }: any) {
       <line
         x1={fromX + BOX_W} y1={Y}
         x2={toX} y2={Y}
-        stroke={isPull ? BRAND : '#9CA3AF'}
+        stroke={isPull ? BRAND : '#B0BEC5'}
         strokeWidth={isPull ? 2 : 1.5}
-        strokeDasharray={isPull ? undefined : undefined}
         markerEnd={`url(#arrowhead-${fromX})`}
       />
-      {/* WIP on arrow */}
       {wip > 0 && (
         <>
-          <circle cx={midX} cy={Y} r={9} fill="#FEF3C7" stroke={AMBER} strokeWidth={1.5} />
-          <text x={midX} y={Y + 4} textAnchor="middle" fontSize={8} fontWeight={700}
+          <circle cx={midX} cy={Y} r={11} fill="#FEF3C7" stroke={AMBER} strokeWidth={1.5}
+            style={{ filter: 'drop-shadow(1px 2px 3px rgba(0,0,0,0.15))' }} />
+          <text x={midX} y={Y + 4} textAnchor="middle" fontSize={9} fontWeight={700}
             fill={AMBER} fontFamily="monospace">{wip}</text>
         </>
       )}
-      {/* Supermarket symbol */}
       {flowType === 'supermarket' && (
-        <rect x={midX - 8} y={Y - 12} width={16} height={10}
+        <rect x={midX - 9} y={Y - 13} width={18} height={12}
           fill="none" stroke={BRAND} strokeWidth={1.5} />
       )}
     </g>
   )
 }
 
-// ── Phase lane indicator ──────────────────────────────────────────────────────
+// ── Phase lane ─────────────────────────────────────────────────────────────────
 function PhaseLane({ phase, startX, endX, canvasH }: { phase: number; startX: number; endX: number; canvasH: number }) {
-  const PHASE_LABELS = ['Wall Session', 'Floor Observation', 'Analysis', 'Improvement']
-  const PHASE_COLORS = ['rgba(1,118,211,0.04)', 'rgba(29,209,161,0.04)', 'rgba(244,166,35,0.04)', 'rgba(140,68,204,0.04)']
-  const PHASE_TEXT   = [BRAND, '#1DD1A1', AMBER, '#8C44CC']
-
+  const LABELS = ['Wall Session', 'Floor Observation', 'Analysis', 'Improvement']
+  const COLORS = ['rgba(1,118,211,0.04)', 'rgba(29,209,161,0.04)', 'rgba(244,166,35,0.04)', 'rgba(140,68,204,0.04)']
+  const TEXT   = [BRAND, '#1DD1A1', AMBER, '#8C44CC']
   if (phase < 1) return null
-
   return (
     <g>
       <rect x={startX} y={0} width={endX - startX} height={canvasH}
-        fill={PHASE_COLORS[phase - 1] || 'transparent'} rx={0} />
+        fill={COLORS[phase - 1] || 'transparent'} />
       <text x={startX + 6} y={14} fontSize={8} fontWeight={700}
-        fill={PHASE_TEXT[phase - 1] || '#aaa'} fontFamily="monospace" opacity={0.8}>
-        PHASE {phase}: {PHASE_LABELS[phase - 1]?.toUpperCase()}
+        fill={TEXT[phase - 1] || '#aaa'} fontFamily="monospace" opacity={0.8}>
+        PHASE {phase}: {LABELS[phase - 1]?.toUpperCase()}
       </text>
     </g>
   )
 }
 
-// ── Main canvas ───────────────────────────────────────────────────────────────
+// ── Main canvas ────────────────────────────────────────────────────────────────
 export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAddStep, t, onSaveStopwatch }: any) {
-  const [pan,          setPan]          = useState({ x: 0, y: 0 })
-  const [zoom,         setZoom]         = useState(1)
-  const [isDragging,   setIsDragging]   = useState(false)
+  const [pan,           setPan]           = useState({ x: 0, y: 0 })
+  const [zoom,          setZoom]          = useState(1)
+  const [isDragging,    setIsDragging]    = useState(false)
   const [expandedSteps, setExpandedSteps] = useState<Record<string, boolean>>({})
-  const [swStep,       setSwStep]       = useState<any>(null)  // floating stopwatch
+  const [swStep,        setSwStep]        = useState<any>(null)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const dragging     = useRef(false)
@@ -371,7 +454,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
 
   const onMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return
-    dragging.current  = true; didDrag.current = false
+    dragging.current = true; didDrag.current = false
     dragStart.current = { x: e.clientX, y: e.clientY }
     lastPos.current   = { x: e.clientX, y: e.clientY }
     setIsDragging(true)
@@ -387,19 +470,19 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
 
   const onTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length !== 1) return
-    const t = e.touches[0]
+    const tt = e.touches[0]
     dragging.current = true; didDrag.current = false
-    dragStart.current = { x: t.clientX, y: t.clientY }
-    lastPos.current   = { x: t.clientX, y: t.clientY }
+    dragStart.current = { x: tt.clientX, y: tt.clientY }
+    lastPos.current   = { x: tt.clientX, y: tt.clientY }
   }
   const onTouchMove = (e: React.TouchEvent) => {
     if (!dragging.current || e.touches.length !== 1) return
     e.preventDefault()
-    const t = e.touches[0]
-    const dx = t.clientX - lastPos.current.x; const dy = t.clientY - lastPos.current.y
-    if (Math.abs(t.clientX - dragStart.current.x) > 4 || Math.abs(t.clientY - dragStart.current.y) > 4) didDrag.current = true
+    const tt = e.touches[0]
+    const dx = tt.clientX - lastPos.current.x; const dy = tt.clientY - lastPos.current.y
+    if (Math.abs(tt.clientX - dragStart.current.x) > 4 || Math.abs(tt.clientY - dragStart.current.y) > 4) didDrag.current = true
     setPan(p => ({ x: p.x + dx, y: p.y + dy }))
-    lastPos.current = { x: t.clientX, y: t.clientY }
+    lastPos.current = { x: tt.clientX, y: tt.clientY }
   }
   const onTouchEnd = () => { dragging.current = false }
 
@@ -408,10 +491,9 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
   const taktTime = taktCalc ?? 0
 
   const hasExpanded  = Object.values(expandedSteps).some(Boolean)
-  const CANVAS_W = Math.max(1000, 80 + steps.length * (BOX_W + GAP) + 200)
-  const CANVAS_H = hasExpanded ? 580 : 380
+  const CANVAS_W = Math.max(1100, 80 + steps.length * (BOX_W + GAP) + 240)
+  const CANVAS_H = hasExpanded ? 640 : 420
 
-  // Mobile auto-scale
   useEffect(() => {
     if (typeof window === 'undefined') return
     const vw = window.innerWidth
@@ -423,7 +505,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
 
   if (steps.length === 0) {
     return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, background: '#F8F7F4', color: 'var(--text3)' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, background: '#F5F4F1', color: 'var(--text3)' }}>
         <VSMIcon size={52} />
         <div style={{ textAlign: 'center' }}>
           <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
@@ -438,10 +520,9 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
   }
 
   return (
-    <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: '#F8F7F4' }}>
+    <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: '#F5F4F1' }}>
       <style>{`
-        @keyframes stickyPulse { 0%,100%{opacity:0.7;stroke-width:2.5} 50%{opacity:1;stroke-width:3.5} }
-        @keyframes stickyBreath { 0%,100%{opacity:0.3} 50%{opacity:0.6} }
+        @keyframes stickyPulse { 0%,100%{opacity:0.6;stroke-width:2} 50%{opacity:1;stroke-width:3} }
       `}</style>
 
       {/* Floating stopwatch */}
@@ -465,20 +546,20 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
           ...(taktTime > 0 ? [{ label: 'Takt', value: fmtTime(taktTime) }] : []),
           ...(missingCount > 0 ? [{ label: 'Incomplete', value: String(missingCount), color: AMBER }] : []),
         ].map(({ label, value, color }) => (
-          <div key={label} style={{ background: 'rgba(255,255,255,0.92)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 6, padding: '4px 10px', textAlign: 'center', backdropFilter: 'blur(4px)', pointerEvents: 'all' }}>
+          <div key={label} style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 6, padding: '4px 10px', textAlign: 'center', backdropFilter: 'blur(4px)', pointerEvents: 'all', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
             <div style={{ fontSize: 7, fontFamily: 'monospace', color: '#9CA3AF', letterSpacing: 1 }}>{label}</div>
             <div style={{ fontSize: 13, fontWeight: 700, color: color || '#1F2937' }}>{value}</div>
           </div>
         ))}
       </div>
 
-      {/* Expand / collapse toggles */}
-      <div style={{ position: 'absolute', top: 10, left: 12, marginTop: 44, zIndex: 20, display: 'flex', gap: 4 }}>
+      {/* Expand/collapse */}
+      <div style={{ position: 'absolute', top: 54, left: 12, zIndex: 20, display: 'flex', gap: 4 }}>
         {[
           { label: 'EXPAND ALL',  fn: expandAll  },
           { label: 'COLLAPSE',    fn: collapseAll },
         ].map(({ label, fn }) => (
-          <button key={label} onClick={fn} style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 1, padding: '3px 8px', border: '1px solid rgba(0,0,0,0.12)', background: 'rgba(255,255,255,0.9)', cursor: 'pointer', color: '#374151', borderRadius: 4 }}>
+          <button key={label} onClick={fn} style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 1, padding: '3px 8px', border: '1px solid rgba(0,0,0,0.10)', background: 'rgba(255,255,255,0.92)', cursor: 'pointer', color: '#374151', borderRadius: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
             {label}
           </button>
         ))}
@@ -491,10 +572,10 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
         <button onClick={resetView} style={{ ...ZBTN, fontSize: 9, padding: '5px 8px' }}>FIT</button>
       </div>
 
-      {/* VA Legend */}
-      <div style={{ position: 'absolute', bottom: 12, right: 14, zIndex: 20, display: 'flex', gap: 6, flexWrap: 'wrap', maxWidth: 320 }}>
-        {[{ color: GREEN, label: 'VA' }, { color: AMBER, label: 'NNVA' }, { color: RED, label: 'NVA / Waste' }].map(({ color, label }) => (
-          <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#374151', background: 'rgba(255,255,255,0.9)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 4, padding: '2px 7px' }}>
+      {/* Legend */}
+      <div style={{ position: 'absolute', bottom: 12, right: 14, zIndex: 20, display: 'flex', gap: 6 }}>
+        {[{ color: GREEN, label: 'VA' }, { color: AMBER, label: 'NNVA' }, { color: RED, label: 'NVA' }].map(({ color, label }) => (
+          <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#374151', background: 'rgba(255,255,255,0.92)', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 4, padding: '2px 7px' }}>
             <div style={{ width: 8, height: 8, borderRadius: 2, background: color }} />
             {label}
           </div>
@@ -502,7 +583,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
       </div>
 
       {/* Zoom % */}
-      <div style={{ position: 'absolute', bottom: 12, left: 12, zIndex: 20, fontSize: 10, fontFamily: 'monospace', color: '#9CA3AF', background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 4, padding: '2px 8px' }}>
+      <div style={{ position: 'absolute', bottom: 12, left: 12, zIndex: 20, fontSize: 9, fontFamily: 'monospace', color: '#9CA3AF' }}>
         {Math.round(zoom * 100)}%
       </div>
 
@@ -521,36 +602,39 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
         <div style={{ transformOrigin: 'top left', transform: `translate(${pan.x}px,${pan.y}px) scale(${zoom})`, width: CANVAS_W, height: CANVAS_H, willChange: 'transform' }}>
           <svg width={CANVAS_W} height={CANVAS_H} style={{ display: 'block', userSelect: 'none' }} role="region" aria-label="Value stream map canvas" focusable="false">
             <defs>
-              <pattern id="grid-v4" width="32" height="32" patternUnits="userSpaceOnUse">
-                <circle cx="1" cy="1" r="1" fill="#DBEAFE" opacity="0.6" />
+              {/* Subtle cork/linen background texture */}
+              <pattern id="board-dot" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="0.8" fill="#C8B89A" opacity="0.35" />
               </pattern>
             </defs>
 
-            {/* Blue dot grid background */}
-            <rect width={CANVAS_W} height={CANVAS_H} fill="url(#grid-v4)" />
+            {/* Board background — warm off-white, like a physical whiteboard */}
+            <rect width={CANVAS_W} height={CANVAS_H} fill="#F5F4F1" />
+            <rect width={CANVAS_W} height={CANVAS_H} fill="url(#board-dot)" />
 
-            {/* Phase lane (if project.phase set) */}
+            {/* Phase lane */}
             {project?.phase && (
               <PhaseLane phase={project.phase} startX={0} endX={CANVAS_W} canvasH={CANVAS_H} />
             )}
 
-            {/* Supplier */}
-            <rect x={12} y={56} width={52} height={44} fill="#6B7280" stroke="#4B5563" strokeWidth={1.5} rx={3}
-              style={{ filter: 'drop-shadow(1px 2px 3px rgba(0,0,0,0.2))' }} />
-            <text x={38} y={71} textAnchor="middle" fontSize={8} fontWeight={700} fill="white" fontFamily="monospace">
+            {/* Supplier block */}
+            <rect x={12} y={68} width={56} height={48} fill="#607D8B" stroke="#455A64" strokeWidth={1.5} rx={4}
+              style={{ filter: 'drop-shadow(1px 3px 5px rgba(0,0,0,0.2))' }} />
+            <text x={40} y={85} textAnchor="middle" fontSize={8} fontWeight={700} fill="white" fontFamily="monospace">
               {(project?.supplier || 'Supplier').slice(0, 8)}
             </text>
-            <text x={38} y={83} textAnchor="middle" fontSize={7} fill="rgba(255,255,255,0.7)" fontFamily="monospace">SUPPLIER</text>
+            <text x={40} y={98} textAnchor="middle" fontSize={6.5} fill="rgba(255,255,255,0.7)" fontFamily="monospace">SUPPLIER</text>
             {steps.length > 0 && (
-              <line x1={64} y1={80 + BOX_H / 2} x2={80} y2={80 + BOX_H / 2} stroke="#9CA3AF" strokeWidth={1.5}
-                markerEnd="url(#arrow-push-v4)" />
+              <>
+                <defs>
+                  <marker id="arr-supp" markerWidth={6} markerHeight={4} refX={5} refY={2} orient="auto">
+                    <polygon points="0 0,6 2,0 4" fill="#607D8B" />
+                  </marker>
+                </defs>
+                <line x1={68} y1={90 + BOX_H / 2} x2={82} y2={90 + BOX_H / 2}
+                  stroke="#B0BEC5" strokeWidth={1.5} markerEnd="url(#arr-supp)" />
+              </>
             )}
-
-            <defs>
-              <marker id="arrow-push-v4" markerWidth={6} markerHeight={4} refX={5} refY={2} orient="auto">
-                <polygon points="0 0,6 2,0 4" fill="#6B7280" />
-              </marker>
-            </defs>
 
             {/* Step boxes */}
             {steps.map((step: any, i: number) => (
@@ -564,7 +648,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
               />
             ))}
 
-            {/* Flow arrows with WIP */}
+            {/* Flow arrows */}
             {steps.slice(0, -1).map((_: any, i: number) => (
               <FlowArrow
                 key={`arr-${i}`}
@@ -575,29 +659,29 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
               />
             ))}
 
-            {/* Customer */}
+            {/* Customer block */}
             {steps.length > 0 && (() => {
-              const lx = 80 + (steps.length - 1) * (BOX_W + GAP) + BOX_W + 16
+              const lx = 80 + (steps.length - 1) * (BOX_W + GAP) + BOX_W + 18
               return (
                 <g>
-                  <rect x={lx} y={56} width={52} height={44} fill="#6B7280" stroke="#4B5563" strokeWidth={1.5} rx={3}
-                    style={{ filter: 'drop-shadow(1px 2px 3px rgba(0,0,0,0.2))' }} />
-                  <text x={lx + 26} y={71} textAnchor="middle" fontSize={8} fontWeight={700} fill="white" fontFamily="monospace">
+                  <rect x={lx} y={68} width={56} height={48} fill="#607D8B" stroke="#455A64" strokeWidth={1.5} rx={4}
+                    style={{ filter: 'drop-shadow(1px 3px 5px rgba(0,0,0,0.2))' }} />
+                  <text x={lx + 28} y={85} textAnchor="middle" fontSize={8} fontWeight={700} fill="white" fontFamily="monospace">
                     {(project?.customer || 'Customer').slice(0, 8)}
                   </text>
-                  <text x={lx + 26} y={83} textAnchor="middle" fontSize={7} fill="rgba(255,255,255,0.7)" fontFamily="monospace">CUSTOMER</text>
+                  <text x={lx + 28} y={98} textAnchor="middle" fontSize={6.5} fill="rgba(255,255,255,0.7)" fontFamily="monospace">CUSTOMER</text>
                 </g>
               )
             })()}
 
             {/* Sawtooth timeline */}
             {totalLT > 0 && (() => {
-              const TL_Y = hasExpanded ? 440 : 260
-              const TL_W = Math.max(2, CANVAS_W - 160)
+              const TL_Y = hasExpanded ? 500 : 310
+              const TL_W = Math.max(2, CANVAS_W - 180)
               let pos = 80
               return (
                 <g>
-                  <line x1={80} y1={TL_Y + 20} x2={CANVAS_W - 60} y2={TL_Y + 20} stroke="#D1D5DB" strokeWidth={1} />
+                  <line x1={80} y1={TL_Y + 20} x2={CANVAS_W - 80} y2={TL_Y + 20} stroke="#D4C9B8" strokeWidth={1.5} />
                   {steps.flatMap((s: any, i: number) => {
                     const ctW   = totalLT > 0 ? (ctSeconds(s) / totalLT) * TL_W : 0
                     const waitW = totalLT > 0 ? ((s.wait_time || 0) / totalLT) * TL_W : 0
@@ -617,9 +701,9 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
                     if (waitW > 0) {
                       els.push(
                         <g key={`wt-${i}`}>
-                          <line x1={pos} y1={TL_Y + 20} x2={pos} y2={TL_Y + 32} stroke="#D1D5DB" strokeWidth={1} />
-                          <line x1={pos} y1={TL_Y + 32} x2={pos + waitW} y2={TL_Y + 32} stroke="#D1D5DB" strokeWidth={2} />
-                          <line x1={pos + waitW} y1={TL_Y + 32} x2={pos + waitW} y2={TL_Y + 20} stroke="#D1D5DB" strokeWidth={1} />
+                          <line x1={pos} y1={TL_Y + 20} x2={pos} y2={TL_Y + 32} stroke="#D4C9B8" strokeWidth={1} />
+                          <line x1={pos} y1={TL_Y + 32} x2={pos + waitW} y2={TL_Y + 32} stroke="#D4C9B8" strokeWidth={2} />
+                          <line x1={pos + waitW} y1={TL_Y + 32} x2={pos + waitW} y2={TL_Y + 20} stroke="#D4C9B8" strokeWidth={1} />
                           {waitW > 20 && <text x={pos + waitW / 2} y={TL_Y + 44} textAnchor="middle" fontSize={7} fill="#9CA3AF" fontFamily="monospace">{fmtTime(s.wait_time || 0)}</text>}
                         </g>
                       )
@@ -627,14 +711,14 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
                     }
                     return els
                   })}
-                  <text x={CANVAS_W / 2} y={TL_Y + 58} textAnchor="middle" fontSize={9} fill="#6B7280" fontFamily="monospace">
-                    {t?.cycleTime || 'CT'}: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {fmtPCE(pce)}
+                  <text x={CANVAS_W / 2} y={TL_Y + 60} textAnchor="middle" fontSize={9} fill="#9CA3AF" fontFamily="monospace">
+                    CT: {fmtTime(totalCT)} · Wait: {fmtTime(totalWait)} · Lead Time: {fmtTime(totalLT)} · PCE: {fmtPCE(pce)}
                   </text>
                   {taktTime > 0 && (() => {
                     const tx = 80 + (taktTime / totalLT) * TL_W
                     return (
                       <g>
-                        <line x1={tx} y1={TL_Y - 30} x2={tx} y2={TL_Y + 50} stroke={RED} strokeWidth={1.2} strokeDasharray="5 3" opacity={0.6} />
+                        <line x1={tx} y1={TL_Y - 30} x2={tx} y2={TL_Y + 50} stroke={RED} strokeWidth={1.2} strokeDasharray="5 3" opacity={0.5} />
                         <text x={tx + 4} y={TL_Y - 20} fontSize={8} fill={RED} fontFamily="monospace">Takt={fmtTime(taktTime)}</text>
                       </g>
                     )
@@ -648,10 +732,10 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
               const x = 80 + steps.length * (BOX_W + GAP)
               return (
                 <g style={{ cursor: 'pointer' }} onClick={() => onAddStep(steps.length - 1)}>
-                  <rect x={x} y={80 + BOX_H / 2 - 19} width={42} height={38} rx={8}
-                    fill="white" stroke={BRAND} strokeWidth={1.5} strokeDasharray="4 2"
-                    style={{ filter: 'drop-shadow(1px 2px 3px rgba(0,0,0,0.1))' }} />
-                  <text x={x + 21} y={80 + BOX_H / 2 + 8} textAnchor="middle" fontSize={24} fill={BRAND} fontWeight={300}>+</text>
+                  <rect x={x} y={90 + BOX_H / 2 - 22} width={48} height={44} rx={8}
+                    fill="rgba(255,255,255,0.9)" stroke={BRAND} strokeWidth={1.5} strokeDasharray="5 3"
+                    style={{ filter: 'drop-shadow(1px 2px 4px rgba(0,0,0,0.10))' }} />
+                  <text x={x + 24} y={90 + BOX_H / 2 + 10} textAnchor="middle" fontSize={26} fill={BRAND} fontWeight={300}>+</text>
                 </g>
               )
             })()}
