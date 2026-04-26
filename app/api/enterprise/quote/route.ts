@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   const addons =
     (needs_api         ? 200 : 0) +   // +$200/mo API access
     (needs_sso         ? 150 : 0) +   // +$150/mo SSO/SAML
-    (needs_sla         ? 300 : 0) +   // +$300/mo SLA guarantee
+    (needs_sla         ? 300 : 0) +   // +$300/mo SLA option
     (needs_onboarding  ? 500 : 0) +   // +$500 one-time onboarding (not monthly)
     (needs_custom_int  ? 250 : 0)     // +$250/mo custom integrations
 

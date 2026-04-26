@@ -1,11 +1,11 @@
 {
-  "name": "Vesimy",
-  "short_name": "Vesimy",
-  "description": "Continuous improvement platform for every industry. Map value streams, identify waste, and track improvements.",
+  "name": "VeSiMy",
+  "short_name": "VeSiMy",
+  "description": "Target-driven continuous improvement platform. Map processes, identify waste, and track improvements.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#03030D",
-  "theme_color": "#D4A208",
+  "theme_color": "#3B7CFF",
   "orientation": "portrait-primary",
   "icons": [
     { "src": "/icons/icon-72x72.png",   "sizes": "72x72",   "type": "image/png" },

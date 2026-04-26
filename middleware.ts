@@ -60,6 +60,8 @@ export const config = {
     '/onboarding/:path*',
     '/kaizen/:path*',
     '/learn/:path*',
+    '/guided/:path*',
+    '/skill-matrix/:path*',
     '/auth/login',
     '/auth/signup',
   ],

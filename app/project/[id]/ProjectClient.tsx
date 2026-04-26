@@ -813,7 +813,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       Supe
                     </div>
                     <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginTop: 2 }}>
-                      AI MENTOR {!isPaid && 'PRO'}
+                      AI ADVISOR {!isPaid && 'PRO'}
                     </div>
                   </div>
                 </div>
@@ -902,7 +902,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   </div>
                   <div>
                     <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: 'Palatino Linotype,serif' }}>Supe</span>
-                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
+                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginLeft: 6 }}>AI ADVISOR</span>
                   </div>
                 </div>
                 <button

@@ -42,6 +42,38 @@ interface ReportOutput {
   leanConceptExplanation: string
 }
 
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+function normaliseText(value: unknown, max = 120): string {
+  return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max)
+}
+
+function normaliseTier0Request(body: Tier0Request): Tier0Request {
+  const steps = Array.isArray(body.steps) ? body.steps : []
+  return {
+    email: normaliseText(body.email, 180).toLowerCase(),
+    firstName: body.firstName ? normaliseText(body.firstName, 60) : undefined,
+    industry: normaliseText(body.industry, 80),
+    processName: normaliseText(body.processName, 120),
+    targetCategory: body.targetCategory ? normaliseText(body.targetCategory, 80) : undefined,
+    painStep: typeof body.painStep === 'number' ? body.painStep : null,
+    painDescription: body.painDescription ? normaliseText(body.painDescription, 240) : undefined,
+    steps: steps.slice(0, 12).map((step: any) => ({
+      label: normaliseText(step?.label, 80),
+      time_seconds: typeof step?.time_seconds === 'number' && Number.isFinite(step.time_seconds) && step.time_seconds > 0
+        ? Math.round(Math.min(step.time_seconds, 60 * 60 * 24))
+        : null,
+    })).filter(step => step.label.length > 0),
+  }
+}
+
 // ── Industry VA ratio table ────────────────────────────────────────────────
 // Typical value-added % for each industry segment (lean literature benchmarks)
 // Used when no step times are provided to set a realistic PCE baseline
@@ -159,12 +191,22 @@ async function sendReportEmail(
   sessionId: string,
 ): Promise<void> {
   const apiKey = process.env.SENDER_API_KEY
+  const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://www.vesimy.com').replace(/\/$/, '')
   if (!apiKey) {
     console.warn('[tier0/email] SENDER_API_KEY not set — skipping email')
     return
   }
 
-  const name    = firstName ?? 'there'
+  const name    = escapeHtml(firstName ?? 'there')
+  const safeProcessName = escapeHtml(processName)
+  const safeReport = {
+    summary: escapeHtml(report.summary),
+    wasteType: escapeHtml(report.wasteType),
+    bottleneckStep: escapeHtml(report.bottleneckStep),
+    firstAction: escapeHtml(report.firstAction),
+    leanConcept: escapeHtml(report.leanConcept),
+    leanConceptExplanation: escapeHtml(report.leanConceptExplanation),
+  }
   const minutes = Math.round(report.totalTimeSeconds / 60)
   const vaMins  = Math.round(report.vaTimeSeconds / 60)
 
@@ -183,12 +225,12 @@ async function sendReportEmail(
     <div style="padding:32px">
       <p style="color:#181818;font-size:16px;margin:0 0 8px">Hi ${name},</p>
       <p style="color:#3E3E3C;font-size:15px;line-height:1.6;margin:0 0 24px">
-        Here is the lean analysis for your <strong>${processName}</strong> process.
+        Here is the lean analysis for your <strong>${safeProcessName}</strong> process.
       </p>
 
       <div style="background:#F8F8F8;border-radius:8px;padding:20px;margin-bottom:24px">
         <p style="color:#181818;font-size:14px;font-weight:600;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.06em">Summary</p>
-        <p style="color:#3E3E3C;font-size:15px;line-height:1.6;margin:0">${report.summary}</p>
+        <p style="color:#3E3E3C;font-size:15px;line-height:1.6;margin:0">${safeReport.summary}</p>
       </div>
 
       <div style="display:grid;gap:12px;margin-bottom:24px">
@@ -202,22 +244,22 @@ async function sendReportEmail(
         </div>
         <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Primary waste type</span>
-          <span style="color:#BA0517;font-size:15px;font-weight:600">${report.wasteType}</span>
+          <span style="color:#BA0517;font-size:15px;font-weight:600">${safeReport.wasteType}</span>
         </div>
         <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Bottleneck step</span>
-          <span style="color:#181818;font-size:15px;font-weight:600">${report.bottleneckStep}</span>
+          <span style="color:#181818;font-size:15px;font-weight:600">${safeReport.bottleneckStep}</span>
         </div>
       </div>
 
       <div style="background:#EFF6FF;border-left:3px solid #0176D3;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:24px">
         <p style="color:#0a3d78;font-size:13px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:0.06em">First Action This Week</p>
-        <p style="color:#181818;font-size:15px;line-height:1.6;margin:0">${report.firstAction}</p>
+        <p style="color:#181818;font-size:15px;line-height:1.6;margin:0">${safeReport.firstAction}</p>
       </div>
 
       <div style="background:#F8F4FF;border-radius:8px;padding:16px 20px;margin-bottom:32px">
-        <p style="color:#6426A0;font-size:13px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:0.06em">${report.leanConcept}</p>
-        <p style="color:#3E3E3C;font-size:14px;line-height:1.6;margin:0">${report.leanConceptExplanation}</p>
+        <p style="color:#6426A0;font-size:13px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:0.06em">${safeReport.leanConcept}</p>
+        <p style="color:#3E3E3C;font-size:14px;line-height:1.6;margin:0">${safeReport.leanConceptExplanation}</p>
       </div>
 
       <div style="border-top:1px solid #E5E5E5;padding-top:24px">
@@ -225,7 +267,7 @@ async function sendReportEmail(
         <p style="color:#3E3E3C;font-size:14px;line-height:1.6;margin:0 0 20px">
           Build a full VSM map and run a complete improvement cycle. 14-day free trial, no card required.
         </p>
-        <a href="https://vesimy.com/auth/signup?utm_source=tier0&utm_medium=email&utm_campaign=report_delivery"
+        <a href="${siteUrl}/auth/signup?utm_source=tier0&utm_medium=email&utm_campaign=report_delivery"
            style="display:inline-block;background:#0176D3;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600">
           Start Free Trial
         </a>
@@ -239,8 +281,8 @@ async function sendReportEmail(
         <a href="mailto:founder@vesimy.com" style="color:#0176D3">founder@vesimy.com</a>
       </p>
       <p style="color:#A8A8A8;font-size:12px;margin:12px 0 0">
-        You received this because you mapped a process at vesimy.com/start.
-        <a href="https://vesimy.com/unsubscribe?id=${sessionId}" style="color:#A8A8A8">Unsubscribe</a>
+        You received this because you mapped a process at ${siteUrl.replace(/^https?:\/\//, '')}/start.
+        <a href="mailto:founder@vesimy.com?subject=Unsubscribe%20from%20VeSiMy%20emails&body=Please%20unsubscribe%20me%20from%20VeSiMy%20emails.%20Session%20ID:%20${encodeURIComponent(sessionId)}" style="color:#A8A8A8">Unsubscribe</a>
       </p>
     </div>
   </div>
@@ -257,7 +299,7 @@ async function sendReportEmail(
       body: JSON.stringify({
         from:    { name: 'Max Singh, VeSiMy', email: 'founder@vesimy.com' },
         to:      [{ email }],
-        subject: `Your lean report is here${firstName ? `, ${firstName}` : ''}`,
+        subject: `Your lean report is here${firstName ? `, ${normaliseText(firstName, 60)}` : ''}`,
         html:    htmlBody,
         groups:  [process.env.SENDER_TIER0_GROUP_ID].filter(Boolean),
       }),
@@ -326,7 +368,8 @@ async function checkRateLimit(email: string): Promise<boolean> {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json() as Tier0Request
+    const rawBody = await request.json() as Tier0Request
+    const body = normaliseTier0Request(rawBody)
 
     // Validate required fields
     if (!body.email || !body.industry || !body.processName || !Array.isArray(body.steps)) {
@@ -344,17 +387,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
-
-    // Truncate inputs to prevent prompt injection / large payloads
-    body.processName  = String(body.processName).slice(0, 120)
-    body.targetMetric = body.targetMetric ? String(body.targetMetric).slice(0, 80) : undefined
-    body.steps        = body.steps.slice(0, 12).map(s => ({
-      ...s,
-      name:      String(s.name || '').slice(0, 80),
-      waitBefore:String(s.waitBefore || '').slice(0, 20),
-      cycleTime: String(s.cycleTime || '').slice(0, 20),
-      painPoint: s.painPoint ? String(s.painPoint).slice(0, 200) : undefined,
-    }))
 
     if (body.steps.length < 2 || body.steps.length > 12) {
       return NextResponse.json(
@@ -394,7 +426,7 @@ export async function POST(request: NextRequest) {
             'anthropic-version': '2023-06-01',
           },
           body: JSON.stringify({
-            model:      'claude-opus-4-5',
+            model:      process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
             max_tokens: 1024,
             messages:   [{ role: 'user', content: buildPrompt(body) }],
           }),

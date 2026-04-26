@@ -278,7 +278,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 style={{ minWidth: 80 }}
                 type="button"
               >
-                ⏱ Lap
+                Record lap
               </button>
             )}
 

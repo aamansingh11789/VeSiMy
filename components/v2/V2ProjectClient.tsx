@@ -279,7 +279,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
       setSteps(insertedSteps)
       if (parsed.governing_entities?.length > 0) {
-        toast(`Governing entities detected: ${parsed.governing_entities.join(', ')}`, { icon: 'ℹ️' })
+        toast(`Governing entities detected: ${parsed.governing_entities.join(', ')}`)
       }
     } catch (e: any) {
       toast.error(e.message || 'SOP parsing failed')
@@ -322,17 +322,17 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
   const TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
     { id: 'map',        label: 'Process Map',    icon: 'map' },
-    { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
+    { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: 'SUB' },
     { id: 'analyze',    label: 'Analysis',       icon: 'zap' },
-    { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: '📓' },
+    { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'JR' },
     { id: 'future',     label: 'Future State',   icon: '→',  premium: true },
-    { id: 'roadmap',    label: 'Kaizen Plan',    icon: '🗺' },
-    { id: 'pdca',       label: 'PDCA',           icon: '🔄' },
-    { id: 'kaizen',     label: 'Kaizen Board',   icon: '⚡' },
-    { id: 'kanban',     label: 'Kanban',         icon: '📋' },
-    { id: 'simulation', label: 'Simulation',     icon: '⚗',  premium: true },
-    { id: 'live',       label: 'Gemba Monitor',  icon: '📡', premium: true },
-    { id: 'report',     label: 'Report',         icon: '📊' },
+    { id: 'roadmap',    label: 'Kaizen Plan',    icon: 'KP' },
+    { id: 'pdca',       label: 'PDCA',           icon: 'PD' },
+    { id: 'kaizen',     label: 'Kaizen Board',   icon: 'SP' },
+    { id: 'kanban',     label: 'Kanban',         icon: 'KB' },
+    { id: 'simulation', label: 'Simulation',     icon: 'SIM',  premium: true },
+    { id: 'live',       label: 'Gemba Monitor',  icon: 'LF', premium: true },
+    { id: 'report',     label: 'Report',         icon: 'AN' },
   ]
 
   return (
@@ -413,7 +413,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             </div>
           )}
           {/* Settings button — always visible */}
-          <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>⚙</button>
+          <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>SET</button>
           {/* Map completeness */}
           {tab === 'map' && steps.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 6, background: 'var(--sl-100)', border: '1px solid var(--border)' }}>
@@ -691,7 +691,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               )}
               {branches.length === 0 && !showAddBranch ? (
                 <div style={{ textAlign:'center', padding:60, color:'var(--text3)' }}>
-                  <div style={{ fontSize:32, marginBottom:12 }}>⬡</div>
+                  <div style={{ fontSize:16, fontWeight:800, marginBottom:12 }}>SUB</div>
                   <p style={{ fontSize:14, lineHeight:1.7 }}>No sub-processes yet.<br/>Add branches for rework loops, sub-assembly lines, or alternate paths.</p>
                 </div>
               ) : (
@@ -821,7 +821,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               ? <ProcessSimulation steps={steps} projectId={project.id} isPaid={true} />
               : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
-                  <div style={{ fontSize: 32 }}>⚗</div>
+                  <div style={{ fontSize:16, fontWeight:800 }}>SIM</div>
                   <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Process Simulation</div>
                   <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
                     Run stress scenarios on your value stream. Adjust cycle times, simulate demand spikes, labor shortages, and equipment failures — and see the pressure impact before it hits your floor.
@@ -840,7 +840,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               ? <LiveFloorPanel steps={steps} projectId={project.id} />
               : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
-                  <div style={{ fontSize: 32 }}>📡</div>
+                  <div style={{ fontSize:16, fontWeight:800 }}>LIVE</div>
                   <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Gemba Monitor</div>
                   <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
                     Monitor your process in real time from the floor. Track live cycle times, flag deviations, and capture observations directly from your phone during a gemba walk.
@@ -1150,7 +1150,7 @@ function V2KaizenBoardView({ steps, onStatusChange }: {
   if (allItems.length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: 60 }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>⚡</div>
+        <div style={{ fontSize: 40, marginBottom: 12 }}>SP</div>
         <div style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 20 }}>
           No kaizen events yet. Open the Kaizen tool on any step to add improvement items.
         </div>
@@ -1266,14 +1266,14 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
       {/* Takt not set warning — bottleneck detection is disabled without takt time */}
       {takt == null && (
         <div style={{ padding: '10px 14px', background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#7A5200', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>⚠</span>
+          <span>WARN</span>
           <span><strong>Takt time not set</strong> — bottleneck detection is disabled. Open Project Settings and add your takt time to enable accurate bottleneck identification.</span>
         </div>
       )}
       {/* PCE null warning — VA classification not done */}
       {pceNum == null && mainSteps.length > 0 && (
         <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#0a4d8f', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>ℹ</span>
+          <span>INFO</span>
           <span><strong>PCE shows — (not calculable)</strong> because no steps have been classified as Value-Add. Open the step panel and set VA Type on each step to see your Process Cycle Efficiency.</span>
         </div>
       )}

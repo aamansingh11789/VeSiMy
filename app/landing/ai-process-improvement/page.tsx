@@ -9,11 +9,11 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'AI Process Improvement for Small Businesses — VeSiMy',
-  description: 'VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an ISO-verified knowledge base. 68+ industries.',
+  description: 'VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built around practical Lean and Six Sigma workflows for process-heavy teams.',
   keywords: ['AI process improvement', 'process improvement tool', 'Lean Six Sigma for small business', 'continuous improvement software', 'business workflow optimization', 'AI tools for small business owners'],
   openGraph: {
     title: 'AI Process Improvement for Small Businesses — VeSiMy',
-    description: 'Stop babysitting your processes. Start improving them. AI-guided Lean and Six Sigma for small businesses across 68+ industries.',
+    description: 'Stop babysitting your processes. Start improving them. AI-guided Lean and Six Sigma for small businesses across process-heavy industries.',
     type: 'website',
   },
 }
@@ -40,7 +40,7 @@ export default function LandingAIProcessImprovement() {
           Stop babysitting your processes.<br />Start improving them.
         </h1>
         <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.75, maxWidth: 580, margin: '0 auto 40px' }}>
-          VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an ISO-verified knowledge base so your improvement workflow is practical, structured, and easy to act on.
+          VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built around practical Lean and Six Sigma workflows so your improvement work is structured, specific, and easy to act on.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700, boxShadow: '0 4px 14px rgba(1,118,211,0.3)' }}>
@@ -56,9 +56,9 @@ export default function LandingAIProcessImprovement() {
       <section style={{ maxWidth: 960, margin: '0 auto', padding: '0 clamp(20px,5vw,48px) 80px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: 20 }}>
           {[
-            { icon: '🔍', title: 'The problem is buried', body: 'Your team knows something is slowing them down, but the real cause is scattered across spreadsheets, handoffs, and tribal knowledge. Nobody has a complete picture.' },
-            { icon: '🤖', title: 'Generic AI is not enough', body: 'General AI tools can answer questions but they do not guide a real improvement workflow from root cause to action plan. You end up doing the thinking yourself.' },
-            { icon: '📋', title: 'Lean feels too complex', body: 'Lean Six Sigma sounds useful but for small businesses it often feels too consultant-heavy or too disconnected from day-to-day operations.' },
+            { icon: '01', title: 'The problem is buried', body: 'Your team knows something is slowing them down, but the real cause is scattered across spreadsheets, handoffs, and tribal knowledge. Nobody has a complete picture.' },
+            { icon: '02', title: 'Generic AI is not enough', body: 'General AI tools can answer questions but they do not guide a real improvement workflow from root cause to action plan. You end up doing the thinking yourself.' },
+            { icon: '03', title: 'Lean feels too complex', body: 'Lean Six Sigma sounds useful but for small businesses it often feels too consultant-heavy or too disconnected from day-to-day operations.' },
           ].map(({ icon, title, body }) => (
             <div key={title} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px' }}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>{icon}</div>
@@ -80,7 +80,7 @@ export default function LandingAIProcessImprovement() {
             {[
               { step: '01', title: 'Map one process', body: 'Use the VSM canvas or the free flow at vesimy.com/start to map any process in your operation — from order fulfilment to service delivery to patient discharge.' },
               { step: '02', title: 'Find the waste', body: 'VeSiMy analyzes your process using Lean methodology and surfaces the delays, defects, and non-value-added steps that are costing you time and money.' },
-              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle — PDCA, 8D, DMAIC, or OODA — with AI support based on an ISO-verified lean knowledge base. From problem to root cause to fix.' },
+              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle — PDCA, 8D, DMAIC, or OODA — with AI support grounded in structured continuous-improvement logic. From problem to root cause to fix.' },
             ].map(({ step, title, body }) => (
               <div key={step} style={{ display: 'flex', gap: 20 }}>
                 <div style={{ fontFamily: mono, fontSize: 11, color: '#0176D3', fontWeight: 700, paddingTop: 4, flexShrink: 0 }}>{step}</div>
@@ -98,9 +98,9 @@ export default function LandingAIProcessImprovement() {
       <section style={{ maxWidth: 960, margin: '0 auto', padding: 'clamp(60px,8vh,100px) clamp(20px,5vw,48px)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px,1fr))', gap: 24, marginBottom: 60 }}>
           {[
-            { stat: '68+', label: 'Industries supported' },
+            { stat: 'Multi', label: 'Industry workflows' },
             { stat: '200+', label: 'Lean knowledge chunks in the AI' },
-            { stat: 'ISO', label: '22468 VSM standard aligned' },
+            { stat: 'VSM', label: 'Methodology-aware mapping' },
             { stat: '14d', label: 'Free trial, no card' },
           ].map(({ stat, label }) => (
             <div key={label} style={{ textAlign: 'center', padding: '24px 16px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12 }}>
@@ -114,10 +114,10 @@ export default function LandingAIProcessImprovement() {
         <h2 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, marginBottom: 28, color: 'var(--text)' }}>Common questions</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {[
-            { q: 'Is this only for manufacturing or technical teams?', a: 'No. VeSiMy is built for small businesses across 68+ industries, including service operations, admin, logistics, healthcare, hospitality, and any workflow-heavy team.' },
+            { q: 'Is this only for manufacturing or technical teams?', a: 'No. VeSiMy is built for small businesses across process-heavy industries, including service operations, admin, logistics, healthcare, hospitality, and repeatable workflows.' },
             { q: 'Do I need to understand Lean Six Sigma already?', a: 'No. VeSiMy translates improvement methods into a guided workflow so you can identify problems and act on them without needing to be an expert.' },
             { q: 'Will this replace our current tools?', a: 'No. VeSiMy improves the way your team works, not forces a rip-and-replace. It helps you make better decisions and fix the process you already have.' },
-            { q: 'How is this different from ChatGPT or Claude?', a: 'General AI tools know language. VeSiMy knows Lean methodology. It gives you operationally correct guidance — takt time calculations, waste classification, PDCA cycles — not polished-sounding generic advice.' },
+            { q: 'How is this different from ChatGPT or Claude?', a: 'General AI tools know language. VeSiMy knows Lean methodology. It gives you structured operational guidance — takt-time thinking, waste classification, PDCA cycles — not polished-sounding generic advice.' },
           ].map(({ q, a }) => (
             <div key={q} style={{ borderLeft: '3px solid rgba(1,118,211,0.3)', paddingLeft: 20 }}>
               <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{q}</div>

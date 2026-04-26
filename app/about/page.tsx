@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About VeSiMy — AI Process Intelligence for Every Industry',
-  description: 'VeSiMy is an AI-powered process improvement platform built for lean practitioners, operators, managers, and consultants across 68+ industries. Learn about our mission and the team behind it.',
+  description: 'VeSiMy is an AI-powered process improvement platform built for lean practitioners, operators, managers, and consultants across process-heavy industries. Learn about our mission and the team behind it.',
 }
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
@@ -48,7 +48,7 @@ export default function AboutPage() {
             VeSiMy is an AI operations intelligence platform. It gives you the tools to see your processes clearly, identify where waste is costing you time and money, and take structured action to fix it.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
-            We built 9 core CI tools: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, and PDCA. In v4.0 we added OODA, 8D, and DMAIC. The AI layer turns your map data into a consultant-grade improvement report with specific actions, prioritised by impact.
+            We built 9 core CI tools: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, and PDCA. In v4.0 we added OODA, 8D, and DMAIC. The AI layer turns your map data into a business-ready improvement report with specific actions, prioritised by impact.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.8 }}>
             The goal: replace the reactive, manual, disconnected world of CI tooling with a proactive, intelligent, connected platform that any operations team can afford.

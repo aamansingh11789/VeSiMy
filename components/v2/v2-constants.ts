@@ -27,17 +27,17 @@ export const CI_LABELS: Record<string, string> = {
 }
 
 export const CI_TOOLS = [
-  { id: 'stopwatch',   label: 'Time Study',           icon: '⏱',  desc: 'Measure actual cycle time with stopwatch' },
-  { id: 'ishikawa',    label: 'Fishbone Diagram',      icon: '🐟', desc: 'Map causes across all categories' },
-  { id: 'fivewhy',     label: '5 Why Analysis',        icon: '❓', desc: 'Drill to system root cause' },
-  { id: 'waste',       label: 'Waste Identification',  icon: '♻️', desc: 'Identify the 8 wastes on this step' },
-  { id: 'kaizen',      label: 'Kaizen Event',           icon: '⚡', desc: 'Log and track an improvement event' },
-  { id: 'improvement', label: 'Improvement Goal',       icon: '🎯', desc: 'Set baseline and target for a metric' },
-  { id: 'smed',        label: 'SMED (Changeover)',      icon: '🔄', desc: 'Reduce setup / changeover time' },
+  { id: 'stopwatch',   label: 'Time Study',           icon: 'TS',  desc: 'Measure actual cycle time with stopwatch' },
+  { id: 'ishikawa',    label: 'Fishbone Diagram',      icon: 'FB', desc: 'Map causes across all categories' },
+  { id: 'fivewhy',     label: '5 Why Analysis',        icon: '5Y', desc: 'Drill to system root cause' },
+  { id: 'waste',       label: 'Waste Identification',  icon: 'WI', desc: 'Identify the 8 wastes on this step' },
+  { id: 'kaizen',      label: 'Kaizen Event',           icon: 'SP', desc: 'Log and track an improvement event' },
+  { id: 'improvement', label: 'Improvement Goal',       icon: 'TG', desc: 'Set baseline and target for a metric' },
+  { id: 'smed',        label: 'SMED (Changeover)',      icon: 'SM', desc: 'Reduce setup / changeover time' },
   // v4.0 new tools
-  { id: 'ooda',        label: 'OODA Loop',              icon: '🔁', desc: 'Fast operational decisions — Observe Orient Decide Act' },
-  { id: 'eightd',      label: '8D Report',              icon: '📋', desc: 'Team-based structured response to quality escapes' },
-  { id: 'dmaic',       label: 'DMAIC',                  icon: '📊', desc: 'Six Sigma data-driven problem solving — 5 phases' },
+  { id: 'ooda',        label: 'OODA Loop',              icon: 'OO', desc: 'Fast operational decisions — Observe Orient Decide Act' },
+  { id: 'eightd',      label: '8D Report',              icon: '8D', desc: 'Team-based structured response to quality escapes' },
+  { id: 'dmaic',       label: 'DMAIC',                  icon: 'AN', desc: 'Six Sigma data-driven problem solving — 5 phases' },
 ]
 
 export const STEP_TYPES = [

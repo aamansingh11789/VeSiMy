@@ -28,12 +28,12 @@ export function ServiceWorkerRegistration() {
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
               // New version available — could show a toast here in future
-              console.log('[Vesimy] App update available. Refresh to get the latest version.')
+              if (process.env.NODE_ENV !== 'production') console.info('[Vesimy] App update available. Refresh to get the latest version.')
             }
           })
         })
 
-        console.log('[Vesimy] Service worker registered:', registration.scope)
+        if (process.env.NODE_ENV !== 'production') console.info('[Vesimy] Service worker registered:', registration.scope)
       } catch (err) {
         // SW registration failed — app still works, just no offline support
         console.warn('[Vesimy] Service worker registration failed:', err)

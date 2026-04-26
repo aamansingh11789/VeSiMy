@@ -113,7 +113,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
         }),
       })
       const d = await res.json()
-      const answer = d.answer || "I couldn't analyze that — make sure your ANTHROPIC_API_KEY is configured in Vercel."
+      const answer = d.answer || "I couldn't complete that analysis right now. Please try again, or check the AI setup if the issue continues."
       setChat(prev => [...prev, { role:'assistant', content:answer }])
     } catch {
       setChat(prev => [...prev, { role:'assistant', content:"Connection error. Please try again." }])
@@ -134,7 +134,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <span style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:.5 }}>AI</span>
           <span style={{ fontWeight:700, color:'var(--text)', fontSize:14, fontFamily:'var(--font-serif)' }}>Supe</span>
-          <span style={{ fontSize:9, color:'var(--text3)', fontFamily:'var(--font-mono)', letterSpacing:1.5 }}>AI MENTOR</span>
+          <span style={{ fontSize:9, color:'var(--text3)', fontFamily:'var(--font-mono)', letterSpacing:1.5 }}>AI ADVISOR</span>
           {isDemo && <span style={{ fontSize:9, color:'var(--brand)', background:'var(--brand-dim)', border:'1px solid var(--brand-glow)', padding:'1px 7px', borderRadius:100, letterSpacing:1 }}>DEMO</span>}
         </div>
         {highN > 0 && <span style={{ background:'var(--red)', color:'#fff', fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:100 }}>{highN} HIGH</span>}

@@ -23,8 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/standard-work-manufacturing`,       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/industries`,                                lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/demos`,                                     lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${base}/start`,                                     lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${base}/guided`,                                    lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/start`,                                     lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
+    { url: `${base}/map`,                                       lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/blog/vsm-workshop-wall-session`,             lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/blog/value-added-vs-non-value-added`,        lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/blog/takt-time-calculation`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
@@ -59,6 +59,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/8-wastes-of-lean`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/privacy`,             lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${base}/terms`,               lastModified: now, changeFrequency: 'yearly',  priority: 0.4 },
-    { url: `${base}/learn`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 }

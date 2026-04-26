@@ -48,7 +48,7 @@ export async function POST(_req: NextRequest) {
     // Build a synthetic Request that carries the session cookie and industryFilter.
     // This avoids the localhost:3000 fetch that breaks on Vercel serverless.
     const syntheticReq = new Request(
-      'http://localhost/api/projects/seed-all-references',
+      'https://vesimy.internal/api/projects/seed-all-references',
       {
         method: 'POST',
         headers: {

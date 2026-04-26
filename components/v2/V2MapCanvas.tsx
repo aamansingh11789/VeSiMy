@@ -237,14 +237,14 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
 
       {/* ── CT + WIP LINE (always visible) ── */}
       <text x={X + 14} y={Y + 33} fontSize={8} fill={sc.text} fontFamily="'JetBrains Mono',monospace" opacity={0.85}>
-        {ct ? `CT: ${fmtTime(ct)}` : 'CT: tap ⏱'}
+        {ct ? `CT: ${fmtTime(ct)}` : 'CT: tap'}
         {step.wip ? `  WIP: ${step.wip}` : ''}
       </text>
 
       {/* ── OPERATOR ICON + COUNT ── */}
       <text x={X + 14} y={Y + 46} fontSize={8} fill={sc.text} fontFamily="'Satoshi',sans-serif" opacity={0.7}>
         {'👤'.repeat(0)}{step.operators ? `× ${step.operators} op` : ''}
-        {step.wait_time ? `  ⏳ ${fmtTime(step.wait_time)}` : ''}
+        {step.wait_time ? `  WT ${fmtTime(step.wait_time)}` : ''}
       </text>
 
       {/* ── VA BADGE ── */}
@@ -278,7 +278,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         style={{ cursor: 'pointer' }}
         onClick={e => { e.stopPropagation(); onStopwatch(step) }}
       />
-      <text x={X + BOX_W - 19} y={Y + 50} fontSize={11} textAnchor="middle" fill={sc.text}>⏱</text>
+      <text x={X + BOX_W - 19} y={Y + 50} fontSize={11} textAnchor="middle" fill={sc.text}>CT</text>
 
       {/* ── EXPANDED: Activity list + Data strip ── */}
       {expanded && (
