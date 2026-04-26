@@ -6,6 +6,7 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon, KaizenIcon, LiveFloorIcon, RoadmapIcon, PDCAIcon, SimulationIcon } from '@/components/ui/Icons'
+import { VesimyLogo } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import { V2MapCanvas } from './V2MapCanvas'
@@ -29,7 +30,7 @@ import KaizenRoadmap from '@/components/tools/KaizenRoadmap'
 import PDCATool from '@/components/tools/PDCATool'
 import type { KanbanColumn } from '@/lib/store'
 
-type V2Tab = 'map' | 'analyze' | 'journal' | 'future' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca' | 'kaizen' | 'kanban' | 'report'
+type V2Tab = 'project' | 'map' | 'analyze' | 'journal' | 'future' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca' | 'kaizen' | 'kanban' | 'report'
 
 export interface V2Step {
   id: string; project_id: string; name: string; position: number
@@ -321,14 +322,15 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   }, [steps])
 
   const TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
-    { id: 'map',        label: 'Process Map',    icon: 'map' },
+    { id: 'project',    label: 'Project',        icon: 'PR' },
+    { id: 'map',        label: 'Process Map',    icon: 'MAP' },
     { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: 'SUB' },
     { id: 'analyze',    label: 'Analysis',       icon: 'zap' },
     { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'JR' },
     { id: 'future',     label: 'Future State',   icon: '→',  premium: true },
     { id: 'roadmap',    label: 'Kaizen Plan',    icon: 'KP' },
     { id: 'pdca',       label: 'PDCA',           icon: 'PD' },
-    { id: 'kaizen',     label: 'Kaizen Board',   icon: 'SP' },
+    { id: 'kaizen',     label: 'Kaizen Board',   icon: 'KB' },
     { id: 'kanban',     label: 'Kanban',         icon: 'KB' },
     { id: 'simulation', label: 'Simulation',     icon: 'SIM',  premium: true },
     { id: 'live',       label: 'Gemba Monitor',  icon: 'LF', premium: true },
@@ -336,21 +338,21 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   ]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: '#F7F9FC', overflow: 'hidden' }}>
 
       {/* ── TOP BAR ──────────────────────────────────────────────────────── */}
       <div style={{
         display: 'flex', alignItems: 'center', padding: '0 16px', height: 52,
-        borderBottom: '1px solid var(--border)', background: '#FFFFFF', flexShrink: 0, gap: 12,
+        borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,.94)', backdropFilter: 'blur(14px)', flexShrink: 0, gap: 12,
       }}>
-        {/* Project name */}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flex: '0 0 auto', maxWidth: 300 }}>
-          <span style={{ fontFamily: SERIF, fontSize: 16, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {project.name}
-          </span>
-          <span style={{ fontSize: 10, fontFamily: 'monospace', color: BRAND, background: 'rgba(1,118,211,.08)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 4, padding: '1px 5px', letterSpacing: 1 }}>
-            V2
-          </span>
+        {/* VeSiMy trademark + project name */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: '0 0 auto', maxWidth: 360 }}>
+          <VesimyLogo size={34} showText />
+          <div style={{ height: 28, width: 1, background: 'var(--border)' }} />
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.name}</div>
+            <div style={{ fontSize: 9, fontFamily: 'monospace', color: BRAND, letterSpacing: 1.4 }}>V2 WORKSPACE</div>
+          </div>
         </div>
 
         {/* Smart tab navigation — scrollable on desktop, dropdown on mobile */}
@@ -413,7 +415,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             </div>
           )}
           {/* Settings button — always visible */}
-          <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>SET</button>
+          <button className="v2-topbar-essential" onClick={() => setTab('project')} title="Project" style={{ border: '1px solid var(--border)', cursor: 'pointer', padding: '6px 10px', color: tab === 'project' ? 'white' : 'var(--text2)', background: tab === 'project' ? BRAND : 'white', borderRadius: 8, fontSize: 12, fontWeight: 800, lineHeight: 1 }}>Project</button>
           {/* Map completeness */}
           {tab === 'map' && steps.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 6, background: 'var(--sl-100)', border: '1px solid var(--border)' }}>
@@ -583,6 +585,53 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           </div>
         )}
 
+        {/* PROJECT TAB */}
+        {tab === 'project' && (
+          <div className="v2-tab-content-scroll" style={{ padding: 28, flex: 1, overflow: 'auto', background: '#F7F9FC' }}>
+            <div style={{ maxWidth: 980, margin: '0 auto' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.2fr) minmax(280px,.8fr)', gap: 18 }}>
+                <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 20, padding: 24, boxShadow: '0 18px 45px rgba(15,23,42,.06)' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: 2, color: BRAND, marginBottom: 8 }}>PROJECT CONTROL</div>
+                  <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-0.04em', color: 'var(--text)', marginBottom: 8 }}>{project.name}</h2>
+                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 20 }}>Manage the current value stream, project assumptions, takt time, owner information, and the workflow that feeds the sticky-note canvas.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 12 }}>
+                    {[
+                      ['Steps', steps.length],
+                      ['Incomplete', missingCount],
+                      ['Reports', reports.length],
+                      ['Branches', branches.length],
+                    ].map(([label, value]) => (
+                      <div key={String(label)} style={{ border: '1px solid var(--border)', borderRadius: 16, padding: 16, background: '#FAFBFF' }}>
+                        <div style={{ fontSize: 10, fontFamily: 'monospace', color: 'var(--text3)', letterSpacing: 1.3, textTransform: 'uppercase' }}>{label}</div>
+                        <div style={{ marginTop: 8, fontSize: 28, fontWeight: 900, color: 'var(--text)' }}>{value}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 22 }}>
+                    <button onClick={() => setShowProjectSettings(true)} style={{ padding: '10px 16px', borderRadius: 12, border: 'none', background: BRAND, color: 'white', fontWeight: 800, cursor: 'pointer' }}>Open Project Settings</button>
+                    <button onClick={() => setTab('map')} style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'white', color: 'var(--text)', fontWeight: 800, cursor: 'pointer' }}>Open Sticky Canvas</button>
+                    <button onClick={runAnalysis} style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid rgba(1,118,211,.25)', background: 'rgba(1,118,211,.06)', color: BRAND, fontWeight: 800, cursor: 'pointer' }}>Analyze Current State</button>
+                  </div>
+                </div>
+                <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 20, padding: 22, boxShadow: '0 18px 45px rgba(15,23,42,.06)' }}>
+                  <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)', marginBottom: 12 }}>Recommended flow</div>
+                  {[
+                    ['1', 'Wall Session', 'Map steps and work elements'],
+                    ['2', 'Floor Observation', 'Capture cycle time, wait time, WIP'],
+                    ['3', 'Analysis', 'Find bottlenecks and waste'],
+                    ['4', 'Future State', 'Build target and action plan'],
+                  ].map(([n, title, body]) => (
+                    <div key={n} style={{ display: 'flex', gap: 12, padding: '12px 0', borderTop: '1px solid var(--border)' }}>
+                      <div style={{ width: 28, height: 28, borderRadius: 999, background: 'rgba(1,118,211,.09)', color: BRAND, fontWeight: 900, display: 'grid', placeItems: 'center' }}>{n}</div>
+                      <div><div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)' }}>{title}</div><div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>{body}</div></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* MAP TAB */}
         {tab === 'map' && (
           <>
@@ -595,6 +644,8 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               onAddStep={addStep}
               onDeleteStep={deleteStep}
               missingCount={missingCount}
+              onStepUpdate={updateStep}
+              onTool={(tool: string, stepId: string) => setActiveTool({ tool, stepId })}
               onSaveStopwatch={async (stepId: string, avgSeconds: number, lapCount: number) => {
                 const step = steps.find((s: any) => s.id === stepId)
                 if (!step) return

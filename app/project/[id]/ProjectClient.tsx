@@ -628,7 +628,37 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </button>
               </div>
               <div style={{ padding: 24 }}>
-                <VSMMap steps={steps} branches={branches} project={project} />
+                <VSMMap
+                  steps={steps}
+                  branches={branches}
+                  project={project}
+                  onStepUpdate={async (stepId, updates) => {
+                    const previous = steps
+                    setSteps(current => current.map(step => step.id === stepId ? { ...step, ...updates } : step))
+                    try {
+                      await updateStep(stepId, updates)
+                    } catch (error) {
+                      setSteps(previous)
+                      showToast('Sticky note update failed', 'error')
+                    }
+                  }}
+                  onStepToolData={async (stepId, tool, data) => {
+                    setSteps(current => current.map(step => (
+                      step.id === stepId
+                        ? { ...step, toolData: { ...(step.toolData || {}), [tool]: data } }
+                        : step
+                    )))
+                    try {
+                      await saveToolData(stepId, tool, data)
+                    } catch (error) {
+                      showToast('Sticky layout save failed', 'error')
+                    }
+                  }}
+                  onOpenTool={(tool, stepId) => {
+                    setActiveTool({ tool, stepId })
+                    track('tool_opened_from_sticky_vsm', { tool, projectId: project.id })
+                  }}
+                />
               </div>
             </div>
           )}
