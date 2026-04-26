@@ -4,7 +4,7 @@
 // Pro canvas redesign — REAL sticky note aesthetic per spec §5.2
 // Physical paper feel: rotation, warm tones, multi-layer shadow, fold corner
 
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { VSMIcon } from '@/components/ui/Icons'
 import { BRAND, RED, GREEN, AMBER } from './v2-constants'
 import { calcProcessMetrics, fmtPCE, pceColor } from '@/lib/v2/process-metrics'
@@ -169,7 +169,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         <pattern id={textureId} width="40" height="40" patternUnits="userSpaceOnUse" patternTransform={`rotate(35,${X},${Y})`}>
           <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(0,0,0,0.025)" strokeWidth="1"/>
         </pattern>
-        {/* Multi-layer drop shadow filter — physical paper on wall */}
+        {/* Multi-layer drop shadow filter : physical paper on wall */}
         <filter id={shadowId} x="-15%" y="-15%" width="140%" height="150%">
           {/* Layer 1: tight contact shadow */}
           <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.18)" />
@@ -180,7 +180,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         </filter>
       </defs>
 
-      {/* Selection / bottleneck glow — outside the note */}
+      {/* Selection / bottleneck glow : outside the note */}
       {(isSelected || isBot) && (
         <rect
           x={X - 4} y={Y - 4} width={BOX_W + 8} height={H + 8} rx={5}
@@ -202,7 +202,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
       {/* Paper texture overlay */}
       <rect x={X} y={Y} width={BOX_W} height={H} rx={3} fill={`url(#${textureId})`} opacity={0.5} />
 
-      {/* Subtle warm gradient overlay — gives depth to the paper */}
+      {/* Subtle warm gradient overlay : gives depth to the paper */}
       <defs>
         <linearGradient id={`grad-${step.id}`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="rgba(255,255,255,0.30)" />
@@ -212,7 +212,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
       </defs>
       <rect x={X} y={Y} width={BOX_W} height={H} rx={3} fill={`url(#grad-${step.id})`} />
 
-      {/* Fold corner — top right */}
+      {/* Fold corner : top right */}
       <path
         d={`M${X + BOX_W - 18},${Y} L${X + BOX_W},${Y + 18} L${X + BOX_W - 18},${Y + 18} Z`}
         fill={sc.fold}
@@ -221,7 +221,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
       {/* Fold shadow line */}
       <line x1={X + BOX_W - 18} y1={Y} x2={X + BOX_W} y2={Y + 18} stroke="rgba(0,0,0,0.12)" strokeWidth={0.8} />
 
-      {/* Color accent stripe — left edge, type indicator */}
+      {/* Color accent stripe : left edge, type indicator */}
       <rect x={X} y={Y} width={4} height={H} rx={3} fill={sc.stripe} opacity={0.75} />
 
       {/* ── STEP NAME ── */}
@@ -293,7 +293,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
             ACTIVITIES
           </text>
 
-          {/* Activity items — bullet list inside the note */}
+          {/* Activity items : bullet list inside the note */}
           {activities.length === 0 ? (
             <text x={X + 14} y={Y + 84} fontSize={8} fill={sc.text} opacity={0.45}
               fontFamily="'Satoshi',sans-serif" fontStyle="italic">
@@ -317,7 +317,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
             </text>
           )}
 
-          {/* Data strip — below the note body, attached */}
+          {/* Data strip : below the note body, attached */}
           <g>
             <rect x={X} y={Y + BOX_H_EXP} width={BOX_W} height={STRIP_H}
               fill="rgba(255,255,255,0.92)"
@@ -361,10 +361,15 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
 }
 
 // ── Flow arrows ────────────────────────────────────────────────────────────────
-function FlowArrow({ fromX, toX, flowType, wip }: any) {
+function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }: any) {
+  const [editing, setEditing] = React.useState(false)
+  const [wipVal,  setWipVal]  = React.useState(wip)
   const midX = (fromX + BOX_W + toX) / 2
   const Y    = 90 + BOX_H / 2
-  const isPull = flowType === 'supermarket' || flowType === 'fifo'
+  const isPull = flowType === 'supermarket' || flowType === 'fifo' || flowType === 'pull'
+  const isSM   = flowType === 'supermarket'
+
+  const FLOW_CYCLE = ['push', 'pull', 'supermarket', 'fifo']
 
   return (
     <g>
@@ -380,17 +385,55 @@ function FlowArrow({ fromX, toX, flowType, wip }: any) {
         strokeWidth={isPull ? 2 : 1.5}
         markerEnd={`url(#arrowhead-${fromX})`}
       />
-      {wip > 0 && (
-        <>
-          <circle cx={midX} cy={Y} r={11} fill="#FEF3C7" stroke={AMBER} strokeWidth={1.5}
-            style={{ filter: 'drop-shadow(1px 2px 3px rgba(0,0,0,0.15))' }} />
-          <text x={midX} y={Y + 4} textAnchor="middle" fontSize={9} fontWeight={700}
-            fill={AMBER} fontFamily="monospace">{wip}</text>
-        </>
+      {/* Supermarket symbol */}
+      {isSM && (
+        <g>
+          <rect x={midX - 10} y={Y - 18} width={20} height={14} fill="none" stroke={BRAND} strokeWidth={1.5} rx={2} />
+          <text x={midX} y={Y - 8} textAnchor="middle" fontSize={6} fill={BRAND} fontFamily="monospace" fontWeight={700}>SM</text>
+        </g>
       )}
-      {flowType === 'supermarket' && (
-        <rect x={midX - 9} y={Y - 13} width={18} height={12}
-          fill="none" stroke={BRAND} strokeWidth={1.5} />
+      {/* Flow type toggle */}
+      <g style={{ cursor: 'pointer' }} onClick={() => onFlowTypeChange && onFlowTypeChange(
+        FLOW_CYCLE[(FLOW_CYCLE.indexOf(flowType) + 1) % FLOW_CYCLE.length]
+      )}>
+        <rect x={midX - 14} y={Y + 14} width={28} height={12} rx={3}
+          fill="rgba(255,255,255,0.85)" stroke="rgba(0,0,0,0.10)" strokeWidth={0.5} />
+        <text x={midX} y={Y + 23} textAnchor="middle" fontSize={6.5} fontFamily="monospace"
+          fill={isPull ? BRAND : '#9CA3AF'} fontWeight={700}>{(flowType || 'PUSH').toUpperCase().slice(0,4)}</text>
+      </g>
+      {/* WIP bubble : click to edit */}
+      {!editing ? (
+        <g style={{ cursor: 'pointer' }} onClick={() => setEditing(true)}>
+          <circle cx={midX} cy={Y} r={12} fill="#FEF3C7" stroke={AMBER} strokeWidth={1.5} />
+          <text x={midX} y={Y + 4} textAnchor="middle" fontSize={wip > 0 ? 9 : 8} fontWeight={wip > 0 ? 700 : 400}
+            fill={wip > 0 ? AMBER : '#C0B080'} fontFamily="monospace">{wip > 0 ? wip : '+'}</text>
+        </g>
+      ) : (
+        <foreignObject x={midX - 16} y={Y - 14} width={32} height={28}>
+          <input
+            xmlns="http://www.w3.org/1999/xhtml"
+            type="number"
+            defaultValue={wipVal}
+            autoFocus
+            min={0} max={999}
+            style={{
+              width: '100%', height: '100%', textAlign: 'center', fontFamily: 'monospace',
+              fontSize: 11, fontWeight: 700, color: '#3B2F00', background: '#FEF3C7',
+              border: '1.5px solid #F59E0B', borderRadius: 12, outline: 'none', padding: 0,
+            }}
+            onChange={e => setWipVal(Number(e.target.value))}
+            onBlur={e => {
+              setEditing(false)
+              if (onWipChange) onWipChange(Number(e.target.value))
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === 'Escape') {
+                setEditing(false)
+                if (onWipChange) onWipChange(wipVal)
+              }
+            }}
+          />
+        </foreignObject>
       )}
     </g>
   )
@@ -441,16 +484,16 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
     display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1,
   }
 
-  const onWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault()
-    setZoom(z => Math.min(Math.max(z + (e.deltaY > 0 ? -0.1 : 0.1), 0.25), 3))
-  }, [])
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
-    el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
-  }, [onWheel])
+    const handler = (e: WheelEvent) => {
+      e.preventDefault()
+      setZoom(z => Math.min(Math.max(z + (e.deltaY > 0 ? -0.1 : 0.1), 0.25), 3))
+    }
+    el.addEventListener('wheel', handler, { passive: false })
+    return () => el.removeEventListener('wheel', handler)
+  }, [])
 
   const onMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return
@@ -608,7 +651,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
               </pattern>
             </defs>
 
-            {/* Board background — warm off-white, like a physical whiteboard */}
+            {/* Board background : warm off-white, like a physical whiteboard */}
             <rect width={CANVAS_W} height={CANVAS_H} fill="#F5F4F1" />
             <rect width={CANVAS_W} height={CANVAS_H} fill="url(#board-dot)" />
 
@@ -654,8 +697,22 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
                 key={`arr-${i}`}
                 fromX={80 + i * (BOX_W + GAP)}
                 toX={80 + (i + 1) * (BOX_W + GAP)}
-                flowType={steps[i + 1]?.flow_type}
+                flowType={steps[i + 1]?.flow_type || 'push'}
                 wip={steps[i + 1]?.wip || 0}
+                onWipChange={(val: number) => {
+                  const step = steps[i + 1]
+                  if (step && onStepClick) {
+                    const updated = { ...step, wip: val }
+                    // Optimistic local update via parent
+                    onStepClick({ ...updated, _wipUpdate: true })
+                  }
+                }}
+                onFlowTypeChange={(ft: string) => {
+                  const step = steps[i + 1]
+                  if (step && onStepClick) {
+                    onStepClick({ ...step, flow_type: ft, _flowUpdate: true })
+                  }
+                }}
               />
             ))}
 
