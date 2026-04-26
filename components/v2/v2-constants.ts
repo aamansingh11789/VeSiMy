@@ -31,7 +31,7 @@ export const CI_TOOLS = [
   { id: 'ishikawa',    label: 'Fishbone Diagram',      icon: 'FB', desc: 'Map causes across all categories' },
   { id: 'fivewhy',     label: '5 Why Analysis',        icon: '5Y', desc: 'Drill to system root cause' },
   { id: 'waste',       label: 'Waste Identification',  icon: 'WI', desc: 'Identify the 8 wastes on this step' },
-  { id: 'kaizen',      label: 'Kaizen Event',           icon: 'SP', desc: 'Log and track an improvement event' },
+  { id: 'kaizen',      label: 'Kaizen Event',           icon: 'KB', desc: 'Log and track an improvement event' },
   { id: 'improvement', label: 'Improvement Goal',       icon: 'TG', desc: 'Set baseline and target for a metric' },
   { id: 'smed',        label: 'SMED (Changeover)',      icon: 'SM', desc: 'Reduce setup / changeover time' },
   // v4.0 new tools

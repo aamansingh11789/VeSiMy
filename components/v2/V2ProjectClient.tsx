@@ -842,6 +842,23 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           <div className="v2-tab-content-scroll" style={{ padding: 24, flex: 1, overflow: 'auto' }}>
             <V2KaizenBoardView
               steps={steps}
+              onCreateItem={async (stepId, item) => {
+                const step = steps.find(s => s.id === stepId)
+                if (!step) return
+                const currentItems = step.toolData?.kaizen?.items || []
+                const newItem = {
+                  id: `kz-${Date.now()}`,
+                  title: item.title,
+                  owner: item.owner || '',
+                  priority: item.priority || 'normal',
+                  status: 'open',
+                  createdAt: new Date().toISOString(),
+                }
+                try {
+                  await handleSaveToolData(stepId, 'kaizen', { items: [...currentItems, newItem] })
+                  toast.success('Kaizen item added')
+                } catch { toast.error('Could not add kaizen item') }
+              }}
               onStatusChange={async (stepId, updatedItems) => {
                 // Persist updated kaizen items back to the step's tool data
                 try {
@@ -1169,132 +1186,143 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
 }
 
 // ── V2KaizenBoardView — editable Kanban-style kaizen board ──────────────────
-function V2KaizenBoardView({ steps, onStatusChange }: {
+function V2KaizenBoardView({ steps, onStatusChange, onCreateItem }: {
   steps: any[]
   onStatusChange?: (stepId: string, updatedItems: any[]) => void
+  onCreateItem?: (stepId: string, item: { title: string; owner?: string; priority?: string }) => void
 }) {
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#FF6B6B', 'in-progress': '#F4A623', complete: '#1DD1A1' }
-  const sBg    = { open: 'rgba(255,107,107,0.06)', 'in-progress': 'rgba(244,166,35,0.06)', complete: 'rgba(29,209,161,0.06)' }
+  const sColor = { open: '#EF4444', 'in-progress': '#F59E0B', complete: '#10B981' }
+  const sBg    = { open: 'rgba(239,68,68,0.06)', 'in-progress': 'rgba(245,158,11,0.07)', complete: 'rgba(16,185,129,0.07)' }
   const NEXT   = { open: 'in-progress' as const, 'in-progress': 'complete' as const, complete: 'open' as const }
-  const NEXT_LABEL = { open: '→ Start', 'in-progress': '→ Complete', complete: '↺ Reopen' }
+  const NEXT_LABEL = { open: 'Start', 'in-progress': 'Complete', complete: 'Reopen' }
+  const [selectedStepId, setSelectedStepId] = useState(steps[0]?.id || '')
+  const [title, setTitle] = useState('')
+  const [owner, setOwner] = useState('')
+  const [priority, setPriority] = useState('normal')
+
+  useEffect(() => {
+    if (!selectedStepId && steps[0]?.id) setSelectedStepId(steps[0].id)
+  }, [steps, selectedStepId])
 
   const allItems = steps.flatMap(s =>
     (s.toolData?.kaizen?.items || []).map((i: any) => ({
       ...i,
+      id: i.id || `${s.id}-${i.title || 'kaizen'}`,
+      status: i.status || 'open',
+      priority: i.priority || 'normal',
       stepName: s.name,
       stepId:   s.id,
       stepItems: s.toolData?.kaizen?.items || [],
     }))
   )
 
+  function submitItem() {
+    const cleanTitle = title.trim()
+    if (!cleanTitle || !selectedStepId || !onCreateItem) return
+    onCreateItem(selectedStepId, { title: cleanTitle, owner: owner.trim(), priority })
+    setTitle('')
+    setOwner('')
+    setPriority('normal')
+  }
+
   function advanceStatus(item: any) {
     if (!onStatusChange) return
-    const next = NEXT[item.status as keyof typeof NEXT] || 'open'
+    const currentStatus = (item.status || 'open') as keyof typeof NEXT
+    const next = NEXT[currentStatus] || 'open'
     const updatedItems = item.stepItems.map((si: any) =>
-      si.id === item.id ? { ...si, status: next } : si
+      (si.id || si.title) === (item.id || item.title) ? { ...si, status: next } : si
     )
     onStatusChange(item.stepId, updatedItems)
   }
 
-  if (allItems.length === 0) {
-    return (
-      <div style={{ textAlign: 'center', padding: 60 }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>SP</div>
-        <div style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 20 }}>
-          No kaizen events yet. Open the Kaizen tool on any step to add improvement items.
-        </div>
-        <div style={{ fontSize: 12, color: 'var(--text3)' }}>
-          Click any step on the Process Map → choose Kaizen tool → add an event
-        </div>
+  const boardHeader = (
+    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 20 }}>
+      <div>
+        <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: '#0176D3', marginBottom: 6 }}>CONTINUOUS IMPROVEMENT</div>
+        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 24, fontWeight: 800, color: 'var(--text)', margin: 0 }}>Kaizen Board</h2>
+        <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginTop: 6 }}>Create, start, complete, and reopen improvement ideas linked directly to your VSM steps.</p>
       </div>
-    )
-  }
+      <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', background: 'white', border: '1px solid var(--border)', borderRadius: 12, padding: '8px 12px' }}>
+        {allItems.length} item{allItems.length !== 1 ? 's' : ''} · {allItems.filter(i => i.status === 'complete').length} complete
+      </div>
+    </div>
+  )
+
+  const quickAdd = (
+    <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 18, padding: 18, marginBottom: 18, boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
+      <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--text)', marginBottom: 12 }}>Add a Kaizen item</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(180px, .8fr) minmax(220px, 1.3fr) minmax(120px, .55fr) minmax(120px, .55fr) auto', gap: 10, alignItems: 'center' }}>
+        <select value={selectedStepId} onChange={e => setSelectedStepId(e.target.value)} style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', background: 'white', fontSize: 13 }}>
+          {steps.map(s => <option key={s.id} value={s.id}>{s.position + 1}. {s.name}</option>)}
+        </select>
+        <input value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') submitItem() }} placeholder="Example: Reduce handoff delay before Assembly" style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 13 }} />
+        <input value={owner} onChange={e => setOwner(e.target.value)} placeholder="Owner" style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 13 }} />
+        <select value={priority} onChange={e => setPriority(e.target.value)} style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', background: 'white', fontSize: 13 }}>
+          <option value="normal">Normal</option><option value="high">High</option><option value="critical">Critical</option>
+        </select>
+        <button onClick={submitItem} disabled={!title.trim() || !selectedStepId} style={{ padding: '10px 14px', borderRadius: 10, border: 'none', background: title.trim() ? '#0176D3' : '#CBD5E1', color: 'white', fontWeight: 900, cursor: title.trim() ? 'pointer' : 'not-allowed' }}>Add</button>
+      </div>
+    </div>
+  )
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>
-          Kaizen Board
-        </h2>
-        <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>
-          {allItems.length} event{allItems.length !== 1 ? 's' : ''} ·{' '}
-          {allItems.filter(i => i.status === 'complete').length} complete
+      {boardHeader}
+      {steps.length > 0 && quickAdd}
+      {steps.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: 60, background: 'white', border: '1px solid var(--border)', borderRadius: 18 }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)' }}>No process steps yet.</div>
+          <div style={{ color: 'var(--text2)', fontSize: 13, marginTop: 8 }}>Add steps on the Process Map first, then create kaizen items from here.</div>
         </div>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
-        {statuses.map(st => {
-          const col = allItems.filter(i => i.status === st)
-          return (
-            <div key={st}>
-              <div style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: sColor[st],
-                marginBottom: 10, padding: '8px 10px', borderBottom: `2px solid ${sColor[st]}33`,
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                background: sBg[st], borderRadius: '6px 6px 0 0',
-              }}>
-                <span>{sLabel[st]}</span>
-                <span style={{ background: `${sColor[st]}22`, padding: '2px 8px', borderRadius: 10, fontSize: 10 }}>
-                  {col.length}
-                </span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minHeight: 60 }}>
-                {col.length === 0 && (
-                  <div style={{ padding: '20px 10px', textAlign: 'center', color: 'var(--text3)', fontSize: 11, border: '1px dashed var(--border)', borderRadius: 8 }}>
-                    No items
-                  </div>
-                )}
-                {col.map((item: any, ki: number) => (
-                  <div key={`${item.stepId}-${item.id || ki}`} style={{
-                    background: 'var(--sl-0,#fff)', border: '1px solid var(--border)',
-                    borderRadius: 8, padding: '11px 13px',
-                    borderLeft: `3px solid ${sColor[st]}`,
-                  }}>
-                    <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 3, lineHeight: 1.3 }}>
-                      {item.title || 'Untitled event'}
-                    </div>
-                    <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>
-                      {item.stepName}
-                      {item.priority && item.priority !== 'normal' && (
-                        <span style={{
-                          marginLeft: 8, fontSize: 9, fontWeight: 700, letterSpacing: 0.5,
-                          color: item.priority === 'critical' ? '#FF6B6B' : item.priority === 'high' ? '#F4A623' : '#0176D3',
-                          background: item.priority === 'critical' ? 'rgba(255,107,107,0.1)' : item.priority === 'high' ? 'rgba(244,166,35,0.1)' : 'rgba(1,118,211,0.1)',
-                          padding: '1px 5px', borderRadius: 4,
-                        }}>
-                          {item.priority.toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-                    {item.owner && (
-                      <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 6 }}>
-                        👤 {item.owner}
-                      </div>
-                    )}
-                    {onStatusChange && (
-                      <button
-                        onClick={() => advanceStatus(item)}
-                        style={{
-                          fontSize: 10, fontWeight: 600, padding: '4px 10px', borderRadius: 6,
-                          border: `1px solid ${sColor[st]}55`, background: 'transparent',
-                          color: sColor[NEXT[item.status as keyof typeof NEXT] || 'open'],
-                          cursor: 'pointer', transition: 'all .15s',
-                        }}
-                        onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = sBg[st] }}
-                        onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = 'transparent' }}
-                        aria-label={`${NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]} — ${item.title}`}
-                      >
-                        {NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]}
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
+      ) : allItems.length === 0 ? (
+        <div style={{ padding: 28, background: 'linear-gradient(135deg,#F8FBFF,#FFFFFF)', border: '1px solid var(--border)', borderRadius: 18, boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: 16, alignItems: 'center' }}>
+            <div style={{ width: 54, height: 54, borderRadius: 16, background: 'rgba(1,118,211,.08)', color: '#0176D3', display: 'grid', placeItems: 'center', fontWeight: 900 }}>KB</div>
+            <div>
+              <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--text)' }}>No kaizen items yet</div>
+              <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginTop: 4 }}>Use the form above or select a sticky note on the Process Map and launch the Kaizen tool. Items added here are saved back into the selected step.</div>
             </div>
-          )
-        })}
-      </div>
+          </div>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
+          {statuses.map(st => {
+            const col = allItems.filter(i => (i.status || 'open') === st)
+            return (
+              <div key={st} style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 18, overflow: 'hidden', boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
+                <div style={{
+                  fontSize: 11, fontWeight: 800, letterSpacing: 1.5, color: sColor[st],
+                  padding: '11px 12px', borderBottom: `2px solid ${sColor[st]}33`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  background: sBg[st],
+                }}>
+                  <span>{sLabel[st]}</span>
+                  <span style={{ background: `${sColor[st]}22`, padding: '2px 8px', borderRadius: 10, fontSize: 10 }}>{col.length}</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: 12, minHeight: 90 }}>
+                  {col.length === 0 && <div style={{ padding: '22px 10px', textAlign: 'center', color: 'var(--text3)', fontSize: 12, border: '1px dashed var(--border)', borderRadius: 12 }}>No items</div>}
+                  {col.map((item: any, ki: number) => {
+                    const currentStatus = (item.status || 'open') as keyof typeof NEXT_LABEL
+                    return (
+                      <div key={`${item.stepId}-${item.id || ki}`} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 13, padding: '12px 13px', borderLeft: `4px solid ${sColor[st]}` }}>
+                        <div style={{ fontWeight: 800, fontSize: 13, color: 'var(--text)', marginBottom: 5, lineHeight: 1.35 }}>{item.title || 'Untitled kaizen item'}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>Linked step: {item.stepName}</div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 9 }}>
+                          {item.owner && <span style={{ fontSize: 10, color: '#475569', background: '#F1F5F9', padding: '3px 7px', borderRadius: 999 }}>Owner: {item.owner}</span>}
+                          {item.priority && item.priority !== 'normal' && <span style={{ fontSize: 10, color: item.priority === 'critical' ? '#EF4444' : '#B45309', background: item.priority === 'critical' ? '#FEF2F2' : '#FFFBEB', padding: '3px 7px', borderRadius: 999 }}>{String(item.priority).toUpperCase()}</span>}
+                        </div>
+                        {onStatusChange && <button onClick={() => advanceStatus(item)} style={{ fontSize: 11, fontWeight: 800, padding: '6px 10px', borderRadius: 8, border: `1px solid ${sColor[st]}55`, background: 'transparent', color: sColor[NEXT[currentStatus] || 'open'], cursor: 'pointer' }}>{NEXT_LABEL[currentStatus]}</button>}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
