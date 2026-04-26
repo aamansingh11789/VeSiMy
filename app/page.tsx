@@ -581,6 +581,94 @@ function BottleneckSection() {
 }
 
 // ─── FOUNDER STATEMENT ─────────────────────────────────────
+// ── VSM LIVE PREVIEW SECTION ────────────────────────────────────────────────────
+function VSMPreview() {
+  const notes = [
+    {name:"Order\nReceived",  bg:"#FEF3C7",border:"#F0D87A",text:"#3B2F00",stripe:"#F59E0B",fold:"#F0D87A",rot:1.2, ct:"3m", wip:0,  va:"VA",   dot:"#10B981",bot:false,x:68},
+    {name:"Inventory\nCheck", bg:"#DBEAFE",border:"#93C5FD",text:"#1E3A5F",stripe:"#3B82F6",fold:"#BFDBFE",rot:-0.8,ct:"7m", wip:24, va:"NNVA", dot:"#F59E0B",bot:false,x:300},
+    {name:"Pick &\nPack",     bg:"#FEF3C7",border:"#F0D87A",text:"#3B2F00",stripe:"#F59E0B",fold:"#F0D87A",rot:1.5, ct:"14m",wip:18, va:"VA",   dot:"#EF4444",bot:true, x:532},
+    {name:"Quality\nCheck",   bg:"#FCE7F3",border:"#F9A8D4",text:"#4A1535",stripe:"#EC4899",fold:"#FBCFE8",rot:-1.1,ct:"6m", wip:8,  va:"NNVA", dot:"#F59E0B",bot:false,x:764},
+    {name:"Ship\nOrders",     bg:"#D1FAE5",border:"#6EE7B7",text:"#064E3B",stripe:"#10B981",fold:"#A7F3D0",rot:0.7, ct:"4m", wip:3,  va:"VA",   dot:"#10B981",bot:false,x:996},
+  ]
+  const NW=158,NH=90,NY=72
+  return (
+    <div style={{position:"relative",overflow:"hidden",padding:"72px 0 0"}}>
+      <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,${C.p0} 0%,rgba(3,4,13,0.92) 100%)`}}/>
+      <div style={{position:"relative",zIndex:1,maxWidth:1120,margin:"0 auto",padding:"0 32px"}}>
+        <div style={{textAlign:"center",marginBottom:24}}>
+          <div style={{display:"inline-block",background:"rgba(59,124,255,0.12)",border:`1px solid rgba(59,124,255,0.25)`,borderRadius:999,padding:"5px 16px",marginBottom:14}}>
+            <span style={{fontFamily:"monospace",fontSize:10,fontWeight:700,color:C.blue,letterSpacing:2}}>LIVE CANVAS PREVIEW</span>
+          </div>
+          <h2 className="tc sans" style={{fontSize:"clamp(22px,3.5vw,36px)",fontWeight:800,color:C.t1,lineHeight:1.1,letterSpacing:-0.8,marginBottom:10}}>
+            This is what your process looks like inside VeSiMy
+          </h2>
+          <p style={{fontSize:14,color:C.t2,maxWidth:460,margin:"0 auto",lineHeight:1.7}}>
+            Physical sticky notes. Real data. The bottleneck glows red automatically.
+          </p>
+        </div>
+        <div style={{background:"#F5F4F1",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",overflow:"hidden",boxShadow:"0 4px 0 rgba(10,18,80,0.9),0 8px 0 rgba(8,14,60,0.7),0 24px 64px rgba(0,0,0,0.8)",marginBottom:-2}}>
+          <div style={{background:"#060C1A",height:38,display:"flex",alignItems:"center",padding:"0 14px",gap:7,borderBottom:"1px solid rgba(59,124,255,0.15)"}}>
+            <div style={{width:6,height:6,borderRadius:"50%",background:"#3B7CFF",boxShadow:"0 0 6px #3B7CFF"}}/>
+            <span style={{fontFamily:C.sans,fontWeight:800,fontSize:11,color:"#EEF2FF"}}>Ve<span style={{color:"#3B7CFF"}}>Si</span>My</span>
+            <span style={{color:"#2A3455",fontSize:10}}>/</span>
+            <span style={{color:"#8B9CC8",fontSize:10}}>Order Fulfilment Process</span>
+            <div style={{background:"rgba(59,124,255,0.15)",color:"#90BAFF",fontSize:7,fontFamily:"monospace",letterSpacing:1,padding:"2px 6px",borderRadius:999}}>PHASE 2</div>
+            <div style={{flex:1}}/>
+            <span style={{fontFamily:"monospace",fontSize:8,color:"#2A3455"}}>PCE: 23% · Lead Time: 2.7h</span>
+          </div>
+          <div style={{position:"relative",background:"#F5F4F1",height:200,overflow:"hidden"}}>
+            <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.4}}>
+              <defs><pattern id="pvdot" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.8" fill="#C8B89A"/></pattern></defs>
+              <rect width="100%" height="100%" fill="url(#pvdot)"/>
+            </svg>
+            <div style={{position:"absolute",left:8,top:60,width:46,height:44,background:"#607D8B",borderRadius:4,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+              <span style={{fontFamily:"monospace",fontSize:6,fontWeight:700,color:"white"}}>SUPPLIER</span>
+            </div>
+            <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none"}}>
+              <defs>
+                <marker id="pvah" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#3B7CFF"/></marker>
+                <marker id="pvph" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#B0BEC5"/></marker>
+              </defs>
+              {notes.slice(0,-1).map((n,i)=>{
+                const fx=n.x+NW,tx=notes[i+1].x,mx=(fx+tx)/2,Y=NY+NH/2,wip=notes[i+1].wip,pull=i%2===0
+                return(<g key={i}>
+                  <line x1={fx} y1={Y} x2={tx} y2={Y} stroke={pull?"#3B7CFF":"#B0BEC5"} strokeWidth={pull?1.5:1} markerEnd={`url(#${pull?"pvah":"pvph"})`}/>
+                  {wip>0&&<><circle cx={mx} cy={Y} r={10} fill="#FEF3C7" stroke="#F59E0B" strokeWidth={1.2}/><text x={mx} y={Y+4} textAnchor="middle" fontSize={9} fontWeight={700} fill="#F59E0B" fontFamily="monospace">{wip}</text></>}
+                </g>)
+              })}
+            </svg>
+            {notes.map((n,i)=>(
+              <div key={i} style={{position:"absolute",left:n.x,top:NY,width:NW,height:NH,background:n.bg,border:`0.5px solid ${n.border}`,borderRadius:3,padding:"8px 10px 8px 12px",transform:`rotate(${n.rot}deg)`,transformOrigin:"center center",cursor:"default",overflow:"visible"}}>
+                <div style={{position:"absolute",top:0,left:0,width:4,bottom:0,background:n.stripe,borderRadius:"3px 0 0 3px"}}/>
+                <div style={{position:"absolute",top:0,right:0,width:0,height:0,borderStyle:"solid",borderWidth:`0 15px 15px 0`,borderColor:`transparent ${n.fold} transparent transparent`,opacity:0.65}}/>
+                <div style={{position:"absolute",top:6,right:6,width:8,height:8,borderRadius:"50%",background:n.dot}}/>
+                <div style={{fontSize:9,fontWeight:700,color:n.text,lineHeight:1.3,whiteSpace:"pre-line",marginBottom:5}}>{n.name}</div>
+                <div style={{fontFamily:"monospace",fontSize:7,color:n.text,opacity:0.85,marginBottom:2}}>CT: {n.ct}  WIP: {n.wip}</div>
+                <div style={{fontSize:6.5,fontWeight:700,fontFamily:"monospace",background:`${n.dot}22`,color:n.dot,padding:"1px 4px",borderRadius:3,display:"inline-block"}}>{n.va}</div>
+                {n.bot&&<div style={{position:"absolute",bottom:4,left:10,fontSize:5.5,fontWeight:700,color:"#EF4444",fontFamily:"monospace",background:"rgba(239,68,68,0.12)",padding:"1px 4px",borderRadius:3}}>BOTTLENECK</div>}
+              </div>
+            ))}
+            <div style={{position:"absolute",left:62,right:62,bottom:22,height:4,background:"rgba(0,0,0,0.06)",borderRadius:2,display:"flex",gap:1}}>
+              {[{w:"8%",c:"#3B7CFF"},{w:"55%",c:"rgba(0,0,0,0.05)"},{w:"12%",c:"#3B7CFF"},{w:"14%",c:"rgba(0,0,0,0.05)"},{w:"6%",c:"#EC4899"},{w:"5%",c:"rgba(0,0,0,0.05)"}].map((seg,i)=>(
+                <div key={i} style={{width:seg.w,height:"100%",background:seg.c,borderRadius:2}}/>
+              ))}
+            </div>
+            <div style={{position:"absolute",bottom:6,left:0,right:0,textAlign:"center",fontSize:7,fontFamily:"monospace",color:"#9CA3AF"}}>CT: 34m · Wait: 2.1h · Lead Time: 2.7h · PCE: 23%</div>
+            <div style={{position:"absolute",left:notes[notes.length-1].x+NW+10,top:60,width:46,height:44,background:"#607D8B",borderRadius:4,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+              <span style={{fontFamily:"monospace",fontSize:6,fontWeight:700,color:"white"}}>CUSTOMER</span>
+            </div>
+          </div>
+        </div>
+        <div style={{textAlign:"center",marginTop:20,paddingBottom:64}}>
+          <a href="/start" style={{textDecoration:"none"}}>
+            <button className="br" style={{fontSize:13,padding:"11px 28px"}}>Try it on your own process</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FounderStatement() {
   return (
     <div style={{position:"relative",overflow:"hidden"}}>
