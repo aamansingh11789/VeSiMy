@@ -1395,9 +1395,6 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
   )
 }
 
-  )
-}
-
 // ── V2ProjectOverview ─────────────────────────────────────────────────────────
 // Clean project summary/settings panel — the "Project" tab content
 function V2ProjectOverview({ project, steps, profile, onRename }: {
