@@ -63,7 +63,7 @@ const SCENARIOS = [
   {
     id: 'supplier_delay',
     label: 'Supplier Delay',
-    icon: 'WT',
+    icon: '⏳',
     desc: 'Critical lead time slips +2 weeks',
     demandMult: 1.0,
     laborMult: 1.0,

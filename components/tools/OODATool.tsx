@@ -40,8 +40,8 @@ function uid() { return Date.now().toString(36) + Math.random().toString(36).sli
 const PHASES = [
   { key: 'observe', label: 'Observe',  color: '#6CB9FC', icon: '👁', desc: 'What is actually happening right now? Raw observations without interpretation.' },
   { key: 'orient',  label: 'Orient',   color: '#0176D3', icon: '🧭', desc: "What does the observation tell you? What's the context? What patterns do you see?" },
-  { key: 'decide',  label: 'Decide',   color: '#8C44CC', icon: 'SP', desc: 'What are your options? Which best addresses what you observed?' },
-  { key: 'act',     label: 'Act',      color: '#2E844A', icon: 'TG', desc: 'What specific action are you taking? When? Who?' },
+  { key: 'decide',  label: 'Decide',   color: '#8C44CC', icon: '⚡', desc: 'What are your options? Which best addresses what you observed?' },
+  { key: 'act',     label: 'Act',      color: '#2E844A', icon: '🎯', desc: 'What specific action are you taking? When? Who?' },
 ]
 
 const inp: React.CSSProperties = {

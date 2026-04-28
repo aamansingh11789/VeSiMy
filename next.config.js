@@ -3,8 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
 
   // ── Build error suppression ───────────────────────────────────────────────
-  // Type checking is handled separately in CI. All runtime bugs are fixed.
-  // This prevents type annotation mismatches from blocking production builds.
+  // ⚠️  CRITICAL RISK: These flags mask real TypeScript and ESLint errors.
+  // They were added to ship past annotation mismatches, but they mean broken
+  // code can reach production silently. Before the next major release:
+  //   1. Run `npm run type-check` and fix ALL reported errors
+  //   2. Run `npm run lint` and fix ALL warnings
+  //   3. Remove both `ignoreBuildErrors` and `ignoreDuringBuilds`
+  // Do NOT remove these before step 1–2 or the Vercel build will fail.
   typescript: {
     ignoreBuildErrors: true,
   },

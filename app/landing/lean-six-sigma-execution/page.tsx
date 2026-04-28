@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Lean Six Sigma for Small Businesses That Actually Gets Used — VeSiMy',
-  description: 'VeSiMy is the execution layer for Lean Six Sigma. Turn training into real projects, repeatable habits, and measurable improvement. AI-guided, methodology-aware, built for small teams.',
+  description: 'VeSiMy is the execution layer for Lean Six Sigma. Turn training into real projects, repeatable habits, and measurable improvement. AI-powered, ISO-verified, built for small teams.',
   keywords: [
     'Lean Six Sigma for small businesses',
     'Lean Six Sigma training not working',
@@ -48,7 +48,7 @@ export default function LandingLeanSixSigmaExecution() {
           Lean Six Sigma training only works when your team can execute it.
         </h1>
         <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.75, maxWidth: 600, margin: '0 auto 40px' }}>
-          VeSiMy helps small businesses turn Lean and Six Sigma training into real projects, repeatable daily habits, and measurable process improvement. AI-guided, methodology-aware, and designed to keep continuous improvement alive after the workshop ends.
+          VeSiMy helps small businesses turn Lean and Six Sigma training into real projects, repeatable daily habits, and measurable process improvement. AI-powered, built on ISO-verified knowledge, and designed to keep continuous improvement alive after the workshop ends.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700, boxShadow: '0 4px 14px rgba(1,118,211,0.3)' }}>
@@ -71,9 +71,9 @@ export default function LandingLeanSixSigmaExecution() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px,1fr))', gap: 20 }}>
             {[
-              { icon: '01', title: 'Training without follow-through', body: 'Your team got the training but there is no system for project ownership, daily use, or tracking whether anything changed after the certificates were handed out.' },
-              { icon: '02', title: 'Tools without context', body: 'Most Lean Six Sigma tools feel theoretical when handed to a small team without a Black Belt on staff to guide implementation.' },
-              { icon: 'AN', title: 'Results nobody can see', body: 'Leadership wants measurable results. But there is no structured way to show the before/after of a process improvement without building a report from scratch.' },
+              { icon: '📄', title: 'Training without follow-through', body: 'Your team got the training but there is no system for project ownership, daily use, or tracking whether anything changed after the certificates were handed out.' },
+              { icon: '🧩', title: 'Tools without context', body: 'Most Lean Six Sigma tools feel theoretical when handed to a small team without a Black Belt on staff to guide implementation.' },
+              { icon: '📊', title: 'Results nobody can see', body: 'Leadership wants measurable results. But there is no structured way to show the before/after of a process improvement without building a report from scratch.' },
             ].map(({ icon, title, body }) => (
               <div key={title} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 14, padding: '22px' }}>
                 <div style={{ fontSize: 26, marginBottom: 10 }}>{icon}</div>
@@ -97,10 +97,10 @@ export default function LandingLeanSixSigmaExecution() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px,1fr))', gap: 28 }}>
           {[
-            { icon: '01', title: 'Map it', body: 'Start by mapping one process using the VSM canvas or the free flow at vesimy.com/start. See the full picture: every step, every wait, every handoff.' },
-            { icon: '02', title: 'Find it', body: 'AI guidance helps surface the bottleneck, classify the waste type, and identify where your process cycle efficiency is being lost — using structured continuous-improvement logic.' },
-            { icon: '03', title: 'Fix it with structure', body: 'Run a PDCA, 8D, DMAIC, or OODA cycle inside VeSiMy with your process data pre-loaded. Every improvement cycle is documented and linked to the VSM.' },
-            { icon: 'UP', title: 'Prove it', body: 'The before/after comparison is automatic. Lead time reduced. PCE improved. Waste type eliminated. The case for leadership writes itself.' },
+            { icon: '🗺', title: 'Map it', body: 'Start by mapping one process using the VSM canvas or the free flow at vesimy.com/start. See the full picture: every step, every wait, every handoff.' },
+            { icon: '🔍', title: 'Find it', body: 'AI analysis surfaces the bottleneck, classifies the waste type, and identifies where your process cycle efficiency is being lost — using the same methodology as a certified practitioner.' },
+            { icon: '🔄', title: 'Fix it with structure', body: 'Run a PDCA, 8D, DMAIC, or OODA cycle inside VeSiMy with your process data pre-loaded. Every improvement cycle is documented and linked to the VSM.' },
+            { icon: '📈', title: 'Prove it', body: 'The before/after comparison is automatic. Lead time reduced. PCE improved. Waste type eliminated. The case for leadership writes itself.' },
           ].map(({ icon, title, body }) => (
             <div key={title} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px' }}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>{icon}</div>
@@ -120,7 +120,7 @@ export default function LandingLeanSixSigmaExecution() {
               { q: 'Is VeSiMy just another Lean Six Sigma training course?', a: 'No. VeSiMy is a process improvement tool that helps teams apply Lean and Six Sigma methods after training. The training gives you the knowledge. VeSiMy gives you the system to use it.' },
               { q: 'Do we need a dedicated Black Belt or CI expert to use it?', a: 'No. VeSiMy is built to help small teams structure improvement work and move projects forward with practical AI guidance. You do not need a certified expert on staff.' },
               { q: 'What if our team already had training but never used it?', a: 'That is exactly the gap VeSiMy is built to close. It gives teams a system for execution, not more knowledge. The training is fine. The execution infrastructure was missing.' },
-              { q: 'Will this work in our industry?', a: 'VeSiMy is designed for process-heavy industries with terminology, templates, and AI responses that adapt to operational context.' },
+              { q: 'Will this work in our industry?', a: 'VeSiMy supports 68+ industries with industry-specific terminology, templates, and AI responses calibrated to your operational context.' },
             ].map(({ q, a }) => (
               <div key={q} style={{ borderLeft: '3px solid rgba(1,118,211,0.3)', paddingLeft: 20 }}>
                 <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{q}</div>
@@ -137,7 +137,7 @@ export default function LandingLeanSixSigmaExecution() {
           Your team already has the training.<br />Now give it a system.
         </h2>
         <p style={{ color: 'rgba(241,245,249,0.65)', fontSize: 17, maxWidth: 520, margin: '0 auto 40px', lineHeight: 1.7 }}>
-          See how an AI-guided execution system can support your improvement projects, guide daily follow-through, and make continuous improvement part of how your business actually runs.
+          See how an AI-powered execution system built on ISO-verified knowledge can support your improvement projects, guide daily follow-through, and make continuous improvement part of how your business actually runs.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700 }}>

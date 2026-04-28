@@ -6,7 +6,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon, KaizenIcon, LiveFloorIcon, RoadmapIcon, PDCAIcon, SimulationIcon } from '@/components/ui/Icons'
-import { VesimyLogo } from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import { V2MapCanvas } from './V2MapCanvas'
@@ -280,7 +279,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
       setSteps(insertedSteps)
       if (parsed.governing_entities?.length > 0) {
-        toast(`Governing entities detected: ${parsed.governing_entities.join(', ')}`)
+        toast(`Governing entities detected: ${parsed.governing_entities.join(', ')}`, { icon: 'ℹ️' })
       }
     } catch (e: any) {
       toast.error(e.message || 'SOP parsing failed')
@@ -321,86 +320,79 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     return Math.round((complete / steps.length) * 100)
   }, [steps])
 
-  const TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
-    { id: 'project',    label: 'Project',        icon: 'PR' },
-    { id: 'map',        label: 'Process Map',    icon: 'MAP' },
-    { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: 'SUB' },
-    { id: 'analyze',    label: 'Analysis',       icon: 'zap' },
-    { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`, icon: 'JR' },
-    { id: 'future',     label: 'Future State',   icon: '→',  premium: true },
-    { id: 'roadmap',    label: 'Kaizen Plan',    icon: 'KP' },
-    { id: 'pdca',       label: 'PDCA',           icon: 'PD' },
-    { id: 'kaizen',     label: 'Kaizen Board',   icon: 'KB' },
-    { id: 'kanban',     label: 'Kanban',         icon: 'KB' },
-    { id: 'simulation', label: 'Simulation',     icon: 'SIM',  premium: true },
-    { id: 'live',       label: 'Gemba Monitor',  icon: 'LF', premium: true },
-    { id: 'report',     label: 'Report',         icon: 'AN' },
+  const PRIMARY_TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
+    { id: 'project', label: 'Project',      icon: '◈' },
+    { id: 'map',     label: 'Map',         icon: '▦' },
+    { id: 'analyze', label: 'Analysis',    icon: '⚡' },
+    { id: 'roadmap', label: 'Kaizen Plan', icon: '◎' },
+    { id: 'kaizen',  label: 'Kaizen Board',icon: '⊞' },
+    { id: 'kanban',  label: 'Kanban',      icon: '⬡' },
+    { id: 'report',  label: 'Report',      icon: '▤' },
   ]
+  const MORE_TABS: { id: V2Tab; label: string; icon: string; premium?: boolean }[] = [
+    { id: 'branches',   label: `Sub-Processes${branches.length > 0 ? ` (${branches.length})` : ''}`, icon: '⬡' },
+    { id: 'journal',    label: `Journal${reports.length > 0 ? ` (${reports.length})` : ''}`,          icon: '◉' },
+    { id: 'future',     label: 'Future State', icon: '→',  premium: true },
+    { id: 'pdca',       label: 'PDCA',         icon: '↻' },
+    { id: 'simulation', label: 'Simulation',   icon: '⚗',  premium: true },
+    { id: 'live',       label: 'Gemba Monitor',icon: '◎', premium: true },
+  ]
+  const TABS = [...PRIMARY_TABS, ...MORE_TABS]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: '#F7F9FC', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)', overflow: 'hidden' }}>
 
       {/* ── TOP BAR ──────────────────────────────────────────────────────── */}
       <div style={{
         display: 'flex', alignItems: 'center', padding: '0 16px', height: 52,
-        borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,.94)', backdropFilter: 'blur(14px)', flexShrink: 0, gap: 12,
+        borderBottom: '1px solid var(--border)', background: '#FFFFFF', flexShrink: 0, gap: 12,
       }}>
-        {/* VeSiMy trademark + project name */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: '0 0 auto', maxWidth: 360 }}>
-          <VesimyLogo size={34} showText />
-          <div style={{ height: 28, width: 1, background: 'var(--border)' }} />
-          <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.name}</div>
-            <div style={{ fontSize: 9, fontFamily: 'monospace', color: BRAND, letterSpacing: 1.4 }}>V2 WORKSPACE</div>
-          </div>
+        {/* Project name */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flex: '0 0 auto', maxWidth: 300 }}>
+          <span style={{ fontFamily: SERIF, fontSize: 16, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {project.name}
+          </span>
+          <span style={{ fontSize: 10, fontFamily: 'monospace', color: BRAND, background: 'rgba(1,118,211,.08)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 4, padding: '1px 5px', letterSpacing: 1 }}>
+            V2
+          </span>
         </div>
 
-        {/* Smart tab navigation — scrollable on desktop, dropdown on mobile */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 0 }}>
-          {/* Desktop: scrollable pill tabs */}
-          <div className="v2-tab-bar" style={{
-            display: 'flex', gap: 2, padding: '4px', borderRadius: 12,
-            background: 'rgba(3,45,96,0.08)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(1,118,211,0.12)',
-            boxShadow: '0 2px 12px rgba(1,118,211,0.08)',
-            overflowX: 'auto', maxWidth: '100%', position: 'relative',
-            scrollbarWidth: 'none',
-          }}>
-            {TABS.map(t => (
+        {/* Tab navigation — primary tabs always visible + More dropdown */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 4, minWidth: 0, overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {/* Primary tabs — always visible */}
+          <div style={{ display: 'flex', gap: 2, padding: '3px', borderRadius: 10, background: 'rgba(3,45,96,0.08)', border: '1px solid rgba(1,118,211,0.12)', flexShrink: 0 }}>
+            {PRIMARY_TABS.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)} style={{
-                display: 'flex', alignItems: 'center', gap: 5,
-                padding: '5px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                padding: '5px 11px', borderRadius: 7, border: 'none', cursor: 'pointer',
                 fontSize: 11, fontWeight: tab === t.id ? 700 : 500,
                 fontFamily: 'monospace', letterSpacing: 0.3, textTransform: 'uppercase',
                 background: tab === t.id ? BRAND : 'transparent',
                 color: tab === t.id ? 'white' : 'var(--text3)',
                 boxShadow: tab === t.id ? `0 2px 8px rgba(1,118,211,0.35)` : 'none',
-                transition: 'all .15s', whiteSpace: 'nowrap', flexShrink: 0,
-                opacity: (t as any).premium && !isPaid ? 0.65 : 1,
+                transition: 'all .15s', whiteSpace: 'nowrap',
               }}>
-                <span style={{ fontSize: 12 }}>{t.icon}</span>
-                <span>{t.label}</span>
-                {(t as any).premium && !isPaid && (
-                  <span style={{ fontSize: 9, marginLeft: 2, opacity: 0.8 }}>🔒</span>
-                )}
+                {t.label}
               </button>
             ))}
           </div>
-          {/* Mobile: dropdown selector */}
-          <div className="v2-tab-dropdown" style={{ display: 'none', width: '100%', maxWidth: 260 }}>
+          {/* More dropdown for secondary tabs */}
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <select
-              value={tab}
-              onChange={e => setTab(e.target.value as V2Tab)}
+              value={MORE_TABS.some(t => t.id === tab) ? tab : ''}
+              onChange={e => { if (e.target.value) setTab(e.target.value as V2Tab) }}
               style={{
-                width: '100%', padding: '8px 12px', borderRadius: 9,
-                border: `1px solid ${BRAND}44`, background: 'white',
-                fontSize: 13, fontWeight: 600, color: 'var(--text)', cursor: 'pointer',
-                fontFamily: 'inherit', appearance: 'auto',
+                padding: '5px 10px', borderRadius: 7, cursor: 'pointer',
+                border: `1px solid ${MORE_TABS.some(t => t.id === tab) ? BRAND : 'rgba(1,118,211,0.2)'}`,
+                background: MORE_TABS.some(t => t.id === tab) ? `${BRAND}15` : 'rgba(3,45,96,0.05)',
+                fontSize: 11, fontWeight: MORE_TABS.some(t => t.id === tab) ? 700 : 500,
+                color: MORE_TABS.some(t => t.id === tab) ? BRAND : 'var(--text3)',
+                fontFamily: 'monospace', letterSpacing: 0.3, textTransform: 'uppercase',
+                appearance: 'auto', maxWidth: 140,
               }}
             >
-              {TABS.map(t => (
-                <option key={t.id} value={t.id}>{t.icon} {t.label}</option>
+              <option value="">More...</option>
+              {MORE_TABS.map(t => (
+                <option key={t.id} value={t.id}>{t.label}{(t as any).premium && !isPaid ? ' 🔒' : ''}</option>
               ))}
             </select>
           </div>
@@ -415,7 +407,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             </div>
           )}
           {/* Settings button — always visible */}
-          <button className="v2-topbar-essential" onClick={() => setTab('project')} title="Project" style={{ border: '1px solid var(--border)', cursor: 'pointer', padding: '6px 10px', color: tab === 'project' ? 'white' : 'var(--text2)', background: tab === 'project' ? BRAND : 'white', borderRadius: 8, fontSize: 12, fontWeight: 800, lineHeight: 1 }}>Project</button>
+          <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>⚙</button>
           {/* Map completeness */}
           {tab === 'map' && steps.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 6, background: 'var(--sl-100)', border: '1px solid var(--border)' }}>
@@ -585,51 +577,20 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           </div>
         )}
 
-        {/* PROJECT TAB */}
+        {/* PROJECT OVERVIEW TAB */}
         {tab === 'project' && (
-          <div className="v2-tab-content-scroll" style={{ padding: 28, flex: 1, overflow: 'auto', background: '#F7F9FC' }}>
-            <div style={{ maxWidth: 980, margin: '0 auto' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.2fr) minmax(280px,.8fr)', gap: 18 }}>
-                <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 20, padding: 24, boxShadow: '0 18px 45px rgba(15,23,42,.06)' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: 2, color: BRAND, marginBottom: 8 }}>PROJECT CONTROL</div>
-                  <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-0.04em', color: 'var(--text)', marginBottom: 8 }}>{project.name}</h2>
-                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 20 }}>Manage the current value stream, project assumptions, takt time, owner information, and the workflow that feeds the sticky-note canvas.</p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 12 }}>
-                    {[
-                      ['Steps', steps.length],
-                      ['Incomplete', missingCount],
-                      ['Reports', reports.length],
-                      ['Branches', branches.length],
-                    ].map(([label, value]) => (
-                      <div key={String(label)} style={{ border: '1px solid var(--border)', borderRadius: 16, padding: 16, background: '#FAFBFF' }}>
-                        <div style={{ fontSize: 10, fontFamily: 'monospace', color: 'var(--text3)', letterSpacing: 1.3, textTransform: 'uppercase' }}>{label}</div>
-                        <div style={{ marginTop: 8, fontSize: 28, fontWeight: 900, color: 'var(--text)' }}>{value}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 22 }}>
-                    <button onClick={() => setShowProjectSettings(true)} style={{ padding: '10px 16px', borderRadius: 12, border: 'none', background: BRAND, color: 'white', fontWeight: 800, cursor: 'pointer' }}>Open Project Settings</button>
-                    <button onClick={() => setTab('map')} style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'white', color: 'var(--text)', fontWeight: 800, cursor: 'pointer' }}>Open Sticky Canvas</button>
-                    <button onClick={runAnalysis} style={{ padding: '10px 16px', borderRadius: 12, border: '1px solid rgba(1,118,211,.25)', background: 'rgba(1,118,211,.06)', color: BRAND, fontWeight: 800, cursor: 'pointer' }}>Analyze Current State</button>
-                  </div>
-                </div>
-                <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 20, padding: 22, boxShadow: '0 18px 45px rgba(15,23,42,.06)' }}>
-                  <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--text)', marginBottom: 12 }}>Recommended flow</div>
-                  {[
-                    ['1', 'Wall Session', 'Map steps and work elements'],
-                    ['2', 'Floor Observation', 'Capture cycle time, wait time, WIP'],
-                    ['3', 'Analysis', 'Find bottlenecks and waste'],
-                    ['4', 'Future State', 'Build target and action plan'],
-                  ].map(([n, title, body]) => (
-                    <div key={n} style={{ display: 'flex', gap: 12, padding: '12px 0', borderTop: '1px solid var(--border)' }}>
-                      <div style={{ width: 28, height: 28, borderRadius: 999, background: 'rgba(1,118,211,.09)', color: BRAND, fontWeight: 900, display: 'grid', placeItems: 'center' }}>{n}</div>
-                      <div><div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)' }}>{title}</div><div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>{body}</div></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <V2ProjectOverview
+            project={project}
+            steps={steps}
+            profile={profile}
+            onRename={async (name: string) => {
+              try {
+                await updateV2Project(project.id, { name })
+                setProject((p: any) => ({ ...p, name }))
+                toast.success('Project renamed')
+              } catch { toast.error('Could not rename project') }
+            }}
+          />
         )}
 
         {/* MAP TAB */}
@@ -644,8 +605,6 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               onAddStep={addStep}
               onDeleteStep={deleteStep}
               missingCount={missingCount}
-              onStepUpdate={updateStep}
-              onTool={(tool: string, stepId: string) => setActiveTool({ tool, stepId })}
               onSaveStopwatch={async (stepId: string, avgSeconds: number, lapCount: number) => {
                 const step = steps.find((s: any) => s.id === stepId)
                 if (!step) return
@@ -742,7 +701,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               )}
               {branches.length === 0 && !showAddBranch ? (
                 <div style={{ textAlign:'center', padding:60, color:'var(--text3)' }}>
-                  <div style={{ fontSize:16, fontWeight:800, marginBottom:12 }}>SUB</div>
+                  <div style={{ fontSize:32, marginBottom:12 }}>⬡</div>
                   <p style={{ fontSize:14, lineHeight:1.7 }}>No sub-processes yet.<br/>Add branches for rework loops, sub-assembly lines, or alternate paths.</p>
                 </div>
               ) : (
@@ -842,28 +801,29 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           <div className="v2-tab-content-scroll" style={{ padding: 24, flex: 1, overflow: 'auto' }}>
             <V2KaizenBoardView
               steps={steps}
-              onCreateItem={async (stepId, item) => {
-                const step = steps.find(s => s.id === stepId)
-                if (!step) return
-                const currentItems = step.toolData?.kaizen?.items || []
-                const newItem = {
-                  id: `kz-${Date.now()}`,
-                  title: item.title,
-                  owner: item.owner || '',
-                  priority: item.priority || 'normal',
-                  status: 'open',
-                  createdAt: new Date().toISOString(),
-                }
-                try {
-                  await handleSaveToolData(stepId, 'kaizen', { items: [...currentItems, newItem] })
-                  toast.success('Kaizen item added')
-                } catch { toast.error('Could not add kaizen item') }
-              }}
               onStatusChange={async (stepId, updatedItems) => {
                 // Persist updated kaizen items back to the step's tool data
                 try {
                   await handleSaveToolData(stepId, 'kaizen', { items: updatedItems })
+                  // Optimistic: update local steps state
+                  setSteps(prev => prev.map(s =>
+                    s.id === stepId ? { ...s, toolData: { ...s.toolData, kaizen: { items: updatedItems } } } : s
+                  ))
                 } catch { toast.error('Could not update kaizen status') }
+              }}
+              onAddItem={async (stepId, newItem) => {
+                const targetStep = steps.find(s => s.id === stepId)
+                if (!targetStep) return
+                const existingItems = targetStep.toolData?.kaizen?.items || []
+                const updatedItems = [...existingItems, newItem]
+                try {
+                  await handleSaveToolData(stepId, 'kaizen', { items: updatedItems })
+                  // Optimistic update
+                  setSteps(prev => prev.map(s =>
+                    s.id === stepId ? { ...s, toolData: { ...s.toolData, kaizen: { items: updatedItems } } } : s
+                  ))
+                  toast.success('Kaizen item added')
+                } catch { toast.error('Could not add kaizen item') }
               }}
             />
           </div>
@@ -889,7 +849,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               ? <ProcessSimulation steps={steps} projectId={project.id} isPaid={true} />
               : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
-                  <div style={{ fontSize:16, fontWeight:800 }}>SIM</div>
+                  <div style={{ fontSize: 32 }}>⚗</div>
                   <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Process Simulation</div>
                   <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
                     Run stress scenarios on your value stream. Adjust cycle times, simulate demand spikes, labor shortages, and equipment failures — and see the pressure impact before it hits your floor.
@@ -908,7 +868,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               ? <LiveFloorPanel steps={steps} projectId={project.id} />
               : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 16, padding: 40 }}>
-                  <div style={{ fontSize:16, fontWeight:800 }}>LIVE</div>
+                  <div style={{ fontSize: 32 }}>📡</div>
                   <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Gemba Monitor</div>
                   <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
                     Monitor your process in real time from the floor. Track live cycle times, flag deviations, and capture observations directly from your phone during a gemba walk.
@@ -1186,143 +1146,427 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
 }
 
 // ── V2KaizenBoardView — editable Kanban-style kaizen board ──────────────────
-function V2KaizenBoardView({ steps, onStatusChange, onCreateItem }: {
+function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
   steps: any[]
   onStatusChange?: (stepId: string, updatedItems: any[]) => void
-  onCreateItem?: (stepId: string, item: { title: string; owner?: string; priority?: string }) => void
+  onAddItem?: (stepId: string, item: any) => Promise<void>
 }) {
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#EF4444', 'in-progress': '#F59E0B', complete: '#10B981' }
-  const sBg    = { open: 'rgba(239,68,68,0.06)', 'in-progress': 'rgba(245,158,11,0.07)', complete: 'rgba(16,185,129,0.07)' }
+  const sColor = { open: '#FF6B6B', 'in-progress': '#F4A623', complete: '#1DD1A1' }
+  const sBg    = { open: 'rgba(255,107,107,0.06)', 'in-progress': 'rgba(244,166,35,0.06)', complete: 'rgba(29,209,161,0.06)' }
   const NEXT   = { open: 'in-progress' as const, 'in-progress': 'complete' as const, complete: 'open' as const }
-  const NEXT_LABEL = { open: 'Start', 'in-progress': 'Complete', complete: 'Reopen' }
-  const [selectedStepId, setSelectedStepId] = useState(steps[0]?.id || '')
-  const [title, setTitle] = useState('')
-  const [owner, setOwner] = useState('')
-  const [priority, setPriority] = useState('normal')
+  const NEXT_LABEL = { open: '→ Start', 'in-progress': '→ Complete', complete: '↺ Reopen' }
 
-  useEffect(() => {
-    if (!selectedStepId && steps[0]?.id) setSelectedStepId(steps[0].id)
-  }, [steps, selectedStepId])
+  // ── Quick-add state ──────────────────────────────────────────────────────
+  const [showAdd, setShowAdd]     = useState(false)
+  const [addTitle, setAddTitle]   = useState('')
+  const [addOwner, setAddOwner]   = useState('')
+  const [addPrio, setAddPrio]     = useState<'low'|'medium'|'high'|'critical'>('medium')
+  const [addStep, setAddStep]     = useState(steps[0]?.id || '')
+  const [addSaving, setAddSaving] = useState(false)
+
+  function uid() { return Math.random().toString(36).slice(2, 9) }
+
+  async function submitAdd() {
+    if (!addTitle.trim() || !addStep || !onAddItem) return
+    setAddSaving(true)
+    const newItem = {
+      id: uid(),
+      kzId: `KZ-${Date.now().toString(36).toUpperCase()}`,
+      title: addTitle.trim(),
+      description: '',
+      category: 'Quality',
+      priority: addPrio,
+      status: 'open',
+      owner: addOwner.trim(),
+      dueDate: '',
+      actions: [],
+      created: Date.now(),
+    }
+    try {
+      await onAddItem(addStep, newItem)
+      setAddTitle(''); setAddOwner(''); setAddPrio('medium'); setShowAdd(false)
+    } finally { setAddSaving(false) }
+  }
 
   const allItems = steps.flatMap(s =>
     (s.toolData?.kaizen?.items || []).map((i: any) => ({
       ...i,
-      id: i.id || `${s.id}-${i.title || 'kaizen'}`,
-      status: i.status || 'open',
-      priority: i.priority || 'normal',
       stepName: s.name,
       stepId:   s.id,
       stepItems: s.toolData?.kaizen?.items || [],
     }))
   )
 
-  function submitItem() {
-    const cleanTitle = title.trim()
-    if (!cleanTitle || !selectedStepId || !onCreateItem) return
-    onCreateItem(selectedStepId, { title: cleanTitle, owner: owner.trim(), priority })
-    setTitle('')
-    setOwner('')
-    setPriority('normal')
-  }
-
   function advanceStatus(item: any) {
     if (!onStatusChange) return
-    const currentStatus = (item.status || 'open') as keyof typeof NEXT
-    const next = NEXT[currentStatus] || 'open'
+    const next = NEXT[item.status as keyof typeof NEXT] || 'open'
     const updatedItems = item.stepItems.map((si: any) =>
-      (si.id || si.title) === (item.id || item.title) ? { ...si, status: next } : si
+      si.id === item.id ? { ...si, status: next } : si
     )
     onStatusChange(item.stepId, updatedItems)
   }
 
-  const boardHeader = (
-    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 20 }}>
-      <div>
-        <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: '#0176D3', marginBottom: 6 }}>CONTINUOUS IMPROVEMENT</div>
-        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 24, fontWeight: 800, color: 'var(--text)', margin: 0 }}>Kaizen Board</h2>
-        <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginTop: 6 }}>Create, start, complete, and reopen improvement ideas linked directly to your VSM steps.</p>
+  // ── Shared header + add-item form (shown regardless of item count) ──────
+  const BoardHeader = () => (
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+          Kaizen Board
+        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>
+            {allItems.length} event{allItems.length !== 1 ? 's' : ''} · {allItems.filter(i => i.status === 'complete').length} complete
+          </span>
+          {steps.length > 0 && onAddItem && (
+            <button
+              onClick={() => setShowAdd(v => !v)}
+              style={{
+                fontSize: 12, fontWeight: 700, padding: '7px 14px',
+                background: showAdd ? 'var(--bg3,#f3f3f3)' : 'var(--brand,#0176D3)',
+                color: showAdd ? 'var(--text3)' : '#fff',
+                border: 'none', borderRadius: 8, cursor: 'pointer', transition: 'all .15s',
+              }}
+            >
+              {showAdd ? '✕ Cancel' : '+ Add Kaizen Item'}
+            </button>
+          )}
+        </div>
       </div>
-      <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', background: 'white', border: '1px solid var(--border)', borderRadius: 12, padding: '8px 12px' }}>
-        {allItems.length} item{allItems.length !== 1 ? 's' : ''} · {allItems.filter(i => i.status === 'complete').length} complete
-      </div>
+
+      {/* Quick-add form */}
+      {showAdd && steps.length > 0 && (
+        <div style={{
+          background: 'var(--bg2,#fff)', border: '1px solid var(--border,#ddd)',
+          borderRadius: 10, padding: '16px 18px', marginBottom: 16,
+          boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--brand,#0176D3)', textTransform: 'uppercase' as const, fontFamily: 'monospace', marginBottom: 12 }}>
+            New Kaizen Item
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 10 }}>
+            <input
+              placeholder="Improvement title *"
+              value={addTitle}
+              onChange={e => setAddTitle(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') submitAdd() }}
+              style={{ padding: '9px 12px', border: '1px solid var(--border)', borderRadius: 8, fontSize: 13, color: 'var(--text)', background: 'var(--bg,#f3f3f3)', outline: 'none', width: '100%' }}
+            />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+              <select
+                value={addStep}
+                onChange={e => setAddStep(e.target.value)}
+                style={{ padding: '9px 10px', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12, color: 'var(--text)', background: 'var(--bg,#f3f3f3)', cursor: 'pointer' }}
+              >
+                {steps.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              </select>
+              <select
+                value={addPrio}
+                onChange={e => setAddPrio(e.target.value as any)}
+                style={{ padding: '9px 10px', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12, color: 'var(--text)', background: 'var(--bg,#f3f3f3)', cursor: 'pointer' }}
+              >
+                <option value="low">Low priority</option>
+                <option value="medium">Medium priority</option>
+                <option value="high">High priority</option>
+                <option value="critical">Critical</option>
+              </select>
+              <input
+                placeholder="Owner (optional)"
+                value={addOwner}
+                onChange={e => setAddOwner(e.target.value)}
+                style={{ padding: '9px 12px', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12, color: 'var(--text)', background: 'var(--bg,#f3f3f3)', outline: 'none' }}
+              />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                onClick={submitAdd}
+                disabled={addSaving || !addTitle.trim()}
+                style={{
+                  padding: '9px 22px', background: !addTitle.trim() ? 'var(--bg4,#e5e5e5)' : 'var(--brand,#0176D3)',
+                  color: !addTitle.trim() ? 'var(--text3)' : '#fff',
+                  border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 13,
+                  cursor: addTitle.trim() ? 'pointer' : 'not-allowed', transition: 'all .15s',
+                }}
+              >
+                {addSaving ? 'Adding…' : 'Add to Board'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 
-  const quickAdd = (
-    <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 18, padding: 18, marginBottom: 18, boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
-      <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--text)', marginBottom: 12 }}>Add a Kaizen item</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(180px, .8fr) minmax(220px, 1.3fr) minmax(120px, .55fr) minmax(120px, .55fr) auto', gap: 10, alignItems: 'center' }}>
-        <select value={selectedStepId} onChange={e => setSelectedStepId(e.target.value)} style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', background: 'white', fontSize: 13 }}>
-          {steps.map(s => <option key={s.id} value={s.id}>{s.position + 1}. {s.name}</option>)}
-        </select>
-        <input value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') submitItem() }} placeholder="Example: Reduce handoff delay before Assembly" style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 13 }} />
-        <input value={owner} onChange={e => setOwner(e.target.value)} placeholder="Owner" style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 13 }} />
-        <select value={priority} onChange={e => setPriority(e.target.value)} style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)', background: 'white', fontSize: 13 }}>
-          <option value="normal">Normal</option><option value="high">High</option><option value="critical">Critical</option>
-        </select>
-        <button onClick={submitItem} disabled={!title.trim() || !selectedStepId} style={{ padding: '10px 14px', borderRadius: 10, border: 'none', background: title.trim() ? '#0176D3' : '#CBD5E1', color: 'white', fontWeight: 900, cursor: title.trim() ? 'pointer' : 'not-allowed' }}>Add</button>
+  if (allItems.length === 0) {
+    return (
+      <div>
+        <BoardHeader />
+        <div style={{ textAlign: 'center', padding: '40px 20px', border: '1px dashed var(--border,#ddd)', borderRadius: 10 }}>
+          <div style={{ fontSize: 28, marginBottom: 10, opacity: 0.4 }}>◉</div>
+          <div style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 8, fontWeight: 600 }}>
+            No kaizen events yet
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
+            Use the button above to add a quick item, or open the Kaizen tool<br/>
+            from any step on the Map tab for the full event form.
+          </div>
+        </div>
       </div>
+    )
+  }
+
+  return (
+    <div>
+      <BoardHeader />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
+        {statuses.map(st => {
+          const col = allItems.filter(i => i.status === st)
+          return (
+            <div key={st}>
+              <div style={{
+                fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: sColor[st],
+                marginBottom: 10, padding: '8px 10px', borderBottom: `2px solid ${sColor[st]}33`,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                background: sBg[st], borderRadius: '6px 6px 0 0',
+              }}>
+                <span>{sLabel[st]}</span>
+                <span style={{ background: `${sColor[st]}22`, padding: '2px 8px', borderRadius: 10, fontSize: 10 }}>
+                  {col.length}
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minHeight: 60 }}>
+                {col.length === 0 && (
+                  <div style={{ padding: '20px 10px', textAlign: 'center', color: 'var(--text3)', fontSize: 11, border: '1px dashed var(--border)', borderRadius: 8 }}>
+                    No items
+                  </div>
+                )}
+                {col.map((item: any, ki: number) => (
+                  <div key={`${item.stepId}-${item.id || ki}`} style={{
+                    background: 'var(--sl-0,#fff)', border: '1px solid var(--border)',
+                    borderRadius: 8, padding: '11px 13px',
+                    borderLeft: `3px solid ${sColor[st]}`,
+                  }}>
+                    <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 3, lineHeight: 1.3 }}>
+                      {item.title || 'Untitled event'}
+                    </div>
+                    <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>
+                      {item.stepName}
+                      {item.priority && item.priority !== 'normal' && (
+                        <span style={{
+                          marginLeft: 8, fontSize: 9, fontWeight: 700, letterSpacing: 0.5,
+                          color: item.priority === 'critical' ? '#FF6B6B' : item.priority === 'high' ? '#F4A623' : '#0176D3',
+                          background: item.priority === 'critical' ? 'rgba(255,107,107,0.1)' : item.priority === 'high' ? 'rgba(244,166,35,0.1)' : 'rgba(1,118,211,0.1)',
+                          padding: '1px 5px', borderRadius: 4,
+                        }}>
+                          {item.priority.toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                    {item.owner && (
+                      <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 6 }}>
+                        👤 {item.owner}
+                      </div>
+                    )}
+                    {onStatusChange && (
+                      <button
+                        onClick={() => advanceStatus(item)}
+                        style={{
+                          fontSize: 10, fontWeight: 600, padding: '4px 10px', borderRadius: 6,
+                          border: `1px solid ${sColor[st]}55`, background: 'transparent',
+                          color: sColor[NEXT[item.status as keyof typeof NEXT] || 'open'],
+                          cursor: 'pointer', transition: 'all .15s',
+                        }}
+                        onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = sBg[st] }}
+                        onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = 'transparent' }}
+                        aria-label={`${NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]} — ${item.title}`}
+                      >
+                        {NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+  )
+}
+
+// ── V2ProjectOverview ─────────────────────────────────────────────────────────
+// Clean project summary/settings panel — the "Project" tab content
+function V2ProjectOverview({ project, steps, profile, onRename }: {
+  project: any; steps: any[]; profile: any
+  onRename: (name: string) => Promise<void>
+}) {
+  const [editing, setEditing] = useState(false)
+  const [nameVal, setNameVal] = useState(project.name || '')
+  const [saving, setSaving] = useState(false)
+
+  const { totalCT, leadTime, pce, bottleneck } = calcProcessMetrics(steps, project)
+
+  const completedSteps  = steps.filter(s => Number(s.cycle_time) > 0 || s.toolData?.stopwatch?.mean > 0).length
+  const hasVA           = steps.filter(s => s.is_value_added === 'VA').length
+  const kaizenItems     = steps.flatMap(s => s.toolData?.kaizen?.items || [])
+  const openKaizen      = kaizenItems.filter((i: any) => i.status === 'open').length
+
+  async function saveRename() {
+    if (!nameVal.trim() || nameVal === project.name) { setEditing(false); return }
+    setSaving(true)
+    await onRename(nameVal.trim())
+    setSaving(false)
+    setEditing(false)
+  }
+
+  const created = project.created_at
+    ? new Date(project.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '—'
+  const updated = project.updated_at
+    ? new Date(project.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    : '—'
+
+  const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+
+  const Stat = ({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) => (
+    <div style={{
+      background: 'var(--bg2,#fff)', border: '1px solid var(--border,#e5e5e5)',
+      borderRadius: 10, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 4,
+    }}>
+      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3,#706e6b)', textTransform: 'uppercase', fontFamily: 'monospace' }}>{label}</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: color || 'var(--text,#181818)', fontFamily: 'monospace', letterSpacing: -0.5 }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: 'var(--text3,#706e6b)' }}>{sub}</div>}
     </div>
   )
 
   return (
-    <div>
-      {boardHeader}
-      {steps.length > 0 && quickAdd}
-      {steps.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: 60, background: 'white', border: '1px solid var(--border)', borderRadius: 18 }}>
-          <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text)' }}>No process steps yet.</div>
-          <div style={{ color: 'var(--text2)', fontSize: 13, marginTop: 8 }}>Add steps on the Process Map first, then create kaizen items from here.</div>
+    <div style={{ flex: 1, overflow: 'auto', padding: '32px 28px', maxWidth: 820, margin: '0 auto', width: '100%' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28, gap: 16 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {editing ? (
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <input
+                autoFocus
+                value={nameVal}
+                onChange={e => setNameVal(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') saveRename(); if (e.key === 'Escape') setEditing(false) }}
+                style={{
+                  fontSize: 26, fontFamily: serif, fontWeight: 700, color: 'var(--text)',
+                  background: 'var(--bg2)', border: '2px solid var(--brand,#0176D3)',
+                  borderRadius: 8, padding: '6px 12px', flex: 1, minWidth: 0, outline: 'none',
+                }}
+              />
+              <button onClick={saveRename} disabled={saving} style={{ padding: '8px 18px', background: 'var(--brand,#0176D3)', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
+                {saving ? 'Saving…' : 'Save'}
+              </button>
+              <button onClick={() => setEditing(false)} style={{ padding: '8px 14px', background: 'transparent', color: 'var(--text3)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', fontSize: 13 }}>
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <h1 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', lineHeight: 1.2, margin: 0 }}>
+                {project.name || 'Untitled Project'}
+              </h1>
+              <button
+                onClick={() => { setNameVal(project.name || ''); setEditing(true) }}
+                title="Rename project"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text3)', fontSize: 14, padding: 4, borderRadius: 4, display: 'flex', alignItems: 'center' }}
+              >
+                ✎
+              </button>
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: 12, marginTop: 8, flexWrap: 'wrap' as const }}>
+            {project.industry && (
+              <span style={{ fontSize: 11, background: 'var(--brand-dim,rgba(1,118,211,0.1))', color: 'var(--brand,#0176D3)', padding: '3px 10px', borderRadius: 12, fontWeight: 600 }}>
+                {project.industry}
+              </span>
+            )}
+            <span style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--bg3,#f3f3f3)', padding: '3px 10px', borderRadius: 12 }}>
+              {project.version === 'v2' ? 'V2 Builder' : 'V1 Builder'}
+            </span>
+            <span style={{ fontSize: 11, color: 'var(--text3)' }}>Created {created}</span>
+            <span style={{ fontSize: 11, color: 'var(--text3)' }}>Last updated {updated}</span>
+          </div>
         </div>
-      ) : allItems.length === 0 ? (
-        <div style={{ padding: 28, background: 'linear-gradient(135deg,#F8FBFF,#FFFFFF)', border: '1px solid var(--border)', borderRadius: 18, boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: 16, alignItems: 'center' }}>
-            <div style={{ width: 54, height: 54, borderRadius: 16, background: 'rgba(1,118,211,.08)', color: '#0176D3', display: 'grid', placeItems: 'center', fontWeight: 900 }}>KB</div>
-            <div>
-              <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--text)' }}>No kaizen items yet</div>
-              <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.7, marginTop: 4 }}>Use the form above or select a sticky note on the Process Map and launch the Kaizen tool. Items added here are saved back into the selected step.</div>
+      </div>
+
+      {/* Metrics row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 12, marginBottom: 28 }}>
+        <Stat label="Steps" value={String(steps.length)} sub={`${completedSteps} with cycle time`} />
+        <Stat label="Cycle Time" value={totalCT > 0 ? (totalCT >= 60 ? `${(totalCT/60).toFixed(1)}m` : `${Math.round(totalCT)}s`) : '—'} sub="total process CT" />
+        <Stat label="Lead Time" value={leadTime > 0 ? (leadTime >= 3600 ? `${(leadTime/3600).toFixed(1)}h` : `${(leadTime/60).toFixed(1)}m`) : '—'} sub="incl. wait time" />
+        <Stat label="PCE" value={pce > 0 ? `${pce.toFixed(0)}%` : '—'} sub="process cycle efficiency" color={pce >= 50 ? 'var(--green,#2e844a)' : pce > 0 ? 'var(--warning,#fe9339)' : undefined} />
+        <Stat label="VA Steps" value={String(hasVA)} sub="value-added classified" />
+        <Stat label="Kaizen Open" value={String(openKaizen)} sub="improvement items" color={openKaizen > 0 ? 'var(--warning,#fe9339)' : undefined} />
+      </div>
+
+      {/* Bottleneck callout */}
+      {bottleneck && (
+        <div style={{
+          background: 'rgba(186,5,23,0.06)', border: '1px solid rgba(186,5,23,0.2)',
+          borderRadius: 10, padding: '14px 18px', marginBottom: 24,
+          display: 'flex', alignItems: 'flex-start', gap: 12,
+        }}>
+          <div style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>⚠</div>
+          <div>
+            <div style={{ fontWeight: 700, color: 'var(--red,#ba0517)', fontSize: 13, marginBottom: 4 }}>Bottleneck Detected: {bottleneck.name}</div>
+            <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.6 }}>
+              This step's cycle time exceeds your takt time target. Prioritise root cause analysis here using the Fishbone or 5 Why tools.
             </div>
           </div>
         </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
-          {statuses.map(st => {
-            const col = allItems.filter(i => (i.status || 'open') === st)
-            return (
-              <div key={st} style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 18, overflow: 'hidden', boxShadow: '0 16px 40px rgba(15,23,42,.05)' }}>
-                <div style={{
-                  fontSize: 11, fontWeight: 800, letterSpacing: 1.5, color: sColor[st],
-                  padding: '11px 12px', borderBottom: `2px solid ${sColor[st]}33`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  background: sBg[st],
-                }}>
-                  <span>{sLabel[st]}</span>
-                  <span style={{ background: `${sColor[st]}22`, padding: '2px 8px', borderRadius: 10, fontSize: 10 }}>{col.length}</span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: 12, minHeight: 90 }}>
-                  {col.length === 0 && <div style={{ padding: '22px 10px', textAlign: 'center', color: 'var(--text3)', fontSize: 12, border: '1px dashed var(--border)', borderRadius: 12 }}>No items</div>}
-                  {col.map((item: any, ki: number) => {
-                    const currentStatus = (item.status || 'open') as keyof typeof NEXT_LABEL
-                    return (
-                      <div key={`${item.stepId}-${item.id || ki}`} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 13, padding: '12px 13px', borderLeft: `4px solid ${sColor[st]}` }}>
-                        <div style={{ fontWeight: 800, fontSize: 13, color: 'var(--text)', marginBottom: 5, lineHeight: 1.35 }}>{item.title || 'Untitled kaizen item'}</div>
-                        <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>Linked step: {item.stepName}</div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 9 }}>
-                          {item.owner && <span style={{ fontSize: 10, color: '#475569', background: '#F1F5F9', padding: '3px 7px', borderRadius: 999 }}>Owner: {item.owner}</span>}
-                          {item.priority && item.priority !== 'normal' && <span style={{ fontSize: 10, color: item.priority === 'critical' ? '#EF4444' : '#B45309', background: item.priority === 'critical' ? '#FEF2F2' : '#FFFBEB', padding: '3px 7px', borderRadius: 999 }}>{String(item.priority).toUpperCase()}</span>}
-                        </div>
-                        {onStatusChange && <button onClick={() => advanceStatus(item)} style={{ fontSize: 11, fontWeight: 800, padding: '6px 10px', borderRadius: 8, border: `1px solid ${sColor[st]}55`, background: 'transparent', color: sColor[NEXT[currentStatus] || 'open'], cursor: 'pointer' }}>{NEXT_LABEL[currentStatus]}</button>}
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )
-          })}
-        </div>
       )}
+
+      {/* Project steps list */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3)', textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 12 }}>Process Steps</div>
+        {steps.length === 0 ? (
+          <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--text3)', border: '1px dashed var(--border)', borderRadius: 10, fontSize: 13 }}>
+            No steps yet. Go to the Map tab to add process steps.
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {steps.map((s: any, i: number) => {
+              const ct = Number(s.cycle_time) || s.toolData?.stopwatch?.mean || 0
+              const hasCT = ct > 0
+              const va = s.is_value_added || s.va_type
+              const vaColor = va === 'VA' ? 'var(--green,#2e844a)' : va === 'NVA' ? 'var(--red,#ba0517)' : 'var(--text3)'
+              return (
+                <div key={s.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px',
+                  background: 'var(--bg2,#fff)', border: '1px solid var(--border)', borderRadius: 8,
+                }}>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'monospace' }}>{i + 1}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}>{s.name}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
+                    {va && <span style={{ fontSize: 9, fontWeight: 700, color: vaColor, fontFamily: 'monospace', letterSpacing: 0.5 }}>{va}</span>}
+                    <span style={{ fontSize: 11, fontFamily: 'monospace', color: hasCT ? 'var(--text2)' : 'var(--text3)' }}>{hasCT ? (ct >= 60 ? `${(ct/60).toFixed(1)}m` : `${Math.round(ct)}s`) : 'No CT'}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Quick links */}
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
+        <a href="/dashboard" style={{ fontSize: 12, color: 'var(--brand,#0176D3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', border: '1px solid var(--border)', borderRadius: 8, fontWeight: 600, background: 'var(--bg2)' }}>
+          ← All Projects
+        </a>
+        <a href="/pricing" style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', border: '1px solid var(--border)', borderRadius: 8, fontWeight: 600, background: 'var(--bg2)' }}>
+          View Plans
+        </a>
+      </div>
     </div>
   )
 }
@@ -1345,14 +1589,14 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
       {/* Takt not set warning — bottleneck detection is disabled without takt time */}
       {takt == null && (
         <div style={{ padding: '10px 14px', background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#7A5200', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>WARN</span>
+          <span>⚠</span>
           <span><strong>Takt time not set</strong> — bottleneck detection is disabled. Open Project Settings and add your takt time to enable accurate bottleneck identification.</span>
         </div>
       )}
       {/* PCE null warning — VA classification not done */}
       {pceNum == null && mainSteps.length > 0 && (
         <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#0a4d8f', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>INFO</span>
+          <span>ℹ</span>
           <span><strong>PCE shows — (not calculable)</strong> because no steps have been classified as Value-Add. Open the step panel and set VA Type on each step to see your Process Cycle Efficiency.</span>
         </div>
       )}

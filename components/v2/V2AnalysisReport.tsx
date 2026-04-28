@@ -18,9 +18,9 @@ const TOOL_LABELS: Record<string, string> = {
   pdca: 'PDCA Cycle', ooda: 'OODA Loop', eightd: '8D Report', dmaic: 'DMAIC',
 }
 const WASTE_LABELS: Record<string, string> = {
-  transportation: 'Transportation', inventory: 'Inventory',
-  motion: 'Motion', waiting: 'Waiting', overproduction: 'Overproduction',
-  overprocessing: 'Overprocessing', defects: 'Defects', skills: 'Unused Skills',
+  transportation: '🚛 Transportation', inventory: '📦 Inventory',
+  motion: '🚶 Motion', waiting: '⏳ Waiting', overproduction: '⚡ Overproduction',
+  overprocessing: '⚙️ Overprocessing', defects: '❌ Defects', skills: '🧠 Unused Skills',
 }
 const PRIORITY_COLORS: Record<string, string> = {
   immediate: RED, short_term: AMBER, medium_term: BRAND,
@@ -455,7 +455,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       {/* Staleness warning */}
       {isStale && (
         <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 9, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#0a4d8f' }}>
-          <span>TIME</span>
+          <span>⏱</span>
           <span>Analysis run {Math.round(ageHours)}h ago. Re-run if you have changed steps since then.</span>
           {onGoMap && <button onClick={onGoMap} style={{ marginLeft: 'auto', fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid rgba(1,118,211,0.4)', background: 'transparent', color: BRAND, cursor: 'pointer' }}>Re-analyse →</button>}
         </div>
@@ -464,14 +464,14 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       {/* AI availability note */}
       {report.ai_analysis_used === false && (
         <div style={{ padding: '9px 14px', background: 'rgba(112,110,107,0.06)', border: '1px solid rgba(112,110,107,0.2)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: 'var(--text3)', display: 'flex', gap: 8 }}>
-          <span>RULE</span>
+          <span>⚙</span>
           <span>AI analysis was unavailable — findings are rule-based. Results are directionally correct. Re-run when AI is available.</span>
         </div>
       )}
 
       {/* ── SECTION 1: Executive Summary ───────────────────────────────────── */}
       <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px 28px', marginBottom: 28 }}>
-        <SectionHeader num="01" label="Executive Summary" icon="EX" />
+        <SectionHeader num="01" label="Executive Summary" icon="📋" />
         <p style={{ fontSize: 16, color: 'var(--text)', lineHeight: 1.85, margin: '0 0 20px', fontFamily: SERIF }}>
           {report.executive_summary}
         </p>
@@ -493,7 +493,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 2: Current State Snapshot ──────────────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="02" label="Current State Snapshot" icon="AN" />
+        <SectionHeader num="02" label="Current State Snapshot" icon="📊" />
 
         {/* Lead time waterfall */}
         <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
@@ -533,7 +533,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 3: Bottleneck Analysis ─────────────────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="03" label="Bottleneck Analysis" icon="TG" />
+        <SectionHeader num="03" label="Bottleneck Analysis" icon="🎯" />
         <div style={{ background: 'rgba(192,64,42,0.04)', border: '1px solid rgba(192,64,42,0.2)', borderRadius: 12, padding: '20px 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
             <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{bottleneck.step_name || '—'}</div>
@@ -563,7 +563,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 4: NVA Analysis ─────────────────────────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="04" label="NVA Analysis" icon="NVA" />
+        <SectionHeader num="04" label="NVA Analysis" icon="🔍" />
         {!isPaid ? <TrialTeaser section="Full NVA Analysis" /> : (
           <div>
             {/* Pareto */}
@@ -609,7 +609,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 5: Recommended Improvement Actions ──────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="05" label="Recommended Improvement Actions" icon="SP" />
+        <SectionHeader num="05" label="Recommended Improvement Actions" icon="⚡" />
         {!isPaid ? <TrialTeaser section="Improvement Recommendations" /> : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {recs.length === 0 && <div style={{ color: 'var(--text3)', fontSize: 13 }}>Run analysis with complete step data to generate recommendations.</div>}
@@ -643,7 +643,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 6: Prioritisation Matrix ───────────────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="06" label="Prioritisation Matrix" icon="PM" />
+        <SectionHeader num="06" label="Prioritisation Matrix" icon="🗺️" />
         {!isPaid ? <TrialTeaser section="Priority Matrix" /> : (
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
             <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 16 }}>
@@ -658,7 +658,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 7: Lead Time Projection ────────────────────────────────── */}
       <div style={{ marginBottom: 28 }}>
-        <SectionHeader num="07" label="Lead Time Improvement Projection" icon="UP" />
+        <SectionHeader num="07" label="Lead Time Improvement Projection" icon="📈" />
         {!isPaid ? <TrialTeaser section="Lead Time Projection" /> : (
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
             <ProjectionChart projection={projection} />
@@ -668,7 +668,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* ── SECTION 8: Next Steps ───────────────────────────────────────────── */}
       <div style={{ marginBottom: 32 }}>
-        <SectionHeader num="08" label="Next Steps" icon="TG" />
+        <SectionHeader num="08" label="Next Steps" icon="🎯" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {nextSteps.map((ns: any, i: number) => (
             <div key={i} style={{ display: 'flex', gap: 16, padding: '16px 20px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, alignItems: 'flex-start' }}>

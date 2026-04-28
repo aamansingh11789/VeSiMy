@@ -64,14 +64,14 @@ const BLANK: EightDData = {
 function uid() { return Math.random().toString(36).slice(2, 9) }
 
 const DISCIPLINES = [
-  { d: 'D1', label: 'Team Formation',        color: '#6CB9FC', icon: 'T1' },
-  { d: 'D2', label: 'Problem Description',   color: '#0176D3', icon: 'D2' },
-  { d: 'D3', label: 'Interim Containment',   color: '#F4A623', icon: 'CT' },
-  { d: 'D4', label: 'Root Cause Analysis',   color: '#C0402A', icon: 'RC' },
-  { d: 'D5', label: 'Permanent Corrective Action', color: '#8C44CC', icon: 'TL' },
-  { d: 'D6', label: 'Verify & Implement',    color: '#2E844A', icon: 'OK' },
-  { d: 'D7', label: 'Prevent Recurrence',    color: '#1DD1A1', icon: 'PR' },
-  { d: 'D8', label: 'Team Recognition',      color: '#F4A623', icon: 'CL' },
+  { d: 'D1', label: 'Team Formation',        color: '#6CB9FC', icon: '👥' },
+  { d: 'D2', label: 'Problem Description',   color: '#0176D3', icon: '📋' },
+  { d: 'D3', label: 'Interim Containment',   color: '#F4A623', icon: '🚧' },
+  { d: 'D4', label: 'Root Cause Analysis',   color: '#C0402A', icon: '🔍' },
+  { d: 'D5', label: 'Permanent Corrective Action', color: '#8C44CC', icon: '🔧' },
+  { d: 'D6', label: 'Verify & Implement',    color: '#2E844A', icon: '✅' },
+  { d: 'D7', label: 'Prevent Recurrence',    color: '#1DD1A1', icon: '🛡' },
+  { d: 'D8', label: 'Team Recognition',      color: '#F4A623', icon: '🏆' },
 ]
 
 const inp: React.CSSProperties = {

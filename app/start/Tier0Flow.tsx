@@ -102,11 +102,11 @@ const INDUSTRY_GROUPS: { label: string; options: string[] }[] = [
 ]
 
 const TARGET_OPTIONS = [
-  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    icon: 'SP' },
-  { id: 'cost',       label: 'Cost',       sub: 'Eliminate waste and rework costs',   icon: 'CO' },
-  { id: 'quality',    label: 'Quality',    sub: 'Reduce defects and rework',          icon: 'QA' },
-  { id: 'compliance', label: 'Compliance', sub: 'Consistency and audit readiness',    icon: 'CP' },
-  { id: 'capacity',   label: 'Capacity',   sub: 'Do more with the same resources',    icon: 'CA' },
+  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    icon: '⚡' },
+  { id: 'cost',       label: 'Cost',        sub: 'Eliminate waste and rework costs',   icon: '💰' },
+  { id: 'quality',    label: 'Quality',     sub: 'Reduce defects and rework',          icon: '🎯' },
+  { id: 'compliance', label: 'Compliance',  sub: 'Consistency and audit readiness',    icon: '✅' },
+  { id: 'capacity',   label: 'Capacity',    sub: 'Do more with the same resources',    icon: '📈' },
 ]
 
 const LOADING_MESSAGES = [

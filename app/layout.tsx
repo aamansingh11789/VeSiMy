@@ -18,7 +18,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title:       { default: 'VeSiMy — AI Operations Intelligence Platform', template: '%s — VeSiMy' },
-  description: 'VeSiMy helps teams map processes, identify waste and bottlenecks, and turn continuous improvement work into clear actions, reports, and measurable targets.',
+  description: 'VeSiMy is the AI platform that monitors your manufacturing processes, detects inefficiencies automatically, and tells your team exactly what to fix. Free VSM, Kaizen, 5 Why, Fishbone, SMED and Gemba Walk tools — all in one platform.',
   keywords:    ['continuous improvement', 'VSM', 'value stream mapping', 'lean manufacturing software', 'kaizen tracking', 'AI process optimization', '5 why analysis', 'fishbone diagram', 'free VSM tool', 'manufacturing AI', 'process improvement software'],
   authors:     [{ name: 'VeSiMy' }],
   creator:     'VeSiMy',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type:        'website',
     siteName:    'VeSiMy',
     title:       'VeSiMy — AI-Powered Process Improvement for Every Industry',
-    description: 'Map your process, identify waste and bottlenecks, and start structured improvement work. Free to start — no account needed.',
+    description: 'Map your process, find the bottleneck, and fix it. AI-powered lean tools for 68+ industries. Free to start — no account needed.',
     url:         'https://www.vesimy.com',
     images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — AI Process Improvement for Every Industry' }],
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card:        'summary_large_image',
     title:       'VeSiMy — AI Process Improvement',
-    description: 'Map your process, identify waste, and take structured action with lean tools and AI guidance.',
+    description: 'Map your process, identify waste, and take structured action. Lean tools with AI guidance for 68+ industries.',
     images:      ['/api/og'],
   },
 
@@ -95,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "name": "VeSiMy",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
-            "description": "Continuous improvement platform for teams that need to map processes, identify waste, and track improvement actions. VSM, Kaizen, 5 Why, SMED, Fishbone, PDCA — all connected.",
+            "description": "AI-powered continuous improvement platform for lean and manufacturing teams. VSM, Kaizen, 5 Why, SMED, Fishbone, PDCA — all connected.",
             "offers": {
               "@type": "Offer",
               "price": "0",

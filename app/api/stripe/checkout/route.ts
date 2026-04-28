@@ -14,10 +14,10 @@ export async function POST(request: NextRequest) {
     const planConfig = PLANS[plan as keyof typeof PLANS]
 
     // Check plan exists
-    if (!planConfig) return NextResponse.json({ error: 'Unknown plan selected.' }, { status: 400 })
+    if (!planConfig) return NextResponse.json({ error: `Unknown plan: ${plan}` }, { status: 400 })
 
     // Check price ID is configured
-    if (!planConfig.priceId) return NextResponse.json({ error: 'Checkout is not configured for this plan yet. Please contact support.' }, { status: 400 })
+    if (!planConfig.priceId) return NextResponse.json({ error: `Price not configured for plan: ${plan}. Add ${plan.toUpperCase()}_PRICE_ID to Vercel env vars.` }, { status: 400 })
 
     const { data: profile } = await supabase
       .from('profiles').select('stripe_customer_id').eq('id', user.id).single()
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     console.error('[stripe/checkout]', err)
     // Return the actual Stripe error message so we can debug it
     return NextResponse.json(
-      { error: 'Checkout failed. Please try again or contact support.' },
+      { error: err?.message || 'Checkout failed. Check Vercel logs for details.' },
       { status: 500 }
     )
   }

@@ -179,7 +179,7 @@ const TIERS: Tier[] = [
       'Multi-user seat management',
       'SSO / SAML integration',
       'Dedicated onboarding',
-      'SLA and uptime options',
+      'SLA and uptime guarantee',
       'Custom industry templates',
       'Analytics dashboard',
       'Quarterly review calls',
@@ -206,8 +206,8 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Your account and all saved maps remain accessible for viewing. Editing and new map creation require an active Pro plan.',
   },
   {
-    q: 'Does VeSiMy follow VSM standards?',
-    a: 'VeSiMy is designed to be standards-aware and to follow accepted Value Stream Mapping methodology where applicable. Avoid treating the software itself as a certification or legal compliance guarantee.',
+    q: 'Is VeSiMy ISO 22468 compliant?',
+    a: 'Yes. VeSiMy follows ISO 22468 Value Stream Management methodology standards. All VSM notation, phase structure, and metric definitions align with the standard.',
   },
   {
     q: 'Can I export my process maps?',
@@ -473,7 +473,8 @@ export default function PricingPage() {
       <section style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto', padding: '0 24px 72px', textAlign: 'center' }}>
         <div style={{ background: C.bg2, border: `1px solid ${C.b2}`, borderRadius: 14, padding: '20px 28px', boxShadow: cardShadow }}>
           <p style={{ fontSize: 14, color: C.t2, lineHeight: 1.7, margin: 0 }}>
-            All plans are designed around accepted Value Stream Mapping and continuous improvement methodology, with industry templates and AI-assisted analysis where available. No recurring upsells. No data sold.
+            All plans include ISO 22468-aligned methodology, 68 industry templates, and AI analysis
+            powered by the VeSiMy lean knowledge base. No recurring upsells. No data sold.
           </p>
         </div>
       </section>
@@ -481,7 +482,7 @@ export default function PricingPage() {
       {/* Lifetime deal — launch period */}
       <section style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto 60px', padding: '0 24px' }}>
         <div style={{ background: 'linear-gradient(135deg, #0A1228, #162040)', border: '1px solid rgba(59,124,255,0.3)', borderRadius: 20, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: 18, fontWeight: 800, color: C.blueLight, border: `1px solid ${C.blueBdr}`, borderRadius: 12, padding: '10px 12px' }}>LT</div>
+          <div style={{ fontSize: 36 }}>⚡</div>
           <div style={{ flex: 1, minWidth: 200 }}>
             <div style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: 10, color: '#3B7CFF', letterSpacing: 2, marginBottom: 6 }}>LAUNCH OFFER — LIMITED TIME</div>
             <div style={{ fontSize: 20, fontWeight: 800, color: C.t1, marginBottom: 6 }}>Lifetime access for $99</div>

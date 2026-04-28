@@ -322,12 +322,12 @@ export default function GuidedFlow({ userId, profile }: Props) {
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
               {[
-                { v: 'speed',    label: 'Finish faster',        icon: 'SP', sub: 'Reduce time from start to done' },
-                { v: 'errors',   label: 'Fewer errors',         icon: 'TG', sub: 'Reduce defects and rework' },
-                { v: 'capacity', label: 'Do more with same',    icon: 'UP', sub: 'Increase throughput' },
-                { v: 'cost',     label: 'Reduce waste or cost', icon: 'CO', sub: 'Eliminate non-value steps' },
-                { v: 'safety',   label: 'Safety or compliance', icon: 'OK', sub: 'Reduce risk and variation' },
-                { v: 'other',    label: 'Something else',       icon: 'TL', sub: 'I\'ll describe it' },
+                { v: 'speed',    label: 'Finish faster',        icon: '⚡', sub: 'Reduce time from start to done' },
+                { v: 'errors',   label: 'Fewer errors',         icon: '🎯', sub: 'Reduce defects and rework' },
+                { v: 'capacity', label: 'Do more with same',    icon: '📈', sub: 'Increase throughput' },
+                { v: 'cost',     label: 'Reduce waste or cost', icon: '💰', sub: 'Eliminate non-value steps' },
+                { v: 'safety',   label: 'Safety or compliance', icon: '✅', sub: 'Reduce risk and variation' },
+                { v: 'other',    label: 'Something else',       icon: '🔧', sub: 'I\'ll describe it' },
               ].map(o => (
                 <button key={o.v} onClick={() => setTarget(o.v as TargetCategory)} style={{
                   padding: '14px 16px', borderRadius: 12, border: `1px solid ${target === o.v ? C.blue : C.b2}`,

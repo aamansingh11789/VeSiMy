@@ -134,7 +134,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
         {/* SOP change prompt */}
         {form.from_sop && sopChanged && !sopDismissed && (
           <div style={{ marginTop: 10, padding: '8px 10px', background: 'rgba(244,166,35,.08)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 7, fontSize: 11, color: '#7A5200', lineHeight: 1.6 }}>
-            Note: This step came from your uploaded SOP. Your changes differ from the original. If this improvement is not yet in your action plan, <strong>consider reporting this change to your process control department</strong> for future SOP updates.
+            ℹ️ This step came from your uploaded SOP. Your changes differ from the original. If this improvement is not yet in your action plan, <strong>consider reporting this change to your process control department</strong> for future SOP updates.
             <button onClick={() => setSopDismissed(true)} style={{ display: 'block', marginTop: 5, fontSize: 10, color: '#7A5200', background: 'none', border: '1px solid rgba(244,166,35,.4)', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Understood — dismiss</button>
           </div>
         )}

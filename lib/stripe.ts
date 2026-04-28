@@ -4,7 +4,6 @@
 // Setup: Stripe Dashboard > Coupons > create 20% off first_time_transaction
 // Then:  Promotions > create code SPRING25 linking to that coupon
 import Stripe from 'stripe'
-import { PLAN_DISPLAY } from '@/lib/plans'
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
@@ -19,19 +18,71 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export const PLANS = {
   trial: {
-    ...PLAN_DISPLAY.trial,
+    name:        'Trial',
+    price:       0,
+    description: '14-day free trial. Full access. No credit card required.',
+    features: [
+      'Up to 3 projects',
+      'All CI tools',
+      'V2 Process Builder',
+      'Reference projects',
+      'No credit card',
+    ],
+    projects_limit: 3,
     priceId: null,
+    cta: 'Start free trial',
   },
   pro: {
-    ...PLAN_DISPLAY.pro,
+    name:        'Pro',
+    price:       29,
+    description: 'Everything you need to run a serious CI programme.',
+    features: [
+      'Up to 10 projects',
+      'All CI tools + AI Gap Analysis',
+      'VSM export — A3 landscape PDF',
+      'Full ISO improvement report export',
+      'PDCA export — A3, 8D, DMAIC, OODA',
+      'Yamazumi + Standard Work export',
+      'Kaizen Roadmap — mission control',
+      'Branches — parallel sub-assembly flows',
+      'Cloud sync & backup',
+      'Priority support',
+    ],
+    cta: 'Start Pro — $29/mo',
     priceId: process.env.STRIPE_PRO_MONTHLY_PRICE_ID,
   },
   lifetime: {
-    ...PLAN_DISPLAY.lifetime,
-    priceId: process.env.STRIPE_LIFETIME_PRICE_ID,
+    name:        'Lifetime',
+    price:       99,
+    description: 'Pay once. Use forever. Lock in launch pricing now.',
+    features: [
+      'Up to 30 projects',
+      'Everything in Pro',
+      'Gold Standard founder badge',
+      'No recurring fees — ever',
+      'All future tool releases included',
+      '33% enterprise discount for your company',
+      'Priority feedback channel — shape the roadmap',
+    ],
+    cta: 'Get Lifetime Access — $99',
+    priceId:  process.env.STRIPE_LIFETIME_PRICE_ID,
+    oneTime:  true,
   },
   enterprise: {
-    ...PLAN_DISPLAY.enterprise,
+    name:        'Enterprise',
+    price:       null,
+    description: 'For manufacturing teams and multi-site organisations.',
+    features: [
+      'Unlimited projects',
+      'Everything in Pro',
+      'Team collaboration & shared projects',
+      'Organisation dashboard',
+      'API access + custom integrations',
+      'SSO / SAML',
+      'SLA guarantee',
+      'Dedicated onboarding & training',
+    ],
+    cta: 'Get a Quote',
     priceId: null,
   },
 } as const

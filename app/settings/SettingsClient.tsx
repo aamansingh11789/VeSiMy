@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
-import { PLAN_DISPLAY as PLANS } from '@/lib/plans'
+import { PLANS } from '@/lib/stripe'
 import { CreditCardIcon, CrownIcon, ExternalLinkIcon, CheckIcon } from '@/components/ui/Icons'
 import { IndustrySelector } from '@/components/ui/IndustrySelector'
 

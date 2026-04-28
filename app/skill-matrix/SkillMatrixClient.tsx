@@ -21,14 +21,14 @@ const MATURITY_CONFIG = {
     label: 'Intermediate',
     color: '#0176D3',
     desc: 'Consistent data quality developing. AI provides standard recommendations with lean terminology.',
-    badge: 'SP',
+    badge: '⚡',
     next: 'Use 4+ different CI tools and achieve 80%+ CT consistency to progress to Advanced.',
   },
   advanced: {
     label: 'Advanced',
     color: '#2E844A',
     desc: 'Strong practitioner habits. AI gives data-only recommendations. Explanations available on request.',
-    badge: 'TG',
+    badge: '🎯',
     next: 'You are operating at the advanced level. Maintain data quality and tool depth.',
   },
 }
@@ -121,7 +121,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
         <div>
           {!hasData ? (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>AN</div>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>📊</div>
               <h2 style={{ fontFamily: serif, fontSize: 22, color: 'var(--text)', marginBottom: 10 }}>No data yet</h2>
               <p style={{ color: 'var(--text2)', fontSize: 14, maxWidth: 400, margin: '0 auto 24px', lineHeight: 1.7 }}>
                 Your skill matrix builds automatically as you work. Complete projects, use CI tools, and measure with the stopwatch. The profile appears after your first project.
@@ -152,10 +152,10 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
         <div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
             {[
-              { label: 'Avg CT laps per step',    value: skillData?.ct_consistency_score ? `${Math.round(skillData.ct_consistency_score)}%` : '—', sub: '% steps with 3+ laps',    icon: 'CT' },
-              { label: 'Steps mapped total',       value: skillData?.total_steps_mapped ?? '—',                                                   sub: 'across all projects',       icon: 'ST' },
-              { label: 'Avg efficiency improvement', value: skillData?.avg_efficiency_improvement ? `+${skillData.avg_efficiency_improvement.toFixed(1)}%` : '—', sub: 'PCE gain per project', icon: 'UP' },
-              { label: 'Lead time reduction',      value: skillData?.avg_lead_time_reduction ? `${skillData.avg_lead_time_reduction.toFixed(0)}%` : '—', sub: 'average across projects', icon: 'SP' },
+              { label: 'Avg CT laps per step',    value: skillData?.ct_consistency_score ? `${Math.round(skillData.ct_consistency_score)}%` : '—', sub: '% steps with 3+ laps',    icon: '⏱' },
+              { label: 'Steps mapped total',       value: skillData?.total_steps_mapped ?? '—',                                                   sub: 'across all projects',       icon: '📋' },
+              { label: 'Avg efficiency improvement', value: skillData?.avg_efficiency_improvement ? `+${skillData.avg_efficiency_improvement.toFixed(1)}%` : '—', sub: 'PCE gain per project', icon: '📈' },
+              { label: 'Lead time reduction',      value: skillData?.avg_lead_time_reduction ? `${skillData.avg_lead_time_reduction.toFixed(0)}%` : '—', sub: 'average across projects', icon: '⚡' },
             ].map(m => (
               <div key={m.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '18px 20px', textAlign: 'center' }}>
                 <div style={{ fontSize: 24, marginBottom: 8 }}>{m.icon}</div>
@@ -192,7 +192,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
             <div>
               <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px 28px', marginBottom: 20 }}>
                 <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
-                  <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: 1 }}>AI</span>
+                  <span style={{ fontSize: 24 }}>🤖</span>
                   <div>
                     <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 15 }}>AI Coaching Note</div>
                     <div style={{ fontSize: 12, color: 'var(--text3)' }}>
@@ -212,7 +212,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-              <div style={{ fontSize: 18, fontWeight: 900, letterSpacing: 2, marginBottom: 16 }}>AI</div>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🤖</div>
               <h2 style={{ fontFamily: serif, fontSize: 22, color: 'var(--text)', marginBottom: 10 }}>No coaching note yet</h2>
               <p style={{ color: 'var(--text2)', fontSize: 14, maxWidth: 360, margin: '0 auto', lineHeight: 1.7 }}>
                 A coaching note is generated after your first project completion. It will tell you what went well, what took longer than expected, and what to focus on next time.
@@ -234,7 +234,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
               {events.map((ev: any) => (
                 <div key={ev.id} style={{ display: 'flex', gap: 14, padding: '10px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8 }}>
                   <div style={{ fontSize: 20, flexShrink: 0 }}>
-                    {ev.event_type === 'project_completed' ? 'OK' : ev.event_type === 'tool_used' ? 'TL' : ev.event_type === 'analysis_run' ? 'AN' : 'SP'}
+                    {ev.event_type === 'project_completed' ? '✅' : ev.event_type === 'tool_used' ? '🔧' : ev.event_type === 'analysis_run' ? '📊' : '⚡'}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', textTransform: 'capitalize' as const }}>

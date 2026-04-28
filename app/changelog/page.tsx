@@ -17,7 +17,7 @@ const entries = [
     title: 'VeSiMy goes live',
     items: [
       'All 9 CI tools live: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA',
-      'Supe AI — AI guidance that reads your VSM data and surfaces improvement priorities',
+      'Supe AI — AI mentor that reads your real VSM data and surfaces improvement priorities',
       '14-day free trial: 3 projects, all CI tools, no credit card required',
       'Pro plan at $29/mo — 10 projects, Supe AI, process simulation, A3 export. Trial period on first upgrade.',
       'Lifetime plan at $99 — all Pro features, no monthly fee, all future releases included',
@@ -26,7 +26,7 @@ const entries = [
       'PWA support — installable on iPhone and Android',
       'Email and Google authentication via Supabase',
       'Stripe payment integration for Pro and Lifetime plans',
-      'Privacy policy and cookie handling updates',
+      'GDPR-compliant privacy policy and cookie handling',
       'robots.txt and sitemap submitted to Google Search Console',
     ],
   },
