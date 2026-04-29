@@ -138,23 +138,14 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
   const vaLabel = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }[step.va_type as string] || '?'
   const vaColor = { va: GREEN, nnva: AMBER, nva: RED }[step.va_type as string] || '#9CA3AF'
 
-  const H   = expanded ? BOX_H_EXP : BOX_H
-  const X   = 80 + index * (BOX_W + GAP)
-  const Y   = 90
-  const cx  = X + BOX_W / 2   // rotation center x
-  const cy  = Y + H / 2        // rotation center y
   const rot = noteRotation(index)
 
   // Activities (op_steps or fallback)
   const activities: string[] = step.op_steps || []
   const maxActivities = 4
 
-  // Paper texture — subtle diagonal lines for warmth
-  const textureId = `tex-${step.id}`
-  const shadowId  = `shadow-${step.id}`
-
-  const W = BOX_W
-  const H = expanded ? BOX_H_EXP + STRIP_H : BOX_H
+  const W    = BOX_W
+  const H    = expanded ? BOX_H_EXP + STRIP_H : BOX_H
   const left = 80 + index * (BOX_W + GAP)
   const top  = 90
 
@@ -280,6 +271,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
       </div>
     </div>
   )
+}
 
 // ── Flow arrows ────────────────────────────────────────────────────────────────
 function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }: any) {
@@ -563,7 +555,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
         onTouchEnd={onTouchEnd}
         style={{ width: '100%', height: '100%', cursor: isDragging ? 'grabbing' : 'grab', userSelect: 'none', overflow: 'hidden', touchAction: 'none' }}
       >
-        <div style={{ transformOrigin: 'top left', transform: `translate(${pan.x}px,${pan.y}px) scale(${zoom})`, width: CANVAS_W, height: CANVAS_H, willChange: 'transform' }}>
+        <div style={{ transformOrigin: 'top left', transform: `translate(${pan.x}px,${pan.y}px) scale(${zoom})`, position: 'relative', width: CANVAS_W, height: CANVAS_H, willChange: 'transform' }}>
           <svg width={CANVAS_W} height={CANVAS_H} style={{ display: 'block', userSelect: 'none' }} role="region" aria-label="Value stream map canvas" focusable="false">
             <defs>
               {/* Subtle cork/linen background texture */}
@@ -711,7 +703,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
 
           {/* ── HTML STICKY NOTE OVERLAY — renders on top of SVG canvas ── */}
           {/* Uses absolute positioning matching the SVG coordinate space    */}
-          <div style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: CANVAS_W, height: CANVAS_H, pointerEvents: 'none', overflow: 'visible' }}>
             {steps.map((step: any, i: number) => (
               <div key={step.id} style={{ pointerEvents: 'all' }}>
                 <StickyStepBox
