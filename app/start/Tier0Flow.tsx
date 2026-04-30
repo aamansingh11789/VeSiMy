@@ -8,6 +8,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { Zap, DollarSign, Target, ShieldCheck, BarChart2, ChevronUp, ChevronDown, X } from 'lucide-react'
 
 // ── Design tokens ─────────────────────────────────────────────────────────
 const C = {
@@ -102,11 +103,11 @@ const INDUSTRY_GROUPS: { label: string; options: string[] }[] = [
 ]
 
 const TARGET_OPTIONS = [
-  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    icon: '⚡' },
-  { id: 'cost',       label: 'Cost',        sub: 'Eliminate waste and rework costs',   icon: '💰' },
-  { id: 'quality',    label: 'Quality',     sub: 'Reduce defects and rework',          icon: '🎯' },
-  { id: 'compliance', label: 'Compliance',  sub: 'Consistency and audit readiness',    icon: '✅' },
-  { id: 'capacity',   label: 'Capacity',    sub: 'Do more with the same resources',    icon: '📈' },
+  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    Icon: Zap,          color: '#FBBF24' },
+  { id: 'cost',       label: 'Cost',        sub: 'Eliminate waste and rework costs',   Icon: DollarSign,   color: '#34D399' },
+  { id: 'quality',    label: 'Quality',     sub: 'Reduce defects and rework',          Icon: Target,       color: '#F87171' },
+  { id: 'compliance', label: 'Compliance',  sub: 'Consistency and audit readiness',    Icon: ShieldCheck,  color: '#60A5FA' },
+  { id: 'capacity',   label: 'Capacity',    sub: 'Do more with the same resources',    Icon: BarChart2,    color: '#A78BFA' },
 ]
 
 const LOADING_MESSAGES = [
@@ -566,10 +567,10 @@ export default function Tier0Flow() {
         {!loading && step === 0 && (
           <div>
             <div style={{ marginBottom: 32 }}>
-              <div style={{ color: C.t3, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+              <div style={{ color: C.blue, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 10, fontFamily: '"JetBrains Mono","Fira Code",monospace' }}>
                 Step 1 of 5
               </div>
-              <h1 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+              <h1 style={{ fontSize: 32, fontWeight: 800, margin: '0 0 10px', letterSpacing: '-0.02em', color: C.t1, lineHeight: 1.15 }}>
                 Map any process. Free.
               </h1>
               <p style={{ color: C.t2, fontSize: 16, margin: 0, lineHeight: 1.6 }}>
@@ -637,10 +638,10 @@ export default function Tier0Flow() {
         {!loading && step === 1 && (
           <div>
             <div style={{ marginBottom: 32 }}>
-              <div style={{ color: C.t3, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+              <div style={{ color: C.blue, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 10, fontFamily: '"JetBrains Mono","Fira Code",monospace' }}>
                 Step 2 of 5
               </div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 10px', letterSpacing: '-0.02em', color: C.t1, lineHeight: 1.15 }}>
                 Which process are you mapping?
               </h2>
               <p style={{ color: C.t2, fontSize: 15, margin: 0 }}>
@@ -674,7 +675,9 @@ export default function Tier0Flow() {
                   Every process has a target. Picking one helps VeSiMy judge the process through the right lens.
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {TARGET_OPTIONS.map(opt => (
+                  {TARGET_OPTIONS.map(opt => {
+                    const isSelected = target === opt.id
+                    return (
                     <button
                       key={opt.id}
                       onClick={() => setTarget(opt.id)}
@@ -684,21 +687,29 @@ export default function Tier0Flow() {
                         gap:         14,
                         padding:     '14px 16px',
                         borderRadius: 10,
-                        border:      `1px solid ${target === opt.id ? C.blue : C.b2}`,
-                        background:  target === opt.id ? C.blueGlow : 'transparent',
+                        border:      `1px solid ${isSelected ? opt.color : C.b2}`,
+                        background:  isSelected ? `${opt.color}14` : 'transparent',
                         cursor:      'pointer',
                         textAlign:   'left',
                         fontFamily:  'inherit',
                         transition:  'all 0.15s',
                       }}
                     >
-                      <span style={{ fontSize: 20 }}>{opt.icon}</span>
-                      <div>
-                        <div style={{ color: target === opt.id ? C.blueLight : C.t1, fontWeight: 700, fontSize: 15 }}>{opt.label}</div>
-                        <div style={{ color: C.t3, fontSize: 13 }}>{opt.sub}</div>
+                      <div style={{ width: 36, height: 36, borderRadius: 9, background: `${opt.color}18`, border: `1px solid ${opt.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <opt.Icon size={18} color={opt.color} strokeWidth={2} />
                       </div>
+                      <div>
+                        <div style={{ color: isSelected ? C.t1 : C.t2, fontWeight: 700, fontSize: 15 }}>{opt.label}</div>
+                        <div style={{ color: C.t3, fontSize: 13, marginTop: 2 }}>{opt.sub}</div>
+                      </div>
+                      {isSelected && (
+                        <div style={{ marginLeft: 'auto', width: 18, height: 18, borderRadius: '50%', background: opt.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <svg width={10} height={10} viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#000" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </div>
+                      )}
                     </button>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -709,10 +720,10 @@ export default function Tier0Flow() {
         {!loading && step === 2 && (
           <div>
             <div style={{ marginBottom: 24 }}>
-              <div style={{ color: C.t3, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+              <div style={{ color: C.blue, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 10, fontFamily: '"JetBrains Mono","Fira Code",monospace' }}>
                 Step 3 of 5
               </div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 10px', letterSpacing: '-0.02em', color: C.t1, lineHeight: 1.15 }}>
                 What are the steps?
               </h2>
               <p style={{ color: C.t2, fontSize: 15, margin: 0 }}>
@@ -741,11 +752,17 @@ export default function Tier0Flow() {
                   />
                   <div style={{ display: 'flex', gap: 4 }}>
                     <button onClick={() => moveStep(i, -1)} disabled={i === 0}
-                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: C.t3, cursor: i === 0 ? 'default' : 'pointer', opacity: i === 0 ? 0.3 : 1 }}>↑</button>
+                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: C.t3, cursor: i === 0 ? 'default' : 'pointer', opacity: i === 0 ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <ChevronUp size={14} />
+                    </button>
                     <button onClick={() => moveStep(i, 1)} disabled={i === steps.length - 1}
-                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: C.t3, cursor: i === steps.length - 1 ? 'default' : 'pointer', opacity: i === steps.length - 1 ? 0.3 : 1 }}>↓</button>
+                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: C.t3, cursor: i === steps.length - 1 ? 'default' : 'pointer', opacity: i === steps.length - 1 ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <ChevronDown size={14} />
+                    </button>
                     <button onClick={() => removeStep(i)} disabled={steps.length <= 2}
-                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: '#F87171', cursor: steps.length <= 2 ? 'default' : 'pointer', opacity: steps.length <= 2 ? 0.3 : 1 }}>✕</button>
+                      style={{ padding: '8px', background: 'none', border: `1px solid ${C.b2}`, borderRadius: 6, color: '#F87171', cursor: steps.length <= 2 ? 'default' : 'pointer', opacity: steps.length <= 2 ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <X size={14} />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -767,10 +784,10 @@ export default function Tier0Flow() {
         {!loading && step === 3 && (
           <div>
             <div style={{ marginBottom: 24 }}>
-              <div style={{ color: C.t3, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+              <div style={{ color: C.blue, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 10, fontFamily: '"JetBrains Mono","Fira Code",monospace' }}>
                 Step 4 of 5
               </div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 10px', letterSpacing: '-0.02em', color: C.t1, lineHeight: 1.15 }}>
                 How long does each step take?
               </h2>
               <p style={{ color: C.t2, fontSize: 15, margin: '0 0 4px' }}>
@@ -851,10 +868,10 @@ export default function Tier0Flow() {
         {!loading && step === 4 && (
           <div>
             <div style={{ marginBottom: 24 }}>
-              <div style={{ color: C.t3, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+              <div style={{ color: C.blue, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 10, fontFamily: '"JetBrains Mono","Fira Code",monospace' }}>
                 Step 5 of 5
               </div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 10px', letterSpacing: '-0.02em', color: C.t1, lineHeight: 1.15 }}>
                 Where is the pain?
               </h2>
               <p style={{ color: C.t2, fontSize: 15, margin: '0 0 10px' }}>
