@@ -180,9 +180,9 @@ function Stopwatch({ onSave }: { onSave: (seconds: number) => void }) {
         )}
         {running && (
           <button onClick={stop} style={{
-            flex: 1, padding: '10px', borderRadius: 8, border: 'none',
+            flex: 1, padding: '10px', borderRadius: 8, border: `1px solid ${C.b3}`,
             background: C.bg4, color: C.t1, fontWeight: 700, cursor: 'pointer',
-            fontSize: 14, fontFamily: 'inherit', border: `1px solid ${C.b3}`,
+            fontSize: 14, fontFamily: 'inherit',
           }}>Stop</button>
         )}
         {!running && elapsed > 0 && (
