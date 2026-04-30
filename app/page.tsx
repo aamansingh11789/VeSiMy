@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { VLogoMark, VeSiMyWordmark } from "@/components/ui/Logo";
 import { ManufacturingHeroDashboard } from "@/components/homepage/ManufacturingHeroDashboard";
 import { HeroCubePreview } from "@/components/home/HeroCubePreview";
 
@@ -247,8 +248,8 @@ function Nav() {
     <>
       <div style={{background:`${C.p0}F2`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,boxShadow:'0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)',padding:'0 24px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:200}}>
         <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <img src="/brand/vesimy-mark.png" alt="VeSiMy" width={32} height={32} style={{objectFit:'contain',filter:'drop-shadow(0 0 8px rgba(59,124,255,0.45)) brightness(1.05)'}}/>
-          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',maxWidth:130,filter:'brightness(1.15) contrast(1.1) drop-shadow(0 1px 6px rgba(0,0,0,0.9))'}}/>
+          <VLogoMark size={28} />
+          <VeSiMyWordmark size={22} onDark={true} />
         </div>
         <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:24}}>
           <div style={{width:1,height:16,background:C.b2}}/>
@@ -790,8 +791,8 @@ export default function App() {
       {/* Footer */}
       <div style={{background:C.p0,borderTop:`1px solid ${C.b1}`,padding:"32px",textAlign:"center"}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:8}}>
-          <img src="/brand/vesimy-mark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',filter:'brightness(0.9) drop-shadow(0 0 6px rgba(59,124,255,0.3))'}}/>
-          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={18} style={{objectFit:'contain',maxWidth:110,filter:'brightness(1.1) drop-shadow(0 1px 4px rgba(0,0,0,0.9))'}}/>
+          <VLogoMark size={22} />
+          <VeSiMyWordmark size={18} onDark={true} />
         </div>
         <MT c={C.t4}>Structured around ISO 22468:2020 · Lean · TPS · Six Sigma</MT>
       </div>
