@@ -161,7 +161,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       })
       setSteps(prev => {
         const updated = [...prev]
-        updated.splice(pos, 0, newStep)
+        updated.splice(pos, 0, newStep as V2Step)
         return updated.map((s, i) => ({ ...s, position: i }))
       })
       setSelectedStep(newStep)
