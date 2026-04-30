@@ -37,7 +37,7 @@ export interface V2Step {
   step_type: string; tasks: string[]; governing_entity: string; department: string
   notes: string; cycle_time: number; cycle_time_unit: string; cycle_time_type: string
   cycle_time_notes: string; operators: number; uptime: number; defect_rate: number
-  wait_time: number; wip: number; flow_type: string; sm_min: number; sm_max: number
+  wait_time: number; wip: number; flow_type: "push" | "fifo" | "supermarket" | "queue"; sm_min: number; sm_max: number
   is_value_added: string; missing_info_flags: string[]; from_sop: boolean
   sop_original_text: string; map_x: number; map_y: number; version: string
   toolData?: Record<string, any>
@@ -437,7 +437,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             isPaid
               ? <PDFExportButton
                   project={project}
-                  steps={steps}
+                  steps={steps as any}
                   isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
                 />
               : <a href="/pricing" style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)', textDecoration:'none' }}>
