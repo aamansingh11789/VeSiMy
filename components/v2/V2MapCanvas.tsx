@@ -356,7 +356,6 @@ function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }:
       ) : (
         <foreignObject x={midX - 16} y={Y - 14} width={32} height={28}>
           <input
-            xmlns="http://www.w3.org/1999/xhtml"
             type="number"
             defaultValue={wipVal}
             autoFocus
