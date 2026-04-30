@@ -1263,7 +1263,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
       {mainSteps.map((step, idx) => (
         <StepCard
           key={step.id}
-          step={step}
+          step={step as any}
           index={idx}
           takt={takt}
           onEdit={() => onEdit(step)}
@@ -1308,8 +1308,9 @@ interface StepCardProps {
   onTool: (t: string) => void
   onDragStart: () => void
   onDrop: () => void
-  expanded?: boolean
+  expanded?: any
   onToggle?: () => void
+  key?: any
 }
 
 function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {

@@ -33,16 +33,55 @@ import type { KanbanColumn } from '@/lib/store'
 type V2Tab = 'project' | 'map' | 'analyze' | 'journal' | 'future' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca' | 'kaizen' | 'kanban' | 'report'
 
 export interface V2Step {
-  id: string; project_id: string; name: string; position: number
-  step_type: string; tasks: string[]; governing_entity: string; department: string
-  notes: string; cycle_time: number; cycle_time_unit: string; cycle_time_type: string
-  cycle_time_notes: string; operators: number; uptime: number; defect_rate: number
-  wait_time: number; wip: number; flow_type: "push" | "fifo" | "supermarket" | "queue"; sm_min: number; sm_max: number
-  is_value_added: string; missing_info_flags: string[]; from_sop: boolean
-  sop_original_text: string; map_x: number; map_y: number; version: string
+  // Core identity (matches Step)
+  id: string
+  project_id: string
+  name: string
+  position: number
+  created_at: string
+  updated_at: string
   toolData?: Record<string, any>
-  created_at?: string
-  updated_at?: string
+
+  // Step-compatible optional fields
+  department?: string
+  notes?: string
+  cycle_time?: number
+  operators?: number
+  uptime?: number
+  defect_rate?: number
+  wait_time?: number
+  wip?: number
+  sm_min?: number
+  sm_max?: number
+  setup_time?: number
+  trans_time?: number
+  completion_accuracy?: number
+  flow_type: 'push' | 'fifo' | 'supermarket' | 'queue'
+  va_type?: 'va' | 'nnva' | 'nva'
+  op_steps?: Array<{ id: string; name: string; time: number; va_type: 'va' | 'nnva' | 'nva' }>
+  is_bottleneck?: boolean
+  health_status?: string
+  branch_id?: string | null
+  branch_label?: string | null
+  branch_parent_id?: string | null
+  branch_position?: number
+  is_main_flow?: boolean
+  user_id?: string
+
+  // V2-specific fields
+  step_type?: string
+  tasks?: string[]
+  governing_entity?: string
+  cycle_time_unit?: string
+  cycle_time_type?: string
+  cycle_time_notes?: string
+  is_value_added?: string
+  missing_info_flags?: string[]
+  from_sop?: boolean
+  sop_original_text?: string
+  map_x?: number
+  map_y?: number
+  version?: string
 }
 
 interface Props {
@@ -406,7 +445,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           {/* Process health score — hidden on small mobile */}
           {steps.length > 0 && (
             <div className="health-score-compact">
-              <ProcessHealthScore steps={steps as any} compact />
+              <ProcessHealthScore steps={steps} compact />
             </div>
           )}
           {/* Settings button — always visible */}
@@ -437,7 +476,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             isPaid
               ? <PDFExportButton
                   project={project}
-                  steps={steps as any}
+                  steps={steps}
                   isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
                 />
               : <a href="/pricing" style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)', textDecoration:'none' }}>
