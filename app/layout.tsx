@@ -77,7 +77,7 @@ export const viewport: Viewport = {
   viewportFit:   'cover',   // handles iPhone notch / dynamic island
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children?: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

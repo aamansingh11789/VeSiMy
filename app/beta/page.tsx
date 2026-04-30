@@ -392,7 +392,7 @@ export default function BetaPage() {
   )
 }
 
-function Section({ title, children }: { title:string; children:any }) {
+function Section({ title, children }: { title:string; children?:any }) {
   return (
     <div style={{ background:'#FFFFFF', border:'1px solid rgba(40,40,92,0.4)', borderRadius:14, padding:'22px 24px' }}>
       <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>
@@ -400,10 +400,10 @@ function Section({ title, children }: { title:string; children:any }) {
     </div>
   )
 }
-function Row2({ children }: { children:any }) {
+function Row2({ children }: { children?:any }) {
   return <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>{children}</div>
 }
-function Field({ label, hint, children }: { label:string; hint?:string; children:any }) {
+function Field({ label, hint, children }: { label:string; hint?:string; children?:any }) {
   return (
     <div>
       <label className="label">{label}</label>

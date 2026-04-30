@@ -1,5 +1,6 @@
 // TypeScript enabled
 'use client'
+import React from 'react'
 import { FishboneIcon, FiveWhyIcon, StopwatchIcon, ZapIcon, SettingsIcon, BookIcon, RefreshIcon, VSMIcon, CreditCardIcon, FolderIcon } from '@/components/ui/Icons'
 // ── components/ui/CommandPalette.tsx ──────────────────────────────────────────
 // ⌘K command palette — search projects, steps, CI tools, nav.

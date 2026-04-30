@@ -6,6 +6,7 @@
 // Spec: Section 4 — vesimy-v4-specification.docx
 
 
+import React from 'react'
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -26,7 +27,7 @@ const cardShadow = `inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,
 const btnShadow  = `inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.3), 0 2px 0 rgba(20,50,140,0.9), 0 4px 0 rgba(15,38,105,0.7), 0 8px 24px rgba(59,124,255,0.25)`
 
 // ── Lean concept box ──────────────────────────────────────────────────────────
-function ConceptBox({ title, children }: { title: string; children: React.ReactNode }) {
+function ConceptBox({ title, children }: { title: string; children?: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
     <div style={{ background: C.blueGlow, border: `1px solid ${C.blueBdr}`, borderRadius: 12, overflow: 'hidden', marginTop: 16 }}>
@@ -412,7 +413,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
               {steps.map(step => (
-                <StepCard key={step.id} step={step} onUpdate={updateStep} onRemove={removeStep} />
+                <StepCard key={step.id} step={step as any} onUpdate={updateStep} onRemove={removeStep} />
               ))}
             </div>
             {steps.length < 12 && (

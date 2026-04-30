@@ -7,6 +7,7 @@
 // Spec: VeSiMy v4 Section 7.4
 
 
+import React from 'react'
 import { useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
 
@@ -230,7 +231,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             </div>
           )}
           {form.iterations.map((iter, i) => (
-            <IterationCard key={iter.id} iter={iter} index={i} isLast={i === form.iterations.length - 1}
+            <IterationCard key={iter.id} iter={iter as OODAIteration} index={i} isLast={i === form.iterations.length - 1}
               onUpdate={(field, value) => updateIteration(iter.id, field, value)}
               onDelete={() => deleteIteration(iter.id)} />
           ))}

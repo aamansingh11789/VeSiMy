@@ -6,6 +6,7 @@
 // Self-contained: no external CSS dependencies, all inline styles
 
 
+import React from 'react'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { Zap, DollarSign, Target, ShieldCheck, BarChart2, ChevronUp, ChevronDown, X } from 'lucide-react'

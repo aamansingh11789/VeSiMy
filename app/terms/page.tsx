@@ -6,7 +6,7 @@ import { VesimyLogo } from '@/components/ui/Logo'
 
 export const metadata = { title: 'Terms of Service — VeSiMy' }
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
     <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
     <div style={{ color: 'var(--text3)', fontSize: 14, lineHeight: 1.8 }}>{children}</div>

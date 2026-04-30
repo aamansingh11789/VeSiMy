@@ -1004,7 +1004,6 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
       {showStepModal && (
         <StepModal
-          key={editingStep?.id ?? 'new-step'}
           step={editingStep}
           onSave={async form => {
             if (editingStep) {
@@ -1309,6 +1308,8 @@ interface StepCardProps {
   onTool: (t: string) => void
   onDragStart: () => void
   onDrop: () => void
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {

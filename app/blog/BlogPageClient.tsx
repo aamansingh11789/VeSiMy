@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'

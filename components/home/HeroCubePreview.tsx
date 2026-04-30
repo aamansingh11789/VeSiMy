@@ -6,6 +6,7 @@
 // Bottom: KPI strip (dark command-center)
 // No Three.js. No external assets. Pure CSS 3D + React.
 
+import React from 'react'
 import { useState, useEffect } from 'react'
 
 // ── Tokens (scoped, not importing C from page.tsx) ────────────────────────

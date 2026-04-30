@@ -3,6 +3,7 @@
 // ── components/v2/V2ProjectClient.tsx ─────────────────────────────────────────
 // V2 Project Builder: SOP upload → interactive map → analyze → future state
 
+import React from 'react'
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { BRAND, SERIF, GREEN, AMBER, RED } from './v2-constants'
 import { FolderIcon, EditIcon, PDFIcon, BookIcon, LayersIcon, ZapIcon, VSMIcon, ImprovementIcon, KaizenIcon, LiveFloorIcon, RoadmapIcon, PDCAIcon, SimulationIcon } from '@/components/ui/Icons'

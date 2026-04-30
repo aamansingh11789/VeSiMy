@@ -3,10 +3,10 @@
 // ── components/analytics/PostHogProvider.tsx ─────────────────────────────────
 // Initialises PostHog after mount. Safe passthrough if posthog-js not installed.
 
-import type React from 'react'
+import React from 'react'
 import { useEffect } from 'react'
 
-export function PostHogProvider({ children }: { children: React.ReactNode }) {
+export function PostHogProvider({ children }: { children?: React.ReactNode }) {
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY
     if (!key) return

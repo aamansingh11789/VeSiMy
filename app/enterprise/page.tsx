@@ -279,7 +279,7 @@ export default function EnterprisePage() {
   )
 }
 
-function Card({ title, children }: { title:string; children:any }) {
+function Card({ title, children }: { title:string; children?:any }) {
   return (
     <div style={{ background:'rgba(248,247,245,0.97)', border:'1px solid rgba(184,180,172,0.6)', borderRadius:14, padding:'22px 24px' }}>
       <p style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>

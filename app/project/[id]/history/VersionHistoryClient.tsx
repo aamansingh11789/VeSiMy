@@ -2,6 +2,7 @@
 // ── app/project/[id]/history/VersionHistoryClient.tsx ────────────────────────
 'use client'
 
+import React from 'react'
 import { useState } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'

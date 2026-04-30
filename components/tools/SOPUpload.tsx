@@ -18,7 +18,7 @@ function Chip({ label, color }: { label: string; color: string }) {
 }
 
 
-interface ParsedStep { name: string; department?: string; notes?: string }
+interface ParsedStep { name: string; department?: string; notes?: string; cycle_time?: string; wait_time?: string; setup_time?: string; operators?: string; defect_rate?: string; uptime?: string; wip?: string }
 interface Props {
   projectId: string
   onStepsGenerated: (steps: ParsedStep[]) => void

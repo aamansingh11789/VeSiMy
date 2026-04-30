@@ -207,7 +207,7 @@ function ValidatedInput({ field, value, onChange, hint, ...rest }) {
 }
 
 // ── StepModal ─────────────────────────────────────────────────────────────────
-export function StepModal({ step, onSave, onClose }) {
+export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; onClose: any }) {
   const isEdit = !!step?.id
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
 

@@ -340,7 +340,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
     )
   }
 
-  const ReportCard = ({ report }: { report: any }) => {
+  const ReportCard = ({ report }: { report: any; key?: any }) => {
     const isOpen = expanded === report.id
     const ip = report.improvement_potential || {}
     const isFuture = report.report_type === 'future_state'
@@ -497,7 +497,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
         {futureReports.length > 0 && (
           <div style={{ marginBottom: 24 }}>
             <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: GREEN, marginBottom: 12 }}>FUTURE STATE REPORTS</div>
-            {futureReports.map(r => <ReportCard key={r.id} report={r as any} />)}
+            {futureReports.map((r, i) => <ReportCard key={i} report={r as any} />)}
           </div>
         )}
 
@@ -505,7 +505,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
         {currentReports.length > 0 && (
           <div>
             <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>CURRENT STATE REPORTS</div>
-            {currentReports.map(r => <ReportCard key={r.id} report={r as any} />)}
+            {currentReports.map((r, i) => <ReportCard key={i} report={r as any} />)}
           </div>
         )}
       </div>

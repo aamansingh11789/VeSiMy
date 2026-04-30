@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ManufacturingHeroDashboard } from "@/components/homepage/ManufacturingHeroDashboard";
 import { HeroCubePreview } from "@/components/home/HeroCubePreview";
 
@@ -26,7 +26,7 @@ const C = {
 
 // ─── MICRO TAG COMPONENT ────────────────────────────────────
 // Usage: <MT c={C.blue}>CI Tool Suite</MT>
-function MT({ c, sp = 1.5, children }: { c: string; sp?: number; children: React.ReactNode }) {
+function MT({ c, sp = 1.5, children }: { c: string; sp?: number; children?: React.ReactNode }) {
   return (
     <span style={{
       fontFamily: C.mono,
