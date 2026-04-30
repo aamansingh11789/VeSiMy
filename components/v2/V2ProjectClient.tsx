@@ -41,6 +41,8 @@ export interface V2Step {
   is_value_added: string; missing_info_flags: string[]; from_sop: boolean
   sop_original_text: string; map_x: number; map_y: number; version: string
   toolData?: Record<string, any>
+  created_at?: string
+  updated_at?: string
 }
 
 interface Props {
@@ -404,7 +406,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           {/* Process health score — hidden on small mobile */}
           {steps.length > 0 && (
             <div className="health-score-compact">
-              <ProcessHealthScore steps={steps} compact />
+              <ProcessHealthScore steps={steps as any} compact />
             </div>
           )}
           {/* Settings button — always visible */}
