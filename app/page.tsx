@@ -224,7 +224,7 @@ function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,alig
       <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg, rgba(3,4,13,0.85) 0%, rgba(6,12,26,0.75) 50%, rgba(3,4,13,0.9) 100%)`}}/>
       {/* Accent glow from photo colors */}
       <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse 60% 60% at 50% 50%, ${accent}08 0%, transparent 70%)`}}/>
-      <div style={{position:"relative",maxWidth:800,margin:"0 auto",textAlign:align}}>
+      <div style={{position:"relative",maxWidth:800,margin:"0 auto",textAlign:align as React.CSSProperties["textAlign"]}}>
         {title && <div className="au" style={{fontFamily:C.sans,fontSize:40,fontWeight:800,color:C.t1,letterSpacing:-1,lineHeight:1.1,marginBottom:16,textShadow:"0 2px 4px rgba(0,0,8,0.95),0 8px 24px rgba(0,0,0,0.7)"}}>{title}</div>}
         {sub && <div style={{fontFamily:C.sans,fontSize:15,color:C.t2,lineHeight:1.8,marginBottom:children?36:0,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{sub}</div>}
         {children}
