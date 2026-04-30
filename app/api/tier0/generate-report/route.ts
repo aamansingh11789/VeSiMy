@@ -26,6 +26,7 @@ interface Tier0Request {
   painStep?: number | null
   painDescription?: string
   targetCategory?: string
+  targetMetric?: string
 }
 
 interface ReportOutput {
