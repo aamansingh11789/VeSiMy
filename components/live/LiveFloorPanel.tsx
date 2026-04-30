@@ -8,7 +8,8 @@ import toast from 'react-hot-toast'
 import type { Step } from '@/lib/store'
 
 interface Metric { id:string; step_id:string; metric_type:string; value:number; timestamp:string }
-interface Props   { steps: Step[]; projectId: string }
+type LiveStep = Record<string, any>
+interface Props   { steps: LiveStep[]; projectId: string }
 
 const TYPES = [
   { key:'cycle_time',   label:'Cycle Time (s)' },

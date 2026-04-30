@@ -1,7 +1,7 @@
 // TypeScript enabled — @ts-nocheck removed as part of quality pass
 'use client'
 
-import ReportFooter from './ReportFooter'
+import ReportFooter from '@/components/reports/ReportFooter'
 
 function fmtS(s?: number | null) {
   if (!s && s !== 0) return '—'

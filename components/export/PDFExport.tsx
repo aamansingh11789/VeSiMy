@@ -10,9 +10,11 @@ import toast from 'react-hot-toast'
 import type { Project, Step } from '@/lib/store'
 import { CheckIcon, DownloadIcon, RefreshIcon } from '@/components/ui/Icons'
 
+type ReportStep = Record<string, any>
+
 interface Props {
   project: Project
-  steps:   Step[]
+  steps:   ReportStep[]
   isGold?: boolean
 }
 
@@ -34,7 +36,7 @@ function docNum(projectId: string, reportId?: string): string {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-function buildISOReport(project: Project, steps: Step[], isGold = false): string {
+function buildISOReport(project: Project, steps: ReportStep[], isGold = false): string {
   // FIX: use calcProcessMetrics for consistent, unit-aware, branch-filtered calculations
   const { mainSteps, totalCT, totalWait: totalWT, leadTime: totalLT, pce: pceNum,
           takt: taktCalc, bottleneck: primaryBN, totalWIP } =

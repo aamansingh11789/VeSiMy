@@ -49,7 +49,7 @@ function ConceptBox({ title, children }: { title: string; children?: React.React
 }
 
 // ── Step card ─────────────────────────────────────────────────────────────────
-function StepCard({ step, onUpdate, onRemove }: { key?: any;
+function StepCard({ step, onUpdate, onRemove }: {
   step: { id: string; name: string; va: 'va' | 'nva' | ''; cycleTime: string; waitTime: string; wip: string }
   onUpdate: (id: string, field: string, value: string) => void
   onRemove: (id: string) => void
@@ -413,7 +413,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
               {steps.map(step => (
-                <StepCard key={step.id} step={step} onUpdate={updateStep} onRemove={removeStep} />
+                <StepCard key={step.id} step={step as any} onUpdate={updateStep} onRemove={removeStep} />
               ))}
             </div>
             {steps.length < 12 && (

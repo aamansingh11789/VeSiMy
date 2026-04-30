@@ -426,7 +426,7 @@ export default function BlogPageClient() {
   )
 }
 
-function PostCard({ post }: { post: (typeof posts)[0]; key?: string }) {
+function PostCard({ post }: { post: (typeof posts)[0] }) {
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
       <article style={{

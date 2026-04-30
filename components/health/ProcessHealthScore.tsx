@@ -5,10 +5,12 @@ import { useMemo } from 'react'
 import { calcHealth } from '@/lib/health-score'
 import type { Step } from '@/lib/store'
 
-interface Props { steps: Step[]; compact?: boolean }
+type HealthStep = Record<string, any>
+
+interface Props { steps: HealthStep[]; compact?: boolean }
 
 export function ProcessHealthScore({ steps, compact=false }: Props) {
-  const h = useMemo(() => calcHealth(steps), [steps])
+  const h = useMemo(() => calcHealth(steps as Step[]), [steps])
 
   if (compact) {
     return (

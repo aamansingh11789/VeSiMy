@@ -159,7 +159,7 @@ function MiniGauge({ score }: { score: number }) {
 }
 
 // ── Per-project health card ───────────────────────────────────────────────────
-function ProjectHealthCard({ project }: { project: Project; key?: any }) {
+function ProjectHealthCard({ project }: { project: Project }) {
   const count = project.steps?.length || 0
   const score = getProjectScore(project)
   const color = getScoreColor(score)
@@ -1040,7 +1040,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 }}
               >
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} project={p as Project} />
+                  <ProjectHealthCard key={p.id} project={p} />
                 ))}
 
                 {!atLimit && (
@@ -1085,7 +1085,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} project={p as Project} />
+                  <ProjectHealthCard key={p.id} project={p} />
                 ))}
               </div>
             )}

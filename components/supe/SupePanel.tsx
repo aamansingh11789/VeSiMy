@@ -8,7 +8,9 @@ import { useState, useEffect, useRef } from 'react'
 import { analyzeSteps, ISSUE_LABEL, SEV_COLOR } from '@/lib/supe-engine'
 import type { Step } from '@/lib/store'
 
-interface Props { steps: Step[]; projectId: string; industry?: string; projectName?: string }
+type SupeStep = Record<string, any>
+
+interface Props { steps: SupeStep[]; projectId: string; industry?: string; projectName?: string }
 
 type ChatMsg = { role: 'user' | 'assistant'; content: string }
 
@@ -35,7 +37,7 @@ const SUGGESTED_QUESTIONS = [
 
 export function SupePanel({ steps, projectId, industry, projectName }: Props) {
   const isDemo   = !steps?.length || !steps.some(s => s.cycle_time || s.toolData?.stopwatch?.mean > 0)
-  const [recs,      setRecs]      = useState(() => isDemo ? DEMO_RECS : analyzeSteps(steps))
+  const [recs,      setRecs]      = useState(() => isDemo ? DEMO_RECS : analyzeSteps(steps as Step[]))
   // FIX: persist resolved findings to localStorage per project so they survive page refresh
   const [resolved, setResolved] = useState<Set<string>>(() => {
     if (typeof window === 'undefined') return new Set()
@@ -70,7 +72,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
   }, [projectId])
 
   useEffect(() => {
-    if (!isDemo) setRecs(analyzeSteps(steps))
+    if (!isDemo) setRecs(analyzeSteps(steps as Step[]))
     else setRecs(DEMO_RECS)
   }, [steps, isDemo])
 

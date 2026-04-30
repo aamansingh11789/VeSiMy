@@ -18,7 +18,10 @@ import { calcProcessMetrics } from '@/lib/v2/process-metrics'
 import type { Step } from '@/lib/store'
 import { AlertIcon, ZapIcon, ActivityIcon, BarChartIcon, RefreshIcon } from '@/components/ui/Icons'
 
-interface Props { steps: Step[]; projectId: string; isPaid?: boolean; project?: Record<string, any> }
+type SimulationStep = Record<string, any>
+type ScenarioStep = SimulationStep & { _scenCT?: number; _scenWait?: number }
+
+interface Props { steps: SimulationStep[]; projectId: string; isPaid?: boolean; project?: Record<string, any> }
 
 const fmt = (s: number) => !s ? '0s' : s < 60 ? `${Math.round(s)}s` : `${(s/60).toFixed(1)}m`
 const fmtPct = (n: number) => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`
@@ -138,13 +141,13 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   const [adj, setAdj] = useState<Record<string, { fCT: number; fWait: number }>>({})
   const [saving, setSaving] = useState(false)
 
-  function getA(s: Step) {
+  function getA(s: SimulationStep) {
     return adj[s.id] || {
       fCT:   ctSeconds(s),          // ctSeconds handles ms→s conversion for stopwatch
       fWait: Number(s.wait_time) || 0,
     }
   }
-  function setA(s: Step, k: 'fCT' | 'fWait', v: number) {
+  function setA(s: SimulationStep, k: 'fCT' | 'fWait', v: number) {
     setAdj(p => ({ ...p, [s.id]: { ...getA(s), [k]: v } }))
   }
 
@@ -169,8 +172,12 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   // Scenario computed metrics
   const scenario = useMemo(() => SCENARIOS.find(s => s.id === activeScenario), [activeScenario])
 
-  const scenarioSteps = useMemo(() => {
-    if (!scenario) return main
+  const scenarioSteps = useMemo<ScenarioStep[]>(() => {
+    if (!scenario) return main.map(s => ({
+      ...s,
+      _scenCT: ctSeconds(s),
+      _scenWait: Number(s.wait_time) || 0,
+    }))
     return main.map(s => {
       const ct   = ctSeconds(s) * scenario.ctMult           // ctSeconds normalises ms→s
       const wait = (Number(s.wait_time) || 0) * scenario.waitMult

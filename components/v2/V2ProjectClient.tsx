@@ -33,55 +33,58 @@ import type { KanbanColumn } from '@/lib/store'
 type V2Tab = 'project' | 'map' | 'analyze' | 'journal' | 'future' | 'branches' | 'simulation' | 'live' | 'roadmap' | 'pdca' | 'kaizen' | 'kanban' | 'report'
 
 export interface V2Step {
-  // Core identity (matches Step)
-  id: string
-  project_id: string
-  name: string
-  position: number
-  created_at: string
-  updated_at: string
-  toolData?: Record<string, any>
-
-  // Step-compatible optional fields
-  department?: string
-  notes?: string
-  cycle_time?: number
-  operators?: number
-  uptime?: number
-  defect_rate?: number
-  wait_time?: number
-  wip?: number
-  sm_min?: number
-  sm_max?: number
-  setup_time?: number
-  trans_time?: number
-  completion_accuracy?: number
-  flow_type: 'push' | 'fifo' | 'supermarket' | 'queue'
+  id: string; project_id: string; name: string; position: number
+  step_type: string; tasks: string[]; governing_entity: string; department: string
+  notes: string; cycle_time: number; cycle_time_unit: string; cycle_time_type: string
+  cycle_time_notes: string; operators: number; uptime: number; defect_rate: number
+  wait_time: number; wip: number; flow_type: string; sm_min: number; sm_max: number
+  is_value_added: string; missing_info_flags: string[]; from_sop: boolean
+  sop_original_text: string; map_x: number; map_y: number; version: string
   va_type?: 'va' | 'nnva' | 'nva'
-  op_steps?: Array<{ id: string; name: string; time: number; va_type: 'va' | 'nnva' | 'nva' }>
+  op_steps?: Array<{ id: string; name: string; time: number; va_type: 'va' | 'nnva' | 'nva' }> | string[]
   is_bottleneck?: boolean
-  health_status?: string
-  branch_id?: string | null
-  branch_label?: string | null
-  branch_parent_id?: string | null
-  branch_position?: number
-  is_main_flow?: boolean
-  user_id?: string
+  created_at?: string
+  updated_at?: string
+  toolData?: Record<string, any>
+}
 
-  // V2-specific fields
-  step_type?: string
-  tasks?: string[]
-  governing_entity?: string
-  cycle_time_unit?: string
-  cycle_time_type?: string
-  cycle_time_notes?: string
-  is_value_added?: string
-  missing_info_flags?: string[]
-  from_sop?: boolean
-  sop_original_text?: string
-  map_x?: number
-  map_y?: number
-  version?: string
+function toV2Step(step: Record<string, any>): V2Step {
+  return {
+    id: step.id,
+    project_id: step.project_id,
+    name: step.name || '',
+    position: step.position ?? 0,
+    step_type: step.step_type || 'process',
+    tasks: Array.isArray(step.tasks) ? step.tasks : [],
+    governing_entity: step.governing_entity || '',
+    department: step.department || '',
+    notes: step.notes || '',
+    cycle_time: step.cycle_time ?? 0,
+    cycle_time_unit: step.cycle_time_unit || 'seconds',
+    cycle_time_type: step.cycle_time_type || 'assumed',
+    cycle_time_notes: step.cycle_time_notes || '',
+    operators: step.operators ?? 1,
+    uptime: step.uptime ?? 100,
+    defect_rate: step.defect_rate ?? 0,
+    wait_time: step.wait_time ?? 0,
+    wip: step.wip ?? 0,
+    flow_type: step.flow_type || 'push',
+    sm_min: step.sm_min ?? 0,
+    sm_max: step.sm_max ?? 0,
+    is_value_added: step.is_value_added || 'value-added',
+    va_type: step.va_type,
+    op_steps: step.op_steps,
+    missing_info_flags: Array.isArray(step.missing_info_flags) ? step.missing_info_flags : [],
+    from_sop: step.from_sop ?? false,
+    sop_original_text: step.sop_original_text || '',
+    map_x: step.map_x ?? 0,
+    map_y: step.map_y ?? 0,
+    version: step.version || 'v2',
+    is_bottleneck: step.is_bottleneck,
+    created_at: step.created_at,
+    updated_at: step.updated_at,
+    toolData: step.toolData || {},
+  }
 }
 
 interface Props {
@@ -189,7 +192,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
   const addStep = useCallback(async (afterPosition?: number) => {
     const pos = afterPosition !== undefined ? afterPosition + 1 : steps.length
     try {
-      const newStep = await createV2Step({
+      const newStep = toV2Step(await createV2Step({
         project_id: project.id,
         name: `Step ${pos + 1}`,
         position: pos,
@@ -199,13 +202,13 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         cycle_time_type: 'assumed',
         missing_info_flags: ['cycle_time', 'operators', 'defect_rate'],
         from_sop: false,
-      })
+      }))
       setSteps(prev => {
         const updated = [...prev]
-        updated.splice(pos, 0, newStep as V2Step)
+        updated.splice(pos, 0, newStep)
         return updated.map((s, i) => ({ ...s, position: i }))
       })
-      setSelectedStep(newStep as V2Step)
+      setSelectedStep(newStep)
       setPanelOpen(true)
     } catch {
       toast.error('Could not add step')
@@ -553,7 +556,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   return (
                     <div
                       key={step.id}
-                      onClick={() => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
+                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
                       style={{
                         display: 'flex', alignItems: 'center', gap: 8,
                         padding: '7px 10px 7px 8px', cursor: 'pointer',
@@ -603,7 +606,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   return (
                     <div
                       key={step.id}
-                      onClick={() => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
+                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
                       title={step.name}
                       style={{
                         width: 8, height: 8, borderRadius: '50%', background: vaColor,
@@ -643,7 +646,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               project={project}
               t={t}
               selectedStepId={selectedStep?.id}
-              onStepClick={(step) => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
+              onStepClick={(step) => { setSelectedStep(step); setPanelOpen(true) }}
               onAddStep={addStep}
               onDeleteStep={deleteStep}
               missingCount={missingCount}
