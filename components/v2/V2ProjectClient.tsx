@@ -164,7 +164,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         updated.splice(pos, 0, newStep as V2Step)
         return updated.map((s, i) => ({ ...s, position: i }))
       })
-      setSelectedStep(newStep)
+      setSelectedStep(newStep as V2Step)
       setPanelOpen(true)
     } catch {
       toast.error('Could not add step')
@@ -512,7 +512,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   return (
                     <div
                       key={step.id}
-                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
+                      onClick={() => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
                       style={{
                         display: 'flex', alignItems: 'center', gap: 8,
                         padding: '7px 10px 7px 8px', cursor: 'pointer',
@@ -562,7 +562,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   return (
                     <div
                       key={step.id}
-                      onClick={() => { setSelectedStep(step); setPanelOpen(true) }}
+                      onClick={() => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
                       title={step.name}
                       style={{
                         width: 8, height: 8, borderRadius: '50%', background: vaColor,
@@ -602,7 +602,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               project={project}
               t={t}
               selectedStepId={selectedStep?.id}
-              onStepClick={(step) => { setSelectedStep(step); setPanelOpen(true) }}
+              onStepClick={(step) => { setSelectedStep(step as V2Step); setPanelOpen(true) }}
               onAddStep={addStep}
               onDeleteStep={deleteStep}
               missingCount={missingCount}
