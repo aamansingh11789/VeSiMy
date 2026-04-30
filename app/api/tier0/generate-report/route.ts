@@ -15,6 +15,10 @@ export const maxDuration = 60
 interface Step {
   label: string
   time_seconds: number | null
+  name?: string
+  waitBefore?: string
+  cycleTime?: string
+  painPoint?: string
 }
 
 interface Tier0Request {
