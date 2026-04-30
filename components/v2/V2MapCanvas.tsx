@@ -13,23 +13,22 @@ import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 // ── Natural sticky note palette per spec §5.2 ─────────────────────────────────
 // "Color range limited to natural sticky note palette only. No bright digital
 //  colors. Muted, natural tones." — each has paper bg, fold shade, text color
+// ── Step type color palette — clean, enterprise-grade, print-safe ─────────────
 const STICKY: Record<string, { bg: string; fold: string; text: string; stripe: string }> = {
-  process:    { bg: '#FEF3C7', fold: '#FDE68A', text: '#3B2F00', stripe: '#F59E0B' }, // warm yellow
-  sub_process:{ bg: '#DBEAFE', fold: '#BFDBFE', text: '#1E3A5F', stripe: '#3B82F6' }, // soft blue
-  decision:   { bg: '#FED7AA', fold: '#FDBA74', text: '#3D1700', stripe: '#F97316' }, // warm orange
-  inspection: { bg: '#FCE7F3', fold: '#FBCFE8', text: '#4A1535', stripe: '#EC4899' }, // soft pink
-  transport:  { bg: '#D1FAE5', fold: '#A7F3D0', text: '#064E3B', stripe: '#10B981' }, // soft green
-  storage:    { bg: '#EDE9FE', fold: '#DDD6FE', text: '#2E1065', stripe: '#7C3AED' }, // soft lavender
-  rework:     { bg: '#FEE2E2', fold: '#FECACA', text: '#450A0A', stripe: '#EF4444' }, // soft red
-  delay:      { bg: '#F3F4F6', fold: '#E5E7EB', text: '#111827', stripe: '#9CA3AF' }, // neutral
-  start_end:  { bg: '#ECEFF1', fold: '#CFD8DC', text: '#1A2832', stripe: '#607D8B' }, // grey-blue
+  process:    { bg: '#FFFBEB', fold: '#FEF3C7', text: '#1C1400', stripe: '#D97706' }, // warm amber
+  sub_process:{ bg: '#EFF6FF', fold: '#DBEAFE', text: '#0F2A5C', stripe: '#2563EB' }, // clean blue
+  decision:   { bg: '#FFF7ED', fold: '#FFEDD5', text: '#2D1200', stripe: '#EA580C' }, // clean orange
+  inspection: { bg: '#FDF4FF', fold: '#F3E8FF', text: '#2E0D40', stripe: '#9333EA' }, // clean purple
+  transport:  { bg: '#F0FDF4', fold: '#DCFCE7', text: '#052E16', stripe: '#16A34A' }, // clean green
+  storage:    { bg: '#F0F9FF', fold: '#E0F2FE', text: '#0C2744', stripe: '#0284C7' }, // sky blue
+  rework:     { bg: '#FFF1F2', fold: '#FFE4E6', text: '#3B0007', stripe: '#DC2626' }, // clean red
+  delay:      { bg: '#F9FAFB', fold: '#F3F4F6', text: '#111827', stripe: '#6B7280' }, // neutral
+  start_end:  { bg: '#F1F5F9', fold: '#E2E8F0', text: '#0F172A', stripe: '#475569' }, // slate
 }
 
-// Slight rotation per step index — alternating pattern feels physical, not random
-const NOTE_ROTATIONS = [1.2, -0.8, 1.5, -1.1, 0.7, -1.4, 1.0, -0.6, 1.8, -1.2]
-function noteRotation(index: number): number {
-  return NOTE_ROTATIONS[index % NOTE_ROTATIONS.length]
-}
+// ── Sticky note layout constants ──────────────────────────────────────────────
+const NOTE_ROTATIONS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // straight — no rotation
+function noteRotation(_index: number): number { return 0 }
 
 const BOX_W  = 160   // wider for content
 const BOX_H  = 96    // taller for real sticky note feel
@@ -138,8 +137,6 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
   const vaLabel = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }[step.va_type as string] || '?'
   const vaColor = { va: GREEN, nnva: AMBER, nva: RED }[step.va_type as string] || '#9CA3AF'
 
-  const rot = noteRotation(index)
-
   // Activities (op_steps or fallback)
   const activities: string[] = step.op_steps || []
   const maxActivities = 4
@@ -156,78 +153,113 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         position: 'absolute',
         left, top,
         width: W,
-        transformOrigin: 'center center',
-        transform: `rotate(${rot}deg)`,
         cursor: 'pointer',
         userSelect: 'none',
+        // No rotation — straight, symmetric, enterprise-grade
       }}
       onClick={() => onClick(step)}
     >
-      {/* ── NOTE CARD ── */}
+      {/* ── NOTE CARD — clean, flat, symmetric ── */}
       <div
         style={{
           width: W,
           minHeight: expanded ? BOX_H_EXP : BOX_H,
           background: sc.bg,
-          borderRadius: 3,
-          border: `0.5px solid ${sc.fold}`,
-          boxShadow: isSelected || isBot
-            ? `0 0 0 2.5px ${isBot ? RED : BRAND}, 1px 3px 8px rgba(0,0,0,0.22), 3px 7px 16px rgba(0,0,0,0.14), 5px 11px 24px rgba(0,0,0,0.08)`
-            : '1px 3px 8px rgba(0,0,0,0.22), 3px 7px 16px rgba(0,0,0,0.14), 5px 11px 24px rgba(0,0,0,0.08)',
+          borderRadius: 6,
+          border: `1.5px solid ${isSelected ? BRAND : isBot ? RED : sc.fold}`,
+          boxShadow: isSelected
+            ? `0 0 0 3px ${BRAND}28, 0 4px 16px rgba(0,0,0,0.18)`
+            : isBot
+            ? `0 0 0 2px ${RED}30, 0 4px 16px rgba(0,0,0,0.15)`
+            : '0 2px 8px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.08)',
           position: 'relative',
           overflow: 'hidden',
-          padding: '9px 10px 9px 14px',
+          padding: '10px 10px 10px 14px',
+          transition: 'box-shadow 0.15s, border-color 0.15s, transform 0.15s',
+          transform: isSelected ? 'translateY(-2px)' : 'none',
         }}
       >
-        {/* Left stripe */}
-        <div style={{ position: 'absolute', top: 0, left: 0, width: 4, bottom: 0, background: sc.stripe, opacity: 0.8, borderRadius: '3px 0 0 3px' }} />
-        {/* Fold corner top-right */}
-        <div style={{ position: 'absolute', top: 0, right: 0, width: 0, height: 0, borderStyle: 'solid', borderWidth: '0 18px 18px 0', borderColor: `transparent ${sc.fold} transparent transparent`, opacity: 0.65 }} />
-        {/* Health dot */}
-        <div style={{ position: 'absolute', top: 7, right: 7, width: 9, height: 9, borderRadius: '50%', background: healthColor, boxShadow: `0 0 5px ${healthColor}90` }} />
+        {/* Left accent stripe */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: 4, bottom: 0,
+          background: isBot ? RED : sc.stripe,
+          borderRadius: '6px 0 0 6px',
+        }} />
+
+        {/* Health indicator dot — top right */}
+        <div style={{
+          position: 'absolute', top: 8, right: 8, width: 8, height: 8,
+          borderRadius: '50%', background: healthColor,
+          boxShadow: `0 0 4px ${healthColor}80`,
+        }} />
 
         {/* Step name */}
-        <div style={{ fontSize: 10, fontWeight: 700, color: sc.text, lineHeight: 1.3, marginBottom: 5, paddingRight: 16 }}>
+        <div style={{
+          fontSize: 10.5, fontWeight: 700, color: sc.text, lineHeight: 1.3,
+          marginBottom: 6, paddingRight: 18,
+          fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif',
+        }}>
           {step.name.length > 18 ? step.name.slice(0, 17) + '…' : step.name}
         </div>
 
-        {/* CT + WIP */}
-        <div style={{ fontSize: 8, fontFamily: 'monospace', color: sc.text, opacity: 0.85, marginBottom: 2 }}>
-          {ct ? `CT: ${fmtTime(ct)}` : 'CT: tap ⏱'}{step.wip ? `  WIP: ${step.wip}` : ''}
+        {/* CT + WIP row */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, marginBottom: 4,
+        }}>
+          {[
+            ['CT', ct ? fmtTime(ct) : '—'],
+            ['WIP', step.wip ?? '—'],
+          ].map(([label, val]) => (
+            <div key={String(label)} style={{
+              background: 'rgba(0,0,0,0.05)', borderRadius: 3, padding: '2px 5px',
+            }}>
+              <div style={{ fontSize: 6.5, fontFamily: 'monospace', color: sc.text, opacity: 0.5, letterSpacing: 0.5 }}>{label}</div>
+              <div style={{ fontSize: 9, fontWeight: 700, fontFamily: 'monospace', color: sc.text }}>{String(val)}</div>
+            </div>
+          ))}
         </div>
 
-        {/* Operators + wait */}
-        <div style={{ fontSize: 8, fontFamily: 'monospace', color: sc.text, opacity: 0.65, marginBottom: 4 }}>
-          {step.operators ? `× ${step.operators} op` : ''}{step.wait_time ? `  ⏳ ${fmtTime(step.wait_time)}` : ''}
-        </div>
-
-        {/* VA badge */}
-        <div style={{ position: 'absolute', bottom: 6, right: 8, fontSize: 7.5, fontWeight: 700, fontFamily: 'monospace', color: vaColor, background: `${vaColor}22`, padding: '1px 5px', borderRadius: 3 }}>
-          {vaLabel}
-        </div>
-
-        {/* Bottleneck badge */}
-        {isBot && (
-          <div style={{ position: 'absolute', bottom: 6, left: 12, fontSize: 6.5, fontWeight: 700, fontFamily: 'monospace', color: RED, background: `${RED}18`, padding: '1px 5px', borderRadius: 3 }}>
-            ▲ BOTTLENECK
+        {/* Operators + wait time */}
+        {(step.operators || step.wait_time) ? (
+          <div style={{ fontSize: 7.5, fontFamily: 'monospace', color: sc.text, opacity: 0.55, marginBottom: 5 }}>
+            {step.operators ? `${step.operators} op` : ''}{step.operators && step.wait_time ? '  ' : ''}{step.wait_time ? `WT: ${fmtTime(step.wait_time)}` : ''}
           </div>
-        )}
+        ) : null}
 
-        {/* Stopwatch button */}
-        <div
-          style={{ position: 'absolute', right: 8, top: 34, width: 26, height: 18, borderRadius: 4, background: 'rgba(255,255,255,0.6)', border: `0.5px solid ${sc.stripe}80`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, cursor: 'pointer' }}
-          onClick={e => { e.stopPropagation(); onStopwatch(step) }}
-        >⏱</div>
+        {/* Bottom row: VA badge + stopwatch + bottleneck */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 }}>
+          <div style={{
+            fontSize: 7, fontWeight: 700, fontFamily: 'monospace', color: vaColor,
+            background: `${vaColor}18`, padding: '1px 5px', borderRadius: 3, letterSpacing: 0.5,
+          }}>{vaLabel}</div>
+
+          {isBot && (
+            <div style={{ fontSize: 6, fontWeight: 700, fontFamily: 'monospace', color: RED, background: `${RED}12`, padding: '1px 5px', borderRadius: 3, letterSpacing: 0.5 }}>
+              ▲ BOT
+            </div>
+          )}
+
+          <div
+            style={{
+              width: 22, height: 16, borderRadius: 3,
+              background: 'rgba(255,255,255,0.7)', border: `1px solid ${sc.stripe}60`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 11, cursor: 'pointer', flexShrink: 0,
+            }}
+            onClick={e => { e.stopPropagation(); onStopwatch(step) }}
+            title="Open Time Study"
+          >⏱</div>
+        </div>
 
         {/* Activities (expanded) */}
         {expanded && (
-          <div style={{ borderTop: `1px solid ${sc.fold}`, marginTop: 8, paddingTop: 6 }}>
-            <div style={{ fontSize: 6.5, fontFamily: 'monospace', color: sc.text, opacity: 0.5, letterSpacing: 1, marginBottom: 4 }}>ACTIVITIES</div>
+          <div style={{ borderTop: `1px solid ${sc.fold}60`, marginTop: 8, paddingTop: 6 }}>
+            <div style={{ fontSize: 6.5, fontFamily: 'monospace', color: sc.text, opacity: 0.4, letterSpacing: 1, marginBottom: 4 }}>ACTIVITIES</div>
             {activities.length === 0 ? (
-              <div style={{ fontSize: 8, color: sc.text, opacity: 0.45, fontStyle: 'italic' }}>No activities added</div>
+              <div style={{ fontSize: 8, color: sc.text, opacity: 0.4, fontStyle: 'italic' }}>No activities added</div>
             ) : (
               activities.slice(0, maxActivities).map((act: string, ai: number) => (
-                <div key={ai} style={{ fontSize: 8, color: sc.text, opacity: 0.8, marginBottom: 3, paddingLeft: 8, position: 'relative' }}>
+                <div key={ai} style={{ fontSize: 8, color: sc.text, opacity: 0.75, marginBottom: 3, paddingLeft: 8, position: 'relative' }}>
                   <span style={{ position: 'absolute', left: 0, color: sc.stripe }}>•</span>
                   {act.length > 22 ? act.slice(0, 21) + '…' : act}
                 </div>

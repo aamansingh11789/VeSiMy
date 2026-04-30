@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { ManufacturingHeroDashboard } from "@/components/homepage/ManufacturingHeroDashboard";
+import { HeroCubePreview } from "@/components/home/HeroCubePreview";
 
 // ─── DESIGN TOKENS ─────────────────────────────────────────
 const C = {
@@ -233,37 +235,67 @@ function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,alig
 
 // ─── NAV ───────────────────────────────────────────────────
 function Nav() {
+  const [open, setOpen] = useState(false)
+  const NAV_LINKS = [
+    {n:'Guided',     href:'/guided'},
+    {n:'Tools',      href:'/dashboard'},
+    {n:'Industries', href:'/industries'},
+    {n:'Enterprise', href:'/enterprise'},
+    {n:'Blog',       href:'/blog'},
+  ]
   return (
-    <div style={{background:`${C.p0}F2`,backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:`1px solid ${C.b1}`,boxShadow:"0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)",padding:"0 32px",height:56,display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:100}}>
-      <div style={{display:"flex",alignItems:"center",gap:24}}>
-        <div style={{display:"flex",alignItems:"center",gap:9}}>
-          <div style={{width:30,height:30,borderRadius:7,background:"linear-gradient(145deg,#4A8AFF 0%,#1E5FE8 100%)",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -1px 0 rgba(0,0,0,0.3),0 2px 0 rgba(10,20,80,0.8),0 4px 0 rgba(8,16,60,0.6),0 8px 20px rgba(59,124,255,0.4)"}}>
-            <span style={{fontFamily:C.sans,fontSize:14,fontWeight:800,color:"#fff",textShadow:"0 1px 2px rgba(0,0,0,0.5)"}}>V</span>
-          </div>
-          <span style={{fontFamily:C.sans,fontSize:16,fontWeight:700,color:C.t1,letterSpacing:0.3,textShadow:"0 1px 0 rgba(255,255,255,0.04),0 2px 8px rgba(0,0,0,0.8)"}}>Ve<span style={{color:C.blue}}>Si</span>My</span>
+    <>
+      <div style={{background:`${C.p0}F2`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,boxShadow:'0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)',padding:'0 24px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:200}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <img src="/brand/vesimy-mark.png" alt="VeSiMy" width={32} height={32} style={{objectFit:'contain',filter:'drop-shadow(0 0 8px rgba(59,124,255,0.45)) brightness(1.05)'}}/>
+          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',maxWidth:130,filter:'brightness(1.15) contrast(1.1) drop-shadow(0 1px 6px rgba(0,0,0,0.9))'}}/>
         </div>
-        <div style={{width:1,height:16,background:C.b2}}/>
-        {[
-          {n:"Guided",    href:"/guided"},
-          {n:"Tools",     href:"/dashboard"},
-          {n:"Industries",href:"/industries"},
-          {n:"Enterprise",href:"/enterprise"},
-          {n:"Blog",      href:"/blog"},
-        ].map(({n,href})=>(
-          <a key={n} href={href} style={{textDecoration:"none"}}>
-            <span className="sans" style={{fontSize:12.5,color:n==="Guided"?C.blueL:C.t3,cursor:"pointer",transition:"color 0.15s",fontWeight:n==="Guided"?600:400}} onMouseEnter={e=>(e.target as HTMLElement).style.color=C.t1} onMouseLeave={e=>(e.target as HTMLElement).style.color=n==="Guided"?C.blueL:C.t3}>{n}</span>
-          </a>
-        ))}
+        <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:24}}>
+          <div style={{width:1,height:16,background:C.b2}}/>
+          {NAV_LINKS.map(({n,href})=>(
+            <a key={n} href={href} style={{textDecoration:'none'}}>
+              <span className="sans" style={{fontSize:12.5,color:n==='Guided'?C.blueL:C.t3,cursor:'pointer',transition:'color 0.15s',fontWeight:n==='Guided'?600:400}}
+                onMouseEnter={e=>(e.target as HTMLElement).style.color=C.t1}
+                onMouseLeave={e=>(e.target as HTMLElement).style.color=n==='Guided'?C.blueL:C.t3}>{n}</span>
+            </a>
+          ))}
+        </div>
+        <div className="hide-mobile" style={{display:'flex',gap:8}}>
+          <a href="/auth/login" style={{textDecoration:'none'}}><button className="bg" style={{padding:'7px 16px',fontSize:12}}>Sign in</button></a>
+          <a href="/start" style={{textDecoration:'none'}}><button className="br" style={{padding:'7px 16px',fontSize:12}}>Start free</button></a>
+        </div>
+        <div className="show-mobile" style={{display:'none',alignItems:'center',gap:10}}>
+          <a href="/auth/login" style={{textDecoration:'none'}}><button className="bg" style={{padding:'6px 14px',fontSize:11}}>Sign in</button></a>
+          <button onClick={()=>setOpen(o=>!o)} aria-label={open?'Close menu':'Open menu'} style={{background:'transparent',border:`1px solid ${C.b2}`,borderRadius:7,width:36,height:36,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:5,cursor:'pointer',padding:8}}>
+            <span style={{display:'block',width:18,height:1.5,background:open?C.blue:C.t2,borderRadius:2,transition:'all 0.2s',transform:open?'rotate(45deg) translate(2px,2px)':'none'}}/>
+            <span style={{display:'block',width:18,height:1.5,background:open?C.blue:C.t2,borderRadius:2,transition:'all 0.2s',opacity:open?0:1}}/>
+            <span style={{display:'block',width:18,height:1.5,background:open?C.blue:C.t2,borderRadius:2,transition:'all 0.2s',transform:open?'rotate(-45deg) translate(2px,-2px)':'none'}}/>
+          </button>
+        </div>
       </div>
-      <div style={{display:"flex",gap:8}}>
-        <a href="/auth/login" style={{textDecoration:"none"}}><button className="bg" style={{padding:"7px 16px",fontSize:12}}>Sign in</button></a>
-        <a href="/start" style={{textDecoration:"none"}}><button className="br" style={{padding:"7px 16px",fontSize:12}}>Start free</button></a>
-      </div>
-    </div>
-  );
+      {open && (
+        <div style={{position:'fixed',top:56,left:0,right:0,zIndex:199,background:`${C.p0}F8`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,padding:'12px 0 20px'}}>
+          {NAV_LINKS.map(({n,href})=>(
+            <a key={n} href={href} onClick={()=>setOpen(false)} style={{textDecoration:'none',display:'block',padding:'13px 28px'}}>
+              <span style={{fontFamily:C.sans,fontSize:15,color:n==='Guided'?C.blueL:C.t2,fontWeight:n==='Guided'?600:400}}>{n}</span>
+            </a>
+          ))}
+          <div style={{margin:'12px 28px 0',display:'flex',gap:8}}>
+            <a href="/start" style={{textDecoration:'none',flex:1}}><button className="br" style={{width:'100%',padding:'10px 0',fontSize:13}}>Start free</button></a>
+          </div>
+        </div>
+      )}
+      <style>{`
+        @media (max-width: 720px) {
+          .hide-mobile { display: none !important; }
+          .show-mobile { display: flex !important; }
+        }
+      `}</style>
+    </>
+  )
 }
 
-// ─── HERO ──────────────────────────────────────────────────
+// ── HERO ────────────────────────────────────────────────────
 function Hero() {
   const [step,setStep]=useState(0);
   useEffect(()=>{const t=setTimeout(()=>setStep(1),2400);return()=>clearTimeout(t);},[]);
@@ -280,11 +312,14 @@ function Hero() {
       <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 40% at 25% 40%, rgba(59,124,255,0.07) 0%,transparent 70%)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 35% 45% at 75% 55%, rgba(34,211,238,0.04) 0%,transparent 70%)",pointerEvents:"none"}}/>
 
-      <div style={{position:"relative",maxWidth:720,margin:"0 auto",textAlign:"center"}}>
+      {/* ── 2-column hero layout: copy left, cube right ── */}
+      <div style={{position:"relative",maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",gap:64}}>
+        {/* Left column: copy */}
+        <div style={{flex:1,minWidth:0,textAlign:"left"}}>
         {/* Badge */}
         <div className="au" style={{display:"inline-flex",alignItems:"center",gap:8,marginBottom:30,background:"linear-gradient(145deg,rgba(59,124,255,0.15),rgba(59,124,255,0.07))",border:"1px solid rgba(59,124,255,0.3)",borderRadius:100,padding:"5px 16px 5px 10px",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.07),0 2px 0 rgba(0,0,20,0.5),0 4px 12px rgba(59,124,255,0.12),0 8px 24px rgba(0,0,0,0.3)"}}>
           <div style={{width:7,height:7,borderRadius:"50%",background:C.blue,boxShadow:`0 0 6px ${C.blue},0 0 12px rgba(59,124,255,0.5)`,animation:"pulseGlow 2.5s ease-in-out infinite"}}/>
-          <MT c={C.blueL} sp={2.5}>Live Lean CI · ISO 22468:2020</MT>
+          <MT c={C.blueL} sp={2.5}>AI-Powered Continuous Improvement · ISO 22468:2020</MT>
         </div>
 
         {/* Headline : carved. Spec §3.1 */}
@@ -298,7 +333,7 @@ function Hero() {
           <div className="tc-grd sans" style={{fontSize:50,fontWeight:800,lineHeight:1.08,letterSpacing:-1.8}}>VeSiMy makes it visible.</div>
         </div>
 
-        <p className="au3 sans" style={{fontSize:15,color:C.t2,lineHeight:1.8,maxWidth:520,margin:"0 auto 36px",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>
+        <p className="au3 sans" style={{fontSize:15,color:C.t2,lineHeight:1.8,maxWidth:520,margin:"0 0 36px",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>
           Most teams know where the problem is. Almost none can see it clearly enough to fix it and prove it.
         </p>
 
@@ -371,13 +406,20 @@ function Hero() {
         {/* Stats */}
         <div style={{display:"flex",flexWrap:"wrap",marginTop:44,paddingTop:32,borderTop:`1px solid ${C.b1}`}}>
           {[["68","","Industries"],["20","+","CI Tools"],["70","","Ref Projects"],["14","-day","Free Trial"]].map(([n,s,l],i)=>(
-            <div key={l} style={{flex:1,textAlign:"center",borderLeft:i>0?`1px solid ${C.b1}`:"none",padding:"8px 0"}}>
+            <div key={l} style={{flex:1,textAlign:"left",borderLeft:i>0?`1px solid ${C.b1}`:"none",padding:"8px 0"}}>
               <div className="mono tc" style={{fontSize:26,fontWeight:700,color:C.t1,letterSpacing:-0.5,textShadow:"0 2px 8px rgba(0,0,0,0.9),0 0 20px rgba(59,124,255,0.12)"}}><Counter end={parseInt(n)}/>{s}</div>
               <MT c={C.t4}>{l}</MT>
             </div>
           ))}
         </div>
-      </div>
+        </div>{/* end left column */}
+
+        {/* Right column: 3D cube */}
+        <div className="hide-mobile" style={{flexShrink:0,position:"relative",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <HeroCubePreview/>
+        </div>
+
+      </div>{/* end 2-col */}
     </div>
   );
 }
@@ -401,7 +443,7 @@ function PhotoDivider() {
 // ─── FEATURES SECTION (purple lantern bg) ──────────────────
 function Features() {
   const features = [
-    {icon:"◈",title:"Value Stream Mapping",desc:"ISO 22468-compliant VSM with sticky-note canvas, sub-process nesting, and inline data editing.",color:C.blue},
+    {icon:"◈",title:"Value Stream Mapping",desc:"ISO 22468:2020-aligned VSM with sticky-note canvas, sub-process nesting, and inline data editing.",color:C.blue},
     {icon:"⏱",title:"Stopwatch CT Capture",desc:"Single-tap timing on the floor. 3-lap methodology. Auto-populates your data strip.",color:C.cyan},
     {icon:"⬡",title:"Bottleneck Detection",desc:"AI identifies your constraint using takt comparison, WIP analysis, and Little's Law validation.",color:C.purple},
     {icon:"⚑",title:"Root Cause Tools",desc:"5 Whys, Fishbone, FMEA, and 8D: each with distinct workflows pre-populated from your map.",color:C.green},
@@ -737,6 +779,7 @@ export default function App() {
     <div style={{background:C.p0,minHeight:"100vh",fontFamily:C.sans}}>
       <Nav/>
       <Hero/>
+      <ManufacturingHeroDashboard/>
       <PhotoDivider/>
       <VSMPreview/>
       <Features/>
@@ -746,7 +789,10 @@ export default function App() {
       <Pricing/>
       {/* Footer */}
       <div style={{background:C.p0,borderTop:`1px solid ${C.b1}`,padding:"32px",textAlign:"center"}}>
-        <div className="sans" style={{fontSize:16,fontWeight:700,color:C.t1,marginBottom:8}}>Ve<span style={{color:C.blue}}>Si</span>My</div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:8}}>
+          <img src="/brand/vesimy-mark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',filter:'brightness(0.9) drop-shadow(0 0 6px rgba(59,124,255,0.3))'}}/>
+          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={18} style={{objectFit:'contain',maxWidth:110,filter:'brightness(1.1) drop-shadow(0 1px 4px rgba(0,0,0,0.9))'}}/>
+        </div>
         <MT c={C.t4}>Structured around ISO 22468:2020 · Lean · TPS · Six Sigma</MT>
       </div>
     </div>
