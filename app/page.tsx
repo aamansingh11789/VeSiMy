@@ -1,6 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { VLogoMark, VeSiMyWordmark } from "@/components/ui/Logo";
+import { useState, useEffect, useRef } from "react";
 import { ManufacturingHeroDashboard } from "@/components/homepage/ManufacturingHeroDashboard";
 import { HeroCubePreview } from "@/components/home/HeroCubePreview";
 
@@ -27,7 +26,7 @@ const C = {
 
 // ─── MICRO TAG COMPONENT ────────────────────────────────────
 // Usage: <MT c={C.blue}>CI Tool Suite</MT>
-function MT({ c, sp = 1.5, children }: { c: string; sp?: number; children?: React.ReactNode }) {
+function MT({ c, sp = 1.5, children }: { c: string; sp?: number; children: React.ReactNode }) {
   return (
     <span style={{
       fontFamily: C.mono,
@@ -225,7 +224,7 @@ function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,alig
       <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg, rgba(3,4,13,0.85) 0%, rgba(6,12,26,0.75) 50%, rgba(3,4,13,0.9) 100%)`}}/>
       {/* Accent glow from photo colors */}
       <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse 60% 60% at 50% 50%, ${accent}08 0%, transparent 70%)`}}/>
-      <div style={{position:"relative",maxWidth:800,margin:"0 auto",textAlign:align as React.CSSProperties["textAlign"]}}>
+      <div style={{position:"relative",maxWidth:800,margin:"0 auto",textAlign:align}}>
         {title && <div className="au" style={{fontFamily:C.sans,fontSize:40,fontWeight:800,color:C.t1,letterSpacing:-1,lineHeight:1.1,marginBottom:16,textShadow:"0 2px 4px rgba(0,0,8,0.95),0 8px 24px rgba(0,0,0,0.7)"}}>{title}</div>}
         {sub && <div style={{fontFamily:C.sans,fontSize:15,color:C.t2,lineHeight:1.8,marginBottom:children?36:0,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{sub}</div>}
         {children}
@@ -248,8 +247,8 @@ function Nav() {
     <>
       <div style={{background:`${C.p0}F2`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,boxShadow:'0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)',padding:'0 24px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:200}}>
         <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <VLogoMark size={28} />
-          <VeSiMyWordmark size={22} onDark={true} />
+          <img src="/brand/vesimy-mark.png" alt="VeSiMy" width={32} height={32} style={{objectFit:'contain',filter:'drop-shadow(0 0 8px rgba(59,124,255,0.45)) brightness(1.05)'}}/>
+          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',maxWidth:130,filter:'brightness(1.15) contrast(1.1) drop-shadow(0 1px 6px rgba(0,0,0,0.9))'}}/>
         </div>
         <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:24}}>
           <div style={{width:1,height:16,background:C.b2}}/>
@@ -302,16 +301,16 @@ function Hero() {
   useEffect(()=>{const t=setTimeout(()=>setStep(1),2400);return()=>clearTimeout(t);},[]);
 
   return (
-    <div style={{position:"relative",background:C.p1,overflow:"hidden",padding:"80px 32px 60px"}}>
-      {/* Starfield photo at low opacity */}
-      
-      {/* Deep overlay */}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(6,12,26,0.7) 0%,rgba(6,12,26,0.5) 40%,rgba(6,12,26,0.85) 100%)"}}/>
-      {/* Blue dots */}
-      <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle, rgba(59,124,255,0.2) 1px, transparent 1px)",backgroundSize:"28px 28px",maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",WebkitMaskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)"}}/>
-      {/* Glows */}
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 40% at 25% 40%, rgba(59,124,255,0.07) 0%,transparent 70%)",pointerEvents:"none"}}/>
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 35% 45% at 75% 55%, rgba(34,211,238,0.04) 0%,transparent 70%)",pointerEvents:"none"}}/>
+    <div style={{position:"relative",background:C.p0,overflow:"hidden",padding:"80px 32px 60px"}}>
+      {/* Particle wave hero background */}
+      <div style={{position:"absolute",inset:0,backgroundImage:"url('/hero-bg.png')",backgroundSize:"cover",backgroundPosition:"center bottom",backgroundRepeat:"no-repeat",opacity:0.85}}/>
+      {/* Dark overlay so text stays readable */}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(2,4,13,0.45) 0%,rgba(2,4,13,0.25) 40%,rgba(2,4,13,0.70) 100%)"}}/>
+      {/* Top fade — blends nav into hero */}
+      <div style={{position:"absolute",top:0,left:0,right:0,height:120,background:"linear-gradient(180deg,rgba(2,4,13,0.8),transparent)"}}/>
+      {/* Subtle blue glow accents on top of photo */}
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 40% at 20% 50%,rgba(59,124,255,0.08) 0%,transparent 70%)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 35% 45% at 75% 30%,rgba(34,211,238,0.05) 0%,transparent 70%)",pointerEvents:"none"}}/>
 
       {/* ── 2-column hero layout: copy left, cube right ── */}
       <div style={{position:"relative",maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",gap:64}}>
@@ -791,8 +790,8 @@ export default function App() {
       {/* Footer */}
       <div style={{background:C.p0,borderTop:`1px solid ${C.b1}`,padding:"32px",textAlign:"center"}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:8}}>
-          <VLogoMark size={22} />
-          <VeSiMyWordmark size={18} onDark={true} />
+          <img src="/brand/vesimy-mark.png" alt="VeSiMy" height={24} style={{objectFit:'contain',filter:'brightness(0.9) drop-shadow(0 0 6px rgba(59,124,255,0.3))'}}/>
+          <img src="/brand/vesimy-wordmark.png" alt="VeSiMy" height={18} style={{objectFit:'contain',maxWidth:110,filter:'brightness(1.1) drop-shadow(0 1px 4px rgba(0,0,0,0.9))'}}/>
         </div>
         <MT c={C.t4}>Structured around ISO 22468:2020 · Lean · TPS · Six Sigma</MT>
       </div>
