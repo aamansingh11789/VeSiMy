@@ -209,7 +209,7 @@ function Typewriter({text,speed=20,delay=0}) {
 }
 
 // ─── PHOTO SECTION ─────────────────────────────────────────
-function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,align="center"}) {
+function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,align="center"}: {img?:string,title?:string,sub?:string,accent?:string,opacity?:number,children?:React.ReactNode,align?:React.CSSProperties['textAlign']}) {
   // img may be undefined if photos not yet added to /public/photos/
   return (
     <div style={{position:"relative",overflow:"hidden",padding:"72px 32px"}}>
