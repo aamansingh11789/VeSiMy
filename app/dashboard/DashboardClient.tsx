@@ -858,10 +858,10 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
           <StatCard
             label="Last Active"
-            value={`${profile.projects_count} projects`}
+            value={projects.length > 0 ? new Date(projects[0].updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}
             icon={ZapIcon}
             color="#F4A623"
-            hint="Keep the momentum going"
+            hint="Most recent project update"
           />
         </div>
 
@@ -1040,7 +1040,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 }}
               >
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} project={p} />
+                  <ProjectHealthCard key={p.id} {...{project: p}} />
                 ))}
 
                 {!atLimit && (
@@ -1085,7 +1085,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} project={p} />
+                  <ProjectHealthCard key={p.id} {...{project: p}} />
                 ))}
               </div>
             )}

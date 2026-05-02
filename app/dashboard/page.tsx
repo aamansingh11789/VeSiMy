@@ -28,7 +28,9 @@ export default async function DashboardPage() {
         )
       `)
       .eq('user_id', user.id)
-      .eq('status', 'active')
+      // Include projects where status is 'active', null, or 'draft'
+      // (older projects may predate the status column and have status = null)
+      .not('status', 'eq', 'archived')
       .order('updated_at', { ascending: false })
       .limit(20),
   ])
