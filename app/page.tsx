@@ -302,15 +302,15 @@ function Hero() {
   useEffect(()=>{const t=setTimeout(()=>setStep(1),2400);return()=>clearTimeout(t);},[]);
 
   return (
-    <div style={{position:"relative",background:C.p1,overflow:"hidden",padding:"80px 32px 60px"}}>
-      {/* Starfield photo at low opacity */}
-      
-      {/* Deep overlay */}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(6,12,26,0.7) 0%,rgba(6,12,26,0.5) 40%,rgba(6,12,26,0.85) 100%)"}}/>
-      {/* Blue dots */}
-      <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle, rgba(59,124,255,0.2) 1px, transparent 1px)",backgroundSize:"28px 28px",maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",WebkitMaskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)"}}/>
+    <div style={{position:"relative",overflow:"hidden",padding:"80px 32px 60px",
+      backgroundImage:"url('/hero-bg.png')",
+      backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+      {/* Dark overlay so text stays readable */}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(2,6,18,0.72) 0%,rgba(3,8,22,0.60) 40%,rgba(2,6,18,0.88) 100%)"}}/>
+      {/* Blue dots — subtle */}
+      <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle, rgba(59,124,255,0.15) 1px, transparent 1px)",backgroundSize:"28px 28px",maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",WebkitMaskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)"}}/>
       {/* Glows */}
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 40% at 25% 40%, rgba(59,124,255,0.07) 0%,transparent 70%)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 40% at 25% 40%, rgba(59,124,255,0.06) 0%,transparent 70%)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 35% 45% at 75% 55%, rgba(34,211,238,0.04) 0%,transparent 70%)",pointerEvents:"none"}}/>
 
       {/* ── 2-column hero layout: copy left, cube right ── */}
