@@ -21,45 +21,45 @@ function FaceVSM() {
     { name:'Dispatch', ct:'22s', va:'VA',   bot:false },
   ]
   return (
-    <div style={{background:'#FFFFFF',width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:7,overflow:'hidden'}}>
+    <div style={{background:'#FFFFFF',width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:7,overflow:'hidden',WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale',transform:'translateZ(0)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div>
           <div style={{fontSize:9,fontWeight:800,color:'#0F172A',letterSpacing:0.5}}>CURRENT STATE</div>
-          <div style={{fontSize:7,color:'#64748B',marginTop:1}}>Assembly Line A</div>
+          <div style={{fontSize:10,color:'#64748B',marginTop:1}}>Assembly Line A</div>
         </div>
         <div style={{display:'flex',alignItems:'center',gap:4,background:'rgba(16,185,129,0.10)',border:'1px solid rgba(16,185,129,0.30)',borderRadius:100,padding:'2px 7px'}}>
           <div style={{width:5,height:5,borderRadius:'50%',background:'#10B981'}}/>
-          <span style={{fontSize:7,fontWeight:700,color:'#10B981'}}>LIVE</span>
+          <span style={{fontSize:10,fontWeight:700,color:'#10B981'}}>LIVE</span>
         </div>
       </div>
       <div style={{display:'flex',gap:5}}>
         {[['Lead Time','18.2m',T.blue],['PCE','26%',T.amber],['Takt','32s','#64748B'],['WIP','31',T.red]].map(([l,v,c])=>(
           <div key={l as string} style={{flex:1,background:'rgba(0,0,0,0.03)',border:'1px solid #E2E8F0',borderRadius:5,padding:'4px 4px'}}>
-            <div style={{fontSize:6,color:'#94A3B8',letterSpacing:0.4}}>{l}</div>
+            <div style={{fontSize:9,color:'#94A3B8',letterSpacing:0.4}}>{l}</div>
             <div style={{fontSize:11,fontWeight:800,color:c as string,fontFamily:T.mono,lineHeight:1.1}}>{v}</div>
           </div>
         ))}
       </div>
       <div style={{flex:1,display:'flex',alignItems:'center',gap:4,overflow:'hidden'}}>
-        <div style={{fontSize:6,color:'#94A3B8',flexShrink:0}}>SUP→</div>
+        <div style={{fontSize:9,color:'#94A3B8',flexShrink:0}}>SUP→</div>
         {steps.map((s,i)=>(
           <React.Fragment key={s.name}>
             <div style={{flex:1,borderRadius:6,background:s.bot?'rgba(239,68,68,0.06)':'#FAFBFE',border:`1.5px solid ${s.bot?'#EF4444':'#E2E8F0'}`,padding:'5px 4px',position:'relative'}}>
               {s.bot&&<div style={{position:'absolute',top:-4,right:-3,width:9,height:9,background:T.red,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                <span style={{fontSize:6,color:'#fff',fontWeight:800}}>!</span>
+                <span style={{fontSize:9,color:'#fff',fontWeight:800}}>!</span>
               </div>}
-              <div style={{fontSize:7,fontWeight:700,color:s.bot?T.red:'#0F172A',marginBottom:1}}>{s.name}</div>
+              <div style={{fontSize:10,fontWeight:700,color:s.bot?T.red:'#0F172A',marginBottom:1}}>{s.name}</div>
               <div style={{fontSize:10,fontWeight:800,color:s.bot?T.red:T.blue,fontFamily:T.mono}}>{s.ct}</div>
-              <div style={{fontSize:6,marginTop:2,display:'inline-block',background:s.va==='VA'?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)',color:s.va==='VA'?'#10B981':'#F59E0B',borderRadius:3,padding:'1px 4px',fontWeight:700}}>{s.va}</div>
+              <div style={{fontSize:9,marginTop:2,display:'inline-block',background:s.va==='VA'?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)',color:s.va==='VA'?'#10B981':'#F59E0B',borderRadius:3,padding:'1px 4px',fontWeight:700}}>{s.va}</div>
             </div>
-            {i<steps.length-1&&<div style={{fontSize:8,color:'#CBD5E1',flexShrink:0}}>→</div>}
+            {i<steps.length-1&&<div style={{fontSize:11,color:'#CBD5E1',flexShrink:0}}>→</div>}
           </React.Fragment>
         ))}
-        <div style={{fontSize:6,color:'#94A3B8',flexShrink:0}}>→CUS</div>
+        <div style={{fontSize:9,color:'#94A3B8',flexShrink:0}}>→CUS</div>
       </div>
       <div style={{background:'rgba(43,127,255,0.05)',border:'1px solid rgba(43,127,255,0.15)',borderRadius:6,padding:'5px 7px'}}>
-        <div style={{fontSize:6,fontWeight:800,color:T.amber,letterSpacing:0.8,marginBottom:2}}>SUPE AI · ROOT CAUSE</div>
-        <div style={{fontSize:7,color:'#334155',lineHeight:1.5}}><strong style={{color:T.red}}>Inspect</strong> is your bottleneck — CT 62s vs Takt 32s. SMED analysis recommended.</div>
+        <div style={{fontSize:9,fontWeight:800,color:T.amber,letterSpacing:0.8,marginBottom:2}}>SUPE AI · ROOT CAUSE</div>
+        <div style={{fontSize:10,color:'#334155',lineHeight:1.5}}><strong style={{color:T.red}}>Inspect</strong> is your bottleneck — CT 62s vs Takt 32s. SMED analysis recommended.</div>
       </div>
     </div>
   )
@@ -74,24 +74,24 @@ function FaceTargetState() {
     {label:'Lead Time',   from:'18m',to:'11m', delta:'−39%',color:T.blueL},
   ]
   return (
-    <div style={{background:T.navy,width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:6,overflow:'hidden'}}>
+    <div style={{background:T.navy,width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:6,overflow:'hidden',WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale',transform:'translateZ(0)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:2}}>
         <div>
           <div style={{fontSize:9,fontWeight:800,color:T.white,letterSpacing:0.5}}>TARGET STATE</div>
-          <div style={{fontSize:7,color:T.sub,marginTop:1}}>AI-generated improvement plan</div>
+          <div style={{fontSize:10,color:T.sub,marginTop:1}}>AI-generated improvement plan</div>
         </div>
         <div style={{background:'rgba(232,148,26,0.15)',border:'1px solid rgba(232,148,26,0.35)',borderRadius:4,padding:'3px 7px'}}>
-          <span style={{fontSize:7,fontWeight:800,color:T.amber,letterSpacing:0.8}}>✦ SUPE</span>
+          <span style={{fontSize:10,fontWeight:800,color:T.amber,letterSpacing:0.8}}>✦ SUPE</span>
         </div>
       </div>
       <div style={{flex:1,display:'flex',flexDirection:'column',gap:5}}>
         {items.map(item=>(
           <div key={item.label} style={{display:'flex',alignItems:'center',gap:6,padding:'5px 7px',borderRadius:6,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.07)'}}>
             <div style={{flex:1}}>
-              <div style={{fontSize:7.5,fontWeight:600,color:T.white}}>{item.label}</div>
-              <div style={{fontSize:7,color:T.sub,marginTop:1}}>{item.from} → <span style={{color:item.color,fontWeight:700}}>{item.to}</span></div>
+              <div style={{fontSize:10.5,fontWeight:600,color:T.white}}>{item.label}</div>
+              <div style={{fontSize:10,color:T.sub,marginTop:1}}>{item.from} → <span style={{color:item.color,fontWeight:700}}>{item.to}</span></div>
             </div>
-            <div style={{background:`${item.color}18`,border:`1px solid ${item.color}40`,borderRadius:100,padding:'2px 7px',fontSize:8,fontWeight:800,color:item.color,fontFamily:T.mono,whiteSpace:'nowrap'}}>
+            <div style={{background:`${item.color}18`,border:`1px solid ${item.color}40`,borderRadius:100,padding:'2px 7px',fontSize:11,fontWeight:800,color:item.color,fontFamily:T.mono,whiteSpace:'nowrap'}}>
               {item.delta}
             </div>
           </div>
@@ -99,8 +99,8 @@ function FaceTargetState() {
       </div>
       <div>
         <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
-          <span style={{fontSize:7,color:T.sub}}>PCE progression</span>
-          <span style={{fontSize:7,color:T.amber,fontWeight:700,fontFamily:T.mono}}>26% → 44%</span>
+          <span style={{fontSize:10,color:T.sub}}>PCE progression</span>
+          <span style={{fontSize:10,color:T.amber,fontWeight:700,fontFamily:T.mono}}>26% → 44%</span>
         </div>
         <div style={{height:5,borderRadius:3,background:'rgba(255,255,255,0.08)',overflow:'hidden'}}>
           <div style={{height:'100%',width:'44%',background:`linear-gradient(90deg,${T.blue},${T.amber})`,borderRadius:3}}/>
@@ -117,16 +117,16 @@ function FaceDashboard() {
     {name:'Order Fulfilment',score:88, color:T.green, status:'Excellent',  industry:'Logistics'},
   ]
   return (
-    <div style={{background:'#F5F7FA',width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:8,overflow:'hidden'}}>
+    <div style={{background:'#F5F7FA',width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:8,overflow:'hidden',WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale',transform:'translateZ(0)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div style={{fontSize:9,fontWeight:800,color:'#04111F',letterSpacing:0.5}}>DASHBOARD</div>
-        <div style={{fontSize:7.5,color:'#94A3B8'}}>3 active projects</div>
+        <div style={{fontSize:10.5,color:'#94A3B8'}}>3 active projects</div>
       </div>
       <div style={{display:'flex',gap:5}}>
         {[['3','Projects',T.blue],['17','Tools',T.amber],['2','Overdue',T.red]].map(([v,l,c])=>(
           <div key={l as string} style={{flex:1,background:'#fff',border:'1px solid #E2E8F0',borderRadius:6,padding:'5px 6px'}}>
             <div style={{fontSize:14,fontWeight:800,color:c as string,fontFamily:T.mono,lineHeight:1}}>{v}</div>
-            <div style={{fontSize:6.5,color:'#64748B',marginTop:2}}>{l}</div>
+            <div style={{fontSize:9,color:'#64748B',marginTop:2}}>{l}</div>
           </div>
         ))}
       </div>
@@ -139,13 +139,13 @@ function FaceDashboard() {
                 <circle cx={13} cy={13} r={10} fill="none" stroke={p.color} strokeWidth={3}
                   strokeDasharray={`${(p.score/100)*63} 63`} strokeLinecap="round" transform="rotate(-90 13 13)"/>
               </svg>
-              <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:6.5,fontWeight:800,color:p.color,fontFamily:T.mono}}>{p.score}</div>
+              <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:9,fontWeight:800,color:p.color,fontFamily:T.mono}}>{p.score}</div>
             </div>
             <div style={{flex:1,minWidth:0}}>
-              <div style={{fontSize:8,fontWeight:700,color:'#0F172A',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{p.name}</div>
-              <div style={{fontSize:6.5,color:'#94A3B8',marginTop:1}}>{p.industry}</div>
+              <div style={{fontSize:11,fontWeight:700,color:'#0F172A',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{p.name}</div>
+              <div style={{fontSize:9,color:'#94A3B8',marginTop:1}}>{p.industry}</div>
             </div>
-            <div style={{fontSize:7,fontWeight:700,color:p.color,background:`${p.color}12`,border:`1px solid ${p.color}25`,borderRadius:100,padding:'2px 6px',whiteSpace:'nowrap'}}>{p.status}</div>
+            <div style={{fontSize:10,fontWeight:700,color:p.color,background:`${p.color}12`,border:`1px solid ${p.color}25`,borderRadius:100,padding:'2px 6px',whiteSpace:'nowrap'}}>{p.status}</div>
           </div>
         ))}
       </div>
@@ -163,19 +163,19 @@ function FaceCITools() {
     {name:'Simulation',icon:'📊',color:T.amber,  status:'Demand +25% modelled'},
   ]
   return (
-    <div style={{background:T.navy,width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:6,overflow:'hidden'}}>
+    <div style={{background:T.navy,width:'100%',height:'100%',padding:'14px 12px',display:'flex',flexDirection:'column',gap:6,overflow:'hidden',WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale',transform:'translateZ(0)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:2}}>
         <div style={{fontSize:9,fontWeight:800,color:T.white,letterSpacing:0.5}}>CI TOOLKIT</div>
-        <div style={{fontSize:7,color:T.sub}}>17 tools</div>
+        <div style={{fontSize:10,color:T.sub}}>17 tools</div>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:5,flex:1}}>
         {tools.map(tool=>(
           <div key={tool.name} style={{background:'rgba(255,255,255,0.04)',border:`1px solid ${tool.color}25`,borderRadius:7,padding:'7px 8px'}}>
             <div style={{display:'flex',alignItems:'center',gap:5,marginBottom:3}}>
               <span style={{fontSize:10}}>{tool.icon}</span>
-              <span style={{fontSize:7.5,fontWeight:700,color:T.white}}>{tool.name}</span>
+              <span style={{fontSize:10.5,fontWeight:700,color:T.white}}>{tool.name}</span>
             </div>
-            <div style={{fontSize:6.5,color:T.sub,lineHeight:1.4}}>{tool.status}</div>
+            <div style={{fontSize:9,color:T.sub,lineHeight:1.4}}>{tool.status}</div>
             <div style={{marginTop:4,height:2,borderRadius:1,background:`${tool.color}25`,overflow:'hidden'}}>
               <div style={{height:'100%',width:'70%',background:tool.color,borderRadius:1}}/>
             </div>
@@ -266,7 +266,7 @@ export function HeroCubePreview() {
           <div style={{textAlign:'center'}}>
             <div style={{fontSize:12,fontWeight:800,color:'rgba(255,255,255,0.6)',letterSpacing:4,marginBottom:6}}>VeSiMy</div>
             <div style={{width:48,height:1,background:'rgba(43,127,255,0.40)',margin:'0 auto'}}/>
-            <div style={{fontSize:7.5,color:'rgba(255,255,255,0.25)',letterSpacing:2.5,marginTop:6}}>PROCESS INTELLIGENCE</div>
+            <div style={{fontSize:10.5,color:'rgba(255,255,255,0.55)',letterSpacing:2.5,marginTop:6}}>PROCESS INTELLIGENCE</div>
           </div>
         </div>
 
@@ -284,14 +284,14 @@ export function HeroCubePreview() {
           {[['18.2m','Lead Time',T.blue],['26%','PCE',T.amber],['32s','Takt','#94A3B8'],['31','WIP',T.red]].map(([v,l,c])=>(
             <div key={l as string} style={{textAlign:'center'}}>
               <div style={{fontSize:18,fontWeight:800,color:c as string,fontFamily:T.mono}}>{v}</div>
-              <div style={{fontSize:7.5,color:'rgba(255,255,255,0.35)',letterSpacing:0.5}}>{l}</div>
+              <div style={{fontSize:10.5,color:'rgba(255,255,255,0.60)',letterSpacing:0.5}}>{l}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Hint text */}
-      <div style={{ position:'absolute', bottom:-24, left:'50%', transform:'translateX(-50%)', fontSize:9, color:'rgba(255,255,255,0.28)', letterSpacing:1, whiteSpace:'nowrap' }}>
+      <div style={{ position:'absolute', bottom:-24, left:'50%', transform:'translateX(-50%)', fontSize:9, color:'rgba(255,255,255,0.55)', letterSpacing:1, whiteSpace:'nowrap' }}>
         {paused ? '⏸ hover to inspect' : '↻ rotating'}
       </div>
     </div>

@@ -497,7 +497,7 @@ export default function Tier0Flow() {
         height:     56,
         display:    'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'rgba(2,4,13,0.85)',
-        backdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(8px)',
         borderBottom: `1px solid ${C.b1}`,
       }}>
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>

@@ -226,8 +226,8 @@ function PhotoSection({img,title,sub,accent="#3B7CFF",opacity=0.15,children,alig
       {/* Accent glow from photo colors */}
       <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse 60% 60% at 50% 50%, ${accent}08 0%, transparent 70%)`}}/>
       <div style={{position:"relative",maxWidth:800,margin:"0 auto",textAlign:align as React.CSSProperties["textAlign"]}}>
-        {title && <div className="au" style={{fontFamily:C.sans,fontSize:40,fontWeight:800,color:C.t1,letterSpacing:-1,lineHeight:1.1,marginBottom:16,textShadow:"0 2px 4px rgba(0,0,8,0.95),0 8px 24px rgba(0,0,0,0.7)"}}>{title}</div>}
-        {sub && <div style={{fontFamily:C.sans,fontSize:15,color:C.t2,lineHeight:1.8,marginBottom:children?36:0,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{sub}</div>}
+        {title && <div className="au" style={{fontFamily:C.sans,fontSize:40,fontWeight:800,color:C.t1,letterSpacing:-1,lineHeight:1.1,marginBottom:16,textShadow:"0 1px 2px rgba(0,0,0,0.6)"}}>{title}</div>}
+        {sub && <div style={{fontFamily:C.sans,fontSize:15,color:C.t2,lineHeight:1.8,marginBottom:children?36:0,textShadow:"none"}}>{sub}</div>}
         {children}
       </div>
     </div>
@@ -246,7 +246,7 @@ function Nav() {
   ]
   return (
     <>
-      <div style={{background:`${C.p0}F2`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,boxShadow:'0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)',padding:'0 24px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:200}}>
+      <div style={{background:`${C.p0}F2`,backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:`1px solid ${C.b1}`,boxShadow:'0 1px 0 rgba(255,255,255,0.02),0 4px 20px rgba(0,0,0,0.6)',padding:'0 24px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:200}}>
         <div style={{display:'flex',alignItems:'center',gap:10}}>
           <VLogoMark size={28} />
           <VeSiMyWordmark size={22} onDark={true} />
@@ -275,7 +275,7 @@ function Nav() {
         </div>
       </div>
       {open && (
-        <div style={{position:'fixed',top:56,left:0,right:0,zIndex:199,background:`${C.p0}F8`,backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',borderBottom:`1px solid ${C.b1}`,padding:'12px 0 20px'}}>
+        <div style={{position:'fixed',top:56,left:0,right:0,zIndex:199,background:`${C.p0}F8`,backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:`1px solid ${C.b1}`,padding:'12px 0 20px'}}>
           {NAV_LINKS.map(({n,href})=>(
             <a key={n} href={href} onClick={()=>setOpen(false)} style={{textDecoration:'none',display:'block',padding:'13px 28px'}}>
               <span style={{fontFamily:C.sans,fontSize:15,color:n==='Guided'?C.blueL:C.t2,fontWeight:n==='Guided'?600:400}}>{n}</span>
@@ -334,7 +334,7 @@ function Hero() {
           <div className="tc-grd sans" style={{fontSize:50,fontWeight:800,lineHeight:1.08,letterSpacing:-1.8}}>VeSiMy makes it visible.</div>
         </div>
 
-        <p className="au3 sans" style={{fontSize:15,color:C.t2,lineHeight:1.8,maxWidth:520,margin:"0 0 36px",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>
+        <p className="au3 sans" style={{fontSize:15,color:C.t2,lineHeight:1.8,maxWidth:520,margin:"0 0 36px",textShadow:"none"}}>
           Most teams know where the problem is. Almost none can see it clearly enough to fix it and prove it.
         </p>
 
@@ -352,10 +352,10 @@ function Hero() {
         </div>
 
         {/* Floating 3D process card */}
-        <div className="au5" style={{borderRadius:12,overflow:"hidden",animation:"float 7s ease-in-out infinite",background:"linear-gradient(160deg,#0E1C38 0%,#091422 100%)",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.08),inset 0 -1px 0 rgba(0,0,0,0.4),6px 6px 0 rgba(3,6,16,0.9),12px 12px 0 rgba(2,4,12,0.7),18px 18px 0 rgba(2,3,8,0.4),24px 32px 60px rgba(0,0,0,0.8)",border:"1px solid rgba(255,255,255,0.07)",position:"relative"}}>
+        <div className="au5" style={{borderRadius:12,overflow:"hidden",animation:"float 7s ease-in-out infinite",willChange:"transform",isolation:"isolate",background:"linear-gradient(160deg,#0E1C38 0%,#091422 100%)",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.08),inset 0 -1px 0 rgba(0,0,0,0.4),6px 6px 0 rgba(3,6,16,0.9),12px 12px 0 rgba(2,4,12,0.7),18px 18px 0 rgba(2,3,8,0.4),24px 32px 60px rgba(0,0,0,0.8)",border:"1px solid rgba(255,255,255,0.07)",position:"relative"}}>
           {/* Scan line */}
           <div style={{position:"absolute",inset:0,overflow:"hidden",borderRadius:12,zIndex:10,pointerEvents:"none"}}>
-            <div style={{position:"absolute",left:0,right:0,height:1,background:"linear-gradient(90deg,transparent,rgba(59,124,255,0.3),transparent)",animation:"scanLine 6s ease-in-out infinite"}}/>
+            <div style={{position:"absolute",left:0,right:0,height:1,background:"linear-gradient(90deg,transparent,rgba(59,124,255,0.3),transparent)",animation:"scanLine 6s ease-in-out infinite",opacity:0.4}}/>
           </div>
           {/* Header */}
           <div style={{padding:"10px 16px",background:"linear-gradient(180deg,#0F1C38,#0A1428)",borderBottom:"1px solid rgba(255,255,255,0.05)",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.06)",display:"flex",alignItems:"center",gap:10}}>
@@ -398,7 +398,7 @@ function Hero() {
             <div style={{width:22,height:22,borderRadius:"50%",flexShrink:0,marginTop:1,background:"linear-gradient(145deg,#4A8AFF,#22D3EE)",boxShadow:"inset 0 1px 0 rgba(255,255,255,0.3),0 2px 0 rgba(20,40,100,0.6),0 4px 12px rgba(59,124,255,0.4)",display:"flex",alignItems:"center",justifyContent:"center"}}>
               <span className="sans" style={{fontSize:8,fontWeight:800,color:"#fff",textShadow:"0 1px 2px rgba(0,0,0,0.5)"}}>S</span>
             </div>
-            <div className="sans" style={{fontSize:11,color:"rgba(144,186,255,0.9)",lineHeight:1.65,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>
+            <div className="sans" style={{fontSize:11,color:"rgba(144,186,255,0.9)",lineHeight:1.65,textShadow:"none"}}>
               {step===0?<Typewriter text="Analysing process map..." speed={50}/>:<Typewriter text="Quality Check is your constraint. CT 38s vs takt 32s. SMED analysis on changeover sequence recommended. Pre-staging materials could recover 8–12s per cycle." speed={16} delay={200}/>}
             </div>
           </div>
@@ -434,7 +434,7 @@ function PhotoDivider() {
       <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
         <div style={{textAlign:"center"}}>
           <div className="tc-grd sans" style={{fontSize:36,fontWeight:800,letterSpacing:-0.8}}>Every process has a constraint.</div>
-          <div className="sans" style={{fontSize:15,color:C.t2,marginTop:10,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>VeSiMy finds it. Then helps you fix it.</div>
+          <div className="sans" style={{fontSize:15,color:C.t2,marginTop:10,textShadow:"none"}}>VeSiMy finds it. Then helps you fix it.</div>
         </div>
       </div>
     </div>
@@ -463,7 +463,7 @@ function Features() {
         <div style={{textAlign:"center",marginBottom:52}}>
           <MT c={C.blue}>CI Tool Suite</MT>
           <div className="tc sans" style={{fontSize:38,fontWeight:800,color:C.t1,marginTop:12,letterSpacing:-0.8}}>Every tool the methodology demands.</div>
-          <div className="sans" style={{fontSize:15,color:C.t2,marginTop:12,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>Connected, not siloed. Every finding linked to the same step.</div>
+          <div className="sans" style={{fontSize:15,color:C.t2,marginTop:12,textShadow:"none"}}>Connected, not siloed. Every finding linked to the same step.</div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:14}}>
           {features.map(f=>(

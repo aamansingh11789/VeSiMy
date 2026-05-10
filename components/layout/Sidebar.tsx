@@ -115,7 +115,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
       background: `linear-gradient(180deg, #04111F 0%, #061520 60%, #04111F 100%)`,  /* Deep navy, slight warmth at center */
       borderRight: `1px solid ${NAVY[800]}`,
       display: 'flex', flexDirection: 'column',
-      fontFamily: "'Satoshi', 'Inter', -apple-system, sans-serif",
+      fontFamily: "'Satoshi', 'Inter', -apple-system, sans-serif", WebkitFontSmoothing: 'antialiased' as any,
       transition: 'width 0.22s cubic-bezier(.4,0,.2,1)',
       overflow: 'hidden',
     }}>

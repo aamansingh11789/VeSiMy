@@ -464,7 +464,7 @@ export function VSMMap({ steps, branches, project }: Props) {
             </div>
           </div>
           <div style={{ flex:1, overflow:'auto', padding:20 }}>
-            <svg width={TOTAL_W} height={TOTAL_H} style={{ display:'block', minWidth:TOTAL_W }}>
+            <svg width={TOTAL_W} height={TOTAL_H} style={{ display:'block', minWidth:TOTAL_W }} shapeRendering="geometricPrecision" textRendering="geometricPrecision">
               {svgContent('#FFFFFF')}
             </svg>
           </div>
@@ -473,7 +473,7 @@ export function VSMMap({ steps, branches, project }: Props) {
 
       {/* Normal view */}
       <div style={{ background:'#FFFFFF', border:'1px solid #E5E7EB', borderRadius:8, overflowX:'auto', padding:16 }}>
-        <svg width={TOTAL_W} height={TOTAL_H} style={{ display:'block', minWidth:TOTAL_W }}>
+        <svg width={TOTAL_W} height={TOTAL_H} style={{ display:'block', minWidth:TOTAL_W }} shapeRendering="geometricPrecision" textRendering="geometricPrecision">
           {svgContent('#FFFFFF')}
         </svg>
       </div>

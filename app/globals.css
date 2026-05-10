@@ -176,7 +176,7 @@ html {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
   scroll-behavior: smooth;
   font-size: 14px;
   font-feature-settings: "cv11", "ss01";  /* Satoshi stylistic sets */
@@ -551,8 +551,8 @@ select.input {
   inset: 0;
   z-index: 9999;
   background: rgba(4, 17, 31, 0.50);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -783,8 +783,8 @@ select.input {
   align-items: center;
   gap: 0;
   box-shadow: 0 -4px 16px rgba(4, 17, 31, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .bottom-nav-item {
   display: flex;
@@ -1193,4 +1193,20 @@ html, body {
   max-width: 280px;
   line-height: 1.6;
   font-family: var(--font-sans);
+}
+
+/* ── Crisp text in GPU-composited layers ─────────────────────────────────── */
+/* Use on any element inside CSS 3D transforms, animations, or backdrop-filter */
+.text-crisp {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  transform: translateZ(0);
+}
+
+/* Fix: elements with backdrop-filter can blur nearby text */
+/* Ensure text containers adjacent to blurred elements are isolated */
+.backdrop-isolated {
+  isolation: isolate;
+  -webkit-font-smoothing: antialiased;
 }

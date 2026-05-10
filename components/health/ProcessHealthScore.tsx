@@ -39,7 +39,7 @@ export function ProcessHealthScore({ steps, compact=false }: Props) {
             Add cycle time to 3+ steps to see the health score
           </div>
         ) : (<>
-        <svg width={110} height={66} viewBox="0 0 110 66">
+        <svg width={110} height={66} viewBox="0 0 110 66" shapeRendering="geometricPrecision">
           <path d="M8 58 A47 47 0 0 1 102 58" fill="none" stroke="var(--border2)" strokeWidth="9" strokeLinecap="round"/>
           <path d="M8 58 A47 47 0 0 1 102 58" fill="none" stroke={h.color} strokeWidth="9" strokeLinecap="round"
             strokeDasharray={`${(displayScore/100)*ARC} ${ARC}`}
