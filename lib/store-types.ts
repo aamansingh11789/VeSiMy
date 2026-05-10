@@ -33,7 +33,7 @@ export interface Step {
   branch_parent_id?: string | null
   branch_position?:  number
   is_main_flow?:     boolean
-  toolData: Record<string, any>
+  toolData?: Record<string, any>
   created_at: string
   updated_at: string
 }
