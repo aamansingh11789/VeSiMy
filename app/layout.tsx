@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
           rel="stylesheet"
         />
-        {/* Satoshi — display font for v4.0 public pages */}
+        {/* Satoshi — primary UI font */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap"
@@ -147,7 +147,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
               color:        'var(--text)',
               border:       '1px solid rgba(1,118,211,0.25)',
               borderRadius: '10px',
-              fontFamily:   'Inter, sans-serif',
+              fontFamily:   "'Satoshi', 'Inter', -apple-system, sans-serif",
               fontSize:     '14px',
             },
             success: { iconTheme: { primary: '#0176D3', secondary: 'var(--bg)' } },

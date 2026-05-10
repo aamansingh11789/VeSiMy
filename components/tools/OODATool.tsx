@@ -55,7 +55,7 @@ const inp: React.CSSProperties = {
 const area: React.CSSProperties = { ...inp, resize: 'vertical' as const }
 
 // ── Iteration card ────────────────────────────────────────────────────────────
-function IterationCard({ iter, index, isLast, onUpdate, onDelete }: {
+function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
   iter: OODAIteration; index: number; isLast: boolean
   onUpdate: (field: string, value: string | boolean) => void
   onDelete: () => void
@@ -231,7 +231,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             </div>
           )}
           {form.iterations.map((iter, i) => (
-            <IterationCard key={iter.id} iter={iter as OODAIteration} index={i} isLast={i === form.iterations.length - 1}
+            <IterationCard key={iter.id} iter={iter as OODAIteration} index={i as number} isLast={i === form.iterations.length - 1}
               onUpdate={(field, value) => updateIteration(iter.id, field, value)}
               onDelete={() => deleteIteration(iter.id)} />
           ))}

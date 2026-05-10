@@ -18,12 +18,18 @@ import {
 import type { Profile } from '@/lib/store'
 
 const NAVY = {
-  900: '#032D60', 800: '#0a3d78', 700: '#0c4a8f',
-  600: '#1558a8', 500: '#1e6bb8', 400: '#5b9fd4',
-  300: '#8ec5e8', 200: '#c5e0f4', 100: '#d8edff',
+  900: '#04111F',
+  800: '#071828',
+  700: '#0A2035',
+  600: '#0E2A46',
+  500: '#1A4270',
+  400: '#4A7BAA',
+  300: '#7AAECF',
+  200: '#A8CDE6',
+  100: '#D6E8FF',
 }
-const BLUE    = '#0176D3'
-const BLUE_LT = '#D8EDFF'
+const BLUE    = '#1E7FEA'
+const BLUE_LT = '#A8CDE6'
 const WHITE   = '#FFFFFF'
 const VIOLET  = '#8C44CC'
 
@@ -106,10 +112,10 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
       width: collapsed ? W_COLLAPSED : W_OPEN,
       minHeight: '100vh', position: 'fixed',
       left: 0, top: 0, bottom: 0, zIndex: 100,
-      background: NAVY[900],
+      background: `linear-gradient(180deg, #04111F 0%, #061520 60%, #04111F 100%)`,  /* Deep navy, slight warmth at center */
       borderRight: `1px solid ${NAVY[800]}`,
       display: 'flex', flexDirection: 'column',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif',
+      fontFamily: "'Satoshi', 'Inter', -apple-system, sans-serif",
       transition: 'width 0.22s cubic-bezier(.4,0,.2,1)',
       overflow: 'hidden',
     }}>
@@ -128,7 +134,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             <div>
               <VeSiMyWordmark size={16} onDark />
               <div style={{
-                fontSize: 9, letterSpacing: 1.8, color: NAVY[400],
+                fontSize: 9, letterSpacing: 1.8, color: '#E8941A',
                 fontFamily: 'monospace', textTransform: 'uppercase', marginTop: 2,
               }}>
                 Process Intelligence
@@ -147,7 +153,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               width: 26, height: 26, borderRadius: 6, border: 'none',
               background: 'transparent', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: NAVY[400], flexShrink: 0,
+              color: NAVY[300], flexShrink: 0,
               transition: 'all .15s',
             }}
             onMouseEnter={e => { e.currentTarget.style.background = NAVY[800]; e.currentTarget.style.color = WHITE }}
@@ -236,11 +242,11 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                   gap: collapsed ? 0 : 10,
                   padding: collapsed ? '10px 0' : '8px 10px',
                   justifyContent: collapsed ? 'center' : 'flex-start',
-                  fontSize: 13, fontWeight: active ? 600 : 400,
+                  fontSize: 13, fontWeight: active ? 700 : 500,
                   textDecoration: 'none',
-                  color: active ? WHITE : NAVY[400],
-                  background: active ? 'rgba(1,118,211,0.25)' : 'transparent',
-                  borderLeft: collapsed ? 'none' : `3px solid ${active ? BLUE : 'transparent'}`,
+                  color: active ? '#FFFFFF' : '#7AAECF',
+                  background: active ? 'rgba(30,127,234,0.18)' : 'transparent',
+                  borderLeft: collapsed ? 'none' : `3px solid ${active ? '#E8941A' : 'transparent'}`,
                   borderRadius: collapsed ? 8 : '0 6px 6px 0',
                   margin: collapsed ? '0 8px' : undefined,
                   transition: 'all 0.12s',

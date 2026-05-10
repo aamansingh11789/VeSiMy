@@ -15,6 +15,12 @@ export async function POST(_request: NextRequest) {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // Only allow seeding for the authenticated user's own account.
+    // Additional guard: check SEED_SECRET env var in production to prevent abuse.
+    const seedSecret = process.env.SEED_SECRET
+    if (seedSecret && _request.headers.get('x-seed-secret') !== seedSecret) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
 
     const uid = user.id
     const seeded: string[] = []

@@ -18,10 +18,7 @@ import { calcProcessMetrics } from '@/lib/v2/process-metrics'
 import type { Step } from '@/lib/store'
 import { AlertIcon, ZapIcon, ActivityIcon, BarChartIcon, RefreshIcon } from '@/components/ui/Icons'
 
-type SimulationStep = Record<string, any>
-type ScenarioStep = SimulationStep & { _scenCT?: number; _scenWait?: number }
-
-interface Props { steps: SimulationStep[]; projectId: string; isPaid?: boolean; project?: Record<string, any> }
+interface Props { steps: Step[]; projectId: string; isPaid?: boolean; project?: Record<string, any> }
 
 const fmt = (s: number) => !s ? '0s' : s < 60 ? `${Math.round(s)}s` : `${(s/60).toFixed(1)}m`
 const fmtPct = (n: number) => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`
@@ -141,13 +138,13 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   const [adj, setAdj] = useState<Record<string, { fCT: number; fWait: number }>>({})
   const [saving, setSaving] = useState(false)
 
-  function getA(s: SimulationStep) {
+  function getA(s: Step) {
     return adj[s.id] || {
       fCT:   ctSeconds(s),          // ctSeconds handles ms→s conversion for stopwatch
       fWait: Number(s.wait_time) || 0,
     }
   }
-  function setA(s: SimulationStep, k: 'fCT' | 'fWait', v: number) {
+  function setA(s: Step, k: 'fCT' | 'fWait', v: number) {
     setAdj(p => ({ ...p, [s.id]: { ...getA(s), [k]: v } }))
   }
 
@@ -172,18 +169,48 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   // Scenario computed metrics
   const scenario = useMemo(() => SCENARIOS.find(s => s.id === activeScenario), [activeScenario])
 
-  const scenarioSteps = useMemo<ScenarioStep[]>(() => {
-    if (!scenario) return main.map(s => ({
-      ...s,
-      _scenCT: ctSeconds(s),
-      _scenWait: Number(s.wait_time) || 0,
-    }))
+  const scenarioSteps = useMemo(() => {
+    if (!scenario) return main
+    // REVIEW FIX: Use Little's Law and M/D/1 queue theory instead of hardcoded multipliers.
+    // The simulation now uses the actual process data — different processes get different results.
+    const newTakt = takt > 0 ? takt / scenario.demandMult : 0
+
     return main.map(s => {
-      const ct   = ctSeconds(s) * scenario.ctMult           // ctSeconds normalises ms→s
-      const wait = (Number(s.wait_time) || 0) * scenario.waitMult
-      return { ...s, _scenCT: ct, _scenWait: wait }
+      const baseCT = ctSeconds(s)
+      // Labor shortage directly inflates cycle time (fewer operators = more time per unit)
+      const laborInflation = 1 + (1 - scenario.laborMult) * 0.8
+      const ct = baseCT * laborInflation
+
+      // Utilization = cycle time / takt (how loaded is this step?)
+      const utilization = newTakt > 0 ? Math.min(ct / newTakt, 0.999) : 0.85
+
+      // M/D/1 queue: queue depth = utilization² / (2*(1-utilization))
+      // Wait time = queue depth × service time (Little's Law: L = λW)
+      const queueDepth = utilization > 0
+        ? (utilization * utilization) / (2 * (1 - utilization))
+        : 0
+      const queueWait = queueDepth * ct
+
+      // Base wait from supplier delays etc. + queue wait from congestion
+      const baseWait = Number(s.wait_time) || 0
+      const wait = baseWait * scenario.waitMult + queueWait
+
+      // Equipment downtime inflates CT at affected steps
+      const eqInflation = scenario.id === 'equipment_down'
+        ? (1 + (1 - 0.60) * (Number(s.uptime) > 0 ? (100 - Number(s.uptime)) / 100 : 0.3))
+        : 1
+      const finalCT = ct * eqInflation
+
+      return {
+        ...s,
+        _scenCT: finalCT,
+        _scenWait: wait,
+        _utilization: Math.round(Math.min(utilization * 100, 99)),
+        _queueDepth: Math.round(queueDepth * 10) / 10,
+        _newTakt: newTakt,
+      }
     })
-  }, [main, scenario])
+  }, [main, scenario, takt])
 
   const scenLT  = useMemo(() => (scenarioSteps as any[]).reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
   // Scenario PCE: only VA steps are value-adding — preserve ratio from base
@@ -204,6 +231,21 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
     const risks = (scenarioSteps as any[]).map(s => calcQueueRisk(s._scenCT || 0, s._scenWait || 0, displayTakt))
     return risks.length > 0 ? Math.max(...risks) : 0
   }, [scenarioSteps, displayTakt, scenario])
+
+  // Real throughput: units/hour based on bottleneck step
+  const baseThroughput = useMemo(() => {
+    const bn = main.reduce((max, s) => ctSeconds(s) > ctSeconds(max) ? s : max, main[0])
+    const bnCT = bn ? ctSeconds(bn) : 0
+    return bnCT > 0 ? Math.round(3600 / bnCT * 10) / 10 : 0
+  }, [main])
+
+  const scenThroughput = useMemo(() => {
+    if (!scenario) return baseThroughput
+    const bn = (scenarioSteps as any[]).reduce((max: any, s: any) =>
+      (s._scenCT || 0) > (max._scenCT || 0) ? s : max, scenarioSteps[0])
+    const bnCT = (bn as any)?._scenCT || 0
+    return bnCT > 0 ? Math.round(3600 / bnCT * 10) / 10 : 0
+  }, [scenarioSteps, scenario, baseThroughput])
 
   // Fix Sim-3: don't substitute 10 when WIP=0 — use step count as proxy instead
   const recoveryWIP = totalWIP > 0 ? totalWIP : Math.max(main.length, 1)

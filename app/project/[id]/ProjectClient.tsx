@@ -30,6 +30,7 @@ import { ProcessHealthScore } from '@/components/health/ProcessHealthScore'
 import { ProcessSimulation } from '@/components/simulation/ProcessSimulation'
 import { LiveFloorPanel } from '@/components/live/LiveFloorPanel'
 import { SOPUpload } from '@/components/tools/SOPUpload'
+import { FutureStatePanel } from '@/components/tools/FutureStatePanel'
 import { PDFExportButton } from '@/components/export/PDFExport'
 import { ProcessJournal } from '@/components/journal/ProcessJournal'
 import { Modal } from '@/components/ui/Modal'
@@ -83,6 +84,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [showYamazumi,    setShowYamazumi]    = useState(false)
   const [showStandardWork, setShowStandardWork] = useState(false)
   const [showVSMCoaching,  setShowVSMCoaching]  = useState(false)
+  const [showFutureState,  setShowFutureState]  = useState(false)
   const [showPDCA,         setShowPDCA]         = useState(false)
   const [pdcaData,         setPdcaData]         = useState<any>(null)
   const {showToast, setActiveTool, activeTool} = useStore()
@@ -396,12 +398,12 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
-              background: 'rgba(1,118,211,0.08)',
+              background: 'var(--brand-dim)',
               border: '1px solid rgba(1,118,211,0.25)',
               color: 'var(--brand)',
             }}
           >
-            <SOPIcon size={13} color="#0176D3" />
+            <SOPIcon size={13} color="var(--brand)" />
             <span className="action-btn-label">Import SOP</span>
           </button>
 
@@ -411,7 +413,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 steps={steps}
                 isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
               />
-            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)' }}>
+            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'var(--brand-dim)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)' }}>
                 PDF ↑ Pro
               </button>
           }
@@ -428,7 +430,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
-              background: 'rgba(1,118,211,0.06)',
+              background: 'var(--brand-dim)',
               border: '1px solid rgba(1,118,211,0.2)',
               color: 'var(--brand)',
             }}
@@ -468,7 +470,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 13,
               fontWeight: 700,
               cursor: 'pointer',
-              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+              background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
               color: 'var(--bg)',
               border: 'none',
               boxShadow: '0 2px 12px rgba(1,118,211,0.25)',
@@ -492,11 +494,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
           { label: 'STEPS',    value: mainSteps.length,            color: 'var(--brand)' },
           { label: 'BRANCHES', value: branches.length,             color: 'var(--brand)' },
           { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--brand)' },
-          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : '#0176D3' },
+          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : 'var(--brand)' },
           { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: 'var(--brand)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
-          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? '#0176D3' : '#1DD1A1' },
-          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? '#0176D3' : '#1DD1A1' },
+          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
         ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
@@ -605,6 +607,23 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
           {tab === 'vsm' && (
             <div>
+              {/* Takt Time not-set banner — REVIEW FIX #13 */}
+              {!project.takt_time && !project.demand && steps.filter(s => s.is_main_flow !== false).length > 0 && (
+                <div style={{ margin: '12px 24px 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(232,148,26,0.07)', border: '1px solid rgba(232,148,26,0.25)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 16 }}>⏱</span>
+                  <div style={{ flex: 1, minWidth: 200 }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--amber)' }}>Takt Time not set</span>
+                    <span style={{ fontSize: 12, color: 'var(--text2)', marginLeft: 8 }}>Bottleneck analysis is disabled. Set customer demand to unlock the full VSM analysis.</span>
+                  </div>
+                  <button
+                    onClick={() => setShowProjectEdit(true)}
+                    style={{ padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', background: 'var(--amber)', color: '#FFFFFF', border: 'none', whiteSpace: 'nowrap' }}
+                  >
+                    Set Takt Time →
+                  </button>
+                </div>
+              )}
+
               {/* VSM Analysis Toolbar */}
               <div style={{ display: 'flex', gap: 8, padding: '12px 24px 0', flexWrap: 'wrap', alignItems: 'center' }}>
                 <span style={{ fontSize: 9, color: 'var(--sl-400)', fontFamily: 'monospace', marginRight: 4, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>VSM Tools</span>
@@ -626,6 +645,13 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 >
                   Standard Work Sheet
                 </button>
+                <button
+                  onClick={() => setShowFutureState(true)}
+                  className="vsm-tool-btn vsm-tool-btn--amber"
+                  style={{ marginLeft: 'auto' }}
+                >
+                  ✦ Target State →
+                </button>
               </div>
               <div style={{ padding: 24 }}>
                 <VSMMap steps={steps} branches={branches} project={project} />
@@ -640,11 +666,17 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 takt={takt}
                 pce={pceNum}
                 onSaveRoadmap={async (phases) => {
-                  const { createClient } = await import('@/lib/supabase')
-                  const db = createClient()
-                  await db.from('projects')
-                    .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
-                    .eq('id', project.id)
+                  try {
+                    const { createClient } = await import('@/lib/supabase')
+                    const db = createClient()
+                    const { error } = await db.from('projects')
+                      .update({ kaizen_roadmap: { phases }, updated_at: new Date().toISOString() })
+                      .eq('id', project.id)
+                    if (error) throw error
+                    showToast('Kaizen plan saved', 'success')
+                  } catch {
+                    showToast('Failed to save Kaizen plan — please try again', 'error')
+                  }
                 }}
               />
             </div>
@@ -669,7 +701,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
-                    const colors = ['#0176D3', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
+                    const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
                     const descs = [
                       'Plan-Do-Check-Act — standard lean cycle',
                       'Toyota one-page problem-solving report',
@@ -834,7 +866,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                         display: 'inline-block',
                         padding: '8px 16px',
                         borderRadius: 8,
-                        background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+                        background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
                         color: 'var(--bg)',
                         fontWeight: 700,
                         fontSize: 12,
@@ -930,7 +962,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       display: 'inline-block',
                       padding: '10px 20px',
                       borderRadius: 10,
-                      background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+                      background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
                       color: 'var(--bg)',
                       fontWeight: 700,
                       fontSize: 14,
@@ -969,7 +1001,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             borderRadius: '50%',
             border: 'none',
             cursor: 'pointer',
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
             boxShadow: '0 4px 20px rgba(1,118,211,0.4)',
             display: 'flex',
             alignItems: 'center',
@@ -1103,6 +1135,29 @@ export function ProjectClient({ initialProject, profile }: Props) {
         />
       )}
 
+      {/* ── Target / Future State Panel ─────────────────────────────────── */}
+      {showFutureState && (
+        <div className="vesimy-modal-overlay" onClick={e => { if (e.target === e.currentTarget) setShowFutureState(false) }}>
+          <div className="vesimy-modal" style={{ maxWidth: 780 }}>
+            <div className="vesimy-modal-header">
+              <div>
+                <div className="vesimy-modal-title">✦ Target State Analysis</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>
+                  AI-powered Future State VSM — uses your real process data
+                </div>
+              </div>
+              <button className="vesimy-modal-close" onClick={() => setShowFutureState(false)}>×</button>
+            </div>
+            <FutureStatePanel
+              project={project}
+              steps={steps}
+              onClose={() => setShowFutureState(false)}
+              isPaid={isPaidProfile(profile)}
+            />
+          </div>
+        </div>
+      )}
+
       {showYamazumi && (
         <YamazumiTool
           steps={steps}
@@ -1173,7 +1228,7 @@ function PaywallGate({ feature }: { feature: string }) {
         This is a <strong style={{ color: 'var(--brand)' }}>Pro feature</strong>. Upgrade to unlock {feature}, Supe AI, and all advanced CI tools.
       </p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,var(--brand2),var(--brand))', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
           Upgrade to Pro to track all your improvement targets — $29/mo
         </a>
         <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(1,118,211,0.3)', color: 'var(--brand)', fontSize: 14, textDecoration: 'none' }}>
@@ -1200,7 +1255,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
     return (
       <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--sl-400)' }}>
         <div style={{ marginBottom: 20, opacity: 0.3 }}>
-          <VSMIcon size={64} color="#0176D3" />
+          <VSMIcon size={64} color="var(--brand)" />
         </div>
         <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
           No process steps yet
@@ -1217,7 +1272,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
               gap: 8,
               padding: '10px 24px',
               borderRadius: 9,
-              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+              background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
               color: 'var(--bg)',
               border: 'none',
               cursor: 'pointer',
@@ -1235,7 +1290,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
               gap: 8,
               padding: '10px 20px',
               borderRadius: 9,
-              background: 'rgba(1,118,211,0.08)',
+              background: 'var(--brand-dim)',
               border: '1px solid rgba(1,118,211,0.3)',
               color: 'var(--brand)',
               cursor: 'pointer',
@@ -1243,7 +1298,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
               fontWeight: 600,
             }}
           >
-            <SOPIcon size={14} color="#0176D3" /> Import from SOP
+            <SOPIcon size={14} color="var(--brand)" /> Import from SOP
           </button>
         </div>
       </div>
@@ -1263,7 +1318,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
       {mainSteps.map((step, idx) => (
         <StepCard
           key={step.id}
-          step={step}
+          step={step as any}
           index={idx}
           takt={takt}
           onEdit={() => onEdit(step)}
@@ -1308,8 +1363,9 @@ interface StepCardProps {
   onTool: (t: string) => void
   onDragStart: () => void
   onDrop: () => void
-  expanded?: boolean
+  expanded?: any
   onToggle?: () => void
+  key?: any
 }
 
 function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, onDrop, expanded, onToggle }: StepCardProps & { expanded: boolean; onToggle: () => void }) {
@@ -1418,14 +1474,14 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
                   style={{
                     display: 'flex', alignItems: 'center', gap: 4,
                     padding: '6px 10px', fontSize: 11, borderRadius: 6, cursor: 'pointer',
-                    background: has ? 'rgba(1,118,211,0.08)' : 'var(--bg2)',
+                    background: has ? 'var(--brand-dim)' : 'var(--bg2)',
                     border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
-                    color: has ? '#0176D3' : 'var(--sl-400)',
+                    color: has ? 'var(--brand)' : 'var(--sl-400)',
                   }}
                 >
                   <TIcon size={11} color="currentColor" />
                   {t.label}
-                  {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#0176D3', display: 'inline-block', marginLeft: 1 }} />}
+                  {has && <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--brand)', display: 'inline-block', marginLeft: 1 }} />}
                 </button>
               )
             })}
@@ -1538,7 +1594,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : '—',                                                          color: 'var(--text)' },
           { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : '—',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
           { label: 'Bottleneck',               val: bottleneck?.name || '—',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
-          { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? '#0176D3' : '#1DD1A1' },
+          { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? 'var(--brand)' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
@@ -1580,12 +1636,12 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : '—'}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? fmtS(wt) : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#0176D3' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#0176D3' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
-                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#0176D3' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? 'var(--brand)' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? 'var(--brand)' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
@@ -1705,7 +1761,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
             gap: 6,
             padding: '8px 16px',
             borderRadius: 8,
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
             border: 'none',
             color: 'var(--bg)',
             cursor: 'pointer',

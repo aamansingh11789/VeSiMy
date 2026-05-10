@@ -2,7 +2,7 @@
 'use client'
 // ── app/dashboard/DashboardClient.tsx ────────────────────────────────────────
 
-import { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
   PlusIcon,
@@ -13,11 +13,13 @@ import {
   CrownIcon,
   ActivityIcon,
   ChevronRightIcon,
+  TrashIcon,
 } from '@/components/ui/Icons'
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
 import type { Profile, Project } from '@/lib/store'
 import { getIndustryTerms, getIndustryLabel, INDUSTRY_SECTORS, getIndustriesBySector } from '@/lib/industry-language'
+import { deleteProject } from '@/lib/db'
 import { getIndustryReferenceNames } from '@/lib/industry-reference-map'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
@@ -74,6 +76,18 @@ function UpgradeToast() {
 // Industry options loaded from lib/industry-language.ts via the IndustrySelector component
 
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+
+function getOverdueKaizen(project: any): number {
+  const steps = (project.steps || []) as any[]
+  const today = new Date().toISOString().split('T')[0]
+  return steps.reduce((count: number, step: any) => {
+    const items = step.toolData?.kaizen?.items || []
+    const overdue = items.filter((item: any) =>
+      item.dueDate && item.dueDate < today && item.status !== 'complete' && item.status !== 'verified'
+    ).length
+    return count + overdue
+  }, 0)
+}
 
 function getProjectScore(project: any) {
   // Uses actual joined step data for accurate project health scoring.
@@ -159,7 +173,8 @@ function MiniGauge({ score }: { score: number }) {
 }
 
 // ── Per-project health card ───────────────────────────────────────────────────
-function ProjectHealthCard({ project }: { project: Project }) {
+function ProjectHealthCard({ project, onDelete, isDeleting }: { project: Project; key?: any; onDelete?: (e: React.MouseEvent) => void; isDeleting?: boolean }) {
+  const overdueCount = getOverdueKaizen(project)
   const count = project.steps?.length || 0
   const score = getProjectScore(project)
   const color = getScoreColor(score)
@@ -222,22 +237,38 @@ function ProjectHealthCard({ project }: { project: Project }) {
                 )}
               </div>
 
-              <span
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  background: `${color}14`,
-                  color,
-                  border: `1px solid ${color}2b`,
-                  borderRadius: 999,
-                  padding: '3px 9px',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
-                  letterSpacing: 0.25,
-                }}
-              >
-                {status}
-              </span>
+              <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
+                {overdueCount > 0 && (
+                  <span
+                    title={`${overdueCount} overdue Kaizen action${overdueCount > 1 ? 's' : ''}`}
+                    style={{
+                      fontSize: 10, fontWeight: 700,
+                      background: 'var(--red-dim)', color: 'var(--red)',
+                      border: '1px solid rgba(192,24,12,0.22)',
+                      borderRadius: 999, padding: '3px 8px',
+                      whiteSpace: 'nowrap', flexShrink: 0,
+                    }}
+                  >
+                    ⚠ {overdueCount} overdue
+                  </span>
+                )}
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    background: `${color}14`,
+                    color,
+                    border: `1px solid ${color}2b`,
+                    borderRadius: 999,
+                    padding: '3px 9px',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    letterSpacing: 0.25,
+                  }}
+                >
+                  {status}
+                </span>
+              </div>
             </div>
 
             <div
@@ -282,20 +313,34 @@ function ProjectHealthCard({ project }: { project: Project }) {
             </div>
           </div>
 
-          <div
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: 10,
-              background: 'rgba(255,255,255,0.025)',
-              border: '1px solid transparent',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <ChevronRightIcon size={14} color="#4F4C74" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+            {onDelete && (
+              <button
+                onClick={onDelete}
+                disabled={isDeleting}
+                title="Delete project"
+                style={{
+                  width: 30, height: 30, borderRadius: 8,
+                  background: 'transparent', border: '1px solid transparent',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', color: '#6B6A8A', transition: 'all 0.15s',
+                  opacity: isDeleting ? 0.5 : 1,
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(192,64,42,0.12)'; (e.currentTarget as HTMLElement).style.color = '#C0402A'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(192,64,42,0.2)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#6B6A8A'; (e.currentTarget as HTMLElement).style.borderColor = 'transparent' }}
+              >
+                <TrashIcon size={13} />
+              </button>
+            )}
+            <div
+              style={{
+                width: 34, height: 34, borderRadius: 10,
+                background: 'rgba(255,255,255,0.025)', border: '1px solid transparent',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <ChevronRightIcon size={14} color="#4F4C74" />
+            </div>
           </div>
         </div>
       </div>
@@ -516,12 +561,32 @@ export function DashboardClient({ profile, initialProjects }: Props) {
   // ── All hooks must be declared before any conditional logic ──────────────
   const { identify } = useAnalytics()
   const router = useRouter()
-  const [projects] = useState(initialProjects)
+  const [projects, setProjects] = useState(initialProjects)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
   const [creating, setCreating] = useState(false)
   const [showNew, setShowNew] = useState(false)
   const [form, setForm] = useState({ name: '', industry: '', customer: '' })
   const [view, setView] = useState<'cards' | 'list'>('cards')
   const [seedingRef, setSeedingRef] = useState(false)
+
+  // ── Project delete handler ─────────────────────────────────────────────────
+  async function handleDeleteProject(e: React.MouseEvent, id: string, name: string) {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return
+    setDeletingId(id)
+    try {
+      await deleteProject(id)
+      setProjects(prev => prev.filter(p => p.id !== id))
+      toast.success('Project deleted')
+      // Refresh to sync projects_count in profile
+      router.refresh()
+    } catch {
+      toast.error('Could not delete project')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   useEffect(() => {
     if (profile?.id) {
@@ -687,7 +752,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 gap: 8,
                 padding: '6px 10px',
                 borderRadius: 999,
-                background: 'rgba(1,118,211,0.08)',
+                background: 'var(--brand-dim)',
                 border: '1px solid rgba(1,118,211,0.14)',
                 marginBottom: 14,
               }}
@@ -698,7 +763,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   fontSize: 10,
                   letterSpacing: 1.2,
                   textTransform: 'uppercase',
-                  color: '#0176D3',
+                  color: 'var(--brand)',
                   fontWeight: 700,
                 }}
               >
@@ -752,7 +817,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
-                      background: view === v ? 'rgba(1,118,211,0.12)' : 'transparent',
+                      background: view === v ? 'rgba(22,112,212,0.14)' : 'transparent',
                       color: view === v ? '#0176D3' : 'var(--text2)',
                       fontWeight: view === v ? 700 : 500,
                     }}
@@ -787,7 +852,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               gap: 16,
               flexWrap: 'wrap',
               background:
-                'linear-gradient(135deg, rgba(1,118,211,0.06), rgba(1,118,211,0.02) 42%, rgba(248,247,245,0.97))',
+                'linear-gradient(135deg, rgba(22,112,212,0.06), rgba(22,112,212,0.02) 42%, rgba(245,247,250,0.97))',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -796,7 +861,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   width: 34,
                   height: 34,
                   borderRadius: 10,
-                  background: 'rgba(1,118,211,0.12)',
+                  background: 'rgba(22,112,212,0.14)',
                   border: '1px solid rgba(1,118,211,0.22)',
                   display: 'flex',
                   alignItems: 'center',
@@ -807,7 +872,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               </div>
 
               <div>
-                <div style={{ fontSize: 13, color: '#0176D3', fontWeight: 700 }}>
+                <div style={{ fontSize: 13, color: 'var(--brand)', fontWeight: 700 }}>
                   You’ve reached your trial project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
@@ -858,10 +923,10 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
           <StatCard
             label="Last Active"
-            value={projects.length > 0 ? new Date(projects[0].updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}
+            value={`${profile.projects_count} projects`}
             icon={ZapIcon}
             color="#F4A623"
-            hint="Most recent project update"
+            hint="Keep the momentum going"
           />
         </div>
 
@@ -899,7 +964,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               {refNames.length > 0 && (
                 <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {refNames.map(name => (
-                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 6, padding: '3px 9px' }}>
+                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 6, padding: '3px 9px' }}>
                       {name.replace('Reference — ', '')}
                     </div>
                   ))}
@@ -918,7 +983,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             <span style={{ fontSize: 16 }}>🌱</span>
             <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
               <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
-              {' '}20% off Pro — use <code style={{ color: '#C49B2E', fontWeight: 700 }}>SPRING25</code>
+              {' '}20% off Pro — use <code style={{ color: 'var(--amber)', fontWeight: 700 }}>SPRING25</code>
               {' '}at checkout. Ends 20 April 2026.
             </span>
             <Link href="/pricing" style={{ fontSize: 12, fontWeight: 700, color: '#C49B2E', textDecoration: 'none', whiteSpace: 'nowrap' }}>View pricing →</Link>
@@ -945,10 +1010,10 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(1,118,211,0.08)',
+                background: 'var(--brand-dim)',
                 border: '1px solid rgba(1,118,211,0.16)',
                 fontSize: 34,
-                color: '#0176D3',
+                color: 'var(--brand)',
               }}
             >
               ⊚
@@ -1001,16 +1066,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 flexWrap: 'wrap',
               }}
             >
-              <h2
-                style={{
-                  fontSize: 11,
-                  color: 'var(--text2)',
-                  fontFamily: 'monospace',
-                  letterSpacing: 1.6,
-                  textTransform: 'uppercase',
-                }}
-              >
-                Your Projects
+              <h2 className="section-label">
+                Active Projects
               </h2>
 
               {recentProject && (
@@ -1018,7 +1075,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   href={`/project/${recentProject.id}`}
                   style={{
                     fontSize: 12,
-                    color: '#0176D3',
+                    color: 'var(--brand)',
                     textDecoration: 'none',
                     display: 'flex',
                     alignItems: 'center',
@@ -1040,7 +1097,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 }}
               >
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} {...{project: p}} />
+                  <ProjectHealthCard key={p.id} project={p as Project} onDelete={(e) => handleDeleteProject(e, p.id, p.name)} isDeleting={deletingId === p.id} />
                 ))}
 
                 {!atLimit && (
@@ -1085,7 +1142,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {sorted.map((p) => (
-                  <ProjectHealthCard key={p.id} {...{project: p}} />
+                  <ProjectHealthCard key={p.id} project={p as Project} onDelete={(e) => handleDeleteProject(e, p.id, p.name)} isDeleting={deletingId === p.id} />
                 ))}
               </div>
             )}
@@ -1126,7 +1183,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   gap: 8,
                   padding: '6px 10px',
                   borderRadius: 999,
-                  background: 'rgba(1,118,211,0.08)',
+                  background: 'var(--brand-dim)',
                   border: '1px solid rgba(1,118,211,0.14)',
                   marginBottom: 14,
                 }}
@@ -1135,7 +1192,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 <span
                   style={{
                     fontSize: 10,
-                    color: '#0176D3',
+                    color: 'var(--brand)',
                     fontWeight: 700,
                     letterSpacing: 1.2,
                     textTransform: 'uppercase',

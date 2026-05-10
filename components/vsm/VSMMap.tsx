@@ -201,8 +201,8 @@ export function VSMMap({ steps, branches, project }: Props) {
   const pctX = (TOTAL_W-PCTRL_W)/2
 
   const TOTAL_H = branchIds.length > 0
-    ? BRANCH_START_Y + branchIds.length*(BRANCH_LANE_H+BRANCH_GAP) + 56
-    : TL_BASE + 56
+    ? BRANCH_START_Y + branchIds.length*(BRANCH_LANE_H+BRANCH_GAP) + 70
+    : TL_BASE + 70
 
   const svgContent = (bg = '#FFFFFF') => (<>
     <defs>
@@ -312,10 +312,32 @@ export function VSMMap({ steps, branches, project }: Props) {
       )
     })}
 
-    {/* ── Timeline ── */}
-    <line x1={flowX-4} y1={TL_BASE} x2={sx(n-1)+PW+4} y2={TL_BASE} stroke="#374151" strokeWidth={1.5} />
-    <text x={flowX-6} y={TL_BASE-8} textAnchor="end" fill="#059669" fontSize={8} fontFamily="monospace" fontWeight={700}>VA</text>
-    <text x={flowX-6} y={TL_BASE+12} textAnchor="end" fill="#EF4444" fontSize={8} fontFamily="monospace" fontWeight={700}>NVA</text>
+    {/* ── Timeline Bar — ISO 22468 style ── */}
+    {/* Section label */}
+    <text x={flowX} y={TL_BASE-42} fill="#374151" fontSize={9} fontFamily="monospace" fontWeight={700} letterSpacing={1}>
+      PROCESS TIMELINE
+    </text>
+    {/* VA row label */}
+    <text x={flowX-6} y={TL_BASE-8} textAnchor="end" fill="#16803C" fontSize={8} fontFamily="monospace" fontWeight={700}>VA</text>
+    {/* Timeline baseline */}
+    <line x1={flowX-4} y1={TL_BASE} x2={sx(n-1)+PW+4} y2={TL_BASE} stroke="#D1D5DB" strokeWidth={1} />
+    {/* NVA row label */}
+    <text x={flowX-6} y={TL_BASE+18} textAnchor="end" fill="#DC2626" fontSize={8} fontFamily="monospace" fontWeight={700}>NVA</text>
+    {/* Summary PCE bar */}
+    {pce !== null && (() => {
+      const barW = sx(n-1)+PW - flowX
+      const vaW  = Math.max(4, Math.round(barW * (pce/100)))
+      const nvaW = barW - vaW
+      return (
+        <g>
+          <rect x={flowX} y={TL_BASE+30} width={vaW} height={8} fill="#16803C" opacity={0.6} rx={2} />
+          <rect x={flowX+vaW} y={TL_BASE+30} width={nvaW} height={8} fill="#DC2626" opacity={0.3} rx={2} />
+          <text x={flowX+vaW/2} y={TL_BASE+38+10} textAnchor="middle" fill="#16803C" fontSize={7.5} fontFamily="monospace" fontWeight={700}>
+            {pce.toFixed(1)}% VA
+          </text>
+        </g>
+      )
+    })()}
 
     {/* Takt time reference line */}
     {takt > 0 && (() => {

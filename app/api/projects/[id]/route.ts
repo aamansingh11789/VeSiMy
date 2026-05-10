@@ -54,7 +54,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     const { data, error } = await supabase
       .from('projects').update(updates).eq('id', params.id).eq('user_id', user.id).select().single()
 
-    if (error) return NextResponse.json({ error: 'Failed to load project.' }, { status: 500 })
+    if (error) return NextResponse.json({ error: error.message || 'Failed to update project.' }, { status: 500 })
     return NextResponse.json({ project: data })
   } catch (err: any) {
     console.error('[projects/[id] PATCH]', err)
@@ -72,7 +72,7 @@ export async function DELETE(_: NextRequest, { params }: Params) {
     const { error } = await supabase
       .from('projects').delete().eq('id', params.id).eq('user_id', user.id)
 
-    if (error) return NextResponse.json({ error: 'Failed to load project.' }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'Failed to delete project.' }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch (err: any) {
     console.error('[projects/[id] DELETE]', err)

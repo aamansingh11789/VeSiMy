@@ -17,12 +17,13 @@ import { IndustrySelector } from '@/components/ui/IndustrySelector'
 
 const PLAN_COLOR: Record<string, string> = {
   trial:        'var(--text3)',
-  trialing:     '#0176D3',
-  pro:          '#0176D3',
+  trialing:     'var(--brand)',
+  pro:          'var(--brand)',
   lifetime:     '#C49B2E',
   enterprise:   '#8C44CC',
   trial_expired:'#C0402A',
   free:         'var(--text3)',
+  // 'free' is legacy — treat same as trial
 }
 
 interface Props {
@@ -37,7 +38,8 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
   const [saving,        setSaving]        = useState(false)
   const [name,          setName]          = useState(profile?.full_name || '')
 
-  const planKey    = (profile?.plan_tier || 'trial') as keyof typeof PLANS
+  const rawTier    = profile?.plan_tier || 'trial'
+  const planKey    = (rawTier === 'free' ? 'trial' : rawTier) as keyof typeof PLANS
   const plan       = PLANS[planKey as keyof typeof PLANS] || PLANS.trial
   const isPaid = isPaidProfile(profile)
   const isLifetime = planKey === 'lifetime' || profile?.lifetime_access
@@ -155,14 +157,14 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
         <section style={{ marginBottom:32 }}>
           <div className="card" style={{ padding:24, background:'rgba(1,118,211,0.03)', borderColor:'rgba(1,118,211,0.15)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
-              <CrownIcon size={16} color='#0176D3' />
-              <span style={{ fontSize:15, fontWeight:700, color:'#0176D3' }}>Upgrade to Pro</span>
+              <CrownIcon size={16} color='var(--brand)' />
+              <span style={{ fontSize:15, fontWeight:700, color:'var(--brand)' }}>Upgrade to Pro</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day trial when upgrading</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:20 }}>
               {PLANS.pro.features.map((f,i) => (
                 <div key={i} style={{ display:'flex', alignItems:'center', gap:8 }}>
-                  <CheckIcon size={12} color='#0176D3' strokeWidth={3} />
+                  <CheckIcon size={12} color='var(--brand)' strokeWidth={3} />
                   <span style={{ fontSize:12, color:'#B0B0C8' }}>{f}</span>
                 </div>
               ))}

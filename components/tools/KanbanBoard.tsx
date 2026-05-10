@@ -37,8 +37,6 @@ const COL_COLORS = [
   '#1DD1A1','#F4A623','#E84393','#00BCD4','#FF6B6B',
 ]
 
-type BoardStep = Record<string, any>
-
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function isOverWIP(col: KanbanColumn): boolean {
   return !!(col.wip_limit && col.cards && col.cards.length > col.wip_limit)
@@ -411,7 +409,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
 // ══════════════════════════════════════════════════════════════════════════════
 interface KanbanBoardProps {
   projectId:  string
-  steps:      BoardStep[]
+  steps:      Step[]
   columns:    KanbanColumn[]
   onColumnsChange: (cols: KanbanColumn[]) => void
   showToast:  (msg: string, type?: 'success' | 'error' | 'info') => void

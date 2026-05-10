@@ -158,49 +158,88 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           onChange={(e) => setProblem(e.target.value)}
         />
 
-        <div style={{ display: 'grid', gap: 8 }}>
-          {whys.map((w, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '28px 1fr',
-                gap: 8,
-                alignItems: 'start',
-                background: 'transparent',
-                border: '1px solid var(--border)',
-                borderRadius: 10,
-                padding: 8,
-              }}
-            >
-              <div
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 8,
-                  background: 'rgba(1,118,211,0.1)',
-                  border: '1px solid rgba(1,118,211,0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: '#0176D3',
-                  marginTop: 2,
-                }}
-              >
-                {i + 1}
+        {/* Causal chain — each Why connects to the previous answer */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          {whys.map((w, i) => {
+            const prevAnswer = i === 0 ? problem : whys[i - 1]
+            const hasMinLength = w.trim().length >= 15
+            const isFilled = w.trim().length > 0
+            const isShallow = isFilled && w.trim().length < 15
+            return (
+              <div key={i} style={{ position: 'relative' }}>
+                {/* Causal connector arrow between entries */}
+                {i > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 0 4px 14px', color: 'var(--text3)', fontSize: 11, fontFamily: 'var(--font-mono)' }}>
+                    <div style={{ width: 1, height: 20, background: 'var(--border)', flexShrink: 0, marginLeft: 13 }} />
+                    <span style={{ fontSize: 9, letterSpacing: 0.5, color: 'var(--text4)' }}>BECAUSE ↓</span>
+                  </div>
+                )}
+                <div style={{
+                  border: `1.5px solid ${isFilled && hasMinLength ? 'rgba(22,112,212,0.30)' : isShallow ? 'rgba(217,119,6,0.35)' : 'var(--border)'}`,
+                  borderRadius: 10,
+                  padding: '10px 12px 10px 10px',
+                  background: isFilled && hasMinLength ? 'rgba(22,112,212,0.03)' : '#FFFFFF',
+                  transition: 'border-color 0.15s, background 0.15s',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    {/* Step number badge */}
+                    <div style={{
+                      width: 26, height: 26, borderRadius: 7, flexShrink: 0,
+                      background: isFilled && hasMinLength ? 'rgba(22,112,212,0.12)' : 'var(--bg3)',
+                      border: `1px solid ${isFilled && hasMinLength ? 'rgba(22,112,212,0.25)' : 'var(--border)'}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 11, fontWeight: 700,
+                      color: isFilled && hasMinLength ? 'var(--brand)' : 'var(--text3)',
+                      marginTop: 1,
+                    }}>
+                      {i + 1}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      {/* Show previous answer as context prompt */}
+                      {prevAnswer && (
+                        <div style={{ fontSize: 10, color: 'var(--text3)', fontStyle: 'italic', marginBottom: 4, lineHeight: 1.4, paddingLeft: 1 }}>
+                          Why does <em style={{ color: 'var(--text2)' }}>"{prevAnswer.slice(0, 80)}{prevAnswer.length > 80 ? '…' : ''}"</em> happen?
+                        </div>
+                      )}
+                      <textarea
+                        className="input"
+                        rows={2}
+                        placeholder={i === 0 ? 'Why does this problem occur?' : 'Why does that happen? Go deeper…'}
+                        style={{ minHeight: 52, fontSize: 13 }}
+                        value={w}
+                        onChange={(e) => setWhy(i, e.target.value)}
+                      />
+                      {/* Validation hint */}
+                      {isShallow && (
+                        <div style={{ fontSize: 10, color: 'var(--warning)', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
+                          <span>⚠</span> Too brief — describe the mechanism, not just the symptom
+                        </div>
+                      )}
+                      {isFilled && hasMinLength && i < 4 && (
+                        <div style={{ fontSize: 10, color: 'var(--brand)', marginTop: 4 }}>
+                          ✓ Good — ask why this happens in Why {i + 2}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <textarea
-                className="input"
-                rows={2}
-                placeholder={`Why ${i + 1}…`}
-                style={{ minHeight: 64 }}
-                value={w}
-                onChange={(e) => setWhy(i, e.target.value)}
-              />
-            </div>
+            )
+          })}
+        </div>
+
+        {/* Depth indicator */}
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center', padding: '4px 0' }}>
+          {whys.map((w, i) => (
+            <div key={i} style={{
+              flex: 1, height: 4, borderRadius: 999,
+              background: w.trim().length >= 15 ? 'var(--brand)' : w.trim().length > 0 ? 'var(--amber)' : 'var(--sl-200)',
+              transition: 'background 0.2s',
+            }} />
           ))}
+          <span style={{ fontSize: 10, color: 'var(--text3)', whiteSpace: 'nowrap', marginLeft: 4 }}>
+            {whys.filter(w => w.trim().length >= 15).length}/5 complete
+          </span>
         </div>
 
         <div

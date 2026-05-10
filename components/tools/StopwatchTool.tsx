@@ -100,6 +100,19 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
   const handleSave = async () => {
     setSaving(true)
 
+    // Statistical calculations per review recommendation
+    const validMs = laps.filter((l, i) => !excluded.has(i)).map(l => l.t)
+    const n = validMs.length
+    const meanMs = n > 0 ? validMs.reduce((a, b) => a + b, 0) / n : 0
+    const variance = n > 1
+      ? validMs.reduce((a, v) => a + Math.pow(v - meanMs, 2), 0) / (n - 1)
+      : 0
+    const stdDevMs = Math.sqrt(variance)
+    const cv = meanMs > 0 ? (stdDevMs / meanMs) * 100 : 0
+    // Cp = (USL - LSL) / (6σ) — use ±30% of mean as natural spec limits when not set
+    const usl = meanMs * 1.30, lsl = Math.max(0, meanMs * 0.70)
+    const cp = stdDevMs > 0 ? (usl - lsl) / (6 * stdDevMs) : null
+
     const payload = {
       laps,
       excluded: [...excluded],
@@ -107,6 +120,10 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       mean: effectiveMean,
       min: minT,
       max: maxT,
+      stdDev: Math.round(stdDevMs),
+      cv: Math.round(cv * 10) / 10,
+      cp: cp ? Math.round(cp * 100) / 100 : null,
+      n,
       savedAt: Date.now(),
     }
 
@@ -120,6 +137,16 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       setSaving(false)
     }
   }
+
+  // Compute std dev and CV from current lap data for live display
+  const validLapTimes = laps.filter((_, i) => !excluded.has(i)).map(l => l.t)
+  const n_obs = validLapTimes.length
+  const m_obs = n_obs > 0 ? validLapTimes.reduce((a, b) => a + b, 0) / n_obs : 0
+  const v_obs = n_obs > 1 ? validLapTimes.reduce((a, v) => a + Math.pow(v - m_obs, 2), 0) / (n_obs - 1) : 0
+  const sd_obs = Math.sqrt(v_obs)
+  const cv_obs = m_obs > 0 ? (sd_obs / m_obs * 100).toFixed(1) : null
+  const stable = cv_obs !== null && parseFloat(cv_obs) < 15
+  const cp_obs = sd_obs > 0 ? ((m_obs * 0.60) / (6 * sd_obs)).toFixed(2) : null
 
   const statCards = [
     ['Mean', fmtMs(mean || effectiveMean)],
