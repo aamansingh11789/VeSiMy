@@ -332,7 +332,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid var(--border)', flexShrink: 0, background: 'white' }}>
         <button onClick={save} disabled={saving} style={{
           width: '100%', padding: '11px 0', borderRadius: 9, border: 'none',
-          background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+          background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#B8912E,#D4A843)',
           color: saving ? 'var(--text3)' : 'white', fontSize: 14, fontWeight: 700, cursor: saving ? 'wait' : 'pointer',
         }}>
           {saving ? 'Saving…' : 'Save step'}

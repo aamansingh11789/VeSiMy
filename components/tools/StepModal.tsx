@@ -91,7 +91,7 @@ const FLOW_TYPES = [
 
 const VA_TYPES = [
   { value: 'va',   label: 'Value-Add (VA)',                color: '#1DD1A1', bg: 'rgba(29,209,161,0.08)',  hint: 'Customer pays for this — directly transforms the product or service' },
-  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#0176D3', bg: 'rgba(1,118,211,0.08)',   hint: 'Required but adds no customer value — inspections, compliance, setup' },
+  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#D4A843', bg: 'rgba(212,168,67,0.08)',   hint: 'Required but adds no customer value — inspections, compliance, setup' },
   { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#FF6B6B', bg: 'rgba(255,107,107,0.08)', hint: 'Pure waste — target for elimination first' },
 ]
 
@@ -133,7 +133,7 @@ function FieldLabel({ field, children }: { field: any; children?: any }) {
             onClick={() => setOpen(v => !v)}
             style={{
               width: 16, height: 16, borderRadius: '50%', cursor: 'pointer',
-              background: open ? 'var(--brand)' : 'rgba(1,118,211,0.14)',
+              background: open ? 'var(--brand)' : 'rgba(212,168,67,0.14)',
               border: '1px solid rgba(1,118,211,0.35)',
               color: open ? '#0D0C0A' : 'var(--brand)',
               fontSize: 9, fontWeight: 800,
@@ -198,7 +198,7 @@ function ValidatedInput({ field, value, onChange, hint, ...rest }) {
         <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 3, lineHeight: 1.4 }}>{hint}</div>
       )}
       {warn && (
-        <div style={{ fontSize: 10, color: '#0176D3', marginTop: 3, display: 'flex', alignItems: 'flex-start', gap: 4, lineHeight: 1.4 }}>
+        <div style={{ fontSize: 10, color: '#D4A843', marginTop: 3, display: 'flex', alignItems: 'flex-start', gap: 4, lineHeight: 1.4 }}>
           <AlertIcon size={13} color="#F4A623"/><span>{warn}</span>
         </div>
       )}
@@ -421,7 +421,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
         {/* ── Operator Steps (Standard Work & Yamazumi) ── */}
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowOpSteps(v => !v)}
-            style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#0176D3', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#D4A843', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Operator Steps — Standard Work &amp; Yamazumi ({opSteps.length} tasks)</span>
             <span style={{ fontSize: 10 }}>{showOpSteps ? '▲ Hide' : '▼ Expand'}</span>
           </button>
@@ -434,12 +434,12 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                 <div>
                   <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', gap: 1, marginBottom: 4 }}>
                     {opTotal > 0 && <div style={{ width: `${(vaT/opTotal)*100}%`, background: '#1DD1A1' }} />}
-                    {opTotal > 0 && <div style={{ width: `${(nnvT/opTotal)*100}%`, background: '#0176D3' }} />}
+                    {opTotal > 0 && <div style={{ width: `${(nnvT/opTotal)*100}%`, background: '#D4A843' }} />}
                     {opTotal > 0 && <div style={{ width: `${(nvT/opTotal)*100}%`, background: '#FF6B6B' }} />}
                   </div>
                   <div style={{ display: 'flex', gap: 12, fontSize: 10, color: 'var(--text3)' }}>
                     <span style={{ color: '#1DD1A1' }}>VA: {vaT}s ({Math.round(vaT/opTotal*100)}%)</span>
-                    <span style={{ color: '#0176D3' }}>NNVA: {nnvT}s</span>
+                    <span style={{ color: '#D4A843' }}>NNVA: {nnvT}s</span>
                     <span style={{ color: '#FF6B6B' }}>NVA: {nvT}s ({Math.round(nvT/opTotal*100)}%)</span>
                   </div>
                 </div>
@@ -466,7 +466,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                 </select>
                 <input className="input" style={{ flex: 3, minWidth: 100, fontSize: 12 }} placeholder="Task name…" value={newStep.name} onChange={e => setNewStep(p => ({ ...p, name: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addOpStep()} />
                 <input className="input" type="number" style={{ flex: 1, minWidth: 60, fontSize: 12 }} placeholder="sec" value={newStep.time} onChange={e => setNewStep(p => ({ ...p, time: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addOpStep()} />
-                <button type="button" onClick={addOpStep} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(1,118,211,0.3)', color: '#0176D3', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36, minHeight: 36 }}>+</button>
+                <button type="button" onClick={addOpStep} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#D4A843', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36, minHeight: 36 }}>+</button>
               </div>
             </div>
           )}

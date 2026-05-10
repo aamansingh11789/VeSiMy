@@ -10,7 +10,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
-const BRAND = '#0176D3'
+const BRAND = '#D4A843'
 const mono  = '"IBM Plex Mono",ui-monospace,monospace'
 
 const STATIC_COMMANDS = [

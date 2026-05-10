@@ -144,7 +144,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                   {/* Show extracted fields as chips */}
                   {(s.cycle_time||s.wait_time||s.setup_time||s.operators||s.department||s.defect_rate||s.uptime||s.wip) && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:6, paddingLeft:32 }}>
-                      {s.department        && <Chip label={s.department} color="#0176D3" />}
+                      {s.department        && <Chip label={s.department} color="#D4A843" />}
                       {s.operators         && <Chip label={`${s.operators} ops`} color="#6CB9FC" />}
                       {s.cycle_time        && <Chip label={`CT ${s.cycle_time>=60?(s.cycle_time/60).toFixed(0)+'min':s.cycle_time+'s'}`} color="#1DD1A1" />}
                       {s.wait_time         && <Chip label={`Wait ${s.wait_time>=60?(s.wait_time/60).toFixed(0)+'min':s.wait_time+'s'}`} color="#F4A623" />}

@@ -49,7 +49,7 @@ export default function ComparisonPage() {
           <p style={{ marginBottom: 18 }}>For small businesses, that means you may get answers and automation without getting a repeatable system for performance improvement. You end up doing a lot of the thinking and cleanup yourself.</p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why VeSiMy is different</h2>
-          <p style={{ marginBottom: 18 }}>VeSiMy is built specifically for process improvement, not task completion. It uses Lean and Six Sigma continuous improvement tools designed for small businesses across more than 68 industries. Its AI is powered by an ISO-verified knowledge base, which gives teams a more structured and trustworthy way to improve operations.</p>
+          <p style={{ marginBottom: 18 }}>VeSiMy is built specifically for process improvement, not task completion. It uses Lean and Six Sigma continuous improvement tools designed for small businesses across more than 68 industries. Its AI is powered by an Lean and VSM-structured knowledge base, which gives teams a more structured and trustworthy way to improve operations.</p>
           <p style={{ marginBottom: 18 }}>The difference is in what the AI knows. General chatbots know language. VeSiMy's AI knows Lean methodology — takt time, process cycle efficiency, SMED, PDCA, 8D, value stream mapping. It gives you operationally correct guidance, not polished-sounding generic advice.</p>
 
           {/* Comparison table */}
@@ -66,7 +66,7 @@ export default function ComparisonPage() {
                 {[
                   ['Built for process improvement', '✓', '—'],
                   ['Lean Six Sigma methodology', '✓', '—'],
-                  ['ISO-verified knowledge base', '✓', '—'],
+                  ['Lean and VSM-structured knowledge base', '✓', '—'],
                   ['Value stream mapping', '✓', '—'],
                   ['68+ industry templates', '✓', '—'],
                   ['General-purpose task execution', 'Partial', '✓'],

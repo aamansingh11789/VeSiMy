@@ -26,9 +26,9 @@ const NAVY = {
   400: '#4A7BAA',
   300: '#7AAECF',
   200: '#A8CDE6',
-  100: '#D6E8FF',
+  100: '#FDF3D8',
 }
-const BLUE    = '#1E7FEA'
+const BLUE    = '#D4A843'
 const BLUE_LT = '#A8CDE6'
 const WHITE   = '#FFFFFF'
 const VIOLET  = '#8C44CC'
@@ -156,7 +156,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               color: NAVY[300], flexShrink: 0,
               transition: 'all .15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = NAVY[800]; e.currentTarget.style.color = WHITE }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212,168,67,0.08)'; e.currentTarget.style.color = '#F5E6A8' }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = NAVY[400] }}
           >
             {/* Chevron icon — points left when open, right when collapsed */}
@@ -180,9 +180,9 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             }}>
               <span style={{ fontSize: 11, color: NAVY[300], fontWeight: 600 }}>14-Day Trial</span>
               <Link href="/pricing" style={{
-                fontSize: 11, color: BLUE_LT, fontWeight: 700,
+                fontSize: 11, fontWeight: 700,
                 textDecoration: 'none',
-                background: BLUE, padding: '3px 10px', borderRadius: 4,
+                background: 'linear-gradient(135deg,#D4A843,#B8912E)', color: '#1A0E00', padding: '3px 10px', borderRadius: 4,
               }}>
                 Upgrade
               </Link>
@@ -195,7 +195,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             }}>
               <div style={{
                 width: 20, height: 20, borderRadius: 5,
-                background: isGold ? 'rgba(1,118,211,0.3)' : 'rgba(140,68,204,0.3)',
+                background: isGold ? 'rgba(212,168,67,0.3)' : 'rgba(140,68,204,0.3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <CrownIcon size={11} color={isGold ? BLUE_LT : VIOLET} />
@@ -244,8 +244,8 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                   justifyContent: collapsed ? 'center' : 'flex-start',
                   fontSize: 13, fontWeight: active ? 700 : 500,
                   textDecoration: 'none',
-                  color: active ? '#FFFFFF' : '#7AAECF',
-                  background: active ? 'rgba(30,127,234,0.18)' : 'transparent',
+                  color: active ? '#F5E6A8' : '#7AAECF',
+                  background: active ? 'rgba(212,168,67,0.18)' : 'transparent',
                   borderLeft: collapsed ? 'none' : `3px solid ${active ? '#E8941A' : 'transparent'}`,
                   borderRadius: collapsed ? 8 : '0 6px 6px 0',
                   margin: collapsed ? '0 8px' : undefined,

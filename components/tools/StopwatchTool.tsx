@@ -273,7 +273,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               fontSize: 'clamp(30px, 8vw, 42px)',
               fontFamily: 'monospace',
               fontWeight: 700,
-              color: running ? '#0176D3' : 'var(--text)',
+              color: running ? '#D4A843' : 'var(--text)',
               lineHeight: 1.1,
             }}
           >
@@ -344,7 +344,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 4 }}>
                   {label}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#0176D3' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#D4A843' }}>
                   {val}
                 </div>
               </div>

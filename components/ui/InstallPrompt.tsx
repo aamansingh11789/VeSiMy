@@ -88,7 +88,7 @@ export function InstallPrompt() {
         <div style={{
           width: 44, height: 44, borderRadius: 10, flexShrink: 0,
           background: 'linear-gradient(135deg, var(--border), var(--border2))',
-          border: '1px solid rgba(1,118,211,0.3)',
+          border: '1px solid rgba(212,168,67,0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 22,
         }}>
@@ -110,7 +110,7 @@ export function InstallPrompt() {
           <button
             onClick={handleInstall}
             style={{
-              background: 'linear-gradient(135deg, #0a5eaa, #0176D3)',
+              background: 'linear-gradient(135deg, #B8912E, #D4A843)',
               color:      'var(--bg)',
               border:     'none',
               borderRadius: 7,
@@ -156,7 +156,7 @@ export function InstallPrompt() {
         right:      0,
         zIndex:     9999,
         background: 'var(--bg3)',
-        borderTop:  '1px solid rgba(1,118,211,0.3)',
+        borderTop:  '1px solid rgba(212,168,67,0.3)',
         padding:    '20px 24px 32px',
         animation:  'slideUpFull 0.3s ease',
       }}>
@@ -189,10 +189,10 @@ export function InstallPrompt() {
           }}>
             <div style={{
               width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-              background: 'rgba(1,118,211,0.12)',
-              border:     '1px solid rgba(1,118,211,0.25)',
+              background: 'rgba(212,168,67,0.12)',
+              border:     '1px solid rgba(212,168,67,0.25)',
               display:    'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 13, color: '#0176D3', fontWeight: 700,
+              fontSize: 13, color: '#D4A843', fontWeight: 700,
             }}>{step.icon}</div>
             <div style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.5, paddingTop: 4 }}>
               {step.text}

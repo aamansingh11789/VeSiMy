@@ -38,7 +38,7 @@ function downloadHTML(html: string, filename: string) {
   URL.revokeObjectURL(url)
 }
 
-function renderSection(title: string, rows: [string, string][], color = '#0176D3') {
+function renderSection(title: string, rows: [string, string][], color = '#D4A843') {
   return `
     <div class="section">
       <div class="section-title" style="color:${color};border-color:${color};">${title}</div>
@@ -58,8 +58,8 @@ function baseTemplate(docType: string, docId: string, projectName: string, date:
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 13px; color: #1A1A1A; background: #fff; padding: 36px 44px; max-width: 860px; margin: 0 auto; }
-    .header { border-bottom: 3px solid #0176D3; padding-bottom: 18px; margin-bottom: 28px; }
-    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #0176D3; font-weight: 700; margin-bottom: 6px; }
+    .header { border-bottom: 3px solid #D4A843; padding-bottom: 18px; margin-bottom: 28px; }
+    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #D4A843; font-weight: 700; margin-bottom: 6px; }
     .doc-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 4px; }
     .doc-meta { font-size: 11px; color: #666; font-family: monospace; }
     .section { margin-bottom: 22px; }
@@ -73,7 +73,7 @@ function baseTemplate(docType: string, docId: string, projectName: string, date:
     .footer { margin-top: 32px; padding-top: 14px; border-top: 1px solid #E8E5E0; font-size: 10px; color: #999; font-family: monospace; display: flex; justify-content: space-between; }
     .action-list { list-style: none; padding: 0; }
     .action-list li { padding: 5px 0; border-bottom: 1px solid #F0EDE8; font-size: 12px; line-height: 1.6; display: flex; gap: 10px; }
-    .action-num { width: 20px; height: 20px; border-radius: 50%; background: #0176D3; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .action-num { width: 20px; height: 20px; border-radius: 50%; background: #D4A843; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     @media print {
       body { padding: 20px; }
       .no-print { display: none; }
@@ -81,7 +81,7 @@ function baseTemplate(docType: string, docId: string, projectName: string, date:
   </style>
 </head>
 <body>
-  <p class="no-print" style="background:#EEF4FB;border:1px solid #0176D3;border-radius:6px;padding:8px 14px;font-size:11px;color:#0176D3;margin-bottom:20px;">
+  <p class="no-print" style="background:#EEF4FB;border:1px solid #D4A843;border-radius:6px;padding:8px 14px;font-size:11px;color:#D4A843;margin-bottom:20px;">
     TIP: To save as PDF: File → Print → Destination: Save as PDF
   </p>
   <div class="header">

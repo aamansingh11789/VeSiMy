@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Lean Six Sigma for Small Businesses That Actually Gets Used — VeSiMy',
-  description: 'VeSiMy is the execution layer for Lean Six Sigma. Turn training into real projects, repeatable habits, and measurable improvement. AI-powered, ISO-verified, built for small teams.',
+  description: 'VeSiMy is the execution layer for Lean Six Sigma. Turn training into real projects, repeatable habits, and measurable improvement. AI-powered, structured around Lean and Six Sigma, built for small teams.',
   keywords: [
     'Lean Six Sigma for small businesses',
     'Lean Six Sigma training not working',

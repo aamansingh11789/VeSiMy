@@ -375,9 +375,9 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
         {(['steps', 'analysis', 'targets'] as const).map(tab => (
           <button key={tab} type="button" onClick={() => setActiveTab(tab)} style={{
             padding: '7px 14px', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-            background: activeTab === tab ? 'rgba(1,118,211,0.08)' : 'transparent',
-            borderBottom: activeTab === tab ? '2px solid #0176D3' : '2px solid transparent',
-            color: activeTab === tab ? '#0176D3' : 'var(--text3)',
+            background: activeTab === tab ? 'rgba(212,168,67,0.08)' : 'transparent',
+            borderBottom: activeTab === tab ? '2px solid #D4A843' : '2px solid transparent',
+            color: activeTab === tab ? '#D4A843' : 'var(--text3)',
             border: 'none', fontFamily: 'inherit', textTransform: 'capitalize',
             transition: 'all .15s',
           }}>
@@ -397,7 +397,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
           {/* Live timer indicator */}
           {timerActive && (
-            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(1,118,211,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#0176D3' }}>
+            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#D4A843' }}>
               <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block', fontFamily:"monospace", fontSize:11 }}>REC</span>
               <span>Timer running: <strong style={{ fontFamily: 'monospace' }}>{(timerMs / 1000).toFixed(1)}s</strong></span>
             </div>
@@ -415,7 +415,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             const meta = TYPE_META[s.type]
             const isTimingThis = timerStepId === s.id && timerActive
             return (
-              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#0176D3' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
+              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#D4A843' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
                 {/* Step header row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20, textAlign: 'center', fontWeight: 700 }}>#{s.seq}</span>
@@ -458,7 +458,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                       disabled={timerActive && !isTimingThis}
                       style={{
                         padding: '5px 7px', borderRadius: 6, border: '1px solid var(--border)',
-                        background: isTimingThis ? '#0176D3' : 'var(--bg)',
+                        background: isTimingThis ? '#D4A843' : 'var(--bg)',
                         color: isTimingThis ? '#fff' : 'var(--text3)',
                         cursor: timerActive && !isTimingThis ? 'not-allowed' : 'pointer',
                         fontSize: 11, fontWeight: 700,
@@ -537,7 +537,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>Reduction</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#0176D3', fontFamily: 'monospace' }}>{smedReductionPct}%</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'monospace' }}>{smedReductionPct}%</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)' }}>save {fmtS(savingPerChange)} per change</div>
                   </div>
                 </div>

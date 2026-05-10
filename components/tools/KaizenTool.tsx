@@ -15,7 +15,7 @@ const STATUSES = ['open', 'in-progress', 'complete', 'verified'] as const
 
 const STATUS_COLOR: Record<string, string> = {
   open: 'var(--text3)',
-  'in-progress': '#0176D3',
+  'in-progress': '#D4A843',
   complete: '#1DD1A1',
   verified: '#6CB9FC',
 }

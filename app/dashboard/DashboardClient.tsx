@@ -713,7 +713,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       </Suspense>
 
       <div style={{
-        backgroundImage: 'url(/sensario-texture.jpg), linear-gradient(135deg, rgba(1,118,211,0.08), rgba(3,45,96,0.12))',
+        backgroundImage: 'url(/sensario-texture.jpg), linear-gradient(135deg, rgba(212,168,67,0.08), rgba(3,45,96,0.12))',
         backgroundSize: '600px auto',
         backgroundRepeat: 'repeat-y',
         backgroundPosition: 'right -100px top',
@@ -753,11 +753,11 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 padding: '6px 10px',
                 borderRadius: 999,
                 background: 'var(--brand-dim)',
-                border: '1px solid rgba(1,118,211,0.14)',
+                border: '1px solid rgba(212,168,67,0.14)',
                 marginBottom: 14,
               }}
             >
-              <CrownIcon size={12} color="#0176D3" />
+              <CrownIcon size={12} color="#D4A843" />
               <span
                 style={{
                   fontSize: 10,
@@ -817,8 +817,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
-                      background: view === v ? 'rgba(22,112,212,0.14)' : 'transparent',
-                      color: view === v ? '#0176D3' : 'var(--text2)',
+                      background: view === v ? 'rgba(212,168,67,0.14)' : 'transparent',
+                      color: view === v ? '#D4A843' : 'var(--text2)',
                       fontWeight: view === v ? 700 : 500,
                     }}
                   >
@@ -861,14 +861,14 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   width: 34,
                   height: 34,
                   borderRadius: 10,
-                  background: 'rgba(22,112,212,0.14)',
-                  border: '1px solid rgba(1,118,211,0.22)',
+                  background: 'rgba(212,168,67,0.14)',
+                  border: '1px solid rgba(212,168,67,0.22)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <CrownIcon size={16} color="#0176D3" />
+                <CrownIcon size={16} color="#D4A843" />
               </div>
 
               <div>
@@ -904,7 +904,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             label="Projects"
             value={projects.length}
             icon={BarChartIcon}
-            color="#0176D3"
+            color="#D4A843"
             hint="Active workspaces"
           />
           <StatCard
@@ -944,7 +944,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           return (
             <div style={{ background: '#FFFFFF', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 14, padding: '18px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(1,118,211,0.10)', border: '1px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
                     {industryLabel ? `${industryLabel} Reference Project` : 'Reference Project'}
@@ -956,15 +956,15 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 <button
                   onClick={seedReferenceProject}
                   disabled={seedingRef}
-                  style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
+                  style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#B8912E,#D4A843)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
                 >
-                  {seedingRef ? 'Loading…' : `Load ${industryLabel || 'Industry'} Reference →`}
+                  {seedingRef ? 'Loading…' : `Load ${industryLabel || 'Industry'} Sample Map →`}
                 </button>
               </div>
               {refNames.length > 0 && (
                 <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {refNames.map(name => (
-                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 6, padding: '3px 9px' }}>
+                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 6, padding: '3px 9px' }}>
                       {name.replace('Reference — ', '')}
                     </div>
                   ))}
@@ -1011,7 +1011,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'var(--brand-dim)',
-                border: '1px solid rgba(1,118,211,0.16)',
+                border: '1px solid rgba(212,168,67,0.16)',
                 fontSize: 34,
                 color: 'var(--brand)',
               }}
@@ -1184,11 +1184,11 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   padding: '6px 10px',
                   borderRadius: 999,
                   background: 'var(--brand-dim)',
-                  border: '1px solid rgba(1,118,211,0.14)',
+                  border: '1px solid rgba(212,168,67,0.14)',
                   marginBottom: 14,
                 }}
               >
-                <PlusIcon size={11} color="#0176D3" />
+                <PlusIcon size={11} color="#D4A843" />
                 <span
                   style={{
                     fontSize: 10,

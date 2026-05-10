@@ -98,7 +98,7 @@ function SignupForm() {
           </div>
           <button
             onClick={() => router.push('/auth/login')}
-            style={{ marginTop:24, background:'none', border:'1px solid rgba(1,118,211,0.3)', color:'var(--brand)', borderRadius:10, padding:'10px 24px', cursor:'pointer', fontSize:14 }}
+            style={{ marginTop:24, background:'none', border:'1px solid rgba(212,168,67,0.3)', color:'var(--brand)', borderRadius:10, padding:'10px 24px', cursor:'pointer', fontSize:14 }}
           >
             Back to Sign In
           </button>
@@ -116,7 +116,7 @@ function SignupForm() {
           </div>
           <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'trial' ? (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,168,67,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name} — ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>

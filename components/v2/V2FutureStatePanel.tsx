@@ -284,7 +284,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
             disabled={!targetStatement.trim() || !targetCategory}
             style={{
               width: '100%', padding: '14px 0', borderRadius: 10, border: 'none',
-              background: (!targetStatement.trim() || !targetCategory) ? 'var(--sl-200)' : `linear-gradient(135deg,#032D60,${BRAND})`,
+              background: (!targetStatement.trim() || !targetCategory) ? 'var(--sl-200)' : `linear-gradient(135deg,#2A1800,${BRAND})`,
               color: (!targetStatement.trim() || !targetCategory) ? 'var(--text3)' : 'white',
               fontSize: 15, fontWeight: 700, cursor: (!targetStatement.trim() || !targetCategory) ? 'not-allowed' : 'pointer',
             }}>
@@ -309,7 +309,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           </div>
           <button onClick={generateFutureState} disabled={generating} style={{
             padding: '8px 18px', borderRadius: 8, border: 'none',
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            background: 'linear-gradient(135deg,#B8912E,#D4A843)',
             color: 'white', fontSize: 12, fontWeight: 700, cursor: 'pointer', flexShrink: 0,
           }}>
             Generate future state →

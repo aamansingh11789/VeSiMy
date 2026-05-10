@@ -22,11 +22,11 @@
   --vs-bg5: #1C2850;   /* Active and focus. Highest visible */
 
   /* Accent colors */
-  --vs-blue:       #3B7CFF;
-  --vs-blue-dim:   #2760E0;
-  --vs-blue-glow:  rgba(59, 124, 255, 0.15);
-  --vs-blue-bdr:   rgba(59, 124, 255, 0.25);
-  --vs-blue-light: #90BAFF;
+  --vs-blue:       #D4A843;   /* primary brand = amber */
+  --vs-blue-dim:   #B8912E;
+  --vs-blue-glow:  rgba(212, 168, 67, 0.15);
+  --vs-blue-bdr:   rgba(212, 168, 67, 0.25);
+  --vs-blue-light: #E8C466;
   --vs-cyan:       #22D3EE;
   --vs-purple:     #A78BFA;
 
@@ -60,12 +60,12 @@
     16px 20px 50px rgba(0, 0, 0, 0.8);
 
   --vs-btn-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 2px 0 rgba(20, 50, 140, 0.9),
-    0 4px 0 rgba(15, 38, 105, 0.7),
-    0 6px 0 rgba(10, 25, 70, 0.5),
-    0 8px 24px rgba(59, 124, 255, 0.25);
+    0 2px 0 rgba(139, 106, 0, 0.9),
+    0 4px 0 rgba(100, 75, 0, 0.7),
+    0 6px 0 rgba(60, 45, 0, 0.5),
+    0 8px 24px rgba(212, 168, 67, 0.25);
 
   --vs-btn-shadow-hover:
     inset 0 1px 0 rgba(255, 255, 255, 0.3),

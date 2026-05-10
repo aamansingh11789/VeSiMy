@@ -390,7 +390,7 @@ function ProjectionChart({ projection }: { projection: any }) {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 8 }}>
+      <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 8 }}>
         <div style={{ fontSize: 10, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>METHODOLOGY</div>
         <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>{projection.methodology}. Projections are estimates based on PCE improvement targets — validate with direct observation before committing to timelines.</div>
       </div>
@@ -708,7 +708,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
           Tell Supe what you are trying to achieve. Supe will build a data-backed future state and action plan.
         </p>
-        <button onClick={onGoFuture} style={{ padding: '12px 28px', borderRadius: 9, border: 'none', background: `linear-gradient(135deg, #0a5eaa, ${BRAND})`, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+        <button onClick={onGoFuture} style={{ padding: '12px 28px', borderRadius: 9, border: 'none', background: `linear-gradient(135deg, #B8912E, ${BRAND})`, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
           Set target → Generate future state
         </button>
       </div>

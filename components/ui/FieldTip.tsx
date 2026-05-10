@@ -240,8 +240,8 @@ export function FieldTip({ termKey }: { termKey: string }) {
         aria-label={`What is ${tip.title}?`}
         style={{
           width: 16, height: 16, borderRadius: '50%',
-          background: open ? 'var(--brand)' : 'rgba(1,118,211,0.12)',
-          border: '1px solid rgba(1,118,211,0.3)',
+          background: open ? 'var(--brand)' : 'rgba(212,168,67,0.12)',
+          border: '1px solid rgba(212,168,67,0.3)',
           color: open ? '#0D0C0A' : 'rgba(1,118,211,0.7)',
           fontSize: 10, fontWeight: 800, cursor: 'pointer', padding: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -304,7 +304,7 @@ export function FieldWarn({ msg }: { msg?: string | null }) {
   if (!msg) return null
   return (
     <div style={{
-      fontSize: 11, color: '#0176D3', marginTop: 4,
+      fontSize: 11, color: '#D4A843', marginTop: 4,
       display: 'flex', alignItems: 'flex-start', gap: 5, lineHeight: 1.5,
     }}>
       <AlertIcon size={13} color="#F4A623"/>

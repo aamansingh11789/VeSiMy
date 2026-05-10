@@ -16,7 +16,7 @@ import toast from 'react-hot-toast'
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const C = {
   bg0: '#02040D', bg1: '#060C1A', bg2: '#0A1228', bg3: '#0F1830', bg4: '#162040',
-  blue: '#3B7CFF', blueDim: '#2760E0', blueGlow: 'rgba(59,124,255,0.15)',
+  blue: '#3B7CFF', blueDim: '#2760E0', amberGlow: 'rgba(59,124,255,0.15)',
   blueBdr: 'rgba(59,124,255,0.25)', blueLight: '#90BAFF',
   cyan: '#22D3EE', purple: '#A78BFA', green: '#34D399', amber: '#FBB024', red: '#F87171',
   t1: '#EEF2FF', t2: '#8B9CC8', t3: '#4B5880', t4: '#2A3455',
@@ -31,7 +31,7 @@ const btnShadow  = `inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,
 function ConceptBox({ title, children }: { title: string; children?: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
-    <div style={{ background: C.blueGlow, border: `1px solid ${C.blueBdr}`, borderRadius: 12, overflow: 'hidden', marginTop: 16 }}>
+    <div style={{ background: C.amberGlow, border: `1px solid ${C.blueBdr}`, borderRadius: 12, overflow: 'hidden', marginTop: 16 }}>
       <button onClick={() => setOpen(o => !o)} style={{
         width: '100%', padding: '12px 16px', background: 'none', border: 'none',
         display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', fontFamily: 'inherit',
@@ -300,7 +300,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
               ].map(o => (
                 <button key={o.v} onClick={() => setExperience(o.v as ExperienceLevel)} style={{
                   padding: '16px 20px', borderRadius: 12, border: `1px solid ${experience === o.v ? C.blue : C.b2}`,
-                  background: experience === o.v ? C.blueGlow : 'transparent',
+                  background: experience === o.v ? C.amberGlow : 'transparent',
                   textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                 }}>
                   <div style={{ color: experience === o.v ? C.blueLight : C.t1, fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{o.label}</div>
@@ -333,7 +333,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
               ].map(o => (
                 <button key={o.v} onClick={() => setTarget(o.v as TargetCategory)} style={{
                   padding: '14px 16px', borderRadius: 12, border: `1px solid ${target === o.v ? C.blue : C.b2}`,
-                  background: target === o.v ? C.blueGlow : 'transparent',
+                  background: target === o.v ? C.amberGlow : 'transparent',
                   textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                 }}>
                   <div style={{ fontSize: 20, marginBottom: 6 }}>{o.icon}</div>
@@ -484,7 +484,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 {['Plan', 'Do', 'Check', 'Act'].map((phase, i) => (
                   <div key={phase} style={{
                     flex: 1, padding: '8px 4px', borderRadius: 8, textAlign: 'center', fontSize: 11, fontWeight: 700, fontFamily: mono,
-                    background: i === 0 ? C.blueGlow : C.b1,
+                    background: i === 0 ? C.amberGlow : C.b1,
                     border: `1px solid ${i === 0 ? C.blueBdr : C.b2}`,
                     color: i === 0 ? C.blueLight : C.t4,
                   }}>{phase}</div>
@@ -590,7 +590,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 <button onClick={finish} disabled={saving} style={{
                   padding: '14px 28px', borderRadius: 10, border: 'none', cursor: saving ? 'default' : 'pointer',
                   background: saving ? C.b2 : `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-                  color: '#fff', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
+                  color: '#1A0E00', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
                 }}>
                   {saving ? 'Saving your map...' : 'Save map and open in VeSiMy Pro →'}
                 </button>

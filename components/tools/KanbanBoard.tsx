@@ -33,7 +33,7 @@ const PRIORITY_DOT: Record<KanbanPriority, string> = {
 }
 
 const COL_COLORS = [
-  'var(--border2)','#1090D4','#0176D3','#6426A0',
+  'var(--border2)','#1090D4','#D4A843','#6426A0',
   '#1DD1A1','#F4A623','#E84393','#00BCD4','#FF6B6B',
 ]
 
@@ -61,7 +61,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
 
   return (
     <div style={{
-      background: 'var(--sl-50)', border: '1px solid rgba(1,118,211,0.25)',
+      background: 'var(--sl-50)', border: '1px solid rgba(212,168,67,0.25)',
       borderRadius: 8, padding: 12, marginBottom: 8,
     }}>
       <textarea
@@ -109,7 +109,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
           disabled={!title.trim()}
           onClick={() => { if (title.trim()) onSave(title.trim(), priority, assignee) }}
           style={{
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', border: 'none',
+            background: 'linear-gradient(135deg,#B8912E,#D4A843)', border: 'none',
             borderRadius: 5, padding: '5px 14px', color: '#FFFFFF',
             fontSize: 12, fontWeight: 700, cursor: 'pointer',
             opacity: title.trim() ? 1 : 0.4,
@@ -190,7 +190,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
             disabled={!title.trim()}
             onClick={() => onSave({ title: title.trim(), color, wip_limit: wipLimit ? parseInt(wipLimit) : null })}
             style={{
-              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
               opacity: title.trim() ? 1 : 0.4,
@@ -393,7 +393,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               padding: '8px 16px', color: 'var(--text3)', fontSize: 13, cursor: 'pointer',
             }}>Cancel</button>
             <button onClick={() => { onUpdate(card.id, form); onClose() }} style={{
-              background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
             }}>Save Changes</button>
@@ -553,7 +553,7 @@ export function KanbanBoard({
               onClick={handleSeed}
               disabled={seeding}
               style={{
-                background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+                background: 'linear-gradient(135deg,#B8912E,#D4A843)',
                 border: 'none', borderRadius: 10, padding: '12px 24px',
                 color: '#FFFFFF', fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -593,13 +593,13 @@ export function KanbanBoard({
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {steps.length > 0 && columns.length === 0 && (
             <button onClick={handleSeed} disabled={seeding} style={{
-              background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(1,118,211,0.3)',
-              borderRadius: 7, padding: '7px 14px', color: '#0176D3',
+              background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)',
+              borderRadius: 7, padding: '7px 14px', color: '#D4A843',
               fontSize: 12, fontWeight: 600, cursor: 'pointer',
             }}>⊞ Seed from VSM</button>
           )}
           <button onClick={() => setColForm({ open: true })} style={{
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            background: 'linear-gradient(135deg,#B8912E,#D4A843)',
             border: 'none', borderRadius: 7, padding: '7px 14px',
             color: '#FFFFFF', fontSize: 12, fontWeight: 700, cursor: 'pointer',
           }}>+ Add Column</button>
@@ -772,7 +772,7 @@ export function KanbanBoard({
             fontSize: 13, cursor: 'pointer', flexShrink: 0, alignSelf: 'flex-start',
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#0176D3'; e.currentTarget.style.color = '#0176D3' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#D4A843'; e.currentTarget.style.color = '#D4A843' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
           + Add Column
         </button>

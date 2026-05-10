@@ -399,7 +399,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 600,
               cursor: 'pointer',
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(1,118,211,0.25)',
+              border: '1px solid rgba(212,168,67,0.25)',
               color: 'var(--brand)',
             }}
           >
@@ -473,7 +473,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
               color: 'var(--bg)',
               border: 'none',
-              boxShadow: '0 2px 12px rgba(1,118,211,0.25)',
+              boxShadow: '0 2px 12px rgba(212,168,67,0.25)',
             }}
           >
             <PlusIcon size={14} color="var(--bg)" />
@@ -1231,7 +1231,7 @@ function PaywallGate({ feature }: { feature: string }) {
         <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,var(--brand2),var(--brand))', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
           Upgrade to Pro to track all your improvement targets — $29/mo
         </a>
-        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(1,118,211,0.3)', color: 'var(--brand)', fontSize: 14, textDecoration: 'none' }}>
+        <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(212,168,67,0.3)', color: 'var(--brand)', fontSize: 14, textDecoration: 'none' }}>
           View all plans
         </a>
       </div>
@@ -1291,7 +1291,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
               padding: '10px 20px',
               borderRadius: 9,
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(1,118,211,0.3)',
+              border: '1px solid rgba(212,168,67,0.3)',
               color: 'var(--brand)',
               cursor: 'pointer',
               fontSize: 13,
@@ -1310,7 +1310,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
       {mainSteps.length > 0 && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
           <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{mainSteps.length} STEPS</span>
-          <button onClick={toggleAll} style={{ fontSize: 11, color: 'var(--brand)', background: 'none', border: '1px solid rgba(1,118,211,0.3)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}>
+          <button onClick={toggleAll} style={{ fontSize: 11, color: 'var(--brand)', background: 'none', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}>
             {allExpanded ? '▲ Collapse All' : '▼ Expand All'}
           </button>
         </div>
@@ -1457,7 +1457,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
             ))}
           </div>
           {step.notes && (
-            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(1,118,211,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>NOTES</span>
               {step.notes}
             </div>
@@ -1636,7 +1636,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : '—'}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? fmtS(wt) : '—'}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(1,118,211,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>

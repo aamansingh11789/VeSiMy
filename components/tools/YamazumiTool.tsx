@@ -15,7 +15,7 @@ interface Props {
 
 const VA_COLORS = {
   va:   { bar: '#1DD1A1', label: 'Value Add',                text: '#1DD1A1' },
-  nnva: { bar: '#0176D3', label: 'Necessary Non-Value Add',  text: '#0176D3' },
+  nnva: { bar: '#D4A843', label: 'Necessary Non-Value Add',  text: '#D4A843' },
   nva:  { bar: '#FF6B6B', label: 'Non-Value Add',            text: '#FF6B6B' },
 }
 
@@ -74,15 +74,15 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system,'Segoe UI',sans-serif; padding: 36px 44px; max-width: 900px; margin: 0 auto; color: #1A1A1A; }
-    .header { border-bottom: 3px solid #0176D3; padding-bottom: 16px; margin-bottom: 24px; }
-    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #0176D3; font-weight: 700; margin-bottom: 6px; }
+    .header { border-bottom: 3px solid #D4A843; padding-bottom: 16px; margin-bottom: 24px; }
+    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #D4A843; font-weight: 700; margin-bottom: 6px; }
     .doc-title { font-size: 22px; font-weight: 700; color: #111; }
     .metrics { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
     .metric { background: #F8F6F0; border: 1px solid #E8E5E0; border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 100px; }
     .metric-label { font-size: 9px; font-family: monospace; letter-spacing: 1px; color: #999; margin-bottom: 3px; }
     .metric-val { font-size: 20px; font-weight: 700; }
     .legend { margin: 16px 0; }
-    .no-print { background:#EEF4FB;border:1px solid #0176D3;border-radius:6px;padding:8px 14px;font-size:11px;color:#0176D3;margin-bottom:18px; }
+    .no-print { background:#EEF4FB;border:1px solid #D4A843;border-radius:6px;padding:8px 14px;font-size:11px;color:#D4A843;margin-bottom:18px; }
     .footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #E8E5E0; font-size: 10px; color: #999; font-family: monospace; }
     @media print { .no-print { display: none; } body { padding: 20px; } }
   </style>
@@ -298,7 +298,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                 { label: 'Total CT',    val: `${summary.total}s`, color: 'var(--text)' },
                 { label: '% VA',        val: `${summary.pct}%`,   color: '#1DD1A1' },
                 { label: 'VA Time',     val: `${summary.va}s`,    color: '#1DD1A1' },
-                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#0176D3' },
+                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#D4A843' },
                 { label: 'NVA Waste',   val: `${summary.nva}s`,   color: '#FF6B6B' },
               ].map(({ label, val, color }) => (
                 <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
@@ -311,12 +311,12 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             {/* Imbalance warnings */}
             {takt > 0 && operators.some(o => o.totalTime > takt) && (
               <div style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#FF6B6B' }}>
-                <strong style={{color:'#0176D3'}}>OVER TAKT:</strong> <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time — these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
+                <strong style={{color:'#D4A843'}}>OVER TAKT:</strong> <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time — these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
               </div>
             )}
 
             {summary.nva > 0 && (
-              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#0176D3' }}>
+              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#D4A843' }}>
                 <strong style={{color:'#1DD1A1'}}>NVA WASTE:</strong> <strong>{summary.nva}s of NVA waste</strong> identified across all operators. Target these tasks for elimination in your next kaizen event.
               </div>
             )}

@@ -106,7 +106,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
 
   function tagStyle(type: string) {
     if (type === 'auto') return { bg: 'rgba(108,185,252,0.12)', color: '#6CB9FC', label: 'AUTO' }
-    if (type === 'milestone') return { bg: 'rgba(1,118,211,0.12)', color: '#0176D3', label: 'MILESTONE' }
+    if (type === 'milestone') return { bg: 'rgba(212,168,67,0.12)', color: '#D4A843', label: 'MILESTONE' }
     return { bg: 'rgba(139,136,179,0.12)', color: 'var(--text2)', label: 'NOTE' }
   }
 
@@ -263,7 +263,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               disabled={saving || !note.trim()}
               style={{
                 padding: '0 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                background: note.trim() ? 'linear-gradient(135deg,#0a5eaa,#0176D3)' : 'transparent',
+                background: note.trim() ? 'linear-gradient(135deg,#B8912E,#D4A843)' : 'transparent',
                 color: note.trim() ? 'var(--bg)' : 'var(--sl-400)',
                 fontWeight: 700, fontSize: 18, transition: 'all 0.2s',
                 flexShrink: 0,

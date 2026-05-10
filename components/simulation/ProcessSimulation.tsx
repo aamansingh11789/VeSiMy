@@ -429,7 +429,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                 <div className="sim-matrix-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8, height: 160 }}>
                   {[
                     { label: 'DO NOW', sub: 'High benefit · Low effort', color: '#2E844A', items: ['Address bottleneck CT', 'Redeploy labor'] },
-                    { label: 'PLAN NEXT', sub: 'High benefit · High effort', color: '#0176D3', items: ['Buffer policy reset', 'Release sequencing'] },
+                    { label: 'PLAN NEXT', sub: 'High benefit · High effort', color: '#D4A843', items: ['Buffer policy reset', 'Release sequencing'] },
                     { label: 'WATCH', sub: 'Low benefit · Low effort', color: '#C49B2E', items: ['Monitor signals', 'Log cycle variance'] },
                     { label: 'DEFER', sub: 'Low benefit · High effort', color: '#706E6B', items: ['Automation capex', 'Layout redesign'] },
                   ].map(q => (

@@ -22,7 +22,7 @@ const C = {
   bg5:      '#1C2850',
   blue:     '#3B7CFF',
   blueDim:  '#2760E0',
-  blueGlow: 'rgba(59,124,255,0.15)',
+  amberGlow: 'rgba(59,124,255,0.15)',
   blueBdr:  'rgba(59,124,255,0.25)',
   blueLight:'#90BAFF',
   cyan:     '#22D3EE',
@@ -176,7 +176,7 @@ function Stopwatch({ onSave }: { onSave: (seconds: number) => void }) {
         {!running && elapsed === 0 && (
           <button onClick={start} style={{
             flex: 1, padding: '10px', borderRadius: 8, border: 'none',
-            background: C.blue, color: '#fff', fontWeight: 700, cursor: 'pointer',
+            background: C.blue, color: '#1A0E00', fontWeight: 700, cursor: 'pointer',
             fontSize: 14, fontFamily: 'inherit',
           }}>Start</button>
         )}
@@ -350,7 +350,7 @@ function ReportView({ report, email, processName }: { report: Report; email: str
           <button style={{
             padding: '14px 32px', borderRadius: 10, border: 'none', cursor: 'pointer',
             background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-            color: '#fff', fontSize: 15, fontWeight: 700,
+            color: '#1A0E00', fontSize: 15, fontWeight: 700,
             fontFamily: 'inherit', boxShadow: btnShadow,
           }}>
             Start Free Trial
@@ -624,7 +624,7 @@ export default function Tier0Flow() {
               Your email is used only to send your report. No spam, unsubscribe anytime.
             </p>
             {/* Tutorial note per spec §20.4 */}
-            <div style={{ background: `${C.blueGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 16 }}>
+            <div style={{ background: `${C.amberGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 16 }}>
               <div style={{ color: C.blueLight, fontSize: 12, fontWeight: 700, marginBottom: 4 }}>Why we ask for your industry</div>
               <div style={{ color: C.t2, fontSize: 12, lineHeight: 1.6 }}>VeSiMy calibrates your report against real benchmarks from your industry. A 10-minute cycle time means something different in a hospital than in a warehouse. Knowing your industry makes the recommendation specific to you.</div>
             </div>
@@ -727,7 +727,7 @@ export default function Tier0Flow() {
                 Add 2 to 12 steps in order from start to finish.
               </p>
               {/* Tutorial note per spec §20.4 */}
-              <div style={{ background: `${C.blueGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 12 }}>
+              <div style={{ background: `${C.amberGlow}`, border: `1px solid ${C.blueBdr}`, borderRadius: 10, padding: '12px 14px', marginTop: 12 }}>
                 <div style={{ color: C.blueLight, fontSize: 12, fontWeight: 700, marginBottom: 3 }}>Write what actually happens today</div>
                 <div style={{ color: C.t2, fontSize: 12, lineHeight: 1.6 }}>Do not write the ideal version. Write the steps the way they actually happen right now. Current state means reality. Example: "Waiting for approval" is a valid step if it happens.</div>
               </div>
@@ -823,7 +823,7 @@ export default function Tier0Flow() {
                           />
                           <button onClick={() => applyManualTime(originalIdx)} style={{
                             padding: '0 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                            background: C.blue, color: '#fff', fontWeight: 700, fontFamily: 'inherit',
+                            background: C.blue, color: '#1A0E00', fontWeight: 700, fontFamily: 'inherit',
                           }}>Set</button>
                         </div>
                         <button onClick={() => setActiveStepIdx(null)} style={{
@@ -978,7 +978,7 @@ export default function Tier0Flow() {
             <button onClick={() => setStep(s => s + 1)} style={{
               flex: 2, padding: '14px', borderRadius: 12, border: 'none',
               background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-              color: '#fff', fontSize: 15, fontWeight: 700,
+              color: '#1A0E00', fontSize: 15, fontWeight: 700,
               cursor: 'pointer', fontFamily: 'inherit', boxShadow: btnShadow,
             }}>Continue</button>
           </div>

@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'AI Process Improvement for Small Businesses — VeSiMy',
-  description: 'VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an ISO-verified knowledge base. 68+ industries.',
+  description: 'VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an Lean and VSM-structured knowledge base. 68+ industries.',
   keywords: ['AI process improvement', 'process improvement tool', 'Lean Six Sigma for small business', 'continuous improvement software', 'business workflow optimization', 'AI tools for small business owners'],
   openGraph: {
     title: 'AI Process Improvement for Small Businesses — VeSiMy',
@@ -40,7 +40,7 @@ export default function LandingAIProcessImprovement() {
           Stop babysitting your processes.<br />Start improving them.
         </h1>
         <p style={{ fontSize: 18, color: 'var(--text2)', lineHeight: 1.75, maxWidth: 580, margin: '0 auto 40px' }}>
-          VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an ISO-verified knowledge base so your improvement workflow is practical, structured, and easy to act on.
+          VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an Lean and VSM-structured knowledge base so your improvement workflow is practical, structured, and easy to act on.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700, boxShadow: '0 4px 14px rgba(1,118,211,0.3)' }}>
@@ -80,7 +80,7 @@ export default function LandingAIProcessImprovement() {
             {[
               { step: '01', title: 'Map one process', body: 'Use the VSM canvas or the free flow at vesimy.com/start to map any process in your operation — from order fulfilment to service delivery to patient discharge.' },
               { step: '02', title: 'Find the waste', body: 'VeSiMy analyzes your process using Lean methodology and surfaces the delays, defects, and non-value-added steps that are costing you time and money.' },
-              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle — PDCA, 8D, DMAIC, or OODA — with AI support based on an ISO-verified lean knowledge base. From problem to root cause to fix.' },
+              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle — PDCA, 8D, DMAIC, or OODA — with AI support based on an Lean and VSM-structured knowledge base. From problem to root cause to fix.' },
             ].map(({ step, title, body }) => (
               <div key={step} style={{ display: 'flex', gap: 20 }}>
                 <div style={{ fontFamily: mono, fontSize: 11, color: '#0176D3', fontWeight: 700, paddingTop: 4, flexShrink: 0 }}>{step}</div>

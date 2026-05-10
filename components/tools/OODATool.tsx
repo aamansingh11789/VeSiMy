@@ -40,7 +40,7 @@ function uid() { return Date.now().toString(36) + Math.random().toString(36).sli
 // ── Phase colours ─────────────────────────────────────────────────────────────
 const PHASES = [
   { key: 'observe', label: 'Observe',  color: '#6CB9FC', icon: '👁', desc: 'What is actually happening right now? Raw observations without interpretation.' },
-  { key: 'orient',  label: 'Orient',   color: '#0176D3', icon: '🧭', desc: "What does the observation tell you? What's the context? What patterns do you see?" },
+  { key: 'orient',  label: 'Orient',   color: '#D4A843', icon: '🧭', desc: "What does the observation tell you? What's the context? What patterns do you see?" },
   { key: 'decide',  label: 'Decide',   color: '#8C44CC', icon: '⚡', desc: 'What are your options? Which best addresses what you observed?' },
   { key: 'act',     label: 'Act',      color: '#2E844A', icon: '🎯', desc: 'What specific action are you taking? When? Who?' },
 ]
@@ -114,9 +114,9 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
                 LOOP AGAIN?
               </label>
               <button onClick={() => onUpdate('loop_again', !iter.loop_again)} style={{
-                padding: '8px 16px', borderRadius: 7, border: `1px solid ${iter.loop_again ? '#0176D3' : 'var(--border)'}`,
+                padding: '8px 16px', borderRadius: 7, border: `1px solid ${iter.loop_again ? '#D4A843' : 'var(--border)'}`,
                 background: iter.loop_again ? 'rgba(1,118,211,0.1)' : 'transparent',
-                color: iter.loop_again ? '#0176D3' : 'var(--text3)', fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                color: iter.loop_again ? '#D4A843' : 'var(--text3)', fontSize: 12, fontWeight: 700, cursor: 'pointer',
                 fontFamily: 'inherit',
               }}>
                 {iter.loop_again ? '↻ Yes, loop' : '→ Done'}
@@ -174,7 +174,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
     <Modal title={`OODA Loop — ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save OODA'}>
       {/* Header info */}
       <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 9, padding: '10px 14px', marginBottom: 16 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: 'monospace', color: '#0176D3', letterSpacing: 1, marginBottom: 4 }}>OODA LOOP</div>
+        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: 'monospace', color: '#D4A843', letterSpacing: 1, marginBottom: 4 }}>OODA LOOP</div>
         <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
           Observe → Orient → Decide → Act. For fast-moving operational decisions where speed of iteration matters more than exhaustive analysis. Complete the loop, assess the outcome, then loop again if needed.
         </p>
@@ -191,7 +191,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               <div style={{ fontSize: 9, fontWeight: 700, color: phase.color, fontFamily: 'monospace', letterSpacing: 1 }}>{phase.label.toUpperCase()}</div>
             </div>
             {i < PHASES.length - 1 && <div style={{ width: 24, height: 2, background: 'var(--border)', flexShrink: 0 }} />}
-            {i === PHASES.length - 1 && <div style={{ fontSize: 16, color: '#0176D3', flexShrink: 0 }}>↩</div>}
+            {i === PHASES.length - 1 && <div style={{ fontSize: 16, color: '#D4A843', flexShrink: 0 }}>↩</div>}
           </div>
         ))}
       </div>
@@ -215,8 +215,8 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
           { id: 'guide', label: 'When to use OODA' },
         ].map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id as any)} style={{
-            padding: '8px 14px', border: 'none', borderBottom: `2px solid ${activeTab === tab.id ? '#0176D3' : 'transparent'}`,
-            background: 'none', color: activeTab === tab.id ? '#0176D3' : 'var(--text3)',
+            padding: '8px 14px', border: 'none', borderBottom: `2px solid ${activeTab === tab.id ? '#D4A843' : 'transparent'}`,
+            background: 'none', color: activeTab === tab.id ? '#D4A843' : 'var(--text3)',
             fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
           }}>{tab.label}</button>
         ))}
@@ -268,9 +268,9 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               {(['active', 'resolved', 'paused'] as const).map(s => (
                 <button key={s} onClick={() => setForm(f => ({ ...f, status: s }))} style={{
                   padding: '6px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-                  border: `1px solid ${form.status === s ? '#0176D3' : 'var(--border)'}`,
+                  border: `1px solid ${form.status === s ? '#D4A843' : 'var(--border)'}`,
                   background: form.status === s ? 'rgba(1,118,211,0.1)' : 'transparent',
-                  color: form.status === s ? '#0176D3' : 'var(--text3)',
+                  color: form.status === s ? '#D4A843' : 'var(--text3)',
                   textTransform: 'capitalize' as const,
                 }}>{s}</button>
               ))}

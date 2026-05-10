@@ -27,23 +27,23 @@
   --sidebar-w: 240px;
 
   /* ── Brand: Electric Blue ──────────────────────────── */
-  --brand:        #1670D4;
-  --brand2:       #0E5BB5;
-  --brand3:       #0A4A96;
-  --brand-dark:   #04111F;
-  --brand-light:  #D6E8FF;
-  --brand-dim:    rgba(22, 112, 212, 0.08);
-  --brand-glow:   rgba(22, 112, 212, 0.16);
+  --brand:        #D4A843;
+  --brand2:       #B8912E;
+  --brand3:       #8B6A00;
+  --brand-dark:   #2A1800;
+  --brand-light:  #FDF3D8;
+  --brand-dim:    rgba(212, 168, 67, 0.08);
+  --brand-glow:   rgba(212, 168, 67, 0.16);
 
   /* Legacy aliases — kept for compatibility */
-  --gold:         #1670D4;
-  --gold2:        #1670D4;
-  --gold3:        #D6E8FF;
-  --gold-dim:     rgba(22, 112, 212, 0.08);
-  --gold-glow:    rgba(22, 112, 212, 0.16);
-  --steel:        #1670D4;
-  --steel2:       #0E5BB5;
-  --steel-dim:    rgba(22, 112, 212, 0.08);
+  --gold:         #D4A843;
+  --gold2:        #B8912E;
+  --gold3:        #FDF3D8;
+  --gold-dim:     rgba(212, 168, 67, 0.08);
+  --gold-glow:    rgba(212, 168, 67, 0.16);
+  --steel:        #D4A843;
+  --steel2:       #B8912E;
+  --steel-dim:    rgba(212, 168, 67, 0.08);
 
   /* ── Amber: The Intelligence Accent ───────────────── */
   --amber:        #E8941A;
@@ -154,7 +154,7 @@
   --shadow-md: 0 4px 12px rgba(4, 17, 31, 0.08), 0 2px 4px rgba(4, 17, 31, 0.04);
   --shadow-lg: 0 8px 28px rgba(4, 17, 31, 0.10), 0 4px 8px rgba(4, 17, 31, 0.06);
   --shadow-xl: 0 20px 48px rgba(4, 17, 31, 0.12), 0 8px 16px rgba(4, 17, 31, 0.08);
-  --shadow-brand: 0 4px 16px rgba(22, 112, 212, 0.24), 0 2px 4px rgba(22, 112, 212, 0.12);
+  --shadow-brand: 0 4px 16px rgba(212, 168, 67, 0.28), 0 2px 4px rgba(212, 168, 67, 0.14);
   --shadow-amber: 0 4px 16px rgba(232, 148, 26, 0.20), 0 2px 4px rgba(232, 148, 26, 0.10);
 
   /* ── Transitions ───────────────────────────────────── */
@@ -212,12 +212,12 @@ p {
 }
 
 ::selection {
-  background: rgba(22, 112, 212, 0.15);
-  color: var(--brand3);
+  background: rgba(212, 168, 67, 0.18);
+  color: #6B4E00;
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid #D4A843;
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -301,15 +301,15 @@ p {
   /* Primary — brand blue, confident */
   .btn-primary {
     @apply btn;
-    background: var(--brand);
-    color: #FFFFFF;
-    border-color: var(--brand2);
-    box-shadow: 0 1px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.12);
+    background: linear-gradient(135deg, #D4A843 0%, #B8912E 100%);
+    color: #1A0E00;
+    border-color: #B8912E;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 2px 0 #8B6A00, 0 8px 20px rgba(212,168,67,0.22);
   }
   .btn-primary:hover {
-    background: var(--brand2);
-    border-color: var(--brand3);
-    box-shadow: var(--shadow-brand);
+    background: linear-gradient(135deg, #E8C466 0%, #D4A843 100%);
+    border-color: #B8912E;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.20) inset, 0 2px 0 #8B6A00, 0 12px 28px rgba(212,168,67,0.32);
     transform: translateY(-1px);
   }
   .btn-primary:active { transform: translateY(0); box-shadow: none; }
@@ -318,13 +318,13 @@ p {
   .btn-secondary {
     @apply btn;
     background: #FFFFFF;
-    color: var(--brand);
-    border-color: rgba(22, 112, 212, 0.35);
+    color: #8B6A00;
+    border-color: rgba(212, 168, 67, 0.40);
   }
   .btn-secondary:hover {
-    background: var(--brand-dim);
-    border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(22, 112, 212, 0.08);
+    background: rgba(212, 168, 67, 0.07);
+    border-color: #D4A843;
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.10);
   }
 
   /* Amber — for AI / intelligence actions */
@@ -388,8 +388,8 @@ p {
   .input:hover  { border-color: var(--border2); }
   .input:focus  {
     outline: none;
-    border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(22, 112, 212, 0.10);
+    border-color: #D4A843;
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.12);
   }
   .input::placeholder { color: var(--text4); }
   textarea.input { height: auto; resize: vertical; min-height: 80px; line-height: 1.6; }
@@ -418,9 +418,9 @@ p {
     font-family: var(--font-sans);
   }
   .badge-brand, .badge-gold, .badge-steel {
-    background: var(--brand-dim);
-    color: var(--brand2);
-    border-color: rgba(22, 112, 212, 0.18);
+    background: rgba(212, 168, 67, 0.10);
+    color: #8B6A00;
+    border-color: rgba(212, 168, 67, 0.24);
   }
   .badge-amber {
     background: var(--amber-dim);
@@ -711,12 +711,12 @@ select.input {
 }
 .vsm-tool-btn--red  { background: #FFF5F5; border-color: rgba(192,24,12,0.22); color: var(--red); }
 .vsm-tool-btn--teal { background: #F0FDF9; border-color: rgba(22,128,60,0.22); color: var(--green); }
-.vsm-tool-btn--blue { background: var(--brand-dim); border-color: rgba(22,112,212,0.22); color: var(--brand2); }
+.vsm-tool-btn--blue { background: rgba(212,168,67,0.08); border-color: rgba(212,168,67,0.28); color: #8B6A00; }
 .vsm-tool-btn--amber { background: var(--amber-dim); border-color: var(--amber-border); color: var(--amber2); }
 
 .vsm-tool-btn--red:hover   { background: #FFE8E6; border-color: var(--red); }
 .vsm-tool-btn--teal:hover  { background: #DCFCE7; border-color: var(--green2); }
-.vsm-tool-btn--blue:hover  { background: var(--brand-light); border-color: var(--brand); }
+.vsm-tool-btn--blue:hover  { background: rgba(212,168,67,0.14); border-color: #D4A843; }
 .vsm-tool-btn--amber:hover { background: var(--amber-light); border-color: var(--amber); }
 
 .step-ci-btn {
@@ -736,14 +736,14 @@ select.input {
   font-family: var(--font-sans);
 }
 .step-ci-btn:hover {
-  border-color: var(--brand);
-  color: var(--brand);
-  background: var(--brand-dim);
+  border-color: #D4A843;
+  color: #8B6A00;
+  background: rgba(212, 168, 67, 0.08);
 }
 .step-ci-btn.active {
-  border-color: var(--brand);
-  background: var(--brand-dim);
-  color: var(--brand);
+  border-color: #D4A843;
+  background: rgba(212, 168, 67, 0.10);
+  color: #8B6A00;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -804,8 +804,8 @@ select.input {
   border: none;
   font-family: var(--font-sans);
 }
-.bottom-nav-item.active { color: var(--brand); }
-.bottom-nav-item:hover  { color: var(--brand); }
+.bottom-nav-item.active { color: #D4A843; }
+.bottom-nav-item:hover  { color: #D4A843; }
 .bottom-nav-item:active { transform: translateY(1px); }
 .bottom-nav-item svg    { margin-bottom: 1px; }
 
@@ -1127,7 +1127,7 @@ html, body {
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--navy);
+  background: #1A0E00;
   color: #FFFFFF;
   font-size: 11px;
   font-family: var(--font-sans);
@@ -1144,7 +1144,7 @@ html, body {
 
 /* ── Focus ring override for brand consistency ─────────────── */
 *:focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid #D4A843;
   outline-offset: 2px;
 }
 

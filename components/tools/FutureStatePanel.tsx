@@ -237,7 +237,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                   {result.action_plan.map((action: any) => (
                     <div key={action.sequence} style={{ padding: '12px 14px', borderRadius: 9, border: '1px solid var(--border)', background: '#FFFFFF' }}>
                       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                        <div style={{ width: 24, height: 24, borderRadius: 6, background: 'var(--brand-dim)', border: '1px solid rgba(22,112,212,0.20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: 'var(--brand)', flexShrink: 0 }}>
+                        <div style={{ width: 24, height: 24, borderRadius: 6, background: 'var(--brand-dim)', border: '1px solid rgba(212,168,67,0.20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: 'var(--brand)', flexShrink: 0 }}>
                           {action.sequence}
                         </div>
                         <div style={{ flex: 1 }}>

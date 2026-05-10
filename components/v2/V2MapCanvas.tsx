@@ -16,7 +16,7 @@ import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 // ── Step type color palette — clean, enterprise-grade, print-safe ─────────────
 const STICKY: Record<string, { bg: string; fold: string; text: string; stripe: string }> = {
   process:    { bg: '#FFFBEB', fold: '#FEF3C7', text: '#1C1400', stripe: '#D97706' }, // warm amber
-  sub_process:{ bg: '#EFF6FF', fold: '#DBEAFE', text: '#0F2A5C', stripe: '#2563EB' }, // clean blue
+  sub_process:{ bg: '#FFFBEB', fold: '#FEF3C7', text: '#0F2A5C', stripe: '#2563EB' }, // clean blue
   decision:   { bg: '#FFF7ED', fold: '#FFEDD5', text: '#2D1200', stripe: '#EA580C' }, // clean orange
   inspection: { bg: '#FDF4FF', fold: '#F3E8FF', text: '#2E0D40', stripe: '#9333EA' }, // clean purple
   transport:  { bg: '#F0FDF4', fold: '#DCFCE7', text: '#052E16', stripe: '#16A34A' }, // clean green

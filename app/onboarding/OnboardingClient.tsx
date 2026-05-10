@@ -808,9 +808,9 @@ export function OnboardingClient({ profile }: Props) {
                 width:28, height:28, borderRadius:'50%',
                 display:'flex', alignItems:'center', justifyContent:'center',
                 fontSize:12, fontWeight:700,
-                background: step > n ? 'rgba(46,132,74,0.12)' : step === n ? 'rgba(1,118,211,0.12)' : 'var(--sl-100)',
-                border: step > n ? '1.5px solid #2E844A' : step === n ? '1.5px solid #0176D3' : '1.5px solid var(--border)',
-                color: step > n ? '#2E844A' : step === n ? '#0176D3' : 'var(--text3)',
+                background: step > n ? 'rgba(46,132,74,0.12)' : step === n ? 'rgba(212,168,67,0.12)' : 'var(--sl-100)',
+                border: step > n ? '1.5px solid #2E844A' : step === n ? '1.5px solid #D4A843' : '1.5px solid var(--border)',
+                color: step > n ? '#2E844A' : step === n ? '#D4A843' : 'var(--text3)',
               }}>
                 {step > n ? <CheckIcon size={12} strokeWidth={3} /> : n}
               </div>
@@ -825,7 +825,7 @@ export function OnboardingClient({ profile }: Props) {
 
       {/* Progress bar */}
       <div style={{ height:3, background:'var(--sl-200)' }}>
-        <div style={{ height:'100%', background:'#0176D3', width:`${pct}%`, transition:'width 0.4s ease' }} />
+        <div style={{ height:'100%', background:'#D4A843', width:`${pct}%`, transition:'width 0.4s ease' }} />
       </div>
 
       {/* Content */}
@@ -837,7 +837,7 @@ export function OnboardingClient({ profile }: Props) {
           ══════════════════════════════════════════════════════════════════ */}
           {step === 1 && (
             <div>
-              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 1 of 4 — Your Industry</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 1 of 4 — Your Industry</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
                 What field do you work in?
               </h1>
@@ -849,16 +849,16 @@ export function OnboardingClient({ profile }: Props) {
               <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:20 }}>
                 <button onClick={() => setSector('')} style={{
                   padding:'5px 12px', borderRadius:100, fontSize:12, cursor:'pointer', border:'1px solid',
-                  background: sector==='' ? '#0176D3' : '#FFFFFF',
-                  borderColor: sector==='' ? '#0176D3' : 'var(--border)',
+                  background: sector==='' ? '#D4A843' : '#FFFFFF',
+                  borderColor: sector==='' ? '#D4A843' : 'var(--border)',
                   color: sector==='' ? '#FFFFFF' : 'var(--text2)',
                   fontWeight: sector==='' ? 600 : 400,
                 }}>All</button>
                 {INDUSTRY_SECTORS.map(s => (
                   <button key={s} onClick={() => setSector(s)} style={{
                     padding:'5px 12px', borderRadius:100, fontSize:12, cursor:'pointer', border:'1px solid',
-                    background: sector===s ? '#0176D3' : '#FFFFFF',
-                    borderColor: sector===s ? '#0176D3' : 'var(--border)',
+                    background: sector===s ? '#D4A843' : '#FFFFFF',
+                    borderColor: sector===s ? '#D4A843' : 'var(--border)',
                     color: sector===s ? '#FFFFFF' : 'var(--text2)',
                     fontWeight: sector===s ? 600 : 400,
                   }}>{s}</button>
@@ -870,11 +870,11 @@ export function OnboardingClient({ profile }: Props) {
                 {(sector ? getIndustriesBySector(sector) : INDUSTRY_OPTIONS).map(ind => (
                   <button key={ind.id} onClick={() => selectIndustry(ind.id)} style={{
                     padding:'12px 14px', borderRadius:10, textAlign:'left', cursor:'pointer', transition:'all 0.12s',
-                    background: industry===ind.id ? 'rgba(1,118,211,0.08)' : '#FFFFFF',
-                    border: industry===ind.id ? '1.5px solid #0176D3' : '1.5px solid var(--border)',
-                    boxShadow: industry===ind.id ? '0 0 0 3px rgba(1,118,211,0.10)' : 'none',
+                    background: industry===ind.id ? 'rgba(212,168,67,0.08)' : '#FFFFFF',
+                    border: industry===ind.id ? '1.5px solid #D4A843' : '1.5px solid var(--border)',
+                    boxShadow: industry===ind.id ? '0 0 0 3px rgba(212,168,67,0.10)' : 'none',
                   }}>
-                    <div style={{ fontSize:12, fontWeight: industry===ind.id ? 700 : 500, color: industry===ind.id ? '#0176D3' : 'var(--text)', lineHeight:1.3 }}>
+                    <div style={{ fontSize:12, fontWeight: industry===ind.id ? 700 : 500, color: industry===ind.id ? '#D4A843' : 'var(--text)', lineHeight:1.3 }}>
                       {ind.label}
                     </div>
                     <div style={{ fontSize:10, color:'var(--text3)', marginTop:2 }}>{ind.sector}</div>
@@ -888,7 +888,7 @@ export function OnboardingClient({ profile }: Props) {
                 const terms = getIndustryTerms(industry)
                 return (
                   <div style={{ background:'rgba(1,118,211,0.04)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:12, padding:'16px 18px', marginBottom:24 }}>
-                    <div style={{ fontSize:10, color:'#0176D3', fontWeight:700, letterSpacing:1.5, textTransform:'uppercase', marginBottom:10, fontFamily:'monospace' }}>
+                    <div style={{ fontSize:10, color:'#D4A843', fontWeight:700, letterSpacing:1.5, textTransform:'uppercase', marginBottom:10, fontFamily:'monospace' }}>
                       How VeSiMy will look for {preview.badge}
                     </div>
                     <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
@@ -902,7 +902,7 @@ export function OnboardingClient({ profile }: Props) {
                       ].map(([lean, industry_term]) => (
                         <div key={lean} style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:8, padding:'6px 10px', fontSize:11 }}>
                           <span style={{ color:'var(--text3)' }}>{lean} →</span>
-                          <span style={{ color:'#0176D3', fontWeight:700, marginLeft:4 }}>{industry_term}</span>
+                          <span style={{ color:'#D4A843', fontWeight:700, marginLeft:4 }}>{industry_term}</span>
                         </div>
                       ))}
                     </div>
@@ -912,7 +912,7 @@ export function OnboardingClient({ profile }: Props) {
 
               <button onClick={() => setStep(2)} disabled={!industry} style={{
                 padding:'12px 32px', borderRadius:8, fontSize:15, fontWeight:600, cursor: !industry ? 'not-allowed' : 'pointer',
-                background: !industry ? 'var(--sl-200)' : '#0176D3',
+                background: !industry ? 'var(--sl-200)' : '#D4A843',
                 color: !industry ? 'var(--text3)' : '#FFFFFF',
                 border:'none', display:'inline-flex', alignItems:'center', gap:8,
                 boxShadow: industry ? '0 4px 14px rgba(1,118,211,0.30)' : 'none',
@@ -928,9 +928,9 @@ export function OnboardingClient({ profile }: Props) {
           ══════════════════════════════════════════════════════════════════ */}
           {step === 2 && (
             <div>
-              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 2 of 4 — Your Role</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 2 of 4 — Your Role</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
-                What's your role<br /><span style={{ color:'#0176D3' }}>in {getIndustryLabel(industry) || 'your field'}?</span>
+                What's your role<br /><span style={{ color:'#D4A843' }}>in {getIndustryLabel(industry) || 'your field'}?</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.65 }}>
                 Select the role that best fits how you work. VeSiMy uses this to personalise its improvement suggestions and coaching.
@@ -940,10 +940,10 @@ export function OnboardingClient({ profile }: Props) {
                 {roles.map(r => (
                   <button key={r.id} onClick={() => setRole(r.id)} style={{
                     padding:'14px 16px', borderRadius:10, textAlign:'left', cursor:'pointer', transition:'all 0.12s',
-                    background: role===r.id ? 'rgba(1,118,211,0.08)' : '#FFFFFF',
-                    border: role===r.id ? '1.5px solid #0176D3' : '1.5px solid var(--border)',
+                    background: role===r.id ? 'rgba(212,168,67,0.08)' : '#FFFFFF',
+                    border: role===r.id ? '1.5px solid #D4A843' : '1.5px solid var(--border)',
                   }}>
-                    <div style={{ fontSize:13, fontWeight: role===r.id ? 700 : 500, color: role===r.id ? '#0176D3' : 'var(--text)' }}>
+                    <div style={{ fontSize:13, fontWeight: role===r.id ? 700 : 500, color: role===r.id ? '#D4A843' : 'var(--text)' }}>
                       {r.label}
                     </div>
                   </button>
@@ -957,7 +957,7 @@ export function OnboardingClient({ profile }: Props) {
                 <button onClick={() => setStep(3)} disabled={!role} style={{
                   flex:1, padding:'12px 32px', borderRadius:8, fontSize:15, fontWeight:600,
                   cursor: !role ? 'not-allowed' : 'pointer',
-                  background: !role ? 'var(--sl-200)' : '#0176D3',
+                  background: !role ? 'var(--sl-200)' : '#D4A843',
                   color: !role ? 'var(--text3)' : '#FFFFFF',
                   border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
                   transition:'all 0.15s',
@@ -973,9 +973,9 @@ export function OnboardingClient({ profile }: Props) {
           ══════════════════════════════════════════════════════════════════ */}
           {step === 3 && (
             <div>
-              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 3 of 4 — Your First Process</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 3 of 4 — Your First Process</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
-                Name your first<br /><span style={{ color:'#0176D3' }}>{t.process}.</span>
+                Name your first<br /><span style={{ color:'#D4A843' }}>{t.process}.</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:24, lineHeight:1.65 }}>
                 This is the {t.valueStream} you'll map first. You can always add more later.
@@ -1011,9 +1011,9 @@ export function OnboardingClient({ profile }: Props) {
                   <button key={tpl.id} onClick={() => setTemplate(tpl.id)} style={{
                     padding:'14px 16px', borderRadius:10, textAlign:'left', cursor:'pointer', transition:'all 0.12s',
                     background: template===tpl.id ? 'rgba(1,118,211,0.06)' : '#FFFFFF',
-                    border: template===tpl.id ? '1.5px solid #0176D3' : '1.5px solid var(--border)',
+                    border: template===tpl.id ? '1.5px solid #D4A843' : '1.5px solid var(--border)',
                   }}>
-                    <div style={{ fontWeight:600, fontSize:13, color: template===tpl.id ? '#0176D3' : 'var(--text)', marginBottom: tpl.steps.length ? 5 : 0 }}>
+                    <div style={{ fontWeight:600, fontSize:13, color: template===tpl.id ? '#D4A843' : 'var(--text)', marginBottom: tpl.steps.length ? 5 : 0 }}>
                       {tpl.label}
                     </div>
                     {tpl.steps.length > 0 && (
@@ -1034,7 +1034,7 @@ export function OnboardingClient({ profile }: Props) {
                   style={{
                     flex:1, padding:'12px 32px', borderRadius:8, fontSize:15, fontWeight:600,
                     cursor: (!template || (!projName.trim() && template !== 'sample')) ? 'not-allowed' : 'pointer',
-                    background: (!template || (!projName.trim() && template !== 'sample')) ? 'var(--sl-200)' : '#0176D3',
+                    background: (!template || (!projName.trim() && template !== 'sample')) ? 'var(--sl-200)' : '#D4A843',
                     color: (!template || (!projName.trim() && template !== 'sample')) ? 'var(--text3)' : '#FFFFFF',
                     border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
                     transition:'all 0.15s',
@@ -1050,9 +1050,9 @@ export function OnboardingClient({ profile }: Props) {
           ══════════════════════════════════════════════════════════════════ */}
           {step === 4 && (
             <div>
-              <p style={{ fontSize:11, color:'#0176D3', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 4 of 4 — Ready</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 4 of 4 — Ready</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
-                Your workspace is<br /><span style={{ color:'#0176D3' }}>ready to build.</span>
+                Your workspace is<br /><span style={{ color:'#D4A843' }}>ready to build.</span>
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.65 }}>
                 Here's what's being set up for you:
@@ -1079,8 +1079,8 @@ export function OnboardingClient({ profile }: Props) {
               </div>
 
               {/* Industry language preview */}
-              <div style={{ background:'rgba(1,118,211,0.04)', border:'1px solid rgba(1,118,211,0.18)', borderRadius:12, padding:'14px 18px', marginBottom:24 }}>
-                <div style={{ fontSize:11, color:'#0176D3', fontWeight:700, letterSpacing:1.2, textTransform:'uppercase', marginBottom:10 }}>
+              <div style={{ background:'rgba(1,118,211,0.04)', border:'1px solid rgba(212,168,67,0.18)', borderRadius:12, padding:'14px 18px', marginBottom:24 }}>
+                <div style={{ fontSize:11, color:'#D4A843', fontWeight:700, letterSpacing:1.2, textTransform:'uppercase', marginBottom:10 }}>
                   Your workspace will use {industryLabel} language
                 </div>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
@@ -1094,7 +1094,7 @@ export function OnboardingClient({ profile }: Props) {
                   ].map(([lean, ind]) => (
                     <div key={lean} style={{ fontSize:11, display:'flex', gap:4 }}>
                       <span style={{ color:'var(--text3)', flexShrink:0 }}>{lean}:</span>
-                      <span style={{ color:'#0176D3', fontWeight:600 }}>{ind}</span>
+                      <span style={{ color:'#D4A843', fontWeight:600 }}>{ind}</span>
                     </div>
                   ))}
                 </div>
@@ -1107,7 +1107,7 @@ export function OnboardingClient({ profile }: Props) {
                 <button onClick={finish} disabled={saving} style={{
                   flex:1, padding:'14px 32px', borderRadius:8, fontSize:15, fontWeight:600,
                   cursor: saving ? 'wait' : 'pointer',
-                  background:'#0176D3', color:'#FFFFFF', border:'none',
+                  background:'#D4A843', color:'#FFFFFF', border:'none',
                   display:'flex', alignItems:'center', justifyContent:'center', gap:8,
                   boxShadow:'0 4px 18px rgba(1,118,211,0.30)',
                   opacity: saving ? 0.8 : 1, transition:'all 0.15s',

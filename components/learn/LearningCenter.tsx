@@ -437,7 +437,7 @@ export function LearningCenter({ userId }: Props) {
                 >
                   <span style={{
                     width:22, height:22, borderRadius:6, flexShrink:0,
-                    background: open ? 'rgba(1,118,211,0.12)' : 'var(--sl-100)',
+                    background: open ? 'rgba(212,168,67,0.12)' : 'var(--sl-100)',
                     border: `1px solid ${open ? 'var(--brand)' : 'var(--border)'}`,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontSize:10, fontWeight:700, color: open ? 'var(--brand)' : 'var(--text3)',
@@ -489,7 +489,7 @@ export function LearningCenter({ userId }: Props) {
             <button key={tab} onClick={() => { setActiveTab(tab); setShowMobilePicker(false) }} style={{
               padding:'7px 14px', borderRadius:8, fontSize:12,
               fontWeight: activeTab === tab ? 700 : 400,
-              background: activeTab === tab ? 'rgba(1,118,211,0.10)' : 'transparent',
+              background: activeTab === tab ? 'rgba(212,168,67,0.10)' : 'transparent',
               border: `1px solid ${activeTab === tab ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
               color: activeTab === tab ? 'var(--brand)' : 'var(--text3)',
               cursor: 'pointer',
@@ -506,7 +506,7 @@ export function LearningCenter({ userId }: Props) {
             {MANUAL.map(s => (
               <button key={s.id} onClick={() => pickSection(s.id)} style={{
                 width:'100%', textAlign:'left', padding:'9px 14px',
-                background: activeSection === s.id ? 'rgba(1,118,211,0.08)' : 'transparent',
+                background: activeSection === s.id ? 'rgba(212,168,67,0.08)' : 'transparent',
                 border:'none', borderLeft:`3px solid ${activeSection === s.id ? 'var(--brand)' : 'transparent'}`,
                 cursor:'pointer', display:'flex', alignItems:'center', gap:8,
               }}>
@@ -558,7 +558,7 @@ export function LearningCenter({ userId }: Props) {
                   {MANUAL.map(s => (
                     <button key={s.id} onClick={() => pickSection(s.id)} style={{
                       width:'100%', textAlign:'left', padding:'11px 16px',
-                      background: activeSection === s.id ? 'rgba(1,118,211,0.08)' : 'transparent',
+                      background: activeSection === s.id ? 'rgba(212,168,67,0.08)' : 'transparent',
                       border:'none', borderBottom:'1px solid var(--border)',
                       cursor:'pointer', display:'flex', alignItems:'center', gap:10,
                     }}>
