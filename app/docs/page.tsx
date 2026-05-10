@@ -151,12 +151,7 @@ export default function DocsPage() {
               <div style={{ padding:'8px 0' }}>
                 {section.pages.map(page => (
                   <Link key={page.title} href={page.href}
-                    style={{ display:'block', padding:'10px 20px', textDecoration:'none',
-                      borderBottom:'1px solid #F8FAFC', transition:'background 0.12s' }}
-                    onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) =>
-                      (e.currentTarget.style.background = '#FAFBFE')}
-                    onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) =>
-                      (e.currentTarget.style.background = 'transparent')}>
+                    className='doc-link' style={{ display:'block', padding:'10px 20px', textDecoration:'none', borderBottom:'1px solid #F8FAFC' }}>
                     <div style={{ fontSize:13, fontWeight:600, color:NAVY, marginBottom:2 }}>
                       {page.title}
                     </div>
@@ -182,6 +177,12 @@ export default function DocsPage() {
           </p>
         </div>
       </div>
+    
+      <style>{`
+        .doc-link:hover { background: #FAFBFE !important; }
+        .footer-link:hover { color: #F0F2FF !important; }
+        .inner-nav-link:hover { color: #D4A843 !important; }
+      `}</style>
     </div>
   )
 }
