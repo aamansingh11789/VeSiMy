@@ -10,6 +10,7 @@ import React from 'react'
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import toast from 'react-hot-toast'
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
@@ -261,7 +262,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
       {/* Nav */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', background: 'rgba(2,4,13,0.9)', backdropFilter: 'blur(12px)', borderBottom: `1px solid ${C.b1}` }}>
         <Link href="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 28, height: 28, borderRadius: 6, background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 14 }}>V</div>
+          <VLogoMark size={28} />
           <span style={{ color: C.t1, fontWeight: 700, fontSize: 15 }}>VeSiMy Guided</span>
         </Link>
         <div style={{ fontFamily: mono, fontSize: 12, color: C.t3 }}>Step {currentStep + 1} of 8</div>

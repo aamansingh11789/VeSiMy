@@ -9,6 +9,7 @@
 import React from 'react'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import { Zap, DollarSign, Target, ShieldCheck, BarChart2, ChevronUp, ChevronDown, X } from 'lucide-react'
 
 // ── Design tokens ─────────────────────────────────────────────────────────
@@ -500,13 +501,8 @@ export default function Tier0Flow() {
         borderBottom: `1px solid ${C.b1}`,
       }}>
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: 6,
-            background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontWeight: 800, fontSize: 14,
-          }}>V</div>
-          <span style={{ color: C.t1, fontWeight: 700, fontSize: 15 }}>VeSiMy</span>
+          <VLogoMark size={28} />
+          <VeSiMyWordmark size={16} onDark={true} />
         </Link>
         <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
           <button style={{
