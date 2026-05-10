@@ -757,18 +757,35 @@ function Footer() {
           </div>
           {/* Links */}
           {[
-            ['Product',['VSM Builder','CI Tools','Simulation','PDF Reports','Supe AI']],
-            ['Company',['About','Blog','Pricing','Contact','Changelog']],
-            ['Resources',['Learning Center','Documentation','ISO 22468 Guide','Lean Glossary']],
+            ['Product',[
+              ['VSM Builder','/learn/vsm-fundamentals'],
+              ['CI Tools','/learn/ci-tools'],
+              ['Simulation','/#pricing'],
+              ['PDF Reports','/#pricing'],
+              ['Supe AI','/learn/lean-fundamentals'],
+            ]],
+            ['Company',[
+              ['About','/about'],
+              ['Blog','/blog'],
+              ['Pricing','/pricing'],
+              ['Contact','/contact'],
+              ['Changelog','/changelog'],
+            ]],
+            ['Resources',[
+              ['Learning Center','/learn'],
+              ['Documentation','/docs'],
+              ['ISO 22468 Guide','/iso-22468'],
+              ['Lean Glossary','/lean-glossary'],
+            ]],
           ].map(([heading, links])=>(
             <div key={heading as string} style={{flex:'1 1 140px'}}>
               <div style={{fontSize:11,fontWeight:700,color:WHITE,letterSpacing:1,
                 textTransform:'uppercase',fontFamily:MONO,marginBottom:14}}>
                 {heading as string}
               </div>
-              {(links as string[]).map(l=>(
+              {(links as [string,string][]).map(([l,href])=>(
                 <div key={l} style={{marginBottom:8}}>
-                  <a href="#" style={{fontSize:13,color:GRAY2,fontFamily:SANS,
+                  <a href={href} style={{fontSize:13,color:GRAY2,fontFamily:SANS,
                     textDecoration:'none',transition:'color 0.15s'}}
                     onMouseEnter={e=>(e.currentTarget as HTMLElement).style.color=WHITE}
                     onMouseLeave={e=>(e.currentTarget as HTMLElement).style.color=GRAY2}>
