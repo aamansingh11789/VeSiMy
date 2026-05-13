@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Takt Time: What It Means, How to Calculate It, and What to Do When CT Exceeds It — VeSiMy',
+  title: 'Takt Time: What It Means, How to Calculate It, and What to Do When CT Exceeds It, VeSiMy',
   description: 'Takt time is the heartbeat of a lean process. If you do not know yours, you cannot know whether your process is capable of meeting demand.',
   openGraph: { title: 'Takt Time: What It Means, How to Calculate It, and What to Do When CT Exceeds It', type: 'article' },
 }
@@ -37,15 +37,15 @@ export default function Post() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Reading a takt comparison on your VSM</h2>
           <p style={{ marginBottom: 18 }}>Draw a horizontal line across your VSM at takt time. Every step whose cycle time bar rises above the takt line is a problem. That step cannot keep up with demand. Every step well below the takt line has excess capacity. The question is whether that excess capacity matters or whether it is just buffering for the constrained step.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>When cycle time exceeds takt</h2>
-          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 1 — Reduce CT at the constrained step.</strong> Eliminate NVA activities, improve setup, reduce wait within the step.</p>
-          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 2 — Add parallel capacity.</strong> Split the work across two operators or two machines. This doubles throughput at that step without reducing CT.</p>
-          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 3 — Accept demand you cannot meet and communicate it.</strong> Sometimes the honest answer is that takt time reveals a capacity gap that cannot be closed with current resources. That is important information. Better to know now than to promise delivery lead times the process cannot support.</p>
+          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 1, Reduce CT at the constrained step.</strong> Eliminate NVA activities, improve setup, reduce wait within the step.</p>
+          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 2, Add parallel capacity.</strong> Split the work across two operators or two machines. This doubles throughput at that step without reducing CT.</p>
+          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Option 3, Accept demand you cannot meet and communicate it.</strong> Sometimes the honest answer is that takt time reveals a capacity gap that cannot be closed with current resources. That is important information. Better to know now than to promise delivery lead times the process cannot support.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>When cycle time is significantly below takt</h2>
           <p style={{ marginBottom: 18 }}>A step that runs at 30 percent of takt time is not a win. It is either overbuilt, a symptom of earlier problems, or covering for a bottleneck elsewhere. Look at the steps around it. The excess capacity is almost always there because the team knew something upstream or downstream was unreliable.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

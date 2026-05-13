@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'How to Run a Kaizen Event: Template, Checklist & Examples 2026 — VeSiMy',
+  title: 'How to Run a Kaizen Event: Template, Checklist & Examples 2026, VeSiMy',
   description: 'A kaizen event is a focused 3–5 day improvement sprint. This guide gives you the exact template, pre-event checklist, and daily agenda used by lean teams to deliver measurable results in days.',
   keywords: ['kaizen event template', 'kaizen event checklist', 'how to run a kaizen event', 'kaizen blitz', 'lean manufacturing kaizen', 'continuous improvement sprint'],
   openGraph: {
@@ -40,7 +40,7 @@ export default function KaizenEventPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is a kaizen event?</h2>
           <p style={{ marginBottom: 18 }}>
-            A kaizen event (also called a kaizen blitz or rapid improvement event) is a short, intensive workshop where a cross-functional team focuses all their attention on improving a single process or problem. The team meets every day for 3–5 days, maps the current state, identifies waste, implements changes, and measures the result — all before the week is over.
+            A kaizen event (also called a kaizen blitz or rapid improvement event) is a short, intensive workshop where a cross-functional team focuses all their attention on improving a single process or problem. The team meets every day for 3–5 days, maps the current state, identifies waste, implements changes, and measures the result, all before the week is over.
           </p>
           <p style={{ marginBottom: 18 }}>
             Unlike traditional improvement projects that drag on for months, a kaizen event creates urgency and momentum. Teams are empowered to <em style={{ color: 'var(--text)' }}>implement changes immediately</em>, not write reports and wait for approval cycles.
@@ -65,11 +65,11 @@ export default function KaizenEventPost() {
           <p style={{ marginBottom: 16 }}>Poor preparation is the #1 reason kaizen events fail. Complete every item on this list before the event begins:</p>
           {[
             ['Define the target process', 'Which exact process, which shift, which product family. Be specific.'],
-            ['Set measurable goals', 'e.g. "Reduce cycle time from 4.2 min to 2.8 min" — not "improve efficiency"'],
+            ['Set measurable goals', 'e.g. "Reduce cycle time from 4.2 min to 2.8 min", not "improve efficiency"'],
             ['Select the team', '4–6 people: 1 facilitator, 2–3 operators who actually do the work, 1 engineer, 1 manager'],
-            ['Collect baseline data', 'Cycle times, defect rates, downtime, inventory counts — whatever your goal is measuring'],
+            ['Collect baseline data', 'Cycle times, defect rates, downtime, inventory counts, whatever your goal is measuring'],
             ['Walk the gemba', 'Facilitator walks the process floor before the event to understand current state'],
-            ['Arrange cover for team members', 'The team cannot be pulled away during the event — arrange backfill in advance'],
+            ['Arrange cover for team members', 'The team cannot be pulled away during the event, arrange backfill in advance'],
             ['Book the war room', 'A dedicated space with whiteboards and wall space for the entire week'],
             ['Prepare supplies', 'Sticky notes, markers, stopwatches, tape, flip chart paper, and a camera'],
           ].map(([title, desc], i) => (
@@ -85,7 +85,7 @@ export default function KaizenEventPost() {
             {
               day: 'Day 1', label: 'Understand', color: '#0176D3',
               items: [
-                'Morning: Team kickoff — review goals, ground rules, and roles',
+                'Morning: Team kickoff, review goals, ground rules, and roles',
                 'Review baseline data and go to gemba (the actual work floor)',
                 'Time study: stopwatch each step, count inventory at every station',
                 'Afternoon: Draw current state value stream map as a team',
@@ -99,7 +99,7 @@ export default function KaizenEventPost() {
                 'Morning: Share and discuss overnight ideas',
                 'Run 5 Why analysis on the top defects and delays found on Day 1',
                 'Fishbone diagram for the root cause of the biggest problem',
-                'Afternoon: Draw future state value stream map — what should this look like?',
+                'Afternoon: Draw future state value stream map, what should this look like?',
                 'Identify quick wins (can implement Day 3) vs longer-term changes',
                 'Create an action log: owner, action, deadline for every improvement',
               ]
@@ -111,7 +111,7 @@ export default function KaizenEventPost() {
                 'Rearrange workstations, update standard work, fix tooling issues',
                 'Update visual management boards and labels',
                 'Prototype any new process flows at reduced speed',
-                'Test and time the new process — is it faster? fewer defects?',
+                'Test and time the new process, is it faster? fewer defects?',
                 'Document every change made with before/after photos',
               ]
             },
@@ -122,7 +122,7 @@ export default function KaizenEventPost() {
                 'Measure actual cycle times, count errors, track downtime',
                 'Fix issues found during Day 3 testing',
                 'Update standard operating procedures (SOPs) to reflect changes',
-                'Train all operators on the new standard — not just the team members',
+                'Train all operators on the new standard, not just the team members',
                 'Afternoon: Begin preparing the results presentation',
               ]
             },
@@ -132,9 +132,9 @@ export default function KaizenEventPost() {
                 'Morning: Final measurements and data collection',
                 'Calculate improvement: before vs after on all target metrics',
                 'Complete the 30-60-90 day action plan for remaining items',
-                'Assign owners to every open action — no orphan tasks',
+                'Assign owners to every open action, no orphan tasks',
                 'Afternoon: Present results to leadership and broader team',
-                'Celebrate — kaizen events are hard work. Acknowledge the team.',
+                'Celebrate, kaizen events are hard work. Acknowledge the team.',
               ]
             },
           ].map(({ day, label, color, items }) => (
@@ -190,7 +190,7 @@ export default function KaizenEventPost() {
               Track your kaizen events digitally
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy's Kaizen Tracker links improvement events directly to your VSM process steps — so you always know what's been changed, what's pending, and what the result was. Free to start — no credit card.
+              VeSiMy's Kaizen Tracker links improvement events directly to your VSM process steps, so you always know what's been changed, what's pending, and what the result was. Free to start, no credit card.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#4A9EDA,#6CB9FC)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start tracking kaizen events free →

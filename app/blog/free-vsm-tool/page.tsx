@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Best Free VSM Tool in 2026 (No Visio Required) — VeSiMy',
-  description: 'The best free value stream mapping tools compared. Skip the $500 Visio license — here are the top browser-based VSM tools that actually work.',
+  title: 'Best Free VSM Tool in 2026 (No Visio Required), VeSiMy',
+  description: 'The best free value stream mapping tools compared. Skip the $500 Visio license, here are the top browser-based VSM tools that actually work.',
   keywords: ['free VSM tool', 'free value stream mapping software', 'VSM tool online', 'Visio alternative VSM', 'lean software free'],
   openGraph: {
     title: 'Best Free VSM Tool in 2026 (No Visio Required)',
@@ -32,7 +32,7 @@ export default function FreeVSMPost() {
             The Best Free VSM Tool in 2026 (No Visio Required)
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Visio requires a Microsoft license, hours of setup, and still doesn't know what a VSM symbol looks like without a template pack. Here are the real alternatives — including one that builds your map in 60 seconds.
+            Visio requires a Microsoft license, hours of setup, and still doesn't know what a VSM symbol looks like without a template pack. Here are the real alternatives, including one that builds your map in 60 seconds.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function FreeVSMPost() {
             Visio is a general diagramming tool. It doesn't understand lean concepts, doesn't calculate cycle time or lead time, can't track changes over time, and costs $15–$28/month on top of a Microsoft 365 subscription.
           </p>
           <p style={{ marginBottom: 18 }}>
-            For a manufacturer running kaizen events every quarter, Visio means redrawing your map from scratch every time — and losing all history of how the process has improved.
+            For a manufacturer running kaizen events every quarter, Visio means redrawing your map from scratch every time, and losing all history of how the process has improved.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The top free VSM tools compared</h2>
@@ -51,10 +51,10 @@ export default function FreeVSMPost() {
           {[
             {
               name: 'VeSiMy',
-              price: '14-day free trial — then $29/mo Pro or $99 Lifetime',
+              price: '14-day free trial, then $29/mo Pro or $99 Lifetime',
               best: 'Teams who want AI + all CI tools in one place',
               pros: ['Browser-based, no download', 'Calculates lead time and takt time automatically', 'Connected to Kaizen, 5 Why, and Time Study', 'SOP → VSM in 60 seconds with AI', 'Mobile-friendly', 'Export to PDF'],
-              cons: ['Newer platform — still adding advanced symbols'],
+              cons: ['Newer platform, still adding advanced symbols'],
               highlight: true,
             },
             {
@@ -110,7 +110,7 @@ export default function FreeVSMPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The bottom line</h2>
           <p style={{ marginBottom: 18 }}>
-            If you just need a quick diagram to share with your team, draw.io is free and functional. If you want a tool that actually <em style={{ color: 'var(--text)' }}>understands lean</em> — calculates your lead time, connects to kaizen tracking, and lets AI help you build maps from SOPs — VeSiMy is the only free option that does all of that.
+            If you just need a quick diagram to share with your team, draw.io is free and functional. If you want a tool that actually <em style={{ color: 'var(--text)' }}>understands lean</em>, calculates your lead time, connects to kaizen tracking, and lets AI help you build maps from SOPs, VeSiMy is the only free option that does all of that.
           </p>
           <p style={{ marginBottom: 40 }}>
             The most important thing is to start. A rough VSM on paper is infinitely more useful than a perfect diagram you never built.
@@ -124,7 +124,7 @@ export default function FreeVSMPost() {
               No download. No Visio. No setup. Build your first VSM map in under 5 minutes.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0a5eaa,#0176D3)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
-              Start free trial — no credit card required →
+              Start free trial, no credit card required →
             </Link>
           </div>
         </div>

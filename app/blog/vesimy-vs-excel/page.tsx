@@ -2,12 +2,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'VeSiMy vs Excel for Value Stream Mapping: Why Spreadsheets Break CI — VeSiMy',
-  description: 'Excel is the most common CI tool in manufacturing — and the most expensive one nobody talks about. Here is what it costs you, and what a connected CI platform does differently.',
+  title: 'VeSiMy vs Excel for Value Stream Mapping: Why Spreadsheets Break CI, VeSiMy',
+  description: 'Excel is the most common CI tool in manufacturing, and the most expensive one nobody talks about. Here is what it costs you, and what a connected CI platform does differently.',
   keywords: ['VSM excel alternative', 'value stream mapping software vs excel', 'lean manufacturing software', 'CI tools manufacturing', 'replace excel lean', 'process improvement software', 'VSM tool comparison'],
   openGraph: {
     title: 'VeSiMy vs Excel for Value Stream Mapping',
-    description: 'The hidden cost of running your CI process in spreadsheets — and what a connected platform does differently.',
+    description: 'The hidden cost of running your CI process in spreadsheets, and what a connected platform does differently.',
     type: 'article',
   },
 }
@@ -32,7 +32,7 @@ export default function VeSiMyVsExcelPost() {
             VeSiMy vs Excel for Value Stream Mapping: What Spreadsheets Actually Cost You
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Nobody chose Excel for lean. It became the default because it was already there. But there's a real cost to running a CI programme in a tool that has no idea what a value stream is — and most teams are paying it without ever adding it up.
+            Nobody chose Excel for lean. It became the default because it was already there. But there's a real cost to running a CI programme in a tool that has no idea what a value stream is, and most teams are paying it without ever adding it up.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default function VeSiMyVsExcelPost() {
           {[
             {
               title: 'Reconciliation time',
-              body: 'Every time you want a current-state picture — for a monthly review, a kaizen readout, a manager asking for an update — someone spends 30 to 90 minutes pulling numbers from multiple sources, checking that the VSM matches the time study, checking that the time study matches the current standard. This is not improvement work. It is maintenance work caused by fragmentation.',
+              body: 'Every time you want a current-state picture, for a monthly review, a kaizen readout, a manager asking for an update, someone spends 30 to 90 minutes pulling numbers from multiple sources, checking that the VSM matches the time study, checking that the time study matches the current standard. This is not improvement work. It is maintenance work caused by fragmentation.',
             },
             {
               title: 'Data that is already stale',
@@ -102,22 +102,22 @@ export default function VeSiMyVsExcelPost() {
             Excel is the right answer for one-off analysis that doesn't need to connect to anything else. An ad hoc capacity calculation. A quick cost comparison. A pivot table on export data. For tasks like these, Excel is fast and flexible and there is no reason to use anything else.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The problem is using Excel for the parts of CI that should connect — the VSM, the time studies, the root cause work, the improvement tracking. Those parts need a system, not a file.
+            The problem is using Excel for the parts of CI that should connect, the VSM, the time studies, the root cause work, the improvement tracking. Those parts need a system, not a file.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to make the switch without disrupting your team</h2>
           <p style={{ marginBottom: 18 }}>
-            The biggest barrier to switching tools in manufacturing is not capability — it's inertia. The team knows the spreadsheet. The spreadsheet exists. Starting over feels like admitting the old way was wrong.
+            The biggest barrier to switching tools in manufacturing is not capability, it's inertia. The team knows the spreadsheet. The spreadsheet exists. Starting over feels like admitting the old way was wrong.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The practical approach is to run one project in the new system and leave everything else alone. Pick a process that has an upcoming improvement event — a known bottleneck, a quality issue with a root cause you haven't fully addressed, a changeover that keeps slipping. Map it in VeSiMy, run the time study there, do the kaizen tracking there. At the end of the event, generate the A3 from the tool.
+            The practical approach is to run one project in the new system and leave everything else alone. Pick a process that has an upcoming improvement event, a known bottleneck, a quality issue with a root cause you haven't fully addressed, a changeover that keeps slipping. Map it in VeSiMy, run the time study there, do the kaizen tracking there. At the end of the event, generate the A3 from the tool.
           </p>
           <p style={{ marginBottom: 18 }}>
             If the report takes ten minutes instead of a day, and the data is current instead of two weeks old, the case for the rest of your projects makes itself.
           </p>
 
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
-            <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Map your first process in VeSiMy — free</div>
+            <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Map your first process in VeSiMy, free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>14-day free trial, 3 projects, all CI tools, no credit card. See what a connected CI system actually feels like on a real process.</p>
             <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →

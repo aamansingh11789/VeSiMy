@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'How to Run a VSM Workshop: The Wall Session Method — VeSiMy',
+  title: 'How to Run a VSM Workshop: The Wall Session Method, VeSiMy',
   description: 'Step by step from empty wall to completed current state map. Everything you need to run your first value stream mapping workshop the right way.',
   keywords: ['VSM workshop', 'value stream mapping workshop', 'wall session lean', 'current state map how to'],
   openGraph: { title: 'How to Run a VSM Workshop: The Wall Session Method', type: 'article' },
@@ -34,14 +34,14 @@ export default function Post() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What you need before you start</h2>
           <p style={{ marginBottom: 18 }}>A wall. Not a whiteboard. A real wall or a long stretch of butcher paper taped to the wall. The physical scale matters. A value stream needs space to breathe.</p>
-          <p style={{ marginBottom: 18 }}>Sticky notes in at least three colors. Main process steps in one color, sub-processes in another, information flows in a third. Markers — medium point so writing is readable from six feet away.</p>
+          <p style={{ marginBottom: 18 }}>Sticky notes in at least three colors. Main process steps in one color, sub-processes in another, information flows in a third. Markers, medium point so writing is readable from six feet away.</p>
           <p style={{ marginBottom: 18 }}>The right people: someone from every part of the process. Five to eight people is the right size. A facilitator who can keep the group on the current state, not the ideal state.</p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Setting the scope first</h2>
-          <p style={{ marginBottom: 18 }}>Define the trigger — the event that starts this process. Define completion — what done looks like. Write both on the wall before anyone touches a sticky note. Everything in between is fair game. Everything outside those boundaries is not on this map.</p>
+          <p style={{ marginBottom: 18 }}>Define the trigger, the event that starts this process. Define completion, what done looks like. Write both on the wall before anyone touches a sticky note. Everything in between is fair game. Everything outside those boundaries is not on this map.</p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Running the wall session</h2>
-          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Step 1: Name the process steps.</strong> Ask: "What is the first thing that happens after the trigger?" Write the answer, place it on the wall, then ask: "What happens next?" Map the typical flow — the path that 80 percent of your volume takes.</p>
+          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Step 1: Name the process steps.</strong> Ask: "What is the first thing that happens after the trigger?" Write the answer, place it on the wall, then ask: "What happens next?" Map the typical flow, the path that 80 percent of your volume takes.</p>
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Step 2: Add activities inside each step.</strong> For each step, ask what the individual tasks are. A step called "Incoming inspection" might have six distinct activities. These activities are where waste hides.</p>
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Step 3: Add sub-processes.</strong> Add a horizontal lane for each process that feeds the main flow. Do not ignore them. The constraint is often a sub-process starving a main step.</p>
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Step 4: Add information flows.</strong> How does each step know what to do? Draw electronic flows with a lightning bolt arrow, manual flows with a straight arrow.</p>
@@ -54,7 +54,7 @@ export default function Post() {
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

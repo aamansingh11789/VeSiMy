@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sub-Process Mapping: How to Map Feeding Processes Without Losing the Main Flow — VeSiMy',
+  title: 'Sub-Process Mapping: How to Map Feeding Processes Without Losing the Main Flow, VeSiMy',
   description: 'Sub-processes are where the real constraint often lives. Here is how to map them without creating a map that nobody can read.',
   openGraph: { title: 'Sub-Process Mapping: How to Map Feeding Processes Without Losing the Main Flow', type: 'article' },
 }
@@ -33,7 +33,7 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>The constraint in many operations is not on the main flow at all. It is in a sub-process that the main flow assumes will always deliver on time. When the sub-process is late, the main flow stalls. But because the stall appears on the main flow, the team keeps trying to fix the main flow and never addresses the actual cause.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The lane structure</h2>
           <p style={{ marginBottom: 18 }}>Sub-processes map as horizontal lanes above or below the main flow. The point where a sub-process feeds into the main flow is shown as a connection arrow at the relevant main flow step. Multiple sub-processes each get their own lane.</p>
-          <p style={{ marginBottom: 18 }}>The same VSM notation applies to sub-process lanes: sticky notes, data strips, CT, wait time, WIP. The analysis metrics — PCE, lead time, takt comparison — also apply to each sub-process lane independently.</p>
+          <p style={{ marginBottom: 18 }}>The same VSM notation applies to sub-process lanes: sticky notes, data strips, CT, wait time, WIP. The analysis metrics, PCE, lead time, takt comparison, also apply to each sub-process lane independently.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Scope rules for sub-processes</h2>
           <p style={{ marginBottom: 18 }}>Map a sub-process when it has its own dedicated resources, when its output is only used by the main flow at a specific point, and when its timing has historically caused main flow delays. Do not map a shared service function as a sub-process unless its capacity is genuinely constraining your value stream.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The common mistake</h2>
@@ -43,7 +43,7 @@ export default function Post() {
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

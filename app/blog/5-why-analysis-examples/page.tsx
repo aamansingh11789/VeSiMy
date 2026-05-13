@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '5 Why Analysis: 6 Real Examples From the Shop Floor 2026 — VeSiMy',
-  description: 'The 5 Why technique sounds simple but most teams stop too early. Here are 6 real manufacturing examples showing exactly how deep to dig — and how to write a corrective action that sticks.',
+  title: '5 Why Analysis: 6 Real Examples From the Shop Floor 2026, VeSiMy',
+  description: 'The 5 Why technique sounds simple but most teams stop too early. Here are 6 real manufacturing examples showing exactly how deep to dig, and how to write a corrective action that sticks.',
   keywords: ['5 why analysis examples', '5 why root cause analysis', 'five why manufacturing', '5 why template', 'root cause analysis examples', 'lean problem solving'],
   openGraph: {
     title: '5 Why Analysis: 6 Real Examples From the Shop Floor',
@@ -43,7 +43,7 @@ const examples = [
   },
   {
     color: '#1DD1A1',
-    problem: 'Order picking errors are running at 3.2% — target is 0.5%',
+    problem: 'Order picking errors are running at 3.2%, target is 0.5%',
     whys: [
       'Pickers are selecting the wrong SKU from the bin',
       'Bins for two similar SKUs (A4412 and A4421) are adjacent and look identical',
@@ -124,7 +124,7 @@ export default function FiveWhyPost() {
             The 5 Why technique was developed by Sakichi Toyoda and is the cornerstone of the Toyota Production System. It is deceptively simple: when a problem occurs, ask "why?" five times to get to the root cause instead of the symptom.
           </p>
           <p style={{ marginBottom: 18 }}>
-            In practice, most teams stop at Why 2 or Why 3 — the point where the answer is uncomfortable, politically sensitive, or points to a systemic failure rather than a single person's mistake. The result is a corrective action that treats the symptom and the problem returns within weeks.
+            In practice, most teams stop at Why 2 or Why 3, the point where the answer is uncomfortable, politically sensitive, or points to a systemic failure rather than a single person's mistake. The result is a corrective action that treats the symptom and the problem returns within weeks.
           </p>
           <p style={{ marginBottom: 18 }}>
             A properly completed 5 Why will almost always point to one of three systemic root causes: a missing standard, a standard that isn't followed, or a standard that isn't visible at the point of use.
@@ -171,10 +171,10 @@ export default function FiveWhyPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The pattern you'll notice</h2>
           <p style={{ marginBottom: 18 }}>
-            Look back at all 6 examples. Every single root cause points to a <strong style={{ color: 'var(--text)' }}>system or process failure</strong> — not a person's failure. The operator who guessed the tonnage setting wasn't careless; the training system never required them to prove they could do it alone. The picker who selected the wrong SKU wasn't distracted; the warehouse layout made the error almost inevitable.
+            Look back at all 6 examples. Every single root cause points to a <strong style={{ color: 'var(--text)' }}>system or process failure</strong>, not a person's failure. The operator who guessed the tonnage setting wasn't careless; the training system never required them to prove they could do it alone. The picker who selected the wrong SKU wasn't distracted; the warehouse layout made the error almost inevitable.
           </p>
           <p style={{ marginBottom: 18 }}>
-            This is the point of 5 Why. When you reach the real root cause, the corrective action becomes obvious — and it changes the system, not just the person.
+            This is the point of 5 Why. When you reach the real root cause, the corrective action becomes obvious, and it changes the system, not just the person.
           </p>
           <p style={{ marginBottom: 18 }}>
             If your 5 Why analysis ends with "operator error" or "employee didn't follow procedure," you haven't gone deep enough. Keep asking why.

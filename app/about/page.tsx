@@ -4,7 +4,7 @@ import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About VeSiMy — AI Process Intelligence for Every Industry',
+  title: 'About VeSiMy, AI Process Intelligence for Every Industry',
   description: 'VeSiMy is an AI-powered process improvement platform built for lean practitioners, operators, managers, and consultants across 68+ industries. Learn about our mission and the team behind it.',
 }
 
@@ -42,7 +42,7 @@ export default function AboutPage() {
         <div style={{ background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
           <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.45 }}>
-            "Make every team — manufacturer, clinic, law firm, or warehouse — as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
+            "Make every team, manufacturer, clinic, law firm, or warehouse, as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
           </p>
         </div>
 

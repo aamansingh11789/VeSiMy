@@ -1,6 +1,6 @@
 'use client'
-// ── app/page.tsx — VeSiMy Homepage v5.0 ──────────────────────────────────────
-// Design: Premium dark SaaS — deep navy, warm amber glow, product mockup hero.
+// ── app/page.tsx, VeSiMy Homepage v5.0 ──────────────────────────────────────
+// Design: Premium dark SaaS, deep navy, warm amber glow, product mockup hero.
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -129,7 +129,7 @@ function Nav() {
     <nav style={{
       position:'sticky', top:0, zIndex:200, height:60,
       display:'flex', alignItems:'center', justifyContent:'space-between',
-      padding:'0 40px',
+      padding:'0 20px',
       background: scrolled ? 'rgba(8,9,15,0.92)' : 'transparent',
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
       WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
@@ -143,7 +143,7 @@ function Nav() {
         <VeSiMyWordmark size={17} onDark />
       </Link>
 
-      {/* Nav links — desktop */}
+      {/* Nav links, desktop */}
       <div style={{display:'flex',alignItems:'center',gap:28}} className="home-nav-links">
         {[['Product','/#features'],['Solutions','/#solutions'],['Pricing','/#pricing'],['Learn','/learn'],['Blog','/blog']].map(([label,href])=>(
           <Link key={label} href={href} className="nav-link">{label}</Link>
@@ -203,7 +203,7 @@ function ProductMockup() {
     {name:'Dispatch', ct:'22s', va:'VA',   bot:false},
   ]
   return (
-    <div className="float" style={{position:'relative',width:580,flexShrink:0,
+    <div className="float hero-mockup" style={{position:'relative',width:580,flexShrink:0,
       WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale'}}>
 
       {/* Main browser frame */}
@@ -382,27 +382,27 @@ function Hero() {
   return (
     <section style={{
       position:'relative', overflow:'hidden',
-      minHeight:'92vh', padding:'60px 40px 80px',
+      minHeight:'92vh', padding:'60px 24px 80px',
       backgroundImage:"url('/hero-bg.png')",
       backgroundSize:'cover', backgroundPosition:'center',
       display:'flex', alignItems:'center',
     }}>
       {/* Overlays */}
       <div style={{position:'absolute',inset:0,background:'linear-gradient(160deg,rgba(5,6,14,0.85) 0%,rgba(6,8,16,0.70) 50%,rgba(5,6,14,0.90) 100%)'}}/>
-      {/* Warm amber glow — upper right, like reference */}
+      {/* Warm amber glow, upper right, like reference */}
       <div style={{position:'absolute',top:-80,right:-80,width:600,height:600,
         background:'radial-gradient(ellipse at center, rgba(212,168,67,0.14) 0%, transparent 70%)',
         filter:'blur(40px)',pointerEvents:'none'}}/>
-      {/* Blue glow — left */}
+      {/* Blue glow, left */}
       <div style={{position:'absolute',bottom:0,left:0,width:500,height:400,
         background:'radial-gradient(ellipse at bottom left, rgba(22,112,212,0.08) 0%, transparent 70%)',
         pointerEvents:'none'}}/>
 
       <div style={{position:'relative',maxWidth:1220,margin:'0 auto',width:'100%',
-        display:'flex',alignItems:'center',gap:80, WebkitFontSmoothing:'antialiased'}}>
+        display:'flex',alignItems:'center',flexWrap:'wrap',gap:48, WebkitFontSmoothing:'antialiased'}}>
 
         {/* Left: copy */}
-        <div style={{flex:'1 1 500px',minWidth:0}}>
+        <div style={{flex:'1 1 320px',minWidth:0,width:'100%'}}>
           {/* Badge */}
           <div className="au" style={{display:'inline-flex',alignItems:'center',gap:8,
             marginBottom:28,background:'rgba(212,168,67,0.10)',
@@ -417,13 +417,13 @@ function Hero() {
 
           {/* Headline */}
           <div className="au1">
-            <h1 style={{fontSize:54,fontWeight:800,color:WHITE,lineHeight:1.07,
+            <h1 className="hero-h1" style={{fontSize:54,fontWeight:800,color:WHITE,lineHeight:1.07,
               letterSpacing:-1.8,marginBottom:0,fontFamily:SANS}}>
               From process mapping
             </h1>
           </div>
           <div className="au2" style={{marginBottom:24}}>
-            <h1 style={{fontSize:54,fontWeight:800,lineHeight:1.07,
+            <h1 className="hero-h1" style={{fontSize:54,fontWeight:800,lineHeight:1.07,
               letterSpacing:-1.8,marginBottom:0,fontFamily:SANS,
               background:`linear-gradient(135deg, ${AMBER} 0%, ${AMBERL} 50%, ${AMBER} 100%)`,
               WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',
@@ -436,7 +436,7 @@ function Hero() {
           <p className="au3" style={{fontSize:16,color:GRAY,lineHeight:1.75,
             maxWidth:480,marginBottom:36,fontFamily:SANS}}>
             VeSiMy helps operations teams map, measure, analyze, and improve how
-            work gets done — with AI that turns process complexity into clarity.
+            work gets done, with AI that turns process complexity into clarity.
           </p>
 
           {/* CTAs */}
@@ -456,7 +456,7 @@ function Hero() {
               textTransform:'uppercase',fontFamily:MONO,marginBottom:14}}>
               Used across operations-focused teams
             </div>
-            <div style={{display:'flex',alignItems:'center',gap:24,flexWrap:'wrap'}}>
+            <div className="trust-pills" style={{display:'flex',alignItems:'center',gap:12,flexWrap:'wrap'}}>
               {['Manufacturing','Healthcare','Logistics','Food & Beverage','Financial Services','Construction'].map((label)=>(
                 <div key={label} style={{
                   display:'flex',alignItems:'center',gap:0,
@@ -473,7 +473,7 @@ function Hero() {
         </div>
 
         {/* Right: product mockup */}
-        <div className="au5" style={{flexShrink:0}}>
+        <div className="au5 hero-mockup-wrap" style={{flexShrink:0}}>
           <ProductMockup />
         </div>
       </div>
@@ -481,12 +481,12 @@ function Hero() {
   )
 }
 
-// ── Social proof — honest, no fake metrics ────────────────────────────────────
+// ── Social proof, honest, no fake metrics ────────────────────────────────────
 // NOTE: No fake testimonials, ratings, or user counts.
 // Replace this section with real customer quotes when available.
 
 function SocialProof() {
-  // Honest proof section — no fake reviews, no fake ratings, no invented quotes
+  // Honest proof section, no fake reviews, no fake ratings, no invented quotes
   // Replace placeholder cards with real customer stories when available
   const INDUSTRIES = [
     {icon:'⚙', name:'Manufacturing',       desc:'Assembly, machining, fabrication, production lines'},
@@ -552,21 +552,21 @@ function SocialProof() {
 const FEATURES = [
   {icon:'⊕',  title:'Map with ease',         body:'Drag-drop VSM builder. Capture any process in minutes, not hours.'},
   {icon:'✦',  title:'AI-powered Supe',        body:'Detects bottlenecks, waste, and improvement opportunities automatically.'},
-  {icon:'◎',  title:'17 CI tools',            body:'Stopwatch, Fishbone, 5 Why, SMED, Kaizen, PDCA — all in one platform.'},
+  {icon:'◎',  title:'17 CI tools',            body:'Stopwatch, Fishbone, 5 Why, SMED, Kaizen, PDCA, all in one platform.'},
   {icon:'⟳',  title:'Target State',           body:'AI generates a Future State VSM with projected metrics and action plan.'},
   {icon:'▨',  title:'Multi-industry support',  body:'66 industry verticals. Lean terminology adapts to your sector automatically.'},
 ]
 
 function Features() {
   return (
-    <section id="features" style={{background:BG,padding:'80px 40px',borderTop:`1px solid ${BORD2}`}}>
+    <section id="features" style={{background:BG,padding:'60px 20px',borderTop:`1px solid ${BORD2}`}}>
       <div style={{maxWidth:1100,margin:'0 auto'}}>
         <div style={{textAlign:'center',marginBottom:52}}>
           <div style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
             textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>
             PLATFORM CAPABILITIES
           </div>
-          <h2 style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
+          <h2 className="section-h2" style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
             lineHeight:1.15,fontFamily:SANS,margin:0}}>
             Everything your CI team needs
           </h2>
@@ -576,7 +576,7 @@ function Features() {
             execution layer that turns Lean knowledge into measurable improvement.
           </p>
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:16}}>
+        <div className="feature-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:16}}>
           {FEATURES.map((f,i)=>(
             <div key={i} className="feature-card">
               <div style={{width:40,height:40,borderRadius:10,
@@ -622,19 +622,19 @@ function Pricing() {
   ]
 
   return (
-    <section id="pricing" style={{background:BG2,padding:'80px 40px',borderTop:`1px solid ${BORD}`}}>
+    <section id="pricing" style={{background:BG2,padding:'60px 20px',borderTop:`1px solid ${BORD}`}}>
       <div style={{maxWidth:1100,margin:'0 auto'}}>
         <div style={{textAlign:'center',marginBottom:52}}>
           <div style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
             textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>
             PRICING
           </div>
-          <h2 style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
+          <h2 className="section-h2" style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
             lineHeight:1.15,fontFamily:SANS,margin:0}}>
             Start free. Upgrade when VeSiMy earns it.
           </h2>
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:16,alignItems:'start'}}>
+        <div className="pricing-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:16,alignItems:'start'}}>
           {plans.map((p,i)=>(
             <div key={i} className={`pricing-card${p.featured?' featured':''}`}
               style={{position:'relative',borderColor: p.featured?`rgba(212,168,67,0.40)`:BORD}}>
@@ -698,7 +698,7 @@ function BottomCTA() {
         maxWidth:1100,margin:'0 auto',borderRadius:20,
         background:`linear-gradient(160deg,${BG2} 0%,rgba(12,14,24,1) 100%)`,
         border:`1px solid rgba(212,168,67,0.18)`,
-        padding:'56px 48px',
+        padding:'40px 24px',
         display:'flex',alignItems:'center',justifyContent:'space-between',
         flexWrap:'wrap',gap:32,
         position:'relative',overflow:'hidden',
@@ -708,7 +708,7 @@ function BottomCTA() {
           background:'radial-gradient(ellipse at center,rgba(212,168,67,0.10) 0%,transparent 70%)',
           pointerEvents:'none'}}/>
         <div style={{position:'relative',flex:'1 1 400px'}}>
-          <h2 style={{fontSize:36,fontWeight:800,color:WHITE,letterSpacing:-0.8,
+          <h2 className="cta-headline" style={{fontSize:36,fontWeight:800,color:WHITE,letterSpacing:-0.8,
             lineHeight:1.2,fontFamily:SANS,marginBottom:12}}>
             Ready to turn complexity<br/>
             into your{' '}
@@ -741,10 +741,10 @@ function BottomCTA() {
 // ── Footer ────────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer style={{background:BG,borderTop:`1px solid ${BORD}`,padding:'40px 40px 32px'}}>
+    <footer style={{background:BG,borderTop:`1px solid ${BORD}`,padding:'40px 20px 32px'}}>
       <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',
-          flexWrap:'wrap',gap:32,marginBottom:40}}>
+        <div className="footer-grid" style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',
+          gap:32,marginBottom:40}}>
           {/* Brand */}
           <div style={{flex:'1 1 200px'}}>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
@@ -758,11 +758,11 @@ function Footer() {
           {/* Links */}
           {[
             ['Product',[
+              ['All Features','/features'],
               ['VSM Builder','/learn/vsm-fundamentals'],
               ['CI Tools','/learn/ci-tools'],
-              ['Simulation','/#pricing'],
-              ['PDF Reports','/#pricing'],
               ['Supe AI','/learn/lean-fundamentals'],
+              ['Pricing','/pricing'],
             ]],
             ['Company',[
               ['About','/about'],

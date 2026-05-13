@@ -4,7 +4,7 @@ import type React from 'react'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
 
-export const metadata = { title: 'Terms of Service — VeSiMy' }
+export const metadata = { title: 'Terms of Service, VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
@@ -41,7 +41,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="4. Subscriptions and Billing">
-          <p>The Trial plan is available at no cost with no credit card required. The trial period is 14 days with access to up to 3 projects and all CI tools. After the trial period, your account remains active but project creation is restricted until you upgrade. Paid plans are billed monthly or annually depending on your selection. When upgrading to Pro for the first time, a 14-day free trial applies — you will not be charged until the trial period ends. Paid subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge — contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
+          <p>The Trial plan is available at no cost with no credit card required. The trial period is 14 days with access to up to 3 projects and all CI tools. After the trial period, your account remains active but project creation is restricted until you upgrade. Paid plans are billed monthly or annually depending on your selection. When upgrading to Pro for the first time, a 14-day free trial applies, you will not be charged until the trial period ends. Paid subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time from your account settings. Refunds are available within 30 days of any charge, contact founder@vesimy.com. We use Stripe for payment processing and do not store your payment card details.</p>
         </Section>
 
         <Section title="5. Your Data">

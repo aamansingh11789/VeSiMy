@@ -2,12 +2,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '8 Wastes of Lean Manufacturing: DOWNTIME Examples and How to Eliminate Them — VeSiMy',
-  description: 'The 8 wastes of lean — DOWNTIME — with real manufacturing examples for each. How to identify waste on your floor and build an elimination backlog from your value stream.',
+  title: '8 Wastes of Lean Manufacturing: DOWNTIME Examples and How to Eliminate Them, VeSiMy',
+  description: 'The 8 wastes of lean, DOWNTIME, with real manufacturing examples for each. How to identify waste on your floor and build an elimination backlog from your value stream.',
   keywords: ['8 wastes of lean', 'DOWNTIME lean manufacturing', '8 wastes manufacturing examples', 'lean waste identification', 'muda lean', 'types of waste manufacturing', 'waste walk lean', 'identify waste manufacturing'],
   openGraph: {
     title: '8 Wastes of Lean Manufacturing: Real Examples and How to Eliminate Them',
-    description: 'DOWNTIME — the 8 wastes of lean — with real manufacturing examples and a structured approach to identification.',
+    description: 'DOWNTIME, the 8 wastes of lean, with real manufacturing examples and a structured approach to identification.',
     type: 'article',
   },
 }
@@ -21,7 +21,7 @@ const WASTES = [
     icon: '',
     definition: 'Any output that does not meet specification and requires rework, scrap, or inspection.',
     examples: ['Weld porosity requiring rework at final QC', 'Dimensional non-conformances caught at first-piece inspection', 'Incorrect labels on finished goods requiring re-labelling', 'Software bugs discovered in UAT that require a code fix'],
-    cost: 'Defects consume labour twice — once to produce and once to correct. Scrap consumes material with zero customer value. Rework delays shipment and erodes confidence in the process.',
+    cost: 'Defects consume labour twice, once to produce and once to correct. Scrap consumes material with zero customer value. Rework delays shipment and erodes confidence in the process.',
     action: 'Use a Fishbone + 5 Why to find the root cause. Standard Work to prevent recurrence. Statistical process control to detect drift before it produces defects.',
   },
   {
@@ -30,14 +30,14 @@ const WASTES = [
     icon: '',
     definition: 'Producing more than the customer requires, sooner than required, or faster than downstream can consume.',
     examples: ['Running a batch of 500 when the customer order is 200', 'Producing subassemblies 3 days before final assembly needs them', 'Printing reports that nobody reads', 'Processing transactions in bulk overnight when real-time would serve better'],
-    cost: 'Overproduction is the worst waste because it creates all the others — it generates inventory, requires transportation, hides defects, and ties up capacity that should respond to actual demand.',
+    cost: 'Overproduction is the worst waste because it creates all the others, it generates inventory, requires transportation, hides defects, and ties up capacity that should respond to actual demand.',
     action: 'Match production rate to takt time. Implement pull signals (kanban) between steps. Reduce batch sizes. Schedule to actual demand rather than forecast push.',
   },
   {
     letter: 'W',
     name: 'Waiting',
     icon: '',
-    definition: 'Time when work — product, people, or information — is idle and not progressing through the process.',
+    definition: 'Time when work, product, people, or information, is idle and not progressing through the process.',
     examples: ['Parts waiting in bins between machining and assembly', 'Operators waiting for a crane that serves multiple cells', 'Approval signatures holding a purchase order for 3 days', 'A machine idle while the operator locates a tool'],
     cost: 'Waiting is often invisible because the product is still in the building and the operator may appear busy with other tasks. But it is the primary driver of long lead time and low PCE.',
     action: 'Map wait times explicitly in the VSM. Balance capacity between steps to takt. Relocate tools and materials to point of use. Reduce approval chains.',
@@ -57,7 +57,7 @@ const WASTES = [
     icon: '',
     definition: 'Moving product, material, or information that does not add value to the transformation.',
     examples: ['Parts moved to a central inspection area and back to the line', 'Raw material stored in a warehouse far from point of use', 'A document emailed, printed, signed, scanned, and emailed again', 'A subassembly that crosses the building floor four times before final assembly'],
-    cost: 'Every move is an opportunity for damage, loss, delay, and labelling error. Transport also obscures the sequence of operations — when parts travel, the process is harder to see and manage.',
+    cost: 'Every move is an opportunity for damage, loss, delay, and labelling error. Transport also obscures the sequence of operations, when parts travel, the process is harder to see and manage.',
     action: 'Reorganise layout to create flow cells where sequential steps are adjacent. Reduce centralised storage in favour of point-of-use supermarkets. Digitalise document flows.',
   },
   {
@@ -66,7 +66,7 @@ const WASTES = [
     icon: '',
     definition: 'More material, WIP, or finished goods than is needed to support current demand.',
     examples: ['Three pallets of raw material when one shift\'s worth is sufficient', 'WIP triangles on the VSM showing 4-day queues between steps', 'Finished goods stock that hasn\'t moved in 90 days', 'A spare parts cage with components for machines no longer in service'],
-    cost: 'Inventory ties up cash, occupies space, and hides problems. When a quality issue is discovered in 500 units of WIP, the cost is exponentially higher than discovering it in 5. Inventory is the buffer that makes all other wastes tolerable — and therefore invisible.',
+    cost: 'Inventory ties up cash, occupies space, and hides problems. When a quality issue is discovered in 500 units of WIP, the cost is exponentially higher than discovering it in 5. Inventory is the buffer that makes all other wastes tolerable, and therefore invisible.',
     action: 'Use the VSM to make WIP visible. Set target WIP levels based on cycle time and lead time. Implement kanban pull to control WIP between steps. Conduct regular inventory reviews.',
   },
   {
@@ -75,7 +75,7 @@ const WASTES = [
     icon: '',
     definition: 'Unnecessary movement of people that does not add value to the product.',
     examples: ['An operator walking to a shared tool cabinet 12 times per shift', 'Reaching, bending, or stretching to access materials not at ergonomic height', 'Walking between disconnected workstations to check status', 'Searching for information across multiple systems or physical locations'],
-    cost: 'Motion waste is the most visible waste on a properly run time study — and the most ignored. It accumulates in seconds per cycle, but at 480 cycles per shift, minutes per hour become hours per week.',
+    cost: 'Motion waste is the most visible waste on a properly run time study, and the most ignored. It accumulates in seconds per cycle, but at 480 cycles per shift, minutes per hour become hours per week.',
     action: 'Time study to identify motion waste per step. Reorganise the workstation with everything at point of use. 5S to eliminate search. Standard Work to lock in the optimised sequence.',
   },
   {
@@ -84,7 +84,7 @@ const WASTES = [
     icon: '',
     definition: 'Doing more to a product than the customer requires, or using a more complex process than the task demands.',
     examples: ['Polishing a surface the customer will never see', 'Running a tolerance tighter than the specification requires', 'Multiple sign-off levels for low-risk decisions', 'Re-entering data from one system into another', 'Inspecting at every step when process capability is proven'],
-    cost: 'Extra processing consumes capacity without producing value. It often originates in well-intentioned process additions that were never revisited — the inspection step added after a quality escape ten years ago, still running on every part.',
+    cost: 'Extra processing consumes capacity without producing value. It often originates in well-intentioned process additions that were never revisited, the inspection step added after a quality escape ten years ago, still running on every part.',
     action: 'Audit process steps against customer requirements. Ask "what would happen if we stopped doing this?" Standard Work to define what is actually necessary.',
   },
 ]
@@ -107,7 +107,7 @@ export default function EightWastesPost() {
             The 8 Wastes of Lean Manufacturing: DOWNTIME With Real Examples
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            The 8 wastes — Defects, Overproduction, Waiting, Non-utilisation of talent, Transportation, Inventory, Motion, and Extra Processing — are the categories that structure waste identification in lean. Most teams can name them. Fewer can identify them specifically on their own floor and build an actionable elimination backlog from what they find.
+            The 8 wastes, Defects, Overproduction, Waiting, Non-utilisation of talent, Transportation, Inventory, Motion, and Extra Processing, are the categories that structure waste identification in lean. Most teams can name them. Fewer can identify them specifically on their own floor and build an actionable elimination backlog from what they find.
           </p>
         </div>
 
@@ -115,10 +115,10 @@ export default function EightWastesPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why the 8 wastes matter</h2>
           <p style={{ marginBottom: 18 }}>
-            The original seven wastes were identified by Taiichi Ohno at Toyota in the development of the Toyota Production System. The eighth — non-utilisation of talent — was added later as lean thinking spread beyond manufacturing to knowledge work environments. Together they form a complete taxonomy of non-value-adding activity that applies across industries and processes.
+            The original seven wastes were identified by Taiichi Ohno at Toyota in the development of the Toyota Production System. The eighth, non-utilisation of talent, was added later as lean thinking spread beyond manufacturing to knowledge work environments. Together they form a complete taxonomy of non-value-adding activity that applies across industries and processes.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The purpose is not to categorise waste for its own sake. The purpose is to give teams a structured lens for seeing waste that would otherwise be invisible — because waste that has existed long enough becomes the background, the way things are.
+            The purpose is not to categorise waste for its own sake. The purpose is to give teams a structured lens for seeing waste that would otherwise be invisible, because waste that has existed long enough becomes the background, the way things are.
           </p>
 
           {WASTES.map((w, idx) => (
@@ -149,14 +149,14 @@ export default function EightWastesPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Building a waste elimination backlog</h2>
           <p style={{ marginBottom: 18 }}>
-            Identifying waste is only the first step. The output of a waste identification exercise should be a prioritised backlog of specific observations — not "we have inventory waste" but "there are 4.2 days of WIP between Station 3 and Station 4 due to the batch size mismatch, and reducing it to 0.5 days would save 14 hours of lead time."
+            Identifying waste is only the first step. The output of a waste identification exercise should be a prioritised backlog of specific observations, not "we have inventory waste" but "there are 4.2 days of WIP between Station 3 and Station 4 due to the batch size mismatch, and reducing it to 0.5 days would save 14 hours of lead time."
           </p>
           <p style={{ marginBottom: 18 }}>
-            VeSiMy's Waste ID tool walks through all 8 wastes per process step. For each waste you identify, you add a specific observation note. These roll up automatically into the project report as a prioritised waste register — so the output of the waste walk is a Kaizen backlog, not just a list.
+            VeSiMy's Waste ID tool walks through all 8 wastes per process step. For each waste you identify, you add a specific observation note. These roll up automatically into the project report as a prioritised waste register, so the output of the waste walk is a Kaizen backlog, not just a list.
           </p>
 
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
-            <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Identify waste on your floor — free</div>
+            <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Identify waste on your floor, free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>VeSiMy's Waste ID tool covers all 8 wastes per step and builds your improvement backlog automatically.</p>
             <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →

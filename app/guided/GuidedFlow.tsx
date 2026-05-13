@@ -1,9 +1,9 @@
 // TypeScript enabled
 'use client'
 // ── app/guided/GuidedFlow.tsx ─────────────────────────────────────────────────
-// VeSiMy Guided — 8-step lean improvement exercise for new users
+// VeSiMy Guided, 8-step lean improvement exercise for new users
 // Teaches methodology while the user does real work.
-// Spec: Section 4 — vesimy-v4-specification.docx
+// Spec: Section 4, vesimy-v4-specification.docx
 
 
 import React from 'react'
@@ -93,7 +93,7 @@ function StepCard({ step, onUpdate, onRemove }: { key?: any;
       <div>
         <div style={{ color: C.t3, fontSize: 11, fontFamily: mono, marginBottom: 6 }}>ADDS VALUE FOR CUSTOMER?</div>
         <div style={{ display: 'flex', gap: 8 }}>
-          {[{ v: 'va', label: 'Yes — value-added', color: C.green }, { v: 'nva', label: 'No — waste', color: C.red }].map(o => (
+          {[{ v: 'va', label: 'Yes, value-added', color: C.green }, { v: 'nva', label: 'No, waste', color: C.red }].map(o => (
             <button key={o.v} onClick={() => onUpdate(step.id, 'va', o.v)}
               style={{
                 flex: 1, padding: '8px', borderRadius: 8, cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', fontWeight: 600,
@@ -197,7 +197,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
       })
       const data = await res.json()
       if (!res.ok || !data.project?.id) {
-        toast.error(data.error || 'Could not create project — please try again')
+        toast.error(data.error || 'Could not create project, please try again')
         setSaving(false)
         return
       }
@@ -227,7 +227,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
       toast.success('Process map created! Opening your project...')
       setTimeout(() => router.push(`/project/${projectId}`), 600)
     } catch {
-      toast.error('Connection error — please try again')
+      toast.error('Connection error, please try again')
       setSaving(false)
     }
   }
@@ -294,9 +294,9 @@ export default function GuidedFlow({ userId, profile }: Props) {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                { v: 'new', label: "I've never mapped a process before", sub: 'Full guidance mode — every concept explained as you go' },
-                { v: 'heard', label: "I've heard of VSM but never used it", sub: 'Standard guidance — methodology tips where helpful' },
-                { v: 'done', label: "I've done some improvement work before", sub: 'Efficient mode — guidance available on request' },
+                { v: 'new', label: "I've never mapped a process before", sub: 'Full guidance mode, every concept explained as you go' },
+                { v: 'heard', label: "I've heard of VSM but never used it", sub: 'Standard guidance, methodology tips where helpful' },
+                { v: 'done', label: "I've done some improvement work before", sub: 'Efficient mode, guidance available on request' },
               ].map(o => (
                 <button key={o.v} onClick={() => setExperience(o.v as ExperienceLevel)} style={{
                   padding: '16px 20px', borderRadius: 12, border: `1px solid ${experience === o.v ? C.blue : C.b2}`,
@@ -371,7 +371,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
               style={{ ...inp, resize: 'vertical' as const }} />
             <div style={{ color: C.t3, fontSize: 12, marginTop: 6 }}>{processDesc.length} characters</div>
             <ConceptBox title="Current state vs future state">
-              <p>The current state map is a factual record of exactly how the process works right now — warts and all. The bottlenecks, the waiting, the workarounds people have invented to cope with broken steps.</p>
+              <p>The current state map is a factual record of exactly how the process works right now, warts and all. The bottlenecks, the waiting, the workarounds people have invented to cope with broken steps.</p>
               <p style={{ marginTop: 8 }}>You cannot improve something you have not accurately described. Teams that skip the honest current state assessment end up solving the wrong problems.</p>
               <p style={{ marginTop: 8 }}>The future state map (which we will show you at the end) is what the process should look like after you eliminate the biggest wastes. The gap between them is your improvement plan.</p>
             </ConceptBox>
@@ -382,7 +382,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
         {currentStep === 3 && (
           <div>
             <p style={{ color: C.t2, fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
-              Every process map needs a defined start and end. Without this, the map never finishes — someone always wants to add one more step.
+              Every process map needs a defined start and end. Without this, the map never finishes, someone always wants to add one more step.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div>
@@ -425,11 +425,11 @@ export default function GuidedFlow({ userId, profile }: Props) {
             )}
             <ConceptBox title="Value-added vs non-value-added">
               <p>Value-added (VA) means the customer would pay for this step if they knew it was happening. It transforms the product or service in a way they care about.</p>
-              <p style={{ marginTop: 8 }}>Non-value-added (NVA) means it adds no value from the customer's perspective. Inspection, waiting, re-entering data, moving things between rooms — none of this is what the customer paid for.</p>
+              <p style={{ marginTop: 8 }}>Non-value-added (NVA) means it adds no value from the customer's perspective. Inspection, waiting, re-entering data, moving things between rooms, none of this is what the customer paid for.</p>
               <p style={{ marginTop: 8 }}>For most processes, only 10-30% of total time is value-adding. The rest is waste. That gap is where your improvement lives.</p>
             </ConceptBox>
             <ConceptBox title="What is WIP?">
-              <p>WIP stands for Work in Progress — the number of items sitting at or waiting for a step right now. A pile of forms in a tray is WIP. A queue in a software system is WIP. Partially assembled products on a bench are WIP.</p>
+              <p>WIP stands for Work in Progress, the number of items sitting at or waiting for a step right now. A pile of forms in a tray is WIP. A queue in a software system is WIP. Partially assembled products on a bench are WIP.</p>
               <p style={{ marginTop: 8 }}>High WIP before a step tells you something important: that step cannot keep up with the flow coming into it. It is your first clue about where the bottleneck lives.</p>
             </ConceptBox>
           </div>
@@ -464,9 +464,9 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 </button>
               ))}
             </div>
-            <ConceptBox title="Theory of Constraints — why the bottleneck is everything">
+            <ConceptBox title="Theory of Constraints, why the bottleneck is everything">
               <p>Every process has one step that determines how fast the whole system can go. One step. Not several. One. That step is the constraint.</p>
-              <p style={{ marginTop: 8 }}>Everything upstream of the bottleneck is producing faster than the bottleneck can consume. This creates the WIP pile you see in front of it. Everything downstream of the bottleneck is waiting — it has nothing to process.</p>
+              <p style={{ marginTop: 8 }}>Everything upstream of the bottleneck is producing faster than the bottleneck can consume. This creates the WIP pile you see in front of it. Everything downstream of the bottleneck is waiting, it has nothing to process.</p>
               <p style={{ marginTop: 8 }}>This is why improving the bottleneck always matters more than improving anything else. If you improve step 2 while step 4 is the bottleneck, your output stays exactly the same. You just have a faster step 2 feeding a longer queue at step 4.</p>
               <p style={{ marginTop: 8 }}>Eli Goldratt called this the Theory of Constraints. Fix the constraint first. When you fix it, a new one emerges. Fix that one. Repeat.</p>
             </ConceptBox>
@@ -497,7 +497,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                     What specific action will you take on {filledSteps.find(s => s.id === bottleneckId)?.name || 'the bottleneck'}?
                   </label>
                   <textarea value={pdcaAction} onChange={e => setPdcaAction(e.target.value)} rows={3}
-                    placeholder="Be specific. Not 'improve the step' — rather 'reduce hand-off time by pre-staging materials before the step starts'"
+                    placeholder="Be specific. Not 'improve the step', rather 'reduce hand-off time by pre-staging materials before the step starts'"
                     style={{ ...inp, resize: 'vertical' as const }} />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
@@ -516,7 +516,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 </div>
               </div>
             </div>
-            <ConceptBox title="PDCA — the engine of continuous improvement">
+            <ConceptBox title="PDCA, the engine of continuous improvement">
               <p>Plan-Do-Check-Act (PDCA) is the most important cycle in lean thinking. It is how every improvement gets tested and either standardised or discarded.</p>
               <p style={{ marginTop: 8 }}><strong style={{ color: C.t1 }}>Plan:</strong> Define what you will test and how you will measure it.</p>
               <p style={{ marginTop: 4 }}><strong style={{ color: C.t1 }}>Do:</strong> Run the test. Small scale first.</p>
@@ -538,9 +538,9 @@ export default function GuidedFlow({ userId, profile }: Props) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12, marginBottom: 24 }}>
               {[
                 { label: 'Steps mapped', value: filledSteps.length.toString(), color: C.blue },
-                { label: 'Total lead time', value: leadTime > 0 ? `${Math.round(leadTime)} min` : '—', color: C.t1 },
-                { label: 'Actual work time', value: totalCT > 0 ? `${Math.round(totalCT)} min` : '—', color: C.green },
-                { label: 'Process efficiency', value: pce !== null ? `${pce}%` : '—', color: pce !== null ? (pce > 50 ? C.green : pce > 25 ? C.amber : '#F87171') : C.t3 },
+                { label: 'Total lead time', value: leadTime > 0 ? `${Math.round(leadTime)} min` : ',', color: C.t1 },
+                { label: 'Actual work time', value: totalCT > 0 ? `${Math.round(totalCT)} min` : ',', color: C.green },
+                { label: 'Process efficiency', value: pce !== null ? `${pce}%` : ',', color: pce !== null ? (pce > 50 ? C.green : pce > 25 ? C.amber : '#F87171') : C.t3 },
               ].map(m => (
                 <div key={m.label} style={{ background: C.bg2, border: `1px solid ${C.b2}`, borderRadius: 12, padding: 16, textAlign: 'center', boxShadow: cardShadow }}>
                   <div style={{ color: C.t3, fontSize: 11, fontFamily: mono, marginBottom: 6 }}>{m.label.toUpperCase()}</div>
@@ -564,7 +564,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 <div style={{ color: C.blueLight, fontSize: 13, fontWeight: 700, marginBottom: 8 }}>What this means</div>
                 <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.7, margin: 0 }}>
                   {totalWait > totalCT
-                    ? `Your process spends more time waiting (${Math.round(totalWait)} min) than doing actual work (${Math.round(totalCT)} min). This is typical — most processes are 10-30% value-adding. The waiting time is your biggest improvement opportunity.`
+                    ? `Your process spends more time waiting (${Math.round(totalWait)} min) than doing actual work (${Math.round(totalCT)} min). This is typical, most processes are 10-30% value-adding. The waiting time is your biggest improvement opportunity.`
                     : `Your process has a relatively high ratio of work to wait time. Focus on the bottleneck step to unlock further speed gains.`
                   }
                 </p>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'SMED Calculator: Reduce Changeover Time & Calculate Annual Savings — VeSiMy',
+  title: 'SMED Calculator: Reduce Changeover Time & Calculate Annual Savings, VeSiMy',
   description: 'Free SMED calculator for manufacturers. Enter your changeover steps, classify Internal vs External, and see exactly how much time and money you recover. Built on Shingo methodology.',
   keywords: ['SMED calculator', 'changeover time calculator', 'SMED methodology', 'single minute exchange of die', 'changeover reduction', 'setup time reduction', 'lean manufacturing changeover', 'internal external setup'],
   openGraph: {
@@ -32,7 +32,7 @@ export default function SMEDCalculatorPost() {
             SMED Calculator: How to Calculate Changeover Savings Before You Touch a Wrench
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Most changeover reduction projects start with gut feel. This one starts with numbers. Before you change a single procedure, a SMED calculator shows you exactly where the time goes — and what you recover when you apply Shingo's three-stage methodology.
+            Most changeover reduction projects start with gut feel. This one starts with numbers. Before you change a single procedure, a SMED calculator shows you exactly where the time goes, and what you recover when you apply Shingo's three-stage methodology.
           </p>
         </div>
 
@@ -40,10 +40,10 @@ export default function SMEDCalculatorPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is SMED?</h2>
           <p style={{ marginBottom: 18 }}>
-            SMED — Single-Minute Exchange of Die — is the methodology developed by Shigeo Shingo at Toyota in the 1950s and 60s. The goal is to reduce every changeover to under 10 minutes. The name comes from the target: single-digit minutes. Not zero, not five — under ten.
+            SMED, Single-Minute Exchange of Die, is the methodology developed by Shigeo Shingo at Toyota in the 1950s and 60s. The goal is to reduce every changeover to under 10 minutes. The name comes from the target: single-digit minutes. Not zero, not five, under ten.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The core insight is deceptively simple: not everything that happens during a changeover actually requires the machine to be stopped. Tasks like retrieving tools, pre-heating components, staging materials, and completing paperwork can all be done while the previous run is still producing. Shingo called these External steps. The tasks that genuinely require the machine to be stopped — physical die changes, fixture adjustments, calibration — are Internal steps.
+            The core insight is deceptively simple: not everything that happens during a changeover actually requires the machine to be stopped. Tasks like retrieving tools, pre-heating components, staging materials, and completing paperwork can all be done while the previous run is still producing. Shingo called these External steps. The tasks that genuinely require the machine to be stopped, physical die changes, fixture adjustments, calibration, are Internal steps.
           </p>
           <p style={{ marginBottom: 18 }}>
             Most operations that haven't applied SMED are running 60–80% of their changeover time as Internal when 30–50% of it could safely move to External. That's the recoverable time a SMED calculator quantifies before you start.
@@ -53,15 +53,15 @@ export default function SMEDCalculatorPost() {
 
           {[
             {
-              stage: 'Stage 1 — Observe and record',
-              desc: 'Video the entire changeover as it actually happens — not how the SOP says it should happen. Document every step, in sequence, with times. Do not improve yet. This stage produces the baseline your SMED calculator works from.',
+              stage: 'Stage 1, Observe and record',
+              desc: 'Video the entire changeover as it actually happens, not how the SOP says it should happen. Document every step, in sequence, with times. Do not improve yet. This stage produces the baseline your SMED calculator works from.',
             },
             {
-              stage: 'Stage 2 — Separate Internal from External',
-              desc: 'For each recorded step, ask one question: does this step require the machine to be stopped? If yes, it is Internal. If no — if it could be done while the previous batch is running or while the next run is setting up — it is External. Mark every step.',
+              stage: 'Stage 2, Separate Internal from External',
+              desc: 'For each recorded step, ask one question: does this step require the machine to be stopped? If yes, it is Internal. If no, if it could be done while the previous batch is running or while the next run is setting up, it is External. Mark every step.',
             },
             {
-              stage: 'Stage 3 — Convert Internal to External',
+              stage: 'Stage 3, Convert Internal to External',
               desc: 'Take every step marked as convertible and redesign the procedure so it happens outside the machine-stopped window. Pre-stage tooling. Pre-heat fixtures. Complete all paperwork before the last piece. This is where the time savings are realised.',
             },
           ].map(item => (
@@ -91,7 +91,7 @@ export default function SMEDCalculatorPost() {
           ))}
 
           <p style={{ marginBottom: 18, marginTop: 10 }}>
-            For example: a food and beverage line with a 45-minute changeover running 3 times per day, 250 days per year. If SMED analysis reveals 18 minutes of convertible internal time and 7 minutes of waste, the new changeover is 20 minutes. That's 25 minutes saved per changeover × 750 changeovers per year = 312 hours recovered. At $45/hour fully loaded, that's $14,000 per year — from process changes alone, before any capital investment.
+            For example: a food and beverage line with a 45-minute changeover running 3 times per day, 250 days per year. If SMED analysis reveals 18 minutes of convertible internal time and 7 minutes of waste, the new changeover is 20 minutes. That's 25 minutes saved per changeover × 750 changeovers per year = 312 hours recovered. At $45/hour fully loaded, that's $14,000 per year, from process changes alone, before any capital investment.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What most SMED projects miss</h2>
@@ -102,10 +102,10 @@ export default function SMEDCalculatorPost() {
             <strong style={{ color: 'var(--text)' }}>Skipping Stage 1.</strong> Teams jump straight to solutions before documenting what actually happens. The changeover they improve is the one from the SOP, not the one their operators actually run. The real changeover contains 8–12 minutes of informal steps that never appear in any document.
           </p>
           <p style={{ marginBottom: 14 }}>
-            <strong style={{ color: 'var(--text)' }}>Treating all Internal as fixed.</strong> Most teams assume Internal steps cannot be touched. Many of them can — not moved to External, but dramatically shortened through quick-connect tooling, colour-coding, standard kits, and parallel workflows. Stage 4 of the full SMED methodology addresses this.
+            <strong style={{ color: 'var(--text)' }}>Treating all Internal as fixed.</strong> Most teams assume Internal steps cannot be touched. Many of them can, not moved to External, but dramatically shortened through quick-connect tooling, colour-coding, standard kits, and parallel workflows. Stage 4 of the full SMED methodology addresses this.
           </p>
           <p style={{ marginBottom: 18 }}>
-            <strong style={{ color: 'var(--text)' }}>No Standard Work after the event.</strong> You reduce changeover time in the kaizen event. Six months later the time creeps back. Without Standard Work documenting the new sequence and training records showing every operator has been certified on it, the improvement isn't an improvement — it's a one-time event.
+            <strong style={{ color: 'var(--text)' }}>No Standard Work after the event.</strong> You reduce changeover time in the kaizen event. Six months later the time creeps back. Without Standard Work documenting the new sequence and training records showing every operator has been certified on it, the improvement isn't an improvement, it's a one-time event.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>SMED in VeSiMy</h2>
@@ -113,14 +113,14 @@ export default function SMEDCalculatorPost() {
             VeSiMy's SMED tool builds the calculator directly into your value stream. You record every changeover step with a built-in stopwatch, classify each as Internal, External, or Waste/NVA, and the tool calculates your SMED potential, target minimum, and annual ROI in real time. When you're done, a single click exports an ISO 9001:2015 §8.5.1 compliant PDF report with the full step analysis, financial impact, and the five-stage implementation roadmap.
           </p>
           <p style={{ marginBottom: 18 }}>
-            Because SMED lives inside the same project as your VSM, the improved changeover time feeds directly back into your value stream — so your PCE and lead time calculations reflect the actual post-improvement state, not a spreadsheet guess.
+            Because SMED lives inside the same project as your VSM, the improved changeover time feeds directly back into your value stream, so your PCE and lead time calculations reflect the actual post-improvement state, not a spreadsheet guess.
           </p>
 
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32, marginBottom: 8 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Try the SMED calculator free</div>
-            <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Record your changeover steps, classify them, and see your savings calculation — with ISO export when you're ready to present it.</p>
+            <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Record your changeover steps, classify them, and see your savings calculation, with ISO export when you're ready to present it.</p>
             <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
-              Start free — no credit card →
+              Start free, no credit card →
             </Link>
           </div>
 

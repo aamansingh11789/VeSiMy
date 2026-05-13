@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'VeSiMy vs Manus AI: Which Is Better for Small Business Process Improvement? — VeSiMy',
+  title: 'VeSiMy vs Manus AI: Which Is Better for Small Business Process Improvement?, VeSiMy',
   description: 'Comparing VeSiMy and Manus AI for small business process improvement. Choose Manus AI for general-purpose task execution. Choose VeSiMy when you need structured Lean Six Sigma improvement with measurable targets.',
   keywords: ['Manus AI alternative', 'AI tools for small business owners', 'process improvement software', 'Lean Six Sigma AI', 'VeSiMy vs Manus AI'],
   openGraph: {
@@ -50,7 +50,7 @@ export default function ComparisonPage() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why VeSiMy is different</h2>
           <p style={{ marginBottom: 18 }}>VeSiMy is built specifically for process improvement, not task completion. It uses Lean and Six Sigma continuous improvement tools designed for small businesses across more than 68 industries. Its AI is powered by an Lean and VSM-structured knowledge base, which gives teams a more structured and trustworthy way to improve operations.</p>
-          <p style={{ marginBottom: 18 }}>The difference is in what the AI knows. General chatbots know language. VeSiMy's AI knows Lean methodology — takt time, process cycle efficiency, SMED, PDCA, 8D, value stream mapping. It gives you operationally correct guidance, not polished-sounding generic advice.</p>
+          <p style={{ marginBottom: 18 }}>The difference is in what the AI knows. General chatbots know language. VeSiMy's AI knows Lean methodology, takt time, process cycle efficiency, SMED, PDCA, 8D, value stream mapping. It gives you operationally correct guidance, not polished-sounding generic advice.</p>
 
           {/* Comparison table */}
           <div style={{ overflowX: 'auto', marginBottom: 32, marginTop: 32 }}>
@@ -64,21 +64,21 @@ export default function ComparisonPage() {
               </thead>
               <tbody>
                 {[
-                  ['Built for process improvement', '✓', '—'],
-                  ['Lean Six Sigma methodology', '✓', '—'],
-                  ['Lean and VSM-structured knowledge base', '✓', '—'],
-                  ['Value stream mapping', '✓', '—'],
-                  ['68+ industry templates', '✓', '—'],
+                  ['Built for process improvement', '✓', ','],
+                  ['Lean Six Sigma methodology', '✓', ','],
+                  ['Lean and VSM-structured knowledge base', '✓', ','],
+                  ['Value stream mapping', '✓', ','],
+                  ['68+ industry templates', '✓', ','],
                   ['General-purpose task execution', 'Partial', '✓'],
-                  ['Multi-step research & drafting', '—', '✓'],
-                  ['Measurable improvement targets', '✓', '—'],
-                  ['PDCA / 8D / DMAIC tools', '✓', '—'],
-                  ['Free to start (no account)', '✓', '—'],
+                  ['Multi-step research & drafting', ',', '✓'],
+                  ['Measurable improvement targets', '✓', ','],
+                  ['PDCA / 8D / DMAIC tools', '✓', ','],
+                  ['Free to start (no account)', '✓', ','],
                 ].map(([feature, vesimy, manus], i) => (
                   <tr key={i} style={{ borderBottom: '1px solid var(--border3)' }}>
                     <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{feature}</td>
-                    <td style={{ padding: '10px 16px', textAlign: 'center', color: vesimy === '✓' ? '#2E844A' : vesimy === '—' ? 'var(--text4)' : 'var(--text3)', fontWeight: vesimy === '✓' ? 700 : 400 }}>{vesimy}</td>
-                    <td style={{ padding: '10px 16px', textAlign: 'center', color: manus === '✓' ? '#2E844A' : manus === '—' ? 'var(--text4)' : 'var(--text3)', fontWeight: manus === '✓' ? 700 : 400 }}>{manus}</td>
+                    <td style={{ padding: '10px 16px', textAlign: 'center', color: vesimy === '✓' ? '#2E844A' : vesimy === ',' ? 'var(--text4)' : 'var(--text3)', fontWeight: vesimy === '✓' ? 700 : 400 }}>{vesimy}</td>
+                    <td style={{ padding: '10px 16px', textAlign: 'center', color: manus === '✓' ? '#2E844A' : manus === ',' ? 'var(--text4)' : 'var(--text3)', fontWeight: manus === '✓' ? 700 : 400 }}>{manus}</td>
                   </tr>
                 ))}
               </tbody>
@@ -102,7 +102,7 @@ export default function ComparisonPage() {
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '24px' }}>
             <p style={{ color: 'var(--text)', fontSize: 16, fontFamily: serif, margin: '0 0 8px', fontWeight: 700 }}>See it for yourself</p>
             <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.7, margin: '0 0 16px' }}>Map one process in under 5 minutes. Get a real AI lean report with bottleneck identification, waste classification, and a first action for this week. No account required.</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none', fontSize: 15 }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none', fontSize: 15 }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

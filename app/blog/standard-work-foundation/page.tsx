@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Standard Work: Why It Is the Foundation of All Lean Improvement — VeSiMy',
+  title: 'Standard Work: Why It Is the Foundation of All Lean Improvement, VeSiMy',
   description: 'Standard work is not a bureaucratic document. It is the current best method, written down, so that improvement starts from a stable baseline.',
   openGraph: { title: 'Standard Work: Why It Is the Foundation of All Lean Improvement', type: 'article' },
 }
@@ -35,16 +35,16 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>The critical word is current. Standard work documents what is happening today, not what someone decided should happen two years ago. If the standard work and the actual work are different, you have either a training problem or an outdated standard.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why improvement cannot happen without it</h2>
           <p style={{ marginBottom: 18 }}>You cannot improve what you have not stabilised. If every operator runs the process differently, a process change might improve performance for one operator and make it worse for another. The variation in method is indistinguishable from the variation in improvement. You are measuring noise.</p>
-          <p style={{ marginBottom: 18 }}>Toyota's principle: standardise, then improve, then standardise again. The improvement cycle always runs from a documented baseline. Kaizen events that do not update the standard work are not improvements — they are temporary changes that revert when the team turns over.</p>
+          <p style={{ marginBottom: 18 }}>Toyota's principle: standardise, then improve, then standardise again. The improvement cycle always runs from a documented baseline. Kaizen events that do not update the standard work are not improvements, they are temporary changes that revert when the team turns over.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The combination sheet</h2>
           <p style={{ marginBottom: 18 }}>The standard work combination sheet is the most useful format. It shows operator movements, machine movements, and wait time on the same horizontal time axis. The takt time line runs vertically. Any operator time that crosses the takt line is immediately visible as a problem.</p>
           <p style={{ marginBottom: 18 }}>Building combination sheets for your bottleneck steps is one of the most revealing exercises in lean. It almost always surfaces significant wait time that was invisible in the VSM data because nobody had written down what the operator was actually doing during the cycle.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Updating standard work</h2>
-          <p style={{ marginBottom: 18 }}>Every improvement produces a new standard. This is the Act step of PDCA. If the improvement is not written into the standard work, it is not an improvement — it is a temporary deviation that will revert. The discipline to update the standard after every improvement is what separates organisations that sustain gains from those that revert.</p>
+          <p style={{ marginBottom: 18 }}>Every improvement produces a new standard. This is the Act step of PDCA. If the improvement is not written into the standard work, it is not an improvement, it is a temporary deviation that will revert. The discipline to update the standard after every improvement is what separates organisations that sustain gains from those that revert.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

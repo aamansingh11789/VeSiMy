@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'VSM in Construction: How a Contractor Used Process Mapping to Win a Client — VeSiMy',
+  title: 'VSM in Construction: How a Contractor Used Process Mapping to Win a Client, VeSiMy',
   description: 'Construction is not a manufacturing process, but the waste types are identical. Here is how one contractor used value stream mapping to change how they bid and deliver.',
   openGraph: { title: 'VSM in Construction: How a Contractor Used Process Mapping to Win a Client', type: 'article' },
 }
@@ -35,15 +35,15 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>Take a commercial interior fitout. The process runs from design approval to certificate of occupancy. The steps include design finalisation, permit application and approval, procurement of materials and fixtures, site preparation, structural work, mechanical and electrical rough-in, finishing trades, commissioning, and inspection.</p>
           <p style={{ marginBottom: 18 }}>Map it. Time each step. Measure the wait time between steps. A typical finding: the actual trade work represents 35 to 45 percent of the project timeline. The rest is waiting. Waiting for approvals. Waiting for materials. Waiting for the previous trade to complete so the next trade can start.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The contractor who mapped it and won the bid</h2>
-          <p style={{ marginBottom: 18 }}>A mid-size contractor in the commercial fitout space spent three days mapping their last five projects. They measured average wait times between each trade. They identified that permit approval was the single largest delay source — averaging 18 working days — and that they had no visibility into where in the approval process each permit sat.</p>
+          <p style={{ marginBottom: 18 }}>A mid-size contractor in the commercial fitout space spent three days mapping their last five projects. They measured average wait times between each trade. They identified that permit approval was the single largest delay source, averaging 18 working days, and that they had no visibility into where in the approval process each permit sat.</p>
           <p style={{ marginBottom: 18 }}>They redesigned their process: a permit expediting protocol that checked application status daily and responded to requests for information within four hours. A pull-based material delivery system keyed to actual site completion status rather than project schedule. Parallel commissioning activities where previously sequential.</p>
-          <p style={{ marginBottom: 18 }}>The result was a projected schedule reduction of 22 percent on a comparable project. They put that number — with the supporting VSM analysis — in a bid presentation. They won the project. The competitor bidding on the same job had no equivalent data.</p>
+          <p style={{ marginBottom: 18 }}>The result was a projected schedule reduction of 22 percent on a comparable project. They put that number, with the supporting VSM analysis, in a bid presentation. They won the project. The competitor bidding on the same job had no equivalent data.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The replicable parts</h2>
           <p style={{ marginBottom: 18 }}>You do not need a perfect VSM to extract value. Map the handoffs. Measure the wait times. Find the step with the longest wait before it. That is your bottleneck equivalent. Address that step and your lead time comes down.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

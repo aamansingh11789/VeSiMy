@@ -4,7 +4,7 @@ import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Changelog — VeSiMy',
+  title: 'Changelog, VeSiMy',
   description: 'Every update, fix, and new feature shipped to VeSiMy. Updated every time we ship.',
 }
 
@@ -18,13 +18,13 @@ const entries = [
     title: 'VeSiMy goes live',
     items: [
       'All 9 CI tools live: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA',
-      'Supe AI — AI mentor that reads your real VSM data and surfaces improvement priorities',
+      'Supe AI, AI mentor that reads your real VSM data and surfaces improvement priorities',
       '14-day free trial: 3 projects, all CI tools, no credit card required',
-      'Pro plan at $29/mo — 10 projects, Supe AI, process simulation, A3 export. Trial period on first upgrade.',
-      'Lifetime plan at $99 — all Pro features, no monthly fee, all future releases included',
+      'Pro plan at $29/mo, 10 projects, Supe AI, process simulation, A3 export. Trial period on first upgrade.',
+      'Lifetime plan at $99, all Pro features, no monthly fee, all future releases included',
       'Enterprise pricing page with inquiry form',
       'Mobile-responsive across all tools',
-      'PWA support — installable on iPhone and Android',
+      'PWA support, installable on iPhone and Android',
       'Email and Google authentication via Supabase',
       'Stripe payment integration for Pro and Lifetime plans',
       'GDPR-compliant privacy policy and cookie handling',
@@ -48,8 +48,8 @@ const entries = [
     color: '#D4A843',
     title: 'SEO and discoverability upgrades',
     items: [
-      'Added robots.txt — Google can now crawl all public pages',
-      'Added sitemap.xml — submitted to Google Search Console',
+      'Added robots.txt, Google can now crawl all public pages',
+      'Added sitemap.xml, submitted to Google Search Console',
       'Updated meta title to include AI Operations Intelligence Platform',
       'Added Open Graph and Twitter card images for social sharing',
       'Added keyword-rich meta description targeting lean manufacturing searches',
@@ -59,7 +59,7 @@ const entries = [
     date: 'Coming soon',
     tag: 'NEXT',
     color: '#8C44CC',
-    title: 'AI Monitor v1 — Anomaly Detection',
+    title: 'AI Monitor v1, Anomaly Detection',
     items: [
       'Supe AI will watch your Time Study data continuously',
       'Alerts when cycle times drift more than 15% from your baseline',
@@ -75,7 +75,7 @@ const entries = [
     items: [
       'Record every changeover step with a built-in timer',
       'Classify steps as Internal (machine must stop) vs External (can run while machine is running)',
-      'Live time savings calculation — see reduction potential instantly',
+      'Live time savings calculation, see reduction potential instantly',
       'Annual cost savings estimated automatically from your data',
     ],
   },
@@ -110,7 +110,7 @@ export default function ChangelogPage() {
           Changelog
         </h1>
         <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 56, lineHeight: 1.75 }}>
-          Every update shipped to VeSiMy — big and small. Updated continuously.
+          Every update shipped to VeSiMy, big and small. Updated continuously.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
@@ -161,7 +161,7 @@ export default function ChangelogPage() {
             <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#D4A843', textDecoration: 'none' }}>
               VeSiMy on LinkedIn
             </a>
-            {' '}— we post every release.
+            {' '}, we post every release.
           </p>
         </div>
       </div>

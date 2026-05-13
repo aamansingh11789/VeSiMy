@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'VSM for Service Businesses: Mapping Processes That Have No Physical Product — VeSiMy',
+  title: 'VSM for Service Businesses: Mapping Processes That Have No Physical Product, VeSiMy',
   description: 'Value stream mapping originated in manufacturing but applies with equal force to any process where a service flows from request to delivery.',
   openGraph: { title: 'VSM for Service Businesses: Mapping Processes That Have No Physical Product', type: 'article' },
 }
@@ -33,8 +33,8 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>In a service business, the flow is information, decisions, and work output. A mortgage application flows from submission through credit assessment, document verification, underwriting, approval, and closing. A tax return flows from document collection through preparation, review, and filing. A consulting engagement flows from scoping through research, analysis, presentation, and implementation.</p>
           <p style={{ marginBottom: 18 }}>The flow is less visible but the waste is identical. Waiting. Rework. Overprocessing. Unnecessary handoffs. Information that needs to travel from one system to another because the systems do not talk.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Adapting VSM notation for services</h2>
-          <p style={{ marginBottom: 18 }}>The core notation stays the same. Supplier becomes the source of the request or input — the client, the customer, the regulatory body. Customer becomes the recipient of the service output. Process steps are the activities performed on the work as it flows through.</p>
-          <p style={{ marginBottom: 18 }}>The key adaptations: WIP in a service context is queued work — cases waiting, applications pending, tickets open, emails unanswered. Cycle time is the time actively worked on a case. Wait time is the time the case sits in a queue between active work sessions.</p>
+          <p style={{ marginBottom: 18 }}>The core notation stays the same. Supplier becomes the source of the request or input, the client, the customer, the regulatory body. Customer becomes the recipient of the service output. Process steps are the activities performed on the work as it flows through.</p>
+          <p style={{ marginBottom: 18 }}>The key adaptations: WIP in a service context is queued work, cases waiting, applications pending, tickets open, emails unanswered. Cycle time is the time actively worked on a case. Wait time is the time the case sits in a queue between active work sessions.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>A professional services example</h2>
           <p style={{ marginBottom: 18 }}>A law firm maps its contract review process. From client request to signed contract returned. Steps: intake and conflict check, matter opening, document receipt, initial review, redline, client review cycle, negotiation, final review, execution.</p>
           <p style={{ marginBottom: 18 }}>The VSM reveals: total active work time across all steps is 4.5 hours. Total elapsed time from request to execution averages 18 business days. PCE: 3 percent. More than 97 percent of the elapsed time is the work sitting in a queue waiting for someone's attention.</p>
@@ -43,11 +43,11 @@ export default function Post() {
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Reduce handoffs.</strong> Every handoff adds a queue. Reduce the number of people who touch a case by cross-training for the most common case types.</p>
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Eliminate rework loops.</strong> The client review cycle that generates 15 rounds of changes usually has a root cause in the initial brief not being specific enough. Fix the intake form, not the review process.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why service businesses benefit most from VSM</h2>
-          <p style={{ marginBottom: 18 }}>In manufacturing, waste is often visible. Piles of inventory, idle machines, scrap bins. In service businesses, waste is invisible. The case sitting in someone's inbox does not look like waste — it looks like a normal part of the workflow. Making it visible with a VSM is often the first time a service team has seen their own process clearly.</p>
+          <p style={{ marginBottom: 18 }}>In manufacturing, waste is often visible. Piles of inventory, idle machines, scrap bins. In service businesses, waste is invisible. The case sitting in someone's inbox does not look like waste, it looks like a normal part of the workflow. Making it visible with a VSM is often the first time a service team has seen their own process clearly.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

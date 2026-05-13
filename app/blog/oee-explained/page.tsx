@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'OEE Explained: Availability, Performance, Quality, and the Six Big Losses — VeSiMy',
+  title: 'OEE Explained: Availability, Performance, Quality, and the Six Big Losses, VeSiMy',
   description: 'Overall equipment effectiveness is the most comprehensive single metric for machine-intensive operations. Here is how to calculate it and what it reveals.',
   openGraph: { title: 'OEE Explained: Availability, Performance, Quality, and the Six Big Losses', type: 'article' },
 }
@@ -39,11 +39,11 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>OEE was designed around six categories of loss that map directly to the three factors. Equipment failure maps to availability. Setup and adjustment maps to availability. Idling and minor stoppages map to performance. Reduced speed maps to performance. Process defects map to quality. Reduced yield during startup maps to quality.</p>
           <p style={{ marginBottom: 18 }}>The six big losses give you a language for improvement. Instead of saying "our OEE is bad," you can say "we are losing 12 points in availability to equipment failure and 8 points in performance to minor stoppages. These two categories account for 80 percent of our OEE gap." That is an improvement roadmap.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>OEE and VSM together</h2>
-          <p style={{ marginBottom: 18 }}>OEE feeds directly into VSM analysis. A machine with 65 percent OEE does not have 100 percent of its capacity available for your lead time calculation. Effective machine rate — adjusted for OEE — gives you a realistic picture of what the process can actually produce. VeSiMy uses uptime percentage from the step data strip as a proxy for availability when full OEE data is not available.</p>
+          <p style={{ marginBottom: 18 }}>OEE feeds directly into VSM analysis. A machine with 65 percent OEE does not have 100 percent of its capacity available for your lead time calculation. Effective machine rate, adjusted for OEE, gives you a realistic picture of what the process can actually produce. VeSiMy uses uptime percentage from the step data strip as a proxy for availability when full OEE data is not available.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

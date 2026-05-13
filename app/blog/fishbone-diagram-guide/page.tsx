@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause — VeSiMy',
-  description: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that actually works — with real manufacturing examples.',
+  title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause, VeSiMy',
+  description: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that actually works, with real manufacturing examples.',
   keywords: ['fishbone diagram', 'Ishikawa diagram', 'fishbone diagram manufacturing', 'cause and effect diagram', 'root cause analysis fishbone', '6M fishbone', 'Ishikawa analysis examples', 'fishbone diagram template'],
   openGraph: {
     title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause',
@@ -32,7 +32,7 @@ export default function FishboneDiagramPost() {
             Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Most fishbone diagrams produce a wall of brainstorm output and no actionable finding. The problem isn't the tool — it's how teams use it. The fishbone is a structured hypothesis framework, not a whiteboard free-for-all.
+            Most fishbone diagrams produce a wall of brainstorm output and no actionable finding. The problem isn't the tool, it's how teams use it. The fishbone is a structured hypothesis framework, not a whiteboard free-for-all.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function FishboneDiagramPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What the fishbone diagram actually is</h2>
           <p style={{ marginBottom: 18 }}>
-            The Ishikawa diagram — named after Kaoru Ishikawa, who developed it at Kawasaki in the 1960s — is a cause-and-effect analysis tool. It structures potential causes of a problem into categories, with the goal of generating a complete picture before narrowing to the most likely root cause.
+            The Ishikawa diagram, named after Kaoru Ishikawa, who developed it at Kawasaki in the 1960s, is a cause-and-effect analysis tool. It structures potential causes of a problem into categories, with the goal of generating a complete picture before narrowing to the most likely root cause.
           </p>
           <p style={{ marginBottom: 18 }}>
             The key word is "before." The fishbone is not meant to identify the root cause on its own. It is meant to surface every plausible category of cause so that the team does not miss something obvious by focusing too early. The 5 Why analysis then drills into the most credible branch.
@@ -50,12 +50,12 @@ export default function FishboneDiagramPost() {
           <p style={{ marginBottom: 16 }}>For manufacturing environments, the standard framework is 6M. Each category prompts a different line of investigation:</p>
 
           {[
-            ['Man (People)', 'Training, certification, experience, fatigue, adherence to procedure. The most common category and the most misused — "operator error" is a symptom, not a root cause.'],
+            ['Man (People)', 'Training, certification, experience, fatigue, adherence to procedure. The most common category and the most misused, "operator error" is a symptom, not a root cause.'],
             ['Machine (Equipment)', 'Wear, calibration, setup, maintenance intervals, age. Always check whether the problem correlates with a specific machine or shifts across all machines.'],
-            ['Method (Process)', 'Standard work gaps, SOP accuracy, sequence variability, measurement methods. If the standard allows variation, the variation isn\'t the cause — the standard is.'],
+            ['Method (Process)', 'Standard work gaps, SOP accuracy, sequence variability, measurement methods. If the standard allows variation, the variation isn\'t the cause, the standard is.'],
             ['Material', 'Supplier variation, incoming inspection, storage conditions, batch traceability. Problems that start intermittently and improve or worsen after a delivery are often material-driven.'],
             ['Measurement', 'Gauge R&R, calibration status, measurement system consistency. A significant fraction of quality escapes turn out to be measurement problems rather than process problems.'],
-            ['Mother Nature (Environment)', 'Temperature, humidity, contamination, shift timing, seasonal variation. Often overlooked, sometimes decisive — particularly in electronics, food, and pharmaceutical environments.'],
+            ['Mother Nature (Environment)', 'Temperature, humidity, contamination, shift timing, seasonal variation. Often overlooked, sometimes decisive, particularly in electronics, food, and pharmaceutical environments.'],
           ].map(([cat, desc]) => (
             <div key={cat} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 16, marginBottom: 14, borderBottom: '1px solid var(--border)', paddingBottom: 14 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14 }}>{cat}</div>
@@ -71,18 +71,18 @@ export default function FishboneDiagramPost() {
 
           <p style={{ marginBottom: 14 }}><strong style={{ color: 'var(--text)' }}>Use evidence to score each branch.</strong> After brainstorming, ask for each potential cause: do we have data that supports or contradicts this? A cause with supporting evidence gets prioritised. A cause that is plausible but unverified gets flagged for investigation. A cause contradicted by existing data gets removed.</p>
 
-          <p style={{ marginBottom: 18 }}><strong style={{ color: 'var(--text)' }}>Transition to 5 Why on the highest-priority branch.</strong> The fishbone finds the most credible direction. The 5 Why goes to the bottom of it. They are sequential tools — the fishbone is not complete until it feeds a deeper analysis.</p>
+          <p style={{ marginBottom: 18 }}><strong style={{ color: 'var(--text)' }}>Transition to 5 Why on the highest-priority branch.</strong> The fishbone finds the most credible direction. The 5 Why goes to the bottom of it. They are sequential tools, the fishbone is not complete until it feeds a deeper analysis.</p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>A real manufacturing example</h2>
-          <p style={{ marginBottom: 10 }}>Problem: Dimension out of tolerance on machined bore — 4.2% rejection rate, target 0.5%.</p>
+          <p style={{ marginBottom: 10 }}>Problem: Dimension out of tolerance on machined bore, 4.2% rejection rate, target 0.5%.</p>
 
           {[
             { cat: 'Man', causes: ['Operator B is new and hasn\'t been certified on the post-shift warm-up procedure', 'Shift handover notes not consistently completed'] },
-            { cat: 'Machine', causes: ['Spindle bearing showing early wear — vibration measurement elevated', 'Tool holder showing 0.003mm runout at inspection'] },
-            { cat: 'Method', causes: ['Warm-up procedure specifies 15 min but SOP says 5 min — discrepancy not resolved', 'First-piece inspection sometimes skipped when line is behind'] },
+            { cat: 'Machine', causes: ['Spindle bearing showing early wear, vibration measurement elevated', 'Tool holder showing 0.003mm runout at inspection'] },
+            { cat: 'Method', causes: ['Warm-up procedure specifies 15 min but SOP says 5 min, discrepancy not resolved', 'First-piece inspection sometimes skipped when line is behind'] },
             { cat: 'Material', causes: ['Incoming billet hardness varies 12% across suppliers', 'Last batch from Supplier B showed higher hardness'] },
-            { cat: 'Measurement', causes: ['Gauge last calibrated 14 months ago — 12-month interval', 'Two gauges in use — no study on inter-gauge correlation'] },
-            { cat: 'Environment', causes: ['Machine located near dock door — temperature swing of 8°C over shift', 'Coolant concentration not checked since maintenance window'] },
+            { cat: 'Measurement', causes: ['Gauge last calibrated 14 months ago, 12-month interval', 'Two gauges in use, no study on inter-gauge correlation'] },
+            { cat: 'Environment', causes: ['Machine located near dock door, temperature swing of 8°C over shift', 'Coolant concentration not checked since maintenance window'] },
           ].map(item => (
             <div key={item.cat} style={{ marginBottom: 12, background: 'rgba(248,247,245,0.5)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 16px' }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', marginBottom: 6, fontSize: 14 }}>{item.cat}</div>
@@ -96,12 +96,12 @@ export default function FishboneDiagramPost() {
           ))}
 
           <p style={{ marginTop: 18, marginBottom: 18 }}>
-            After evidence review: the gauge calibration lapse and the warm-up procedure discrepancy both had supporting data. The team ran a 5 Why on each. The warm-up discrepancy traced to a standard work update in January that was not propagated to the SOP — a change management failure, not an operator failure. That's the root cause.
+            After evidence review: the gauge calibration lapse and the warm-up procedure discrepancy both had supporting data. The team ran a 5 Why on each. The warm-up discrepancy traced to a standard work update in January that was not propagated to the SOP, a change management failure, not an operator failure. That's the root cause.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Fishbone in VeSiMy</h2>
           <p style={{ marginBottom: 18 }}>
-            VeSiMy's Fishbone tool supports 6M Manufacturing, 8P Service, 4S, and Custom frameworks. Causes are added by category, and the AI can generate initial cause suggestions based on the problem statement and your process context. When the analysis is complete, it feeds directly into the 5 Why tool on the same step — the problem statement carries over and the team doesn't re-enter context. The combined analysis exports as an ISO 9001:2015 §10.2.1 compliant root cause report.
+            VeSiMy's Fishbone tool supports 6M Manufacturing, 8P Service, 4S, and Custom frameworks. Causes are added by category, and the AI can generate initial cause suggestions based on the problem statement and your process context. When the analysis is complete, it feeds directly into the 5 Why tool on the same step, the problem statement carries over and the team doesn't re-enter context. The combined analysis exports as an ISO 9001:2015 §10.2.1 compliant root cause report.
           </p>
 
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>

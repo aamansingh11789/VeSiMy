@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 export const metadata: Metadata = {
-  title: 'ISO 22468:2020 — Value Stream Mapping Standard | VeSiMy',
+  title: 'ISO 22468:2020, Value Stream Mapping Standard | VeSiMy',
   description: 'A practical guide to ISO 22468:2020, the international standard for Value Stream Mapping. Understand the notation, methodology, and how VeSiMy aligns with the standard.',
 }
 
@@ -88,7 +88,7 @@ export default function ISO22468Page() {
           <p style={{ fontSize: 16, color: 'rgba(240,242,255,0.72)', lineHeight: 1.75,
             maxWidth: 580, margin: 0, fontFamily: SANS }}>
             The international standard for Value Stream Mapping notation and methodology.
-            A practical guide for practitioners — what it means, how to apply it, and
+            A practical guide for practitioners, what it means, how to apply it, and
             how VeSiMy is structured around it.
           </p>
         </div>
@@ -132,7 +132,7 @@ export default function ISO22468Page() {
               { icon: '▽', title: 'Inventory Triangle', body: 'Shows WIP (work in progress) between process steps. A critical indicator of flow problems.' },
               { icon: '→', title: 'Push Arrow', body: 'Material is pushed downstream regardless of downstream demand. Common source of overproduction waste.' },
               { icon: '⟳', title: 'Pull/Supermarket', body: 'Downstream signals upstream when to produce. Eliminates overproduction and reduces inventory.' },
-              { icon: '---', title: 'Information Flow', body: 'Dashed lines show how information moves through the value stream — orders, schedules, signals.' },
+              { icon: '---', title: 'Information Flow', body: 'Dashed lines show how information moves through the value stream, orders, schedules, signals.' },
               { icon: '改', title: 'Kaizen Burst', body: 'The starburst/lightning bolt marks an improvement opportunity on the current state map.' },
               { icon: '◻', title: 'Supplier/Customer', body: 'Factory icons at the start and end of the map representing the supplier and end customer.' },
               { icon: '⌂', title: 'Production Control', body: 'The planning/scheduling function that governs how information flows between supplier and production.' },
@@ -158,12 +158,12 @@ export default function ISO22468Page() {
                 {[
                   ['Cycle Time', 'CT', 'Time to complete one unit of work at a step', 'Identifies bottlenecks when compared to Takt Time'],
                   ['Wait Time', 'WT', 'Time work sits idle between steps', 'Major component of non-value-added lead time'],
-                  ['Lead Time', 'LT', 'Total time from start to finish — CT + WT', 'Customer-visible measure of process speed'],
+                  ['Lead Time', 'LT', 'Total time from start to finish, CT + WT', 'Customer-visible measure of process speed'],
                   ['Takt Time', 'TT', 'Available time ÷ customer demand rate', 'The pace the process must match to satisfy demand'],
                   ['PCE', 'PCE', 'Value-added time ÷ total lead time × 100%', 'Process Cycle Efficiency. Higher is better. <10% is common in many industries.'],
                   ['WIP', 'WIP', 'Units of work in progress between steps', 'High WIP = poor flow, cash tied up, quality risk'],
                   ['Uptime', 'U%', 'Percentage of scheduled time equipment/process is available', 'Low uptime magnifies every other constraint'],
-                  ['Defect Rate', 'D%', 'Percentage of outputs requiring rework or scrap', 'Hidden factory — defects consume capacity invisibly'],
+                  ['Defect Rate', 'D%', 'Percentage of outputs requiring rework or scrap', 'Hidden factory, defects consume capacity invisibly'],
                 ].map(([metric, sym, def, why], i) => (
                   <tr key={metric} style={{ borderBottom: i < 7 ? `1px solid ${BORD}` : 'none' }}>
                     <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600, color: NAVY }}>{metric}</td>
@@ -177,15 +177,15 @@ export default function ISO22468Page() {
           </div>
         </Section>
 
-        <Section title="The VSM Process — Current State to Future State">
+        <Section title="The VSM Process, Current State to Future State">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[
-              { n: '1', title: 'Choose a value stream', body: 'Select a specific product family or service line. VSM works on a single flow — not the whole business at once.' },
+              { n: '1', title: 'Choose a value stream', body: 'Select a specific product family or service line. VSM works on a single flow, not the whole business at once.' },
               { n: '2', title: 'Map the Current State', body: 'Walk the process. Record every step, cycle time, wait time, operator count, WIP, defect rate, and information flow. Map what actually happens, not the ideal.' },
               { n: '3', title: 'Calculate the metrics', body: 'Lead time, PCE, takt time, bottleneck identification. These numbers reveal where waste concentrates.' },
               { n: '4', title: 'Design the Future State', body: 'Apply Lean principles: reduce wait time, eliminate non-value-added steps, balance to takt, pull rather than push, standardize the work.' },
               { n: '5', title: 'Build the improvement plan', body: 'Kaizen events, SMED, 5 Why, Standard Work. Specific actions, owners, and timelines that close the gap between current and future state.' },
-              { n: '6', title: 'Implement and measure', body: 'Execute the plan. Re-map after implementation. The loop continues — future state becomes the next current state.' },
+              { n: '6', title: 'Implement and measure', body: 'Execute the plan. Re-map after implementation. The loop continues, future state becomes the next current state.' },
             ].map(step => (
               <div key={step.n} style={{ display: 'flex', gap: 16, alignItems: 'flex-start',
                 padding: '18px 20px', background: '#fff', borderRadius: 10, border: `1px solid ${BORD}` }}>
@@ -207,10 +207,10 @@ export default function ISO22468Page() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 12 }}>
             {[
-              { icon: '⊡', title: 'Standard notation', body: 'Process boxes, WIP triangles, push arrows, supermarket icons, kaizen bursts, supplier/customer factory icons, and production control — all per ISO 22468.' },
+              { icon: '⊡', title: 'Standard notation', body: 'Process boxes, WIP triangles, push arrows, supermarket icons, kaizen bursts, supplier/customer factory icons, and production control, all per ISO 22468.' },
               { icon: '◈', title: 'Correct metric definitions', body: 'Cycle Time, Takt Time, Lead Time, PCE, WIP, and Defect Rate are calculated using the standard definitions, not approximations.' },
               { icon: '⟳', title: 'Current → Future → Implement', body: 'The workflow follows the full VSM improvement cycle: current state mapping, future state design, and structured improvement planning.' },
-              { icon: '✦', title: 'Industry language adaptation', body: 'The standard applies across industries. VeSiMy adapts terminology — "cycle time" becomes "appointment duration" in healthcare, "fermentation time" in brewing — while keeping the underlying methodology consistent.' },
+              { icon: '✦', title: 'Industry language adaptation', body: 'The standard applies across industries. VeSiMy adapts terminology, "cycle time" becomes "appointment duration" in healthcare, "fermentation time" in brewing, while keeping the underlying methodology consistent.' },
               { icon: '◎', title: '17 CI tools', body: 'ISO 22468 focuses on mapping; improvement execution uses Kaizen, 5 Why, Fishbone, SMED, Standard Work, and other Lean tools that complement the VSM methodology.' },
               { icon: '▨', title: 'Not a certification tool', body: 'VeSiMy is a practice tool, not a certification body. We do not issue ISO certificates. The standard is available from ISO and national standards bodies.' },
             ].map(item => (
@@ -231,7 +231,7 @@ export default function ISO22468Page() {
           <p style={{ fontSize: 15, color: 'rgba(240,242,255,0.65)', lineHeight: 1.7,
             marginBottom: 28, maxWidth: 460, marginInline: 'auto', position: 'relative', fontFamily: SANS }}>
             VeSiMy gives you the VSM notation, metrics, CI tools, and AI coaching to
-            run the full improvement cycle — from current state to measurable results.
+            run the full improvement cycle, from current state to measurable results.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', position: 'relative' }}>
             <Link href="/auth/signup"

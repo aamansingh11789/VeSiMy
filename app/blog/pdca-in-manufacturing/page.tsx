@@ -2,12 +2,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'PDCA in Manufacturing: The Complete Guide for 2026 — VeSiMy',
+  title: 'PDCA in Manufacturing: The Complete Guide for 2026, VeSiMy',
   description: 'PDCA (Plan-Do-Check-Act) is the backbone of every ISO 9001 quality system and lean improvement program. Learn how to use it, how it connects to A3, 8D, and DMAIC, and how to run your first cycle.',
   keywords: ['PDCA manufacturing', 'plan do check act', 'PDCA vs DMAIC', 'A3 report', '8D problem solving', 'continuous improvement cycle', 'ISO 9001 PDCA'],
   openGraph: {
     title: 'PDCA in Manufacturing: The Complete Guide',
-    description: 'How to run Plan-Do-Check-Act cycles that actually stick — with A3, 8D, and DMAIC export options.',
+    description: 'How to run Plan-Do-Check-Act cycles that actually stick, with A3, 8D, and DMAIC export options.',
     type: 'article',
   },
 }
@@ -32,7 +32,7 @@ export default function PDCAPost() {
             PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            PDCA is the backbone of ISO 9001, lean manufacturing, and Six Sigma. Yet most teams run it wrong — they Plan, Do, skip Check entirely, and never Act. Here is how to use it correctly.
+            PDCA is the backbone of ISO 9001, lean manufacturing, and Six Sigma. Yet most teams run it wrong, they Plan, Do, skip Check entirely, and never Act. Here is how to use it correctly.
           </p>
         </div>
 
@@ -43,13 +43,13 @@ export default function PDCAPost() {
             PDCA (Plan-Do-Check-Act) is a four-phase improvement cycle developed by Walter Shewhart and popularised by W. Edwards Deming. It is the foundation of ISO 9001:2015 §10.3 (Continual Improvement) and the operating framework behind Toyota Production System, Six Sigma, and every modern quality management methodology.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The cycle is deceptively simple: identify a problem, hypothesise a solution, test it on a small scale, measure the result, and either standardise the improvement or adjust the hypothesis and run the next cycle. The power is in the repetition — each cycle builds on the last, driving continuous improvement rather than one-time fixes.
+            The cycle is deceptively simple: identify a problem, hypothesise a solution, test it on a small scale, measure the result, and either standardise the improvement or adjust the hypothesis and run the next cycle. The power is in the repetition, each cycle builds on the last, driving continuous improvement rather than one-time fixes.
           </p>
 
           {[
             { phase: 'Plan', color: '#6CB9FC', icon: '', desc: 'Define the problem with data. Describe the current condition. Identify the root cause using 5 Why or Fishbone analysis. Set a specific, measurable target condition. Define what success looks like before you start. Write a hypothesis: "If we do X, we expect Y because Z."' },
-            { phase: 'Do', color: '#0176D3', icon: '', desc: 'Implement your countermeasure — but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
-            { phase: 'Check', color: '#1DD1A1', icon: '', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip — and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
+            { phase: 'Do', color: '#0176D3', icon: '', desc: 'Implement your countermeasure, but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
+            { phase: 'Check', color: '#1DD1A1', icon: '', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip, and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
             { phase: 'Act', color: '#8C44CC', icon: '', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
           ].map(({ phase, color, icon, desc }) => (
             <div key={phase} style={{ background: `${color}08`, border: `1px solid ${color}33`, borderRadius: 12, padding: '18px 20px', marginBottom: 12 }}>
@@ -63,13 +63,13 @@ export default function PDCAPost() {
             </div>
           ))}
 
-          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>PDCA vs DMAIC vs A3 vs 8D — which do you use?</h2>
+          <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>PDCA vs DMAIC vs A3 vs 8D, which do you use?</h2>
           <p style={{ marginBottom: 16 }}>All four frameworks ask the same questions in different orders with different names. Choose based on your audience and problem complexity:</p>
 
           {[
             { fmt: 'PDCA', color: '#0176D3', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
             { fmt: 'A3', color: '#1DD1A1', use: 'When you need to communicate the problem and solution on one page to management or across teams. Toyota\'s standard problem-solving communication format. Essentially PDCA on one sheet of A3 paper.' },
-            { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA — different format and language.' },
+            { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA, different format and language.' },
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },
           ].map(({ fmt, color, use }) => (
             <div key={fmt} style={{ display: 'flex', gap: 14, marginBottom: 14, background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '14px 16px' }}>
@@ -79,15 +79,15 @@ export default function PDCAPost() {
           ))}
 
           <p style={{ marginBottom: 18, marginTop: 8 }}>
-            The key insight: the underlying data is identical across all four. If you run a PDCA project properly — problem statement, root cause, countermeasures, before/after metrics, standardisation — you have everything needed to produce an A3, 8D, or DMAIC report without doing any additional work. VeSiMy generates all four from the same project data.
+            The key insight: the underlying data is identical across all four. If you run a PDCA project properly, problem statement, root cause, countermeasures, before/after metrics, standardisation, you have everything needed to produce an A3, 8D, or DMAIC report without doing any additional work. VeSiMy generates all four from the same project data.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The most common PDCA failure modes</h2>
           {[
-            ['Skipping the Check phase', 'The improvement gets implemented and declared successful before any measurement is done. Without Check, there is no learning — only assumption. Require before/after data for every PDCA cycle, no exceptions.'],
+            ['Skipping the Check phase', 'The improvement gets implemented and declared successful before any measurement is done. Without Check, there is no learning, only assumption. Require before/after data for every PDCA cycle, no exceptions.'],
             ['Corrective actions that address symptoms', 'The countermeasure fixes the visible problem without addressing the root cause. Three weeks later the problem returns. A properly completed 5 Why, attached to the Plan phase, prevents this.'],
             ['No standardisation in Act', 'The improvement works and then reverts within 60 days because Standard Work was never updated and operators gradually drift back to the old method. Act must include updating documentation and retraining.'],
-            ['Starting too big', 'Teams try to solve the entire problem in one PDCA cycle. Keep cycles small — one problem, one step, one shift. Fast cycles with clear learning are more valuable than slow comprehensive projects.'],
+            ['Starting too big', 'Teams try to solve the entire problem in one PDCA cycle. Keep cycles small, one problem, one step, one shift. Fast cycles with clear learning are more valuable than slow comprehensive projects.'],
           ].map(([title, body], i) => (
             <div key={i} style={{ background: 'rgba(255,107,107,0.04)', border: '1px solid rgba(255,107,107,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
               <div style={{ fontWeight: 700, color: '#FF6B6B', marginBottom: 6 }}>✕ {title}</div>
@@ -101,7 +101,7 @@ export default function PDCAPost() {
               Run your first PDCA cycle free
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA — whichever format your audience requires. Free to start — no credit card.
+              VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA, whichever format your audience requires. Free to start, no credit card.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#6B24A8,#8C44CC)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start your PDCA project free →

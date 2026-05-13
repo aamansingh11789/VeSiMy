@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Process Improvement in Logistics & Warehousing — VeSiMy',
+  title: 'Process Improvement in Logistics & Warehousing, VeSiMy',
   description: "Logistics and warehousing operations are process-intensive environments where small improvements compound into major efficiency gains. Here\'s how structured CI tools apply.",
   keywords: ['logistics process improvement', 'warehouse CI', 'lean logistics', 'warehouse waste reduction', 'fulfillment center improvement'],
   openGraph: {
@@ -32,7 +32,7 @@ export default function LogisticsBlog() {
             Speed Without Structure Is Just Chaos: CI in Logistics and Warehousing
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Modern logistics operations are under pressure that would have seemed impossible a decade ago. Two-day delivery has become table stakes. Customers track their orders in real time and escalate within hours of a miss. In this environment, process improvement isn't a lean initiative — it's a survival strategy.
+            Modern logistics operations are under pressure that would have seemed impossible a decade ago. Two-day delivery has become table stakes. Customers track their orders in real time and escalate within hours of a miss. In this environment, process improvement isn't a lean initiative, it's a survival strategy.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function LogisticsBlog() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why logistics is a process problem, not a speed problem</h2>
           <p style={{ marginBottom: 18 }}>
-            The instinct in logistics is to solve performance gaps with more labor. More pickers, more packers, more drivers. But in most underperforming operations, the constraint isn't labor — it's process. Poorly laid out pick paths, unclear SOPs, informal handoffs between receiving and putaway, and the quiet waste of people walking 40% of their shift to find things that should have been labeled.
+            The instinct in logistics is to solve performance gaps with more labor. More pickers, more packers, more drivers. But in most underperforming operations, the constraint isn't labor, it's process. Poorly laid out pick paths, unclear SOPs, informal handoffs between receiving and putaway, and the quiet waste of people walking 40% of their shift to find things that should have been labeled.
           </p>
           <p style={{ marginBottom: 18 }}>
             A warehouse that runs 80 orders per hour isn't necessarily working harder than one that runs 120. It's working with a less efficient process. And that gap is closable without adding a single head.
@@ -48,11 +48,11 @@ export default function LogisticsBlog() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The wastes that dominate logistics operations</h2>
           {[
-            ['Motion — the invisible tax', 'Unnecessary travel is the most visible waste in a warehouse, but it\'s often treated as fixed. Layout-driven pick path optimization, slotting by velocity, and zone design can cut travel distance by 20–40% without changing the building footprint.'],
-            ['Waiting at dock interfaces', 'Dock scheduling, trailer positioning, and putaway queue management determine whether a team is productive or standing around. Unmanaged dock interfaces create waiting waste that doesn\'t show up in productivity reports — it just disappears into shift time.'],
+            ['Motion, the invisible tax', 'Unnecessary travel is the most visible waste in a warehouse, but it\'s often treated as fixed. Layout-driven pick path optimization, slotting by velocity, and zone design can cut travel distance by 20–40% without changing the building footprint.'],
+            ['Waiting at dock interfaces', 'Dock scheduling, trailer positioning, and putaway queue management determine whether a team is productive or standing around. Unmanaged dock interfaces create waiting waste that doesn\'t show up in productivity reports, it just disappears into shift time.'],
             ['Defects from process variation', 'In logistics, a defect is a mis-pick, a mislabel, a short-ship, or a damaged item. Each one costs 5–10x the value of the original order to resolve when you account for customer contact, reshipping, and credit handling. Most pick errors trace to unclear SOPs or label placement variation, not individual mistakes.'],
-            ['Over-processing in receiving', 'Receiving teams often perform multiple redundant verification steps on inbound freight — count, verify against PO, enter into WMS, re-count for putaway. Mapping this process often reveals steps that can be eliminated with smarter WMS configuration and supplier compliance programs.'],
-            ['Inventory inaccuracy driving search behavior', 'When bin locations don\'t match WMS records, pickers search. Search time is pure waste — and it compounds across every picker on every shift. The root cause is almost always a process failure in cycle count execution or putaway confirmation.'],
+            ['Over-processing in receiving', 'Receiving teams often perform multiple redundant verification steps on inbound freight, count, verify against PO, enter into WMS, re-count for putaway. Mapping this process often reveals steps that can be eliminated with smarter WMS configuration and supplier compliance programs.'],
+            ['Inventory inaccuracy driving search behavior', 'When bin locations don\'t match WMS records, pickers search. Search time is pure waste, and it compounds across every picker on every shift. The root cause is almost always a process failure in cycle count execution or putaway confirmation.'],
           ].map(([title, body]) => (
             <div key={title} style={{ background: 'rgba(247,151,30,0.06)', border: '1px solid rgba(247,151,30,0.2)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 6 }}>{title}</div>
@@ -64,15 +64,15 @@ export default function LogisticsBlog() {
 
           <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: '32px 0 12px' }}>Time Study for standard process characterization</h3>
           <p style={{ marginBottom: 18 }}>
-            How long does it actually take to pick an order in your operation? Not the engineered standard — the actual time, broken down by element: locate, pick, verify, pack, label, move to consolidation. VeSiMy's Time Study tool gives team leads the ability to answer this question with data from their floor, not an industrial engineering textbook.
+            How long does it actually take to pick an order in your operation? Not the engineered standard, the actual time, broken down by element: locate, pick, verify, pack, label, move to consolidation. VeSiMy's Time Study tool gives team leads the ability to answer this question with data from their floor, not an industrial engineering textbook.
           </p>
           <p style={{ marginBottom: 18 }}>
-            Once you have actual elemental times, the improvement opportunities are obvious. The element that's 3x longer than it should be is the one hiding a process problem — a confusing label, a poorly positioned bin, a verification step that could be automated.
+            Once you have actual elemental times, the improvement opportunities are obvious. The element that's 3x longer than it should be is the one hiding a process problem, a confusing label, a poorly positioned bin, a verification step that could be automated.
           </p>
 
           <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'van(--text)', margin: '32px 0 12px' }}>Value Stream Map for dock-to-stock and order fulfillment flows</h3>
           <p style={{ marginBottom: 18 }}>
-            Dock-to-stock time is a metric most warehouses track. But few map the entire value stream from trailer arrival to inventory availability — including the waiting, the handoffs, the verification steps, and the exceptions. A VSM of this flow typically reveals 2–4 hours of lead time that nobody owns, because it lives between departments.
+            Dock-to-stock time is a metric most warehouses track. But few map the entire value stream from trailer arrival to inventory availability, including the waiting, the handoffs, the verification steps, and the exceptions. A VSM of this flow typically reveals 2–4 hours of lead time that nobody owns, because it lives between departments.
           </p>
 
           <div style={{ borderLeft: '3px solid #F7971E', paddingLeft: 20, marginBottom: 28 }}>
@@ -86,7 +86,7 @@ export default function LogisticsBlog() {
             A focused kaizen on a packing station, a receiving dock, or a returns processing area can compress hours of work per shift with relatively simple changes: better label printer placement, standardized bin layout, laminated quick-reference cards, re-sequenced work steps. These aren't capital projects. They're process improvements that take an afternoon to implement and deliver results the same day.
           </p>
           <p style={{ marginBottom: 18 }}>
-            VeSiMy's Kaizen module documents these events formally — before state, team observations, changes made, and measured result — so the improvement is captured and repeatable across other shifts and sites.
+            VeSiMy's Kaizen module documents these events formally, before state, team observations, changes made, and measured result, so the improvement is captured and repeatable across other shifts and sites.
           </p>
 
           <div style={{ background: 'rgba(44,44,92,0.05)', border: '1px solid rgba(44,44,92,0.12)', borderRadius: 14, padding: '20px 24px', marginTop: 40, marginBottom: 32 }}>

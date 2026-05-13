@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Value-Added vs Non-Value-Added: How to Classify Every Task Honestly — VeSiMy',
+  title: 'Value-Added vs Non-Value-Added: How to Classify Every Task Honestly, VeSiMy',
   description: 'The honest guide to classifying every activity in your process. Most teams misclassify NVA work as necessary. Here is how to stop.',
   openGraph: { title: 'Value-Added vs Non-Value-Added: How to Classify Every Task Honestly', type: 'article' },
 }
@@ -39,11 +39,11 @@ export default function Post() {
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--text)' }}>Meetings as value-added:</strong> The meeting that produces a decision is NNVA. The meeting that produces no decision is NVA. Neither should appear on your future state map at their current frequency.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to classify honestly during a wall session</h2>
           <p style={{ marginBottom: 18 }}>Ask of every activity: does this change the form, fit, or function of the product or service toward what the customer wants? If yes, VA. If no, ask whether it can be eliminated today. If it cannot be eliminated without changing the process design, it is NNVA. Everything else is NVA.</p>
-          <p style={{ marginBottom: 18 }}>Write the classification on the sticky note. Post-its can move. Disagreements can be argued. The point is not to get it perfect on the first pass. The point is to have an honest conversation about every step — and most teams have never had that conversation.</p>
+          <p style={{ marginBottom: 18 }}>Write the classification on the sticky note. Post-its can move. Disagreements can be argued. The point is not to get it perfect on the first pass. The point is to have an honest conversation about every step, and most teams have never had that conversation.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

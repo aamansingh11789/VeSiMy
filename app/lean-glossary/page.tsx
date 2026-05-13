@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 export const metadata: Metadata = {
-  title: 'Lean Glossary — VeSiMy',
+  title: 'Lean Glossary, VeSiMy',
   description: 'Plain-English definitions of Lean, Six Sigma, and continuous improvement terms. Cycle time, takt time, PCE, VSM, 5S, kaizen, SMED, and more.',
 }
 
@@ -17,10 +17,10 @@ const TERMS = [
   {
     letter:'C',
     terms:[
-      { term:'Cycle Time (CT)', def:'The time it takes to complete one unit of work at a process step — from when work starts to when work ends at that step. Measured in seconds, minutes, or hours.' },
+      { term:'Cycle Time (CT)', def:'The time it takes to complete one unit of work at a process step, from when work starts to when work ends at that step. Measured in seconds, minutes, or hours.' },
       { term:'Changeover Time', def:'The time required to switch a process from making one product or service to another. Reducing changeover time is the goal of SMED (Single-Minute Exchange of Die).' },
-      { term:'Continuous Improvement (CI)', def:'An ongoing effort to improve products, services, or processes. In Lean, CI is often called Kaizen — small, incremental changes made frequently.' },
-      { term:'Current State Map', def:'A VSM that documents how a process works today — including cycle times, wait times, WIP, and information flows. The starting point for improvement.' },
+      { term:'Continuous Improvement (CI)', def:'An ongoing effort to improve products, services, or processes. In Lean, CI is often called Kaizen, small, incremental changes made frequently.' },
+      { term:'Current State Map', def:'A VSM that documents how a process works today, including cycle times, wait times, WIP, and information flows. The starting point for improvement.' },
     ],
   },
   {
@@ -50,7 +50,7 @@ const TERMS = [
   {
     letter:'L',
     terms:[
-      { term:'Lead Time (LT)', def:'Total time from when a customer request enters the system to when it is fulfilled — including all waiting time and process time. Always longer than total cycle time.' },
+      { term:'Lead Time (LT)', def:'Total time from when a customer request enters the system to when it is fulfilled, including all waiting time and process time. Always longer than total cycle time.' },
       { term:'Lean', def:'A management philosophy derived from the Toyota Production System (TPS) focused on creating value and eliminating the 8 wastes: overproduction, waiting, transport, over-processing, inventory, motion, defects, and unused talent.' },
       { term:'Little\'s Law', def:'A queuing theory principle: Average queue size = Arrival rate × Average wait time. Used in VeSiMy\'s simulation engine to model demand changes.' },
     ],
@@ -58,9 +58,9 @@ const TERMS = [
   {
     letter:'M',
     terms:[
-      { term:'Muda', def:'Japanese for "waste" — any activity that consumes resources without creating value for the customer. The 8 types: overproduction, waiting, transport, over-processing, excess inventory, motion, defects, unused talent.' },
+      { term:'Muda', def:'Japanese for "waste", any activity that consumes resources without creating value for the customer. The 8 types: overproduction, waiting, transport, over-processing, excess inventory, motion, defects, unused talent.' },
       { term:'Mura', def:'Unevenness or variability in a process. Causes stop-and-start flow, queue build-up, and worker stress. Smoothed by levelling (heijunka).' },
-      { term:'Muri', def:'Overburden — pushing workers or equipment beyond their natural capacity. Causes defects, breakdowns, and burnout.' },
+      { term:'Muri', def:'Overburden, pushing workers or equipment beyond their natural capacity. Causes defects, breakdowns, and burnout.' },
     ],
   },
   {
@@ -90,15 +90,15 @@ const TERMS = [
   {
     letter:'T',
     terms:[
-      { term:'Takt Time', def:'Available production time ÷ Customer demand rate. The "heartbeat" of the process — how fast you need to produce one unit to meet demand. If any step\'s cycle time exceeds takt, you have a bottleneck.' },
+      { term:'Takt Time', def:'Available production time ÷ Customer demand rate. The "heartbeat" of the process, how fast you need to produce one unit to meet demand. If any step\'s cycle time exceeds takt, you have a bottleneck.' },
       { term:'TPS (Toyota Production System)', def:'The original Lean system developed by Toyota. The foundation of all modern Lean and continuous improvement frameworks. Based on Jidoka (stop and fix problems) and Just-in-Time flow.' },
     ],
   },
   {
     letter:'V',
     terms:[
-      { term:'Value', def:'Anything a customer is willing to pay for. In VSM, steps are classified as VA (Value-Added), NNVA (Necessary Non-Value-Added — required but wasteful), or NVA (Non-Value-Added — pure waste to eliminate).' },
-      { term:'VSM (Value Stream Mapping)', def:'A Lean tool that visualises every step in a process — from supplier to customer — along with cycle times, wait times, WIP, information flows, and quality data. Used to identify improvement opportunities.' },
+      { term:'Value', def:'Anything a customer is willing to pay for. In VSM, steps are classified as VA (Value-Added), NNVA (Necessary Non-Value-Added, required but wasteful), or NVA (Non-Value-Added, pure waste to eliminate).' },
+      { term:'VSM (Value Stream Mapping)', def:'A Lean tool that visualises every step in a process, from supplier to customer, along with cycle times, wait times, WIP, information flows, and quality data. Used to identify improvement opportunities.' },
     ],
   },
   {

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'How to Run a 5 Whys That Actually Finds the Root Cause — VeSiMy',
+  title: 'How to Run a 5 Whys That Actually Finds the Root Cause, VeSiMy',
   description: '5 Whys is the most misused tool in lean. Here is how to use it correctly so you fix the system, not the symptom.',
   openGraph: { title: 'How to Run a 5 Whys That Actually Finds the Root Cause', type: 'article' },
 }
@@ -44,7 +44,7 @@ export default function Post() {
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Current State vs Future State: The Two Maps Every Lean Project Needs — VeSiMy',
+  title: 'Current State vs Future State: The Two Maps Every Lean Project Needs, VeSiMy',
   description: 'The current state map shows what is. The future state map shows what is possible. The gap between them is where the improvement work lives.',
   openGraph: { title: 'Current State vs Future State: The Two Maps Every Lean Project Needs', type: 'article' },
 }
@@ -33,19 +33,19 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>The power of VSM is in holding both maps in the same room. The current state shows the waste clearly. The future state shows the same process with the waste removed. The team can see the gap. The gap becomes the project plan.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Building the current state</h2>
           <p style={{ marginBottom: 18 }}>The current state maps what is actually happening today. Not the procedure. Not the ideal. What actually happens when you observe the process. Every step, every delay, every piece of WIP, every information flow. The facilitator's job is to keep asking: is that what actually happens? until the map is honest.</p>
-          <p style={{ marginBottom: 18 }}>Data fields — cycle time, wait time, WIP, defect rate, uptime — come from direct observation during Phase 2. The current state is not complete until every major step has measured data, not estimates.</p>
+          <p style={{ marginBottom: 18 }}>Data fields, cycle time, wait time, WIP, defect rate, uptime, come from direct observation during Phase 2. The current state is not complete until every major step has measured data, not estimates.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Building the future state</h2>
           <p style={{ marginBottom: 18 }}>The future state is designed, not observed. The team asks: given what we now know about waste and constraint, what would this process look like if we eliminated the highest-impact problems?</p>
           <p style={{ marginBottom: 18 }}>Future state design rules: set takt time as the ceiling. Eliminate NVA steps where possible. Reduce WIP to the minimum needed for stable flow. Establish pull systems where push creates batching problems. Introduce pacemaker scheduling at or near the constraint.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The gap is the project backlog</h2>
-          <p style={{ marginBottom: 18 }}>Every difference between the current state and the future state is a project or an action. Eliminate step 4 entirely — that is a project. Reduce WIP at step 7 from 40 to 5 — that is a project. Introduce kanban between steps 9 and 10 — that is a project.</p>
+          <p style={{ marginBottom: 18 }}>Every difference between the current state and the future state is a project or an action. Eliminate step 4 entirely, that is a project. Reduce WIP at step 7 from 40 to 5, that is a project. Introduce kanban between steps 9 and 10, that is a project.</p>
           <p style={{ marginBottom: 18 }}>Prioritise by impact on the constraint. Every action that does not address the current constraint is background improvement. Start with the actions that move the needle on lead time or throughput, because those are the metrics the customer feels.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Version history is the improvement story</h2>
           <p style={{ marginBottom: 18 }}>Every time a future state is implemented, it becomes the new current state and a new future state is designed. The progression of current state maps over time is the measurement of how the organisation is improving. VeSiMy stores every version permanently so the improvement story is always visible.</p>
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

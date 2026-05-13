@@ -2,12 +2,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'What Is Value Stream Mapping? The Complete Guide for 2026 — VeSiMy',
+  title: 'What Is Value Stream Mapping? The Complete Guide for 2026, VeSiMy',
   description: 'Value stream mapping (VSM) visualizes every step your product takes from raw material to customer. Learn what VSM is, how to read one, and how to build your first map free.',
   keywords: ['value stream mapping', 'VSM guide', 'lean manufacturing', 'what is value stream mapping', 'free VSM tool'],
   openGraph: {
     title: 'What Is Value Stream Mapping? The Complete Guide for 2026',
-    description: 'Learn what VSM is, how to read one, and how to build your first map in under an hour — for free.',
+    description: 'Learn what VSM is, how to read one, and how to build your first map in under an hour, for free.',
     type: 'article',
   },
 }
@@ -32,7 +32,7 @@ export default function VSMPost() {
             What Is Value Stream Mapping? The Complete Guide for 2026
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Value stream mapping is the most powerful lean tool most teams use wrong — or don't use at all. Here's everything you need to know, including how to build your first map today for free.
+            Value stream mapping is the most powerful lean tool most teams use wrong, or don't use at all. Here's everything you need to know, including how to build your first map today for free.
           </p>
         </div>
 
@@ -40,10 +40,10 @@ export default function VSMPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is a value stream map?</h2>
           <p style={{ marginBottom: 18 }}>
-            A value stream map (VSM) is a visual diagram that shows every step, every delay, and every handoff your product goes through — from the moment raw materials arrive to the moment a customer receives it.
+            A value stream map (VSM) is a visual diagram that shows every step, every delay, and every handoff your product goes through, from the moment raw materials arrive to the moment a customer receives it.
           </p>
           <p style={{ marginBottom: 18 }}>
-            The key insight of VSM is this: most of the time a product spends in your facility is <em style={{ color: 'var(--text)' }}>waiting</em>, not moving. Studies consistently show that 80–95% of total lead time in manufacturing is pure waste — queues, transport, storage, rework.
+            The key insight of VSM is this: most of the time a product spends in your facility is <em style={{ color: 'var(--text)' }}>waiting</em>, not moving. Studies consistently show that 80–95% of total lead time in manufacturing is pure waste, queues, transport, storage, rework.
           </p>
           <p style={{ marginBottom: 18 }}>
             A VSM makes all of that waste <strong style={{ color: 'var(--text)' }}>visible</strong>. You can't improve what you can't see.
@@ -51,10 +51,10 @@ export default function VSMPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The two maps: current state vs future state</h2>
           <p style={{ marginBottom: 18 }}>
-            Every VSM project starts with a <strong style={{ color: '#0176D3' }}>current state map</strong> — an honest picture of exactly how your process works today. Not how it's supposed to work. How it actually works.
+            Every VSM project starts with a <strong style={{ color: '#0176D3' }}>current state map</strong>, an honest picture of exactly how your process works today. Not how it's supposed to work. How it actually works.
           </p>
           <p style={{ marginBottom: 18 }}>
-            From there, you build a <strong style={{ color: '#0176D3' }}>future state map</strong> — what the process should look like after you've eliminated the waste you found. The gap between current and future state is your kaizen roadmap.
+            From there, you build a <strong style={{ color: '#0176D3' }}>future state map</strong>, what the process should look like after you've eliminated the waste you found. The gap between current and future state is your kaizen roadmap.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The 5 key numbers every VSM must show</h2>
@@ -63,7 +63,7 @@ export default function VSMPost() {
             ['Changeover Time (CO)', 'How long it takes to switch from one product to another'],
             ['Uptime (%)', 'What percentage of the time is the process actually running vs down'],
             ['Inventory', 'How many units are waiting between each step (the triangles on the map)'],
-            ['Lead Time', 'Total time from customer order to delivery — the number that matters most'],
+            ['Lead Time', 'Total time from customer order to delivery, the number that matters most'],
           ].map(([term, def]) => (
             <div key={term} style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
               <span style={{ color: '#0176D3', fontWeight: 700 }}>{term}:</span> {def}
@@ -74,14 +74,14 @@ export default function VSMPost() {
           <p style={{ marginBottom: 16 }}>Once you can see your process, you'll find these wastes hiding in it:</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 10, marginBottom: 24 }}>
             {[
-              ['D — Defects', 'Rework, scrap, customer returns'],
-              ['O — Overproduction', 'Making more than the customer ordered'],
-              ['W — Waiting', 'People or machines idle between steps'],
-              ['N — Non-utilized talent', 'Skills and ideas your people have that nobody asks for'],
-              ['T — Transportation', 'Moving materials unnecessarily'],
-              ['I — Inventory', 'Work in progress piling up between steps'],
-              ['M — Motion', 'Unnecessary movement of people'],
-              ['E — Extra processing', 'Steps that add cost but not customer value'],
+              ['D, Defects', 'Rework, scrap, customer returns'],
+              ['O, Overproduction', 'Making more than the customer ordered'],
+              ['W, Waiting', 'People or machines idle between steps'],
+              ['N, Non-utilized talent', 'Skills and ideas your people have that nobody asks for'],
+              ['T, Transportation', 'Moving materials unnecessarily'],
+              ['I, Inventory', 'Work in progress piling up between steps'],
+              ['M, Motion', 'Unnecessary movement of people'],
+              ['E, Extra processing', 'Steps that add cost but not customer value'],
             ].map(([waste, desc]) => (
               <div key={waste} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 14px' }}>
                 <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, marginBottom: 4 }}>{waste}</div>
@@ -92,7 +92,7 @@ export default function VSMPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to build your first VSM in under an hour</h2>
           {[
-            ['Step 1: Pick one product family', 'Don\'t try to map your entire facility. Pick one product family — ideally the one with the most customer demand or the biggest quality issues.'],
+            ['Step 1: Pick one product family', 'Don\'t try to map your entire facility. Pick one product family, ideally the one with the most customer demand or the biggest quality issues.'],
             ['Step 2: Walk the floor', 'Starting from shipping and working backwards to receiving, follow the actual path your product takes. Sketch it on paper as you go. Time each step with a stopwatch.'],
             ['Step 3: Collect the data', 'At each step, record: cycle time, changeover time, uptime, number of operators, and inventory count (count the actual units sitting there).'],
             ['Step 4: Draw the current state', 'Using standard VSM symbols, draw the flow of material (bottom of the map) and information (top of the map). Add your data boxes under each step.'],

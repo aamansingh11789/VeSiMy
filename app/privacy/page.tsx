@@ -4,7 +4,7 @@ import type React from 'react'
 import Link from 'next/link'
 import { VesimyLogo } from '@/components/ui/Logo'
 
-export const metadata = { title: 'Privacy Policy — VeSiMy' }
+export const metadata = { title: 'Privacy Policy, VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             Your process data is yours. We store it so you can access it across devices and sessions. We never share it, sell it, or use it to train AI models.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75, marginBottom: 12 }}>
-            We collect standard usage analytics — pages viewed, features used — to understand how to improve the product. Your IP address appears in standard server security logs, as it does with every web service. We do not use IP addresses to identify your operations, track your processes, or profile your company.
+            We collect standard usage analytics, pages viewed, features used, to understand how to improve the product. Your IP address appears in standard server security logs, as it does with every web service. We do not use IP addresses to identify your operations, track your processes, or profile your company.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75, margin: 0 }}>
             You can export your data and delete your account at any time. The full policy is below.
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="5. Third-Party Services">
-          <p>We use the following third-party services: <strong style={{ color: '#B0B0C8' }}>Supabase</strong> (database and authentication), <strong style={{ color: '#B0B0C8' }}>Stripe</strong> (payment processing), <strong style={{ color: '#B0B0C8' }}>Vercel</strong> (hosting), <strong style={{ color: '#B0B0C8' }}>Anthropic</strong> (AI features via Claude API — step names, timing data, and process classifications are sent to generate AI analysis; avoid including confidential identifiers in step names). Each of these providers has their own privacy policy.</p>
+          <p>We use the following third-party services: <strong style={{ color: '#B0B0C8' }}>Supabase</strong> (database and authentication), <strong style={{ color: '#B0B0C8' }}>Stripe</strong> (payment processing), <strong style={{ color: '#B0B0C8' }}>Vercel</strong> (hosting), <strong style={{ color: '#B0B0C8' }}>Anthropic</strong> (AI features via Claude API, step names, timing data, and process classifications are sent to generate AI analysis; avoid including confidential identifiers in step names). Each of these providers has their own privacy policy.</p>
         </Section>
 
         <Section title="6. Your Rights">

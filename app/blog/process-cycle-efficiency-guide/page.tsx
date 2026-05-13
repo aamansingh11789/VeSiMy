@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Process Cycle Efficiency: What PCE Means and Why Most Operations Are Between 10 and 30 Percent — VeSiMy',
+  title: 'Process Cycle Efficiency: What PCE Means and Why Most Operations Are Between 10 and 30 Percent, VeSiMy',
   description: 'Process cycle efficiency is the most revealing single number in a VSM analysis. Here is what it measures, how to calculate it, and what to do with it.',
   openGraph: { title: 'Process Cycle Efficiency: What PCE Means and Why Most Operations Are Between 10 and 30 Percent', type: 'article' },
 }
@@ -30,12 +30,12 @@ export default function Post() {
         <div style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.9 }}>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The formula</h2>
           <p style={{ marginBottom: 18 }}>PCE = Value-Added Time / Total Lead Time. Total lead time is the sum of all cycle times and all wait times across the value stream. Value-added time is the sum of cycle times for only the steps classified as value-added.</p>
-          <p style={{ marginBottom: 18 }}>If your process has 45 minutes of VA work and a total lead time of 420 minutes, your PCE is 10.7 percent. The remaining 89.3 percent is waste — either necessary non-value-added (NNVA) or pure waste (NVA).</p>
+          <p style={{ marginBottom: 18 }}>If your process has 45 minutes of VA work and a total lead time of 420 minutes, your PCE is 10.7 percent. The remaining 89.3 percent is waste, either necessary non-value-added (NNVA) or pure waste (NVA).</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why 10 to 30 percent is typical</h2>
           <p style={{ marginBottom: 18 }}>Most processes have been designed around the exceptions, not the flow. The inspection step exists because defects escape. The approval step exists because someone made a costly decision without enough information. The re-entry step exists because two systems do not talk to each other.</p>
           <p style={{ marginBottom: 18 }}>Each of these steps added wait time to the process. The original step still takes the same amount of time. The wait time compounds. A process with 12 steps and an average of 30 minutes of wait time between each step has 360 minutes of wait time built in before a single second of value-added work is counted.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What PCE tells you</h2>
-          <p style={{ marginBottom: 18 }}>A low PCE is not a failure. It is a measure of improvement opportunity. A process with 10 percent PCE has 90 percent of its lead time available for reduction. That is not a bad process — that is a process with a large gap between current and future state.</p>
+          <p style={{ marginBottom: 18 }}>A low PCE is not a failure. It is a measure of improvement opportunity. A process with 10 percent PCE has 90 percent of its lead time available for reduction. That is not a bad process, that is a process with a large gap between current and future state.</p>
           <p style={{ marginBottom: 18 }}>A high PCE (above 70 percent) in a process with quality problems means the problem is in the value-added steps themselves, not in waiting or overhead. The improvement strategy changes completely depending on where the waste lives.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Industry benchmarks</h2>
           <p style={{ marginBottom: 18 }}>Lean manufacturing targets above 80 percent PCE. Service operations typically operate at 5 to 20 percent. Healthcare processes often measure below 10 percent. Software development processes, when measured honestly, often come in at 15 to 25 percent when wait time in queues is included.</p>
@@ -45,7 +45,7 @@ export default function Post() {
 
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free — no account needed →</Link>
+            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

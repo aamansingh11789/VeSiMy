@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Yamazumi Chart: How to Balance Your Production Line — VeSiMy',
+  title: 'Yamazumi Chart: How to Balance Your Production Line, VeSiMy',
   description: 'A Yamazumi chart shows operator work content broken into value-add and waste time, compared to takt time. Learn how to build one, read it, and use it to balance your line and eliminate waste.',
   keywords: ['yamazumi chart', 'operator balance chart', 'line balancing lean', 'yamazumi manufacturing', 'takt time balance', 'value add non-value add'],
   openGraph: {
@@ -32,7 +32,7 @@ export default function YamazumiPost() {
             Yamazumi Chart: The Operator Balance Chart That Makes Waste Impossible to Ignore
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            A Yamazumi chart shows exactly how much of each operator's time is value-adding, necessary waste, or pure waste — compared to takt time. It is the most powerful tool for line balancing and operator-level improvement.
+            A Yamazumi chart shows exactly how much of each operator's time is value-adding, necessary waste, or pure waste, compared to takt time. It is the most powerful tool for line balancing and operator-level improvement.
           </p>
         </div>
 
@@ -43,14 +43,14 @@ export default function YamazumiPost() {
             Yamazumi (山積み) means "stacking" in Japanese. A Yamazumi chart is a stacked bar chart where each bar represents one operator or process step. The bar height is the total cycle time. The bar is divided into three sections: Value Add (VA) in green, Necessary Non-Value Add (NNVA) in amber, and Non-Value Add (NVA) in red.
           </p>
           <p style={{ marginBottom: 18 }}>
-            A dashed horizontal line crosses all bars at the Takt Time level. Any bar rising above this line represents a bottleneck — that operator cannot keep pace with customer demand. The chart makes two things immediately visible: where the line is imbalanced, and where waste is hiding inside the work content.
+            A dashed horizontal line crosses all bars at the Takt Time level. Any bar rising above this line represents a bottleneck, that operator cannot keep pace with customer demand. The chart makes two things immediately visible: where the line is imbalanced, and where waste is hiding inside the work content.
           </p>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The three categories of work</h2>
           {[
             { label: 'Value Add (VA)', color: '#1DD1A1', desc: 'Activities that physically transform the product in a way the customer recognises as valuable and would pay for. Machining, welding, assembly, painting. This is what you are selling. Every second of VA time is justified.' },
             { label: 'Necessary Non-Value Add (NNVA)', color: '#0176D3', desc: 'Activities required by the current process but that add no value from the customer\'s perspective. Setting up a machine, walking to the next station, inspecting output. Cannot be eliminated immediately but should be reduced over time through process redesign.' },
-            { label: 'Non-Value Add (NVA)', color: '#FF6B6B', desc: 'Pure waste. Activities that consume time and resources but add nothing — waiting for a machine cycle to complete, searching for tools, correcting defects, walking to fetch materials that should be at point of use. Target for immediate elimination.' },
+            { label: 'Non-Value Add (NVA)', color: '#FF6B6B', desc: 'Pure waste. Activities that consume time and resources but add nothing, waiting for a machine cycle to complete, searching for tools, correcting defects, walking to fetch materials that should be at point of use. Target for immediate elimination.' },
           ].map(({ label, color, desc }) => (
             <div key={label} style={{ display: 'flex', gap: 12, marginBottom: 16, alignItems: 'flex-start' }}>
               <div style={{ width: 14, height: 14, borderRadius: 3, background: color, flexShrink: 0, marginTop: 3 }} />
@@ -64,9 +64,9 @@ export default function YamazumiPost() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>How to build a Yamazumi chart</h2>
           {[
             ['Step 1: Set your takt time', 'Calculate Takt Time = Available Time ÷ Customer Demand. This becomes the horizontal reference line on your chart. Every operator\'s bar will be compared to this line.'],
-            ['Step 2: Break each step into tasks', 'For each process step, list every individual task the operator performs. Include: loading material, operating the machine, unloading, walking to the next station, visual inspection, filling paperwork. Everything — even the 8-second walk counts.'],
-            ['Step 3: Time each task', 'Use a stopwatch or video analysis. Time each task individually across 5–10 cycles. Use the average. Small tasks add up — a 15-second paperwork task every cycle is 2.5 minutes per hour.'],
-            ['Step 4: Classify each task', 'Label each task VA, NNVA, or NVA. Be honest. Walking to a storage cabinet to fetch tools is NVA — the tools should be at point of use. Waiting for a machine cycle is NVA — the operator could be doing something productive.'],
+            ['Step 2: Break each step into tasks', 'For each process step, list every individual task the operator performs. Include: loading material, operating the machine, unloading, walking to the next station, visual inspection, filling paperwork. Everything, even the 8-second walk counts.'],
+            ['Step 3: Time each task', 'Use a stopwatch or video analysis. Time each task individually across 5–10 cycles. Use the average. Small tasks add up, a 15-second paperwork task every cycle is 2.5 minutes per hour.'],
+            ['Step 4: Classify each task', 'Label each task VA, NNVA, or NVA. Be honest. Walking to a storage cabinet to fetch tools is NVA, the tools should be at point of use. Waiting for a machine cycle is NVA, the operator could be doing something productive.'],
             ['Step 5: Build the chart', 'Stack the tasks for each operator into a bar. VA at bottom (green), NNVA in the middle (amber), NVA at top (red). Draw the Takt Time line. The chart is complete.'],
           ].map(([title, body], i) => (
             <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 20 }}>
@@ -85,7 +85,7 @@ export default function YamazumiPost() {
             ['Bars above takt line', 'These operators are bottlenecks. They cannot complete their work in the time customer demand requires. First eliminate NVA from their work content. Then redistribute NNVA tasks to under-loaded operators if possible.'],
             ['Large red NVA sections', 'These are your first kaizen targets. NVA tasks can usually be eliminated directly: move tools to point of use (motion waste), fix upstream process to eliminate waiting, implement error-proofing to eliminate inspection.'],
             ['Large height variation between bars', 'If one operator\'s bar is at 180s and another is at 60s, you have severe line imbalance. Redistribute work elements from the overloaded operator to the underloaded one. The goal: all bars at takt, with maximum VA content.'],
-            ['Ideal state', 'All bars at or just below takt time, with the maximum possible proportion in green (VA). No NVA sections. NNVA sections minimised. This is world-class line balance — achievable through methodical kaizen over 6–12 months.'],
+            ['Ideal state', 'All bars at or just below takt time, with the maximum possible proportion in green (VA). No NVA sections. NNVA sections minimised. This is world-class line balance, achievable through methodical kaizen over 6–12 months.'],
           ].map(([title, body], i) => (
             <div key={i} style={{ background: 'rgba(29,209,161,0.04)', border: '1px solid rgba(29,209,161,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
               <div style={{ fontWeight: 700, color: '#1DD1A1', marginBottom: 6 }}>→ {title}</div>
@@ -99,7 +99,7 @@ export default function YamazumiPost() {
               Build your Yamazumi chart free
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy generates Yamazumi charts automatically from your operator task data. Add tasks to any process step, classify them VA/NNVA/NVA, and the chart builds itself — with takt line, imbalance warnings, and kaizen targets. Free to start — no credit card.
+              VeSiMy generates Yamazumi charts automatically from your operator task data. Add tasks to any process step, classify them VA/NNVA/NVA, and the chart builds itself, with takt line, imbalance warnings, and kaizen targets. Free to start, no credit card.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Build your Yamazumi chart free →

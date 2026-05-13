@@ -1,139 +1,251 @@
-// TypeScript enabled
-import type { Metadata } from 'next'
+'use client'
+import React from 'react'
+// ── app/contact/page.tsx ──────────────────────────────────────────────────────
+import { useState } from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
-export const metadata: Metadata = {
-  title: 'Contact VeSiMy',
-  description: 'Get in touch with the VeSiMy team. Questions about pricing, enterprise plans, or the product.',
-}
-
-const SANS = "'Satoshi','Inter',-apple-system,sans-serif"
-const MONO = "'JetBrains Mono',monospace"
+const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
+const MONO  = "'JetBrains Mono',monospace"
 const AMBER = '#D4A843'
 const NAVY  = '#04111F'
+const GRAY  = '#5A6480'
+const BORD  = '#E2E8F0'
+
+const TOPICS = [
+  'General question',
+  'Enterprise / team plan',
+  'Consulting services',
+  'Partnership or integration',
+  'Bug report',
+  'Feature request',
+  'Press or media',
+  'Other',
+]
 
 export default function ContactPage() {
+  const [name,    setName]    = useState('')
+  const [email,   setEmail]   = useState('')
+  const [topic,   setTopic]   = useState(TOPICS[0])
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [sent,    setSent]    = useState(false)
+  const [error,   setError]   = useState('')
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    if (!name.trim())    { setError('Please enter your name.'); return }
+    if (!email.trim())   { setError('Please enter your email.'); return }
+    if (!message.trim()) { setError('Please enter a message.'); return }
+    setLoading(true)
+
+    try {
+      // Send via Sender.net API or fallback to mailto
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, topic, message }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSent(true)
+    } catch {
+      // Fallback: open mailto link
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`)
+      window.location.href = `mailto:max@vesimy.com?subject=VeSiMy Contact: ${encodeURIComponent(topic)}&body=${body}`
+      setSent(true)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div style={{ minHeight:'100vh', background:'#F5F7FA', fontFamily:SANS,
-      WebkitFontSmoothing:'antialiased' }}>
+    <div style={{ minHeight: '100vh', background: '#F5F7FA', fontFamily: SANS,
+      WebkitFontSmoothing: 'antialiased' }}>
+
       {/* Nav */}
-      <div style={{ background:NAVY, borderBottom:'1px solid rgba(255,255,255,0.08)',
-        padding:'0 40px', height:56, display:'flex', alignItems:'center',
-        justifyContent:'space-between' }}>
-        <Link href="/" style={{ textDecoration:'none', display:'flex', alignItems:'center', gap:10 }}>
+      <div style={{ background: NAVY, borderBottom: '1px solid rgba(255,255,255,0.08)',
+        padding: '0 24px', height: 56, display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between' }}>
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
           <VLogoMark size={28} />
           <VeSiMyWordmark size={16} onDark />
         </Link>
-        <Link href="/" style={{ fontSize:13, color:'rgba(255,255,255,0.5)', textDecoration:'none' }}>
-          ← Back to home
+        <Link href="/" style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>
+          Back to home
         </Link>
       </div>
 
-      <div style={{ maxWidth:860, margin:'0 auto', padding:'64px 40px' }}>
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '52px 24px 80px' }}>
+
         {/* Header */}
-        <div style={{ marginBottom:52 }}>
-          <div style={{ fontSize:11, fontWeight:700, color:AMBER, letterSpacing:1.5,
-            textTransform:'uppercase', fontFamily:MONO, marginBottom:12 }}>
-            CONTACT
+        <div style={{ marginBottom: 36 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: AMBER, letterSpacing: 1.5,
+            textTransform: 'uppercase', fontFamily: MONO, marginBottom: 10 }}>
+            Get in Touch
           </div>
-          <h1 style={{ fontSize:42, fontWeight:800, color:NAVY, letterSpacing:-0.8,
-            lineHeight:1.1, margin:'0 0 16px', fontFamily:SANS }}>
-            Get in touch
-          </h1>
-          <p style={{ fontSize:16, color:'#5A6480', lineHeight:1.7, maxWidth:520, margin:0 }}>
-            Questions about VeSiMy? Want to discuss an enterprise plan? Interested in
-            partnering on Lean training? We read every message.
+          <h1 style={{ fontSize: 34, fontWeight: 800, color: NAVY, letterSpacing: -0.6,
+            marginBottom: 12, fontFamily: SANS }}>Contact VeSiMy</h1>
+          <p style={{ fontSize: 15, color: GRAY, lineHeight: 1.7, margin: 0, fontFamily: SANS }}>
+            Questions about the platform, consulting services, enterprise plans, or partnerships.
+            Max Singh (founder) reads every message personally.
           </p>
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32,
-          alignItems:'start' }}>
-          {/* Left: contact options */}
-          <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
-            {[
-              {
-                title:'General questions',
-                desc:'Product, pricing, how it works, which plan is right for you.',
-                action:'max@vesimy.com',
-                href:'mailto:max@vesimy.com',
-                label:'Send an email',
-              },
-              {
-                title:'Enterprise & consulting',
-                desc:'Team plans, white-label, API access, custom integrations, or consultant partnerships.',
-                action:'max@vesimy.com',
-                href:'mailto:max@vesimy.com?subject=Enterprise inquiry',
-                label:'Discuss enterprise',
-              },
-              {
-                title:'Feature requests & feedback',
-                desc:'Found something broken, or have an idea for a feature? Tell us directly.',
-                action:'max@vesimy.com',
-                href:'mailto:max@vesimy.com?subject=Feedback',
-                label:'Send feedback',
-              },
-            ].map(item => (
-              <div key={item.title} style={{ padding:'22px 24px', background:'#fff',
-                borderRadius:12, border:'1px solid #E2E8F0',
-                boxShadow:'0 1px 4px rgba(4,17,31,0.05)' }}>
-                <div style={{ fontSize:15, fontWeight:700, color:NAVY, marginBottom:6 }}>
-                  {item.title}
-                </div>
-                <p style={{ fontSize:13, color:'#5A6480', lineHeight:1.6, marginBottom:14, margin:'0 0 14px' }}>
-                  {item.desc}
-                </p>
-                <a href={item.href} style={{ display:'inline-flex', alignItems:'center', gap:6,
-                  fontSize:13, fontWeight:600, color:AMBER, textDecoration:'none' }}>
-                  {item.label} →
-                </a>
-              </div>
-            ))}
+        {sent ? (
+          <div style={{ padding: '32px 28px', background: '#fff', borderRadius: 12,
+            border: '1px solid rgba(22,128,60,0.20)', textAlign: 'center' }}>
+            <div style={{ fontSize: 28, marginBottom: 12 }}>✓</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: '#16803C', marginBottom: 8, fontFamily: SANS }}>
+              Message received
+            </div>
+            <p style={{ fontSize: 14, color: GRAY, lineHeight: 1.6, maxWidth: 360,
+              marginInline: 'auto', fontFamily: SANS }}>
+              Thanks for reaching out. You will hear back within 1 to 2 business days.
+              For faster responses, connect on{' '}
+              <a href="https://www.linkedin.com/in/max-singh" target="_blank" rel="noopener noreferrer"
+                style={{ color: AMBER, fontWeight: 600 }}>LinkedIn</a>.
+            </p>
+            <button onClick={() => setSent(false)}
+              style={{ marginTop: 20, padding: '9px 20px', borderRadius: 8, fontSize: 13,
+                fontWeight: 600, cursor: 'pointer', background: '#F5F7FA',
+                border: `1px solid ${BORD}`, color: NAVY, fontFamily: SANS }}>
+              Send another message
+            </button>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit}
+            style={{ background: '#fff', borderRadius: 12, border: `1px solid ${BORD}`,
+              padding: '28px', boxShadow: '0 2px 8px rgba(4,17,31,0.06)' }}>
 
-          {/* Right: quick info */}
-          <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
-            <div style={{ padding:'28px', background:NAVY, borderRadius:12,
-              border:`1px solid rgba(212,168,67,0.18)` }}>
-              <div style={{ fontSize:11, fontWeight:700, color:AMBER, letterSpacing:1.5,
-                textTransform:'uppercase', fontFamily:MONO, marginBottom:16 }}>
-                ABOUT VESIMY
+            {/* Name + Email */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: GRAY,
+                  letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 6, fontFamily: SANS }}>
+                  Your name *
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Jane Smith"
+                  required
+                  style={{ width: '100%', padding: '9px 12px', borderRadius: 8, fontSize: 14,
+                    border: `1px solid ${BORD}`, fontFamily: SANS, color: NAVY,
+                    outline: 'none', boxSizing: 'border-box' }}
+                />
               </div>
-              <p style={{ fontSize:14, color:'rgba(240,242,255,0.75)', lineHeight:1.7, margin:'0 0 16px' }}>
-                VeSiMy is a solo-founder product built by Max Singh — a Lean Six Sigma
-                Green Belt with 12+ years in manufacturing and operations. Every feature
-                comes from real process improvement work on the floor.
-              </p>
-              <p style={{ fontSize:14, color:'rgba(240,242,255,0.75)', lineHeight:1.7, margin:0 }}>
-                Based in California. Built for operations teams everywhere.
-              </p>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: GRAY,
+                  letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 6, fontFamily: SANS }}>
+                  Email address *
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="jane@company.com"
+                  required
+                  style={{ width: '100%', padding: '9px 12px', borderRadius: 8, fontSize: 14,
+                    border: `1px solid ${BORD}`, fontFamily: SANS, color: NAVY,
+                    outline: 'none', boxSizing: 'border-box' }}
+                />
+              </div>
             </div>
 
-            <div style={{ padding:'22px 24px', background:'rgba(212,168,67,0.06)',
-              borderRadius:12, border:`1px solid rgba(212,168,67,0.20)` }}>
-              <div style={{ fontSize:13, fontWeight:700, color:NAVY, marginBottom:10 }}>
-                Response time
-              </div>
-              <p style={{ fontSize:13, color:'#5A6480', lineHeight:1.6, margin:0 }}>
-                Usually within 24 hours on business days. If you are a current Pro user,
-                your email will be prioritized.
-              </p>
+            {/* Topic */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: GRAY,
+                letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 6, fontFamily: SANS }}>
+                Topic
+              </label>
+              <select
+                value={topic}
+                onChange={e => setTopic(e.target.value)}
+                style={{ width: '100%', padding: '9px 12px', borderRadius: 8, fontSize: 14,
+                  border: `1px solid ${BORD}`, fontFamily: SANS, color: NAVY,
+                  outline: 'none', background: '#fff', appearance: 'none',
+                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A6480' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",
+                  backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center',
+                  paddingRight: 36, cursor: 'pointer' }}>
+                {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
             </div>
 
-            <div style={{ padding:'22px 24px', background:'#fff', borderRadius:12,
-              border:'1px solid #E2E8F0' }}>
-              <div style={{ fontSize:13, fontWeight:700, color:NAVY, marginBottom:10 }}>
-                Already a user?
+            {/* Message */}
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: GRAY,
+                letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 6, fontFamily: SANS }}>
+                Message *
+              </label>
+              <textarea
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                placeholder="Tell me about your process, your team size, what you are trying to improve, or anything else relevant."
+                required
+                rows={6}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, fontSize: 14,
+                  border: `1px solid ${BORD}`, fontFamily: SANS, color: NAVY,
+                  outline: 'none', resize: 'vertical', lineHeight: 1.6,
+                  boxSizing: 'border-box' }}
+              />
+              <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4, fontFamily: SANS }}>
+                {message.length} / 2000 characters
               </div>
-              <p style={{ fontSize:13, color:'#5A6480', lineHeight:1.6, margin:'0 0 14px' }}>
-                Log in to access the Learning Center, or use the Supe AI feedback panel
-                inside any project.
-              </p>
-              <Link href="/dashboard" style={{ display:'inline-flex', alignItems:'center', gap:6,
-                fontSize:13, fontWeight:600, color:AMBER, textDecoration:'none' }}>
-                Go to dashboard →
-              </Link>
             </div>
+
+            {error && (
+              <div style={{ padding: '10px 14px', background: 'rgba(192,24,12,0.06)',
+                border: '1px solid rgba(192,24,12,0.20)', borderRadius: 8,
+                fontSize: 13, color: '#C0180C', marginBottom: 16, fontFamily: SANS }}>
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 14,
+                fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                background: loading ? '#B8912E' : 'linear-gradient(135deg,#D4A843,#B8912E)',
+                color: '#1A0E00', border: 'none', fontFamily: SANS,
+                opacity: loading ? 0.75 : 1, transition: 'opacity 0.15s' }}>
+              {loading ? 'Sending...' : 'Send message'}
+            </button>
+
+            <p style={{ fontSize: 12, color: '#94A3B8', textAlign: 'center',
+              marginTop: 14, fontFamily: SANS }}>
+              Your message goes directly to Max Singh. No support bots, no ticket queues.
+            </p>
+          </form>
+        )}
+
+        {/* Alternative contact */}
+        <div style={{ marginTop: 32, padding: '20px 24px', background: '#fff',
+          borderRadius: 10, border: `1px solid ${BORD}` }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: GRAY, letterSpacing: 1,
+            textTransform: 'uppercase', fontFamily: MONO, marginBottom: 12 }}>
+            Other ways to reach us
+          </div>
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+            <a href="mailto:max@vesimy.com"
+              style={{ fontSize: 13, color: AMBER, fontWeight: 600,
+                textDecoration: 'none', fontFamily: SANS }}>
+              max@vesimy.com
+            </a>
+            <a href="https://www.linkedin.com/in/max-singh"
+              target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: 13, color: AMBER, fontWeight: 600,
+                textDecoration: 'none', fontFamily: SANS }}>
+              LinkedIn
+            </a>
+            <a href="https://vesimy.com"
+              style={{ fontSize: 13, color: AMBER, fontWeight: 600,
+                textDecoration: 'none', fontFamily: SANS }}>
+              vesimy.com
+            </a>
           </div>
         </div>
       </div>

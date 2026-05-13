@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Takt Time Calculator: Formula, Examples & Free Tool 2026 — VeSiMy',
+  title: 'Takt Time Calculator: Formula, Examples & Free Tool 2026, VeSiMy',
   description: 'Takt time is the heartbeat of lean manufacturing. Learn the formula, see real calculation examples, and use our free takt time calculator to set your production pace in minutes.',
   keywords: ['takt time calculator', 'takt time formula', 'what is takt time', 'takt time vs cycle time', 'lean manufacturing takt time', 'takt time examples'],
   openGraph: {
@@ -32,7 +32,7 @@ export default function TaktTimePost() {
             Takt Time Calculator: Formula, Examples, and What to Do With the Number
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8 }}>
-            Takt time is the heartbeat of lean manufacturing — the maximum time you have to complete one unit to meet customer demand. Here's the formula, real examples, and exactly how to use it.
+            Takt time is the heartbeat of lean manufacturing, the maximum time you have to complete one unit to meet customer demand. Here's the formula, real examples, and exactly how to use it.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function TaktTimePost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>What is takt time?</h2>
           <p style={{ marginBottom: 18 }}>
-            Takt time is the rate at which you need to complete products to satisfy customer demand — no faster, no slower. The word "takt" comes from the German word for a conductor's baton: it sets the rhythm the whole orchestra plays to.
+            Takt time is the rate at which you need to complete products to satisfy customer demand, no faster, no slower. The word "takt" comes from the German word for a conductor's baton: it sets the rhythm the whole orchestra plays to.
           </p>
           <p style={{ marginBottom: 18 }}>
             In lean manufacturing, takt time is the single number that tells you whether your production process is in balance with your customer. If your cycle time is faster than takt, you're overproducing. If it's slower, you're falling behind.
@@ -53,7 +53,7 @@ export default function TaktTimePost() {
               Takt Time = Available Production Time ÷ Customer Demand
             </div>
             <div style={{ fontSize: 13, color: 'var(--text2)' }}>
-              Result is in seconds, minutes, or hours per unit — whichever unit you use for time
+              Result is in seconds, minutes, or hours per unit, whichever unit you use for time
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export default function TaktTimePost() {
           {[
             {
               step: '1. Find your available production time',
-              body: 'This is the time your process is actually available to produce — not calendar time. Subtract all planned stops: breaks, lunches, shift changeovers, planned maintenance. Do NOT subtract unplanned downtime — that\'s a problem to fix, not a planning assumption.',
+              body: 'This is the time your process is actually available to produce, not calendar time. Subtract all planned stops: breaks, lunches, shift changeovers, planned maintenance. Do NOT subtract unplanned downtime, that\'s a problem to fix, not a planning assumption.',
               example: 'Example: 8-hour shift = 480 min. Subtract 2 × 10-min breaks and 1 × 30-min lunch = 430 minutes available.',
             },
             {
@@ -72,7 +72,7 @@ export default function TaktTimePost() {
             },
             {
               step: '3. Divide',
-              body: 'Available time divided by demand gives you takt time. Convert to seconds if helpful — it\'s easier to compare to cycle times in seconds.',
+              body: 'Available time divided by demand gives you takt time. Convert to seconds if helpful, it\'s easier to compare to cycle times in seconds.',
               example: '430 min ÷ 86 units = 5.0 minutes per unit (or 300 seconds per unit)',
             },
           ].map(({ step, body, example }, i) => (
@@ -103,7 +103,7 @@ export default function TaktTimePost() {
               note: 'Every 3 minutes, one sub-assembly must leave this line to keep pace with the main assembly line downstream.',
             },
             {
-              title: 'Food packaging — single SKU',
+              title: 'Food packaging, single SKU',
               available: '660 min/day (2 shifts, minus all breaks)',
               demand: '1,100 cases/day',
               takt: '0.6 min (36 sec)',
@@ -145,9 +145,9 @@ export default function TaktTimePost() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Takt time vs cycle time vs lead time</h2>
           <p style={{ marginBottom: 16 }}>These three numbers are often confused but they measure completely different things:</p>
           {[
-            ['Takt Time', 'The pace customer demand requires', 'External — set by the customer'],
-            ['Cycle Time', 'How long your process actually takes', 'Internal — set by your process'],
-            ['Lead Time', 'Total time from order to delivery', 'Internal — includes all waiting'],
+            ['Takt Time', 'The pace customer demand requires', 'External, set by the customer'],
+            ['Cycle Time', 'How long your process actually takes', 'Internal, set by your process'],
+            ['Lead Time', 'Total time from order to delivery', 'Internal, includes all waiting'],
           ].map(([term, def, note]) => (
             <div key={term} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 1fr', gap: 12, marginBottom: 10, alignItems: 'center', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '12px 16px', fontSize: 13 }}>
               <span style={{ fontWeight: 700, color: '#0176D3' }}>{term}</span>
@@ -183,7 +183,7 @@ export default function TaktTimePost() {
               See takt time live on your VSM
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
-              VeSiMy calculates takt time automatically from your project settings and displays it on your value stream map alongside cycle time — so you can instantly see which steps are bottlenecks. Free to start — no credit card.
+              VeSiMy calculates takt time automatically from your project settings and displays it on your value stream map alongside cycle time, so you can instantly see which steps are bottlenecks. Free to start, no credit card.
             </p>
             <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#0FA876,#1DD1A1)', color: 'var(--bg)', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Calculate takt time on your VSM →

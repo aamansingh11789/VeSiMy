@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 export const metadata: Metadata = {
-  title: 'Documentation — VeSiMy',
+  title: 'Documentation, VeSiMy',
   description: 'How to use VeSiMy. Step-by-step guides for Value Stream Mapping, CI tools, AI analysis, and process improvement.',
 }
 
@@ -22,7 +22,7 @@ const SECTIONS = [
       { title:'Create your first project',  desc:'Set up a project, choose your industry, and enter project settings.', href:'/learn' },
       { title:'Add process steps',          desc:'Build your current state value stream by adding steps with cycle times.', href:'/learn' },
       { title:'Understanding takt time',    desc:'How to calculate customer demand and set your takt time target.', href:'/learn' },
-      { title:'What is PCE?',               desc:'Process Cycle Efficiency explained — how to interpret it for your process.', href:'/lean-glossary' },
+      { title:'What is PCE?',               desc:'Process Cycle Efficiency explained, how to interpret it for your process.', href:'/lean-glossary' },
     ],
   },
   {
@@ -54,7 +54,7 @@ const SECTIONS = [
       { title:'What Supe analyses',         desc:'How Supe reads your VSM data and what it looks for.', href:'/learn' },
       { title:'Understanding AI output',    desc:'How to interpret bottleneck identification, waste flags, and suggestions.', href:'/learn' },
       { title:'Target State generation',   desc:'How the AI creates a future state plan from your process data.', href:'/learn' },
-      { title:'AI limitations',             desc:'What Supe cannot do — and why that matters.', href:'/learn' },
+      { title:'AI limitations',             desc:'What Supe cannot do, and why that matters.', href:'/learn' },
     ],
   },
   {
@@ -125,7 +125,7 @@ export default function DocsPage() {
               New to VeSiMy?
             </div>
             <div style={{ fontSize:13, color:'rgba(240,242,255,0.60)' }}>
-              Start with the Learning Center — it walks you through your first value stream map interactively.
+              Start with the Learning Center, it walks you through your first value stream map interactively.
             </div>
           </div>
           <Link href="/learn" style={{ display:'inline-flex', alignItems:'center', gap:6,
@@ -169,7 +169,7 @@ export default function DocsPage() {
         <div style={{ marginTop:48, padding:'20px 24px', background:'rgba(212,168,67,0.06)',
           borderRadius:10, border:`1px solid rgba(212,168,67,0.16)`, textAlign:'center' }}>
           <p style={{ fontSize:13, color:'#5A4800', margin:0, lineHeight:1.6 }}>
-            Documentation is written by the same person who built VeSiMy — Max Singh, Lean Six Sigma Green Belt,
+            Documentation is written by the same person who built VeSiMy, Max Singh, Lean Six Sigma Green Belt,
             12+ years in manufacturing and operations.{' '}
             <Link href="/contact" style={{ color:AMBER, textDecoration:'none', fontWeight:600 }}>
               Missing something? Tell us.
