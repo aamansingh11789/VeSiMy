@@ -24,6 +24,7 @@ import { getIndustryReferenceNames } from '@/lib/industry-reference-map'
 import Link from 'next/link'
 import { BetaBanner } from '@/components/beta/BetaBanner'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { ActivationChecklist } from '@/components/dashboard/ActivationChecklist'
 
 interface Props {
   profile: Profile
@@ -990,6 +991,9 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           </div>
         )}
 
+        {/* Activation Checklist */}
+        <ActivationChecklist projects={projects as any} />
+
         {/* Projects */}
         {projects.length === 0 ? (
           <div
@@ -1046,7 +1050,21 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
             <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
               <button onClick={() => setShowNew(true)} className="btn-primary" style={{ gap: 8 }}>
-                <PlusIcon size={15} /> Create First Project
+                <PlusIcon size={15} /> Create from scratch
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await fetch('/api/projects/seed-industry-reference', { method: 'POST' })
+                    window.location.reload()
+                  } catch {
+                    toast.error('Could not load sample project')
+                  }
+                }}
+                className="btn-secondary"
+                style={{ gap: 8 }}
+              >
+                Try a sample for my industry
               </button>
 
               <Link href="/learn" style={{ textDecoration: 'none' }} className="btn-ghost">
