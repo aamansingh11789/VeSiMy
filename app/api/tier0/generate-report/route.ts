@@ -1,6 +1,6 @@
 // TypeScript enabled
 // ── app/api/tier0/generate-report/route.ts ────────────────────────────────
-// Tier 0 — no-account free process mapping report
+// Tier 0, no-account free process mapping report
 // POST /api/tier0/generate-report
 // Rate limit: 1 report per email per 24 hours
 // Stores session in tier0_sessions, emails report via Sender API
@@ -110,13 +110,13 @@ ${painNote}
 Return ONLY valid JSON with this exact structure:
 {
   "summary": "2-3 sentence plain-language summary of what this process does and where the waste is",
-  "totalTimeSeconds": <number — sum of all step times, or estimated if not provided>,
-  "vaTimeSeconds": <number — estimated value-added seconds>,
-  "nvaTimeSeconds": <number — estimated non-value-added seconds>,
-  "pcePct": <number — process cycle efficiency as a percentage, e.g. 18.4>,
+  "totalTimeSeconds": <number, sum of all step times, or estimated if not provided>,
+  "vaTimeSeconds": <number, estimated value-added seconds>,
+  "nvaTimeSeconds": <number, estimated non-value-added seconds>,
+  "pcePct": <number, process cycle efficiency as a percentage, e.g. 18.4>,
   "wasteType": "<one of: Waiting | Overprocessing | Motion | Transport | Defects | Overproduction | Inventory | Underutilized talent>",
   "wasteExplanation": "1-2 sentences explaining where this waste type is most visible in this specific process",
-  "bottleneckStep": "<name of the step most likely constraining flow — must match a step name above>",
+  "bottleneckStep": "<name of the step most likely constraining flow, must match a step name above>",
   "firstAction": "One specific, concrete action the team can take this week. Not generic advice. Make it actionable for this specific process and industry.",
   "leanConcept": "<one lean concept most relevant to this process: e.g. Takt Time, 5S, SMED, Kanban, Poka-yoke, Standard Work, PDCA, 5 Whys>",
   "leanConceptExplanation": "1 sentence explaining why this concept applies to this specific process"
@@ -150,7 +150,7 @@ function buildFallbackReport(data: Tier0Request): ReportOutput {
     bottleneckStep:       data.steps[data.painStep ?? Math.floor(totalSteps / 2)]?.label ?? data.steps[0]?.label ?? 'Middle step',
     firstAction:          `Time each step individually using a stopwatch and record the actual wait time between steps. The ratio of wait time to active time will show you exactly where to focus.`,
     leanConcept:          'Process Cycle Efficiency',
-    leanConceptExplanation: `PCE measures how much of your total lead time is actually value-adding — in ${data.industry}, world-class is typically 15–30%.`,
+    leanConceptExplanation: `PCE measures how much of your total lead time is actually value-adding, in ${data.industry}, world-class is typically 15–30%.`,
   }
 }
 
@@ -165,7 +165,7 @@ async function sendReportEmail(
 ): Promise<void> {
   const apiKey = process.env.SENDER_API_KEY
   if (!apiKey) {
-    console.warn('[tier0/email] SENDER_API_KEY not set — skipping email')
+    console.warn('[tier0/email] SENDER_API_KEY not set, skipping email')
     return
   }
 
@@ -239,7 +239,7 @@ async function sendReportEmail(
 
     <div style="background:#F8F8F8;border-top:1px solid #E5E5E5;padding:20px 32px">
       <p style="color:#706E6B;font-size:13px;line-height:1.6;margin:0">
-        Max Singh, Founder — VeSiMy<br>
+        Max Singh, Founder, VeSiMy<br>
         LSS Green Belt · 12+ years manufacturing operations · ex-Tesla<br>
         <a href="mailto:founder@vesimy.com" style="color:#0176D3">founder@vesimy.com</a>
       </p>
@@ -419,7 +419,7 @@ export async function POST(request: NextRequest) {
         report = buildFallbackReport(body)
       }
     } else {
-      console.warn('[tier0/ai] ANTHROPIC_API_KEY not set — using fallback report')
+      console.warn('[tier0/ai] ANTHROPIC_API_KEY not set, using fallback report')
       report = buildFallbackReport(body)
     }
 
@@ -429,11 +429,11 @@ export async function POST(request: NextRequest) {
       sessionId = await storeSession(body, report, ipHash)
     } catch (dbErr) {
       console.error('[tier0/store] Failed:', dbErr)
-      // Still return the report — don't fail the user because of a DB issue
+      // Still return the report, don't fail the user because of a DB issue
       sessionId = 'unknown'
     }
 
-    // Send email (non-blocking — don't fail the request if email fails)
+    // Send email (non-blocking, don't fail the request if email fails)
     sendReportEmail(body.email, body.firstName, body.processName, report, sessionId)
       .catch(err => console.error('[tier0/email] Background send error:', err))
 

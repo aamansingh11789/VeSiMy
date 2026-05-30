@@ -25,8 +25,8 @@ export default function FishboneDiagramPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#6426A0', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>7 min read · March 19, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#6426A0', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>7 min read · March 19, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause

@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/industry-language.ts ──────────────────────────────────────────────────
 // Industry-specific terminology mapping for VeSiMy.
 // Every lean term is translated to the native language of each industry.
@@ -696,7 +696,7 @@ export const INDUSTRY_LANGUAGE: Record<string, IndustryTerms> = {
   // ── CUSTOM / FALLBACK ─────────────────────────────────────────────────────────
   'custom':  MFG_DEFAULT,
   'other':   MFG_DEFAULT,
-  // ── MISSING INDUSTRIES — from VeSiMy Universal Industry Mapping ───────────
+  // ── MISSING INDUSTRIES, from VeSiMy Universal Industry Mapping ───────────
 
   'medical_device_manufacturing': {
     ...MFG_DEFAULT,

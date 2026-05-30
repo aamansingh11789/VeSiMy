@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/supabase.ts ────────────────────────────────────────────────────────
-// Client-side Supabase only — safe to import anywhere including Client Components
+// Client-side Supabase only, safe to import anywhere including Client Components
 // Server-side client is in lib/supabase-server.ts
 
 import { createBrowserClient } from '@supabase/ssr'

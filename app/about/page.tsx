@@ -26,7 +26,7 @@ export default function AboutPage() {
 
         {/* Header */}
         <div style={{ marginBottom: 64 }}>
-          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
             Our Story
           </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(36px,5vw,60px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.1 }}>
@@ -40,7 +40,7 @@ export default function AboutPage() {
 
         {/* Mission */}
         <div style={{ background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
-          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
+          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.45 }}>
             "Make every team, manufacturer, clinic, law firm, or warehouse, as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
           </p>
@@ -72,7 +72,7 @@ export default function AboutPage() {
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(212,168,67,0.4),rgba(184,145,46,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'Palatino Linotype,serif' }}>M</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#D4A843', marginBottom: 12, fontFamily: 'monospace', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
+              <div style={{ fontSize: 13, color: '#D4A843', marginBottom: 12, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
                 Building VeSiMy from the ground up. Product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every operations team in the world.
               </p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
             { label: 'Users', value: 'Growing daily' },
           ].map(({ label, value }) => (
             <div key={label} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '20px 22px' }}>
-              <div style={{ fontSize: 11, color: 'var(--sl-400)', letterSpacing: 2, fontFamily: 'monospace', marginBottom: 8, textTransform: 'uppercase' }}>{label}</div>
+              <div style={{ fontSize: 11, color: 'var(--sl-400)', letterSpacing: 2, fontFamily: 'var(--font-mono)', marginBottom: 8, textTransform: 'uppercase' }}>{label}</div>
               <div style={{ fontSize: 17, fontWeight: 700, color: '#D4A843' }}>{value}</div>
             </div>
           ))}

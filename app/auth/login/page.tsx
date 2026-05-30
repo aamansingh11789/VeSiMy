@@ -17,9 +17,9 @@ function LoginForm() {
   const authError    = searchParams.get('error')
   const errorMessages: Record<string, string> = {
     oauth_denied:    'Google sign-in was cancelled. Please try again.',
-    exchange_failed: 'Sign-in failed. The link may have expired — please try again.',
-    no_user:         'Could not retrieve your account. Please try again.',
-    unexpected:      'Something went wrong. Please try again or use email sign-in.',
+    exchange_failed: 'Sign-in link may have expired. Please request a new one.',
+    no_user:         'Could not find your account. Please try signing up.',
+    unexpected:      'Something went wrong. Please try again.',
   }
   const authErrorMsg = authError ? (errorMessages[authError] || 'Sign-in failed. Please try again.') : null
   const supabase     = createClient()
@@ -33,7 +33,7 @@ function LoginForm() {
   async function handleGoogleLogin() {
     setLoading(true)
     // Store intended destination so callback can redirect correctly
-    // We cannot pass ?next= as a query param — Supabase rejects URLs
+    // We cannot pass ?next= as a query param, Supabase rejects URLs
     // that don't exactly match the allowlist (no wildcard query params)
     if (typeof window !== 'undefined' && redirect !== '/dashboard') {
       sessionStorage.setItem('auth_redirect', redirect)
@@ -60,12 +60,14 @@ function LoginForm() {
         if (data?.session) {
           window.location.href = '/onboarding'
         } else {
-          toast.success('Check your email — click the link to confirm your account', { duration: 8000 })
+          toast.success('Account created! Check your email and click the confirmation link to sign in.', { duration: 10000 })
+        setMode('login')
+        setEmail(email)  // Pre-fill email so user can sign in once confirmed
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        // Full page reload required — router.push() is client-side nav and the
+        // Full page reload required, router.push() is client-side nav and the
         // server component at /dashboard reads cookies from the HTTP request.
         // If we don't reload, the server sees no session and kicks user back to login.
         const { data: { user } } = await supabase.auth.getUser()
@@ -79,7 +81,14 @@ function LoginForm() {
         window.location.href = redirect
       }
     } catch (err: any) {
-      toast.error(err.message || 'Authentication failed')
+      const msg = err.message || 'Authentication failed'
+      if (msg.toLowerCase().includes('email not confirmed') || msg.toLowerCase().includes('not confirmed')) {
+        toast.error('Please confirm your email first. Check your inbox for the confirmation link.', { duration: 8000 })
+      } else if (msg.toLowerCase().includes('invalid login credentials')) {
+        toast.error('Incorrect email or password. Please try again.')
+      } else {
+        toast.error(msg)
+      }
     } finally {
       setLoading(false)
     }
@@ -155,9 +164,16 @@ function LoginForm() {
           </form>
 
           {mode === 'login' && (
-            <p className="text-center mt-4 text-xs" style={{ color: 'var(--sl-400)' }}>
-              <Link href="/auth/reset" className="hover:text-[var(--brand)] transition-colors">Forgot password?</Link>
-            </p>
+            <div className="text-center mt-4 space-y-1">
+              <p className="text-xs" style={{ color: 'var(--sl-400)' }}>
+                <Link href="/auth/reset" className="hover:text-[var(--brand)] transition-colors">Forgot password?</Link>
+              </p>
+              {authErrorMsg?.includes('Email not confirmed') && (
+                <p className="text-xs" style={{ color: 'var(--amber)', background: 'rgba(212,168,67,0.08)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(212,168,67,0.20)' }}>
+                  Check your inbox and click the confirmation link first, then sign in here.
+                </p>
+              )}
+            </div>
           )}
         </div>
 

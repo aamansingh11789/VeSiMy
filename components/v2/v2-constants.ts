@@ -1,6 +1,6 @@
 // TypeScript enabled
 // ── components/v2/v2-constants.ts ─────────────────────────────────────────────
-// v4.0 — Added OODA, 8D, and DMAIC to CI tools
+// v4.0, Added OODA, 8D, and DMAIC to CI tools
 
 export const BRAND  = '#D4A843'
 export const NAVY   = '#2A1800'
@@ -35,9 +35,9 @@ export const CI_TOOLS = [
   { id: 'improvement', label: 'Improvement Goal',       icon: '🎯', desc: 'Set baseline and target for a metric' },
   { id: 'smed',        label: 'SMED (Changeover)',      icon: '🔄', desc: 'Reduce setup / changeover time' },
   // v4.0 new tools
-  { id: 'ooda',        label: 'OODA Loop',              icon: '🔁', desc: 'Fast operational decisions — Observe Orient Decide Act' },
+  { id: 'ooda',        label: 'OODA Loop',              icon: '🔁', desc: 'Fast operational decisions, Observe Orient Decide Act' },
   { id: 'eightd',      label: '8D Report',              icon: '📋', desc: 'Team-based structured response to quality escapes' },
-  { id: 'dmaic',       label: 'DMAIC',                  icon: '📊', desc: 'Six Sigma data-driven problem solving — 5 phases' },
+  { id: 'dmaic',       label: 'DMAIC',                  icon: '📊', desc: 'Six Sigma data-driven problem solving, 5 phases' },
 ]
 
 export const STEP_TYPES = [
@@ -52,9 +52,9 @@ export const STEP_TYPES = [
 ]
 
 export const VA_OPTIONS = [
-  { id: 'va',           label: 'Value-Add',               color: GREEN, desc: 'Customer pays for this — transforms the product/service' },
-  { id: 'nnva',         label: 'Necessary Non-Value-Add',  color: AMBER, desc: 'Required but adds no customer value — minimise' },
-  { id: 'nva',          label: 'Non-Value-Add (Waste)',    color: RED,   desc: 'Pure waste — target for elimination' },
+  { id: 'va',           label: 'Value-Add',               color: GREEN, desc: 'Customer pays for this, transforms the product/service' },
+  { id: 'nnva',         label: 'Necessary Non-Value-Add',  color: AMBER, desc: 'Required but adds no customer value, minimise' },
+  { id: 'nva',          label: 'Non-Value-Add (Waste)',    color: RED,   desc: 'Pure waste, target for elimination' },
   { id: 'unclassified', label: 'Not yet classified',       color: '#aaa', desc: '' },
 ]
 

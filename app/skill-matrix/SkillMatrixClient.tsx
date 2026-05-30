@@ -152,10 +152,10 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
         <div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
             {[
-              { label: 'Avg CT laps per step',    value: skillData?.ct_consistency_score ? `${Math.round(skillData.ct_consistency_score)}%` : '—', sub: '% steps with 3+ laps',    icon: '⏱' },
-              { label: 'Steps mapped total',       value: skillData?.total_steps_mapped ?? '—',                                                   sub: 'across all projects',       icon: '📋' },
-              { label: 'Avg efficiency improvement', value: skillData?.avg_efficiency_improvement ? `+${skillData.avg_efficiency_improvement.toFixed(1)}%` : '—', sub: 'PCE gain per project', icon: '📈' },
-              { label: 'Lead time reduction',      value: skillData?.avg_lead_time_reduction ? `${skillData.avg_lead_time_reduction.toFixed(0)}%` : '—', sub: 'average across projects', icon: '⚡' },
+              { label: 'Avg CT laps per step',    value: skillData?.ct_consistency_score ? `${Math.round(skillData.ct_consistency_score)}%` : ',', sub: '% steps with 3+ laps',    icon: '⏱' },
+              { label: 'Steps mapped total',       value: skillData?.total_steps_mapped ?? ',',                                                   sub: 'across all projects',       icon: '📋' },
+              { label: 'Avg efficiency improvement', value: skillData?.avg_efficiency_improvement ? `+${skillData.avg_efficiency_improvement.toFixed(1)}%` : ',', sub: 'PCE gain per project', icon: '📈' },
+              { label: 'Lead time reduction',      value: skillData?.avg_lead_time_reduction ? `${skillData.avg_lead_time_reduction.toFixed(0)}%` : ',', sub: 'average across projects', icon: '⚡' },
             ].map(m => (
               <div key={m.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '18px 20px', textAlign: 'center' }}>
                 <div style={{ fontSize: 24, marginBottom: 8 }}>{m.icon}</div>
@@ -206,7 +206,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
               </div>
               <div style={{ background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 10, padding: '12px 16px' }}>
                 <p style={{ color: 'var(--text3)', fontSize: 12, lineHeight: 1.65, margin: 0 }}>
-                  Coaching notes are generated at project completion. They are based entirely on your project data — mapping speed, data quality, and tool usage. They are constructive prompts, not performance evaluations.
+                  Coaching notes are generated at project completion. They are based entirely on your project data, mapping speed, data quality, and tool usage. They are constructive prompts, not performance evaluations.
                 </p>
               </div>
             </div>

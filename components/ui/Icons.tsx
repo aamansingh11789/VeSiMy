@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/ui/Icons.tsx ─────────────────────────────────────────────────
-// VeSiMy Icon System — Professional 3D Greyscale
+// VeSiMy Icon System, Professional 3D Greyscale
 // Every icon uses a unique gradient-ID counter to prevent SVG conflicts.
 // UI icons: clean 1.6px stroke-based. CI icons: 3D volume with shadow/highlight.
 
@@ -43,7 +43,7 @@ const V = ({ size=20, style, className, children }:any) => {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// UI / NAV ICONS — clean stroke
+// UI / NAV ICONS, clean stroke
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type React from 'react'
@@ -94,11 +94,11 @@ export const PCEIcon          = (p:P) => <L {...p}><path d="M3 12a9 9 0 1 0 9-9"
 export const SupermarketIcon  = (p:P) => <L {...p}><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="10" x2="9" y2="20"/><line x1="15" y1="10" x2="15" y2="20"/></L>
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CI TOOL ICONS — volumetric 3D greyscale
-// Shapes are abstract/geometric — NOT literal representations of the tool name.
+// CI TOOL ICONS, volumetric 3D greyscale
+// Shapes are abstract/geometric, NOT literal representations of the tool name.
 // ══════════════════════════════════════════════════════════════════════════════
 
-// VSM — three connected data blocks (process flow abstraction)
+// VSM, three connected data blocks (process flow abstraction)
 export const VSMIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -119,7 +119,7 @@ export const VSMIcon = (p:P) => (
   </V>
 )
 
-// Time Study — precision stopwatch face (abstract circular with hands)
+// Time Study, precision stopwatch face (abstract circular with hands)
 export const StopwatchIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -138,7 +138,7 @@ export const StopwatchIcon = (p:P) => (
   </V>
 )
 
-// Kaizen — upward momentum: stacked ascending blocks (continuous improvement abstraction)
+// Kaizen, upward momentum: stacked ascending blocks (continuous improvement abstraction)
 export const KaizenIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,c,s}:any) => (<>
@@ -157,7 +157,7 @@ export const KaizenIcon = (p:P) => (
   </V>
 )
 
-// Fishbone / Root Cause — branching tree structure (abstract cause-effect)
+// Fishbone / Root Cause, branching tree structure (abstract cause-effect)
 export const FishboneIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,c,s}:any) => (<>
@@ -179,7 +179,7 @@ export const FishboneIcon = (p:P) => (
   </V>
 )
 
-// 5 Why — descending depth chain (drilling down abstraction)
+// 5 Why, descending depth chain (drilling down abstraction)
 export const FiveWhyIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -200,7 +200,7 @@ export const FiveWhyIcon = (p:P) => (
   </V>
 )
 
-// Waste ID — blocked path with elimination mark (waste removal abstraction)
+// Waste ID, blocked path with elimination mark (waste removal abstraction)
 export const WasteIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,c,s}:any) => (<>
@@ -218,9 +218,9 @@ export const WasteIcon = (p:P) => (
   </V>
 )
 
-// Kaizen events — already defined above as KaizenIcon
+// Kaizen events, already defined above as KaizenIcon
 
-// Yamazumi / Standard Work — operator balance bars
+// Yamazumi / Standard Work, operator balance bars
 export const KanbanIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,c,s}:any) => (<>
@@ -237,7 +237,7 @@ export const KanbanIcon = (p:P) => (
   </V>
 )
 
-// Improvement / Gap Analysis — ascending trend with target
+// Improvement / Gap Analysis, ascending trend with target
 export const ImprovementIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,c,s}:any) => (<>
@@ -253,7 +253,7 @@ export const ImprovementIcon = (p:P) => (
   </V>
 )
 
-// Simulation — network of connected nodes
+// Simulation, network of connected nodes
 export const SimulationIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -274,7 +274,7 @@ export const SimulationIcon = (p:P) => (
   </V>
 )
 
-// Live Floor Monitor — pulsing target rings
+// Live Floor Monitor, pulsing target rings
 export const LiveFloorIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -291,7 +291,7 @@ export const LiveFloorIcon = (p:P) => (
   </V>
 )
 
-// PDCA — four-quadrant disc (Plan/Do/Check/Act cycle)
+// PDCA, four-quadrant disc (Plan/Do/Check/Act cycle)
 export const PDCAIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({b,s}:any) => (<>
@@ -313,7 +313,7 @@ export const PDCAIcon = (p:P) => (
   </V>
 )
 
-// Roadmap — milestone path
+// Roadmap, milestone path
 export const RoadmapIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,c,s}:any) => (<>
@@ -328,7 +328,7 @@ export const RoadmapIcon = (p:P) => (
   </V>
 )
 
-// Branch — split/merge paths
+// Branch, split/merge paths
 export const BranchIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -346,7 +346,7 @@ export const BranchIcon = (p:P) => (
   </V>
 )
 
-// Report / A3 — document with data visualisation inside
+// Report / A3, document with data visualisation inside
 export const ReportIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({b,s}:any) => (<>
@@ -362,7 +362,7 @@ export const ReportIcon = (p:P) => (
   </V>
 )
 
-// SMED — precision gear (setup/changeover abstraction)
+// SMED, precision gear (setup/changeover abstraction)
 export const SmedIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>
@@ -380,7 +380,7 @@ export const SmedIcon = (p:P) => (
   </V>
 )
 
-// SOP — document with procedure lines
+// SOP, document with procedure lines
 export const SOPIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({b,s}:any) => (<>
@@ -395,7 +395,7 @@ export const SOPIcon = (p:P) => (
   </V>
 )
 
-// Supe AI — radiant core (intelligence/insight abstraction)
+// Supe AI, radiant core (intelligence/insight abstraction)
 export const SupeIcon = (p:P) => (
   <V size={p.size} style={p.style} className={p.className}>
     {({a,b,s}:any) => (<>

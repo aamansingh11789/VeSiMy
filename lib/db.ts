@@ -1,12 +1,12 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/db.ts ────────────────────────────────────────────────────────────────
 // Vesimy database access layer
-// All Supabase queries go through here — keeps components clean
+// All Supabase queries go through here, keeps components clean
 
 import { createClient } from '@/lib/supabase'
 import type { Project, Step, KanbanCard, KanbanColumn } from './store'
 
-// ── Fresh client per call (no singleton — avoids session bleed) ──────────────
+// ── Fresh client per call (no singleton, avoids session bleed) ──────────────
 function getClient() {
   return createClient()
 }
@@ -138,7 +138,7 @@ export async function createProject(form: Partial<Project>): Promise<Project> {
       customer:     form.customer     || null,
       state:        form.state        || 'current',
       status:       'active',
-      // VSM context fields — persist from creation if provided
+      // VSM context fields, persist from creation if provided
       product:             (form as any).product             || null,
       supplier:            (form as any).supplier            || null,
       demand:              (form as any).demand              ? Number((form as any).demand)              : null,
@@ -448,7 +448,7 @@ export async function createBranch(projectId: string, form: {
 
   if (projectErr || !projectRow) throw new Error('Project not found')
 
-  // FIX: use randomUUID() — Date.now() caused collisions on simultaneous creation
+  // FIX: use randomUUID(), Date.now() caused collisions on simultaneous creation
   const branchId = typeof crypto !== 'undefined' && crypto.randomUUID
     ? `branch-${crypto.randomUUID()}`
     : `branch-${Date.now()}-${Math.random().toString(36).slice(2,9)}`
@@ -780,7 +780,7 @@ export async function seedDefaultKanbanColumns(
   return (data || []).map((c: any) => ({ ...c, cards: [] })) as KanbanColumn[]
 }
 // ══════════════════════════════════════════════════════════════════════════════
-// V2 STEPS — used by V2ProjectClient. All writes go through here to enforce
+// V2 STEPS, used by V2ProjectClient. All writes go through here to enforce
 // user_id ownership at the data layer, not the component layer.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/enterprise/quote/route.ts ────────────────────────────────────────
 // Dynamic enterprise pricing engine
 // Base: $15/user/mo | addons stack | beta discount applies | annual = 2 months free

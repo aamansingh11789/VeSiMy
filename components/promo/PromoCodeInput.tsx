@@ -38,7 +38,7 @@ export function PromoCodeInput({ onApply }: Props) {
     setStatus('valid')
     setMessage(`${data.discount_percent}% off${data.plan_type ? ` ${data.plan_type} plan` : ''}!`)
     onApply?.(data.discount_percent, data.plan_type)
-    toast.success(`Promo code applied — ${data.discount_percent}% off!`)
+    toast.success(`Promo code applied, ${data.discount_percent}% off!`)
   }
 
   const borderColor = status==='valid' ? '#1DD1A1' : status==='invalid' ? 'var(--red)' : 'var(--border2)'

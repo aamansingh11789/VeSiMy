@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/stripe.ts ──────────────────────────────────────────────────────────
-// PROMO: SPRING25 — 20% off first payment — expires 2026-04-21
+// PROMO: SPRING25, 20% off first payment, expires 2026-04-21
 // Setup: Stripe Dashboard > Coupons > create 20% off first_time_transaction
 // Then:  Promotions > create code SPRING25 linking to that coupon
 import Stripe from 'stripe'
@@ -39,16 +39,16 @@ export const PLANS = {
     features: [
       'Up to 10 projects',
       'All CI tools + AI Gap Analysis',
-      'VSM export — A3 landscape PDF',
+      'VSM export, A3 landscape PDF',
       'Full ISO improvement report export',
-      'PDCA export — A3, 8D, DMAIC, OODA',
+      'PDCA export, A3, 8D, DMAIC, OODA',
       'Yamazumi + Standard Work export',
-      'Kaizen Roadmap — mission control',
-      'Branches — parallel sub-assembly flows',
+      'Kaizen Roadmap, mission control',
+      'Branches, parallel sub-assembly flows',
       'Cloud sync & backup',
       'Priority support',
     ],
-    cta: 'Start Pro — $29/mo',
+    cta: 'Start Pro, $29/mo',
     priceId: process.env.STRIPE_PRO_MONTHLY_PRICE_ID,
   },
   lifetime: {
@@ -59,12 +59,12 @@ export const PLANS = {
       'Up to 30 projects',
       'Everything in Pro',
       'Gold Standard founder badge',
-      'No recurring fees — ever',
+      'No recurring fees, ever',
       'All future tool releases included',
       '33% enterprise discount for your company',
-      'Priority feedback channel — shape the roadmap',
+      'Priority feedback channel, shape the roadmap',
     ],
-    cta: 'Get Lifetime Access — $99',
+    cta: 'Get Lifetime Access, $99',
     priceId:  process.env.STRIPE_LIFETIME_PRICE_ID,
     oneTime:  true,
   },

@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/v2/sop-parser.ts ─────────────────────────────────────────────────────
 
 import { callAI } from '@/lib/ai/ai-assist'
@@ -57,7 +57,7 @@ export async function parseSOP(rawText: string, industryId: string): Promise<Par
   const t = getIndustryTerms(industryId || 'general_manufacturing')
   const industryLabel = getIndustryLabel(industryId || 'general_manufacturing')
 
-  // Pull from uploaded Supe RAG knowledge base — VSM + lean methodology chunks
+  // Pull from uploaded Supe RAG knowledge base, VSM + lean methodology chunks
   const chunks = (KNOWLEDGE_CHUNKS as any[])
     .filter((c: any) => c.tags?.some((t: string) =>
       ['vsm','value stream','process','standard work','lean','tps','kaizen','waste',
@@ -114,7 +114,7 @@ Rules: Extract EVERY step. Use step_type decision for approvals/checks/if-statem
       steps: rawText.split(/\n\n+/).filter(p=>p.trim().length>20).slice(0,20).map((t,i)=>({
         position:i, name:t.replace(/^\d+[\.\)]\s+/,'').slice(0,60).trim(),
         step_type:'process' as StepType, tasks:[t.trim()], governing_entity:'',
-        department:'', notes:'', cycle_time_type:'assumed', cycle_time_unit:'seconds',  // FIX: was 'minutes' — all calculations assume seconds
+        department:'', notes:'', cycle_time_type:'assumed', cycle_time_unit:'seconds',  // FIX: was 'minutes', all calculations assume seconds
         missing_info_flags:['cycle_time','operators','defect_rate','department'],
         from_sop:true, sop_original_text:t.trim(), wip:0, operators:1,
         defect_rate:0, wait_time:0, flow_type:'push',

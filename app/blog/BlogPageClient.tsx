@@ -184,7 +184,7 @@ const posts = [
     tag: 'Comparison',
     tagColor: '#6CB9FC',
     title: 'VeSiMy vs Excel for Value Stream Mapping: What Spreadsheets Actually Cost You',
-    excerpt: "Nobody chose Excel for lean. But there's a real cost to running a CI programme in a tool that has no idea what a value stream is — and most teams pay it without ever adding it up.",
+    excerpt: "Nobody chose Excel for lean. But there's a real cost to running a CI programme in a tool that has no idea what a value stream is, and most teams pay it without ever adding it up.",
     readTime: '6 min read',
     date: 'March 19, 2026',
   },
@@ -193,7 +193,7 @@ const posts = [
     tag: 'Guide',
     tagColor: '#0176D3',
     title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause',
-    excerpt: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that works — with a real machining defect example showing how deep to go.',
+    excerpt: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that works, with a real machining defect example showing how deep to go.',
     readTime: '7 min read',
     date: 'March 19, 2026',
   },
@@ -202,7 +202,7 @@ const posts = [
     tag: 'Guide',
     tagColor: '#1DD1A1',
     title: 'Process Cycle Efficiency: The Number That Tells You How Lean You Really Are',
-    excerpt: 'Most operations teams can tell you their cycle time. Very few can tell you what percentage of their lead time is value-adding. PCE is that number — and for most manufacturers it is uncomfortable.',
+    excerpt: 'Most operations teams can tell you their cycle time. Very few can tell you what percentage of their lead time is value-adding. PCE is that number, and for most manufacturers it is uncomfortable.',
     readTime: '6 min read',
     date: 'March 19, 2026',
   },
@@ -220,7 +220,7 @@ const posts = [
     tag: 'Guide',
     tagColor: '#0176D3',
     title: "What Is Value Stream Mapping? The Complete Guide for 2026",
-    excerpt: "Value stream mapping (VSM) is the single most powerful lean tool available to manufacturers. Here's how it works, when to use it, and how to run your first VSM session — with a free digital tool.",
+    excerpt: "Value stream mapping (VSM) is the single most powerful lean tool available to manufacturers. Here's how it works, when to use it, and how to run your first VSM session, with a free digital tool.",
     readTime: '8 min read',
     date: 'March 12, 2026',
   },
@@ -229,7 +229,7 @@ const posts = [
     tag: 'Tool',
     tagColor: '#1DD1A1',
     title: "The Best Free VSM Tool in 2026 (That's Actually Free)",
-    excerpt: "Most VSM software costs $200–$500 per month and requires a 2-day training course. VeSiMy is Free to start — no credit card., works on your phone, and takes 5 minutes to learn. Here's an honest comparison.",
+    excerpt: "Most VSM software costs $200–$500 per month and requires a 2-day training course. VeSiMy is Free to start, no credit card., works on your phone, and takes 5 minutes to learn. Here's an honest comparison.",
     readTime: '5 min read',
     date: 'March 12, 2026',
   },
@@ -256,7 +256,7 @@ const posts = [
     tag: 'Calculator',
     tagColor: '#1DD1A1',
     title: 'Takt Time Calculator: Formula, Examples & Free Tool',
-    excerpt: 'Takt time is the heartbeat of lean manufacturing — the pace customer demand requires. Learn the formula, see 4 worked examples, and find out what to do once you have the number.',
+    excerpt: 'Takt time is the heartbeat of lean manufacturing, the pace customer demand requires. Learn the formula, see 4 worked examples, and find out what to do once you have the number.',
     readTime: '5 min read',
     date: 'March 12, 2026',
   },
@@ -265,7 +265,7 @@ const posts = [
     tag: 'Guide',
     tagColor: '#8C44CC',
     title: 'PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act',
-    excerpt: 'PDCA is the backbone of ISO 9001 and lean manufacturing. Learn how to run it correctly, how it connects to A3, 8D, and DMAIC — and why the Check phase is the one everyone skips.',
+    excerpt: 'PDCA is the backbone of ISO 9001 and lean manufacturing. Learn how to run it correctly, how it connects to A3, 8D, and DMAIC, and why the Check phase is the one everyone skips.',
     readTime: '9 min read',
     date: 'March 2026',
   },
@@ -283,7 +283,7 @@ const posts = [
     tag: 'Guide',
     tagColor: '#6CB9FC',
     title: 'Standard Work: The Foundation of All Lean Improvement',
-    excerpt: 'Standard Work is not a procedure manual in a binder. It is the current best method — the baseline that makes every future improvement measurable. Without it, you cannot improve. You can only change.',
+    excerpt: 'Standard Work is not a procedure manual in a binder. It is the current best method, the baseline that makes every future improvement measurable. Without it, you cannot improve. You can only change.',
     readTime: '6 min read',
     date: 'March 2026',
   },
@@ -310,7 +310,7 @@ const posts = [
     tag: 'Industry',
     tagColor: '#1DD1A1',
     title: 'Freshness Is a Process Problem: CI in Food & Beverage Manufacturing',
-    excerpt: "Yield loss, changeover waste, sanitation downtime, and food safety compliance — all on the same line. Here's how structured CI addresses the unique challenges of food & beverage production.",
+    excerpt: "Yield loss, changeover waste, sanitation downtime, and food safety compliance, all on the same line. Here's how structured CI addresses the unique challenges of food & beverage production.",
     readTime: '8 min read',
     date: 'March 2026',
   },
@@ -355,7 +355,7 @@ const posts = [
     tag: 'Industry',
     tagColor: '#0176D3',
     title: "The Machine Doesn't Know It's Inefficient. You Have to Tell It.",
-    excerpt: "Heavy industrial, job shops, and custom fabrication — the environments that said lean doesn't apply here. They were wrong. Here's how structured CI works in high-mix, low-volume industrial manufacturing.",
+    excerpt: "Heavy industrial, job shops, and custom fabrication, the environments that said lean doesn't apply here. They were wrong. Here's how structured CI works in high-mix, low-volume industrial manufacturing.",
     readTime: '8 min read',
     date: 'March 2026',
   },
@@ -370,14 +370,14 @@ export default function BlogPageClient() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
           Resources
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
           Lean Manufacturing Blog
         </h1>
         <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75, maxWidth: 580 }}>
-          Practical guides, templates, and deep-dives on VSM, Kaizen, 5 Why, and AI-driven process improvement — plus industry-specific guides for every major sector.
+          Practical guides, templates, and deep-dives on VSM, Kaizen, 5 Why, and AI-driven process improvement, plus industry-specific guides for every major sector.
         </p>
 
         <Link href="/industries" style={{
@@ -390,7 +390,7 @@ export default function BlogPageClient() {
         </Link>
 
         {/* Lean Guides */}
-        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 20, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 20, textTransform: 'uppercase' }}>
           Lean Guides &amp; Templates
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(380px,1fr))', gap: 24, marginBottom: 64 }}>
@@ -400,7 +400,7 @@ export default function BlogPageClient() {
         </div>
 
         {/* Industry Guides */}
-        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 8, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 8, textTransform: 'uppercase' }}>
           Industry Guides
         </p>
         <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.7 }}>
@@ -442,11 +442,11 @@ function PostCard({ post }: { post: (typeof posts)[0]; key?: string }) {
           <span style={{
             fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999,
             background: `${post.tagColor}1a`, color: post.tagColor,
-            fontFamily: 'monospace', letterSpacing: 1.5,
+            fontFamily: 'var(--font-mono)', letterSpacing: 1.5,
           }}>
             {post.tag}
           </span>
-          <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>{post.readTime}</span>
+          <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>{post.readTime}</span>
         </div>
 
         <h2 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.3, flex: 1 }}>

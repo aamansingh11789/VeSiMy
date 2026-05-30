@@ -1,7 +1,7 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-reference/route.ts ─────────────────────────────────
 // Creates a fully-populated reference project demonstrating every VeSiMy feature.
-// Idempotent — returns existing project if one already exists for this user.
+// Idempotent, returns existing project if one already exists for this user.
 
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -19,7 +19,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .select('id')
       .eq('user_id', user.id)
-      .eq('name', '⭐ Reference — Automotive Seat Assembly')
+      .eq('name', '⭐ Reference, Automotive Seat Assembly')
       .maybeSingle()
 
     if (existing?.id) {
@@ -31,7 +31,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        '⭐ Reference — Automotive Seat Assembly',
+        name:        '⭐ Reference, Automotive Seat Assembly',
         description: 'Fully-built reference project. Every tool populated. 6 main steps, 2 branches, time studies, fishbone, 5 Why, waste ID, kaizen events, improvement goals. Use this as your guide.',
         industry:    'Automotive',
         customer:    'OEM Assembly Plant',
@@ -77,7 +77,7 @@ export async function POST(_request: NextRequest) {
       name: 'Material Staging', department: 'Materials',
       operators: 1, cycle_time: 45, wait_time: 300, wip: 12,
       flow_type: 'push', uptime: 100, defect_rate: 0,
-      notes: 'NNVA. Operator walks 40m to warehouse each cycle — motion waste. Shadow board planned.',
+      notes: 'NNVA. Operator walks 40m to warehouse each cycle, motion waste. Shadow board planned.',
     })
 
     const s2 = await step(1, {
@@ -91,7 +91,7 @@ export async function POST(_request: NextRequest) {
       name: 'Foam & Fabric Install', department: 'Trim',
       operators: 2, cycle_time: 145, wait_time: 90, wip: 8,
       flow_type: 'push', uptime: 88, defect_rate: 2.1,
-      notes: 'VA — BOTTLENECK. CT 145s exceeds takt 120s. 16s NVA walk to foam rack. KZ-001 in progress.',
+      notes: 'VA, BOTTLENECK. CT 145s exceeds takt 120s. 16s NVA walk to foam rack. KZ-001 in progress.',
     })
 
     const s4 = await step(3, {
@@ -147,9 +147,9 @@ export async function POST(_request: NextRequest) {
       causes: {
         Machine:     ['No powered assist for fabric pull', 'Jig does not hold fabric taut automatically'],
         Method:      ['Foam rack 4m from workstation (16s walk NVA)', 'Mutual check adds 13s', 'No standard work sheet for new operators'],
-        Material:    ['Fabric cover too tight on winter batches — dimensional variation', 'Foam density variation affects clip engagement'],
-        Manpower:    ['New operators 20% slower — no SWS', 'LH/RH operators must coordinate — creates waiting'],
-        Measurement: ['No in-process CT tracking — only end-of-shift review'],
+        Material:    ['Fabric cover too tight on winter batches, dimensional variation', 'Foam density variation affects clip engagement'],
+        Manpower:    ['New operators 20% slower, no SWS', 'LH/RH operators must coordinate, creates waiting'],
+        Measurement: ['No in-process CT tracking, only end-of-shift review'],
         'Mother Nature': ['Cold ambient temp increases foam stiffness in winter'],
       },
     })
@@ -169,7 +169,7 @@ export async function POST(_request: NextRequest) {
         { q: 'Why is Manufacturing Engineering excluded from takt reviews?',
           a: 'ROOT CAUSE: PFMEA review gate does not require a material flow audit when takt time is revised.' },
       ],
-      rootCause: 'PFMEA review gate does not mandate a material flow audit when takt time changes — foam rack was never relocated when CT/takt ratio deteriorated.',
+      rootCause: 'PFMEA review gate does not mandate a material flow audit when takt time changes, foam rack was never relocated when CT/takt ratio deteriorated.',
       countermeasure: '1. Update PFMEA procedure to include mandatory material flow audit on takt revision. 2. Relocate foam rack to within 0.5m of workstation immediately as interim fix. 3. Add 2-hour kanban replenishment cycle.',
       owner: 'Manufacturing Engineering',
       dueDate: '2026-04-15',
@@ -180,8 +180,8 @@ export async function POST(_request: NextRequest) {
       wastes: {
         Motion:           'Operator walks 4m to foam rack every cycle = 16s NVA per seat',
         Waiting:          'Operator waits 13s for partner to complete LH side before mutual check',
-        'Over-processing': 'Dual mutual check adds 13s — single check + poka-yoke would suffice',
-        Defects:          '2.1% defect rate — fabric mis-clip causes rework averaging 8 min each',
+        'Over-processing': 'Dual mutual check adds 13s, single check + poka-yoke would suffice',
+        Defects:          '2.1% defect rate, fabric mis-clip causes rework averaging 8 min each',
       },
       notes: 'Priority order: Motion (foam rack) → Defects (poka-yoke clip guide) → Over-processing (eliminate dual check).',
     })
@@ -189,7 +189,7 @@ export async function POST(_request: NextRequest) {
     await tool(s1.id, 'waste', {
       wastes: {
         Motion:    'Walk 40m round trip to warehouse each cycle',
-        Transport: 'Manual pallet movement — no automated line replenishment',
+        Transport: 'Manual pallet movement, no automated line replenishment',
         Waiting:   '300s average queue before staging begins',
       },
       notes: 'Point-of-use shadow board and kanban replenishment planned Q2 2026.',
@@ -219,7 +219,7 @@ export async function POST(_request: NextRequest) {
         {
           id: 'kz003', kzId: 'KZ-003',
           title: 'Create Standard Work Sheet for new operators',
-          description: 'No SWS exists — new operators take 20% longer. Create with photos, task breakdown and VA/NNVA/NVA classification.',
+          description: 'No SWS exists, new operators take 20% longer. Create with photos, task breakdown and VA/NNVA/NVA classification.',
           category: 'Morale', priority: 'medium', status: 'complete',
           owner: 'Team Leader', dueDate: '2026-03-15',
           actions: ['Complete operator task breakdown in VeSiMy', 'Print and laminate at workstation', 'Train all 4 operators'],
@@ -231,7 +231,7 @@ export async function POST(_request: NextRequest) {
     await tool(s5.id, 'kaizen', {
       items: [{
         id: 'kz004', kzId: 'KZ-004',
-        title: 'Eliminate manual MES entry — auto-close on barcode scan',
+        title: 'Eliminate manual MES entry, auto-close on barcode scan',
         description: 'Manual MES logging (12s NVA) replaced with automatic scan-to-pass. IT approval received.',
         category: 'Productivity', priority: 'medium', status: 'open',
         owner: 'IT / Quality', dueDate: '2026-06-01',
@@ -260,11 +260,11 @@ export async function POST(_request: NextRequest) {
       ],
     })
 
-    // ── 9. Branch A — Electrical Harness Sub-Assembly ─────────────────────────
+    // ── 9. Branch A, Electrical Harness Sub-Assembly ─────────────────────────
     const bidA = `branch-${Date.now()}-a`
     const { error: bErrA } = await supabase.from('branches').insert({
       project_id: pid, user_id: user.id, branch_id: bidA,
-      label: 'Branch A — Electrical Harness',
+      label: 'Branch A, Electrical Harness',
       color: '#6426A0',
       parent_step_id: s2.id,
       merge_step_id: s4.id,
@@ -305,11 +305,11 @@ export async function POST(_request: NextRequest) {
       }],
     })
 
-    // ── 10. Branch B — Foam Prep Sub-Assembly ────────────────────────────────
+    // ── 10. Branch B, Foam Prep Sub-Assembly ────────────────────────────────
     const bidB = `branch-${Date.now() + 1}-b`
     const { error: bErrB } = await supabase.from('branches').insert({
       project_id: pid, user_id: user.id, branch_id: bidB,
-      label: 'Branch B — Foam & Fabric Prep',
+      label: 'Branch B, Foam & Fabric Prep',
       color: '#1090D4',
       parent_step_id: s1.id,
       merge_step_id: s3.id,

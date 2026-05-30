@@ -103,7 +103,7 @@ export default function ChangelogPage() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
           What's New
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
@@ -130,11 +130,11 @@ export default function ChangelogPage() {
                   <span style={{
                     fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999,
                     background: `${entry.color}22`, color: entry.color,
-                    fontFamily: 'monospace', letterSpacing: 1.5,
+                    fontFamily: 'var(--font-mono)', letterSpacing: 1.5,
                   }}>
                     {entry.tag}
                   </span>
-                  <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>{entry.date}</span>
+                  <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>{entry.date}</span>
                 </div>
 
                 <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 14 }}>

@@ -118,8 +118,8 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               <td>${item.category}</td>
               <td><span class="badge badge-${item.priority === 'critical' ? 'critical' : item.priority === 'high' ? 'high' : item.priority === 'medium' ? 'medium' : 'low'}">${item.priority.toUpperCase()}</span></td>
               <td><span class="badge badge-${item.status === 'complete' || item.status === 'verified' ? 'complete' : 'open'}">${item.status.replace('-', ' ').toUpperCase()}</span></td>
-              <td>${item.owner || '—'}</td>
-              <td>${item.dueDate || '—'}</td>
+              <td>${item.owner || ','}</td>
+              <td>${item.dueDate || ','}</td>
               <td style="font-size:9pt;">${item.description ? item.description + '<br>' : ''}${item.actions.length ? '<strong>Actions:</strong> ' + item.actions.join(' · ') : ''}</td>
             </tr>
           `).join('')}
@@ -150,19 +150,19 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
       at this process step. Actions marked "Verified" have been independently confirmed effective.</p>
 
       ${items.filter(i => i.priority === 'critical' || i.priority === 'high').length > 0 ? `
-      <h2>5. Escalation Register — High Priority Items</h2>
+      <h2>5. Escalation Register, High Priority Items</h2>
       <div class="obs-box waste">
         <div class="obs-label">! Items Requiring Management Attention</div>
         ${items.filter(i => i.priority === 'critical' || i.priority === 'high').map(item => `
           <p><strong>[${item.kzId || item.id.slice(0,6).toUpperCase()}] ${item.title}</strong>
-          — Priority: ${item.priority.toUpperCase()} | Status: ${item.status.toUpperCase()} | Owner: ${item.owner || 'Unassigned'} | Due: ${item.dueDate || 'Not set'}
+         , Priority: ${item.priority.toUpperCase()} | Status: ${item.status.toUpperCase()} | Owner: ${item.owner || 'Unassigned'} | Due: ${item.dueDate || 'Not set'}
           ${item.description ? '<br>' + item.description : ''}</p>
         `).join('')}
       </div>` : ''}
     `
 
     openISOReport(body, {
-      title: 'Kaizen Event Log — Continuous Improvement Register',
+      title: 'Kaizen Event Log, Continuous Improvement Register',
       toolType: 'KAIZEN',
       projectName: stepName,
       stepName: 'Process Step Analysis',
@@ -256,7 +256,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
       showToast(`Kaizen saved (${items.length} event${items.length !== 1 ? 's' : ''})`, 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -264,7 +264,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
 
   return (
     <Modal
-      title={`Kaizen Tracker — ${stepName}`}
+      title={`Kaizen Tracker, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${items.length} event${items.length !== 1 ? 's' : ''})`}
@@ -341,7 +341,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                 </div>
                 {aiResult && typeof aiResult === 'object' && (
                   <AIResultPanel
-                    result="AI draft ready — click Apply to fill the form."
+                    result="AI draft ready, click Apply to fill the form."
                     source={aiSource} error={aiError} onClear={aiClear}
                     useLabel="Apply draft"
                     onUse={(r: any) => {
@@ -540,7 +540,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                   }}
                   onClick={() => setExpanded(expanded === item.id ? null : item.id)}
                 >
-                  <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', flexShrink: 0 }}>
+                  <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
                     {item.kzId}
                   </span>
 

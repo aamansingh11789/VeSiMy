@@ -3,9 +3,9 @@
 import { XIcon } from '@/components/ui/Icons'
 // ── components/beta/BetaBanner.tsx ───────────────────────────────────────────
 // Shows different states:
-//   A. Non-beta user — invite to join during early access
-//   B. Active beta   — countdown + lifetime upgrade CTA
-//   C. Beta expired  — upgrade to lifetime or go free
+//   A. Non-beta user, invite to join during early access
+//   B. Active beta  , countdown + lifetime upgrade CTA
+//   C. Beta expired , upgrade to lifetime or go free
 
 import { useState, useEffect } from 'react'
 import { useRouter }           from 'next/navigation'
@@ -51,13 +51,13 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
             Your Founding Member beta trial has ended
           </div>
           <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
-            Upgrade to <strong style={{ color:'#D4A843' }}>Lifetime access</strong> for a one-time $99 —
+            Upgrade to <strong style={{ color:'#D4A843' }}>Lifetime access</strong> for a one-time $99 ,
             99 projects, no monthly fees. Your Founding Member badge stays permanently.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'9px 18px', borderRadius:8, fontWeight:700, fontSize:13, cursor:'pointer',
           background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', border:'none', whiteSpace:'nowrap' }}>
-          Upgrade — $99 Lifetime
+          Upgrade, $99 Lifetime
         </button>
       </div>
     )
@@ -82,21 +82,21 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
           </div>
           <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
             <strong style={{ color:urgencyColor }}>{days} day{days!==1?'s':''} remaining</strong> in your trial.
-            {' '}Upgrade to Lifetime for $99 — keeps your badge + 99 projects forever.
+            {' '}Upgrade to Lifetime for $99, keeps your badge + 99 projects forever.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer', whiteSpace:'nowrap',
           background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', border:'none' }}>
-          Upgrade — $99 Lifetime
+          Upgrade, $99 Lifetime
         </button>
       </div>
     )
   }
 
-  // ── Lifetime confirmed — silent ───────────────────────────────────────────────
+  // ── Lifetime confirmed, silent ───────────────────────────────────────────────
   if (isLifetime) return null
 
-  // ── A. Non-beta — show early access CTA if window is open ────────────────────
+  // ── A. Non-beta, show early access CTA if window is open ────────────────────
   if (dismissed || windowOpen === null) return null
   if (!windowOpen) return null
 
@@ -109,7 +109,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
         <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>
-          Founding Member Beta — Early Access Open
+          Founding Member Beta, Early Access Open
         </div>
         <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
           Join during early access and get your permanent Founding Member badge. 30-day Pro trial,

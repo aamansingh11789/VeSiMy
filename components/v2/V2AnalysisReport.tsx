@@ -1,9 +1,9 @@
 // TypeScript enabled
 'use client'
 // ── components/v2/V2AnalysisReport.tsx ────────────────────────────────────────
-// v4.0 — Full 8-section AI Improvement Report
+// v4.0, Full 8-section AI Improvement Report
 // Spec: VeSiMy v4 Section 8
-// All charts are pure SVG/CSS — no external libraries required.
+// All charts are pure SVG/CSS, no external libraries required.
 
 import React, { useState, useCallback, useRef } from 'react'
 import { AlertIcon, ZapIcon } from '@/components/ui/Icons'
@@ -45,7 +45,7 @@ function Divider() {
   return <div style={{ height: 1, background: 'var(--border)', margin: '36px 0' }} />
 }
 
-// ── Waterfall chart — VA time vs wait time breakdown ─────────────────────────
+// ── Waterfall chart, VA time vs wait time breakdown ─────────────────────────
 function WaterfallChart({ totalCT, totalWait, vaCT, steps }: { totalCT: number; totalWait: number; vaCT: number; steps: any[] }) {
   const total = totalCT + totalWait
   if (!total) return <div style={{ color: 'var(--text3)', fontSize: 13, padding: '20px 0' }}>No time data available</div>
@@ -155,7 +155,7 @@ function TaktChart({ steps, taktTime }: { steps: any[]; taktTime: number }) {
       </svg>
       {taktTime > 0 && (
         <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 4 }}>
-          <span style={{ color: RED }}>▲ Red bars</span> exceed takt time ({fmtSec(taktTime)}) — these steps cannot meet demand rate.
+          <span style={{ color: RED }}>▲ Red bars</span> exceed takt time ({fmtSec(taktTime)}), these steps cannot meet demand rate.
         </div>
       )}
     </div>
@@ -244,7 +244,7 @@ function ParetoChart({ wasteTypes }: { wasteTypes: any[] }) {
         )
       })}
       <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 8, fontStyle: 'italic' }}>
-        Top {wasteTypes.slice(0, 2).map(w => WASTE_LABELS[w.type]?.split(' ')[1] || w.type).join(' + ')} account for the most NVA occurrences — address these first.
+        Top {wasteTypes.slice(0, 2).map(w => WASTE_LABELS[w.type]?.split(' ')[1] || w.type).join(' + ')} account for the most NVA occurrences, address these first.
       </div>
     </div>
   )
@@ -306,7 +306,7 @@ function PriorityMatrix({ items: initialItems }: { items: any[] }) {
             <text key={q.label} x={q.x} y={q.y} fontSize={8} fill={q.color} fontFamily={MONO} fontWeight={700} opacity={0.7}>{q.label}</text>
           ))}
           {/* Axis labels */}
-          <text x={MATRIX_SIZE / 2} y={MATRIX_SIZE - 4} textAnchor="middle" fontSize={8} fill="var(--text3)" fontFamily={MONO}>← LOW EFFORT — HIGH EFFORT →</text>
+          <text x={MATRIX_SIZE / 2} y={MATRIX_SIZE - 4} textAnchor="middle" fontSize={8} fill="var(--text3)" fontFamily={MONO}>← LOW EFFORT, HIGH EFFORT →</text>
           <text x={8} y={MATRIX_SIZE / 2} textAnchor="middle" fontSize={8} fill="var(--text3)" fontFamily={MONO} transform={`rotate(-90, 8, ${MATRIX_SIZE / 2})`}>IMPACT ↑</text>
           {/* Data points */}
           {items.map((item, i) => {
@@ -392,13 +392,13 @@ function ProjectionChart({ projection }: { projection: any }) {
       </div>
       <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 8 }}>
         <div style={{ fontSize: 10, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>METHODOLOGY</div>
-        <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>{projection.methodology}. Projections are estimates based on PCE improvement targets — validate with direct observation before committing to timelines.</div>
+        <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>{projection.methodology}. Projections are estimates based on PCE improvement targets, validate with direct observation before committing to timelines.</div>
       </div>
     </div>
   )
 }
 
-// ── Plan gate — trial teaser ──────────────────────────────────────────────────
+// ── Plan gate, trial teaser ──────────────────────────────────────────────────
 function TrialTeaser({ section }: { section: string }) {
   return (
     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 10 }}>
@@ -408,7 +408,7 @@ function TrialTeaser({ section }: { section: string }) {
       </div>
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(2,4,13,0.6)' }}>
         <div style={{ fontSize: 20, marginBottom: 8 }}>🔒</div>
-        <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 4 }}>{section} — Pro plan required</div>
+        <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 4 }}>{section}, Pro plan required</div>
         <Link href="/pricing" style={{ padding: '8px 18px', background: BRAND, color: '#fff', borderRadius: 7, textDecoration: 'none', fontSize: 13, fontWeight: 700, marginTop: 4 }}>
           Upgrade to Pro →
         </Link>
@@ -419,7 +419,7 @@ function TrialTeaser({ section }: { section: string }) {
 
 // ── Format seconds helper ─────────────────────────────────────────────────────
 function fmtSec(s: number): string {
-  if (!s || s < 0) return '—'
+  if (!s || s < 0) return ','
   if (s < 60)      return `${Math.round(s)}s`
   if (s < 3600)    return `${(s / 60).toFixed(1)}m`
   if (s < 86400)   return `${(s / 3600).toFixed(1)}h`
@@ -465,7 +465,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       {report.ai_analysis_used === false && (
         <div style={{ padding: '9px 14px', background: 'rgba(112,110,107,0.06)', border: '1px solid rgba(112,110,107,0.2)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: 'var(--text3)', display: 'flex', gap: 8 }}>
           <span>⚙</span>
-          <span>AI analysis was unavailable — findings are rule-based. Results are directionally correct. Re-run when AI is available.</span>
+          <span>AI analysis was unavailable, findings are rule-based. Results are directionally correct. Re-run when AI is available.</span>
         </div>
       )}
 
@@ -478,9 +478,9 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         {/* Key metric strip */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px,1fr))', gap: 10, marginTop: 20 }}>
           {[
-            { label: 'Steps Mapped',  value: cs.total_steps || report.total_steps || '—' },
+            { label: 'Steps Mapped',  value: cs.total_steps || report.total_steps || ',' },
             { label: 'Lead Time',     value: fmtSec(cs.lead_time || 0) },
-            { label: 'PCE',           value: report.va_ratio || '—', color: parseInt(report.va_ratio) > 50 ? GREEN : parseInt(report.va_ratio) > 25 ? AMBER : RED },
+            { label: 'PCE',           value: report.va_ratio || ',', color: parseInt(report.va_ratio) > 50 ? GREEN : parseInt(report.va_ratio) > 25 ? AMBER : RED },
             { label: 'Data Complete', value: `${cs.data_completeness || 0}%`, color: (cs.data_completeness || 0) > 75 ? GREEN : (cs.data_completeness || 0) > 50 ? AMBER : RED },
           ].map(({ label, value, color }) => (
             <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px', textAlign: 'center' }}>
@@ -536,15 +536,15 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         <SectionHeader num="03" label="Bottleneck Analysis" icon="🎯" />
         <div style={{ background: 'rgba(192,64,42,0.04)', border: '1px solid rgba(192,64,42,0.2)', borderRadius: 12, padding: '20px 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
-            <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{bottleneck.step_name || '—'}</div>
+            <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{bottleneck.step_name || ','}</div>
             <span style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', borderRadius: 4, background: RED, color: 'white', letterSpacing: 1 }}>PRIMARY CONSTRAINT</span>
           </div>
           {/* Constraint data */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 16 }}>
             {[
-              { label: 'WIP upstream',    value: bottleneck.wip_upstream ?? '—' },
-              { label: 'CT vs Takt',      value: bottleneck.ct_vs_takt || '—' },
-              { label: 'Constraint score', value: bottleneck.constraint_score ? `${bottleneck.constraint_score}/100` : '—', color: RED },
+              { label: 'WIP upstream',    value: bottleneck.wip_upstream ?? ',' },
+              { label: 'CT vs Takt',      value: bottleneck.ct_vs_takt || ',' },
+              { label: 'Constraint score', value: bottleneck.constraint_score ? `${bottleneck.constraint_score}/100` : ',', color: RED },
             ].map(({ label, value, color }) => (
               <div key={label} style={{ textAlign: 'center', padding: '10px', background: 'var(--bg2)', borderRadius: 8, border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>{label.toUpperCase()}</div>
@@ -631,7 +631,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
                     <div style={{ fontSize: 13, color: 'var(--text2)' }}>{r.why}</div>
                   </div>
                   <div style={{ padding: '10px 12px', background: `${BRAND}06`, border: `1px solid ${BRAND}20`, borderRadius: 7 }}>
-                    <div style={{ fontSize: 9, fontFamily: MONO, color: BRAND, marginBottom: 4 }}>HOW — TOOL: {(TOOL_LABELS[r.tool] || r.tool || '').toUpperCase()}</div>
+                    <div style={{ fontSize: 9, fontFamily: MONO, color: BRAND, marginBottom: 4 }}>HOW, TOOL: {(TOOL_LABELS[r.tool] || r.tool || '').toUpperCase()}</div>
                     <div style={{ fontSize: 13, color: 'var(--text2)' }}>{r.how}</div>
                   </div>
                 </div>

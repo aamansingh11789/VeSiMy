@@ -27,9 +27,9 @@ export function getISOStandards(toolType: ISODocMeta['toolType']): string[] {
     TIMESTUDY:   ['ISO 9001:2015 §8.5 (Production & Service Provision)', 'ISO 22468:2020 §5.2.4 (Cycle Time Analysis)', 'ILO Time Study Standards §3 (Work Measurement)'],
     SMED:        ['ISO 9001:2015 §8.5.1 (Changeover Management)', 'SMED Methodology (Shingo Prize Standards)', 'ISO 22468:2020 §5.2.5 (Setup Reduction)'],
     GEMBA:       ['ISO 9001:2015 §9.1 (Monitoring & Measurement)', 'ISO 45001:2018 §9.1.1 (Workplace Observation)', 'ISO 14001:2015 §9.1 (Environmental Monitoring)'],
-    WASTE:       ['ISO 9001:2015 §10.1 (Improvement — Muda Elimination)', 'ISO 22468:2020 §5.4 (Waste Identification)', 'ISO 14001:2015 §6.1 (Waste Risk Planning)'],
+    WASTE:       ['ISO 9001:2015 §10.1 (Improvement, Muda Elimination)', 'ISO 22468:2020 §5.4 (Waste Identification)', 'ISO 14001:2015 §6.1 (Waste Risk Planning)'],
     IMPROVEMENT: ['ISO 9001:2015 §10.3 (Continual Improvement)', 'ISO 9001:2015 §6.2 (Quality Objectives)', 'ISO 9004:2018 §9.3 (Improvement Actions)'],
-    PDCA:          ['ISO 9001:2015 §10.3 (Continual Improvement — PDCA Cycle)', 'ISO 9000:2015 §3.3.5 (Improvement)', 'ISO 9004:2018 §8.4 (Learning)', 'ISO 31000:2018 §6.7 (Monitoring & Learning)'],
+    PDCA:          ['ISO 9001:2015 §10.3 (Continual Improvement, PDCA Cycle)', 'ISO 9000:2015 §3.3.5 (Improvement)', 'ISO 9004:2018 §8.4 (Learning)', 'ISO 31000:2018 §6.7 (Monitoring & Learning)'],
     STANDARD_WORK: ['ISO 9001:2015 §8.5.1 (Controlled Conditions)', 'ISO 22468:2020 §5.2.3 (Standardised Work)', 'ILO Work Study §4 (Standard Work Documentation)'],
     YAMAZUMI:      ['ISO 22468:2020 §5.2.4 (Operator Balance Chart)', 'ISO 9001:2015 §8.5.1 (Production Control)', 'ISO 22468:2020 §5.3.2 (Line Balancing)'],
   }
@@ -279,7 +279,7 @@ export function buildDocHeader(meta: ISODocMeta): string {
       <tr><td>Date</td><td>${today}</td></tr>
       <tr><td>Prepared By</td><td>${meta.preparedBy || 'VeSiMy'}</td></tr>
       <tr><td>Approved By</td><td>${meta.approvedBy || '_______________'}</td></tr>
-      <tr><td>Classification</td><td>Internal — Controlled Document</td></tr>
+      <tr><td>Classification</td><td>Internal, Controlled Document</td></tr>
     </table>
   </div>
 
@@ -318,7 +318,7 @@ export function openISOReport(htmlBody: string, meta: ISODocMeta): void {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${meta.title} — ${meta.projectName} — ${today}</title>
+  <title>${meta.title}, ${meta.projectName}, ${today}</title>
   <style>${ISO_STYLES}</style>
 </head>
 <body>

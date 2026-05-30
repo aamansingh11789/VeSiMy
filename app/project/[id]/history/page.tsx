@@ -1,7 +1,7 @@
 // TypeScript enabled
 // ── app/project/[id]/history/page.tsx ─────────────────────────────────────────
-// Version history for a project — view and compare saved snapshots
-// Spec: Section 9 — Versioning and Journal
+// Version history for a project, view and compare saved snapshots
+// Spec: Section 9, Versioning and Journal
 
 import type { Metadata } from 'next'
 import { createServerSupabase } from '@/lib/supabase-server'
@@ -11,7 +11,7 @@ import { BottomNav } from '@/components/layout/BottomNav'
 import VersionHistoryClient from './VersionHistoryClient'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  return { title: 'Version History — VeSiMy' }
+  return { title: 'Version History, VeSiMy' }
 }
 
 export default async function VersionHistoryPage({ params }: { params: { id: string } }) {

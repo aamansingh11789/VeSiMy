@@ -18,8 +18,8 @@ export default function Post() {
         <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>← Back to Blog</Link>
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontFamily: 'monospace', letterSpacing: 1.5 }}>METHODOLOGY</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>8 min read · April 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.15)', color: '#0176D3', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>METHODOLOGY</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>8 min read · April 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             How to Run a VSM Workshop: The Wall Session Method

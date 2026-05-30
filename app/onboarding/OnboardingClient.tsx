@@ -2,7 +2,7 @@
 'use client'
 // ── app/onboarding/OnboardingClient.tsx ──────────────────────────────────────
 // 4-step guided onboarding:
-//   1. Industry selection (primary — drives all language and templates)
+//   1. Industry selection (primary, drives all language and templates)
 //   2. Role selection
 //   3. First project (templates adapt to the selected industry)
 //   4. Confirm + launch
@@ -710,7 +710,7 @@ export function OnboardingClient({ profile }: Props) {
     setIndustry(id)
     setTemplate('')
     setProjName('')
-    setRole('')  // reset role — it changes per industry
+    setRole('')  // reset role, it changes per industry
   }
 
   async function finish() {
@@ -833,16 +833,16 @@ export function OnboardingClient({ profile }: Props) {
         <div style={{ width:'100%', maxWidth:680 }}>
 
           {/* ══════════════════════════════════════════════════════════════════
-              STEP 1 — INDUSTRY (the most important choice)
+              STEP 1, INDUSTRY (the most important choice)
           ══════════════════════════════════════════════════════════════════ */}
           {step === 1 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 1 of 4 — Your Industry</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'var(--font-mono)', marginBottom:16, textTransform:'uppercase' }}>Step 1 of 4, Your Industry</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
                 What field do you work in?
               </h1>
               <p style={{ fontSize:14, color:'var(--text3)', marginBottom:32, lineHeight:1.65, maxWidth:520 }}>
-                VeSiMy adapts its language to your field — your processes, metrics, and terminology. A nurse never sees "WIP". A brewer never sees "takt time" as a phrase they don't recognise.
+                VeSiMy adapts its language to your field, your processes, metrics, and terminology. A nurse never sees "WIP". A brewer never sees "takt time" as a phrase they don't recognise.
               </p>
 
               {/* Sector tabs */}
@@ -888,7 +888,7 @@ export function OnboardingClient({ profile }: Props) {
                 const terms = getIndustryTerms(industry)
                 return (
                   <div style={{ background:'rgba(1,118,211,0.04)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:12, padding:'16px 18px', marginBottom:24 }}>
-                    <div style={{ fontSize:10, color:'#D4A843', fontWeight:700, letterSpacing:1.5, textTransform:'uppercase', marginBottom:10, fontFamily:'monospace' }}>
+                    <div style={{ fontSize:10, color:'#D4A843', fontWeight:700, letterSpacing:1.5, textTransform:'uppercase', marginBottom:10, fontFamily:'var(--font-mono)' }}>
                       How VeSiMy will look for {preview.badge}
                     </div>
                     <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
@@ -924,11 +924,11 @@ export function OnboardingClient({ profile }: Props) {
           )}
 
           {/* ══════════════════════════════════════════════════════════════════
-              STEP 2 — ROLE
+              STEP 2, ROLE
           ══════════════════════════════════════════════════════════════════ */}
           {step === 2 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 2 of 4 — Your Role</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'var(--font-mono)', marginBottom:16, textTransform:'uppercase' }}>Step 2 of 4, Your Role</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
                 What's your role<br /><span style={{ color:'#D4A843' }}>in {getIndustryLabel(industry) || 'your field'}?</span>
               </h1>
@@ -969,11 +969,11 @@ export function OnboardingClient({ profile }: Props) {
           )}
 
           {/* ══════════════════════════════════════════════════════════════════
-              STEP 3 — FIRST PROJECT (industry-aware templates)
+              STEP 3, FIRST PROJECT (industry-aware templates)
           ══════════════════════════════════════════════════════════════════ */}
           {step === 3 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 3 of 4 — Your First Process</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'var(--font-mono)', marginBottom:16, textTransform:'uppercase' }}>Step 3 of 4, Your First Process</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
                 Name your first<br /><span style={{ color:'#D4A843' }}>{t.process}.</span>
               </h1>
@@ -999,10 +999,10 @@ export function OnboardingClient({ profile }: Props) {
                   border: template==='sample' ? '1.5px solid #2E844A' : '1.5px solid var(--border)',
                 }}>
                   <div style={{ fontWeight:600, fontSize:13, color: template==='sample' ? '#2E844A' : 'var(--text)', marginBottom:4 }}>
-                    Load reference projects — explore fully-built examples
+                    Load reference projects, explore fully-built examples
                   </div>
                   <div style={{ fontSize:11, color:'var(--text3)' }}>
-                    18 industries, every CI tool populated — stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, and more. Real bottlenecks, root causes, and countermeasures.
+                    18 industries, every CI tool populated, stopwatch, fishbone, 5 Why, waste ID, kaizen, PDCA, SMED, and more. Real bottlenecks, root causes, and countermeasures.
                   </div>
                 </button>
 
@@ -1046,11 +1046,11 @@ export function OnboardingClient({ profile }: Props) {
           )}
 
           {/* ══════════════════════════════════════════════════════════════════
-              STEP 4 — CONFIRM + LAUNCH
+              STEP 4, CONFIRM + LAUNCH
           ══════════════════════════════════════════════════════════════════ */}
           {step === 4 && (
             <div>
-              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'monospace', marginBottom:16, textTransform:'uppercase' }}>Step 4 of 4 — Ready</p>
+              <p style={{ fontSize:11, color:'#D4A843', letterSpacing:3, fontFamily:'var(--font-mono)', marginBottom:16, textTransform:'uppercase' }}>Step 4 of 4, Ready</p>
               <h1 style={{ fontFamily:serif, fontSize:'clamp(26px,4vw,42px)', fontWeight:700, color:'var(--text)', marginBottom:10, lineHeight:1.15 }}>
                 Your workspace is<br /><span style={{ color:'#D4A843' }}>ready to build.</span>
               </h1>

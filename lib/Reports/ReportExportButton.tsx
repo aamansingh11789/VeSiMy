@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 'use client'
 
 import { createRoot } from 'react-dom/client'
@@ -16,7 +16,7 @@ export default function ReportExportButton({ project, steps, branches, vsmHtml =
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Process Analysis Report — ${project?.name || 'Vesimy'}</title>
+          <title>Process Analysis Report, ${project?.name || 'Vesimy'}</title>
           <meta charset="utf-8" />
           <style>
             body { margin: 0; background: #fff; }

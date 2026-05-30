@@ -1,11 +1,11 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/database.types.ts ──────────────────────────────────────────────────
-// Loose types — prevents strict Supabase client type conflicts
+// Loose types, prevents strict Supabase client type conflicts
 
 export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
 export type PlanTier = 'trial' | 'trialing' | 'trial_expired' | 'pro' | 'lifetime' | 'enterprise'
 
-// Loose Database type — allows all operations without 'never' type errors
+// Loose Database type, allows all operations without 'never' type errors
 export interface Database {
   public: {
     Tables: {

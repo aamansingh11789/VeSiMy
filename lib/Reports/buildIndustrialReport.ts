@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 import { calcProcessMetrics } from '@/lib/v2/process-metrics'
 import { fmtSeconds } from '@/lib/v2/cycle-time-utils'
 

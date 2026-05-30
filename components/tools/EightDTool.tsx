@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/tools/EightDTool.tsx ──────────────────────────────────────────
-// 8D — Eight Disciplines
+// 8D, Eight Disciplines
 // Purpose: Quality escapes and customer complaints requiring structured team response.
 // Visual identity: Eight numbered disciplines in a structured grid layout.
 // Spec: VeSiMy v4 Section 7.3
@@ -82,7 +82,7 @@ const inp: React.CSSProperties = {
   boxSizing: 'border-box' as const, outline: 'none',
 }
 const area: React.CSSProperties = { ...inp, resize: 'vertical' as const }
-const label = (text: string): React.CSSProperties => ({ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 })
+const label = (text: string): React.CSSProperties => ({ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 })
 
 interface Props {
   stepId: string; stepName: string; data: Partial<EightDData>
@@ -125,7 +125,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
   ].filter(Boolean).length
 
   return (
-    <Modal title={`8D Report — ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save 8D'}>
+    <Modal title={`8D Report, ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save 8D'}>
       {/* Header */}
       <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
         <div style={{ flex: 1 }}>
@@ -139,8 +139,8 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
       {/* Progress bar */}
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-          <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--text3)' }}>COMPLETION</span>
-          <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#D4A843' }}>{completedCount}/8 disciplines</span>
+          <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text3)' }}>COMPLETION</span>
+          <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#D4A843' }}>{completedCount}/8 disciplines</span>
         </div>
         <div style={{ height: 6, background: 'var(--bg2)', borderRadius: 3, overflow: 'hidden' }}>
           <div style={{ height: '100%', width: `${(completedCount / 8) * 100}%`, background: 'linear-gradient(90deg,#D4A843,#1DD1A1)', borderRadius: 3, transition: 'width 0.4s ease' }} />
@@ -155,7 +155,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
             background: activeD === i ? `${d.color}15` : 'transparent', cursor: 'pointer', fontFamily: 'inherit',
           }}>
             <div style={{ fontSize: 14, marginBottom: 2 }}>{d.icon}</div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: d.color, fontFamily: 'monospace' }}>{d.d}</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: d.color, fontFamily: 'var(--font-mono)' }}>{d.d}</div>
           </button>
         ))}
       </div>
@@ -165,7 +165,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
           <span style={{ fontSize: 20 }}>{disc.icon}</span>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 700, color: disc.color, fontFamily: 'monospace', letterSpacing: 1 }}>{disc.d}</div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: disc.color, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>{disc.d}</div>
             <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>{disc.label}</div>
           </div>
         </div>
@@ -241,7 +241,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
             <div>
               <label style={label('VERIFIED ROOT CAUSE')}>VERIFIED ROOT CAUSE</label>
               <textarea rows={3} value={form.d4_root_cause} onChange={e => set('d4_root_cause', e.target.value)}
-                placeholder="State the root cause. This must be verified — not the first plausible cause." style={area} />
+                placeholder="State the root cause. This must be verified, not the first plausible cause." style={area} />
             </div>
             <div>
               <label style={label('METHOD USED TO IDENTIFY')}>METHOD USED TO IDENTIFY</label>
@@ -338,7 +338,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
           style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: activeD === 0 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 0 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
           ← Previous
         </button>
-        <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'monospace' }}>{activeD + 1} / 8</span>
+        <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'var(--font-mono)' }}>{activeD + 1} / 8</span>
         <button onClick={() => setActiveD(d => Math.min(7, d + 1))} disabled={activeD === 7}
           style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: activeD === 7 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 7 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
           Next →

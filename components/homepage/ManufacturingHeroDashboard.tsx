@@ -1,6 +1,6 @@
 'use client'
 // ── components/homepage/ManufacturingHeroDashboard.tsx ────────────────────────
-// Premium manufacturing analytics hero — 3D tilted tablet + dark analytics panel
+// Premium manufacturing analytics hero, 3D tilted tablet + dark analytics panel
 // Self-contained: no external chart libs, CSS-only charts, Tailwind + inline styles
 
 import { useEffect, useRef, useState } from 'react'
@@ -174,7 +174,7 @@ export function ManufacturingHeroDashboard() {
             borderRadius: 999, padding: '5px 16px', marginBottom: 20,
           }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3B82F6', display: 'inline-block', boxShadow: '0 0 6px #3B82F6' }} />
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#3B82F6', fontFamily: 'monospace', textTransform: 'uppercase' }}>Manufacturing Intelligence</span>
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#3B82F6', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Manufacturing Intelligence</span>
           </div>
           <h2 style={{
             fontSize: 'clamp(26px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.1,
@@ -215,7 +215,7 @@ export function ManufacturingHeroDashboard() {
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFD93D' }} />
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#6BCB77' }} />
               <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-                <div style={{ background: 'rgba(0,0,0,0.05)', borderRadius: 6, padding: '3px 20px', fontSize: 10, color: '#94A3B8', fontFamily: 'monospace' }}>vesimy.com/project/asm-line-a</div>
+                <div style={{ background: 'rgba(0,0,0,0.05)', borderRadius: 6, padding: '3px 20px', fontSize: 10, color: '#94A3B8', fontFamily: 'var(--font-mono)' }}>vesimy.com/project/asm-line-a</div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {['○', '□', '⟳'].map(s => <span key={s} style={{ fontSize: 11, color: '#CBD5E1', cursor: 'pointer' }}>{s}</span>)}
@@ -232,7 +232,7 @@ export function ManufacturingHeroDashboard() {
               }}>
                 {/* Logo mark */}
                 <div style={{ width: 28, height: 28, borderRadius: 7, background: 'linear-gradient(135deg,#3B82F6,#6366F1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, color: 'white', fontWeight: 900, fontFamily: 'monospace' }}>V</span>
+                  <span style={{ fontSize: 11, color: 'white', fontWeight: 900, fontFamily: 'var(--font-mono)' }}>V</span>
                 </div>
                 {RAIL_ICONS.map((icon, i) => (
                   <div key={i} style={{
@@ -249,14 +249,14 @@ export function ManufacturingHeroDashboard() {
                 {/* Header row */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
-                    <div style={{ fontSize: 9, fontFamily: 'monospace', color: '#94A3B8', letterSpacing: 1, marginBottom: 2 }}>ACME MANUFACTURING</div>
+                    <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#94A3B8', letterSpacing: 1, marginBottom: 2 }}>ACME MANUFACTURING</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Current State — Assembly Line A</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Current State, Assembly Line A</span>
                       <span style={{ fontSize: 10, color: '#3B82F6', cursor: 'pointer' }}>✎</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                    <span style={{ fontSize: 9, fontFamily: 'monospace', color: '#10B981', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 4, padding: '2px 7px' }}>● LIVE</span>
+                    <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#10B981', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 4, padding: '2px 7px' }}>● LIVE</span>
                     <span style={{ fontSize: 13, color: '#94A3B8', cursor: 'pointer' }}>⋮</span>
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export function ManufacturingHeroDashboard() {
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           flexDirection: 'column', cursor: 'pointer',
                         }}>
-                          <span style={{ fontSize: 6, fontWeight: 700, color: '#475569', fontFamily: 'monospace', textAlign: 'center', lineHeight: 1.2 }}>{step.label.slice(0, 4).toUpperCase()}</span>
+                          <span style={{ fontSize: 6, fontWeight: 700, color: '#475569', fontFamily: 'var(--font-mono)', textAlign: 'center', lineHeight: 1.2 }}>{step.label.slice(0, 4).toUpperCase()}</span>
                         </div>
                       ) : (
                         <div
@@ -297,8 +297,8 @@ export function ManufacturingHeroDashboard() {
                             }}>!</div>
                           )}
                           <div style={{ fontSize: 9, fontWeight: 700, color: step.bot ? '#EF4444' : '#0F172A', marginBottom: 3 }}>{step.label}</div>
-                          <div style={{ fontSize: 7.5, color: '#64748B', fontFamily: 'monospace' }}>CT: {step.ct}</div>
-                          <div style={{ fontSize: 7.5, color: '#94A3B8', fontFamily: 'monospace' }}>CO: {step.co}</div>
+                          <div style={{ fontSize: 7.5, color: '#64748B', fontFamily: 'var(--font-mono)' }}>CT: {step.ct}</div>
+                          <div style={{ fontSize: 7.5, color: '#94A3B8', fontFamily: 'var(--font-mono)' }}>CO: {step.co}</div>
                         </div>
                       )}
                       {/* Arrow */}
@@ -326,8 +326,8 @@ export function ManufacturingHeroDashboard() {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
                           {[['CT', card.ct], ['WIP', String(card.wip)]].map(([k, v]) => (
                             <div key={k}>
-                              <div style={{ fontSize: 6, color: '#94A3B8', fontFamily: 'monospace' }}>{k}</div>
-                              <div style={{ fontSize: 10, fontWeight: 700, color: '#0F172A', fontFamily: 'monospace' }}>{v}</div>
+                              <div style={{ fontSize: 6, color: '#94A3B8', fontFamily: 'var(--font-mono)' }}>{k}</div>
+                              <div style={{ fontSize: 10, fontWeight: 700, color: '#0F172A', fontFamily: 'var(--font-mono)' }}>{v}</div>
                             </div>
                           ))}
                         </div>
@@ -354,8 +354,8 @@ export function ManufacturingHeroDashboard() {
                       flex: 1, background: '#F8FAFF', border: '1px solid rgba(0,0,0,0.05)',
                       borderRadius: 8, padding: '8px 10px',
                     }}>
-                      <div style={{ fontSize: 7, color: '#94A3B8', fontFamily: 'monospace', letterSpacing: 0.5, marginBottom: 3 }}>{kpi.label.toUpperCase()}</div>
-                      <div style={{ fontSize: 16, fontWeight: 800, color: '#0F172A', fontFamily: 'monospace', letterSpacing: -0.5 }}>{kpi.value}</div>
+                      <div style={{ fontSize: 7, color: '#94A3B8', fontFamily: 'var(--font-mono)', letterSpacing: 0.5, marginBottom: 3 }}>{kpi.label.toUpperCase()}</div>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: '#0F172A', fontFamily: 'var(--font-mono)', letterSpacing: -0.5 }}>{kpi.value}</div>
                       <div style={{ fontSize: 8, fontWeight: 600, color: kpi.up ? '#10B981' : '#EF4444', marginTop: 2 }}>
                         {kpi.up ? '↑' : '↓'} {kpi.delta}
                       </div>
@@ -398,13 +398,13 @@ export function ManufacturingHeroDashboard() {
             {/* Panel header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
               <div>
-                <div style={{ fontSize: 9, fontFamily: 'monospace', color: '#60A5FA', letterSpacing: 1.5, marginBottom: 4 }}>CURRENT STATE ANALYSIS</div>
+                <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#60A5FA', letterSpacing: 1.5, marginBottom: 4 }}>CURRENT STATE ANALYSIS</div>
                 <div style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>Analytics & Insights</div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {['1W', '1M', '3M', 'YTD'].map((r, i) => (
                   <button key={r} style={{
-                    fontSize: 9, fontFamily: 'monospace', padding: '3px 9px',
+                    fontSize: 9, fontFamily: 'var(--font-mono)', padding: '3px 9px',
                     borderRadius: 5, border: '1px solid',
                     borderColor: i === 1 ? '#60A5FA' : 'rgba(255,255,255,0.1)',
                     background: i === 1 ? 'rgba(96,165,250,0.15)' : 'transparent',
@@ -425,8 +425,8 @@ export function ManufacturingHeroDashboard() {
                   borderTop: `2px solid ${kpi.color}`,
                   borderRadius: 10, padding: '10px 14px',
                 }}>
-                  <div style={{ fontSize: 7.5, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', letterSpacing: 1, marginBottom: 6 }}>{kpi.label.toUpperCase()}</div>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: 'white', fontFamily: 'monospace', letterSpacing: -0.5 }}>{kpi.value}</div>
+                  <div style={{ fontSize: 7.5, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)', letterSpacing: 1, marginBottom: 6 }}>{kpi.label.toUpperCase()}</div>
+                  <div style={{ fontSize: 20, fontWeight: 800, color: 'white', fontFamily: 'var(--font-mono)', letterSpacing: -0.5 }}>{kpi.value}</div>
                 </div>
               ))}
             </div>
@@ -435,37 +435,37 @@ export function ManufacturingHeroDashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
               {/* Lead time trend */}
               <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '12px 14px' }}>
-                <div style={{ fontSize: 8, fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 8 }}>LEAD TIME TREND (DAYS)</div>
+                <div style={{ fontSize: 8, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 8 }}>LEAD TIME TREND (DAYS)</div>
                 <LineChart data={LEAD_TREND} color="#60A5FA" />
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
                   {['Jan', 'Mar', 'May', 'Jun'].map(m => (
-                    <span key={m} style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>{m}</span>
+                    <span key={m} style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)' }}>{m}</span>
                   ))}
                 </div>
               </div>
 
               {/* PCE over time */}
               <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '12px 14px' }}>
-                <div style={{ fontSize: 8, fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 6 }}>PCE OVER TIME (%)</div>
+                <div style={{ fontSize: 8, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 6 }}>PCE OVER TIME (%)</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                   {[['Target', 'rgba(96,165,250,0.4)'], ['Actual', '#60A5FA']].map(([l, c]) => (
                     <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                       <div style={{ width: 8, height: 4, background: c, borderRadius: 2 }} />
-                      <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace' }}>{l}</span>
+                      <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)' }}>{l}</span>
                     </div>
                   ))}
                 </div>
                 <BarChart data={PCE_DATA} />
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
                   {PCE_DATA.map(d => (
-                    <span key={d.label} style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>{d.label.slice(0, 1)}</span>
+                    <span key={d.label} style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)' }}>{d.label.slice(0, 1)}</span>
                   ))}
                 </div>
               </div>
 
               {/* Waste breakdown donut */}
               <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '12px 14px' }}>
-                <div style={{ fontSize: 8, fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 8 }}>WASTE BREAKDOWN</div>
+                <div style={{ fontSize: 8, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginBottom: 8 }}>WASTE BREAKDOWN</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <Donut slices={WASTE} />
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -473,9 +473,9 @@ export function ManufacturingHeroDashboard() {
                       <div key={w.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                           <div style={{ width: 5, height: 5, borderRadius: '50%', background: w.color, flexShrink: 0 }} />
-                          <span style={{ fontSize: 7.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>{w.label}</span>
+                          <span style={{ fontSize: 7.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-mono)' }}>{w.label}</span>
                         </div>
-                        <span style={{ fontSize: 8, fontWeight: 700, color: w.color, fontFamily: 'monospace' }}>{w.pct}%</span>
+                        <span style={{ fontSize: 8, fontWeight: 700, color: w.color, fontFamily: 'var(--font-mono)' }}>{w.pct}%</span>
                       </div>
                     ))}
                   </div>

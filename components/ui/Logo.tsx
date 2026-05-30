@@ -12,7 +12,7 @@ interface LogoProps {
 
 // ── 3D extruded V mark ────────────────────────────────────────────────────────
 export function VLogoMark({ size = 40 }: { size?: number }) {
-  // Static ID prefix — avoids SSR/hydration mismatch on dynamic IDs
+  // Static ID prefix, avoids SSR/hydration mismatch on dynamic IDs
   const u = 'v3d'
   return (
     <svg
@@ -25,7 +25,7 @@ export function VLogoMark({ size = 40 }: { size?: number }) {
       aria-hidden="true"
     >
       <defs>
-        {/* Front face — gold → purple gradient */}
+        {/* Front face, gold → purple gradient */}
         <linearGradient id={`${u}-front`} x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stopColor="#FFD56C" />
           <stop offset="22%"  stopColor="#F4A623" />
@@ -33,13 +33,13 @@ export function VLogoMark({ size = 40 }: { size?: number }) {
           <stop offset="76%"  stopColor="#8C44CC" />
           <stop offset="100%" stopColor="#4B1B88" />
         </linearGradient>
-        {/* Depth/extrusion — darker */}
+        {/* Depth/extrusion, darker */}
         <linearGradient id={`${u}-depth`} x1="0" y1="0" x2="0" y2="108" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stopColor="#B8700A" />
           <stop offset="50%"  stopColor="#9B3D10" />
           <stop offset="100%" stopColor="#3A1560" />
         </linearGradient>
-        {/* Top bevel — lightest */}
+        {/* Top bevel, lightest */}
         <linearGradient id={`${u}-top`} x1="10" y1="6" x2="90" y2="6" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stopColor="#FFE896" />
           <stop offset="50%"  stopColor="#FFD56C" />
@@ -104,7 +104,7 @@ export function VLogoMark({ size = 40 }: { size?: number }) {
   )
 }
 
-// ── VeSiMy wordmark — V, S, M large caps; e, i, y small ──────────────────────
+// ── VeSiMy wordmark, V, S, M large caps; e, i, y small ──────────────────────
 export function VeSiMyWordmark({ size = 40, onDark = false }: { size?: number; onDark?: boolean }) {
   const capSize   = Math.round(size * 0.95)
   const lowerSize = Math.round(size * 0.50)

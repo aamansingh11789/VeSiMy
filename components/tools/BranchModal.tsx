@@ -61,7 +61,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
 
   return (
     <Modal
-      title={isEdit ? `Edit Branch — ${branch?.label}` : 'Create Process Branch'}
+      title={isEdit ? `Edit Branch, ${branch?.label}` : 'Create Process Branch'}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Branch'}
@@ -97,7 +97,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
           }}
         >
           A branch represents a **parallel process lane** running alongside your
-          main value stream — such as a sub-assembly line, inspection loop,
+          main value stream, such as a sub-assembly line, inspection loop,
           or support process.
         </div>
 

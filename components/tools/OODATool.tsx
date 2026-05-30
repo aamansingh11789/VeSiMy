@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/tools/OODATool.tsx ─────────────────────────────────────────────
-// OODA Loop — Observe, Orient, Decide, Act
+// OODA Loop, Observe, Orient, Decide, Act
 // Purpose: Fast-moving operational decisions where rapid iteration matters.
 // Visual identity: Four-stage loop communicating speed and iteration.
 // Spec: VeSiMy v4 Section 7.4
@@ -71,8 +71,8 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
         <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--brand)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
           {index + 1}
         </div>
-        <div style={{ flex: 1, fontSize: 12, color: 'var(--text2)', fontFamily: 'monospace' }}>
-          Loop {index + 1} — {iter.timestamp}
+        <div style={{ flex: 1, fontSize: 12, color: 'var(--text2)', fontFamily: 'var(--font-mono)' }}>
+          Loop {index + 1}, {iter.timestamp}
         </div>
         {iter.act && <div style={{ fontSize: 11, color: '#2E844A', fontWeight: 700 }}>✓ Act defined</div>}
         <div style={{ color: 'var(--text3)', fontSize: 14 }}>{expanded ? '▲' : '▼'}</div>
@@ -85,7 +85,7 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
               <div key={phase.key}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                   <span style={{ fontSize: 14 }}>{phase.icon}</span>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: phase.color, fontFamily: 'monospace', letterSpacing: 1 }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: phase.color, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>
                     {phase.label.toUpperCase()}
                   </span>
                 </div>
@@ -103,14 +103,14 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
 
           <div style={{ borderTop: '1px solid var(--border)', paddingTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'monospace', display: 'block', marginBottom: 4 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: 4 }}>
                 OUTCOME (fill in after acting)
               </label>
               <textarea rows={2} value={iter.outcome} onChange={e => onUpdate('outcome', e.target.value)}
                 placeholder="What happened after you acted? Did it work?" style={area} />
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'monospace', display: 'block', marginBottom: 4 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: 4 }}>
                 LOOP AGAIN?
               </label>
               <button onClick={() => onUpdate('loop_again', !iter.loop_again)} style={{
@@ -171,10 +171,10 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
   }
 
   return (
-    <Modal title={`OODA Loop — ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save OODA'}>
+    <Modal title={`OODA Loop, ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save OODA'}>
       {/* Header info */}
       <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 9, padding: '10px 14px', marginBottom: 16 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: 'monospace', color: '#D4A843', letterSpacing: 1, marginBottom: 4 }}>OODA LOOP</div>
+        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: 'var(--font-mono)', color: '#D4A843', letterSpacing: 1, marginBottom: 4 }}>OODA LOOP</div>
         <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
           Observe → Orient → Decide → Act. For fast-moving operational decisions where speed of iteration matters more than exhaustive analysis. Complete the loop, assess the outcome, then loop again if needed.
         </p>
@@ -188,7 +188,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               <div style={{ width: 40, height: 40, borderRadius: '50%', background: `${phase.color}15`, border: `2px solid ${phase.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, margin: '0 auto 4px' }}>
                 {phase.icon}
               </div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: phase.color, fontFamily: 'monospace', letterSpacing: 1 }}>{phase.label.toUpperCase()}</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: phase.color, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>{phase.label.toUpperCase()}</div>
             </div>
             {i < PHASES.length - 1 && <div style={{ width: 24, height: 2, background: 'var(--border)', flexShrink: 0 }} />}
             {i === PHASES.length - 1 && <div style={{ fontSize: 16, color: '#D4A843', flexShrink: 0 }}>↩</div>}
@@ -198,7 +198,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
 
       {/* Context */}
       <div style={{ marginBottom: 14 }}>
-        <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>
+        <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>
           SITUATION / CONTEXT
         </label>
         <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -251,7 +251,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {form.iterations.map((iter, i) => (
                 <div key={iter.id} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: 12 }}>
-                  <div style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--text3)', marginBottom: 6 }}>LOOP {i + 1} — {iter.timestamp}</div>
+                  <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text3)', marginBottom: 6 }}>LOOP {i + 1}, {iter.timestamp}</div>
                   {iter.observe && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#6CB9FC' }}>Observed:</strong> {iter.observe}</p>}
                   {iter.decide && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#8C44CC' }}>Decided:</strong> {iter.decide}</p>}
                   {iter.act    && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#2E844A' }}>Action:</strong> {iter.act}</p>}
@@ -261,9 +261,9 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             </div>
           )}
           <div style={{ marginTop: 16 }}>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 6 }}>RESOLUTION</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 6 }}>RESOLUTION</label>
             <textarea value={form.resolution} onChange={e => setForm(f => ({ ...f, resolution: e.target.value }))} rows={2}
-              placeholder="When you are done looping — what was the final outcome?" style={area} />
+              placeholder="When you are done looping, what was the final outcome?" style={area} />
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               {(['active', 'resolved', 'paused'] as const).map(s => (
                 <button key={s} onClick={() => setForm(f => ({ ...f, status: s }))} style={{
@@ -302,7 +302,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             <li>You need a customer-facing response document</li>
           </ul>
           <p style={{ marginTop: 12, padding: 12, background: 'rgba(1,118,211,0.06)', borderRadius: 8, fontSize: 12, color: 'var(--text3)' }}>
-            OODA was developed by US Air Force Colonel John Boyd for aerial combat decisions. It has since been applied to business strategy, crisis management, and lean operations. The key insight is that the side with the faster OODA loop wins — not necessarily the one with the best single decision.
+            OODA was developed by US Air Force Colonel John Boyd for aerial combat decisions. It has since been applied to business strategy, crisis management, and lean operations. The key insight is that the side with the faster OODA loop wins, not necessarily the one with the best single decision.
           </p>
         </div>
       )}

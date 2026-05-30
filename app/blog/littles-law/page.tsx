@@ -17,8 +17,8 @@ export default function Post() {
         <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>Back to Blog</Link>
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>METHODOLOGY</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>5 min read</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>METHODOLOGY</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>5 min read</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             The Formula That Validates Your WIP and Lead Time Data

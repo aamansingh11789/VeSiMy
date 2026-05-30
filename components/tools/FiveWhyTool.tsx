@@ -44,7 +44,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
       showToast('5 Why analysis saved', 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -55,7 +55,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
     const body = `
       <h2>1. Problem Statement</h2>
       <div class="obs-box finding">
-        <div class="obs-label">Documented Problem — ISO 9001:2015 §10.2.1(a)</div>
+        <div class="obs-label">Documented Problem, ISO 9001:2015 §10.2.1(a)</div>
         <p style="font-size:12pt;font-weight:600;">${problem || '(Not documented)'}</p>
         <p style="font-size:9pt;color:#666;margin-top:4pt;">Process Step: <strong>${stepName}</strong> · Documented: ${new Date().toLocaleDateString()}</p>
       </div>
@@ -63,14 +63,14 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
       <h2>2. Five Why Interrogation Chain</h2>
       <p>The 5 Why method is a structured root cause analysis technique aligned with ISO 9001:2015 §10.2.1
       and ISO 31000:2018 §6.4. Each iterative question drills deeper into the causal chain until the root
-      system cause is identified — not a symptom.</p>
+      system cause is identified, not a symptom.</p>
       <table class="data-table">
         <thead><tr><th style="width:30pt;">Level</th><th>Interrogation Question</th><th>Response / Cause Statement</th><th>Evidence / Data</th></tr></thead>
         <tbody>
           <tr style="background:#fff8e1;">
             <td style="font-size:10pt;font-weight:700;text-align:center;">P</td>
             <td style="font-weight:600;">Problem Statement</td>
-            <td>${problem || '—'}</td>
+            <td>${problem || ','}</td>
             <td>Observed / Reported</td>
           </tr>
           ${whys.map((w, i) => `
@@ -78,7 +78,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
               <td style="font-size:11pt;font-weight:700;text-align:center;color:#8B6A00;">W${i+1}</td>
               <td style="font-style:italic;">Why does this occur?</td>
               <td style="${!w ? 'color:#aaa;font-style:italic;' : ''}">${w || '(Not documented)'}</td>
-              <td>${w ? 'Documented' : '—'}</td>
+              <td>${w ? 'Documented' : ','}</td>
             </tr>
           `).join('')}
         </tbody>
@@ -86,8 +86,8 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
 
       <h2>3. Root Cause Determination</h2>
       <div class="obs-box ${rootCause ? 'finding' : ''}">
-        <div class="obs-label">Verified Root Cause — ISO 9001:2015 §10.2.1(b)</div>
-        <p style="font-size:12pt;font-weight:600;">${rootCause || '(Root cause not yet determined — complete the 5 Why chain above)'}</p>
+        <div class="obs-label">Verified Root Cause, ISO 9001:2015 §10.2.1(b)</div>
+        <p style="font-size:12pt;font-weight:600;">${rootCause || '(Root cause not yet determined, complete the 5 Why chain above)'}</p>
       </div>
       <p>The root cause represents the deepest systemic cause that, if addressed, will prevent recurrence.
       A root cause is distinguished from a contributing cause by the fact that removing it eliminates the problem.</p>
@@ -100,8 +100,8 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
         <tbody>
           <tr>
             <td style="font-weight:600;">${action || '(Action not yet defined)'}</td>
-            <td>${owner || '—'}</td>
-            <td>${dueDate || '—'}</td>
+            <td>${owner || ','}</td>
+            <td>${dueDate || ','}</td>
             <td>Post-implementation review; monitor KPI for 30 days</td>
           </tr>
         </tbody>
@@ -132,7 +132,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
 
   return (
     <Modal
-      title={`5 Why Analysis — ${stepName}`}
+      title={`5 Why Analysis, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
@@ -158,7 +158,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           onChange={(e) => setProblem(e.target.value)}
         />
 
-        {/* Causal chain — each Why connects to the previous answer */}
+        {/* Causal chain, each Why connects to the previous answer */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {whys.map((w, i) => {
             const prevAnswer = i === 0 ? problem : whys[i - 1]
@@ -212,12 +212,12 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                       {/* Validation hint */}
                       {isShallow && (
                         <div style={{ fontSize: 10, color: 'var(--warning)', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                          <span>⚠</span> Too brief — describe the mechanism, not just the symptom
+                          <span>⚠</span> Too brief, describe the mechanism, not just the symptom
                         </div>
                       )}
                       {isFilled && hasMinLength && i < 4 && (
                         <div style={{ fontSize: 10, color: 'var(--brand)', marginTop: 4 }}>
-                          ✓ Good — ask why this happens in Why {i + 2}
+                          ✓ Good, ask why this happens in Why {i + 2}
                         </div>
                       )}
                     </div>

@@ -25,7 +25,7 @@ export function PostHogProvider({ children }: { children?: React.ReactNode }) {
           ;(window as any).posthog = ph
         },
       })
-    }).catch(() => {}) // posthog-js not installed — silent no-op
+    }).catch(() => {}) // posthog-js not installed, silent no-op
   }, [])
 
   return <>{children}</>

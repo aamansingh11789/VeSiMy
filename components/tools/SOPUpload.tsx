@@ -11,7 +11,7 @@ import { Modal } from '@/components/ui/Modal'
 function Chip({ label, color }: { label: string; color: string }) {
   return (
     <span style={{ fontSize:10, padding:'2px 7px', borderRadius:20, border:`1px solid ${color}40`,
-      background:`${color}15`, color, fontFamily:'monospace', whiteSpace:'nowrap' }}>
+      background:`${color}15`, color, fontFamily:'var(--font-mono)', whiteSpace:'nowrap' }}>
       {label}
     </span>
   )
@@ -67,7 +67,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
 
   function confirm() {
     if (!preview.length) return
-    // Don't close here — let handleSOPSteps close after DB saves complete
+    // Don't close here, let handleSOPSteps close after DB saves complete
     onStepsGenerated(preview)
   }
 
@@ -77,7 +77,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
 
   return (
     <Modal
-      title="Import SOP — Auto-Generate Steps"
+      title="Import SOP, Auto-Generate Steps"
       onClose={onClose}
       onSave={preview.length > 0 ? confirm : undefined}
       saveLabel={`Add ${preview.length} step${preview.length !== 1 ? 's' : ''} to Project`}
@@ -103,7 +103,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                 <div onClick={() => inputRef.current?.click()}
                   style={{ border:`2px dashed ${file?'var(--brand)':'var(--border2)'}`, borderRadius:'var(--radius)', padding:'32px 24px', textAlign:'center', cursor:'pointer',
                     background:file?'var(--brand-dim)':'transparent', transition:'all 0.2s' }}>
-                  <div style={{ fontSize:11, fontWeight:800, fontFamily:'monospace', letterSpacing:1, color:'var(--text3)', marginBottom:8 }}>{file?'FILE':'UPLOAD'}</div>
+                  <div style={{ fontSize:11, fontWeight:800, fontFamily:'var(--font-mono)', letterSpacing:1, color:'var(--text3)', marginBottom:8 }}>{file?'FILE':'UPLOAD'}</div>
                   <div style={{ fontSize:14, color:'var(--text)', fontWeight:500, marginBottom:4 }}>
                     {file ? file.name : 'Click to select a file'}
                   </div>

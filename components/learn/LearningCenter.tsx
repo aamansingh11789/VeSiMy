@@ -37,7 +37,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: `Set ${takt}`,
-          body: `${takt} = Available Time ÷ ${cust} Demand. VeSiMy calculates this automatically when you enter working hours and demand in project settings. Every ${ps} is benchmarked against it — ${ps}s over ${takt} are flagged red as bottlenecks.`,
+          body: `${takt} = Available Time ÷ ${cust} Demand. VeSiMy calculates this automatically when you enter working hours and demand in project settings. Every ${ps} is benchmarked against it, ${ps}s over ${takt} are flagged red as bottlenecks.`,
         },
         {
           title: 'Navigate your workspace',
@@ -53,7 +53,7 @@ function buildContent(t: any, industry: string) {
       id: 'va-classification', icon: '', title: 'VA / NNVA / NVA Classification', pro: false, steps: [
         {
           title: 'What is VA classification?',
-          body: `Every ${ps} is classified as Value Add (VA) — transforms the ${prod} in a way the ${cust} pays for; Necessary Non-Value Add (NNVA) — required but adds no ${cust} value; or Non-Value Add (NVA) — pure ${waste} to be eliminated. In ${sector}, VA examples include the core service delivery ${ps}s. NNVA includes necessary checks and handoffs. NVA includes waiting, rework, and unnecessary movement.`,
+          body: `Every ${ps} is classified as Value Add (VA), transforms the ${prod} in a way the ${cust} pays for; Necessary Non-Value Add (NNVA), required but adds no ${cust} value; or Non-Value Add (NVA), pure ${waste} to be eliminated. In ${sector}, VA examples include the core service delivery ${ps}s. NNVA includes necessary checks and handoffs. NVA includes waiting, rework, and unnecessary movement.`,
         },
         {
           title: 'Why it matters',
@@ -61,7 +61,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: `How to classify ${ps}s`,
-          body: `When adding or editing a ${ps}, select VA, NNVA, or NVA using the three buttons at the top of the form. The VSM Map colour-codes ${p} boxes accordingly — green adds value, red is a ${waste} target.`,
+          body: `When adding or editing a ${ps}, select VA, NNVA, or NVA using the three buttons at the top of the form. The VSM Map colour-codes ${p} boxes accordingly, green adds value, red is a ${waste} target.`,
         },
         {
           title: 'PCE and VA time',
@@ -70,7 +70,7 @@ function buildContent(t: any, industry: string) {
       ]
     },
     {
-      id: 'builder', icon: '', title: `Builder — ${ps.charAt(0).toUpperCase() + ps.slice(1)}s`, pro: false, steps: [
+      id: 'builder', icon: '', title: `Builder, ${ps.charAt(0).toUpperCase() + ps.slice(1)}s`, pro: false, steps: [
         {
           title: `Add a ${ps}`,
           body: `Click "Add ${ps.charAt(0).toUpperCase() + ps.slice(1)}" in the top bar. Enter the ${ps} name, department, VA classification, operators, ${ct}, wait time, ${wip}, and flow type. ${ps.charAt(0).toUpperCase() + ps.slice(1)}s appear in sequence representing your ${p} flow.`,
@@ -80,7 +80,7 @@ function buildContent(t: any, industry: string) {
           body: `Push: upstream produces regardless of downstream demand. Pull: downstream signals when it needs more. FIFO Lane: first-in-first-out queue with controlled ${wip}. Supermarket: controlled inventory buffer. One-piece flow is the ideal state for any ${p}.`,
         },
         {
-          title: `Operator tasks — Standard Work`,
+          title: `Operator tasks, Standard Work`,
           body: `Expand the Operator Steps section to break a ${ps} into individual tasks. Each task has a name, time in seconds, and VA classification. This feeds the Yamazumi Chart and Standard Work Sheet.`,
         },
         {
@@ -90,7 +90,7 @@ function buildContent(t: any, industry: string) {
       ]
     },
     {
-      id: 'tool-stopwatch', icon: '', title: `Tool 1 — ${ct} Study`, pro: false, steps: [
+      id: 'tool-stopwatch', icon: '', title: `Tool 1, ${ct} Study`, pro: false, steps: [
         {
           title: 'What it does',
           body: `Measures actual ${ct} for a ${ps} using direct observation. Records multiple observations, calculates the mean, standard deviation, and CV%, identifies outliers, and sets the official ${ct} used in all ${vstream} calculations.`,
@@ -105,12 +105,12 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Reading the output',
-          body: `Mean ${ct} shows on ${ps} cards. ${ps.charAt(0).toUpperCase() + ps.slice(1)}s exceeding ${takt} are flagged red — your bottlenecks. This data flows into the VSM map, PCE calculation, Yamazumi Chart, and AI Coaching.`,
+          body: `Mean ${ct} shows on ${ps} cards. ${ps.charAt(0).toUpperCase() + ps.slice(1)}s exceeding ${takt} are flagged red, your bottlenecks. This data flows into the VSM map, PCE calculation, Yamazumi Chart, and AI Coaching.`,
         },
       ]
     },
     {
-      id: 'tool-fishbone', icon: '', title: 'Tool 2 — Fishbone (Ishikawa)', pro: false, steps: [
+      id: 'tool-fishbone', icon: '', title: 'Tool 2, Fishbone (Ishikawa)', pro: false, steps: [
         {
           title: 'What it does',
           body: `Structured cause-and-effect analysis for quality or ${p} problems. Maps all potential root causes across categories so you can see every contributing factor before jumping to solutions. Developed by Kaoru Ishikawa as part of the Toyota Production System quality toolkit.`,
@@ -121,7 +121,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Add causes',
-          body: `Enter the problem statement at the top. Click each category and add cause statements — aim for 2–3 per category that reflect the real causes in your ${p}. Press Enter or click + to add each cause.`,
+          body: `Enter the problem statement at the top. Click each category and add cause statements, aim for 2–3 per category that reflect the real causes in your ${p}. Press Enter or click + to add each cause.`,
         },
         {
           title: 'Connect to 5 Why and PDCA',
@@ -130,14 +130,14 @@ function buildContent(t: any, industry: string) {
       ]
     },
     {
-      id: 'tool-fivewhy', icon: '', title: 'Tool 3 — 5 Why Analysis', pro: false, steps: [
+      id: 'tool-fivewhy', icon: '', title: 'Tool 3, 5 Why Analysis', pro: false, steps: [
         {
           title: 'What it does',
           body: `Iterative root cause analysis developed by Sakichi Toyoda and systematised at Toyota. Ask "Why?" five times to get past symptoms and surface the true systemic root cause. Most ${p} problems trace to a missing standard, a standard not followed, or a standard not visible.`,
         },
         {
           title: 'How to use it',
-          body: `Enter the problem statement — a ${defect}, a delay, a ${cust} complaint. Answer Why 1, Why 2, through Why 5. Each answer becomes the next question. Stop when you reach a root cause you can act on — something systemic, not a person.`,
+          body: `Enter the problem statement, a ${defect}, a delay, a ${cust} complaint. Answer Why 1, Why 2, through Why 5. Each answer becomes the next question. Stop when you reach a root cause you can act on, something systemic, not a person.`,
         },
         {
           title: 'Set a countermeasure',
@@ -145,12 +145,12 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'How deep to go?',
-          body: `Five is a guideline, not a rule. Stop at 3 if you reach root cause early. If your 5 Why ends with "operator error" or "staff failure" you have not gone deep enough — those are always symptoms of a system failure, never root causes in themselves.`,
+          body: `Five is a guideline, not a rule. Stop at 3 if you reach root cause early. If your 5 Why ends with "operator error" or "staff failure" you have not gone deep enough, those are always symptoms of a system failure, never root causes in themselves.`,
         },
       ]
     },
     {
-      id: 'tool-waste', icon: '', title: `Tool 4 — ${waste.charAt(0).toUpperCase() + waste.slice(1)} Identification`, pro: false, steps: [
+      id: 'tool-waste', icon: '', title: `Tool 4, ${waste.charAt(0).toUpperCase() + waste.slice(1)} Identification`, pro: false, steps: [
         {
           title: `The 8 ${waste}s`,
           body: `Defects (errors/rework), Overproduction (making too much), Waiting (idle time), Non-utilised talent (skills unused), Transport (moving materials or people), Inventory (excess stock or queue), Motion (unnecessary movement), Extra-processing (more work than the ${cust} requires). DOWNTIME is the lean acronym for all 8.`,
@@ -161,12 +161,12 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: `Add notes per ${waste}`,
-          body: `After selecting a ${waste} type, a text field appears for a specific note. Example — Waiting: "${p} waits 35 minutes in queue before the next ${ps} begins." These specifics focus ${kz} events and PDCA corrective actions on real problems.`,
+          body: `After selecting a ${waste} type, a text field appears for a specific note. Example, Waiting: "${p} waits 35 minutes in queue before the next ${ps} begins." These specifics focus ${kz} events and PDCA corrective actions on real problems.`,
         },
       ]
     },
     {
-      id: 'tool-kaizen', icon: '', title: `Tool 5 — ${kz.charAt(0).toUpperCase() + kz.slice(1)} Events`, pro: false, steps: [
+      id: 'tool-kaizen', icon: '', title: `Tool 5, ${kz.charAt(0).toUpperCase() + kz.slice(1)} Events`, pro: false, steps: [
         {
           title: `What is a ${kz}?`,
           body: `A structured, time-boxed improvement activity focused on a specific ${p} area. Typically 3–5 days with a dedicated cross-functional team. Kaizen = "change for better" in Japanese. The goal is measurable improvement in days, not months. In ${sector}, ${kz}s deliver results the team can see before the week ends.`,
@@ -181,15 +181,15 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: `${kz.charAt(0).toUpperCase() + kz.slice(1)} burst on VSM`,
-          body: `Open ${kz} events appear as burst (starburst) markers on your VSM Map — the internationally recognised ISO 22468:2020 symbol for improvement opportunities. Closed events remove the burst automatically.`,
+          body: `Open ${kz} events appear as burst (starburst) markers on your VSM Map, the internationally recognised ISO 22468:2020 symbol for improvement opportunities. Closed events remove the burst automatically.`,
         },
       ]
     },
     {
-      id: 'tool-improvement', icon: '', title: 'Tool 6 — Improvement Tracking', pro: false, steps: [
+      id: 'tool-improvement', icon: '', title: 'Tool 6, Improvement Tracking', pro: false, steps: [
         {
           title: 'What it does',
-          body: `Tracks specific, measurable improvement goals per ${ps}. Captures baseline (current state), target (future state), and actual result — giving you before/after proof of improvement for management reporting and ISO audits.`,
+          body: `Tracks specific, measurable improvement goals per ${ps}. Captures baseline (current state), target (future state), and actual result, giving you before/after proof of improvement for management reporting and ISO audits.`,
         },
         {
           title: 'Add improvement goals',
@@ -201,12 +201,12 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Feeds the PDCA Check phase',
-          body: `Improvement goal results flow directly into the Check phase of your PDCA project — giving you structured before/after data for the ISO-compliant report. This closes the measurement loop of the PDCA cycle.`,
+          body: `Improvement goal results flow directly into the Check phase of your PDCA project, giving you structured before/after data for the ISO-compliant report. This closes the measurement loop of the PDCA cycle.`,
         },
       ]
     },
     {
-      id: 'pdca', icon: '', title: 'PDCA — Improvement Projects', pro: false, steps: [
+      id: 'pdca', icon: '', title: 'PDCA, Improvement Projects', pro: false, steps: [
         {
           title: 'What is PDCA?',
           body: `PDCA (Plan-Do-Check-Act) is the fundamental improvement cycle used in ISO 9001, Lean, Six Sigma, and all quality management systems. Developed by Walter Shewhart and popularised by W. Edwards Deming, it provides a structured path from ${defect} identification to permanent solution.`,
@@ -221,7 +221,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Check phase',
-          body: `Record before/after metrics — ${ct}, ${defect} rate, ${wip}, PCE, or any custom metric. Document the results. Mark whether the target was achieved: Yes (standardise), Partial (adjust and continue), or No (return to Plan with new understanding).`,
+          body: `Record before/after metrics, ${ct}, ${defect} rate, ${wip}, PCE, or any custom metric. Document the results. Mark whether the target was achieved: Yes (standardise), Partial (adjust and continue), or No (return to Plan with new understanding).`,
         },
         {
           title: 'Act phase',
@@ -229,7 +229,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Export in 5 formats',
-          body: `Click "Export Report" to choose your format: PDCA (standard cycle), A3 (Toyota one-page), 8D (Ford customer report), DMAIC (Six Sigma), OODA (rapid decision cycle). All ISO-compliant. One ${p} dataset — five professional documents.`,
+          body: `Click "Export Report" to choose your format: PDCA (standard cycle), A3 (Toyota one-page), 8D (Ford customer report), DMAIC (Six Sigma), OODA (rapid decision cycle). All ISO-compliant. One ${p} dataset, five professional documents.`,
         },
       ]
     },
@@ -241,7 +241,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'How to read it',
-          body: `Each bar represents one ${ps}. Bar height is total ${ct}. Green (VA) should be as tall as possible. Amber (NNVA) should be minimised. Red (NVA) should be eliminated. The dashed red horizontal line is ${takt} — bars above it are bottlenecks requiring immediate action.`,
+          body: `Each bar represents one ${ps}. Bar height is total ${ct}. Green (VA) should be as tall as possible. Amber (NNVA) should be minimised. Red (NVA) should be eliminated. The dashed red horizontal line is ${takt}, bars above it are bottlenecks requiring immediate action.`,
         },
         {
           title: `How to use it for ${p} balancing`,
@@ -257,11 +257,11 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: `${takt} line`,
-          body: `A dashed red horizontal line crosses the timeline at ${takt}. Any ${ps} bar rising above this line cannot keep pace with ${cust} demand — it is your primary improvement target. The ${cust} is waiting.`,
+          body: `A dashed red horizontal line crosses the timeline at ${takt}. Any ${ps} bar rising above this line cannot keep pace with ${cust} demand, it is your primary improvement target. The ${cust} is waiting.`,
         },
         {
           title: 'Bottleneck detection',
-          body: `${ps.charAt(0).toUpperCase() + ps.slice(1)}s where ${ct} exceeds ${takt} are highlighted red with a ▲TAKT label and a ${kz} burst symbol. These are where your effort should focus first — bottlenecks constrain every other ${ps} in the ${vstream}.`,
+          body: `${ps.charAt(0).toUpperCase() + ps.slice(1)}s where ${ct} exceeds ${takt} are highlighted red with a ▲TAKT label and a ${kz} burst symbol. These are where your effort should focus first, bottlenecks constrain every other ${ps} in the ${vstream}.`,
         },
         {
           title: 'VSM analysis toolbar',
@@ -270,10 +270,10 @@ function buildContent(t: any, industry: string) {
       ]
     },
     {
-      id: 'supe', icon: '', title: 'Supe AI — Process Intelligence', pro: true, steps: [
+      id: 'supe', icon: '', title: 'Supe AI, Process Intelligence', pro: true, steps: [
         {
           title: 'What Supe does',
-          body: `Supe is your AI ${p} mentor. It analyses your entire ${vstream} — all ${ps}s, ${ct}s, ${waste} data, ${kz} events, and metrics — and provides specific, actionable improvement recommendations using the language and context of ${sector}.`,
+          body: `Supe is your AI ${p} mentor. It analyses your entire ${vstream}, all ${ps}s, ${ct}s, ${waste} data, ${kz} events, and metrics, and provides specific, actionable improvement recommendations using the language and context of ${sector}.`,
         },
         {
           title: 'How to use Supe',
@@ -293,7 +293,7 @@ function buildContent(t: any, industry: string) {
       id: 'standard-work', icon: '', title: 'Standard Work Sheet', pro: false, steps: [
         {
           title: 'What is Standard Work?',
-          body: `Standard Work is the documented current best method for performing a ${ps}. Not the fastest possible method — the safest, highest quality, lowest ${waste} method that any trained team member can reliably replicate. Standard Work is the baseline that makes continuous improvement possible in ${sector}.`,
+          body: `Standard Work is the documented current best method for performing a ${ps}. Not the fastest possible method, the safest, highest quality, lowest ${waste} method that any trained team member can reliably replicate. Standard Work is the baseline that makes continuous improvement possible in ${sector}.`,
         },
         {
           title: 'Standard Work Sheet',
@@ -301,7 +301,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Updating Standard Work',
-          body: `Standard Work must be updated every time the ${p} changes. In the Act phase of PDCA, updating the Standard Work Sheet is the primary standardisation action. If the document does not reflect reality, team members will not follow it — and improvement gains will revert.`,
+          body: `Standard Work must be updated every time the ${p} changes. In the Act phase of PDCA, updating the Standard Work Sheet is the primary standardisation action. If the document does not reflect reality, team members will not follow it, and improvement gains will revert.`,
         },
       ]
     },
@@ -313,7 +313,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'WIP limits',
-          body: `Each column can have a ${wip} limit — the maximum items allowed. When exceeded, the column header turns red as a visual signal to finish current work before starting more. ${wip} limits enforce pull flow and expose bottlenecks immediately.`,
+          body: `Each column can have a ${wip} limit, the maximum items allowed. When exceeded, the column header turns red as a visual signal to finish current work before starting more. ${wip} limits enforce pull flow and expose bottlenecks immediately.`,
         },
       ]
     },
@@ -325,7 +325,7 @@ function buildContent(t: any, industry: string) {
         },
         {
           title: 'Download Full Report (PDF)',
-          body: `Click "Download Full Report" to export a professionally formatted PDF with a full document control block (document ID, revision, date, prepared by) — suitable for ISO audits, ${cust} quality reviews, and management presentations.`,
+          body: `Click "Download Full Report" to export a professionally formatted PDF with a full document control block (document ID, revision, date, prepared by), suitable for ISO audits, ${cust} quality reviews, and management presentations.`,
         },
         {
           title: 'ISO compliance',
@@ -340,19 +340,19 @@ function buildContent(t: any, industry: string) {
     { term: `${ct} (CT)`, def: `The actual elapsed time to complete one ${prod} at a single ${ps}, measured by direct observation. Average of multiple observations after outlier removal. Compare to ${takt}: if ${ct} > ${takt}, the ${ps} is a bottleneck.`, std: 'ISO 22468:2020 §5.2.3, ILO §3' },
     { term: 'Lead Time', def: `Total elapsed time from input (demand, raw material, order) to output (delivered to ${cust}). = Sum of all ${ct}s + all wait/queue times. PCE = ${ct} / Lead Time. Reducing wait time between ${ps}s reduces Lead Time without changing ${ct}.`, std: 'ISO 22468:2020 §4.2' },
     { term: 'PCE (Process Cycle Efficiency)', def: `= Total VA Time ÷ Lead Time × 100%. What percentage of lead time is genuinely value-adding. World class: >90%. Most ${p}s start at 10–30%. VeSiMy colour-codes: green (≥90%), amber (≥60%), red (<60%).`, std: 'ISO 22468:2020 §5.2.2' },
-    { term: `${wip} (Work In Progress)`, def: `Units, ${prod}s, cases, or requests that have been started but not yet completed — sitting between ${ps}s. High ${wip} = long lead time (Little's Law). The ${wip} triangles on a VSM show exactly where inventory is accumulating.`, std: 'ISO 22468:2020 §5.2.5' },
+    { term: `${wip} (Work In Progress)`, def: `Units, ${prod}s, cases, or requests that have been started but not yet completed, sitting between ${ps}s. High ${wip} = long lead time (Little's Law). The ${wip} triangles on a VSM show exactly where inventory is accumulating.`, std: 'ISO 22468:2020 §5.2.5' },
     { term: 'VA (Value Add)', def: `Activities that transform the ${prod} or service in a way the ${cust} recognises as valuable. In ${sector}, VA examples are the core ${ps}s of ${p} delivery. Everything else is a cost to minimise.`, std: 'ISO 22468:2020 §5.4' },
-    { term: 'NNVA (Necessary Non-Value Add)', def: `Activities required by the current ${p} but adding no ${cust} value — checks, handoffs, setup. Cannot be eliminated immediately but should be minimised. Target for medium-term improvement.`, std: 'ISO 22468:2020 §5.4' },
-    { term: 'NVA (Non-Value Add)', def: `Pure ${waste} — activities consuming time, space, or resources with no ${cust} value. Waiting, searching, rework, unnecessary movement. Target for immediate elimination.`, std: 'ISO 22468:2020 §5.4' },
+    { term: 'NNVA (Necessary Non-Value Add)', def: `Activities required by the current ${p} but adding no ${cust} value, checks, handoffs, setup. Cannot be eliminated immediately but should be minimised. Target for medium-term improvement.`, std: 'ISO 22468:2020 §5.4' },
+    { term: 'NVA (Non-Value Add)', def: `Pure ${waste}, activities consuming time, space, or resources with no ${cust} value. Waiting, searching, rework, unnecessary movement. Target for immediate elimination.`, std: 'ISO 22468:2020 §5.4' },
     { term: `${kz.charAt(0).toUpperCase() + kz.slice(1)}`, def: `Japanese: "change for better." Continuous improvement through small, incremental changes made by the people doing the work. In ${sector}, ${kz}s are structured 3–5 day improvement sprints delivering measurable results before the week ends.`, std: 'ISO 9001:2015 §10.3' },
     { term: 'PDCA', def: `Plan-Do-Check-Act. The fundamental improvement cycle. Plan: define ${p} problem, identify root cause, set target. Do: implement countermeasure. Check: measure result against target. Act: standardise if successful, adjust if not.`, std: 'ISO 9001:2015 §10, ISO 9000:2015 §3.3.5' },
     { term: 'Fishbone (Ishikawa)', def: `Structured cause-and-effect analysis mapping all potential root causes of a ${p} problem across categories. Developed by Kaoru Ishikawa. Used before 5 Why to ensure no cause category is overlooked.`, std: 'ISO 9001:2015 §10.2.1' },
-    { term: '5 Why', def: `Ask "Why?" iteratively (typically 5 times) to get from symptom to root cause. Always ends at a systemic failure — a missing standard, a standard not followed, or a standard not visible. Never ends at an individual person.`, std: 'ISO 9001:2015 §10.2.1' },
-    { term: `${gemba.charAt(0).toUpperCase() + gemba.slice(1)} Walk`, def: `Going to the actual ${p} location to observe directly. The cornerstone of lean management — go see, don't assume. Data gathered at the ${gemba} is more accurate than any report or second-hand account.`, std: 'ISO 9001:2015 §9.1' },
-    { term: 'DOWNTIME', def: `The 8 ${waste}s of lean: Defects, Overproduction, Waiting, Non-utilised talent, Transport, Inventory, Motion, Extra-processing. All 8 exist in every industry — the forms they take differ. In ${sector}, ${waste}s show up as ${defect}s, delays, and underused capacity.`, std: 'ISO 22468:2020 §5.4' },
+    { term: '5 Why', def: `Ask "Why?" iteratively (typically 5 times) to get from symptom to root cause. Always ends at a systemic failure, a missing standard, a standard not followed, or a standard not visible. Never ends at an individual person.`, std: 'ISO 9001:2015 §10.2.1' },
+    { term: `${gemba.charAt(0).toUpperCase() + gemba.slice(1)} Walk`, def: `Going to the actual ${p} location to observe directly. The cornerstone of lean management, go see, don't assume. Data gathered at the ${gemba} is more accurate than any report or second-hand account.`, std: 'ISO 9001:2015 §9.1' },
+    { term: 'DOWNTIME', def: `The 8 ${waste}s of lean: Defects, Overproduction, Waiting, Non-utilised talent, Transport, Inventory, Motion, Extra-processing. All 8 exist in every industry, the forms they take differ. In ${sector}, ${waste}s show up as ${defect}s, delays, and underused capacity.`, std: 'ISO 22468:2020 §5.4' },
     { term: 'Standard Work', def: `The documented current best method for performing a ${ps}. The safest, highest quality, lowest ${waste} repeatable method. Updated every time the ${p} improves. The baseline that makes continuous improvement possible.`, std: 'ISO 22468:2020 §5.2.3, ISO 9001:2015 §8.5.1' },
-    { term: 'Bottleneck', def: `The ${ps} where ${ct} exceeds ${takt}. Constrains throughput for the entire ${vstream} — all other ${ps}s can only produce as fast as the bottleneck. The Theory of Constraints focuses entirely on identifying and elevating bottlenecks.`, std: 'ISO 22468:2020 §5.2.4' },
-    { term: 'A3 Report', def: `Toyota's one-page problem-solving format. Contains background, current condition, goal, root cause, countermeasures, implementation plan, results, and follow-up — all on one sheet. Forces concise, complete thinking about any ${p} problem.`, std: 'ISO 22468:2020' },
+    { term: 'Bottleneck', def: `The ${ps} where ${ct} exceeds ${takt}. Constrains throughput for the entire ${vstream}, all other ${ps}s can only produce as fast as the bottleneck. The Theory of Constraints focuses entirely on identifying and elevating bottlenecks.`, std: 'ISO 22468:2020 §5.2.4' },
+    { term: 'A3 Report', def: `Toyota's one-page problem-solving format. Contains background, current condition, goal, root cause, countermeasures, implementation plan, results, and follow-up, all on one sheet. Forces concise, complete thinking about any ${p} problem.`, std: 'ISO 22468:2020' },
     { term: '8D Report', def: `Eight Disciplines problem-solving methodology (Ford Motor Company). D1: Team, D2: Problem, D3: Containment, D4: Root Cause, D5–6: Corrective Actions, D7: Prevent Recurrence, D8: Close. Required by many customers when a quality escape occurs.`, std: 'IATF 16949 §10.2' },
     { term: 'Poka-Yoke', def: `Error-proofing: designing the ${p} so a mistake cannot be made, or is detected immediately if made. The goal is making quality automatic rather than inspected. Applied at the source of potential ${defect}s in the ${p}.`, std: 'ISO 9001:2015 §8.3.3' },
     { term: 'One-Piece Flow', def: `Ideal lean flow state: one ${prod} moves through each ${ps} without batching. Exposes quality problems immediately, minimises lead time, eliminates ${wip} ${waste}. The goal of every ${vstream} future state in ${sector}.`, std: 'ISO 22468:2020 §5.3' },
@@ -365,15 +365,15 @@ function buildContent(t: any, industry: string) {
   const FAQS = [
     { q: `What is PCE and what is a good score for ${sector}?`, a: `PCE = Total Cycle Time (VA time) ÷ Lead Time. It measures what percentage of your lead time is actually adding value. World-class lean targets 90–95%+ PCE. Most ${p}s in ${sector} start at 10–30%. VeSiMy colour-codes your PCE green (≥90%), amber (≥60%), red (<60%) in the KPI bar.` },
     { q: `What is ${takt} and how is it calculated?`, a: `${takt} = Available Working Time ÷ ${cust} Demand. Enter working hours and demand in project settings and VeSiMy calculates it automatically. ${ps.charAt(0).toUpperCase() + ps.slice(1)}s exceeding ${takt} are your bottlenecks. In ${sector}, understanding your ${takt} is the first step in understanding capacity.` },
-    { q: `What is the difference between ${ct} and Lead Time?`, a: `${ct} is how long it takes to complete one ${prod} at a single ${ps}. Lead Time is the total time from input to ${cust} delivery — all ${ct}s plus all wait/queue times combined. PCE = ${ct} / Lead Time. Reducing wait time between ${ps}s reduces Lead Time without changing any individual ${ct}.` },
+    { q: `What is the difference between ${ct} and Lead Time?`, a: `${ct} is how long it takes to complete one ${prod} at a single ${ps}. Lead Time is the total time from input to ${cust} delivery, all ${ct}s plus all wait/queue times combined. PCE = ${ct} / Lead Time. Reducing wait time between ${ps}s reduces Lead Time without changing any individual ${ct}.` },
     { q: `What is the difference between PDCA and DMAIC?`, a: `PDCA (Plan-Do-Check-Act) is a fast, iterative improvement cycle suitable for most ${p} problems in ${sector}. DMAIC (Define-Measure-Analyse-Improve-Control) is a Six Sigma project methodology for complex, statistically-driven problems requiring months of data analysis. VeSiMy uses PDCA as the workflow but can export in DMAIC format for Six Sigma audiences.` },
-    { q: `How do I identify ${waste} in my ${p}?`, a: `Walk the ${p} — observe the ${gemba} directly. Ask: is this ${ps} adding value the ${cust} would pay for? Is there unnecessary waiting, rework, or movement? Common ${waste}s in ${sector} include ${defect}s, waiting between ${ps}s, and underused team skills. Mark every ${waste} type in the Waste ID tool on each ${ps}.` },
-    { q: `What is a ${kz} and how long does it take?`, a: `A ${kz} is a structured, time-boxed improvement activity — typically 3–5 days with a dedicated cross-functional team. The goal is measurable improvement in days, not months. In ${sector}, ${kz} events focus on specific bottlenecks or ${waste}s identified on the ${vstream} map.` },
+    { q: `How do I identify ${waste} in my ${p}?`, a: `Walk the ${p}, observe the ${gemba} directly. Ask: is this ${ps} adding value the ${cust} would pay for? Is there unnecessary waiting, rework, or movement? Common ${waste}s in ${sector} include ${defect}s, waiting between ${ps}s, and underused team skills. Mark every ${waste} type in the Waste ID tool on each ${ps}.` },
+    { q: `What is a ${kz} and how long does it take?`, a: `A ${kz} is a structured, time-boxed improvement activity, typically 3–5 days with a dedicated cross-functional team. The goal is measurable improvement in days, not months. In ${sector}, ${kz} events focus on specific bottlenecks or ${waste}s identified on the ${vstream} map.` },
     { q: `How many time study observations should I record?`, a: `Minimum 10 observations for stable ${p}s, 20–30 for variable ones. Remove outliers from interruptions or abnormal events. The ILO recommends observations until the coefficient of variation (CV%) stabilises below 10% for manual operations. More observations = more reliable ${ct} data.` },
-    { q: `What is Standard Work and why does it matter?`, a: `Standard Work is the documented current best method for performing a ${ps} — the safest, highest quality, lowest ${waste} repeatable method. It is the baseline for all improvement. Without Standard Work, you cannot measure whether a ${kz} actually improved anything.` },
+    { q: `What is Standard Work and why does it matter?`, a: `Standard Work is the documented current best method for performing a ${ps}, the safest, highest quality, lowest ${waste} repeatable method. It is the baseline for all improvement. Without Standard Work, you cannot measure whether a ${kz} actually improved anything.` },
     { q: `What is in the ISO-compliant export?`, a: `All VeSiMy exports include: document title, document ID, revision number, date, prepared by, project name, and relevant ISO standard references in a document control block. Standards referenced include ISO 9001:2015, ISO 22468:2020 (VSM), ISO 31000:2018 (root cause analysis), and ILO work measurement standards.` },
     { q: `Can multiple people collaborate on the same project?`, a: `Real-time multi-user collaboration is in development. Currently each user manages their own projects. Enterprise plans include team workspace features. Contact founder@vesimy.com to discuss your team setup.` },
-    { q: `How do I upgrade from Trial to Pro?`, a: `Go to Settings → Subscription and click "Upgrade to Pro", or visit the Pricing page. Payment is processed securely through Stripe. Pro features — Supe AI, Process Simulation, Live Floor Monitor — activate immediately after payment.` },
+    { q: `How do I upgrade from Trial to Pro?`, a: `Go to Settings → Subscription and click "Upgrade to Pro", or visit the Pricing page. Payment is processed securely through Stripe. Pro features, Supe AI, Process Simulation, Live Floor Monitor, activate immediately after payment.` },
   ]
 
   return { MANUAL, GLOSSARY, FAQS }
@@ -423,7 +423,7 @@ export function LearningCenter({ userId }: Props) {
           </div>
         )}
         <p style={{ fontSize:12, color:'var(--text3)', marginBottom:14, lineHeight:1.7 }}>
-          {sec.steps.length} topic{sec.steps.length !== 1 ? 's' : ''} — tap any to expand.
+          {sec.steps.length} topic{sec.steps.length !== 1 ? 's' : ''}, tap any to expand.
         </p>
         <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
           {sec.steps.map((step: any, i: number) => {
@@ -477,12 +477,12 @@ export function LearningCenter({ userId }: Props) {
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{ padding:'18px 20px 14px', borderBottom:'1px solid var(--border)', background:'#FFFFFF', flexShrink:0 }}>
         <h1 style={{ fontFamily:serif, fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:4 }}>
-          {industry ? `Learning Center — ${sectorLabel}` : 'Learning Center'}
+          {industry ? `Learning Center, ${sectorLabel}` : 'Learning Center'}
         </h1>
         <p style={{ fontSize:12, color:'var(--text3)', margin:'0 0 12px', lineHeight:1.6 }}>
           {industry
             ? `All content uses ${sectorLabel} terminology. No manufacturing language unless it applies directly to your ${t.process || 'process'}.`
-            : 'Master lean CI — PDCA, VSM, Yamazumi, 5 Why, and more. Select your industry in Settings to see content in your terminology.'}
+            : 'Master lean CI, PDCA, VSM, Yamazumi, 5 Why, and more. Select your industry in Settings to see content in your terminology.'}
         </p>
         <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
           {([['manual', 'Manual'], ['glossary', 'Glossary'], ['faqs', 'FAQs']] as const).map(([tab, label]) => (
@@ -518,7 +518,7 @@ export function LearningCenter({ userId }: Props) {
                 }}>{s.title}</span>
                 {s.pro && (
                   <span style={{
-                    fontSize:8, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1,
+                    fontSize:8, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1,
                     background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)',
                     borderRadius:4, padding:'1px 4px', flexShrink:0,
                   }}>PRO</span>
@@ -579,7 +579,7 @@ export function LearningCenter({ userId }: Props) {
                 <h2 style={{ fontFamily:serif, fontSize:19, fontWeight:700, color:'var(--text)', margin:0 }}>{section.title}</h2>
                 {section.pro && (
                   <span style={{
-                    fontSize:10, color:'#8C44CC', fontFamily:'monospace', letterSpacing:1.5,
+                    fontSize:10, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1.5,
                     background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)',
                     borderRadius:6, padding:'3px 8px',
                   }}>PRO</span>
@@ -595,7 +595,7 @@ export function LearningCenter({ userId }: Props) {
       {activeTab === 'glossary' && (
         <div style={{ flex:1, overflowY:'auto', padding:'16px 18px', paddingBottom:80 }}>
           <p style={{ fontSize:12, color:'var(--text3)', marginBottom:10, lineHeight:1.7 }}>
-            {filteredGlossary.length} terms — all defined in {sectorLabel} context. Tap to expand.
+            {filteredGlossary.length} terms, all defined in {sectorLabel} context. Tap to expand.
           </p>
           <input
             className="input"
@@ -613,7 +613,7 @@ export function LearningCenter({ userId }: Props) {
                 >
                   <div style={{ minWidth:0 }}>
                     <span style={{ fontSize:13, fontWeight:700, color:'var(--brand)', display:'block' }}>{g.term}</span>
-                    <span style={{ fontSize:9, fontFamily:'monospace', color:'var(--text3)' }}>{g.std}</span>
+                    <span style={{ fontSize:9, fontFamily:'var(--font-mono)', color:'var(--text3)' }}>{g.std}</span>
                   </div>
                   <span style={{ color:'var(--text3)', fontSize:16, flexShrink:0, transition:'transform 0.2s', transform: expandedFAQ === i ? 'rotate(90deg)' : 'none' }}>›</span>
                 </button>
@@ -632,7 +632,7 @@ export function LearningCenter({ userId }: Props) {
       {activeTab === 'faqs' && (
         <div style={{ flex:1, overflowY:'auto', padding:'16px 18px', paddingBottom:80 }}>
           <p style={{ fontSize:12, color:'var(--text3)', marginBottom:14, lineHeight:1.7 }}>
-            {FAQS.length} questions — answered in {sectorLabel} context. Tap to expand.
+            {FAQS.length} questions, answered in {sectorLabel} context. Tap to expand.
           </p>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
             {FAQS.map((faq, i) => (

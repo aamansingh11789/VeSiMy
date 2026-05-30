@@ -1,10 +1,10 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/ai/rule-engine.ts ────────────────────────────────────────────────────
-// Rule-based analysis — free forever, runs in the API route with zero cost.
+// Rule-based analysis, free forever, runs in the API route with zero cost.
 // Used as fallback when no AI key is configured, AND as a fast first pass
 // before any AI call.
 
-// Unit normalisation — stopwatch.mean is stored in ms, cycle_time in seconds
+// Unit normalisation, stopwatch.mean is stored in ms, cycle_time in seconds
 function ruleCtSeconds(step: any): number {
   const swMean = step.toolData?.stopwatch?.mean
   if (swMean && swMean > 0) return swMean / 1000
@@ -30,7 +30,7 @@ export function interpretTimeStudy(laps: number[], mean: number, baseline?: numb
 
   // Variation
   if (cv > 25)      lines.push(`⚠ High variation detected (CV = ${cv.toFixed(1)}%). The process is unstable. Investigate what's different between the fastest (${min.toFixed(0)}s) and slowest (${max.toFixed(0)}s) cycles before setting a standard CT. Consider a Fishbone or 5 Why.`)
-  else if (cv > 15) lines.push(`ℹ Moderate variation (CV = ${cv.toFixed(1)}%). Acceptable for now — monitor over time. The range of ${(max-min).toFixed(0)}s suggests some step elements may vary by operator or condition.`)
+  else if (cv > 15) lines.push(`ℹ Moderate variation (CV = ${cv.toFixed(1)}%). Acceptable for now, monitor over time. The range of ${(max-min).toFixed(0)}s suggests some step elements may vary by operator or condition.`)
   else              lines.push(`✓ Process is stable (CV = ${cv.toFixed(1)}%). Variation is within acceptable limits.`)
 
   // Outliers
@@ -71,7 +71,7 @@ export function prioritiseWastes(selected: string[], notes: Record<string,string
 
   const lines = ['Recommended priority order for this step:\n']
   ranked.forEach((w, i) => {
-    lines.push(`${i+1}. ${w.name}${notes[w.id] ? ` — "${notes[w.id]}"` : ''}\n   ${w.note}`)
+    lines.push(`${i+1}. ${w.name}${notes[w.id] ? `, "${notes[w.id]}"` : ''}\n   ${w.note}`)
   })
   lines.push(`\n→ Open a Kaizen event for ${ranked[0].name} first. It has the highest impact-to-effort ratio of your selected wastes.`)
 
@@ -95,7 +95,7 @@ export function suggestImprovementTarget(
       const mustReduce = ((baseline - takt) / baseline * 100)
       pct = Math.min(0.40, (mustReduce + 10) / 100) // 10% below takt
       rationale = `Bottleneck step must reach Takt (${takt}s). Target is 10% below Takt for buffer.`
-      timeline = '30–45 days (urgent — this is the constraint)'
+      timeline = '30–45 days (urgent, this is the constraint)'
     } else {
       pct = 0.20
       rationale = 'A 20% CT reduction is achievable in a first Kaizen cycle through waste elimination and method improvement without capital investment.'
@@ -107,7 +107,7 @@ export function suggestImprovementTarget(
     timeline = '30–60 days'
   } else if (m.includes('wait')) {
     pct = 0.40
-    rationale = 'Wait time reductions of 40%+ are achievable through batch size reduction, one-piece flow, or pull signaling — all low-cost interventions.'
+    rationale = 'Wait time reductions of 40%+ are achievable through batch size reduction, one-piece flow, or pull signaling, all low-cost interventions.'
     timeline = '14–30 days'
   } else if (m.includes('oee') || m.includes('uptime')) {
     pct = 0.15
@@ -119,7 +119,7 @@ export function suggestImprovementTarget(
     timeline = '60–90 days'
   } else {
     pct = 0.20
-    rationale = 'A 20% improvement is the standard first-cycle lean target — achievable through waste elimination before requiring capital expenditure.'
+    rationale = 'A 20% improvement is the standard first-cycle lean target, achievable through waste elimination before requiring capital expenditure.'
     timeline = '60–90 days'
   }
 
@@ -233,11 +233,11 @@ export function diagnoseStep(step: {
   const hasRoot = !!(step.toolData?.fivewhy?.rootCause)
 
   if (takt && ct > 0 && ct > takt * 1.05) {
-    lines.push(`BOTTLENECK: This step runs ${((ct-takt)/takt*100).toFixed(0)}% over Takt (${ct}s vs ${takt}s). This is your constraint — it determines the output rate of the entire line.`)
+    lines.push(`BOTTLENECK: This step runs ${((ct-takt)/takt*100).toFixed(0)}% over Takt (${ct}s vs ${takt}s). This is your constraint, it determines the output rate of the entire line.`)
   }
 
   if (wt > ct && ct > 0) {
-    lines.push(`⚠ Wait time (${wt}s) exceeds cycle time (${ct}s). This step spends more time waiting than working — a strong signal for batch reduction or pull system implementation.`)
+    lines.push(`⚠ Wait time (${wt}s) exceeds cycle time (${ct}s). This step spends more time waiting than working, a strong signal for batch reduction or pull system implementation.`)
   }
 
   if (step.wip && step.wip > 5) {
@@ -245,7 +245,7 @@ export function diagnoseStep(step: {
   }
 
   if (step.defect_rate && step.defect_rate > 1) {
-    const action = hasRoot ? 'Root cause has been identified — ensure countermeasure is implemented and verified.' : 'No root cause analysis on file. Open a 5 Why to find the systemic cause.'
+    const action = hasRoot ? 'Root cause has been identified, ensure countermeasure is implemented and verified.' : 'No root cause analysis on file. Open a 5 Why to find the systemic cause.'
     lines.push(`⚠ Defect rate of ${step.defect_rate}% is above the 1% threshold. ${action}`)
   }
 

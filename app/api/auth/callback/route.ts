@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/auth/callback/route.ts ─────────────────────────────────────────
-// OAuth / magic-link callback — correct Supabase SSR cookie pattern.
+// OAuth / magic-link callback, correct Supabase SSR cookie pattern.
 // CRITICAL: build redirect response FIRST, create Supabase client writing to
 // that same response, exchange code, THEN check onboarding status and
 // mutate the Location header rather than creating a second response.
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/auth/login?error=no_code`)
   }
 
-  // Step 1: Build redirect to dashboard first — we will adjust destination below
+  // Step 1: Build redirect to dashboard first, we will adjust destination below
   const response = NextResponse.redirect(`${origin}/dashboard`)
 
   // Step 2: Create Supabase client that writes cookies onto this response
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     }
   )
 
-  // Step 3: Exchange code — session cookies land on the response
+  // Step 3: Exchange code, session cookies land on the response
   const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
   if (exchangeError) {
     console.error('[auth/callback] Exchange error:', exchangeError.message)
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
       const isOnboarded = profile && (profile as any).onboarded === true
 
       if (!isOnboarded) {
-        // New user — redirect to onboarding. Reuse same response to keep cookies.
+        // New user, redirect to onboarding. Reuse same response to keep cookies.
         response.headers.set('Location', `${origin}/onboarding`)
         return response
       }

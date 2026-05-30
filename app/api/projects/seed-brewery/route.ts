@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-brewery/route.ts ────────────────────────────────────
-// Craft Brewery — Batch Production Value Stream
+// Craft Brewery, Batch Production Value Stream
 // Grain-In → Milling → Mashing → Lautering → Boil & Hop Addition
 // → Fermentation (bottleneck) → Conditioning → Packaging & QC
 // Based on a 10-barrel craft brewery producing 4 batches/week
@@ -19,7 +19,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', 'Demo — Craft Brewery Batch Production')
+      .eq('name', 'Demo, Craft Brewery Batch Production')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -28,7 +28,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        'Demo — Craft Brewery Batch Production',
+        name:        'Demo, Craft Brewery Batch Production',
         description: 'Full brewing value stream from grain delivery to packaged product. 8 steps, 21-day lead time, bottleneck at Fermentation. Taproom throughput and packaging waste analysis included.',
         industry:    'Food & Beverage',
         customer:    'Taproom & Wholesale Accounts',
@@ -57,21 +57,21 @@ export async function POST(_request: NextRequest) {
       if (error) console.error(`tool_data (${toolName}):`, error.message)
     }
 
-    // ── Steps — cycle times in minutes, waits in minutes ──────────────────────
+    // ── Steps, cycle times in minutes, waits in minutes ──────────────────────
     // Takt: 1 batch every 2 days (target: 3 batches/week to meet taproom demand)
 
     const s1 = await step(0, {
       name: 'Grain Receiving & Milling', department: 'Brew Floor',
       operators: 1, cycle_time: 90, wait_time: 1440, wip: 2,
       flow_type: 'push', uptime: 96, defect_rate: 1,
-      notes: 'NNVA. Grain delivery twice weekly — creates batch release rather than flow. Mill uptime 96% (bearing replaced Q1). 1% batches with moisture-damaged grain rejected.',
+      notes: 'NNVA. Grain delivery twice weekly, creates batch release rather than flow. Mill uptime 96% (bearing replaced Q1). 1% batches with moisture-damaged grain rejected.',
     })
 
     const s2 = await step(1, {
       name: 'Mashing & Lautering', department: 'Brew Floor',
       operators: 1, cycle_time: 120, wait_time: 30, wip: 1,
       flow_type: 'push', uptime: 99, defect_rate: 3,
-      notes: 'VA. Mash temp held 152°F for 60 min. Lauter takes 40-60 min depending on grain bill. 3% batches have stuck sparge — adds 45 min rework. Rye and wheat grists most problematic.',
+      notes: 'VA. Mash temp held 152°F for 60 min. Lauter takes 40-60 min depending on grain bill. 3% batches have stuck sparge, adds 45 min rework. Rye and wheat grists most problematic.',
     })
 
     const s3 = await step(2, {
@@ -85,14 +85,14 @@ export async function POST(_request: NextRequest) {
       name: 'Whirlpool, Chill & Transfer', department: 'Brew Floor',
       operators: 1, cycle_time: 45, wait_time: 10, wip: 1,
       flow_type: 'push', uptime: 98, defect_rate: 1,
-      notes: 'VA. Whirlpool 20 min, chill to 68°F via plate chiller, transfer to fermenter. Glycol chiller uptime 98% — single compressor unit. Backup plan: ice bath (adds 60 min).',
+      notes: 'VA. Whirlpool 20 min, chill to 68°F via plate chiller, transfer to fermenter. Glycol chiller uptime 98%, single compressor unit. Backup plan: ice bath (adds 60 min).',
     })
 
     const s5 = await step(4, {
       name: 'Fermentation', department: 'Cellar',
       operators: 1, cycle_time: 8640, wait_time: 0, wip: 6,
       flow_type: 'push', uptime: 100, defect_rate: 4,
-      notes: 'BOTTLENECK. 6-day average active fermentation. Only 6 fermenters — capacity constraint. 4% batches develop off-flavours requiring extended conditioning or blend-down. Limits output to 4 batches/week max.',
+      notes: 'BOTTLENECK. 6-day average active fermentation. Only 6 fermenters, capacity constraint. 4% batches develop off-flavours requiring extended conditioning or blend-down. Limits output to 4 batches/week max.',
     })
 
     const s6 = await step(5, {
@@ -106,14 +106,14 @@ export async function POST(_request: NextRequest) {
       name: 'QC & Transfer to Bright Tank', department: 'Cellar / QC',
       operators: 1, cycle_time: 60, wait_time: 480, wip: 3,
       flow_type: 'push', uptime: 100, defect_rate: 5,
-      notes: 'VA. Gravity check, pH, dissolved oxygen, sensory panel. 5% batches fail sensory — blended, sold as taproom-only, or dumped. 8-hr wait for QC analyst availability on smaller batches.',
+      notes: 'VA. Gravity check, pH, dissolved oxygen, sensory panel. 5% batches fail sensory, blended, sold as taproom-only, or dumped. 8-hr wait for QC analyst availability on smaller batches.',
     })
 
     const s8 = await step(7, {
-      name: 'Packaging — Can, Keg & Bottle', department: 'Packaging',
+      name: 'Packaging, Can, Keg & Bottle', department: 'Packaging',
       operators: 2, cycle_time: 240, wait_time: 60, wip: 2,
       flow_type: 'push', uptime: 88, defect_rate: 3,
-      notes: 'NNVA. Canning line uptime 88% — seamer head issues cause 3% underfill. Keg fill auto, 15 min/keg. Bottle filler runs 2x/month only. 60-min changeover between formats. KZ-001 open.',
+      notes: 'NNVA. Canning line uptime 88%, seamer head issues cause 3% underfill. Keg fill auto, 15 min/keg. Bottle filler runs 2x/month only. 60-min changeover between formats. KZ-001 open.',
     })
 
     // ── Time Studies ──────────────────────────────────────────────────────────
@@ -121,7 +121,7 @@ export async function POST(_request: NextRequest) {
       baseline: 10080, target: 7200, mean: 8640,
       laps: [8640, 7200, 8640, 10080, 8640, 7200, 8640, 10080, 8640, 7200],
       excluded: [],
-      notes: 'Fermentation time in minutes. 5-7 days typical. Faster with higher pitch rate and temp control. Target 5 days with optimised yeast management — would unlock 5th batch/week.',
+      notes: 'Fermentation time in minutes. 5-7 days typical. Faster with higher pitch rate and temp control. Target 5 days with optimised yeast management, would unlock 5th batch/week.',
     })
 
     await tool(s8.id, 'stopwatch', {
@@ -140,15 +140,15 @@ export async function POST(_request: NextRequest) {
 
     // ── Fishbone (Fermentation capacity bottleneck) ───────────────────────────
     await tool(s5.id, 'ishikawa', {
-      problem: 'Fermentation capacity limits output to 4 batches/week — taproom demand requires 5 batches/week peak season',
+      problem: 'Fermentation capacity limits output to 4 batches/week, taproom demand requires 5 batches/week peak season',
       framework: '6m',
       causes: {
-        Machine:          ['Only 6 fermenters — all occupied during 6-day fermentation', 'No unitank capability — separate fermenter and bright tank required per batch', 'Glycol cooling limited to 6 zones — 7th fermenter would need new manifold'],
-        Method:           ['Fermentation schedule not optimised — staggered starts could increase throughput', 'Yeast pitch rate inconsistent — affects lag time and overall fermentation duration', 'No dry yeast backup protocol — single strain failure stops production'],
-        Material:         ['Yeast health variable — repitching generation 4+ shows 15% longer fermentation', 'Dissolved oxygen at transfer affects yeast performance', 'Nutrient addition not standardised across all styles'],
-        Manpower:         ['1 cellarman covering fermentation monitoring, QC, and packaging', 'No Saturday coverage — fermentation checked once instead of twice on weekends'],
-        Measurement:      ['Gravity checked once daily — misses rapid fermentation events overnight', 'No automated temperature logging — relies on manual walk-through'],
-        'Mother Nature':  ['Summer ambient temp increases glycol load — compressor struggles over 85°F ambient', 'Seasonal demand spike (May-Sept) exceeds capacity by 25%'],
+        Machine:          ['Only 6 fermenters, all occupied during 6-day fermentation', 'No unitank capability, separate fermenter and bright tank required per batch', 'Glycol cooling limited to 6 zones, 7th fermenter would need new manifold'],
+        Method:           ['Fermentation schedule not optimised, staggered starts could increase throughput', 'Yeast pitch rate inconsistent, affects lag time and overall fermentation duration', 'No dry yeast backup protocol, single strain failure stops production'],
+        Material:         ['Yeast health variable, repitching generation 4+ shows 15% longer fermentation', 'Dissolved oxygen at transfer affects yeast performance', 'Nutrient addition not standardised across all styles'],
+        Manpower:         ['1 cellarman covering fermentation monitoring, QC, and packaging', 'No Saturday coverage, fermentation checked once instead of twice on weekends'],
+        Measurement:      ['Gravity checked once daily, misses rapid fermentation events overnight', 'No automated temperature logging, relies on manual walk-through'],
+        'Mother Nature':  ['Summer ambient temp increases glycol load, compressor struggles over 85°F ambient', 'Seasonal demand spike (May-Sept) exceeds capacity by 25%'],
       },
     })
 
@@ -163,11 +163,11 @@ export async function POST(_request: NextRequest) {
         { q: 'Why don\'t the recipe sheets specify rice hulls?',
           a: 'Recipes were written before the brewery scaled to 10-barrel system. The original 3-barrel system had a different lauter geometry.' },
         { q: 'Why were recipes not updated when equipment changed?',
-          a: 'No formal recipe scale-up review process exists. Head brewer carried the adjustment in memory — not documented.' },
+          a: 'No formal recipe scale-up review process exists. Head brewer carried the adjustment in memory, not documented.' },
         { q: 'Why is the adjustment not documented?',
           a: 'ROOT CAUSE: No standard recipe management system. Recipes are in a shared Google Doc with no version control or equipment-specific parameters.' },
       ],
-      rootCause: 'No recipe management system with equipment-specific parameters. High-adjunct adjustments (rice hulls) exist only in the head brewer\'s memory — not in the recipe. When a new brewer runs the batch, stuck sparge occurs.',
+      rootCause: 'No recipe management system with equipment-specific parameters. High-adjunct adjustments (rice hulls) exist only in the head brewer\'s memory, not in the recipe. When a new brewer runs the batch, stuck sparge occurs.',
       countermeasure: '1. Implement brewing software (Brewfather or BreweryDB) with equipment profiles. 2. Add rice hull requirement to all high-adjunct recipe sheets immediately. 3. Create standard recipe review checklist for any new or scaled recipe.',
       owner: 'Head Brewer',
       dueDate: '2026-04-15',
@@ -176,20 +176,20 @@ export async function POST(_request: NextRequest) {
     // ── Waste ID ──────────────────────────────────────────────────────────────
     await tool(s5.id, 'waste', {
       wastes: {
-        Waiting:           'Fermenters fully occupied — new batches wait for tanks to free up',
-        Defects:           '4% of batches develop off-flavours — partial volume loss or blend-down required',
-        'Non-Utilisation': 'Cellarman monitoring fermentation manually — no automated alerts for gravity or temp deviation',
-        Inventory:         'Hop inventory not rotated by alpha acid lot — oldest lot used last, alpha acid degradation',
+        Waiting:           'Fermenters fully occupied, new batches wait for tanks to free up',
+        Defects:           '4% of batches develop off-flavours, partial volume loss or blend-down required',
+        'Non-Utilisation': 'Cellarman monitoring fermentation manually, no automated alerts for gravity or temp deviation',
+        Inventory:         'Hop inventory not rotated by alpha acid lot, oldest lot used last, alpha acid degradation',
       },
       notes: 'Priority: fermenter capacity is the constraint. Every other improvement has limited impact until tank count increases or fermentation time decreases.',
     })
 
     await tool(s8.id, 'waste', {
       wastes: {
-        Defects:           '3% underfill on canning line — seamer head inconsistency causes fill variation',
-        Waiting:           '60-min format changeover between cans and kegs — no quick-change tooling',
-        'Over-processing': 'Label application done manually for small bottle runs — 45 min per batch',
-        Inventory:         'Surplus cans from short fills held as taproom pours — not sellable retail',
+        Defects:           '3% underfill on canning line, seamer head inconsistency causes fill variation',
+        Waiting:           '60-min format changeover between cans and kegs, no quick-change tooling',
+        'Over-processing': 'Label application done manually for small bottle runs, 45 min per batch',
+        Inventory:         'Surplus cans from short fills held as taproom pours, not sellable retail',
       },
       notes: 'Canning line rebuild (KZ-001) addresses underfill and changeover simultaneously.',
     })
@@ -199,8 +199,8 @@ export async function POST(_request: NextRequest) {
       items: [
         {
           id: 'kz001', kzId: 'KZ-001',
-          title: 'Canning line seamer rebuild — eliminate underfill',
-          description: 'Seamer head worn — causing 3% underfill rate. Full rebuild with new tooling includes quick-change format kit. Reduces changeover from 60 min to 20 min. Uptime target: 96%.',
+          title: 'Canning line seamer rebuild, eliminate underfill',
+          description: 'Seamer head worn, causing 3% underfill rate. Full rebuild with new tooling includes quick-change format kit. Reduces changeover from 60 min to 20 min. Uptime target: 96%.',
           category: 'Quality', priority: 'critical', status: 'in-progress',
           owner: 'Head Brewer / Maintenance', dueDate: '2026-04-01',
           actions: ['Order seamer rebuild kit', 'Schedule 1-day shutdown for rebuild', 'Calibrate and run 50-can test', 'Record fill weights across 200 cans post-rebuild'],
@@ -222,7 +222,7 @@ export async function POST(_request: NextRequest) {
       items: [
         {
           id: 'kz003', kzId: 'KZ-003',
-          title: 'Optimise fermentation schedule — staggered starts',
+          title: 'Optimise fermentation schedule, staggered starts',
           description: 'Currently all fermenters start Monday and Thursday. Staggering to Mon/Wed/Fri maximises throughput without adding tanks. Modelling shows +0.5 batches/week average.',
           category: 'Productivity', priority: 'high', status: 'open',
           owner: 'Head Brewer', dueDate: '2026-04-15',
@@ -231,7 +231,7 @@ export async function POST(_request: NextRequest) {
         },
         {
           id: 'kz004', kzId: 'KZ-004',
-          title: 'Automated fermentation monitoring — temp and gravity alerts',
+          title: 'Automated fermentation monitoring, temp and gravity alerts',
           description: 'Manual walk-through twice daily. Rapid fermentation events overnight go undetected. Tilt hydrometer + Bluetooth temp probes in each tank. Alerts to brewer phone.',
           category: 'Quality', priority: 'medium', status: 'open',
           owner: 'Head Brewer / IT', dueDate: '2026-06-01',

@@ -23,7 +23,7 @@ const PLAN_COLOR: Record<string, string> = {
   enterprise:   '#8C44CC',
   trial_expired:'#C0402A',
   free:         'var(--text3)',
-  // 'free' is legacy — treat same as trial
+  // 'free' is legacy, treat same as trial
 }
 
 interface Props {
@@ -48,7 +48,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
   const subStatus  = profile?.subscription_status || 'trial'
   const periodEnd  = profile?.subscription_period_end ? new Date(profile.subscription_period_end).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : null
 
-  const planDisplayName = isFounder ? 'Founding Member — Lifetime' : isLifetime ? 'Lifetime Access' : plan.name
+  const planDisplayName = isFounder ? 'Founding Member, Lifetime' : isLifetime ? 'Lifetime Access' : plan.name
 
   async function openPortal() {
     setPortalLoading(true)
@@ -79,7 +79,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
 
       {/* ── Subscription ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Subscription</h2>
+        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Subscription</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16, flexWrap:'wrap' }}>
             <div>
@@ -134,7 +134,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
               ) : (
                 <Link href="/pricing" className="btn-primary" style={{ whiteSpace:'nowrap', textDecoration:'none', display:'inline-flex', alignItems:'center', gap:6 }}>
                   <CrownIcon size={14} />
-                  Upgrade to Pro — $29/mo
+                  Upgrade to Pro, $29/mo
                 </Link>
               )}
             </div>
@@ -159,7 +159,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
               <CrownIcon size={16} color='var(--brand)' />
               <span style={{ fontSize:15, fontWeight:700, color:'var(--brand)' }}>Upgrade to Pro</span>
-              <span style={{ fontSize:12, color:'var(--text3)' }}>— $29/month · 14-day trial when upgrading</span>
+              <span style={{ fontSize:12, color:'var(--text3)' }}>, $29/month · 14-day trial when upgrading</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:20 }}>
               {PLANS.pro.features.map((f,i) => (
@@ -178,7 +178,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
 
       {/* ── Account ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Account</h2>
+        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Account</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
             <div>
@@ -198,7 +198,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
             <div>
               <label className="label">Your Industry</label>
               <IndustrySelector profileId={profile.id} currentIndustry={(profile as any).industry} />
-              <p style={{ fontSize:11, color:'var(--text3)', marginTop:5 }}>VeSiMy adapts its language to your field — patients, batches, matters, or units, depending on your industry.</p>
+              <p style={{ fontSize:11, color:'var(--text3)', marginTop:5 }}>VeSiMy adapts its language to your field, patients, batches, matters, or units, depending on your industry.</p>
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
 
       {/* ── Usage ── */}
       <section style={{ marginBottom:32 }}>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Usage</h2>
+        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'var(--text3)', marginBottom:16, textTransform:'uppercase' }}>Usage</h2>
         <div className="card" style={{ padding:24 }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(100px,1fr))', gap:20 }}>
             {[
@@ -216,7 +216,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
             ].map(([label, val, color]) => (
               <div key={label} style={{ textAlign:'center' }}>
                 <div style={{ fontSize:22, fontWeight:700, color, fontFamily:'Palatino Linotype,serif' }}>{val}</div>
-                <div style={{ fontSize:11, color:'var(--sl-400)', fontFamily:'monospace', letterSpacing:1, textTransform:'uppercase', marginTop:2 }}>{label}</div>
+                <div style={{ fontSize:11, color:'var(--sl-400)', fontFamily:'var(--font-mono)', letterSpacing:1, textTransform:'uppercase', marginTop:2 }}>{label}</div>
               </div>
             ))}
           </div>
@@ -225,7 +225,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
 
       {/* ── Danger zone ── */}
       <section>
-        <h2 style={{ fontSize:13, fontFamily:'monospace', letterSpacing:1.5, color:'#FF6B6B', marginBottom:16, textTransform:'uppercase' }}>Danger Zone</h2>
+        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'#FF6B6B', marginBottom:16, textTransform:'uppercase' }}>Danger Zone</h2>
         <div className="card" style={{ padding:24, borderColor:'rgba(255,107,107,0.15)' }}>
           <p style={{ fontSize:13, color:'var(--text3)', marginBottom:16 }}>
             These actions are permanent and cannot be undone.

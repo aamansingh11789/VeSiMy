@@ -1,5 +1,5 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
-// lib/require-plan.ts — server-side plan enforcement.
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
+// lib/require-plan.ts, server-side plan enforcement.
 // Returns NextResponse 403 if user is not on a qualifying plan.
 // Returns null if the user IS allowed (proceed normally).
 import { NextResponse } from 'next/server'

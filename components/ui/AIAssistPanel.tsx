@@ -2,7 +2,7 @@
 'use client'
 // ── components/ui/AIAssistPanel.tsx ─────────────────────────────────────────
 // Reusable AI assist button + result panel.
-// Drops into any tool with zero friction. Never required — always optional.
+// Drops into any tool with zero friction. Never required, always optional.
 //
 // Usage:
 //   <AIAssistButton label="Interpret results" onClick={handleAssist} loading={loading} />
@@ -107,15 +107,15 @@ export function AIResultPanel({
         background: isError ? 'rgba(192,64,42,0.06)' : 'rgba(100,38,160,0.06)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:'monospace' }}>{isError ? '!' : 'AI'}</span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: isError ? '#C0402A' : '#8C44CC', fontFamily: 'monospace', letterSpacing: 0.8 }}>
+          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:'var(--font-mono)' }}>{isError ? '!' : 'AI'}</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: isError ? '#C0402A' : '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 0.8 }}>
             {isError ? 'ERROR' : source === 'ai' ? (title || 'AI ASSIST') : (title || 'SMART ASSIST')}
           </span>
           {source === 'rule' && !isError && (
-            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace' }}>rule-based</span>
+            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>rule-based</span>
           )}
           {source === 'ai' && (
-            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace' }}>AI-powered</span>
+            <span style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>AI-powered</span>
           )}
         </div>
         <button
@@ -177,7 +177,7 @@ export function AIBadge({ small }: { small?: boolean }) {
       fontSize: small ? 8 : 9,
       fontWeight: 700,
       color: '#8C44CC',
-      fontFamily: 'monospace',
+      fontFamily: 'var(--font-mono)',
       letterSpacing: 0.5,
     }}>
       AI

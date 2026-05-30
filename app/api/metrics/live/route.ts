@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerSupabase }           from '@/lib/supabase-server'
 

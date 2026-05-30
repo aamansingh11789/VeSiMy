@@ -3,7 +3,7 @@
 import React from 'react'
 import { createContext, useContext } from 'react'
 
-// Slate theme is now the single permanent theme — no toggle needed.
+// Slate theme is now the single permanent theme, no toggle needed.
 const Ctx = createContext({ theme: 'slate' })
 export const useTheme = () => useContext(Ctx)
 

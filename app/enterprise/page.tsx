@@ -1,6 +1,6 @@
 // TypeScript enabled
 'use client'
-// ── app/enterprise/page.tsx — Dynamic Enterprise Quote Generator ──────────────
+// ── app/enterprise/page.tsx, Dynamic Enterprise Quote Generator ──────────────
 
 import { useState }  from 'react'
 import Link          from 'next/link'
@@ -73,7 +73,7 @@ export default function EnterprisePage() {
 
       <div style={{ maxWidth:960, margin:'0 auto', padding:'48px 24px 80px' }}>
         <div style={{ textAlign:'center', marginBottom:48 }}>
-          <div style={{ fontSize:11, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>ENTERPRISE PRICING</div>
+          <div style={{ fontSize:11, color:'#6CB9FC', letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:12 }}>ENTERPRISE PRICING</div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(28px,4vw,52px)', fontWeight:700, marginBottom:12 }}>
             Build your quote in<br /><span style={{ color:'#6CB9FC' }}>30 seconds.</span>
           </h1>
@@ -151,7 +151,7 @@ export default function EnterprisePage() {
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginTop:4 }}>
                 <div>
                   <label className="label">Beta Discount Code</label>
-                  <input className="input" value={form.discount_code} onChange={e=>set('discount_code',e.target.value.toUpperCase())} placeholder="BETA-XXXX-33" style={{ fontFamily:'monospace' }} />
+                  <input className="input" value={form.discount_code} onChange={e=>set('discount_code',e.target.value.toUpperCase())} placeholder="BETA-XXXX-33" style={{ fontFamily:'var(--font-mono)' }} />
                   <p style={{ fontSize:11, color:'var(--sl-400)', marginTop:4 }}>If you're affiliated with a Gold Standard beta tester</p>
                 </div>
                 <div>
@@ -172,7 +172,7 @@ export default function EnterprisePage() {
           {/* Right: live price panel */}
           <div style={{ position:'sticky', top:24 }}>
             <div style={{ background:'rgba(248,247,245,0.97)', border:'1px solid rgba(108,185,252,0.25)', borderRadius:16, padding:'24px', overflow:'hidden' }}>
-              <div style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:16 }}>LIVE ESTIMATE</div>
+              <div style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:16 }}>LIVE ESTIMATE</div>
 
               <div style={{ marginBottom:20 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:4 }}>
@@ -189,7 +189,7 @@ export default function EnterprisePage() {
               </div>
 
               <div style={{ borderTop:'1px solid rgba(215,213,206,0.95)', paddingTop:14, marginBottom:14 }}>
-                <div style={{ fontSize:10, color:'var(--sl-400)', letterSpacing:1, fontFamily:'monospace', marginBottom:10 }}>BREAKDOWN</div>
+                <div style={{ fontSize:10, color:'var(--sl-400)', letterSpacing:1, fontFamily:'var(--font-mono)', marginBottom:10 }}>BREAKDOWN</div>
                 {[
                   ['Base', `${users} users × $15`, fmtMoney(Math.round(users*15))],
                   volDisc>0 ? ['Volume discount', `-${Math.round(volDisc*100)}%`, `-${fmtMoney(Math.round(users*15*volDisc))}`] : null,
@@ -200,7 +200,7 @@ export default function EnterprisePage() {
                 ].filter(Boolean).map((row: any, i) => (
                   <div key={i} style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
                     <span style={{ fontSize:12, color:'var(--text3)' }}>{row[0]}{row[1]?' '+row[1]:''}</span>
-                    <span style={{ fontSize:12, color: row[2].startsWith('-')?'#1DD1A1':'var(--text)', fontFamily:'monospace' }}>{row[2]}</span>
+                    <span style={{ fontSize:12, color: row[2].startsWith('-')?'#1DD1A1':'var(--text)', fontFamily:'var(--font-mono)' }}>{row[2]}</span>
                   </div>
                 ))}
               </div>
@@ -214,7 +214,7 @@ export default function EnterprisePage() {
               {/* Official quote */}
               {quote && (
                 <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
-                  <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'monospace', marginBottom:6 }}>OFFICIAL QUOTE</div>
+                  <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'var(--font-mono)', marginBottom:6 }}>OFFICIAL QUOTE</div>
                   <div style={{ fontSize:13, color:'var(--text)', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
                   {quote.breakdown.code_discount && (
                     <div style={{ fontSize:12, color:'#1DD1A1', marginBottom:4 }}>{quote.breakdown.code_discount} applied</div>
@@ -238,7 +238,7 @@ export default function EnterprisePage() {
                     {[
                       ['Within 24 hours','Our team reviews your quote and contacts you to confirm details'],
                       ['Kick-off call','30-minute call to align on rollout plan, integrations, and success metrics'],
-                      ['90-day pilot','Start with a free pilot on one site or one product line — no risk'],
+                      ['90-day pilot','Start with a free pilot on one site or one product line, no risk'],
                     ].map(([step, desc]) => (
                       <div key={step} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
                         <span style={{ color:'#1DD1A1', fontWeight:700, fontSize:13, flexShrink:0 }}>→</span>
@@ -282,7 +282,7 @@ export default function EnterprisePage() {
 function Card({ title, children }: { title:string; children?:any }) {
   return (
     <div style={{ background:'rgba(248,247,245,0.97)', border:'1px solid rgba(184,180,172,0.6)', borderRadius:14, padding:'22px 24px' }}>
-      <p style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>
+      <p style={{ fontSize:10, color:'#6CB9FC', letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:18 }}>{title.toUpperCase()}</p>
       {children}
     </div>
   )

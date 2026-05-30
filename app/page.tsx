@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 import { ManufacturingHeroDashboard } from '@/components/homepage/ManufacturingHeroDashboard'
+import { HeroCubePreview } from '@/components/home/HeroCubePreview'
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const BG   = '#08090F'   // page canvas
@@ -472,9 +473,9 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right: product mockup */}
-        <div className="au5 hero-mockup-wrap" style={{flexShrink:0}}>
-          <ProductMockup />
+        {/* Right: rotating 3D cube */}
+        <div className="au5 hero-mockup-wrap" style={{flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',minHeight:340}}>
+          <HeroCubePreview />
         </div>
       </div>
     </section>
@@ -547,6 +548,82 @@ function SocialProof() {
     </section>
   )
 }
+
+
+// ── How It Works ─────────────────────────────────────────────────────────────
+function HowItWorks() {
+  const steps = [
+    {
+      n: '01',
+      title: 'Map your current state',
+      body: 'Add your process steps with cycle time, wait time, operators, and WIP. VeSiMy builds the value stream map automatically as you type.',
+      color: '#1670D4',
+    },
+    {
+      n: '02',
+      title: 'Identify waste with 17 CI tools',
+      body: 'Run a time study, Fishbone analysis, 5 Why, or Waste ID on any step. All findings are linked to the specific process step they came from.',
+      color: '#D4A843',
+    },
+    {
+      n: '03',
+      title: 'Get AI-powered recommendations',
+      body: 'Supe AI reads your actual cycle times, bottlenecks, and tool findings. It gives you specific, Lean-grounded suggestions, not generic advice.',
+      color: '#7C3AED',
+    },
+    {
+      n: '04',
+      title: 'Build your target state and act',
+      body: 'Generate a Future State VSM with projected improvements. Export a professional report your team and management can actually use.',
+      color: '#16803C',
+    },
+  ]
+
+  const SANS = "'Satoshi','Inter',-apple-system,sans-serif"
+  const MONO = "'JetBrains Mono',monospace"
+
+  return (
+    <section style={{ background: '#FFFFFF', padding: '72px 24px', borderTop: '1px solid #E8ECF2' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 52 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: '#D4A843', letterSpacing: 1.5,
+            textTransform: 'uppercase', fontFamily: MONO, marginBottom: 12 }}>
+            HOW IT WORKS
+          </div>
+          <h2 style={{ fontSize: 36, fontWeight: 800, color: '#04111F', letterSpacing: -0.6,
+            lineHeight: 1.15, fontFamily: SANS, margin: '0 0 14px' }}>
+            From first map to measurable improvement
+          </h2>
+          <p style={{ fontSize: 15, color: '#5A6480', maxWidth: 500, margin: '0 auto',
+            lineHeight: 1.75, fontFamily: SANS }}>
+            No Lean certification required. No consultant needed on day one.
+            VeSiMy guides you through every step.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 20 }}>
+          {steps.map(s => (
+            <div key={s.n} style={{ padding: '24px', borderRadius: 12,
+              background: '#F8FAFD', border: '1px solid #E8ECF2' }}>
+              <div style={{ fontSize: 11, fontWeight: 800, color: s.color,
+                letterSpacing: 2, fontFamily: MONO, marginBottom: 12 }}>
+                {s.n}
+              </div>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#04111F',
+                marginBottom: 10, fontFamily: SANS, lineHeight: 1.3 }}>
+                {s.title}
+              </h3>
+              <p style={{ fontSize: 13, color: '#5A6480', lineHeight: 1.7,
+                margin: 0, fontFamily: SANS }}>
+                {s.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 
 // ── Features ──────────────────────────────────────────────────────────────────
 const FEATURES = [
@@ -821,6 +898,7 @@ export default function App() {
       <Nav />
       <Hero />
       <SocialProof />
+      <HowItWorks />
       <Features />
       <ManufacturingHeroDashboard />
       <Pricing />

@@ -25,7 +25,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
   const supabase = createClient()
 
   // ── Reset form when a DIFFERENT step is clicked (step.id changes) ──────────
-  // useState only initialises once — without this, clicking step B shows step A's data
+  // useState only initialises once, without this, clicking step B shows step A's data
   useEffect(() => {
     setForm({ ...step, tasks: Array.isArray(step.tasks) ? step.tasks : [] })
     setNewTask('')
@@ -35,7 +35,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
     setActiveCITool(null)
   }, [step.id])  // key: reset on ID change, not every re-render
 
-  // Detect SOP diff — show prompt when user edits a parsed step
+  // Detect SOP diff, show prompt when user edits a parsed step
   useEffect(() => {
     if (form.from_sop && !sopDismissed) {
       const changed = form.name !== step.name || form.cycle_time !== step.cycle_time ||
@@ -56,10 +56,10 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       const updated = { ...form, missing_info_flags: missing }
       await onUpdate(updated)
       // FIX: toast.success only fires if onUpdate resolves without error.
-      // updateStep handles its own error toast + rollback — no double-fire.
+      // updateStep handles its own error toast + rollback, no double-fire.
       toast.success('Step saved')
     } catch {
-      // onUpdate already showed error toast and reverted state — nothing more needed
+      // onUpdate already showed error toast and reverted state, nothing more needed
     } finally {
       setSaving(false)
     }
@@ -91,7 +91,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
 
   const section = (title: string, children: React.ReactNode) => (
     <div style={{ marginBottom: 20 }}>
-      <div style={{ fontSize: 10, fontFamily: 'monospace', letterSpacing: 1.5, color: BRAND, marginBottom: 10, paddingBottom: 6, borderBottom: '1px solid var(--border)' }}>
+      <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, color: BRAND, marginBottom: 10, paddingBottom: 6, borderBottom: '1px solid var(--border)' }}>
         {title}
       </div>
       {children}
@@ -107,7 +107,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       animation: 'slideIn .2s ease',
     }}>
       <style>{`@keyframes slideIn { from { transform: translateX(24px); opacity: 0 } to { transform: none; opacity: 1 } }`}</style>
-      {/* Mobile drag handle — only visible on small screens via CSS */}
+      {/* Mobile drag handle, only visible on small screens via CSS */}
       <div style={{
         display: 'none', // shown via CSS on mobile
         width: 40, height: 4, background: 'var(--sl-300)',
@@ -118,7 +118,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 9, fontFamily: 'monospace', color: BRAND, letterSpacing: 1.5, marginBottom: 4 }}>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: BRAND, letterSpacing: 1.5, marginBottom: 4 }}>
               STEP {(step.position || 0) + 1} · {STEP_TYPES.find(s => s.id === form.step_type)?.iso}
             </div>
             <input
@@ -135,7 +135,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
         {form.from_sop && sopChanged && !sopDismissed && (
           <div style={{ marginTop: 10, padding: '8px 10px', background: 'rgba(244,166,35,.08)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 7, fontSize: 11, color: '#7A5200', lineHeight: 1.6 }}>
             ℹ️ This step came from your uploaded SOP. Your changes differ from the original. If this improvement is not yet in your action plan, <strong>consider reporting this change to your process control department</strong> for future SOP updates.
-            <button onClick={() => setSopDismissed(true)} style={{ display: 'block', marginTop: 5, fontSize: 10, color: '#7A5200', background: 'none', border: '1px solid rgba(244,166,35,.4)', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Understood — dismiss</button>
+            <button onClick={() => setSopDismissed(true)} style={{ display: 'block', marginTop: 5, fontSize: 10, color: '#7A5200', background: 'none', border: '1px solid rgba(244,166,35,.4)', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Understood, dismiss</button>
           </div>
         )}
       </div>
@@ -167,12 +167,12 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </div>
         ))}
 
-        {section('WORK ELEMENTS — Physical tasks at this step', (
+        {section('WORK ELEMENTS, Physical tasks at this step', (
           <>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 8 }}>
               {(form.tasks || []).map((task: string, i: number) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, padding: '6px 9px', background: 'var(--sl-50)', borderRadius: 6, border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: 10, color: BRAND, fontFamily: 'monospace', flexShrink: 0, marginTop: 2 }}>{i+1}.</span>
+                  <span style={{ fontSize: 10, color: BRAND, fontFamily: 'var(--font-mono)', flexShrink: 0, marginTop: 2 }}>{i+1}.</span>
                   <span style={{ flex: 1, fontSize: 12, color: 'var(--text)', lineHeight: 1.5 }}>{task}</span>
                   <button onClick={() => removeTask(i)} style={{ background: 'none', border: 'none', color: '#ccc', cursor: 'pointer', fontSize: 14, padding: 0, flexShrink: 0 }}>×</button>
                 </div>
@@ -189,7 +189,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               <button onClick={addTask} style={{ padding: '7px 14px', borderRadius: 7, border: 'none', background: BRAND, color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Add</button>
             </div>
             <p style={{ fontSize: 10, color: 'var(--text3)', marginTop: 6 }}>
-              Be specific — e.g. "Move pallet to staging area" not "Move product"
+              Be specific, e.g. "Move pallet to staging area" not "Move product"
             </p>
           </>
         ))}
@@ -254,7 +254,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           </div>
         ))}
 
-        {section('PROCESS CONTROL — Governing Entity (ISO 22468)', (
+        {section('PROCESS CONTROL, Governing Entity (ISO 22468)', (
           <>
             <input
               value={form.governing_entity || ''}

@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/store.ts ────────────────────────────────────────────────────────────
-// Vesimy global state — Zustand store
+// Vesimy global state, Zustand store
 //
 // SCOPE: UI-only state that needs to cross component boundaries.
 // - Theme preference
@@ -25,7 +25,7 @@ export interface Toast {
 }
 
 // Re-export entity types that are used app-wide for convenience
-// (actual data never flows through the store — these are just type references)
+// (actual data never flows through the store, these are just type references)
 export type { Step, Branch, Project, Profile, KanbanCard, KanbanColumn, KanbanPriority, KanbanStatus, ProjectTab } from './store-types'
 
 // ── Store ───────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ interface AppState {
   sidebarOpen: boolean
   toasts: Toast[]
 
-  // Active tool modal — set by step card clicks, read by ProjectClient
+  // Active tool modal, set by step card clicks, read by ProjectClient
   // This is the one piece of state that needs to cross tree boundaries
   activeTool: { tool: string; stepId: string } | null
 

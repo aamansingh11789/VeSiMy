@@ -1,7 +1,7 @@
 // TypeScript enabled
 // ── app/api/projects/[id]/snapshot/route.ts ───────────────────────────────────
-// POST — save current project state as a version snapshot
-// GET  — list all snapshots for a project
+// POST, save current project state as a version snapshot
+// GET , list all snapshots for a project
 
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'

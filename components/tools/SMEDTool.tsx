@@ -5,9 +5,9 @@ import type React from 'react'
 import { TipLabel, FieldTip } from '@/components/ui/FieldTip'
 // ── components/tools/SMEDTool.tsx ────────────────────────────────────────────
 // Single-Minute Exchange of Die (SMED) Calculator
-// ISO 9001:2015 §8.5.1 — Changeover Management
-// SMED Methodology — Shingo Prize Standards
-// ISO 22468:2020 §5.2.5 — Setup Reduction
+// ISO 9001:2015 §8.5.1, Changeover Management
+// SMED Methodology, Shingo Prize Standards
+// ISO 22468:2020 §5.2.5, Setup Reduction
 //
 // Workflow:
 //   1. Record every changeover step with built-in timer
@@ -58,7 +58,7 @@ const fmtS = (s: number) => {
 const TYPE_META: Record<StepType, { label: string; color: string; bg: string; desc: string; tipKey: string }> = {
   internal: { label: 'Internal',  color: '#C0402A', bg: 'rgba(192,64,42,0.1)',   desc: 'Machine must be stopped to perform this task', tipKey: 'smed_internal' },
   external: { label: 'External',  color: '#1A7A5E', bg: 'rgba(26,122,94,0.1)',   desc: 'Can be done while machine is still running', tipKey: 'smed_external' },
-  waste:    { label: 'Waste/NVA', color: '#8C44CC', bg: 'rgba(140,68,204,0.1)', desc: 'Target for elimination — adds no value', tipKey: 'waste_overprocessing' },
+  waste:    { label: 'Waste/NVA', color: '#8C44CC', bg: 'rgba(140,68,204,0.1)', desc: 'Target for elimination, adds no value', tipKey: 'waste_overprocessing' },
 }
 const PHASE_META: Record<Phase, { label: string; color: string }> = {
   pre:    { label: 'Pre-Changeover',    color: '#1A4F8A' },
@@ -200,8 +200,8 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           <td style="font-weight:600;">${s.name || '(unnamed step)'}</td>
           <td style="text-align:center;color:${meta.color};font-weight:700;">${meta.label}</td>
           <td style="text-align:center;font-family:monospace;font-weight:600;">${fmtS(s.time)}</td>
-          <td style="text-align:center;">${s.type === 'internal' ? (s.convertible ? 'Yes' : 'No') : '—'}</td>
-          <td style="font-size:9pt;color:#555;">${s.notes || '—'}</td>
+          <td style="text-align:center;">${s.type === 'internal' ? (s.convertible ? 'Yes' : 'No') : ','}</td>
+          <td style="font-size:9pt;color:#555;">${s.notes || ','}</td>
         </tr>`
     }).join('')
 
@@ -209,7 +209,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       <section class="doc">
         <div class="doc-header">
           <div class="doc-title-block">
-            <h1>SMED Analysis — ${stepName}</h1>
+            <h1>SMED Analysis, ${stepName}</h1>
             <p class="subtitle">Single-Minute Exchange of Die · Changeover Reduction Study</p>
             ${product ? `<p style="font-size:9.5pt;margin-top:4pt;color:#333;">Product / Part: <strong>${product}</strong>${machine ? ` · Machine / Station: <strong>${machine}</strong>` : ''}</p>` : ''}
           </div>
@@ -232,7 +232,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
         </div>
 
         <!-- CURRENT STATE SUMMARY -->
-        <h2>1. Current State — Changeover Analysis</h2>
+        <h2>1. Current State, Changeover Analysis</h2>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10pt;margin-bottom:14pt;">
           <div class="kpi-card"><div class="kpi-label">Total Changeover Time</div><div class="kpi-value">${fmtS(totalTime)}</div></div>
           <div class="kpi-card"><div class="kpi-label">Internal Steps</div><div class="kpi-value" style="color:#C0402A;">${fmtS(internalTime)}<span style="font-size:9pt;font-weight:400;"> (${smInternalPct}%)</span></div></div>
@@ -279,8 +279,8 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
         <table class="data-table">
           <thead><tr><th>Stage</th><th>Action</th><th>Expected Benefit</th><th>Reference</th></tr></thead>
           <tbody>
-            <tr><td><strong>Stage 1</strong><br/>Observe &amp; Record</td><td>Video record entire changeover. Document every step as performed — do not improve yet.</td><td>Baseline established. Team aligned on true current state.</td><td>SMED §2.1 — Observation Stage</td></tr>
-            <tr><td><strong>Stage 2</strong><br/>Separate Internal / External</td><td>Classify each step. Identify which steps can be performed while machine is running (pre-staging, pre-heating, tool preparation, paperwork).</td><td>External preparation eliminates ${fmtS(convertibleTime)} of machine-stopped time.</td><td>SMED §2.2 — Separation Stage</td></tr>
+            <tr><td><strong>Stage 1</strong><br/>Observe &amp; Record</td><td>Video record entire changeover. Document every step as performed, do not improve yet.</td><td>Baseline established. Team aligned on true current state.</td><td>SMED §2.1, Observation Stage</td></tr>
+            <tr><td><strong>Stage 2</strong><br/>Separate Internal / External</td><td>Classify each step. Identify which steps can be performed while machine is running (pre-staging, pre-heating, tool preparation, paperwork).</td><td>External preparation eliminates ${fmtS(convertibleTime)} of machine-stopped time.</td><td>SMED §2.2, Separation Stage</td></tr>
             <tr><td><strong>Stage 3</strong><br/>Convert Internal to External</td><td>Redesign procedures, fixtures, and checklists to move identified convertible steps outside the machine-stopped window. Use standardized tool carts, pre-staging areas, and parallel workflows.</td><td>Machine-stopped time reduced by ${fmtS(convertibleTime)}. Target: ${fmtS(smedPotential)} total changeover.</td><td>ISO 9001:2015 §8.5.1 &amp; SMED §2.3</td></tr>
             <tr><td><strong>Stage 4</strong><br/>Streamline All Steps</td><td>Eliminate NVA steps (${fmtS(wasteTime)} identified). Standardize remaining internal steps. Implement quick-connect tooling, color-coding, and one-touch adjustments.</td><td>Further reduction toward single-digit changeover. Improved repeatability and operator safety.</td><td>ISO 22468:2020 §5.2.5</td></tr>
             <tr><td><strong>Stage 5</strong><br/>Document &amp; Sustain</td><td>Create Standard Work for the new changeover sequence. Train all operators. Validate with 10 consecutive changeovers. Update VSM with new setup time.</td><td>Gains locked in. Knowledge transferred. VSM current-state updated.</td><td>ISO 9001:2015 §8.5.1(g) &amp; §7.2</td></tr>
@@ -293,7 +293,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       </section>`
 
     openISOReport(body, {
-      title: `SMED Analysis — ${stepName}`,
+      title: `SMED Analysis, ${stepName}`,
       subtitle: 'Single-Minute Exchange of Die · Changeover Reduction Study',
       toolType: 'SMED',
       projectName: stepName,
@@ -312,7 +312,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
   return (
     <Modal
-      title={`SMED — ${stepName}`}
+      title={`SMED, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Analysis'}
@@ -321,7 +321,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       {/* ── ISO standards badge ── */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' }}>
         {['ISO 9001:2015 §8.5.1', 'SMED Methodology', 'ISO 22468:2020 §5.2.5'].map(s => (
-          <span key={s} style={{ fontSize: 9, padding: '2px 7px', borderRadius: 4, background: 'rgba(26,79,138,0.1)', color: '#1A4F8A', border: '1px solid rgba(26,79,138,0.2)', fontFamily: 'monospace' }}>{s}</span>
+          <span key={s} style={{ fontSize: 9, padding: '2px 7px', borderRadius: 4, background: 'rgba(26,79,138,0.1)', color: '#1A4F8A', border: '1px solid rgba(26,79,138,0.2)', fontFamily: 'var(--font-mono)' }}>{s}</span>
         ))}
       </div>
 
@@ -347,7 +347,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             { label: 'Waste',    val: fmtS(wasteTime),    color: '#8C44CC' },
           ].map(k => (
             <div key={k.label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
-              <div style={{ fontSize: 15, fontWeight: 700, color: k.color, fontFamily: 'monospace' }}>{k.val}</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: k.color, fontFamily: 'var(--font-mono)' }}>{k.val}</div>
               <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 2, letterSpacing: 0.5 }}>{k.label.toUpperCase()}</div>
             </div>
           ))}
@@ -387,7 +387,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════
-          TAB 1 — STEPS
+          TAB 1, STEPS
       ════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'steps' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -399,7 +399,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           {timerActive && (
             <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#D4A843' }}>
               <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block', fontFamily:"monospace", fontSize:11 }}>REC</span>
-              <span>Timer running: <strong style={{ fontFamily: 'monospace' }}>{(timerMs / 1000).toFixed(1)}s</strong></span>
+              <span>Timer running: <strong style={{ fontFamily: 'var(--font-mono)' }}>{(timerMs / 1000).toFixed(1)}s</strong></span>
             </div>
           )}
 
@@ -418,7 +418,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
               <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#D4A843' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
                 {/* Step header row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderBottom: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20, textAlign: 'center', fontWeight: 700 }}>#{s.seq}</span>
+                  <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 20, textAlign: 'center', fontWeight: 700 }}>#{s.seq}</span>
 
                   {/* Name */}
                   <input
@@ -445,7 +445,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                   {/* Time + timer */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 100 }}>
                     <input
-                      style={{ ...inputStyle, width: 52, textAlign: 'center', fontFamily: 'monospace', fontWeight: 600 }}
+                      style={{ ...inputStyle, width: 52, textAlign: 'center', fontFamily: 'var(--font-mono)', fontWeight: 600 }}
                       type="number"
                       placeholder="sec"
                       min={0}
@@ -512,7 +512,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       )}
 
       {/* ════════════════════════════════════════════════════════════════════
-          TAB 2 — SMED ANALYSIS
+          TAB 2, SMED ANALYSIS
       ════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'analysis' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -524,20 +524,20 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             <>
               {/* SMED Potential */}
               <div style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-                <div style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10 }}>SMED Potential</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>SMED Potential</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>Current Total</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#C0402A', fontFamily: 'monospace' }}>{fmtS(totalTime)}</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#C0402A', fontFamily: 'var(--font-mono)' }}>{fmtS(totalTime)}</div>
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>SMED Target</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#1A7A5E', fontFamily: 'monospace' }}>{fmtS(smedPotential)}</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#1A7A5E', fontFamily: 'var(--font-mono)' }}>{fmtS(smedPotential)}</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)' }}>after conversion &amp; waste removal</div>
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>Reduction</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'monospace' }}>{smedReductionPct}%</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'var(--font-mono)' }}>{smedReductionPct}%</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)' }}>save {fmtS(savingPerChange)} per change</div>
                   </div>
                 </div>
@@ -549,13 +549,13 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                     <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                       <div style={{ fontSize: 10, color: 'var(--text3)', width: 36, textAlign: 'right', flexShrink: 0 }}>Before</div>
                       <div style={{ flex: 1, height: 14, background: '#C0402A', borderRadius: 4, position: 'relative', overflow: 'visible' }}>
-                        <div style={{ position: 'absolute', right: 4, top: 0, bottom: 0, display: 'flex', alignItems: 'center', fontSize: 9, color: '#fff', fontFamily: 'monospace', fontWeight: 700 }}>{fmtS(totalTime)}</div>
+                        <div style={{ position: 'absolute', right: 4, top: 0, bottom: 0, display: 'flex', alignItems: 'center', fontSize: 9, color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{fmtS(totalTime)}</div>
                       </div>
                     </div>
                     <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginTop: 3 }}>
                       <div style={{ fontSize: 10, color: 'var(--text3)', width: 36, textAlign: 'right', flexShrink: 0 }}>Target</div>
                       <div style={{ width: `${(smedPotential/totalTime)*100}%`, minWidth: 32, height: 14, background: '#1A7A5E', borderRadius: 4, position: 'relative', overflow: 'visible', transition: 'width .5s' }}>
-                        <div style={{ position: 'absolute', right: 4, top: 0, bottom: 0, display: 'flex', alignItems: 'center', fontSize: 9, color: '#fff', fontFamily: 'monospace', fontWeight: 700 }}>{fmtS(smedPotential)}</div>
+                        <div style={{ position: 'absolute', right: 4, top: 0, bottom: 0, display: 'flex', alignItems: 'center', fontSize: 9, color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{fmtS(smedPotential)}</div>
                       </div>
                     </div>
                   </div>
@@ -564,7 +564,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
 
               {/* 4-Stage roadmap */}
               <div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10 }}>Implementation Stages (Shingo SMED)</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>Implementation Stages (Shingo SMED)</div>
                 {[
                   { stage: '1', title: 'Observe & Record', desc: 'Video the full changeover. Document every step as-is before any improvement.', done: steps.length > 0 },
                   { stage: '2', title: 'Separate Internal / External', desc: 'Classify each step. Mark what can be done while machine still runs.', done: steps.some(s => s.type === 'external') },
@@ -605,7 +605,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       )}
 
       {/* ════════════════════════════════════════════════════════════════════
-          TAB 3 — TARGETS & ROI
+          TAB 3, TARGETS & ROI
       ════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'targets' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -616,7 +616,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             {[
               { label: 'Current changeover time (min)', tipKey: 'smed_changeover', val: currentTime, set: setCurrentTime, hint: '0 = use recorded step times' },
-              { label: 'Target changeover time (min)',  tipKey: 'smed_changeover',  val: targetTime,  set: setTargetTime,  hint: 'Your SMED goal — aim for under 10 min' },
+              { label: 'Target changeover time (min)',  tipKey: 'smed_changeover',  val: targetTime,  set: setTargetTime,  hint: 'Your SMED goal, aim for under 10 min' },
               { label: 'Changeovers per day',           val: changesPerDay, set: setChangesPerDay, hint: '' },
               { label: 'Working days per year',         val: workingDays, set: setWorkingDays, hint: 'Typically 250' },
               { label: 'Labour cost ($/hour)',          val: laborCost,   set: setLaborCost,   hint: 'Including benefits' },
@@ -640,7 +640,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           {/* ROI summary */}
           {steps.length > 0 && (
             <div style={{ background: 'rgba(26,122,94,0.06)', border: '1px solid rgba(26,122,94,0.2)', borderRadius: 12, padding: 14, marginTop: 4 }}>
-              <div style={{ fontSize: 11, color: '#1A7A5E', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 10 }}>Annual ROI Projection</div>
+              <div style={{ fontSize: 11, color: '#1A7A5E', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>Annual ROI Projection</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
                 {[
                   { label: 'Saving per changeover', val: fmtS(savingPerChange) },
@@ -650,7 +650,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                 ].map(k => (
                   <div key={k.label} style={{ padding: '10px 12px', background: '#fff', borderRadius: 8, border: '1px solid var(--border)' }}>
                     <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 3 }}>{k.label}</div>
-                    <div style={{ fontSize: k.highlight ? 20 : 16, fontWeight: 700, color: k.highlight ? '#1A7A5E' : 'var(--text)', fontFamily: 'monospace' }}>{k.val}</div>
+                    <div style={{ fontSize: k.highlight ? 20 : 16, fontWeight: 700, color: k.highlight ? '#1A7A5E' : 'var(--text)', fontFamily: 'var(--font-mono)' }}>{k.val}</div>
                   </div>
                 ))}
               </div>

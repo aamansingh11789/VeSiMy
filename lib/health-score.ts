@@ -59,7 +59,7 @@ export function calcHealth(steps: Step[]): HealthScore {
     : 100
 
   // ── Defect score (quality penalty) ───────────────────────────────
-  // REVIEW FIX: 10%+ defect rate should be "Critical" — scaled to 0-100
+  // REVIEW FIX: 10%+ defect rate should be "Critical", scaled to 0-100
   const avgDefect = mainSteps.length
     ? mainSteps.reduce((a, s) => a + (Number(s.defect_rate) || 0), 0) / mainSteps.length
     : 0

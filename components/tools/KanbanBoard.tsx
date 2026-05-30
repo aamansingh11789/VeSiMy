@@ -76,7 +76,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
         rows={2}
         style={{
           width: '100%', background: 'transparent', border: 'none', outline: 'none',
-          color: 'var(--text)', fontSize: 13, fontFamily: 'DM Sans, sans-serif',
+          color: 'var(--text)', fontSize: 13, fontFamily: 'var(--font-sans)',
           resize: 'none', marginBottom: 8,
         }}
       />
@@ -97,7 +97,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
         style={{
           width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
           borderRadius: 5, padding: '5px 8px', color: 'var(--text3)', fontSize: 12,
-          fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 8,
+          fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 8,
         }}
       />
       <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
@@ -150,7 +150,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           style={{
             width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
-            fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 14,
+            fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 14,
           }}
         />
 
@@ -177,7 +177,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           style={{
             width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
-            fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 20,
+            fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 20,
           }}
         />
 
@@ -235,7 +235,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
         overflowY: 'auto',
       }} onClick={e => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'var(--sl-400)' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--sl-400)' }}>
             {card.id.slice(0, 8).toUpperCase()}
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 16 }}><XIcon size={12}/></button>
@@ -250,7 +250,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           style={{
             width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 14,
-            fontFamily: 'DM Sans, sans-serif', resize: 'none', outline: 'none', marginBottom: 14,
+            fontFamily: 'var(--font-sans)', resize: 'none', outline: 'none', marginBottom: 14,
           }}
         />
 
@@ -264,7 +264,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           style={{
             width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
-            fontFamily: 'DM Sans, sans-serif', resize: 'none', outline: 'none', marginBottom: 14,
+            fontFamily: 'var(--font-sans)', resize: 'none', outline: 'none', marginBottom: 14,
           }}
         />
 
@@ -278,7 +278,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               style={{
                 width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
                 borderRadius: 6, padding: '7px 8px', color: PRIORITY_COLOR[form.priority],
-                fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none',
+                fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}>
               {(['critical','high','normal','low'] as KanbanPriority[]).map(p => (
                 <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>
@@ -293,7 +293,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               style={{
                 width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
                 borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
-                fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none',
+                fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}
             />
           </div>
@@ -306,7 +306,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               style={{
                 width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
                 borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
-                fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none',
+                fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}
             />
           </div>
@@ -325,7 +325,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
             style={{
               width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
               borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
-              fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none',
+              fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
             }}>
             {columns.map(c => (
               <option key={c.id} value={c.id}>{c.title}</option>
@@ -344,7 +344,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           style={{
             width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
             borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
-            fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none', marginBottom: 14,
+            fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 14,
           }}
         />
 
@@ -371,7 +371,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
             style={{
               flex: 1, background: 'var(--bg2)', border: '1px solid var(--border)',
               borderRadius: 6, padding: '6px 8px', color: 'var(--text)',
-              fontSize: 12, fontFamily: 'DM Sans, sans-serif', outline: 'none',
+              fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
             }}
           />
           <button onClick={addTag} style={{
@@ -544,7 +544,7 @@ export function KanbanBoard({
           Your Kanban board is empty
         </div>
         <div style={{ fontSize: 14, color: 'var(--text3)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>
-          Kanban tracks live work orders flowing through your process steps — with WIP limits,
+          Kanban tracks live work orders flowing through your process steps, with WIP limits,
           blocked-card alerts, and real-time bottleneck visibility.
         </div>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -661,7 +661,7 @@ export function KanbanBoard({
                 </div>
 
                 {/* WIP indicator */}
-                <div style={{ fontSize: 10, fontFamily: 'monospace', display: 'flex', gap: 8 }}>
+                <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', display: 'flex', gap: 8 }}>
                   <span style={{ color: over ? '#F4A623' : 'var(--sl-400)' }}>
                     {cards.length}{col.wip_limit ? `/${col.wip_limit}` : ''}{over ? ' OVER' : ''}
                   </span>

@@ -1,9 +1,9 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/projects/route.ts ──────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
-// GET /api/projects — list all projects for the current user
+// GET /api/projects, list all projects for the current user
 export async function GET() {
   try {
   const supabase = await createServerSupabase()
@@ -25,14 +25,14 @@ export async function GET() {
     return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
   }}
 
-// POST /api/projects — create a new project
+// POST /api/projects, create a new project
 export async function POST(request: NextRequest) {
   try {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // Check plan limits — count live from DB, not stale profile.projects_count
+  // Check plan limits, count live from DB, not stale profile.projects_count
   const [{ data: profile }, { count: liveCount }] = await Promise.all([
     supabase.from('profiles').select('projects_limit, plan_tier, lifetime_access, is_beta').eq('id', user.id).single(),
     supabase.from('projects').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'active'),

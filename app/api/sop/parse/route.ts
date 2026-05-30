@@ -1,8 +1,8 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/sop/parse/route.ts ────────────────────────────────────────────────
 // Universal SOP → VSM step parser.
 // Handles: STEP-prefix, numbered (1.), section X.Y, pipe-table, bullet Step A,
-//          ALL-CAPS headings — and any mix thereof.
+//          ALL-CAPS headings, and any mix thereof.
 // Primary: Claude API (precise top-level-steps-only prompt with retry)
 // Fallback: rule-based multi-pattern parser tested against 6 real-world formats
 
@@ -144,16 +144,16 @@ function parseRules(text: string): any[] {
 
   // Try strategies in confidence order, stop at first returning 2–25 steps
   const tries: (() => any[])[] = []
-  if (sp >= 2) tries.push(() => buildBlocks(lines, /^STEP\s+\d+[:\s\-–—]+(.+)/, m => m[1]))
+  if (sp >= 2) tries.push(() => buildBlocks(lines, /^STEP\s+\d+[:\s\-–,]+(.+)/, m => m[1]))
   if (pt >= 3) tries.push(() => parsePipeTable(lines))
   if (sn >= 2) tries.push(() => buildBlocks(lines, /^(\d+\.\d+)\s+([A-Z].{3,70})$/, m => m[2]))
-  if (bs >= 2) tries.push(() => buildBlocks(lines, /^[•\-\*]\s+Step\s+[A-Za-z\d]+\s*[—\-–:]\s*(.+)/, m => m[1]))
+  if (bs >= 2) tries.push(() => buildBlocks(lines, /^[•\-\*]\s+Step\s+[A-Za-z\d]+\s*[,\-–:]\s*(.+)/, m => m[1]))
   if (ac >= 3) tries.push(() => parseAllCaps(lines))  // ALLCAPS before numbered when dominant
   tries.push(() => buildBlocks(lines, /^(\d{1,2})[.)]\s+([A-Z].{4,80})$/, m => m[2]))
   if (ac >= 2) tries.push(() => parseAllCaps(lines))   // also try after numbered
   // Final fallbacks
   tries.push(() => buildBlocks(lines, /^(\d+\.\d+)\s+([A-Z].{3,70})$/, m => m[2]))
-  tries.push(() => buildBlocks(lines, /^[•\-\*]\s+Step\s+[A-Za-z\d]+\s*[—\-–:]\s*(.+)/, m => m[1]))
+  tries.push(() => buildBlocks(lines, /^[•\-\*]\s+Step\s+[A-Za-z\d]+\s*[,\-–:]\s*(.+)/, m => m[1]))
 
   for (const fn of tries) {
     const steps = fn()
@@ -203,15 +203,15 @@ async function parseWithClaude(text: string, retry = false): Promise<any[] | nul
   if (!process.env.ANTHROPIC_API_KEY) return null
 
   const retryNote = retry
-    ? '\n\nCRITICAL: Return NO MORE THAN 12 steps. You previously returned too many — you are including sub-tasks or table rows. Only top-level process steps count.'
+    ? '\n\nCRITICAL: Return NO MORE THAN 12 steps. You previously returned too many, you are including sub-tasks or table rows. Only top-level process steps count.'
     : ''
 
   const prompt = `You are a lean manufacturing expert extracting process steps from an SOP to build a Value Stream Map.
 
-Extract ONLY the top-level process steps — the main operations in the flow (usually 4–12 steps total).
+Extract ONLY the top-level process steps, the main operations in the flow (usually 4–12 steps total).
 
 STRICT RULES:
-1. Look for "STEP 01", "STEP 02", "1. Step Name", "3.1 Step Name", "• Step A —" as top-level markers
+1. Look for "STEP 01", "STEP 02", "1. Step Name", "3.1 Step Name", "• Step A ," as top-level markers
 2. Do NOT include sub-tasks (numbered items INSIDE a step like "1.1", "2.1", "a.", "b.")  
 3. Do NOT include rows from: Waste Register, Kaizen Targets, Metrics tables, Approval tables, Build Checklists
 4. Do NOT include section headings (Scope, Purpose, References, Safety, etc.)
@@ -225,9 +225,9 @@ STRICT RULES:
    4 min                    ← wait_time: 240 seconds${retryNote}
 
 For each step return these fields where available:
-name (required, clean, max 60 chars — no [NVA] tags, no timing), department, operators (int),
+name (required, clean, max 60 chars, no [NVA] tags, no timing), department, operators (int),
 cycle_time (seconds), wait_time (seconds), setup_time (seconds), defect_rate (% as number),
-uptime (% as number), wip (int), notes (max 180 chars — CI notes, bottleneck flags)
+uptime (% as number), wip (int), notes (max 180 chars, CI notes, bottleneck flags)
 
 Return ONLY a valid JSON array. Nothing else.
 [{"name":"Order Receipt","operators":1,"cycle_time":48,"wait_time":240,"notes":"14s NVA walk to printer"}]

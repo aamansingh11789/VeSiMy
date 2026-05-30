@@ -66,15 +66,15 @@ const FORMAT_CFG = [
 // ── Export engine ─────────────────────────────────────────────────────────────
 function buildReport(data: PDCAData, format: string, linkedData: any): string {
   const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  const teamStr = data.team.map(t => `${t.name}${t.role ? ' (' + t.role + ')' : ''}`).join(', ') || '—'
+  const teamStr = data.team.map(t => `${t.name}${t.role ? ' (' + t.role + ')' : ''}`).join(', ') || ','
   const metricsTable = data.metrics.length > 0 ? `
     <table class="data-table">
       <thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Unit</th><th>Improvement</th></tr></thead>
       <tbody>${data.metrics.map(m => {
         const before = parseFloat(m.before)
         const after = parseFloat(m.after)
-        const delta = !isNaN(before) && !isNaN(after) ? ((after - before) / before * 100).toFixed(1) + '%' : '—'
-        return `<tr><td><strong>${m.name}</strong></td><td>${m.before || '—'}</td><td>${m.after || '—'}</td><td>${m.unit || '—'}</td><td style="color:${!isNaN(after-before) && after < before ? '#15803D' : '#DC2626'};font-weight:700">${delta}</td></tr>`
+        const delta = !isNaN(before) && !isNaN(after) ? ((after - before) / before * 100).toFixed(1) + '%' : ','
+        return `<tr><td><strong>${m.name}</strong></td><td>${m.before || ','}</td><td>${m.after || ','}</td><td>${m.unit || ','}</td><td style="color:${!isNaN(after-before) && after < before ? '#15803D' : '#DC2626'};font-weight:700">${delta}</td></tr>`
       }).join('')}</tbody>
     </table>` : '<p>(No metrics recorded)</p>'
 
@@ -84,136 +84,136 @@ function buildReport(data: PDCAData, format: string, linkedData: any): string {
       <tbody>${data.countermeasures.map(c => `
         <tr>
           <td>${c.action}</td>
-          <td>${c.owner || '—'}</td>
-          <td>${c.dueDate || '—'}</td>
+          <td>${c.owner || ','}</td>
+          <td>${c.dueDate || ','}</td>
           <td style="color:${c.status === 'done' ? '#15803D' : '#B45309'};font-weight:700">${c.status === 'done' ? 'Complete' : 'Open'}</td>
         </tr>`).join('')}</tbody>
     </table>` : '<p>(No countermeasures recorded)</p>'
 
   // Linked data section
   const linkedSection = linkedData ? `
-    ${linkedData.vsm ? `<h3>VSM Data — Process Baseline</h3>
+    ${linkedData.vsm ? `<h3>VSM Data, Process Baseline</h3>
       <table class="data-table">
         <thead><tr><th>Step</th><th>Cycle Time</th><th>WIP</th><th>Classification</th></tr></thead>
-        <tbody>${linkedData.vsm.map((s: any) => `<tr><td>${s.name}</td><td>${s.ct || '—'}</td><td>${s.wip || '—'}</td><td>${s.va_type?.toUpperCase() || '—'}</td></tr>`).join('')}</tbody>
+        <tbody>${linkedData.vsm.map((s: any) => `<tr><td>${s.name}</td><td>${s.ct || ','}</td><td>${s.wip || ','}</td><td>${s.va_type?.toUpperCase() || ','}</td></tr>`).join('')}</tbody>
       </table>` : ''}
     ${linkedData.rootCause5Why ? `<h3>Root Cause (from 5 Why Analysis)</h3><p>${linkedData.rootCause5Why}</p>` : ''}
   ` : ''
 
   if (format === 'pdca') return `
-    <h2>1. Plan — Problem Definition & Analysis</h2>
+    <h2>1. Plan, Problem Definition & Analysis</h2>
     <table class="data-table" style="width:100%">
       <tbody>
-        <tr><td style="width:160pt;font-weight:700">Project Title</td><td>${data.projectTitle || '—'}</td><td style="width:120pt;font-weight:700">Date</td><td>${today}</td></tr>
+        <tr><td style="width:160pt;font-weight:700">Project Title</td><td>${data.projectTitle || ','}</td><td style="width:120pt;font-weight:700">Date</td><td>${today}</td></tr>
         <tr><td style="font-weight:700">Team</td><td colspan="3">${teamStr}</td></tr>
-        <tr><td style="font-weight:700">Start Date</td><td>${data.startDate || '—'}</td><td style="font-weight:700">Target Date</td><td>${data.targetDate || '—'}</td></tr>
+        <tr><td style="font-weight:700">Start Date</td><td>${data.startDate || ','}</td><td style="font-weight:700">Target Date</td><td>${data.targetDate || ','}</td></tr>
       </tbody>
     </table>
-    <h3>Problem Statement</h3><p>${data.problemStatement || '—'}</p>
-    <h3>Background / Context</h3><p>${data.background || '—'}</p>
-    <h3>Current Condition</h3><p>${data.currentCondition || '—'}</p>
-    <h3>Target Condition</h3><p>${data.targetCondition || '—'}</p>
-    <h3>Root Cause Analysis</h3><p>${data.rootCause || '—'}</p>
-    <h3>Improvement Hypothesis</h3><p><em>${data.hypothesis || '—'}</em></p>
+    <h3>Problem Statement</h3><p>${data.problemStatement || ','}</p>
+    <h3>Background / Context</h3><p>${data.background || ','}</p>
+    <h3>Current Condition</h3><p>${data.currentCondition || ','}</p>
+    <h3>Target Condition</h3><p>${data.targetCondition || ','}</p>
+    <h3>Root Cause Analysis</h3><p>${data.rootCause || ','}</p>
+    <h3>Improvement Hypothesis</h3><p><em>${data.hypothesis || ','}</em></p>
     ${linkedSection}
-    <h2>2. Do — Implementation</h2>
+    <h2>2. Do, Implementation</h2>
     <h3>Countermeasures Implemented</h3>${cmTable}
-    <h3>Implementation Notes</h3><p>${data.implementation || '—'}</p>
-    <h2>3. Check — Results Measurement</h2>
+    <h3>Implementation Notes</h3><p>${data.implementation || ','}</p>
+    <h2>3. Check, Results Measurement</h2>
     <h3>Before vs After Metrics</h3>${metricsTable}
-    <h3>Results Summary</h3><p>${data.results || '—'}</p>
-    <p><strong>Target Achieved:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : data.achieved === 'partial' ? '#B45309' : '#DC2626'}">${data.achieved === 'yes' ? 'Yes — target met' : data.achieved === 'partial' ? 'Partially — continue improvement' : data.achieved === 'no' ? 'No — return to Plan' : 'Not assessed'}</span></p>
-    <h2>4. Act — Standardise or Adjust</h2>
-    <h3>Standardisation Actions</h3><p>${data.standardisation || '—'}</p>
-    <h3>Lessons Learned</h3><p>${data.lessonsLearned || '—'}</p>
-    <h3>Next PDCA Cycle</h3><p>${data.nextCycle || '—'}</p>`
+    <h3>Results Summary</h3><p>${data.results || ','}</p>
+    <p><strong>Target Achieved:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : data.achieved === 'partial' ? '#B45309' : '#DC2626'}">${data.achieved === 'yes' ? 'Yes, target met' : data.achieved === 'partial' ? 'Partially, continue improvement' : data.achieved === 'no' ? 'No, return to Plan' : 'Not assessed'}</span></p>
+    <h2>4. Act, Standardise or Adjust</h2>
+    <h3>Standardisation Actions</h3><p>${data.standardisation || ','}</p>
+    <h3>Lessons Learned</h3><p>${data.lessonsLearned || ','}</p>
+    <h3>Next PDCA Cycle</h3><p>${data.nextCycle || ','}</p>`
 
   if (format === 'a3') return `
     <h2>A3 Problem Solving Report</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20pt;margin-top:12pt;">
       <div>
-        <h3>1. Background</h3><p>${data.background || data.problemStatement || '—'}</p>
-        <h3>2. Current Condition</h3><p>${data.currentCondition || '—'}</p>
-        <h3>3. Goal / Target Condition</h3><p>${data.targetCondition || '—'}</p>
-        <h3>4. Root Cause Analysis</h3><p>${data.rootCause || '—'}</p>
+        <h3>1. Background</h3><p>${data.background || data.problemStatement || ','}</p>
+        <h3>2. Current Condition</h3><p>${data.currentCondition || ','}</p>
+        <h3>3. Goal / Target Condition</h3><p>${data.targetCondition || ','}</p>
+        <h3>4. Root Cause Analysis</h3><p>${data.rootCause || ','}</p>
       </div>
       <div>
         <h3>5. Countermeasures</h3>${cmTable}
-        <h3>6. Implementation Plan</h3><p>${data.implementation || '—'}</p>
-        <h3>7. Results</h3>${metricsTable}<p>${data.results || '—'}</p>
-        <h3>8. Follow-Up Actions</h3><p>${data.standardisation || '—'}</p>
+        <h3>6. Implementation Plan</h3><p>${data.implementation || ','}</p>
+        <h3>7. Results</h3>${metricsTable}<p>${data.results || ','}</p>
+        <h3>8. Follow-Up Actions</h3><p>${data.standardisation || ','}</p>
       </div>
     </div>
     <hr/>
-    <p style="font-size:9pt;color:#888">Author: ${teamStr} &nbsp;|&nbsp; Date: ${today} &nbsp;|&nbsp; Project: ${data.projectTitle || '—'}</p>`
+    <p style="font-size:9pt;color:#888">Author: ${teamStr} &nbsp;|&nbsp; Date: ${today} &nbsp;|&nbsp; Project: ${data.projectTitle || ','}</p>`
 
   if (format === '8d') return `
-    <h2>8D — Eight Disciplines Problem Solving Report</h2>
-    <p style="color:#888;margin-bottom:16pt">Customer complaint / non-conformance report — ISO 9001:2015 §10.2 compliant</p>
+    <h2>8D, Eight Disciplines Problem Solving Report</h2>
+    <p style="color:#888;margin-bottom:16pt">Customer complaint / non-conformance report, ISO 9001:2015 §10.2 compliant</p>
     <div style="background:#fff8e1;border:1pt solid #F59E0B;border-radius:6pt;padding:10pt;margin-bottom:12pt;">
-      <strong>Problem:</strong> ${data.problemStatement || '—'} &nbsp;|&nbsp; <strong>Date:</strong> ${today} &nbsp;|&nbsp; <strong>Reference:</strong> 8D-${Date.now().toString().slice(-6)}
+      <strong>Problem:</strong> ${data.problemStatement || ','} &nbsp;|&nbsp; <strong>Date:</strong> ${today} &nbsp;|&nbsp; <strong>Reference:</strong> 8D-${Date.now().toString().slice(-6)}
     </div>
-    <h3>D1 — Team</h3>
+    <h3>D1, Team</h3>
     <table class="data-table"><thead><tr><th>Name</th><th>Role</th></tr></thead>
-    <tbody>${data.team.length > 0 ? data.team.map(t => `<tr><td>${t.name}</td><td>${t.role || '—'}</td></tr>`).join('') : '<tr><td colspan="2">(Team not specified)</td></tr>'}</tbody></table>
-    <h3>D2 — Problem Description</h3><p>${data.problemStatement || '—'}</p><p><em>Background: ${data.background || '—'}</em></p>
-    <h3>D3 — Interim Containment Action (ICA)</h3><p>${data.currentCondition || '—'}</p>
-    <h3>D4 — Root Cause Analysis</h3><p>${data.rootCause || '—'}</p><p><em>Escape cause: Why did this reach the customer? ${data.hypothesis || '—'}</em></p>
-    <h3>D5 — Permanent Corrective Actions (PCA)</h3>${cmTable}
-    <h3>D6 — Implementation & Validation</h3><p>${data.implementation || '—'}</p>${metricsTable}
-    <h3>D7 — Prevent Recurrence</h3><p>${data.standardisation || '—'}</p>
-    <h3>D8 — Congratulate the Team & Lessons Learned</h3><p>${data.lessonsLearned || '—'}</p>
+    <tbody>${data.team.length > 0 ? data.team.map(t => `<tr><td>${t.name}</td><td>${t.role || ','}</td></tr>`).join('') : '<tr><td colspan="2">(Team not specified)</td></tr>'}</tbody></table>
+    <h3>D2, Problem Description</h3><p>${data.problemStatement || ','}</p><p><em>Background: ${data.background || ','}</em></p>
+    <h3>D3, Interim Containment Action (ICA)</h3><p>${data.currentCondition || ','}</p>
+    <h3>D4, Root Cause Analysis</h3><p>${data.rootCause || ','}</p><p><em>Escape cause: Why did this reach the customer? ${data.hypothesis || ','}</em></p>
+    <h3>D5, Permanent Corrective Actions (PCA)</h3>${cmTable}
+    <h3>D6, Implementation & Validation</h3><p>${data.implementation || ','}</p>${metricsTable}
+    <h3>D7, Prevent Recurrence</h3><p>${data.standardisation || ','}</p>
+    <h3>D8, Congratulate the Team & Lessons Learned</h3><p>${data.lessonsLearned || ','}</p>
     <p><strong>Closure Status:</strong> <span style="color:${data.achieved === 'yes' ? '#15803D' : '#DC2626'};font-weight:700">${data.achieved === 'yes' ? '✓ CLOSED' : 'OPEN'}</span></p>`
 
   if (format === 'dmaic') return `
     <h2>DMAIC Project Charter & Report</h2>
-    <p style="color:#888;margin-bottom:16pt">Six Sigma structured improvement project — ISO 13053 aligned</p>
+    <p style="color:#888;margin-bottom:16pt">Six Sigma structured improvement project, ISO 13053 aligned</p>
     <h3>Define</h3>
     <table class="data-table"><tbody>
-      <tr><td style="font-weight:700;width:140pt">Project Title</td><td>${data.projectTitle || '—'}</td></tr>
-      <tr><td style="font-weight:700">Business Case</td><td>${data.background || '—'}</td></tr>
-      <tr><td style="font-weight:700">Problem Statement</td><td>${data.problemStatement || '—'}</td></tr>
-      <tr><td style="font-weight:700">Goal Statement</td><td>${data.targetCondition || '—'}</td></tr>
-      <tr><td style="font-weight:700">Project Scope</td><td>${data.currentCondition || '—'}</td></tr>
+      <tr><td style="font-weight:700;width:140pt">Project Title</td><td>${data.projectTitle || ','}</td></tr>
+      <tr><td style="font-weight:700">Business Case</td><td>${data.background || ','}</td></tr>
+      <tr><td style="font-weight:700">Problem Statement</td><td>${data.problemStatement || ','}</td></tr>
+      <tr><td style="font-weight:700">Goal Statement</td><td>${data.targetCondition || ','}</td></tr>
+      <tr><td style="font-weight:700">Project Scope</td><td>${data.currentCondition || ','}</td></tr>
       <tr><td style="font-weight:700">Team</td><td>${teamStr}</td></tr>
-      <tr><td style="font-weight:700">Timeline</td><td>${data.startDate || '—'} → ${data.targetDate || '—'}</td></tr>
+      <tr><td style="font-weight:700">Timeline</td><td>${data.startDate || ','} → ${data.targetDate || ','}</td></tr>
     </tbody></table>
     <h3>Measure</h3>
     <p>Current process baseline and measurement plan:</p>${metricsTable}
     <h3>Analyse</h3>
-    <p><strong>Root Cause(s) Identified:</strong></p><p>${data.rootCause || '—'}</p>
-    <p><strong>Validated Hypothesis:</strong> <em>${data.hypothesis || '—'}</em></p>
+    <p><strong>Root Cause(s) Identified:</strong></p><p>${data.rootCause || ','}</p>
+    <p><strong>Validated Hypothesis:</strong> <em>${data.hypothesis || ','}</em></p>
     ${linkedSection}
     <h3>Improve</h3>
     <p><strong>Selected Solutions:</strong></p>${cmTable}
-    <p><strong>Pilot / Implementation Notes:</strong></p><p>${data.implementation || '—'}</p>
+    <p><strong>Pilot / Implementation Notes:</strong></p><p>${data.implementation || ','}</p>
     <h3>Control</h3>
     <p><strong>Results vs Target:</strong></p>${metricsTable}
-    <p>${data.results || '—'}</p>
-    <p><strong>Control Plan / Standardisation:</strong></p><p>${data.standardisation || '—'}</p>
-    <p><strong>Lessons Learned:</strong></p><p>${data.lessonsLearned || '—'}</p>
-    <p><strong>Project Status:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : '#B45309'}">${data.achieved === 'yes' ? '✓ CLOSED — Benefits verified' : data.achieved === 'partial' ? 'IN PROGRESS' : 'OPEN'}</span></p>`
+    <p>${data.results || ','}</p>
+    <p><strong>Control Plan / Standardisation:</strong></p><p>${data.standardisation || ','}</p>
+    <p><strong>Lessons Learned:</strong></p><p>${data.lessonsLearned || ','}</p>
+    <p><strong>Project Status:</strong> <span style="font-weight:700;color:${data.achieved === 'yes' ? '#15803D' : '#B45309'}">${data.achieved === 'yes' ? '✓ CLOSED, Benefits verified' : data.achieved === 'partial' ? 'IN PROGRESS' : 'OPEN'}</span></p>`
 
   if (format === 'ooda') return `
-    <h2>OODA Loop — Operational Decision Cycle</h2>
+    <h2>OODA Loop, Operational Decision Cycle</h2>
     <p style="color:#888;margin-bottom:16pt">Observe-Orient-Decide-Act rapid improvement framework</p>
-    <h3>Observe — What is happening?</h3>
-    <p><strong>Current Condition:</strong></p><p>${data.currentCondition || '—'}</p>
+    <h3>Observe, What is happening?</h3>
+    <p><strong>Current Condition:</strong></p><p>${data.currentCondition || ','}</p>
     <p><strong>Data Collected:</strong></p>${metricsTable}
-    <p><strong>Background Context:</strong></p><p>${data.background || '—'}</p>
+    <p><strong>Background Context:</strong></p><p>${data.background || ','}</p>
     ${linkedSection}
-    <h3>Orient — What does it mean?</h3>
-    <p><strong>Problem Statement:</strong></p><p>${data.problemStatement || '—'}</p>
-    <p><strong>Root Cause / Analysis:</strong></p><p>${data.rootCause || '—'}</p>
-    <p><strong>Mental Model / Hypothesis:</strong></p><p>${data.hypothesis || '—'}</p>
-    <h3>Decide — What will we do?</h3>
-    <p><strong>Target Condition:</strong></p><p>${data.targetCondition || '—'}</p>
+    <h3>Orient, What does it mean?</h3>
+    <p><strong>Problem Statement:</strong></p><p>${data.problemStatement || ','}</p>
+    <p><strong>Root Cause / Analysis:</strong></p><p>${data.rootCause || ','}</p>
+    <p><strong>Mental Model / Hypothesis:</strong></p><p>${data.hypothesis || ','}</p>
+    <h3>Decide, What will we do?</h3>
+    <p><strong>Target Condition:</strong></p><p>${data.targetCondition || ','}</p>
     <p><strong>Decisions Made:</strong></p>${cmTable}
-    <h3>Act — Implement and observe again</h3>
-    <p><strong>Actions Taken:</strong></p><p>${data.implementation || '—'}</p>
-    <p><strong>Outcomes Observed:</strong></p><p>${data.results || '—'}</p>
-    <p><strong>Loop Back:</strong></p><p>${data.nextCycle || data.standardisation || '—'}</p>
-    <p><strong>Lessons for Next Loop:</strong></p><p>${data.lessonsLearned || '—'}</p>`
+    <h3>Act, Implement and observe again</h3>
+    <p><strong>Actions Taken:</strong></p><p>${data.implementation || ','}</p>
+    <p><strong>Outcomes Observed:</strong></p><p>${data.results || ','}</p>
+    <p><strong>Loop Back:</strong></p><p>${data.nextCycle || data.standardisation || ','}</p>
+    <p><strong>Lessons for Next Loop:</strong></p><p>${data.lessonsLearned || ','}</p>`
 
   return '<p>Unknown format</p>'
 }
@@ -304,7 +304,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
     const fmt = FORMAT_CFG.find(f => f.id === format)
     const body = buildReport(data, format, linkedData)
     openISOReport(body, {
-      title: `${fmt?.label} Report — ${data.projectTitle || project?.name}`,
+      title: `${fmt?.label} Report, ${data.projectTitle || project?.name}`,
       toolType: 'PDCA',
       projectName: project?.name || '',
       stepName: data.projectTitle || 'Improvement Project',
@@ -321,7 +321,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
 
   return (
     <Modal
-      title={`PDCA — ${data.projectTitle || project?.name || 'Improvement Project'}`}
+      title={`PDCA, ${data.projectTitle || project?.name || 'Improvement Project'}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Project'}
@@ -351,7 +351,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
           ))}
         </div>
 
-        {/* Project header — always visible */}
+        {/* Project header, always visible */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           <div style={{ gridColumn: '1 / -1' }}>
             <label className="label">Project Title</label>
@@ -376,7 +376,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
 
             <div>
               <TipLabel termKey="problem_statement">Problem Statement *</TipLabel>
-              <textarea className="input" style={inputStyle} rows={3} placeholder="Describe the problem with data — what is wrong, where, how often, since when?" value={data.problemStatement} onChange={e => set('problemStatement', e.target.value)} />
+              <textarea className="input" style={inputStyle} rows={3} placeholder="Describe the problem with data, what is wrong, where, how often, since when?" value={data.problemStatement} onChange={e => set('problemStatement', e.target.value)} />
             </div>
             <div>
               <TipLabel termKey="fishbone_effect">Background / Context</TipLabel>
@@ -384,11 +384,11 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
             </div>
             <div>
               <TipLabel termKey="improvement_baseline">Current Condition</TipLabel>
-              <textarea className="input" style={inputStyle} rows={2} placeholder="What does the process look like today? Include data — CT, WIP, defect rate, lead time…" value={data.currentCondition} onChange={e => set('currentCondition', e.target.value)} />
+              <textarea className="input" style={inputStyle} rows={2} placeholder="What does the process look like today? Include data, CT, WIP, defect rate, lead time…" value={data.currentCondition} onChange={e => set('currentCondition', e.target.value)} />
             </div>
             <div>
               <TipLabel termKey="improvement_target">Target Condition</TipLabel>
-              <textarea className="input" style={inputStyle} rows={2} placeholder="What does success look like? Be specific — e.g. 'CT reduced from 180s to 120s, WIP from 15 to 3'" value={data.targetCondition} onChange={e => set('targetCondition', e.target.value)} />
+              <textarea className="input" style={inputStyle} rows={2} placeholder="What does success look like? Be specific, e.g. 'CT reduced from 180s to 120s, WIP from 15 to 3'" value={data.targetCondition} onChange={e => set('targetCondition', e.target.value)} />
             </div>
             <div>
               <TipLabel termKey="root_cause">Root Cause Analysis</TipLabel>
@@ -404,7 +404,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               <label className="label">Team Members</label>
               {data.team.map(m => (
                 <div key={m.id} style={{ display: 'flex', gap: 8, marginBottom: 6, alignItems: 'center' }}>
-                  <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{m.name}{m.role ? ` — ${m.role}` : ''}</span>
+                  <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{m.name}{m.role ? `, ${m.role}` : ''}</span>
                   <button type="button" onClick={() => set('team', data.team.filter(t => t.id !== m.id))} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
                 </div>
               ))}
@@ -421,7 +421,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {phase === 'do' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 8, fontSize: 11, color: '#D4A843' }}>
-              Implement your countermeasures. Start small — test on one shift or one product before full rollout.
+              Implement your countermeasures. Start small, test on one shift or one product before full rollout.
             </div>
 
             <div>
@@ -469,11 +469,11 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                   <span style={{ fontSize: 12, color: 'var(--text2)', fontWeight: 600 }}>{m.name}</span>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 9, color: 'var(--text3)' }}>Before</div>
-                    <div style={{ fontSize: 13, fontFamily: 'monospace', color: '#FF6B6B' }}>{m.before || '—'}</div>
+                    <div style={{ fontSize: 13, fontFamily: 'var(--font-mono)', color: '#FF6B6B' }}>{m.before || ','}</div>
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 9, color: 'var(--text3)' }}>After</div>
-                    <div style={{ fontSize: 13, fontFamily: 'monospace', color: '#1DD1A1' }}>{m.after || '—'}</div>
+                    <div style={{ fontSize: 13, fontFamily: 'var(--font-mono)', color: '#1DD1A1' }}>{m.after || ','}</div>
                   </div>
                   <div style={{ textAlign: 'center', fontSize: 10, color: 'var(--text3)' }}>{m.unit}</div>
                   <button type="button" onClick={() => removeMetric(m.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14 }}>×</button>
@@ -499,7 +499,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                 {[
                   { val: 'yes', label: 'Yes', color: '#1DD1A1' },
                   { val: 'partial', label: 'Partially', color: '#D4A843' },
-                  { val: 'no', label: 'No — loop back', color: '#FF6B6B' },
+                  { val: 'no', label: 'No, loop back', color: '#FF6B6B' },
                 ].map(o => (
                   <button key={o.val} type="button" onClick={() => set('achieved', o.val)}
                     style={{ flex: 1, padding: '8px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 700,
@@ -518,7 +518,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {phase === 'act' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ padding: '8px 12px', background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 8, fontSize: 11, color: '#8C44CC' }}>
-              If the target was met — standardise and prevent reversion. If not — adjust the plan and run the next cycle.
+              If the target was met, standardise and prevent reversion. If not, adjust the plan and run the next cycle.
             </div>
 
             <div>
@@ -540,13 +540,13 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowExport(v => !v)}
             style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#D4A843', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
-            <span>Export Report — Choose Format</span>
+            <span>Export Report, Choose Format</span>
             <span>{showExport ? '▲' : '▼'}</span>
           </button>
           {showExport && (
             <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ fontSize: 11, color: 'var(--text3)' }}>
-                One project, five professional formats. Same data — different lens for your audience.
+                One project, five professional formats. Same data, different lens for your audience.
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {FORMAT_CFG.map(fmt => (

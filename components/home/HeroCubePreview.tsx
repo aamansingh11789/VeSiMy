@@ -1,6 +1,6 @@
 'use client'
 // ── components/home/HeroCubePreview.tsx ──────────────────────────────────────
-// Auto-rotating 3D CSS cube — 4 faces showing real VeSiMy app previews.
+// Auto-rotating 3D CSS cube, 4 faces showing real VeSiMy app previews.
 // Pauses on hover. Respects prefers-reduced-motion.
 
 import React, { useState, useEffect, useRef } from 'react'
@@ -59,7 +59,7 @@ function FaceVSM() {
       </div>
       <div style={{background:'rgba(43,127,255,0.05)',border:'1px solid rgba(43,127,255,0.15)',borderRadius:6,padding:'5px 7px'}}>
         <div style={{fontSize:9,fontWeight:800,color:T.amber,letterSpacing:0.8,marginBottom:2}}>SUPE AI · ROOT CAUSE</div>
-        <div style={{fontSize:10,color:'#334155',lineHeight:1.5}}><strong style={{color:T.red}}>Inspect</strong> is your bottleneck — CT 62s vs Takt 32s. SMED analysis recommended.</div>
+        <div style={{fontSize:10,color:'#334155',lineHeight:1.5}}><strong style={{color:T.red}}>Inspect</strong> is your bottleneck, CT 62s vs Takt 32s. SMED analysis recommended.</div>
       </div>
     </div>
   )
@@ -229,7 +229,7 @@ export function HeroCubePreview() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Ambient glow */}
-      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(43,127,255,0.14) 0%, transparent 70%)', filter:'blur(24px)', pointerEvents:'none', zIndex:0 }}/>
+      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(212,168,67,0.18) 0%, rgba(43,127,255,0.10) 40%, transparent 70%)', filter:'blur(32px)', pointerEvents:'none', zIndex:0 }}/>
 
       {/* The cube */}
       <div style={{
@@ -246,14 +246,14 @@ export function HeroCubePreview() {
             backfaceVisibility:'hidden', WebkitBackfaceVisibility:'hidden',
             transform:`rotateY(${f.ry}deg) translateZ(${S2}px)`,
             borderRadius:12, overflow:'hidden',
-            boxShadow:'0 12px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.10)',
-            border:'1px solid rgba(255,255,255,0.09)',
+            boxShadow:'0 24px 80px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.30)',
+            border:'1px solid rgba(255,255,255,0.14)',
           }}>
             {f.el}
           </div>
         ))}
 
-        {/* Top face — brand */}
+        {/* Top face, brand */}
         <div style={{
           position:'absolute', width:S, height:S,
           backfaceVisibility:'hidden', WebkitBackfaceVisibility:'hidden',
@@ -270,7 +270,7 @@ export function HeroCubePreview() {
           </div>
         </div>
 
-        {/* Bottom face — KPIs */}
+        {/* Bottom face, KPIs */}
         <div style={{
           position:'absolute', width:S, height:S,
           backfaceVisibility:'hidden', WebkitBackfaceVisibility:'hidden',

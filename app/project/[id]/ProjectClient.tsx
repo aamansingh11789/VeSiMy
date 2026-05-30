@@ -67,7 +67,7 @@ const CI_TOOLS = [
 ]
 
 const fmtS = (s: number) => {
-  if (!s && s !== 0) return '—'
+  if (!s && s !== 0) return ','
   if (s < 60) return `${s.toFixed(0)}s`
   if (s < 3600) return `${(s / 60).toFixed(1)}m`
   return `${(s / 3600).toFixed(2)}h`
@@ -89,7 +89,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
   const [pdcaData,         setPdcaData]         = useState<any>(null)
   const {showToast, setActiveTool, activeTool} = useStore()
 
-  // Project state holds metadata only — steps live in their own state below
+  // Project state holds metadata only, steps live in their own state below
   const { steps: _initialSteps, ...projectMeta } = initialProject
   const [project, setProject] = useState(projectMeta)
   const [steps, setSteps] = useState<Step[]>(_initialSteps || [])
@@ -118,7 +118,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
       .then(setBranches)
       .catch((err) => {
         console.error('[ProjectClient] fetchBranches failed:', err)
-        // Non-critical — branches still usable, just empty
+        // Non-critical, branches still usable, just empty
       })
   }, [project.id])
 
@@ -177,10 +177,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
     ))
     try {
       await saveToolData(stepId, tool, data)
+      showToast('Saved', 'success')
     } catch (err: any) {
-      // Rollback on failure — user sees their previous data
+      // Rollback on failure, user sees their previous data
       setSteps(previousSteps)
-      showToast('Save failed — your changes were not persisted', 'error')
+      showToast('Save failed. Check your connection and try again.', 'error')
       throw err  // re-throw so tool modal stays open
     }
   }
@@ -243,7 +244,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
     )
     setSteps([...reordered, ...branchSteps])
     setDragIdx(null)
-    // Debounce reorder — wait 300ms in case user is still dragging
+    // Debounce reorder, wait 300ms in case user is still dragging
     if (reorderTimeoutRef.current) clearTimeout(reorderTimeoutRef.current)
     reorderTimeoutRef.current = setTimeout(async () => {
       try {
@@ -291,11 +292,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
     if (added > 0) {
       showToast(`${added} steps added to your map!`, 'success')
     } else {
-      showToast(firstError ? `Import failed: ${firstError}` : 'Import failed — no steps were saved', 'error')
+      showToast(firstError ? `Import failed: ${firstError}` : 'Import failed, no steps were saved', 'error')
     }
   }
 
-  // ── Canonical metrics — single source of truth ───────────────────────────
+  // ── Canonical metrics, single source of truth ───────────────────────────
   // All header bar stats, VSM, report, and coaching tools draw from here.
   // calcProcessMetrics uses VA-only steps for PCE, canonical ctSeconds() for CT,
   // and correctly prioritises available_time_sec over working_hours for takt.
@@ -377,7 +378,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             {project.name}
           </div>
           {project.product && (
-            <div style={{ fontSize: 10, color: 'var(--text2)', fontFamily: 'monospace', letterSpacing: 1 }}>
+            <div style={{ fontSize: 10, color: 'var(--text2)', fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>
               {project.product}
             </div>
           )}
@@ -495,10 +496,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
           { label: 'BRANCHES', value: branches.length,             color: 'var(--brand)' },
           { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--brand)' },
           { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : 'var(--brand)' },
-          { label: 'TAKT',     value: takt ? fmtS(takt) : '—',    color: 'var(--brand)' },
+          { label: 'TAKT',     value: takt ? fmtS(takt) : ',',    color: 'var(--brand)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
-          { label: 'WIP',      value: totalWIP || '—',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
-          { label: 'OPEN KZ',  value: openKZ || '—',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'WIP',      value: totalWIP || ',',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || ',',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
         ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
@@ -510,7 +511,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               flexShrink: 0,
             }}
           >
-            <div style={{ fontSize: 8, color: 'var(--sl-400)', letterSpacing: 1.5, fontFamily: 'monospace' }}>
+            <div style={{ fontSize: 8, color: 'var(--sl-400)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)' }}>
               {m.label}
             </div>
             <div style={{ fontSize: 14, fontWeight: 700, color: m.color, marginTop: 2 }}>
@@ -607,7 +608,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
           {tab === 'vsm' && (
             <div>
-              {/* Takt Time not-set banner — REVIEW FIX #13 */}
+              {/* Takt Time not-set banner, REVIEW FIX #13 */}
               {!project.takt_time && !project.demand && steps.filter(s => s.is_main_flow !== false).length > 0 && (
                 <div style={{ margin: '12px 24px 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(232,148,26,0.07)', border: '1px solid rgba(232,148,26,0.25)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                   <span style={{ fontSize: 16 }}>⏱</span>
@@ -626,7 +627,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
 
               {/* VSM Analysis Toolbar */}
               <div style={{ display: 'flex', gap: 8, padding: '12px 24px 0', flexWrap: 'wrap', alignItems: 'center' }}>
-                <span style={{ fontSize: 9, color: 'var(--sl-400)', fontFamily: 'monospace', marginRight: 4, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>VSM Tools</span>
+                <span style={{ fontSize: 9, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', marginRight: 4, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>VSM Tools</span>
                 <button
                   onClick={() => setShowVSMCoaching(true)}
                   className="vsm-tool-btn vsm-tool-btn--red"
@@ -675,7 +676,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     if (error) throw error
                     showToast('Kaizen plan saved', 'success')
                   } catch {
-                    showToast('Failed to save Kaizen plan — please try again', 'error')
+                    showToast('Failed to save Kaizen plan, please try again', 'error')
                   }
                 }}
               />
@@ -689,7 +690,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>PDCA Projects</div>
-                    <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>One data model — export as PDCA, A3, 8D, DMAIC, or OODA</div>
+                    <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>One data model, export as PDCA, A3, 8D, DMAIC, or OODA</div>
                   </div>
                   <button
                     onClick={() => { setPdcaData(null); setShowPDCA(true) }}
@@ -703,7 +704,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
                     const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
                     const descs = [
-                      'Plan-Do-Check-Act — standard lean cycle',
+                      'Plan-Do-Check-Act, standard lean cycle',
                       'Toyota one-page problem-solving report',
                       'Ford 8-Disciplines customer-facing report',
                       'Six Sigma structured project methodology',
@@ -844,7 +845,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, fontFamily: 'Palatino Linotype,serif', lineHeight: 1 }}>
                       Supe
                     </div>
-                    <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginTop: 2 }}>
+                    <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginTop: 2 }}>
                       AI MENTOR {!isPaid && 'PRO'}
                     </div>
                   </div>
@@ -934,7 +935,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                   </div>
                   <div>
                     <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: 'Palatino Linotype,serif' }}>Supe</span>
-                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
+                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
                   </div>
                 </div>
                 <button
@@ -1122,11 +1123,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
               try { await saveToolData(pdcaStep.id, 'pdca_project', data) }
               catch (e) {
                 console.error('PDCA save error:', e)
-                showToast('PDCA save failed — please add at least one step and try again', 'error')
+                showToast('PDCA save failed, please add at least one step and try again', 'error')
                 return // don't close modal on save failure
               }
             } else {
-              // No steps exist — PDCA data held in local state only, warn the user
+              // No steps exist, PDCA data held in local state only, warn the user
               showToast('Add a process step first to persist PDCA data across sessions', 'info')
             }
             setShowPDCA(false)
@@ -1143,7 +1144,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               <div>
                 <div className="vesimy-modal-title">✦ Target State Analysis</div>
                 <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>
-                  AI-powered Future State VSM — uses your real process data
+                  AI-powered Future State VSM, uses your real process data
                 </div>
               </div>
               <button className="vesimy-modal-close" onClick={() => setShowFutureState(false)}>×</button>
@@ -1229,7 +1230,7 @@ function PaywallGate({ feature }: { feature: string }) {
       </p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
         <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: 'linear-gradient(135deg,var(--brand2),var(--brand))', color: 'var(--bg)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-          Upgrade to Pro to track all your improvement targets — $29/mo
+          Upgrade to Pro to track all your improvement targets, $29/mo
         </a>
         <a href="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, border: '1px solid rgba(212,168,67,0.3)', color: 'var(--brand)', fontSize: 14, textDecoration: 'none' }}>
           View all plans
@@ -1309,7 +1310,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {mainSteps.length > 0 && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{mainSteps.length} STEPS</span>
+          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{mainSteps.length} STEPS</span>
           <button onClick={toggleAll} style={{ fontSize: 11, color: 'var(--brand)', background: 'none', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}>
             {allExpanded ? '▲ Collapse All' : '▼ Expand All'}
           </button>
@@ -1404,7 +1405,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--border2)' }}>
           <DragHandleIcon size={14} color="currentColor" />
         </span>
-        <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'monospace', minWidth: 22, flexShrink: 0 }}>
+        <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'var(--font-mono)', minWidth: 22, flexShrink: 0 }}>
           {String(index + 1).padStart(2, '0')}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -1441,17 +1442,17 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 8, marginBottom: 12 }}>
             {[
-              { label: 'Cycle Time', value: ct ? fmtS(ct) : '—', color: 'var(--brand)' },
-              { label: 'Wait Time',  value: step.wait_time ? fmtS(Number(step.wait_time)) : '—' },
-              { label: 'WIP',        value: step.wip ?? '—', color: step.wip > 0 ? '#D97706' : undefined },
-              { label: 'Operators',  value: step.operators ?? '—' },
-              { label: 'Uptime',     value: step.uptime != null ? `${step.uptime}%` : '—' },
-              { label: 'Defect Rate',value: step.defect_rate != null ? `${step.defect_rate}%` : '—' },
+              { label: 'Cycle Time', value: ct ? fmtS(ct) : ',', color: 'var(--brand)' },
+              { label: 'Wait Time',  value: step.wait_time ? fmtS(Number(step.wait_time)) : ',' },
+              { label: 'WIP',        value: step.wip ?? ',', color: step.wip > 0 ? '#D97706' : undefined },
+              { label: 'Operators',  value: step.operators ?? ',' },
+              { label: 'Uptime',     value: step.uptime != null ? `${step.uptime}%` : ',' },
+              { label: 'Defect Rate',value: step.defect_rate != null ? `${step.defect_rate}%` : ',' },
               { label: 'Flow Type',  value: step.flow_type || 'push' },
               { label: 'VA Type',    value: step.va_type || 'VA' },
             ].map(({ label, value, color }) => (
               <div key={label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 7, padding: '7px 10px' }}>
-                <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'monospace', letterSpacing: 0.8, marginBottom: 3 }}>{label}</div>
+                <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'var(--font-mono)', letterSpacing: 0.8, marginBottom: 3 }}>{label}</div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: color || 'var(--text)' }}>{String(value)}</div>
               </div>
             ))}
@@ -1510,7 +1511,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
       {allItems.length === 0 ? (
         <div style={{ textAlign: 'center', padding: 60, color: 'var(--text3)' }}>
           <KaizenIcon size={40} color="var(--text3)" style={{ margin: '0 auto 12px', display: 'block' }} />
-          <div style={{ color: 'var(--text2)' }}>No kaizen events yet — open the Kaizen tool on any step.</div>
+          <div style={{ color: 'var(--text2)' }}>No kaizen events yet, open the Kaizen tool on any step.</div>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
@@ -1540,7 +1541,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
   const [showPDCA, setShowPDCA] = useState(false)
 
-  // Canonical metrics — main-flow only, VA-aware PCE, correct takt resolution
+  // Canonical metrics, main-flow only, VA-aware PCE, correct takt resolution
   const {
     mainSteps: reportSteps,
     totalCT,
@@ -1551,10 +1552,10 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
   } = calcProcessMetrics(steps as any[], project as any)
 
   const takt = taktCalc ?? 0
-  // pceNum is null when no VA-classified steps exist; display as '—' in that case
+  // pceNum is null when no VA-classified steps exist; display as ',' in that case
   const pceDisplay = pceNum !== null ? Math.round(pceNum) : 0
 
-  // Open kaizens across ALL steps (branches included) — board-level count
+  // Open kaizens across ALL steps (branches included), board-level count
   const openKaizens = steps.reduce((a, s) =>
     a + ((s.toolData?.kaizen?.items || []).filter((k: any) => k.status !== 'complete' && k.status !== 'verified').length), 0)
 
@@ -1562,7 +1563,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 4px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
         <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
-          CI Report — {project.name}
+          CI Report, {project.name}
         </h2>
         <AIAssistButton
           label="AI Executive Summary"
@@ -1590,10 +1591,10 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 20 }}>
         {[
           { label: 'Steps Mapped',             val: String(reportSteps.length),                                                                  color: 'var(--text)' },
-          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : '—',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#FF6B6B') : 'var(--text3)' },
-          { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : '—',                                                          color: 'var(--text)' },
-          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : '—',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck',               val: bottleneck?.name || '—',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : ',',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#FF6B6B') : 'var(--text3)' },
+          { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : ',',                                                          color: 'var(--text)' },
+          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : ',',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
+          { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
           { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? 'var(--brand)' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
@@ -1603,7 +1604,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
         ))}
       </div>
 
-      {/* Step breakdown table — main-flow steps only (branches excluded from process report) */}
+      {/* Step breakdown table, main-flow steps only (branches excluded from process report) */}
       {reportSteps.length > 0 && (
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
           <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
@@ -1633,15 +1634,15 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                         {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : '—'}</td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? fmtS(wt) : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? fmtS(wt) : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: '7px 10px', color: wastes > 0 ? 'var(--brand)' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
-                      <td style={{ padding: '7px 10px', color: openK > 0 ? 'var(--brand)' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? 'var(--brand)' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? 'var(--brand)' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
@@ -1656,7 +1657,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
         </div>
       )}
 
-      {/* PDCA Tool — opens as proper modal with real close handler */}
+      {/* PDCA Tool, opens as proper modal with real close handler */}
       <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
         <button
           type="button"
@@ -1741,7 +1742,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
 
   // Body-scroll locking is handled at the root ProjectClient level via Modal
   // component. The prior implementation here referenced 13 undefined state
-  // variables from a deleted parent scope — removed to prevent crash on mount.
+  // variables from a deleted parent scope, removed to prevent crash on mount.
 
   return (
     <div>
@@ -1750,7 +1751,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Process Branches
           </h2>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Parallel lanes — sub-assemblies, prep flows, quality loops</p>
+          <p style={{ fontSize: 13, color: 'var(--text3)' }}>Parallel lanes, sub-assemblies, prep flows, quality loops</p>
         </div>
 
         <button
@@ -1804,7 +1805,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
                     </div>
                   ) : bSteps.map((s, si) => (
                     <div key={s.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                      <span style={{ color: 'var(--sl-400)', fontFamily: 'monospace', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
+                      <span style={{ color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
                       <div style={{ flex: 1, minWidth: 80 }}>
                         <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 12 }}>{s.name}</div>
                       </div>

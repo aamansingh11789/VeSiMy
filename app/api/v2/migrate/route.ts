@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/v2/migrate/route.ts ────────────────────────────────────────────────
 // Migrates a V1 project to V2 format.
 // Maps existing steps to new V2 columns with sensible defaults.
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       await supabase.from('steps').update(data).eq('id', id).eq('user_id', user.id)
     }
 
-    // Mark project as V2 — with user ownership check
+    // Mark project as V2, with user ownership check
     await supabase.from('projects').update({ version: 'v2' }).eq('id', project_id).eq('user_id', user.id)
 
     return NextResponse.json({

@@ -3,12 +3,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Industries — VeSiMy | Process Improvement for Every Industry',
-  description: 'If you have a process, VeSiMy can help you improve it. Manufacturing, healthcare, real estate, legal, construction, logistics and beyond — the same structured method, applied to your world.',
+  title: 'Industries, VeSiMy | Process Improvement for Every Industry',
+  description: 'If you have a process, VeSiMy can help you improve it. Manufacturing, healthcare, real estate, legal, construction, logistics and beyond, the same structured method, applied to your world.',
   keywords: ['continuous improvement', 'lean manufacturing industries', 'process improvement', 'automotive CI', 'aerospace lean', 'pharmaceutical process improvement'],
   openGraph: {
     title: 'VeSiMy | Map any process. Find the waste. Fix the bottleneck.',
-    description: 'VSM, time study, root cause analysis, and kaizen — for manufacturing, healthcare, real estate, legal, logistics and any other process-driven business.',
+    description: 'VSM, time study, root cause analysis, and kaizen, for manufacturing, healthcare, real estate, legal, logistics and any other process-driven business.',
     type: 'website',
   },
 }
@@ -42,7 +42,7 @@ const industries = [
     name: 'Food & Beverage',
     color: '#1DD1A1',
     tagline: 'Freshness is a process problem.',
-    challenge: 'Shelf life, changeover between SKUs, sanitation downtime, yield loss, and food safety compliance — all fighting for the same line hours.',
+    challenge: 'Shelf life, changeover between SKUs, sanitation downtime, yield loss, and food safety compliance, all fighting for the same line hours.',
     tools: ['Kaizen', 'Waste ID', 'Value Stream Map', 'Time Study'],
     stat: 'Up to 30% of food production costs come from preventable process losses.',
   },
@@ -52,7 +52,7 @@ const industries = [
     name: 'Medical Devices',
     color: '#FF6B6B',
     tagline: 'FDA doesn\'t grade on a curve.',
-    challenge: 'Design History Files, Device History Records, CAPA loops, and validation protocols — all while hitting production targets. Traceability is non-negotiable.',
+    challenge: 'Design History Files, Device History Records, CAPA loops, and validation protocols, all while hitting production targets. Traceability is non-negotiable.',
     tools: ['5 Why', 'Fishbone', 'Kaizen', 'Improvement Log'],
     stat: 'Over 60% of FDA 483 observations cite inadequate CAPA systems.',
   },
@@ -62,7 +62,7 @@ const industries = [
     name: 'Logistics',
     color: '#F7971E',
     tagline: 'Speed without structure is just chaos.',
-    challenge: 'Dock-to-stock time, pick accuracy, wave planning, and last-mile delivery windows — all measured to the minute by customers who switched carriers once already.',
+    challenge: 'Dock-to-stock time, pick accuracy, wave planning, and last-mile delivery windows, all measured to the minute by customers who switched carriers once already.',
     tools: ['Time Study', 'Value Stream Map', 'Waste ID', 'Kaizen'],
     stat: 'Warehouses lose an average of 3,000 hours per year to preventable motion and waiting waste.',
   },
@@ -84,7 +84,7 @@ const industries = [
     tagline: 'Every deviation is a documented failure or a documented lesson.',
     challenge: 'Batch record compliance, deviation investigation, GMP documentation, and a regulatory environment where the cost of getting it wrong is measured in recalls and consent decrees.',
     tools: ['5 Why', 'Fishbone', 'CAPA / Improvement Log', 'Kaizen'],
-    stat: 'Drug recalls cost an average of $10M+ per event — most root causes were process-level.',
+    stat: 'Drug recalls cost an average of $10M+ per event, most root causes were process-level.',
   },
   {
     slug: 'industrial-process-improvement',
@@ -109,20 +109,20 @@ export default function IndustriesPage() {
 
         {/* Hero */}
         <div style={{ maxWidth: 720, marginBottom: 72 }}>
-          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 14, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
             Industries
           </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(34px,4.5vw,56px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.1 }}>
             If You Have a Process,<br />VeSiMy Can Help You Improve It
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.85, marginBottom: 28 }}>
-            VeSiMy is not an automotive tool. It is not a pharma tool. It is a <strong style={{ color: 'var(--text)' }}>process improvement tool</strong> — and every industry runs on processes.
+            VeSiMy is not an automotive tool. It is not a pharma tool. It is a <strong style={{ color: 'var(--text)' }}>process improvement tool</strong>, and every industry runs on processes.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.85, marginBottom: 28 }}>
-            The 8 wastes don't check your industry badge before they show up on your floor. Waiting waste in a medical device cleanroom looks different from waiting waste in an automotive assembly plant — but they both have the same root structure: a process that was never fully seen, never fully measured, and never formally improved.
+            The 8 wastes don't check your industry badge before they show up on your floor. Waiting waste in a medical device cleanroom looks different from waiting waste in an automotive assembly plant, but they both have the same root structure: a process that was never fully seen, never fully measured, and never formally improved.
           </p>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.85 }}>
-            VeSiMy gives every team — regardless of what they make — the tools to see their process clearly, measure it honestly, and improve it systematically.
+            VeSiMy gives every team, regardless of what they make, the tools to see their process clearly, measure it honestly, and improve it systematically.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function IndustriesPage() {
           padding: 'clamp(28px,4vw,48px)',
           marginBottom: 72,
         }}>
-          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 16, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 16, textTransform: 'uppercase' }}>
             The Core Belief
           </p>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.2 }}>
@@ -155,7 +155,7 @@ export default function IndustriesPage() {
         </div>
 
         {/* Industry cards */}
-        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'monospace', marginBottom: 28, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: 'var(--text3)', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 28, textTransform: 'uppercase' }}>
           Explore by Industry
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(400px,1fr))', gap: 24, marginBottom: 80 }}>
@@ -174,7 +174,7 @@ export default function IndustriesPage() {
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 18 }}>
                   <span style={{ fontSize: 32, lineHeight: 1 }}>{ind.icon}</span>
                   <div>
-                    <div style={{ fontSize: 10, fontWeight: 800, fontFamily: 'monospace', letterSpacing: 1.5, color: ind.color, marginBottom: 4 }}>
+                    <div style={{ fontSize: 10, fontWeight: 800, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, color: ind.color, marginBottom: 4 }}>
                       {ind.name.toUpperCase()}
                     </div>
                     <div style={{ fontFamily: serif, fontSize: 17, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3 }}>
@@ -195,7 +195,7 @@ export default function IndustriesPage() {
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
                   {ind.tools.map(t => (
-                    <span key={t} style={{ fontSize: 10, padding: '3px 9px', borderRadius: 999, border: `1px solid ${ind.color}40`, color: ind.color, fontFamily: 'monospace', fontWeight: 700 }}>
+                    <span key={t} style={{ fontSize: 10, padding: '3px 9px', borderRadius: 999, border: `1px solid ${ind.color}40`, color: ind.color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
                       {t}
                     </span>
                   ))}
@@ -221,7 +221,7 @@ export default function IndustriesPage() {
             Your industry isn't on this list?
           </h2>
           <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.75, marginBottom: 24, maxWidth: 480, margin: '0 auto 24px' }}>
-            If your work involves a repeatable process — any process — VeSiMy was built for it. Start a free project and find out what's hiding in your workflow.
+            If your work involves a repeatable process, any process, VeSiMy was built for it. Start a free project and find out what's hiding in your workflow.
           </p>
           <Link href="/demo" style={{
             display: 'inline-block',

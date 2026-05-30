@@ -1,7 +1,7 @@
 // lib/v2/cycle-time-utils.ts
 // Canonical cycle-time unit normalization for VeSiMy.
 // EVERY calculation that reads a step's cycle time MUST use ctSeconds() or ctInSeconds().
-// Never read s.cycle_time directly in a numeric context — the stored value is in the
+// Never read s.cycle_time directly in a numeric context, the stored value is in the
 // unit specified by s.cycle_time_unit, which is NOT always seconds.
 
 const UNIT_TO_SECONDS: Record<string, number> = {
@@ -28,7 +28,7 @@ export function toSeconds(
 /**
  * Get a step's cycle time in seconds, preferring a stopwatch measurement
  * (toolData.stopwatch.mean) over the manually-entered cycle_time.
- * The stopwatch stores its mean in milliseconds — divide by 1000.
+ * The stopwatch stores its mean in milliseconds, divide by 1000.
  */
 export function ctSeconds(step: {
   cycle_time?:      number | null
@@ -47,7 +47,7 @@ export function ctSeconds(step: {
  * Format a seconds value to a human-readable string.
  */
 export function fmtSeconds(s: number): string {
-  if (!s || s <= 0) return '—'
+  if (!s || s <= 0) return ','
   if (s < 60)     return `${Math.round(s)}s`
   if (s < 3600)   return `${(s / 60).toFixed(1)}m`
   if (s < 86400)  return `${(s / 3600).toFixed(2)}h`

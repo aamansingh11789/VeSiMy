@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/stripe/portal/route.ts ────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { createPortalSession } from '@/lib/stripe'

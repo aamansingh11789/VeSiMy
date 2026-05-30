@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/steps/[id]/route.ts ──────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'

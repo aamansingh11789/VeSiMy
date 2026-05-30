@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/tools/FutureStatePanel.tsx ────────────────────────────────────
-// Target / Future State VSM panel — REVIEW FIX #1
+// Target / Future State VSM panel, REVIEW FIX #1
 // Calls the existing /api/v2/future-state endpoint (already built and auth-gated)
 // Shows: target setting → AI analysis → projected metrics → action plan
 
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const fmtS = (s: number) => {
-  if (!s) return '—'
+  if (!s) return ','
   if (s < 60) return `${Math.round(s)}s`
   if (s < 3600) return `${(s / 60).toFixed(1)}m`
   return `${(s / 3600).toFixed(1)}h`
@@ -71,7 +71,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
       setResult(data.future_state)
       setTab('plan')
     } catch (e: any) {
-      setError(e.message || 'Analysis failed — check your process data')
+      setError(e.message || 'Analysis failed, check your process data')
     } finally {
       setLoading(false)
     }
@@ -125,7 +125,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                   ['Lead Time', fmtS(metrics.leadTime), 'var(--brand)'],
                   ['PCE', fmtPCE(metrics.pce), metrics.pce !== null && metrics.pce >= 30 ? 'var(--green2)' : 'var(--red2)'],
                   ['Total CT', fmtS(metrics.totalCT), 'var(--text2)'],
-                  ['Bottleneck', metrics.bottleneck?.name || '—', 'var(--red2)'],
+                  ['Bottleneck', metrics.bottleneck?.name || ',', 'var(--red2)'],
                 ].map(([l, v, c]) => (
                   <div key={l as string} style={{ flex: '1 1 80px' }}>
                     <div className="kpi-label">{l}</div>
@@ -275,8 +275,8 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                   {[
                     ['Lead Time', fmtS(metrics.leadTime)],
                     ['PCE', fmtPCE(metrics.pce)],
-                    ['Bottleneck', metrics.bottleneck?.name || '—'],
-                    ['Total WIP', String(metrics.totalWIP || '—')],
+                    ['Bottleneck', metrics.bottleneck?.name || ','],
+                    ['Total WIP', String(metrics.totalWIP || ',')],
                   ].map(([l, v]) => (
                     <div key={l as string} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
                       <span style={{ color: 'var(--text3)' }}>{l}</span>

@@ -3,7 +3,7 @@
 import { XIcon, ExternalLinkIcon } from '@/components/ui/Icons'
 // ── components/vsm/VSMMap.tsx ─────────────────────────────────────────────────
 // ISO 22468:2020-compliant Value Stream Map
-// Process boxes: plain rectangles with data box — no non-ISO decorations.
+// Process boxes: plain rectangles with data box, no non-ISO decorations.
 // Box shadow optional for 3-D depth but no rounding except per standard.
 // WIP inventory triangles, supermarket shelves, and push arrows between all steps.
 
@@ -15,21 +15,21 @@ import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 interface Props { steps: Step[]; branches: Branch[]; project: Project }
 
 const fmtS = (s: number) => {
-  if (!s && s !== 0) return '—'
+  if (!s && s !== 0) return ','
   if (s < 60) return `${Math.round(s)}s`
   if (s < 3600) return `${(s / 60).toFixed(1)}m`
   return `${(s / 3600).toFixed(2)}h`
 }
 
-// ── ISO 22468 process box — plain rectangle + data box ────────────────────
+// ── ISO 22468 process box, plain rectangle + data box ────────────────────
 // No rounded corners on the box body (ISO specifies plain rect)
 // Subtle drop shadow for depth (box-shadow equivalent in SVG = filter)
 const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
   const PW = 100, PH = 56, DH = 72
   const ct  = ctSeconds(step)
   const co  = Number(step.change_over_time) || 0
-  const up  = step.uptime != null ? `${step.uptime}%` : '—'
-  const dr  = step.defect_rate != null ? `${step.defect_rate}%` : '—'
+  const up  = step.uptime != null ? `${step.uptime}%` : ','
+  const dr  = step.defect_rate != null ? `${step.defect_rate}%` : ','
   const ops = step.operators || 1
   const isBN = takt > 0 && ct > 0 && ct > takt * 1.05
   const BOX_STROKE = isBN ? '#DC2626' : '#374151'
@@ -38,10 +38,10 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
 
   return (
     <g filter={highlight ? 'url(#boxShadow)' : undefined}>
-      {/* ISO process rectangle — plain, no radius */}
+      {/* ISO process rectangle, plain, no radius */}
       <rect x={x} y={y} width={PW} height={PH} fill="#FFFFFF" stroke={BOX_STROKE} strokeWidth={isBN ? 2 : 1.5} />
       
-      {/* Step name — centred, ISO standard font */}
+      {/* Step name, centred, ISO standard font */}
       <text x={x+PW/2} y={y+20} textAnchor="middle" fill="#1F2937" fontSize={9} fontWeight={700} fontFamily="sans-serif">
         {step.name.length > 16 ? step.name.slice(0,15)+'…' : step.name}
       </text>
@@ -65,14 +65,14 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
       {/* Bottleneck over-takt marker */}
       {isBN && <text x={x+PW-4} y={y+20} textAnchor="end" fill="#DC2626" fontSize={7.5} fontWeight={700} fontFamily="sans-serif">▲TAKT</text>}
 
-      {/* ISO data box — attached below process rectangle, same width */}
+      {/* ISO data box, attached below process rectangle, same width */}
       <rect x={x} y={y+PH} width={PW} height={DH} fill="#FAFAFA" stroke={BOX_STROKE} strokeWidth={1} />
       {/* Horizontal dividers at 1/3 and 2/3 */}
       <line x1={x} y1={y+PH+DH*0.33} x2={x+PW} y2={y+PH+DH*0.33} stroke="#D1D5DB" strokeWidth={0.7} />
       <line x1={x} y1={y+PH+DH*0.66} x2={x+PW} y2={y+PH+DH*0.66} stroke="#D1D5DB" strokeWidth={0.7} />
       {/* C/T row */}
       <text x={x+4}  y={y+PH+14}          fill="#6B7280" fontSize={7.5} fontFamily="monospace">C/T =</text>
-      <text x={x+32} y={y+PH+14}          fill={CT_COLOR} fontSize={9}   fontWeight={700} fontFamily="monospace">{ct ? fmtS(ct) : '—'}</text>
+      <text x={x+32} y={y+PH+14}          fill={CT_COLOR} fontSize={9}   fontWeight={700} fontFamily="monospace">{ct ? fmtS(ct) : ','}</text>
       {/* C/O row */}
       <text x={x+4}  y={y+PH+DH*0.33+14} fill="#6B7280" fontSize={7.5} fontFamily="monospace">C/O =</text>
       <text x={x+32} y={y+PH+DH*0.33+14} fill="#374151" fontSize={9}   fontFamily="monospace">{co ? fmtS(co) : '0s'}</text>
@@ -162,7 +162,7 @@ export function VSMMap({ steps, branches, project }: Props) {
     : project.demand && project.working_hours ? (Number(project.working_hours)*3600)/Number(project.demand)
     : 0
 
-  // FIX: use canonical calcProcessMetrics — consistent with all other tabs
+  // FIX: use canonical calcProcessMetrics, consistent with all other tabs
   const { totalCT: mainCT, totalWait: mainWT, leadTime: lt, pce, totalWIP } =
     calcProcessMetrics(steps, project)
 
@@ -283,7 +283,7 @@ export function VSMMap({ steps, branches, project }: Props) {
               <text x={sx(i-1)+PW+GAP/2} y={PROC_Y+PH/2-8}
                 textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
 
-              {/* WIP inventory triangle — always shown when wip > 0 */}
+              {/* WIP inventory triangle, always shown when wip > 0 */}
               {wip > 0 && (
                 <WIPTriangle
                   x={sx(i-1)+PW+GAP/2-16}
@@ -291,7 +291,7 @@ export function VSMMap({ steps, branches, project }: Props) {
                   wip={wip}
                 />
               )}
-              {/* Supermarket shelf — shown when flow is pull/supermarket */}
+              {/* Supermarket shelf, shown when flow is pull/supermarket */}
               {isSM && (
                 <Supermarket
                   x={sx(i-1)+PW+GAP/2-22}
@@ -303,16 +303,16 @@ export function VSMMap({ steps, branches, project }: Props) {
             </g>
           )}
 
-          {/* Process box — ISO plain rectangle */}
+          {/* Process box, ISO plain rectangle */}
           <ProcessBox x={x} y={PROC_Y} step={step} takt={takt} highlight />
 
-          {/* Kaizen burst on bottleneck — ISO 22468 improvement marker */}
+          {/* Kaizen burst on bottleneck, ISO 22468 improvement marker */}
           {isBN && <KaizenBurst x={x+PW+1} y={PROC_Y-1} r={14} />}
         </g>
       )
     })}
 
-    {/* ── Timeline Bar — ISO 22468 style ── */}
+    {/* ── Timeline Bar, ISO 22468 style ── */}
     {/* Section label */}
     <text x={flowX} y={TL_BASE-42} fill="#374151" fontSize={9} fontFamily="monospace" fontWeight={700} letterSpacing={1}>
       PROCESS TIMELINE
@@ -370,7 +370,7 @@ export function VSMMap({ steps, branches, project }: Props) {
             </g>
           )}
           <rect x={bx+4} y={TL_BASE-ph} width={PW-8} height={ph} fill={isBN?'#FCA5A5':'#6EE7B7'} opacity={0.9} />
-          <text x={bx+PW/2} y={TL_BASE-ph-3} textAnchor="middle" fill={isBN?'#DC2626':'#059669'} fontSize={8} fontWeight={700} fontFamily="monospace">{ct?fmtS(ct):'—'}</text>
+          <text x={bx+PW/2} y={TL_BASE-ph-3} textAnchor="middle" fill={isBN?'#DC2626':'#059669'} fontSize={8} fontWeight={700} fontFamily="monospace">{ct?fmtS(ct):','}</text>
         </g>
       )
     })}
@@ -391,7 +391,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           <text x={bfX-8} y={laneY+PH/2+4} textAnchor="end" fill={color} fontSize={9} fontFamily="monospace" fontWeight={700}>
             {label.toUpperCase()}
           </text>
-          {/* Lane background — dashed border per ISO sub-process convention */}
+          {/* Lane background, dashed border per ISO sub-process convention */}
           <rect x={bfX-10} y={laneY-8} width={ls.length*(PW+GAP)-GAP+20} height={BRANCH_LANE_H-8}
             fill={`${color}07`} stroke={`${color}30`} strokeWidth={1.2} strokeDasharray="6,3" />
           {/* Connector from main flow down to branch */}
@@ -427,7 +427,7 @@ export function VSMMap({ steps, branches, project }: Props) {
 
     {/* ── Footer KPIs ── */}
     <text x={flowX} y={TOTAL_H-10} fill="#6B7280" fontSize={9} fontFamily="monospace">
-      {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':'—'}  ·  Takt: ${takt?fmtS(takt):'—'}  ·  WIP: ${totalWIP||'—'}`}
+      {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':','}  ·  Takt: ${takt?fmtS(takt):','}  ·  WIP: ${totalWIP||','}`}
     </text>
   </>)
 
@@ -439,12 +439,12 @@ export function VSMMap({ steps, branches, project }: Props) {
           { l:'Lead Time',   v:fmtS(lt),                        c:'#0176D3' },
           { l:'Value Added', v:fmtS(mainCT),                    c:'#059669' },
           { l:'NVA / Wait',  v:fmtS(mainWT),                    c:'#6B7280' },
-          { l:'Takt Time',   v:takt?fmtS(takt):'—',             c:'#0EA5E9' },
+          { l:'Takt Time',   v:takt?fmtS(takt):',',             c:'#0EA5E9' },
           { l:'PCE',         v:fmtPCE(pce),                     c:pceColor(pce) },
-          { l:'Total WIP',   v:totalWIP||'—',                   c:totalWIP>0?'#D97706':'#6B7280' },
+          { l:'Total WIP',   v:totalWIP||',',                   c:totalWIP>0?'#D97706':'#6B7280' },
         ].map(m => (
           <div key={m.l} style={{ flex:'1 1 100px', border:'1px solid var(--border)', borderRadius:8, padding:'8px 12px' }}>
-            <div style={{ fontSize:8, color:'var(--text3)', letterSpacing:1.2, fontFamily:'monospace', marginBottom:4 }}>{m.l}</div>
+            <div style={{ fontSize:8, color:'var(--text3)', letterSpacing:1.2, fontFamily:'var(--font-mono)', marginBottom:4 }}>{m.l}</div>
             <div style={{ fontSize:16, fontWeight:700, color:m.c }}>{m.v}</div>
           </div>
         ))}
@@ -457,7 +457,7 @@ export function VSMMap({ steps, branches, project }: Props) {
       {fullscreen && (
         <div style={{ position:'fixed', inset:0, zIndex:9999, background:'#FFFFFF', display:'flex', flexDirection:'column' }}>
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px 20px', background:'#1E3A5F', color:'#FFF', flexShrink:0 }}>
-            <span style={{ fontSize:14, fontWeight:700 }}>{project.name} — Value Stream Map · ISO 22468:2020</span>
+            <span style={{ fontSize:14, fontWeight:700 }}>{project.name}, Value Stream Map · ISO 22468:2020</span>
             <div style={{ display:'flex', gap:10 }}>
               <span style={{ fontSize:11, opacity:0.5 }}>Esc to exit</span>
               <button onClick={()=>setFullscreen(false)} style={{ padding:'5px 14px', borderRadius:6, fontSize:13, fontWeight:700, cursor:'pointer', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.25)', color:'#FFF' }}><XIcon size={13} color='white'/></button>

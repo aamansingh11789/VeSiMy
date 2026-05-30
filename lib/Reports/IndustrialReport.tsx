@@ -1,10 +1,10 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 'use client'
 
 import ReportFooter from './ReportFooter'
 
 function fmtS(s?: number | null) {
-  if (!s && s !== 0) return '—'
+  if (!s && s !== 0) return ','
   if (s < 60) return `${s.toFixed(0)}s`
   if (s < 3600) return `${(s / 60).toFixed(1)}m`
   return `${(s / 3600).toFixed(2)}h`
@@ -48,10 +48,10 @@ export default function IndustrialReport({ project, metrics, rootCause, waste, i
       </Section>
 
       <Section title="2. Process Overview">
-        <p><strong>Industry:</strong> {project?.industry || '—'}</p>
-        <p><strong>Product / Service:</strong> {project?.product || '—'}</p>
-        <p><strong>Customer:</strong> {project?.customer || '—'}</p>
-        <p><strong>Supplier:</strong> {project?.supplier || '—'}</p>
+        <p><strong>Industry:</strong> {project?.industry || ','}</p>
+        <p><strong>Product / Service:</strong> {project?.product || ','}</p>
+        <p><strong>Customer:</strong> {project?.customer || ','}</p>
+        <p><strong>Supplier:</strong> {project?.supplier || ','}</p>
       </Section>
 
       <Section title="3. Performance Metrics">
@@ -67,8 +67,8 @@ export default function IndustrialReport({ project, metrics, rootCause, waste, i
             <tr><td style={td}>Value Added Time</td><td style={td}>{fmtS(metrics?.valueAdded)}</td></tr>
             <tr><td style={td}>Main Flow CT</td><td style={td}>{fmtS(metrics?.mainCT)}</td></tr>
             <tr><td style={td}>Takt Time</td><td style={td}>{fmtS(metrics?.takt)}</td></tr>
-            <tr><td style={td}>PCE</td><td style={td}>{metrics?.pce ? `${metrics.pce.toFixed(1)}%` : '—'}</td></tr>
-            <tr><td style={td}>Total WIP</td><td style={td}>{metrics?.totalWIP ?? '—'}</td></tr>
+            <tr><td style={td}>PCE</td><td style={td}>{metrics?.pce ? `${metrics.pce.toFixed(1)}%` : ','}</td></tr>
+            <tr><td style={td}>Total WIP</td><td style={td}>{metrics?.totalWIP ?? ','}</td></tr>
           </tbody>
         </table>
       </Section>

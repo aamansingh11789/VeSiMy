@@ -57,7 +57,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
       showToast(`${selected.length} waste${selected.length !== 1 ? 's' : ''} identified & saved`, 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -65,7 +65,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
 
   return (
     <Modal
-      title={`Waste Identification — ${stepName}`}
+      title={`Waste Identification, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${selected.length} selected)`}
@@ -126,7 +126,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                       <span
                         style={{
                           fontSize: 10,
-                          fontFamily: 'monospace',
+                          fontFamily: 'var(--font-mono)',
                           color: 'var(--text3)',
                           background: 'var(--bg2)',
                           padding: '1px 5px',

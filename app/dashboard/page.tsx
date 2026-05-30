@@ -9,7 +9,7 @@ import { IndustryWatermark } from '@/components/ui/IndustryWatermark'
 import { VersionBanner } from '@/components/ui/VersionBanner'
 import { getWatermarkGroup } from '@/lib/industry-reference-map'
 
-export const metadata = { title: 'Dashboard — VeSiMy' }
+export const metadata = { title: 'Dashboard, VeSiMy' }
 
 export default async function DashboardPage() {
   const supabase = await createServerSupabase()

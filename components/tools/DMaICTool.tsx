@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/tools/DMaICTool.tsx ────────────────────────────────────────────
-// DMAIC — Define, Measure, Analyze, Improve, Control
+// DMAIC, Define, Measure, Analyze, Improve, Control
 // Purpose: Complex data-driven problems requiring statistical analysis.
 // Visual identity: Five-phase linear progression.
 // Spec: VeSiMy v4 Section 7.2
@@ -103,7 +103,7 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
   ]
 
   return (
-    <Modal title={`DMAIC — ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save DMAIC'}>
+    <Modal title={`DMAIC, ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save DMAIC'}>
       {/* Header */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
         <input value={form.title} onChange={e => set('title', e.target.value)} placeholder="Project title" style={{ ...inp, flex: 2 }} />
@@ -124,7 +124,7 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
             background: phase === i ? `${p.color}15` : completion[i] ? `${p.color}08` : 'transparent',
           }}>
             <div style={{ fontSize: 16, marginBottom: 2 }}>{completion[i] ? '✓' : p.icon}</div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: phase === i ? p.color : completion[i] ? p.color : 'var(--text3)', fontFamily: 'monospace' }}>{p.label.toUpperCase()}</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: phase === i ? p.color : completion[i] ? p.color : 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{p.label.toUpperCase()}</div>
           </button>
         ))}
       </div>
@@ -133,7 +133,7 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       <div style={{ background: `${current.color}08`, border: `1px solid ${current.color}25`, borderRadius: 9, padding: '10px 14px', marginBottom: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
           <span style={{ fontSize: 18 }}>{current.icon}</span>
-          <div style={{ fontSize: 10, fontWeight: 700, color: current.color, fontFamily: 'monospace', letterSpacing: 1 }}>{current.label.toUpperCase()} PHASE</div>
+          <div style={{ fontSize: 10, fontWeight: 700, color: current.color, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>{current.label.toUpperCase()} PHASE</div>
         </div>
         <div style={{ fontSize: 12, color: 'var(--text3)' }}>{current.desc}</div>
       </div>
@@ -142,22 +142,22 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {phase === 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROBLEM STATEMENT</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROBLEM STATEMENT</label>
             <textarea rows={3} value={form.problem_statement} onChange={e => set('problem_statement', e.target.value)}
               placeholder="Specific, measurable description of the problem. What is happening, where, when, how much?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROJECT SCOPE</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROJECT SCOPE</label>
             <textarea rows={2} value={form.project_scope} onChange={e => set('project_scope', e.target.value)}
               placeholder="What is in scope and out of scope for this project?" style={area} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CUSTOMER IMPACT</label>
+              <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CUSTOMER IMPACT</label>
               <textarea rows={2} value={form.customer_impact} onChange={e => set('customer_impact', e.target.value)} placeholder="How does this problem affect the customer?" style={area} />
             </div>
             <div>
-              <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>BUSINESS CASE</label>
+              <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>BUSINESS CASE</label>
               <textarea rows={2} value={form.business_case} onChange={e => set('business_case', e.target.value)} placeholder="Financial or operational benefit of solving this. Estimate if needed." style={area} />
             </div>
           </div>
@@ -168,22 +168,22 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {phase === 1 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CURRENT PROCESS DATA</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CURRENT PROCESS DATA</label>
             <textarea rows={3} value={form.current_data} onChange={e => set('current_data', e.target.value)}
               placeholder="What data do you have? Defect rates, cycle times, DPMO, Cpk? Enter key numbers." style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MEASUREMENT PLAN</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MEASUREMENT PLAN</label>
             <textarea rows={2} value={form.measurement_plan} onChange={e => set('measurement_plan', e.target.value)}
               placeholder="What will you measure, how, who, and how often?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>BASELINE PROCESS CAPABILITY</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>BASELINE PROCESS CAPABILITY</label>
             <input value={form.baseline_capability} onChange={e => set('baseline_capability', e.target.value)}
               placeholder="e.g. Defect rate: 3.2%, Cpk: 0.8, Sigma level: 2.4" style={inp} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MEASUREMENT SYSTEM ANALYSIS (MSA)</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MEASUREMENT SYSTEM ANALYSIS (MSA)</label>
             <input value={form.msa_notes} onChange={e => set('msa_notes', e.target.value)}
               placeholder="Notes on data reliability / gauge R&R if conducted" style={inp} />
           </div>
@@ -194,19 +194,19 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {phase === 2 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>ROOT CAUSE ANALYSIS</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>ROOT CAUSE ANALYSIS</label>
             <textarea rows={3} value={form.root_cause} onChange={e => set('root_cause', e.target.value)}
               placeholder="What hypotheses did you test? What did you find?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>STATISTICAL / ANALYTICAL TOOLS USED</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>STATISTICAL / ANALYTICAL TOOLS USED</label>
             <input value={form.statistical_tools} onChange={e => set('statistical_tools', e.target.value)}
               placeholder="e.g. Fishbone, 5 Whys, Pareto, regression analysis, hypothesis test" style={inp} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>VALIDATED ROOT CAUSE</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>VALIDATED ROOT CAUSE</label>
             <textarea rows={2} value={form.validated_root_cause} onChange={e => set('validated_root_cause', e.target.value)}
-              placeholder="State the root cause with the evidence that confirms it. Not a hypothesis — a confirmed cause." style={area} />
+              placeholder="State the root cause with the evidence that confirms it. Not a hypothesis, a confirmed cause." style={area} />
           </div>
         </div>
       )}
@@ -215,19 +215,19 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {phase === 3 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>SOLUTION OPTIONS CONSIDERED</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>SOLUTION OPTIONS CONSIDERED</label>
             <textarea rows={2} value={form.solution_options} onChange={e => set('solution_options', e.target.value)} placeholder="What options did you evaluate?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>SELECTED SOLUTION</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>SELECTED SOLUTION</label>
             <textarea rows={2} value={form.selected_solution} onChange={e => set('selected_solution', e.target.value)} placeholder="Which solution was selected and why?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PILOT PLAN</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PILOT PLAN</label>
             <textarea rows={2} value={form.pilot_plan} onChange={e => set('pilot_plan', e.target.value)} placeholder="Small-scale test plan. Who, what, when, how success is measured." style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>RISK ASSESSMENT</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>RISK ASSESSMENT</label>
             <input value={form.risk_assessment} onChange={e => set('risk_assessment', e.target.value)} placeholder="Risks of implementing this solution" style={inp} />
           </div>
         </div>
@@ -237,20 +237,20 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {phase === 4 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CONTROL PLAN</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>CONTROL PLAN</label>
             <textarea rows={3} value={form.control_plan} onChange={e => set('control_plan', e.target.value)}
               placeholder="What ongoing controls ensure the improvement holds? Control charts, inspection points, process checks?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>STANDARD WORK REFERENCE</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>STANDARD WORK REFERENCE</label>
             <input value={form.standard_work_ref} onChange={e => set('standard_work_ref', e.target.value)} placeholder="Document number or name of updated standard work" style={inp} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MONITORING PLAN</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>MONITORING PLAN</label>
             <textarea rows={2} value={form.monitoring_plan} onChange={e => set('monitoring_plan', e.target.value)} placeholder="How and how often will performance be monitored going forward?" style={area} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROJECT CLOSURE / HANDOFF</label>
+            <label style={{ fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text3)', display: 'block', marginBottom: 5 }}>PROJECT CLOSURE / HANDOFF</label>
             <textarea rows={2} value={form.handoff_notes} onChange={e => set('handoff_notes', e.target.value)} placeholder="Final results vs baseline. Handoff to process owner." style={area} />
           </div>
         </div>
@@ -262,7 +262,7 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
           style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: phase === 0 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 0 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
           ← Previous
         </button>
-        <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'monospace' }}>{phase + 1} / 5</span>
+        <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'var(--font-mono)' }}>{phase + 1} / 5</span>
         <button onClick={() => setPhase(p => Math.min(4, p + 1))} disabled={phase === 4}
           style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: phase === 4 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 4 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
           Next →

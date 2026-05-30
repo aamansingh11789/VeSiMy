@@ -33,7 +33,7 @@ export default function DemoPage() {
         </h1>
 
         <p style={{ fontSize: 15, color: 'rgba(248,247,245,0.6)', lineHeight: 1.8, marginBottom: 12 }}>
-          VeSiMy is a web app — there is no separate demo mode.
+          VeSiMy is a web app, there is no separate demo mode.
           The best way to see it is to create a free account and open the
           fully-built <strong style={{ color: '#0176D3' }}>Automotive Seat Assembly</strong> reference project.
         </p>
@@ -41,7 +41,7 @@ export default function DemoPage() {
         <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.4)', lineHeight: 1.7, marginBottom: 32 }}>
           It comes pre-loaded with 6 process steps, 2 sub-assembly branches,
           time studies, a fishbone analysis, 5 Why root cause, waste identification,
-          kaizen events, a Yamazumi chart, and standard work — every tool populated
+          kaizen events, a Yamazumi chart, and standard work, every tool populated
           with real automotive manufacturing data. You can click through everything
           and explore exactly how the platform works.
         </p>
@@ -66,7 +66,7 @@ export default function DemoPage() {
           </Link>
         </div>
 
-        <p style={{ fontSize: 11, color: 'rgba(248,247,245,0.2)', marginTop: 28, fontFamily: 'monospace' }}>
+        <p style={{ fontSize: 11, color: 'rgba(248,247,245,0.2)', marginTop: 28, fontFamily: 'var(--font-mono)' }}>
           Redirecting automatically in a few seconds…
         </p>
 

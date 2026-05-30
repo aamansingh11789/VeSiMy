@@ -25,8 +25,8 @@ export default function FreeVSMPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.12)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>TOOL REVIEW</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>5 min read · March 12, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.12)', color: '#1DD1A1', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>TOOL REVIEW</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>5 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             The Best Free VSM Tool in 2026 (No Visio Required)
@@ -92,7 +92,7 @@ export default function FreeVSMPost() {
                   <span style={{ fontWeight: 800, fontSize: 17, color: tool.highlight ? '#0176D3' : 'var(--text)' }}>{tool.name}</span>
                   {tool.highlight && <span style={{ fontSize: 9, background: '#0176D3', color: 'var(--bg)', padding: '2px 8px', borderRadius: 999, fontWeight: 800, letterSpacing: 1 }}>RECOMMENDED</span>}
                 </div>
-                <span style={{ fontSize: 13, color: tool.highlight ? '#0176D3' : 'var(--text2)', fontFamily: 'monospace' }}>{tool.price}</span>
+                <span style={{ fontSize: 13, color: tool.highlight ? '#0176D3' : 'var(--text2)', fontFamily: 'var(--font-mono)' }}>{tool.price}</span>
               </div>
               <p style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 14 }}>Best for: {tool.best}</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>

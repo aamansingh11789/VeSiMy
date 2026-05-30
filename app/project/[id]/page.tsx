@@ -14,7 +14,7 @@ interface Props { params: { id: string } }
 export async function generateMetadata({ params }: Props) {
   const supabase = await createServerSupabase()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { title: 'Project — VeSiMy' }
+  if (!user) return { title: 'Project, VeSiMy' }
   // Include user_id guard so project names of other users cannot be enumerated
   const { data } = await supabase
     .from('projects')
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
     .eq('id', params.id)
     .eq('user_id', user.id)
     .single()
-  return { title: data?.name ? `${data.name} — VeSiMy` : 'Project — VeSiMy' }
+  return { title: data?.name ? `${data.name}, VeSiMy` : 'Project, VeSiMy' }
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -52,14 +52,14 @@ export default async function ProjectPage({ params }: Props) {
       tool_data: undefined,
     }))
 
-  // Strip steps from project object — steps are managed separately in useState.
+  // Strip steps from project object, steps are managed separately in useState.
   // This prevents any child component from reading project.steps and getting
   // the frozen server-render snapshot instead of live state.
   const { steps: _strippedSteps, ...projectWithoutSteps } = { ...project, steps }
   const initialProject = { ...projectWithoutSteps, steps }
   const isV2 = project.version === 'v2'
 
-  // ── V2 project — new builder ───────────────────────────────────────────────
+  // ── V2 project, new builder ───────────────────────────────────────────────
   if (isV2) {
     return (
       <div style={{ display: 'flex', minHeight: '100dvh', background: 'var(--bg)' }}>
@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: Props) {
     )
   }
 
-  // ── V1 project — existing builder ─────────────────────────────────────────
+  // ── V1 project, existing builder ─────────────────────────────────────────
   return (
     <div style={{ display: 'flex', minHeight: '100dvh', background: 'var(--bg)' }}>
       <Sidebar profile={profile} />

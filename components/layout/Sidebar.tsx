@@ -52,7 +52,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
   const router   = useRouter()
   const supabase = createClient()
 
-  // Always start uncollapsed — read localStorage only in useEffect (after hydration).
+  // Always start uncollapsed, read localStorage only in useEffect (after hydration).
   // Reading localStorage in useState() causes SSR/client hydration mismatch because
   // Next.js 14 runs 'use client' components on the server too.
   const [collapsed, setCollapsed] = useState(forcedCollapsed)
@@ -69,7 +69,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
         setCollapsed(true)
       }
     }
-    // FIX: add sidebar-ready after state is set — enables the transition animation
+    // FIX: add sidebar-ready after state is set, enables the transition animation
     // only after the initial sidebar width is stable. Prevents the "vibration" on load.
     requestAnimationFrame(() => {
       document.documentElement.classList.add('sidebar-ready')
@@ -135,7 +135,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               <VeSiMyWordmark size={16} onDark />
               <div style={{
                 fontSize: 9, letterSpacing: 1.8, color: '#E8941A',
-                fontFamily: 'monospace', textTransform: 'uppercase', marginTop: 2,
+                fontFamily: 'var(--font-mono)', textTransform: 'uppercase', marginTop: 2,
               }}>
                 Process Intelligence
               </div>
@@ -144,7 +144,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
         )}
         {collapsed && <VLogoMark size={30} />}
 
-        {/* Collapse toggle — hidden when forced collapsed */}
+        {/* Collapse toggle, hidden when forced collapsed */}
         {!forcedCollapsed && (
           <button
             onClick={toggle}
@@ -159,7 +159,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212,168,67,0.08)'; e.currentTarget.style.color = '#F5E6A8' }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = NAVY[400] }}
           >
-            {/* Chevron icon — points left when open, right when collapsed */}
+            {/* Chevron icon, points left when open, right when collapsed */}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
               style={{ transform: collapsed ? 'rotate(180deg)' : 'none', transition: 'transform .22s' }}>
@@ -278,7 +278,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
         </div>
       </nav>
 
-      {/* ── Target nudge — only when expanded ─────────────────────────── */}
+      {/* ── Target nudge, only when expanded ─────────────────────────── */}
       {!collapsed && (
         <div style={{
           margin: '8px 10px', flexShrink: 0,

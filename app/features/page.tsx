@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 export const metadata: Metadata = {
-  title: 'Features — VeSiMy Process Intelligence Platform',
+  title: 'Features, VeSiMy Process Intelligence Platform',
   description: 'Value stream mapping, 17 CI tools, AI-powered Supe advisor, simulation, target state planning, and PDF reports. Everything your team needs to improve any process.',
 }
 

@@ -34,9 +34,9 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
     gaps.push({
       severity,
       category: 'Process Efficiency',
-      title: `PCE is ${Math.round(pce)}% — target is 95%+`,
+      title: `PCE is ${Math.round(pce)}%, target is 95%+`,
       detail: `Your process spends ${Math.round(100 - pce)}% of total lead time in non-value-adding wait. World-class VSMs run at 90–95%+ PCE. The gap represents lead time waste that is costing you responsiveness and working capital tied up in WIP.`,
-      action: `Focus kaizen on the largest wait/queue times between steps. Each WIP triangle on your map is a queue — target the biggest one first. Consider one-piece flow: can any adjacent steps be combined to eliminate the queue between them?`,
+      action: `Focus kaizen on the largest wait/queue times between steps. Each WIP triangle on your map is a queue, target the biggest one first. Consider one-piece flow: can any adjacent steps be combined to eliminate the queue between them?`,
     })
   }
 
@@ -54,7 +54,7 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
         category: 'Bottleneck',
         title: `"${s.name}" is ${excess}s over takt time`,
         detail: `Cycle time is ${ct}s vs takt of ${takt}s. This step cannot keep pace with customer demand and will cause either starvation downstream or overproduction upstream. Everything feeding into this step will build queue.`,
-        action: `Run a 5 Why or Kaizen on this step immediately. Decompose the task using Operator Steps — identify which elements are NVA and target them for elimination. If CT cannot be reduced, consider: splitting the step across 2 operators, adding a second station in parallel, or off-loading work elements to an adjacent under-loaded step.`,
+        action: `Run a 5 Why or Kaizen on this step immediately. Decompose the task using Operator Steps, identify which elements are NVA and target them for elimination. If CT cannot be reduced, consider: splitting the step across 2 operators, adding a second station in parallel, or off-loading work elements to an adjacent under-loaded step.`,
       })
     })
   }
@@ -66,8 +66,8 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
       gaps.push({
         severity: wip > 50 ? 'critical' : 'warning',
         category: 'Inventory / WIP',
-        title: `"${s.name}" has ${wip} units WIP — consider one-piece flow`,
-        detail: `WIP of ${wip} units represents batch processing or a queue building before this step. Each unit in this queue is lead time you are adding without adding value. High WIP often hides quality problems — defects can sit in queue for hours before being discovered.`,
+        title: `"${s.name}" has ${wip} units WIP, consider one-piece flow`,
+        detail: `WIP of ${wip} units represents batch processing or a queue building before this step. Each unit in this queue is lead time you are adding without adding value. High WIP often hides quality problems, defects can sit in queue for hours before being discovered.`,
         action: `Investigate why WIP is accumulating here. Is the upstream step running faster than this step can consume? If so, pace the upstream step to takt (drum-buffer-rope). If this is a necessary queue (e.g., drying time, inspection batch), model it as a Queue Step in your VSM to make the lead time impact visible.`,
       })
     }
@@ -79,7 +79,7 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
     gaps.push({
       severity: 'info',
       category: 'Flow Design',
-      title: `${pushSteps.length} steps using PUSH flow — evaluate one-piece flow`,
+      title: `${pushSteps.length} steps using PUSH flow, evaluate one-piece flow`,
       detail: `Push scheduling means each step produces regardless of downstream demand, creating WIP accumulation. One-piece flow (or FIFO lanes between steps) eliminates queue build-up, reduces lead time, and exposes quality problems immediately rather than after a batch has been processed.`,
       action: `Review each PUSH step. For adjacent steps with similar cycle times, consider FIFO lanes instead of push. For the step immediately before a bottleneck, consider a supermarket with a defined max inventory to buffer the bottleneck without creating unbounded WIP elsewhere.`,
     })
@@ -97,8 +97,8 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
           severity: 'warning',
           category: 'Line Balance',
           title: `Cycle time imbalance: ratio ${ratio.toFixed(1)}:1 across steps`,
-          detail: `The fastest step (${Math.round(min)}s) and slowest step (${Math.round(max)}s) differ by ${ratio.toFixed(1)}×. In a balanced line, all steps should run close to takt time. Imbalanced steps mean some operators are idle while others are overwhelmed — this creates NVA waiting waste and inconsistent output.`,
-          action: `Use the Yamazumi chart to visualise operator work content. Re-balance work elements between operators to bring all step cycle times to within 10–15% of takt time. The ideal state is every step at takt time — no slack, no overload.`,
+          detail: `The fastest step (${Math.round(min)}s) and slowest step (${Math.round(max)}s) differ by ${ratio.toFixed(1)}×. In a balanced line, all steps should run close to takt time. Imbalanced steps mean some operators are idle while others are overwhelmed, this creates NVA waiting waste and inconsistent output.`,
+          action: `Use the Yamazumi chart to visualise operator work content. Re-balance work elements between operators to bring all step cycle times to within 10–15% of takt time. The ideal state is every step at takt time, no slack, no overload.`,
         })
       }
     }
@@ -121,7 +121,7 @@ function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
     gaps.push({
       severity: 'info',
       category: 'Achievement',
-      title: `PCE at ${Math.round(pce)}% — excellent! Focus shifts to flow reliability`,
+      title: `PCE at ${Math.round(pce)}%, excellent! Focus shifts to flow reliability`,
       detail: `You have achieved near-world-class process efficiency. At this level, the primary opportunities are in reducing variation (CT standard deviation), improving uptime reliability, and building in quality at the source to eliminate inspection steps.`,
       action: `Run Statistical Process Control (SPC) on your cycle times to identify variation sources. Use the Fishbone tool to investigate the root causes of any remaining NVA or NNVA elements. Consider standard work documentation to lock in gains.`,
     })
@@ -162,7 +162,7 @@ ${mainSteps.map((s, i) => {
 Known gaps:
 ${gaps.slice(0, 4).map(g => `- ${g.title}`).join('\n')}
 
-Give 3-4 specific improvement recommendations focused on moving from ${Math.round(pce)}% PCE toward 95%+. Each recommendation should reference specific step names from the list above. Format as numbered list. Be direct and practical — this is for a practitioner on the shop floor.`
+Give 3-4 specific improvement recommendations focused on moving from ${Math.round(pce)}% PCE toward 95%+. Each recommendation should reference specific step names from the list above. Format as numbered list. Be direct and practical, this is for a practitioner on the shop floor.`
 
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -256,7 +256,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
                 <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                   <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{SEV_ICON[gap.severity]}</span>
                   <div>
-                    <span style={{ fontSize: 9, fontWeight: 800, color: SEV_COLOR[gap.severity], letterSpacing: 1, fontFamily: 'monospace' }}>{gap.category.toUpperCase()}</span>
+                    <span style={{ fontSize: 9, fontWeight: 800, color: SEV_COLOR[gap.severity], letterSpacing: 1, fontFamily: 'var(--font-mono)' }}>{gap.category.toUpperCase()}</span>
                     <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginTop: 2 }}>{gap.title}</div>
                   </div>
                 </div>

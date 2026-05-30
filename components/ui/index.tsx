@@ -2,7 +2,7 @@
 'use client'
 import { CheckIcon, XIcon, InfoIcon } from '@/components/ui/Icons'
 
-// The real Modal lives in Modal.tsx — re-export it so both import paths work
+// The real Modal lives in Modal.tsx, re-export it so both import paths work
 import type React from 'react'
 export { Modal } from '@/components/ui/Modal'
 

@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── hooks/useAnalytics.ts ─────────────────────────────────────────────────────
-// Safe analytics hook — uses window.posthog when available, no-ops otherwise.
+// Safe analytics hook, uses window.posthog when available, no-ops otherwise.
 // Does NOT import posthog-js directly to avoid crashes if it's not installed.
 
 import { useCallback } from 'react'

@@ -25,8 +25,8 @@ export default function TaktTimePost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>CALCULATOR</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>5 min read · March 12, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.15)', color: '#1DD1A1', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>CALCULATOR</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>5 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Takt Time Calculator: Formula, Examples, and What to Do With the Number
@@ -48,7 +48,7 @@ export default function TaktTimePost() {
 
           {/* Formula box */}
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.25)', borderRadius: 14, padding: '28px 32px', marginBottom: 32, textAlign: 'center' }}>
-            <div style={{ fontSize: 12, color: '#1DD1A1', fontFamily: 'monospace', fontWeight: 800, letterSpacing: 2, marginBottom: 16 }}>THE FORMULA</div>
+            <div style={{ fontSize: 12, color: '#1DD1A1', fontFamily: 'var(--font-mono)', fontWeight: 800, letterSpacing: 2, marginBottom: 16 }}>THE FORMULA</div>
             <div style={{ fontFamily: serif, fontSize: 'clamp(18px,3vw,26px)', color: 'var(--text)', fontWeight: 700, marginBottom: 12 }}>
               Takt Time = Available Production Time ÷ Customer Demand
             </div>
@@ -85,7 +85,7 @@ export default function TaktTimePost() {
               </div>
               <div style={{ paddingLeft: 42, fontSize: 14 }}>
                 <p style={{ marginBottom: 10 }}>{body}</p>
-                <div style={{ background: 'rgba(29,209,161,0.04)', border: '1px solid rgba(29,209,161,0.15)', borderRadius: 8, padding: '10px 14px', fontSize: 13, color: '#1DD1A1', fontFamily: 'monospace' }}>
+                <div style={{ background: 'rgba(29,209,161,0.04)', border: '1px solid rgba(29,209,161,0.15)', borderRadius: 8, padding: '10px 14px', fontSize: 13, color: '#1DD1A1', fontFamily: 'var(--font-mono)' }}>
                   {example}
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function TaktTimePost() {
                   ['Takt Time', ex.takt],
                 ].map(([label, val]) => (
                   <div key={label} style={{ background: 'transparent', borderRadius: 8, padding: '10px 12px' }}>
-                    <div style={{ fontSize: 10, color: '#52507A', fontFamily: 'monospace', marginBottom: 4 }}>{label}</div>
+                    <div style={{ fontSize: 10, color: '#52507A', fontFamily: 'var(--font-mono)', marginBottom: 4 }}>{label}</div>
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#1DD1A1' }}>{val}</div>
                   </div>
                 ))}

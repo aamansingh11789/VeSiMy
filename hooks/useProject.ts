@@ -37,7 +37,7 @@ export function useProject(projectId: string, initial: Project): UseProjectRetur
       if (!res.ok) throw new Error('Save failed')
       setLastSaved(new Date())
     } catch {
-      toast.error('Failed to save — check your connection')
+      toast.error('Failed to save, check your connection')
     } finally {
       setSaving(false)
     }

@@ -24,8 +24,8 @@ export default function ComparisonPage() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5 }}>COMPARISON</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>6 min read · April 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>COMPARISON</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · April 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             VeSiMy vs Manus AI for Small Business Process Improvement
@@ -57,9 +57,9 @@ export default function ComparisonPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: 'left', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text)', fontFamily: 'monospace', fontSize: 11, letterSpacing: 1 }}>FEATURE</th>
-                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: '#0176D3', fontFamily: 'monospace', fontSize: 11, letterSpacing: 1 }}>VESIMY</th>
-                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text3)', fontFamily: 'monospace', fontSize: 11, letterSpacing: 1 }}>MANUS AI</th>
+                  <th style={{ textAlign: 'left', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>FEATURE</th>
+                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: '#0176D3', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>VESIMY</th>
+                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>MANUS AI</th>
                 </tr>
               </thead>
               <tbody>

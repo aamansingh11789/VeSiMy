@@ -234,12 +234,12 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     setSelectedStep(updated)
     const ok = await saveStep(updated)
     if (!ok) {
-      // Restore the actual previous value (the old code returned the already-mutated step — bug)
+      // Restore the actual previous value (the old code returned the already-mutated step, bug)
       if (previous) {
         setSteps(prev => prev.map(s => s.id === updated.id ? previous : s))
         setSelectedStep(previous)
       }
-      toast.error('Save failed — changes reverted. Please try again.')
+      toast.error('Save failed, changes reverted. Please try again.')
     }
   }, [saveStep, steps])
 
@@ -268,7 +268,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       if (!res.ok) throw new Error(data.error || 'Parse failed')
 
       const { parsed, filename } = data
-      toast.success(`Parsed "${filename}" — ${parsed.steps.length} steps extracted`)
+      toast.success(`Parsed "${filename}", ${parsed.steps.length} steps extracted`)
 
       // Save raw text + parsed steps to project
       await updateV2Project(project.id, {
@@ -279,7 +279,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         version: 'v2',
       })
 
-      // FIX: rollback all inserted steps on any failure — prevents partial/corrupted state
+      // FIX: rollback all inserted steps on any failure, prevents partial/corrupted state
       const insertedSteps: V2Step[] = []
       let insertFailed = false
       for (let i = 0; i < parsed.steps.length; i++) {
@@ -314,9 +314,9 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       }
 
       if (insertFailed) {
-        toast.loading('Upload failed — cleaning up partial data…')
+        toast.loading('Upload failed, cleaning up partial data…')
         await Promise.all(insertedSteps.map(s => deleteV2Step(s.id).catch(() => {})))
-        throw new Error('SOP upload failed — please try again. Partial data has been removed.')
+        throw new Error('SOP upload failed, please try again. Partial data has been removed.')
       }
 
       setSteps(insertedSteps)
@@ -345,7 +345,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
       if (!res.ok) throw new Error(data.error)
       setCurrentReport(data.report)
       setReports(prev => [data.report, ...prev.filter(r => r.report_type !== 'current_state')])
-      toast.success('Analysis complete — see report below')
+      toast.success('Analysis complete, see report below')
     } catch (e: any) {
       toast.error(e.message || 'Analysis failed')
       setTab('map')
@@ -394,20 +394,20 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           <span style={{ fontFamily: SERIF, fontSize: 16, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {project.name}
           </span>
-          <span style={{ fontSize: 10, fontFamily: 'monospace', color: BRAND, background: 'rgba(1,118,211,.08)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 4, padding: '1px 5px', letterSpacing: 1 }}>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: BRAND, background: 'rgba(1,118,211,.08)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 4, padding: '1px 5px', letterSpacing: 1 }}>
             V2
           </span>
         </div>
 
-        {/* Tab navigation — primary tabs always visible + More dropdown */}
+        {/* Tab navigation, primary tabs always visible + More dropdown */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 4, minWidth: 0, overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {/* Primary tabs — always visible */}
+          {/* Primary tabs, always visible */}
           <div style={{ display: 'flex', gap: 2, padding: '3px', borderRadius: 10, background: 'rgba(3,45,96,0.08)', border: '1px solid rgba(212,168,67,0.12)', flexShrink: 0 }}>
             {PRIMARY_TABS.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)} style={{
                 padding: '5px 11px', borderRadius: 7, border: 'none', cursor: 'pointer',
                 fontSize: 11, fontWeight: tab === t.id ? 700 : 500,
-                fontFamily: 'monospace', letterSpacing: 0.3, textTransform: 'uppercase',
+                fontFamily: 'var(--font-mono)', letterSpacing: 0.3, textTransform: 'uppercase',
                 background: tab === t.id ? BRAND : 'transparent',
                 color: tab === t.id ? 'white' : 'var(--text3)',
                 boxShadow: tab === t.id ? `0 2px 8px rgba(1,118,211,0.35)` : 'none',
@@ -428,7 +428,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                 background: MORE_TABS.some(t => t.id === tab) ? `${BRAND}15` : 'rgba(3,45,96,0.05)',
                 fontSize: 11, fontWeight: MORE_TABS.some(t => t.id === tab) ? 700 : 500,
                 color: MORE_TABS.some(t => t.id === tab) ? BRAND : 'var(--text3)',
-                fontFamily: 'monospace', letterSpacing: 0.3, textTransform: 'uppercase',
+                fontFamily: 'var(--font-mono)', letterSpacing: 0.3, textTransform: 'uppercase',
                 appearance: 'auto', maxWidth: 140,
               }}
             >
@@ -442,13 +442,13 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
 
         {/* Right controls */}
         <div className="v2-topbar-right" style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '0 0 auto' }}>
-          {/* Process health score — hidden on small mobile */}
+          {/* Process health score, hidden on small mobile */}
           {steps.length > 0 && (
             <div className="health-score-compact">
               <ProcessHealthScore steps={steps} compact />
             </div>
           )}
-          {/* Settings button — always visible */}
+          {/* Settings button, always visible */}
           <button className="v2-topbar-essential" onClick={() => setShowProjectSettings(true)} title="Project Settings" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: 'var(--text3)', fontSize: 18, lineHeight: 1 }}>⚙</button>
           {/* Map completeness */}
           {tab === 'map' && steps.length > 0 && (
@@ -456,11 +456,11 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               <div style={{ width: 60, height: 5, borderRadius: 3, background: 'var(--border)', overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${completePct}%`, background: completePct === 100 ? '#2E844A' : BRAND, transition: 'width .3s' }}/>
               </div>
-              <span style={{ fontSize: 10, fontFamily: 'monospace', color: 'var(--text3)' }}>{completePct}%</span>
+              <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'var(--text3)' }}>{completePct}%</span>
             </div>
           )}
 
-          {/* Add step — essential on map tab */}
+          {/* Add step, essential on map tab */}
           {tab === 'map' && (
             <button className="v2-topbar-essential" onClick={() => addStep(steps.length - 1)} style={{
               display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px',
@@ -567,7 +567,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                       {/* VA dot */}
                       <div style={{ width: 8, height: 8, borderRadius: '50%', background: vaColor, flexShrink: 0 }}/>
                       {/* Step number */}
-                      <span style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--text3)', flexShrink: 0, width: 14 }}>{i + 1}</span>
+                      <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'var(--text3)', flexShrink: 0, width: 14 }}>{i + 1}</span>
                       {/* Name */}
                       <span style={{
                         fontSize: 12, color: isSelected ? BRAND : 'var(--text)',
@@ -716,21 +716,21 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             <div style={{ maxWidth:760, margin:'0 auto' }}>
               <div style={{ marginBottom:24, display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16 }}>
                 <div>
-                  <div style={{ fontSize:9, fontFamily:'monospace', letterSpacing:2, color:'#D4A843', marginBottom:6 }}>SUB-PROCESSES & BRANCHES</div>
+                  <div style={{ fontSize:9, fontFamily:'var(--font-mono)', letterSpacing:2, color:'#D4A843', marginBottom:6 }}>SUB-PROCESSES & BRANCHES</div>
                   <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Alternate paths & sub-processes</h2>
                   <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.7 }}>
-                    In TPS and lean VSM, branches represent alternate process paths — rework loops, exception flows, sub-assembly lines, and parallel processes that feed into the main value stream.
+                    In TPS and lean VSM, branches represent alternate process paths, rework loops, exception flows, sub-assembly lines, and parallel processes that feed into the main value stream.
                   </p>
                 </div>
                 <button onClick={() => setShowAddBranch(v => !v)} style={{
                   padding:'8px 16px', borderRadius:0, border:'1px solid #D4A843',
                   background:'#D4A843', color:'white', fontSize:12, fontWeight:700,
-                  cursor:'pointer', flexShrink:0, fontFamily:'monospace', letterSpacing:1,
+                  cursor:'pointer', flexShrink:0, fontFamily:'var(--font-mono)', letterSpacing:1,
                 }}>+ ADD BRANCH</button>
               </div>
               {showAddBranch && (
                 <div style={{ marginBottom:20, padding:18, background:'white', border:'1px solid var(--border)', borderRadius:0 }}>
-                  <div style={{ fontSize:10, fontFamily:'monospace', letterSpacing:1.5, color:'var(--text3)', marginBottom:10 }}>NEW SUB-PROCESS</div>
+                  <div style={{ fontSize:10, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'var(--text3)', marginBottom:10 }}>NEW SUB-PROCESS</div>
                   <div style={{ display:'flex', gap:10 }}>
                     <input value={newBranchName} onChange={e => setNewBranchName(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && handleCreateBranch()}
@@ -756,7 +756,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                           <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{b.label || b.name}</div>
                           <div style={{ fontSize:11, color:'var(--text3)' }}>{b.description || 'Sub-process branch'}</div>
                         </div>
-                        <div style={{ marginLeft:'auto', fontSize:9, fontFamily:'monospace', color:'var(--text3)', letterSpacing:1 }}>
+                        <div style={{ marginLeft:'auto', fontSize:9, fontFamily:'var(--font-mono)', color:'var(--text3)', letterSpacing:1 }}>
                           {b.steps?.length || 0} STEPS
                         </div>
                       </div>
@@ -802,7 +802,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               project={project}
               takt={project.takt_time ? Number(project.takt_time) : 0}
               pce={(() => {
-                // FIX: use canonical calcProcessMetrics — branch-filtered, unit-aware
+                // FIX: use canonical calcProcessMetrics, branch-filtered, unit-aware
                 const { pce: p } = calcProcessMetrics(steps, project)
                 return p ?? 0
               })()}
@@ -822,7 +822,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               <div>
                 <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>PDCA Projects</div>
                 <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 4 }}>
-                  One data model — export as PDCA, A3, 8D, DMAIC, or OODA
+                  One data model, export as PDCA, A3, 8D, DMAIC, or OODA
                 </div>
               </div>
               <button onClick={() => { setPdcaData(null); setShowPDCA(true) }}
@@ -894,7 +894,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   <div style={{ fontSize: 32 }}>⚗</div>
                   <div style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Process Simulation</div>
                   <div style={{ fontSize: 14, color: 'var(--text3)', textAlign: 'center', maxWidth: 360, lineHeight: 1.6 }}>
-                    Run stress scenarios on your value stream. Adjust cycle times, simulate demand spikes, labor shortages, and equipment failures — and see the pressure impact before it hits your floor.
+                    Run stress scenarios on your value stream. Adjust cycle times, simulate demand spikes, labor shortages, and equipment failures, and see the pressure impact before it hits your floor.
                   </div>
                   <a href="/pricing" style={{ padding: '10px 24px', background: BRAND, color: 'white', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Upgrade to Pro →</a>
                 </div>
@@ -984,11 +984,11 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
               const res = await fetch(`/api/projects/${project.id}`, { method: 'DELETE' })
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}))
-                toast.error(err.error || 'Delete failed — please try again')
+                toast.error(err.error || 'Delete failed, please try again')
                 return
               }
             } catch {
-              toast.error('Delete failed — please try again')
+              toast.error('Delete failed, please try again')
               return
             }
             window.location.href = '/dashboard'
@@ -1045,8 +1045,8 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200, padding: 24 }}>
       <div style={{ background: 'white', borderRadius: 20, padding: 36, maxWidth: 540, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,.2)' }}>
-        <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: '#D4A843', background: 'rgba(1,118,211,.07)', border: '1px solid rgba(1,118,211,.15)', borderRadius: 4, padding: '3px 10px', display: 'inline-block', marginBottom: 16 }}>
-          NEW PROJECT — V2 BUILDER
+        <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: '#D4A843', background: 'rgba(1,118,211,.07)', border: '1px solid rgba(1,118,211,.15)', borderRadius: 4, padding: '3px 10px', display: 'inline-block', marginBottom: 16 }}>
+          NEW PROJECT, V2 BUILDER
         </div>
         <h2 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 8, lineHeight: 1.2 }}>
           How do you want to start<br/>mapping your {t.process}?
@@ -1065,7 +1065,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
             <PDFIcon size={22} color="var(--text2)"/>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Upload SOP / Process Document</div>
-              <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>PDF, Word, text file — the AI extracts every step, task, and governing entity. You review and fill in what's missing.</div>
+              <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>PDF, Word, text file, the AI extracts every step, task, and governing entity. You review and fill in what's missing.</div>
             </div>
           </button>
           <button onClick={onManual} style={{
@@ -1172,7 +1172,7 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
               }}
             />
             <button
-              onClick={() => { manualText.trim().length > 20 ? onManualText(manualText) : toast.error('Add more text — at least a few process steps') }}
+              onClick={() => { manualText.trim().length > 20 ? onManualText(manualText) : toast.error('Add more text, at least a few process steps') }}
               style={{
                 width: '100%', marginTop: 12, padding: '12px 0', borderRadius: 9,
                 border: 'none', background: 'linear-gradient(135deg,#B8912E,#D4A843)',
@@ -1187,7 +1187,7 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
   )
 }
 
-// ── V2KaizenBoardView — editable Kanban-style kaizen board ──────────────────
+// ── V2KaizenBoardView, editable Kanban-style kaizen board ──────────────────
 function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
   steps: any[]
   onStatusChange?: (stepId: string, updatedItems: any[]) => void
@@ -1258,7 +1258,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
           Kaizen Board
         </h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>
+          <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>
             {allItems.length} event{allItems.length !== 1 ? 's' : ''} · {allItems.filter(i => i.status === 'complete').length} complete
           </span>
           {steps.length > 0 && onAddItem && (
@@ -1284,7 +1284,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
           borderRadius: 10, padding: '16px 18px', marginBottom: 16,
           boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
         }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--brand,#D4A843)', textTransform: 'uppercase' as const, fontFamily: 'monospace', marginBottom: 12 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--brand,#D4A843)', textTransform: 'uppercase' as const, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>
             New Kaizen Item
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 10 }}>
@@ -1421,7 +1421,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
                         }}
                         onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = sBg[st] }}
                         onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = 'transparent' }}
-                        aria-label={`${NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]} — ${item.title}`}
+                        aria-label={`${NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]}, ${item.title}`}
                       >
                         {NEXT_LABEL[item.status as keyof typeof NEXT_LABEL]}
                       </button>
@@ -1438,7 +1438,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
 }
 
 // ── V2ProjectOverview ─────────────────────────────────────────────────────────
-// Clean project summary/settings panel — the "Project" tab content
+// Clean project summary/settings panel, the "Project" tab content
 function V2ProjectOverview({ project, steps, profile, onRename }: {
   project: any; steps: any[]; profile: any
   onRename: (name: string) => Promise<void>
@@ -1464,10 +1464,10 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
 
   const created = project.created_at
     ? new Date(project.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    : '—'
+    : ','
   const updated = project.updated_at
     ? new Date(project.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-    : '—'
+    : ','
 
   const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
 
@@ -1476,8 +1476,8 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
       background: 'var(--bg2,#fff)', border: '1px solid var(--border,#e5e5e5)',
       borderRadius: 10, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 4,
     }}>
-      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3,#706e6b)', textTransform: 'uppercase', fontFamily: 'monospace' }}>{label}</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: color || 'var(--text,#181818)', fontFamily: 'monospace', letterSpacing: -0.5 }}>{value}</div>
+      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3,#706e6b)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{label}</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: color || 'var(--text,#181818)', fontFamily: 'var(--font-mono)', letterSpacing: -0.5 }}>{value}</div>
       {sub && <div style={{ fontSize: 11, color: 'var(--text3,#706e6b)' }}>{sub}</div>}
     </div>
   )
@@ -1539,9 +1539,9 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
       {/* Metrics row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 12, marginBottom: 28 }}>
         <Stat label="Steps" value={String(steps.length)} sub={`${completedSteps} with cycle time`} />
-        <Stat label="Cycle Time" value={totalCT > 0 ? (totalCT >= 60 ? `${(totalCT/60).toFixed(1)}m` : `${Math.round(totalCT)}s`) : '—'} sub="total process CT" />
-        <Stat label="Lead Time" value={leadTime > 0 ? (leadTime >= 3600 ? `${(leadTime/3600).toFixed(1)}h` : `${(leadTime/60).toFixed(1)}m`) : '—'} sub="incl. wait time" />
-        <Stat label="PCE" value={pce > 0 ? `${pce.toFixed(0)}%` : '—'} sub="process cycle efficiency" color={pce >= 50 ? 'var(--green,#2e844a)' : pce > 0 ? 'var(--warning,#fe9339)' : undefined} />
+        <Stat label="Cycle Time" value={totalCT > 0 ? (totalCT >= 60 ? `${(totalCT/60).toFixed(1)}m` : `${Math.round(totalCT)}s`) : ','} sub="total process CT" />
+        <Stat label="Lead Time" value={leadTime > 0 ? (leadTime >= 3600 ? `${(leadTime/3600).toFixed(1)}h` : `${(leadTime/60).toFixed(1)}m`) : ','} sub="incl. wait time" />
+        <Stat label="PCE" value={pce > 0 ? `${pce.toFixed(0)}%` : ','} sub="process cycle efficiency" color={pce >= 50 ? 'var(--green,#2e844a)' : pce > 0 ? 'var(--warning,#fe9339)' : undefined} />
         <Stat label="VA Steps" value={String(hasVA)} sub="value-added classified" />
         <Stat label="Kaizen Open" value={String(openKaizen)} sub="improvement items" color={openKaizen > 0 ? 'var(--warning,#fe9339)' : undefined} />
       </div>
@@ -1565,7 +1565,7 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
 
       {/* Project steps list */}
       <div style={{ marginBottom: 24 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3)', textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 12 }}>Process Steps</div>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 12 }}>Process Steps</div>
         {steps.length === 0 ? (
           <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--text3)', border: '1px dashed var(--border)', borderRadius: 10, fontSize: 13 }}>
             No steps yet. Go to the Map tab to add process steps.
@@ -1582,13 +1582,13 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
                   display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px',
                   background: 'var(--bg2,#fff)', border: '1px solid var(--border)', borderRadius: 8,
                 }}>
-                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'monospace' }}>{i + 1}</div>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{i + 1}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}>{s.name}</div>
                   </div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
-                    {va && <span style={{ fontSize: 9, fontWeight: 700, color: vaColor, fontFamily: 'monospace', letterSpacing: 0.5 }}>{va}</span>}
-                    <span style={{ fontSize: 11, fontFamily: 'monospace', color: hasCT ? 'var(--text2)' : 'var(--text3)' }}>{hasCT ? (ct >= 60 ? `${(ct/60).toFixed(1)}m` : `${Math.round(ct)}s`) : 'No CT'}</span>
+                    {va && <span style={{ fontSize: 9, fontWeight: 700, color: vaColor, fontFamily: 'var(--font-mono)', letterSpacing: 0.5 }}>{va}</span>}
+                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: hasCT ? 'var(--text2)' : 'var(--text3)' }}>{hasCT ? (ct >= 60 ? `${(ct/60).toFixed(1)}m` : `${Math.round(ct)}s`) : 'No CT'}</span>
                   </div>
                 </div>
               )
@@ -1613,7 +1613,7 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
 // ── V2ReportTab ──────────────────────────────────────────────────────────────
 function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
   const [showPDCA, setShowPDCA] = useState(false)
-  // FIX: use canonical calcProcessMetrics — filters branch steps, unit-aware, consistent with map
+  // FIX: use canonical calcProcessMetrics, filters branch steps, unit-aware, consistent with map
   const { mainSteps, totalCT, totalWait: totalWT, leadTime, pce, takt, bottleneck } =
     calcProcessMetrics(steps, project)
   const pceNum   = pce
@@ -1623,29 +1623,29 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
   return (
     <div style={{ maxWidth: 860, margin: '0 auto' }}>
       <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 20 }}>
-        CI Report — {project.name}
+        CI Report, {project.name}
       </h2>
-      {/* Takt not set warning — bottleneck detection is disabled without takt time */}
+      {/* Takt not set warning, bottleneck detection is disabled without takt time */}
       {takt == null && (
         <div style={{ padding: '10px 14px', background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#7A5200', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span>⚠</span>
-          <span><strong>Takt time not set</strong> — bottleneck detection is disabled. Open Project Settings and add your takt time to enable accurate bottleneck identification.</span>
+          <span><strong>Takt time not set</strong>, bottleneck detection is disabled. Open Project Settings and add your takt time to enable accurate bottleneck identification.</span>
         </div>
       )}
-      {/* PCE null warning — VA classification not done */}
+      {/* PCE null warning, VA classification not done */}
       {pceNum == null && mainSteps.length > 0 && (
         <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.2)', borderRadius: 9, marginBottom: 16, fontSize: 12, color: '#0a4d8f', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span>ℹ</span>
-          <span><strong>PCE shows — (not calculable)</strong> because no steps have been classified as Value-Add. Open the step panel and set VA Type on each step to see your Process Cycle Efficiency.</span>
+          <span><strong>PCE shows, (not calculable)</strong> because no steps have been classified as Value-Add. Open the step panel and set VA Type on each step to see your Process Cycle Efficiency.</span>
         </div>
       )}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))', gap: 8, marginBottom: 20 }}>
         {[
           { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
           { label: 'Process Cycle Efficiency', val: fmtPCE(pceNum), color: pceColor(pceNum) },
-          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)} min` : '—', color: 'var(--text)' },
-          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : '—', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck', val: bottleneck?.name || '—', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)} min` : ',', color: 'var(--text)' },
+          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : ',', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
+          { label: 'Bottleneck', val: bottleneck?.name || ',', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
           { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#D4A843' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
@@ -1681,8 +1681,8 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
                         {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct > 0 ? `${ct < 60 ? ct.toFixed(0)+'s' : ct < 3600 ? (ct/60).toFixed(1)+'m' : (ct/3600).toFixed(2)+'h'}` : '—'}</td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: 'var(--text2)' }}>{wt ? `${wt}s` : '—'}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct > 0 ? `${ct < 60 ? ct.toFixed(0)+'s' : ct < 3600 ? (ct/60).toFixed(1)+'m' : (ct/3600).toFixed(2)+'h'}` : ','}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? `${wt}s` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4,
                           background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)',
@@ -1690,8 +1690,8 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#D4A843' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : '—'}</td>
-                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#D4A843' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : '—'}</td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#D4A843' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#D4A843' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}

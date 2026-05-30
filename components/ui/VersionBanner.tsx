@@ -1,6 +1,6 @@
 'use client'
 // ── components/ui/VersionBanner.tsx ──────────────────────────────────────────
-// v4.0 announcement banner. Spec §1.2 — Version toggle.
+// v4.0 announcement banner. Spec §1.2, Version toggle.
 // Fixed: was inside flex-row so sticky didn't work; button linked to ?v=4 which nothing read.
 
 import { useState, useEffect } from 'react'

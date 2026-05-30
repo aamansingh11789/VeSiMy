@@ -1,7 +1,7 @@
 // TypeScript enabled
 // ── app/skill-matrix/page.tsx ─────────────────────────────────────────────────
-// Team Skill Matrix — track lean improvement maturity
-// Spec: Section 10 — VeSiMy v4 Specification
+// Team Skill Matrix, track lean improvement maturity
+// Spec: Section 10, VeSiMy v4 Specification
 
 import type { Metadata } from 'next'
 import { createServerSupabase } from '@/lib/supabase-server'
@@ -11,7 +11,7 @@ import { BottomNav } from '@/components/layout/BottomNav'
 import SkillMatrixClient from './SkillMatrixClient'
 
 export const metadata: Metadata = {
-  title: 'Skill Matrix — VeSiMy',
+  title: 'Skill Matrix, VeSiMy',
   description: 'Track your lean improvement maturity. See how your mapping speed, data quality, and tool usage are developing over time.',
 }
 

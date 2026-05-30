@@ -39,7 +39,7 @@ function UpgradeToast() {
 
     const plan = params.get('plan') || 'pro'
     toast.success(
-      `You're now on ${plan.charAt(0).toUpperCase() + plan.slice(1)} — premium features are unlocked.`,
+      `You're now on ${plan.charAt(0).toUpperCase() + plan.slice(1)}, premium features are unlocked.`,
       { duration: 8000 }
     )
     window.history.replaceState({}, '', '/dashboard')
@@ -65,7 +65,7 @@ function UpgradeToast() {
     }, 5000)
 
     return () => clearInterval(interval)
-  // FIX: router removed from deps — same issue as ProfileRefresh.
+  // FIX: router removed from deps, same issue as ProfileRefresh.
   // router is a new object on every render; keeping it in deps restarted the polling loop.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
@@ -93,7 +93,7 @@ function getProjectScore(project: any) {
   // Uses actual joined step data for accurate project health scoring.
   const steps      = (project.steps || []) as any[]
   const mainSteps  = steps.filter(s => s.is_main_flow !== false)
-  // Fix I-3: check BOTH cycle_time field AND stopwatch.mean — users who capture
+  // Fix I-3: check BOTH cycle_time field AND stopwatch.mean, users who capture
   // CT via the Stopwatch tool store it in toolData, not in cycle_time directly.
   const withCT     = mainSteps.filter(s =>
     Number(s.cycle_time) > 0 || Number(s.toolData?.stopwatch?.mean) > 0
@@ -383,7 +383,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
               fontSize: 10,
               color: 'var(--text2)',
               letterSpacing: 1.8,
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-mono)',
               marginBottom: 8,
             }}
           >
@@ -449,7 +449,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
                 style={{
                   fontSize: 10,
                   color: 'var(--text3)',
-                  fontFamily: 'monospace',
+                  fontFamily: 'var(--font-mono)',
                   letterSpacing: 1,
                   marginTop: 5,
                   textTransform: 'uppercase',
@@ -535,7 +535,7 @@ function StatCard({
       <div style={{ position:'absolute', top:-20, right:-20, width:80, height:80, borderRadius:'50%', background:`${color}0A`, pointerEvents:'none' }}/>
 
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12 }}>
-        <span style={{ fontSize:10, color:'var(--text2)', letterSpacing:1.2, textTransform:'uppercase', fontFamily:'monospace' }}>
+        <span style={{ fontSize:10, color:'var(--text2)', letterSpacing:1.2, textTransform:'uppercase', fontFamily:'var(--font-mono)' }}>
           {label}
         </span>
         <div style={{ width:28, height:28, borderRadius:9, display:'flex', alignItems:'center', justifyContent:'center', background:`${color}14`, border:`1px solid ${color}25` }}>
@@ -648,7 +648,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
       if (!res.ok) {
         if (data.code === 'LIMIT_REACHED') {
-          toast.error('Upgrade to Pro — up to 10 projects')
+          toast.error('Upgrade to Pro, up to 10 projects')
           router.push('/pricing')
         } else {
           throw new Error(data.error)
@@ -671,7 +671,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       const res = await fetch(endpoint, { method: 'POST' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to create demo project')
-      toast.success(data.already_exists ? `Opening your ${label}…` : `${label} created — exploring now!`)
+      toast.success(data.already_exists ? `Opening your ${label}…` : `${label} created, exploring now!`)
       router.push(`/project/${data.id}`)
     } catch (e: any) {
       toast.error(e.message)
@@ -687,7 +687,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to create reference projects')
       if (data.already_exists) {
-        toast.success('All reference projects already loaded — check your dashboard')
+        toast.success('All reference projects already loaded, check your dashboard')
       } else {
         toast.success(data.message || 'Reference projects added!')
       }
@@ -876,7 +876,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   You’ve reached your trial project limit
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
-                  Upgrade to Pro — up to 10 projects, advanced tools, and premium workflows.
+                  Upgrade to Pro, up to 10 projects, advanced tools, and premium workflows.
                 </div>
               </div>
             </div>
@@ -886,7 +886,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               className="btn-primary"
               style={{ padding: '8px 16px', fontSize: 12, whiteSpace: 'nowrap' }}
             >
-              Upgrade — $29/mo
+              Upgrade, $29/mo
             </Link>
           </div>
         )}
@@ -930,7 +930,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           />
         </div>
 
-        {/* ── Reference Project — industry-specific ── */}
+        {/* ── Reference Project, industry-specific ── */}
         {(() => {
           const industryId = (profile as any).industry || ''
           const industryLabel = getIndustryLabel(industryId)
@@ -944,13 +944,13 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           return (
             <div style={{ background: '#FFFFFF', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 14, padding: '18px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
                     {industryLabel ? `${industryLabel} Reference Project` : 'Reference Project'}
                   </div>
                   <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
-                    A fully built {industryLabel || 'industry'} {t.process} — every CI tool populated with real bottleneck data, root causes drilled to source, kaizen events and PDCA ready to explore. Load it to see what a complete {t.valueStream || 'value stream'} looks like.
+                    A fully built {industryLabel || 'industry'} {t.process}, every CI tool populated with real bottleneck data, root causes drilled to source, kaizen events and PDCA ready to explore. Load it to see what a complete {t.valueStream || 'value stream'} looks like.
                   </p>
                 </div>
                 <button
@@ -965,7 +965,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {refNames.map(name => (
                     <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 6, padding: '3px 9px' }}>
-                      {name.replace('Reference — ', '')}
+                      {name.replace('Reference, ', '')}
                     </div>
                   ))}
                 </div>
@@ -983,7 +983,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             <span style={{ fontSize: 16 }}>🌱</span>
             <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
               <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
-              {' '}20% off Pro — use <code style={{ color: 'var(--amber)', fontWeight: 700 }}>SPRING25</code>
+              {' '}20% off Pro, use <code style={{ color: 'var(--amber)', fontWeight: 700 }}>SPRING25</code>
               {' '}at checkout. Ends 20 April 2026.
             </span>
             <Link href="/pricing" style={{ fontSize: 12, fontWeight: 700, color: '#C49B2E', textDecoration: 'none', whiteSpace: 'nowrap' }}>View pricing →</Link>
@@ -1223,7 +1223,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   <label className="label">Project Name *</label>
                   <input
                     className="input"
-                    placeholder="e.g. Assembly Line A — Current State"
+                    placeholder="e.g. Assembly Line A, Current State"
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                     onKeyDown={(e) => e.key === 'Enter' && createProject()}

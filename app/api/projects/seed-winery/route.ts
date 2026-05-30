@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-winery/route.ts ─────────────────────────────────────
-// Boutique Winery — Annual Production Value Stream
+// Boutique Winery, Annual Production Value Stream
 // Harvest & Crush → Destemming → Primary Fermentation → Pressing
 // → Malolactic Fermentation → Barrel Ageing (bottleneck) → Blending & QC → Bottling
 // Based on a 2,000-case boutique red wine producer
@@ -19,7 +19,7 @@ export async function POST(_request: NextRequest) {
     const { data: existing } = await supabase
       .from('projects').select('id')
       .eq('user_id', user.id)
-      .eq('name', 'Demo — Boutique Winery Production')
+      .eq('name', 'Demo, Boutique Winery Production')
       .maybeSingle()
 
     if (existing?.id) return NextResponse.json({ id: existing.id, already_exists: true })
@@ -28,7 +28,7 @@ export async function POST(_request: NextRequest) {
       .from('projects')
       .insert({
         user_id:     user.id,
-        name:        'Demo — Boutique Winery Production',
+        name:        'Demo, Boutique Winery Production',
         description: 'Full winery value stream from harvest crush to bottled wine. 8 steps, 18-month lead time, bottleneck at Barrel Ageing. Yield loss, label compliance, and DTC channel waste analysis included.',
         industry:    'Food & Beverage',
         customer:    'DTC Wine Club & Wholesale',
@@ -57,21 +57,21 @@ export async function POST(_request: NextRequest) {
       if (error) console.error(`tool_data (${toolName}):`, error.message)
     }
 
-    // ── Steps — cycle times in hours, waits in hours ───────────────────────────
+    // ── Steps, cycle times in hours, waits in hours ───────────────────────────
     // Takt: 2,000 cases/year. Lead time: ~18 months crush to bottle for reds.
 
     const s1 = await step(0, {
       name: 'Harvest & Vineyard Receiving', department: 'Cellar / Vineyard',
       operators: 4, cycle_time: 480, wait_time: 24, wip: 3,
       flow_type: 'push', uptime: 100, defect_rate: 8,
-      notes: 'VA. 2-week harvest window. Fruit sorted on belt — 8% of fruit rejected (sun damage, under-ripe clusters). Night harvest adds quality but limits equipment availability. Timing driven by Brix, pH, and TA targets.',
+      notes: 'VA. 2-week harvest window. Fruit sorted on belt, 8% of fruit rejected (sun damage, under-ripe clusters). Night harvest adds quality but limits equipment availability. Timing driven by Brix, pH, and TA targets.',
     })
 
     const s2 = await step(1, {
       name: 'Destemming, Crush & SO₂ Addition', department: 'Cellar',
       operators: 2, cycle_time: 120, wait_time: 2, wip: 2,
       flow_type: 'push', uptime: 97, defect_rate: 2,
-      notes: 'VA. Destemmmer-crusher uptime 97%. SO₂ addition calculated by lot. 2% of lots require re-press due to incorrect SO₂ dosage — measurement error. Cold soak 48-72 hrs for premium lots.',
+      notes: 'VA. Destemmmer-crusher uptime 97%. SO₂ addition calculated by lot. 2% of lots require re-press due to incorrect SO₂ dosage, measurement error. Cold soak 48-72 hrs for premium lots.',
     })
 
     const s3 = await step(2, {
@@ -85,21 +85,21 @@ export async function POST(_request: NextRequest) {
       name: 'Pressing & Free-Run Separation', department: 'Cellar',
       operators: 2, cycle_time: 180, wait_time: 12, wip: 4,
       flow_type: 'push', uptime: 95, defect_rate: 3,
-      notes: 'VA. Bladder press uptime 95%. Free-run separated from press fractions. 3% of lots blended incorrectly — free-run and press wine mixed unintentionally. Quality tracking by lot essential.',
+      notes: 'VA. Bladder press uptime 95%. Free-run separated from press fractions. 3% of lots blended incorrectly, free-run and press wine mixed unintentionally. Quality tracking by lot essential.',
     })
 
     const s5 = await step(4, {
       name: 'Malolactic Fermentation', department: 'Cellar',
       operators: 1, cycle_time: 1440, wait_time: 0, wip: 6,
       flow_type: 'push', uptime: 100, defect_rate: 8,
-      notes: 'VA. 30-60 days for full ML completion. 8% of lots have incomplete ML at bottling — creates instability and potential for continued fermentation in bottle. Paper chromatography check often inconclusive.',
+      notes: 'VA. 30-60 days for full ML completion. 8% of lots have incomplete ML at bottling, creates instability and potential for continued fermentation in bottle. Paper chromatography check often inconclusive.',
     })
 
     const s6 = await step(5, {
       name: 'Barrel Ageing & Topping', department: 'Cellar',
       operators: 1, cycle_time: 13140, wait_time: 0, wip: 80,
       flow_type: 'push', uptime: 100, defect_rate: 6,
-      notes: 'BOTTLENECK. 12-18 months in French oak. 80 barrels in use — capacity constraint for premium programme. 6% of barrels develop TCA (cork taint) or excessive volatile acidity. Topping weekly — 4 hrs/week labour. Barrel cost $1,200 each.',
+      notes: 'BOTTLENECK. 12-18 months in French oak. 80 barrels in use, capacity constraint for premium programme. 6% of barrels develop TCA (cork taint) or excessive volatile acidity. Topping weekly, 4 hrs/week labour. Barrel cost $1,200 each.',
     })
 
     const s7 = await step(6, {
@@ -113,7 +113,7 @@ export async function POST(_request: NextRequest) {
       name: 'Bottling, Labelling & Warehousing', department: 'Bottling',
       operators: 3, cycle_time: 360, wait_time: 48, wip: 2,
       flow_type: 'push', uptime: 90, defect_rate: 4,
-      notes: 'NNVA. Mobile bottling truck — scheduled 4x/year. Uptime 90% (filler head issues). 4% of bottles have label placement errors — rejected before DTC shipment. 48-hr wait for cork/capsule delivery on short notice.',
+      notes: 'NNVA. Mobile bottling truck, scheduled 4x/year. Uptime 90% (filler head issues). 4% of bottles have label placement errors, rejected before DTC shipment. 48-hr wait for cork/capsule delivery on short notice.',
     })
 
     // ── Time Studies ──────────────────────────────────────────────────────────
@@ -135,20 +135,20 @@ export async function POST(_request: NextRequest) {
       baseline: 480, target: 300, mean: 360,
       laps: [300, 360, 420, 480, 300, 360, 300, 420, 360, 300],
       excluded: [],
-      notes: 'Bottling run time in hours per 500-case lot. Mobile bottling truck — line speed limited by filler head count. Target 300 hrs (5 days) with 6-head filler upgrade.',
+      notes: 'Bottling run time in hours per 500-case lot. Mobile bottling truck, line speed limited by filler head count. Target 300 hrs (5 days) with 6-head filler upgrade.',
     })
 
     // ── Fishbone (Barrel Ageing bottleneck) ───────────────────────────────────
     await tool(s6.id, 'ishikawa', {
-      problem: 'Barrel programme at capacity — 80 barrels fully committed, limiting premium wine output growth to 0% YoY while DTC demand is growing 18% annually',
+      problem: 'Barrel programme at capacity, 80 barrels fully committed, limiting premium wine output growth to 0% YoY while DTC demand is growing 18% annually',
       framework: '6m',
       causes: {
-        Machine:          ['Cellar space physically limits to 80 barrels under current layout', 'No barrel rotation system — topping done by hand, slow and inconsistent', 'Temperature zones not separated — reserve and standard lots age at same temperature'],
-        Method:           ['No barrel replacement schedule — aged barrels used beyond optimal contribution', 'Topping frequency not standardised by variety — some lots topping-insufficient', 'Blending trials not structured — no formal tasting protocol, relies on winemaker judgement'],
-        Material:         ['Mix of French, American, and Eastern European oak — inconsistent quality signal', '6% TCA rate from natural cork closures — Diam or synthetic not evaluated', 'Older barrels (4th fill+) contributing little but occupying space'],
-        Manpower:         ['Winemaker handles all cellar decisions alone — single point of failure', 'Cellarman covers barrel topping, fermentation, and visitor tours simultaneously'],
-        Measurement:      ['No individual barrel tracking — lots tracked as groups only', 'VA and SO₂ checked quarterly — not monthly as best practice recommends'],
-        'Mother Nature':  ['Vintage variation: exceptional years produce more fruit than barrel capacity allows', 'Summer heat waves stress barrels without A/C — loss to evaporation (angel\'s share) higher'],
+        Machine:          ['Cellar space physically limits to 80 barrels under current layout', 'No barrel rotation system, topping done by hand, slow and inconsistent', 'Temperature zones not separated, reserve and standard lots age at same temperature'],
+        Method:           ['No barrel replacement schedule, aged barrels used beyond optimal contribution', 'Topping frequency not standardised by variety, some lots topping-insufficient', 'Blending trials not structured, no formal tasting protocol, relies on winemaker judgement'],
+        Material:         ['Mix of French, American, and Eastern European oak, inconsistent quality signal', '6% TCA rate from natural cork closures, Diam or synthetic not evaluated', 'Older barrels (4th fill+) contributing little but occupying space'],
+        Manpower:         ['Winemaker handles all cellar decisions alone, single point of failure', 'Cellarman covers barrel topping, fermentation, and visitor tours simultaneously'],
+        Measurement:      ['No individual barrel tracking, lots tracked as groups only', 'VA and SO₂ checked quarterly, not monthly as best practice recommends'],
+        'Mother Nature':  ['Vintage variation: exceptional years produce more fruit than barrel capacity allows', 'Summer heat waves stress barrels without A/C, loss to evaporation (angel\'s share) higher'],
       },
     })
 
@@ -161,14 +161,14 @@ export async function POST(_request: NextRequest) {
         { q: 'Why is topping frequency insufficient on some barrels?',
           a: 'Topping schedule is managed manually from memory. There is no documented topping log or calendar. Some barrels in the back of the cellar are missed for 3-4 weeks.' },
         { q: 'Why is there no documented topping log?',
-          a: 'The cellar has no barrel tracking system. Each barrel is identified by chalk marker only — no individual ID or digital record.' },
+          a: 'The cellar has no barrel tracking system. Each barrel is identified by chalk marker only, no individual ID or digital record.' },
         { q: 'Why is there no barrel tracking system?',
           a: 'The winery grew from 400 cases to 2,000 cases over 6 years without updating its record-keeping practices. The system that worked at 400 cases has not scaled.' },
         { q: 'Why were practices not updated as the winery scaled?',
-          a: 'ROOT CAUSE: No formal operations review process at the winery. Growth decisions are made on quality and sales — but production processes are never systematically reviewed for scalability.' },
+          a: 'ROOT CAUSE: No formal operations review process at the winery. Growth decisions are made on quality and sales, but production processes are never systematically reviewed for scalability.' },
       ],
-      rootCause: 'No formal operations review as the winery scaled 5x. Barrel tracking, topping logs, and defect monitoring were never systematised. Individual barrel loss goes undetected until blending — by which point the wine is unsalvageable.',
-      countermeasure: '1. Assign RFID or QR code to every barrel — scan on each topping. 2. Implement weekly topping log with cellarman sign-off. 3. Monthly SO₂ and VA check per barrel (not per lot). 4. Evaluate Diam or synthetic cork for barrels with repeated TCA history.',
+      rootCause: 'No formal operations review as the winery scaled 5x. Barrel tracking, topping logs, and defect monitoring were never systematised. Individual barrel loss goes undetected until blending, by which point the wine is unsalvageable.',
+      countermeasure: '1. Assign RFID or QR code to every barrel, scan on each topping. 2. Implement weekly topping log with cellarman sign-off. 3. Monthly SO₂ and VA check per barrel (not per lot). 4. Evaluate Diam or synthetic cork for barrels with repeated TCA history.',
       owner: 'Winemaker / Operations',
       dueDate: '2026-05-31',
     })
@@ -176,20 +176,20 @@ export async function POST(_request: NextRequest) {
     // ── Waste ID ──────────────────────────────────────────────────────────────
     await tool(s6.id, 'waste', {
       wastes: {
-        Defects:           '6% barrel defect rate — TCA and high VA. At $1,200 barrel cost + $35/bottle wine value, each affected barrel = $4,200+ loss',
-        Waiting:           '18-month ageing creates 18-month cash flow gap — capital tied up in barrels',
+        Defects:           '6% barrel defect rate, TCA and high VA. At $1,200 barrel cost + $35/bottle wine value, each affected barrel = $4,200+ loss',
+        Waiting:           '18-month ageing creates 18-month cash flow gap, capital tied up in barrels',
         'Over-processing': '4th-fill+ barrels contributing less than 5% flavour but occupying full capacity slot',
-        'Non-Utilisation': 'Winemaker expertise underutilised on topping routine — could delegate with tracking system',
+        'Non-Utilisation': 'Winemaker expertise underutilised on topping routine, could delegate with tracking system',
       },
       notes: 'Strategic: evaluate reducing ageing time on entry-level tier to 12 months, freeing capacity for reserve programme.',
     })
 
     await tool(s8.id, 'waste', {
       wastes: {
-        Defects:           '4% label placement errors — pre-shipment inspection catches but creates rework and delay',
-        Waiting:           '48-hr emergency cork/capsule delivery when stock runs short — mobile bottling truck idle',
-        'Over-processing': 'Hand-labelling estate reserve bottles — 3 hrs per 100 bottles',
-        Motion:            'Mobile bottling truck requires full cellar rearrangement each visit — 4 hrs setup',
+        Defects:           '4% label placement errors, pre-shipment inspection catches but creates rework and delay',
+        Waiting:           '48-hr emergency cork/capsule delivery when stock runs short, mobile bottling truck idle',
+        'Over-processing': 'Hand-labelling estate reserve bottles, 3 hrs per 100 bottles',
+        Motion:            'Mobile bottling truck requires full cellar rearrangement each visit, 4 hrs setup',
       },
       notes: 'Label error rate driven by applicator calibration drift. Calibrate before every bottling run.',
     })
@@ -199,8 +199,8 @@ export async function POST(_request: NextRequest) {
       items: [
         {
           id: 'kz001', kzId: 'KZ-001',
-          title: 'Individual barrel tracking — QR code + topping log',
-          description: 'Assign QR code to every barrel. Cellarman scans on each topping — logs date, SO₂ addition, visual inspection. Weekly report flags any barrel not topped in 10+ days. Target: TCA/VA rate from 6% to under 1%.',
+          title: 'Individual barrel tracking, QR code + topping log',
+          description: 'Assign QR code to every barrel. Cellarman scans on each topping, logs date, SO₂ addition, visual inspection. Weekly report flags any barrel not topped in 10+ days. Target: TCA/VA rate from 6% to under 1%.',
           category: 'Quality', priority: 'critical', status: 'in-progress',
           owner: 'Winemaker', dueDate: '2026-04-01',
           actions: ['Print QR codes, attach to all 80 barrels', 'Set up Google Sheet or Vintrace log', 'Train cellarman on scan protocol', 'First monthly VA and SO₂ check'],
@@ -208,7 +208,7 @@ export async function POST(_request: NextRequest) {
         },
         {
           id: 'kz002', kzId: 'KZ-002',
-          title: 'Retire 4th-fill+ barrels — reallocate to entry tier or sell',
+          title: 'Retire 4th-fill+ barrels, reallocate to entry tier or sell',
           description: '18 barrels (22% of programme) are 4th fill or older. Contributing minimal flavour. Retire after current vintage, sell to spirits producers or home winemakers. Frees capacity for new premium oak.',
           category: 'Productivity', priority: 'high', status: 'open',
           owner: 'Winemaker', dueDate: '2026-08-01',
@@ -217,7 +217,7 @@ export async function POST(_request: NextRequest) {
         },
         {
           id: 'kz003', kzId: 'KZ-003',
-          title: 'Label applicator calibration — pre-run protocol',
+          title: 'Label applicator calibration, pre-run protocol',
           description: 'Label placement errors (4%) driven by applicator drift between bottling runs. Calibrate before every run using test bottles. Target: under 0.5% error rate.',
           category: 'Quality', priority: 'medium', status: 'open',
           owner: 'Bottling Crew Lead', dueDate: '2026-05-01',
@@ -226,8 +226,8 @@ export async function POST(_request: NextRequest) {
         },
         {
           id: 'kz004', kzId: 'KZ-004',
-          title: 'DTC inventory buffer — 90-day safety stock before release',
-          description: 'Wine club releases currently timed to bottling completion — no buffer. If bottling delayed, club shipment delayed. Build 90-day safety stock before release date to absorb bottling variability.',
+          title: 'DTC inventory buffer, 90-day safety stock before release',
+          description: 'Wine club releases currently timed to bottling completion, no buffer. If bottling delayed, club shipment delayed. Build 90-day safety stock before release date to absorb bottling variability.',
           category: 'Productivity', priority: 'medium', status: 'open',
           owner: 'DTC Manager', dueDate: '2026-06-01',
           actions: ['Calculate DTC shipment volume by quarter', 'Schedule bottling 90 days before each club release', 'Update 2026 production calendar'],

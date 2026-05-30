@@ -3,7 +3,7 @@
 import React from 'react'
 import { FishboneIcon, FiveWhyIcon, StopwatchIcon, ZapIcon, SettingsIcon, BookIcon, RefreshIcon, VSMIcon, CreditCardIcon, FolderIcon } from '@/components/ui/Icons'
 // ── components/ui/CommandPalette.tsx ──────────────────────────────────────────
-// ⌘K command palette — search projects, steps, CI tools, nav.
+// ⌘K command palette, search projects, steps, CI tools, nav.
 // Glass overlay, keyboard navigation, instant results.
 
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -20,7 +20,7 @@ const STATIC_COMMANDS = [
   { id:'learn',     label:'Learning Center',           icon:'book', category:'Navigate',  href:'/learn' },
   { id:'blog',      label:'Blog',                      icon:'edit', category:'Navigate',  href:'/blog' },
   { id:'new',       label:'New Project',               icon:'＋', category:'Action',    href:'/dashboard?new=1' },
-  { id:'vsm',       label:'VSM — Value Stream Mapping',icon:'vsm', category:'CI Tool',   href:'/learn#vsm' },
+  { id:'vsm',       label:'VSM, Value Stream Mapping',icon:'vsm', category:'CI Tool',   href:'/learn#vsm' },
   { id:'fishbone',  label:'Fishbone Diagram',          icon:'fishbone', category:'CI Tool',   href:'/learn#fishbone' },
   { id:'5why',      label:'5 Why Analysis',            icon:'fivewhy', category:'CI Tool',   href:'/learn#fivewhy' },
   { id:'kaizen',    label:'Kaizen Event Tracking',     icon:'zap', category:'CI Tool',   href:'/learn#kaizen' },

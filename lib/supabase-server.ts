@@ -1,7 +1,7 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/supabase-server.ts ─────────────────────────────────────────────────
-// Server-side Supabase client — for Server Components and Server Actions only.
-// Route Handlers (like auth/callback) must NOT use this — they need to write
+// Server-side Supabase client, for Server Components and Server Actions only.
+// Route Handlers (like auth/callback) must NOT use this, they need to write
 // cookies onto their own response object. See app/api/auth/callback/route.ts.
 
 import { createServerClient } from '@supabase/ssr'
@@ -23,7 +23,7 @@ export async function createServerSupabase() {
             cookieStore.set(name, value, options)
           )
         } catch {
-          // Server Components cannot set cookies — middleware handles refresh
+          // Server Components cannot set cookies, middleware handles refresh
         }
       },
     },

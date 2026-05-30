@@ -114,7 +114,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
       showToast(`${goals.length} improvement goal${goals.length !== 1 ? 's' : ''} saved`, 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -145,7 +145,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
 
   return (
     <Modal
-      title={`Improvement Tracking — ${stepName}`}
+      title={`Improvement Tracking, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : `Save (${goals.length} goal${goals.length !== 1 ? 's' : ''})`}

@@ -8,11 +8,11 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI Process Improvement for Small Businesses — VeSiMy',
+  title: 'AI Process Improvement for Small Businesses, VeSiMy',
   description: 'VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an Lean and VSM-structured knowledge base. 68+ industries.',
   keywords: ['AI process improvement', 'process improvement tool', 'Lean Six Sigma for small business', 'continuous improvement software', 'business workflow optimization', 'AI tools for small business owners'],
   openGraph: {
-    title: 'AI Process Improvement for Small Businesses — VeSiMy',
+    title: 'AI Process Improvement for Small Businesses, VeSiMy',
     description: 'Stop babysitting your processes. Start improving them. AI-guided Lean and Six Sigma for small businesses across 68+ industries.',
     type: 'website',
   },
@@ -78,9 +78,9 @@ export default function LandingAIProcessImprovement() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px,1fr))', gap: 24 }}>
             {[
-              { step: '01', title: 'Map one process', body: 'Use the VSM canvas or the free flow at vesimy.com/start to map any process in your operation — from order fulfilment to service delivery to patient discharge.' },
+              { step: '01', title: 'Map one process', body: 'Use the VSM canvas or the free flow at vesimy.com/start to map any process in your operation, from order fulfilment to service delivery to patient discharge.' },
               { step: '02', title: 'Find the waste', body: 'VeSiMy analyzes your process using Lean methodology and surfaces the delays, defects, and non-value-added steps that are costing you time and money.' },
-              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle — PDCA, 8D, DMAIC, or OODA — with AI support based on an Lean and VSM-structured knowledge base. From problem to root cause to fix.' },
+              { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle, PDCA, 8D, DMAIC, or OODA, with AI support based on an Lean and VSM-structured knowledge base. From problem to root cause to fix.' },
             ].map(({ step, title, body }) => (
               <div key={step} style={{ display: 'flex', gap: 20 }}>
                 <div style={{ fontFamily: mono, fontSize: 11, color: '#0176D3', fontWeight: 700, paddingTop: 4, flexShrink: 0 }}>{step}</div>
@@ -117,7 +117,7 @@ export default function LandingAIProcessImprovement() {
             { q: 'Is this only for manufacturing or technical teams?', a: 'No. VeSiMy is built for small businesses across 68+ industries, including service operations, admin, logistics, healthcare, hospitality, and any workflow-heavy team.' },
             { q: 'Do I need to understand Lean Six Sigma already?', a: 'No. VeSiMy translates improvement methods into a guided workflow so you can identify problems and act on them without needing to be an expert.' },
             { q: 'Will this replace our current tools?', a: 'No. VeSiMy improves the way your team works, not forces a rip-and-replace. It helps you make better decisions and fix the process you already have.' },
-            { q: 'How is this different from ChatGPT or Claude?', a: 'General AI tools know language. VeSiMy knows Lean methodology. It gives you operationally correct guidance — takt time calculations, waste classification, PDCA cycles — not polished-sounding generic advice.' },
+            { q: 'How is this different from ChatGPT or Claude?', a: 'General AI tools know language. VeSiMy knows Lean methodology. It gives you operationally correct guidance, takt time calculations, waste classification, PDCA cycles, not polished-sounding generic advice.' },
           ].map(({ q, a }) => (
             <div key={q} style={{ borderLeft: '3px solid rgba(1,118,211,0.3)', paddingLeft: 20 }}>
               <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{q}</div>

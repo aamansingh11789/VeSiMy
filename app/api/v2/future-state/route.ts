@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/v2/future-state/route.ts ──────────────────────────────────────────
 // Generates a Future/Target State VSM and detailed report.
 // Input: project_id + target statement + Supe conversation transcript
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const t = getIndustryTerms(industry)
     const industryLabel = getIndustryLabel(industry)
 
-    // Full RAG from uploaded knowledge base — not generic data
+    // Full RAG from uploaded knowledge base, not generic data
     const knowledge = (KNOWLEDGE_CHUNKS as any[])
       .filter((c: any) => c.tags?.some((tag: string) =>
         ['future state','kaizen','pdca','improvement','lean','tps','value stream',
@@ -80,7 +80,7 @@ Current state analysis found:
 - Gemba (workplace): ${t.gemba}
 - Improvement action: ${t.kaizen}
 - Value stream: ${t.valueStream}
-Use these terms throughout — never use generic lean jargon when this industry has a specific equivalent.`
+Use these terms throughout, never use generic lean jargon when this industry has a specific equivalent.`
 
     const prompt = `You are a senior lean VSM consultant. Create a detailed Future State plan for this ${industryLabel} process.
 
@@ -101,7 +101,7 @@ ${currentStateContext}${supeContext}
 
 Return ONLY valid JSON:
 {
-  "target_achievement": "Assessment of how achievable the stated target is based on current data — honest, specific",
+  "target_achievement": "Assessment of how achievable the stated target is based on current data, honest, specific",
   "tolerance_range": "Expected tolerance e.g. ±15% depending on implementation consistency",
   "future_state_steps": [
     {

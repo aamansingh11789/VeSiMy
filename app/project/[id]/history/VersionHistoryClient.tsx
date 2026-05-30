@@ -30,7 +30,7 @@ interface Props {
 }
 
 function fmtTime(s: number | null) {
-  if (!s) return '—'
+  if (!s) return ','
   if (s >= 3600) return `${(s / 3600).toFixed(1)}h`
   if (s >= 60)   return `${(s / 60).toFixed(0)}m`
   return `${Math.round(s)}s`
@@ -155,7 +155,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
             }}>
               <option value="">Select version A...</option>
               {snapshots.map(s => (
-                <option key={s.id} value={s.id}>v{s.version_number} — {s.label || new Date(s.created_at).toLocaleDateString()}</option>
+                <option key={s.id} value={s.id}>v{s.version_number}, {s.label || new Date(s.created_at).toLocaleDateString()}</option>
               ))}
             </select>
             <span style={{ color: 'var(--text3)', fontWeight: 700 }}>vs</span>
@@ -164,7 +164,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
             }}>
               <option value="">Select version B...</option>
               {snapshots.map(s => (
-                <option key={s.id} value={s.id}>v{s.version_number} — {s.label || new Date(s.created_at).toLocaleDateString()}</option>
+                <option key={s.id} value={s.id}>v{s.version_number}, {s.label || new Date(s.created_at).toLocaleDateString()}</option>
               ))}
             </select>
           </div>
@@ -173,7 +173,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
               {[
                 { label: 'Steps', a: snapshotA.step_count, b: snapshotB.step_count, fmt: (v: number) => v.toString() },
                 { label: 'Total CT', a: snapshotA.total_ct, b: snapshotB.total_ct, fmt: fmtTime },
-                { label: 'PCE', a: snapshotA.pce, b: snapshotB.pce, fmt: (v: number | null) => v !== null ? `${v.toFixed(1)}%` : '—' },
+                { label: 'PCE', a: snapshotA.pce, b: snapshotB.pce, fmt: (v: number | null) => v !== null ? `${v.toFixed(1)}%` : ',' },
               ].map(m => {
                 const aVal = m.a as any
                 const bVal = m.b as any
@@ -233,7 +233,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
                 {[
                   { label: 'Steps',    value: snap.step_count.toString() },
                   { label: 'Lead time', value: fmtTime((snap.total_ct || 0) + (snap.total_wait || 0)) },
-                  { label: 'PCE',      value: snap.pce !== null ? `${snap.pce.toFixed(1)}%` : '—' },
+                  { label: 'PCE',      value: snap.pce !== null ? `${snap.pce.toFixed(1)}%` : ',' },
                 ].map(m => (
                   <div key={m.label} style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{m.value}</div>

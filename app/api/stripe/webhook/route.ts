@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/stripe/webhook/route.ts ──────────────────────────────────────────
 // Events: customer.subscription.created, updated, deleted,
 //         invoice.payment_failed, checkout.session.completed (lifetime)
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
           founding_member:         true,
         }).eq('id', userId)
       }
-      // Pro subscriptions are handled by customer.subscription.created/updated —
+      // Pro subscriptions are handled by customer.subscription.created/updated ,
       // NOT here. checkout.session.completed for a trial subscription has
       // payment_status='no_payment_required', so the old 'paid' check was dead code.
       // Lifetime only is handled above.

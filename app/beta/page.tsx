@@ -1,6 +1,6 @@
 // TypeScript enabled
 'use client'
-// ── app/beta/page.tsx — Early Access Beta ─────────────────────────────────────
+// ── app/beta/page.tsx, Early Access Beta ─────────────────────────────────────
 
 import { useState, useEffect } from 'react'
 import Link                    from 'next/link'
@@ -12,12 +12,12 @@ const GOLD  = '#0176D3'
 
 const ROLES      = ['Operations Manager','Lean / CI Engineer','Quality Manager','Plant / Site Manager','Manufacturing Engineer','Lean Consultant','Other']
 const INDUSTRIES = ['Automotive','Electronics / PCB','Aerospace','Industrial Manufacturing','Food & Beverage','Healthcare','Logistics / 3PL','Construction','Other']
-const TOOLS      = ['Excel / Spreadsheets','Visio / Lucidchart','External Consultant','Post-it Notes / Whiteboard','eVSM / iGrafx','None — doing it manually']
+const TOOLS      = ['Excel / Spreadsheets','Visio / Lucidchart','External Consultant','Post-it Notes / Whiteboard','eVSM / iGrafx','None, doing it manually']
 const LEAN_EXP   = [
-  { id: 'none',         label: "None — I'm new to lean" },
-  { id: 'basic',        label: 'Basic — aware of concepts, some reading' },
-  { id: 'intermediate', label: 'Intermediate — ran kaizen events or mapped VSMs before' },
-  { id: 'expert',       label: 'Expert — lean is my job title / daily practice' },
+  { id: 'none',         label: "None, I'm new to lean" },
+  { id: 'basic',        label: 'Basic, aware of concepts, some reading' },
+  { id: 'intermediate', label: 'Intermediate, ran kaizen events or mapped VSMs before' },
+  { id: 'expert',       label: 'Expert, lean is my job title / daily practice' },
 ]
 const TEAM_SIZES = ['1-10','11-50','51-200','200+']
 
@@ -102,17 +102,17 @@ export default function BetaPage() {
           </h1>
           <p style={{ color:'var(--text3)', fontSize:15, lineHeight:1.7, marginBottom:28 }}>
             {isApproved
-              ? `Your Founding Member access is confirmed. Log in to claim your 30-day Pro trial — and your permanent Founding Member badge.`
+              ? `Your Founding Member access is confirmed. Log in to claim your 30-day Pro trial, and your permanent Founding Member badge.`
               : `Your application is under review. We'll reach out within 48 hours.`}
           </p>
           <div style={{ background:'#FFFFFF', border:`1px solid rgba(1,118,211,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
-            <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>WHAT HAPPENS NEXT</p>
+            <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:12 }}>WHAT HAPPENS NEXT</p>
             {(isApproved ? [
-              'Head to the app — your Founding Member badge is waiting',
+              'Head to the app, your Founding Member badge is waiting',
               '30-day Pro trial starts when you first log in',
               'Upgrade to $99 Lifetime before trial ends to lock it in',
               'Your company gets a 33% enterprise discount code via email',
-              'Founding Member badge is permanent — it never goes away',
+              'Founding Member badge is permanent, it never goes away',
             ] : [
               'We\'ll email you within 48 hours',
               'Founding Member badge is yours if approved',
@@ -155,23 +155,23 @@ export default function BetaPage() {
         <div style={{ textAlign:'center', marginBottom:56 }}>
           <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.25)', borderRadius:100, padding:'6px 18px', marginBottom:24 }}>
             
-            <span style={{ fontSize:11, color:GOLD, fontWeight:700, letterSpacing:2, fontFamily:'monospace' }}>FOUNDING MEMBER ACCESS</span>
+            <span style={{ fontSize:11, color:GOLD, fontWeight:700, letterSpacing:2, fontFamily:'var(--font-mono)' }}>FOUNDING MEMBER ACCESS</span>
           </div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(32px,5vw,58px)', fontWeight:700, lineHeight:1.15, marginBottom:20 }}>
-            For one week only —<br />
+            For one week only ,<br />
             <span style={{ background:'linear-gradient(135deg,#F5D060,#0176D3,#9A7200)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
               Founding Member
             </span>{' '}is open to everyone.
           </h1>
           <p style={{ fontSize:18, color:'var(--text3)', maxWidth:560, margin:'0 auto 36px', lineHeight:1.7 }}>
-            VeSiMy just launched. For early access, every practitioner who signs up gets the Founding Member badge — permanently. This is a limited credential for early practitioners.
+            VeSiMy just launched. For early access, every practitioner who signs up gets the Founding Member badge, permanently. This is a limited credential for early practitioners.
           </p>
 
           {/* Countdown */}
           {closeDate && !countdown.expired && (
             <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'#FFFFFF', border:'1px solid rgba(1,118,211,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
               <ClockIcon size={14} color={GOLD} />
-              <span style={{ fontSize:12, color:'var(--text3)', fontFamily:'monospace' }}>CLOSES IN</span>
+              <span style={{ fontSize:12, color:'var(--text3)', fontFamily:'var(--font-mono)' }}>CLOSES IN</span>
               {[
                 [countdown.days, 'DAYS'],
                 [countdown.hours, 'HRS'],
@@ -179,7 +179,7 @@ export default function BetaPage() {
                 [countdown.secs, 'SEC'],
               ].map(([val, unit]) => (
                 <div key={unit as string} style={{ display:'flex', flexDirection:'column', alignItems:'center', minWidth:44 }}>
-                  <span style={{ fontSize:22, fontWeight:700, color:'var(--text)', fontFamily:'monospace' }}>{String(val).padStart(2,'0')}</span>
+                  <span style={{ fontSize:22, fontWeight:700, color:'var(--text)', fontFamily:'var(--font-mono)' }}>{String(val).padStart(2,'0')}</span>
                   <span style={{ fontSize:9, color:'var(--sl-400)', letterSpacing:1 }}>{unit}</span>
                 </div>
               ))}
@@ -205,15 +205,15 @@ export default function BetaPage() {
 
         {/* What you get */}
         <div id="perks" style={{ background:'#FFFFFF', border:'1px solid rgba(1,118,211,0.2)', borderRadius:16, padding:'32px 36px', marginBottom:48 }}>
-          <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:20 }}>WHAT GOLD STANDARD GETS YOU — FOREVER</p>
+          <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:20 }}>WHAT GOLD STANDARD GETS YOU, FOREVER</p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))', gap:24 }}>
             {[
-              { icon:'', title:'30-Day Pro Trial',       desc:'Full Pro access from day one — all 6 CI tools, PDF export, Supe AI, unlimited steps.' },
+              { icon:'', title:'30-Day Pro Trial',       desc:'Full Pro access from day one, all 6 CI tools, PDF export, Supe AI, unlimited steps.' },
               { icon:'', title:'$99 Lifetime Upgrade',   desc:'Pay once after the trial. 99 projects, no monthly fees, ever. Beta price only.' },
               { icon:'', title:'Permanent Gold Badge',   desc:'Sidebar, settings, and every report you export carries the Founding Member mark. Permanent.' },
-              { icon:'', title:'33% Enterprise Discount',desc:"Your company gets a perpetual 33% off any enterprise plan — as long as you're a Founding Member holder." },
+              { icon:'', title:'33% Enterprise Discount',desc:"Your company gets a perpetual 33% off any enterprise plan, as long as you're a Founding Member holder." },
               { icon:'', title:'Shape the Roadmap',      desc:'Direct line to submit feature requests. Founding testers get priority consideration on every release.' },
-              { icon:'', title:'Founding Tester Access', desc:'Direct channel to the team. Bug reports, feedback, product questions — you have our ear.' },
+              { icon:'', title:'Founding Tester Access', desc:'Direct channel to the team. Bug reports, feedback, product questions, you have our ear.' },
             ].map(item => (
               <div key={item.title} style={{ display:'flex', gap:14 }}>
                 <span style={{ fontSize:26, flexShrink:0 }}>{item.icon}</span>
@@ -232,7 +232,7 @@ export default function BetaPage() {
           <div>
             <div style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Why early access only?</div>
             <p style={{ fontSize:13, color:'var(--text3)', lineHeight:1.7, margin:0 }}>
-              The Founding Member badge is a founding-tester credential. After early access, it goes away — new users join on standard pricing. 
+              The Founding Member badge is a founding-tester credential. After early access, it goes away, new users join on standard pricing. 
               Everyone who gets in during the window keeps their badge, their 33% enterprise discount, and their lifetime upgrade option permanently. 
               This is the only way to get it.
             </p>
@@ -268,7 +268,7 @@ export default function BetaPage() {
 
       <div style={{ maxWidth:680, margin:'0 auto', padding:'48px 24px 80px' }}>
         <div style={{ textAlign:'center', marginBottom:40 }}>
-          <div style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:12 }}>GOLD STANDARD — EARLY ACCESS</div>
+          <div style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:12 }}>GOLD STANDARD, EARLY ACCESS</div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(24px,3.5vw,38px)', fontWeight:700, marginBottom:8 }}>Claim Your Founding Member Access</h1>
           <p style={{ fontSize:14, color:'var(--text3)' }}>Takes about 3 minutes. Everyone is approved during early access.</p>
         </div>
@@ -350,7 +350,7 @@ export default function BetaPage() {
 
           {/* Use case */}
           <Section title="Your Use Case">
-            <Field label="What's your biggest CI pain point right now? *" hint="Be specific — name the process, the waste, the bottleneck.">
+            <Field label="What's your biggest CI pain point right now? *" hint="Be specific, name the process, the waste, the bottleneck.">
               <textarea className="input" rows={4} value={form.pain_point} onChange={e=>set('pain_point',e.target.value)}
                 placeholder="e.g. Our CNC machining cell has a 47-second changeover nobody has mapped properly. We track it in Excel but the data is stale by the time it reaches me…" />
               <div style={{ fontSize:11, color: form.pain_point.split(' ').length>=10?'#1DD1A1':'var(--sl-400)', marginTop:4, textAlign:'right' }}>
@@ -359,7 +359,7 @@ export default function BetaPage() {
             </Field>
             <Field label="How would you use VeSiMy specifically? *" hint="What process would you map first? What decision would it inform?">
               <textarea className="input" rows={4} value={form.use_case} onChange={e=>set('use_case',e.target.value)}
-                placeholder="e.g. I'd map our engine assembly current state first — 22 steps, ~3 operators. Goal is to find where WIP piles up before the inspection station…" />
+                placeholder="e.g. I'd map our engine assembly current state first, 22 steps, ~3 operators. Goal is to find where WIP piles up before the inspection station…" />
               <div style={{ fontSize:11, color: form.use_case.split(' ').length>=10?'#1DD1A1':'var(--sl-400)', marginTop:4, textAlign:'right' }}>
                 {form.use_case.split(' ').filter(Boolean).length} words
               </div>
@@ -395,7 +395,7 @@ export default function BetaPage() {
 function Section({ title, children }: { title:string; children?:any }) {
   return (
     <div style={{ background:'#FFFFFF', border:'1px solid rgba(40,40,92,0.4)', borderRadius:14, padding:'22px 24px' }}>
-      <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'monospace', marginBottom:18 }}>{title.toUpperCase()}</p>
+      <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:18 }}>{title.toUpperCase()}</p>
       <div style={{ display:'flex', flexDirection:'column', gap:16 }}>{children}</div>
     </div>
   )

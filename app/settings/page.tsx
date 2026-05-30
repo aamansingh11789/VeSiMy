@@ -6,7 +6,7 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { SettingsClient } from './SettingsClient'
 
-export const metadata = { title: 'Settings — VeSiMy' }
+export const metadata = { title: 'Settings, VeSiMy' }
 
 export default async function SettingsPage() {
   const supabase = await createServerSupabase()

@@ -1,8 +1,8 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/ai/assist/route.ts ───────────────────────────────────────────────
 // Unified AI assist endpoint for all tool intelligence features.
 // Uses rule-based engine first (free, instant), escalates to AI for
-// generative tasks. Gracefully degrades — always returns something useful.
+// generative tasks. Gracefully degrades, always returns something useful.
 //
 // Request: POST { type, data }
 // Response: { result: string, source: 'ai' | 'rule' }
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
   const { user, industry, supabase } = await getUserWithIndustry(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // FIX: plan gate — AI assist is a Pro feature, not available on Trial
+  // FIX: plan gate, AI assist is a Pro feature, not available on Trial
   const { requirePlan } = await import('@/lib/require-plan')
   const planBlock = await requirePlan(supabase, user, ['pro', 'lifetime', 'enterprise', 'trialing'])
   if (planBlock) return NextResponse.json({ result: null, source: 'upgrade_required' }, { status: 403 })
@@ -115,7 +115,7 @@ Current value (baseline): ${baseline}
 ${isBottleneck ? 'This step is a BOTTLENECK (over Takt Time).' : ''}
 ${takt ? `Takt Time: ${takt}s` : ''}
 
-Provide: (1) a specific numeric target, (2) why that target is realistic based on lean benchmarks, (3) timeline to achieve it. Be concise — 3 sentences maximum.`
+Provide: (1) a specific numeric target, (2) why that target is realistic based on lean benchmarks, (3) timeline to achieve it. Be concise, 3 sentences maximum.`
 
           const aiResult = await callAI(prompt, 200)
           if (aiResult) return NextResponse.json({ result: aiResult, source: 'ai' })
@@ -157,7 +157,7 @@ Problem: ${problem || 'Process issue'}
 Step: ${stepName || 'process step'}
 Root cause: ${rootCause}
 
-Write a specific, actionable countermeasure in 1-2 sentences. Include: what action to take, what standard/system to change, and how to verify it worked. Do not include an owner or due date — the user will add those. Be direct and practical.`
+Write a specific, actionable countermeasure in 1-2 sentences. Include: what action to take, what standard/system to change, and how to verify it worked. Do not include an owner or due date, the user will add those. Be direct and practical.`
 
           const aiResult = await callAI(prompt, 150)
           if (aiResult) return NextResponse.json({ result: aiResult, source: 'ai' })
@@ -270,7 +270,7 @@ Be specific and actionable. No generic language.`
 
         if (aiAvailable()) {
           const stepList = opSteps.map((s: any, i: number) =>
-            `${i+1}. [${(s.va_type||'').toUpperCase()}] [${(s.step_type||'man').toUpperCase()}] ${s.name} — ${s.time}s`
+            `${i+1}. [${(s.va_type||'').toUpperCase()}] [${(s.step_type||'man').toUpperCase()}] ${s.name}, ${s.time}s`
           ).join('\n')
 
           const prompt = `You are a lean manufacturing expert. Write a Standard Work Instruction for an operator.
@@ -287,10 +287,10 @@ Write clear, numbered instructions in plain language that a new operator could f
 
         // Rule-based: format the steps as plain instructions
         const instructions = (opSteps || []).map((s: any, i: number) =>
-          `${i+1}. ${s.name} [${(s.step_type||'man').toUpperCase()}] — target time: ${s.time}s`
+          `${i+1}. ${s.name} [${(s.step_type||'man').toUpperCase()}], target time: ${s.time}s`
         ).join('\n')
         return NextResponse.json({
-          result: `Standard Work Instructions — ${stepName}\n\n${instructions}\n\nTotal time: ${opSteps.reduce((a: number, s: any) => a + s.time, 0)}s${takt ? ` (Takt: ${takt}s)` : ''}`,
+          result: `Standard Work Instructions, ${stepName}\n\n${instructions}\n\nTotal time: ${opSteps.reduce((a: number, s: any) => a + s.time, 0)}s${takt ? ` (Takt: ${takt}s)` : ''}`,
           source: 'rule',
         })
       }
@@ -344,7 +344,7 @@ Uptime: ${step.uptime || 100}%
 Wastes identified: ${wastes.join(', ') || 'none'}
 Open Kaizen events: ${openKaizens.length}
 
-Identify the single most important improvement opportunity and one specific action to take. Reference the step name and actual numbers. Be direct — no generic lean theory.`
+Identify the single most important improvement opportunity and one specific action to take. Reference the step name and actual numbers. Be direct, no generic lean theory.`
 
           const aiResult = await callAI(prompt, 200)
           if (aiResult) return NextResponse.json({ result: aiResult, source: 'ai' })
@@ -369,7 +369,7 @@ Bottleneck step: ${bottleneck || 'none identified'}
 Steps mapped: ${(steps||[]).length}
 Open Kaizen events: ${openKaizens || 0}
 
-Paragraph 1: Current state summary — what the data shows about process health.
+Paragraph 1: Current state summary, what the data shows about process health.
 Paragraph 2: Top 3 improvement priorities and expected benefit if addressed.
 Use specific numbers from the data. Write in professional language suitable for a manager or client presentation.`
 
@@ -379,7 +379,7 @@ Use specific numbers from the data. Write in professional language suitable for 
 
         // Rule-based executive summary
         const pceLvl = pce < 30 ? 'significantly below' : pce < 60 ? 'below' : pce < 85 ? 'approaching' : 'at'
-        const summary = `The value stream for ${projectName || 'this process'} is currently operating at ${pce || 0}% Process Cycle Efficiency — ${pceLvl} the world-class target of 85–95%. Of the total lead time, only ${pce || 0}% is value-adding; the remaining ${100-(pce||0)}% represents wait, queue, and non-value-adding activity.${bottleneck ? ` The primary constraint is ${bottleneck}, which is the bottleneck limiting overall throughput.` : ''}\n\nTop improvement priorities: (1) ${bottleneck ? `Resolve the ${bottleneck} bottleneck` : 'Identify and address the process bottleneck'}; (2) Reduce the largest WIP queues to improve flow and reduce lead time; (3) Close the ${openKaizens || 0} open Kaizen event${openKaizens !== 1 ? 's' : ''} currently in progress. Addressing these three areas in sequence will deliver the highest return on improvement effort.`
+        const summary = `The value stream for ${projectName || 'this process'} is currently operating at ${pce || 0}% Process Cycle Efficiency, ${pceLvl} the world-class target of 85–95%. Of the total lead time, only ${pce || 0}% is value-adding; the remaining ${100-(pce||0)}% represents wait, queue, and non-value-adding activity.${bottleneck ? ` The primary constraint is ${bottleneck}, which is the bottleneck limiting overall throughput.` : ''}\n\nTop improvement priorities: (1) ${bottleneck ? `Resolve the ${bottleneck} bottleneck` : 'Identify and address the process bottleneck'}; (2) Reduce the largest WIP queues to improve flow and reduce lead time; (3) Close the ${openKaizens || 0} open Kaizen event${openKaizens !== 1 ? 's' : ''} currently in progress. Addressing these three areas in sequence will deliver the highest return on improvement effort.`
 
         return NextResponse.json({ result: summary, source: 'rule' })
       }
@@ -390,7 +390,7 @@ Use specific numbers from the data. Write in professional language suitable for 
 
         if (aiAvailable() && steps && steps.length > 0) {
           const stepList = (steps || []).map((s: any) =>
-            `${s.seq}. [${s.type.toUpperCase()}] ${s.name || 'unnamed'} — ${s.time}s${s.type==='internal'&&s.convertible?' (convertible)':''}`
+            `${s.seq}. [${s.type.toUpperCase()}] ${s.name || 'unnamed'}, ${s.time}s${s.type==='internal'&&s.convertible?' (convertible)':''}`
           ).join('\n')
 
           const prompt = `You are a lean manufacturing expert specialising in SMED (Single-Minute Exchange of Die).
@@ -422,7 +422,7 @@ Be specific to the actual steps listed. Reference SMED stages (Shingo methodolog
         const wastePct = totalTime > 0 ? Math.round(wasteTime / totalTime * 100) : 0
         const ruleText = [
           convertibleTime > 0
-            ? `Stage 2 → Stage 3: ${convertibleTime}s (${convertiblePct}%) of internal work is marked as convertible to external. Pre-stage these tasks before the machine stops — use a dedicated changeover cart and preparation checklist.`
+            ? `Stage 2 → Stage 3: ${convertibleTime}s (${convertiblePct}%) of internal work is marked as convertible to external. Pre-stage these tasks before the machine stops, use a dedicated changeover cart and preparation checklist.`
             : `No convertible internal steps identified yet. Review each internal step and ask: "Could this be prepared while the machine is still running?"`,
           wasteTime > 0
             ? `Waste elimination: ${wasteTime}s (${wastePct}%) is classified as Waste/NVA. Target these for complete elimination before addressing internal→external conversion.`
@@ -470,10 +470,10 @@ INDUSTRY LANGUAGE for this user:
 - Process step is: ${t.processStep}
 - Kaizen means: ${t.kaizen}
 
-LEAN KNOWLEDGE BASE (use this as your source of truth — do not invent methodology):
+LEAN KNOWLEDGE BASE (use this as your source of truth, do not invent methodology):
 ${knowledgeContext}
 
-Conduct this brainstorm like an expert consultant — ask ONE focused question at a time, push for specifics, challenge assumptions with data. Maximum 3 sentences per response. Never use generic advice. Everything must relate to their specific process data.`
+Conduct this brainstorm like an expert consultant, ask ONE focused question at a time, push for specifics, challenge assumptions with data. Maximum 3 sentences per response. Never use generic advice. Everything must relate to their specific process data.`
 
         const fullPrompt = `${systemPrompt}
 

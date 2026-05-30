@@ -64,7 +64,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
     return () => cancelAnimationFrame(rafRef.current)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [running])  // intentionally omit `elapsed` — startRef handles continuity
+  }, [running])  // intentionally omit `elapsed`, startRef handles continuity
 
   const lap = () => {
     if (!running) return
@@ -109,7 +109,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       : 0
     const stdDevMs = Math.sqrt(variance)
     const cv = meanMs > 0 ? (stdDevMs / meanMs) * 100 : 0
-    // Cp = (USL - LSL) / (6σ) — use ±30% of mean as natural spec limits when not set
+    // Cp = (USL - LSL) / (6σ), use ±30% of mean as natural spec limits when not set
     const usl = meanMs * 1.30, lsl = Math.max(0, meanMs * 0.70)
     const cp = stdDevMs > 0 ? (usl - lsl) / (6 * stdDevMs) : null
 
@@ -132,7 +132,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       showToast('Time study saved', 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -156,7 +156,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
   const exportTimeStudyISO = () => {
     const validLaps = laps.filter((_, i) => !excluded.has(i))
-    const cv = mean > 0 ? ((Math.sqrt(validLaps.reduce((a, l) => a + Math.pow(l.t - mean, 2), 0) / Math.max(validLaps.length - 1, 1)) / mean) * 100).toFixed(1) : '—'
+    const cv = mean > 0 ? ((Math.sqrt(validLaps.reduce((a, l) => a + Math.pow(l.t - mean, 2), 0) / Math.max(validLaps.length - 1, 1)) / mean) * 100).toFixed(1) : ','
     const baselineMs = baseline ? parseFloat(baseline) * 1000 : null
     const improvement = baselineMs && mean ? (((baselineMs - mean) / baselineMs) * 100).toFixed(1) : null
 
@@ -172,8 +172,8 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <div class="kpi-card"><div class="kpi-label">Mean Cycle Time</div><div class="kpi-value">${fmtMs(mean || effectiveMean)}</div><div class="kpi-sub">Validated average</div></div>
         <div class="kpi-card"><div class="kpi-label">Minimum CT</div><div class="kpi-value">${fmtMs(minT || effectiveMean)}</div><div class="kpi-sub">Best cycle observed</div></div>
         <div class="kpi-card"><div class="kpi-label">Maximum CT</div><div class="kpi-value">${fmtMs(maxT || effectiveMean)}</div><div class="kpi-sub">Worst cycle observed</div></div>
-        <div class="kpi-card"><div class="kpi-label">Coeff. of Variation</div><div class="kpi-value">${cv}${cv !== '—' ? '%' : ''}</div><div class="kpi-sub">${cv !== '—' && parseFloat(cv) < 15 ? 'Stable process' : cv !== '—' ? 'High variation' : '—'}</div></div>
-        ${baselineMs ? `<div class="kpi-card"><div class="kpi-label">Baseline CT</div><div class="kpi-value">${fmtMs(baselineMs)}</div><div class="kpi-sub">${improvement ? (parseFloat(improvement) > 0 ? '▲ +' + improvement + '% improvement' : '▼ ' + improvement + '% regression') : '—'}</div></div>` : ''}
+        <div class="kpi-card"><div class="kpi-label">Coeff. of Variation</div><div class="kpi-value">${cv}${cv !== ',' ? '%' : ''}</div><div class="kpi-sub">${cv !== ',' && parseFloat(cv) < 15 ? 'Stable process' : cv !== ',' ? 'High variation' : ','}</div></div>
+        ${baselineMs ? `<div class="kpi-card"><div class="kpi-label">Baseline CT</div><div class="kpi-value">${fmtMs(baselineMs)}</div><div class="kpi-sub">${improvement ? (parseFloat(improvement) > 0 ? '▲ +' + improvement + '% improvement' : '▼ ' + improvement + '% regression') : ','}</div></div>` : ''}
       </div>
 
       <h2>2. Observation Log</h2>
@@ -186,14 +186,14 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <tbody>
           ${laps.map((lap, i) => {
             const isExcluded = excluded.has(i)
-            const diff = mean > 0 ? ((lap.t - mean) / mean * 100).toFixed(0) : '—'
+            const diff = mean > 0 ? ((lap.t - mean) / mean * 100).toFixed(0) : ','
             const isOutlier = mean > 0 && Math.abs(lap.t - mean) > mean * 0.3
             return `<tr style="${isExcluded ? 'opacity:0.5;text-decoration:line-through;' : ''}">
               <td style="text-align:center;">${i + 1}</td>
               <td style="font-family:monospace;font-weight:600;">${fmtMs(lap.t)}</td>
-              <td style="${diff !== '—' ? (parseFloat(diff) > 15 ? 'color:#c00;' : parseFloat(diff) < -15 ? 'color:#0a5;' : '') : ''}">${diff !== '—' ? (parseFloat(diff) > 0 ? '+' : '') + diff + '%' : '—'}</td>
+              <td style="${diff !== ',' ? (parseFloat(diff) > 15 ? 'color:#c00;' : parseFloat(diff) < -15 ? 'color:#0a5;' : '') : ''}">${diff !== ',' ? (parseFloat(diff) > 0 ? '+' : '') + diff + '%' : ','}</td>
               <td>${isExcluded ? '<span class="badge badge-open">EXCLUDED</span>' : isOutlier ? '<span class="badge badge-medium">OUTLIER</span>' : '<span class="badge badge-complete">INCLUDED</span>'}</td>
-              <td style="font-size:8.5pt;">${isExcluded ? 'Manually excluded' : isOutlier ? 'High variation — verify' : 'Valid observation'}</td>
+              <td style="font-size:8.5pt;">${isExcluded ? 'Manually excluded' : isOutlier ? 'High variation, verify' : 'Valid observation'}</td>
             </tr>`
           }).join('')}
           <tr style="background:#f0f0f0;font-weight:700;">
@@ -207,11 +207,11 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
       <table class="data-table">
         <thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th><th>ISO Reference</th></tr></thead>
         <tbody>
-          <tr><td>Sample Size</td><td>${validLaps.length} observations</td><td>${validLaps.length >= 10 ? '✓ Adequate for statistical confidence' : validLaps.length >= 5 ? 'Minimum threshold — collect more' : 'Insufficient — collect 10+ observations'}</td><td>ILO §3</td></tr>
+          <tr><td>Sample Size</td><td>${validLaps.length} observations</td><td>${validLaps.length >= 10 ? '✓ Adequate for statistical confidence' : validLaps.length >= 5 ? 'Minimum threshold, collect more' : 'Insufficient, collect 10+ observations'}</td><td>ILO §3</td></tr>
           <tr><td>Mean Cycle Time</td><td>${fmtMs(mean || effectiveMean)}</td><td>Average of all included observations</td><td>ISO 22468 §5.2.4</td></tr>
-          <tr><td>Range (Max − Min)</td><td>${fmtMs(maxT - minT)}</td><td>${(maxT - minT) / mean < 0.3 ? '✓ Low range — consistent' : 'High range — investigate causes'}</td><td>ILO §4.2</td></tr>
-          <tr><td>Coefficient of Variation</td><td>${cv}${cv !== '—' ? '%' : ''}</td><td>${cv !== '—' ? (parseFloat(cv) < 10 ? '✓ Excellent process stability' : parseFloat(cv) < 20 ? 'Acceptable — monitor' : 'High variation — requires investigation') : '—'}</td><td>ILO §4.3</td></tr>
-          ${baselineMs ? `<tr><td>Baseline vs. Observed</td><td>${improvement ? (parseFloat(improvement) > 0 ? '+' + improvement + '%' : improvement + '%') : '—'}</td><td>${improvement ? (parseFloat(improvement) > 0 ? '✓ Improvement confirmed' : '⚠ Performance regression') : '—'}</td><td>ISO 9001 §9.1</td></tr>` : ''}
+          <tr><td>Range (Max − Min)</td><td>${fmtMs(maxT - minT)}</td><td>${(maxT - minT) / mean < 0.3 ? '✓ Low range, consistent' : 'High range, investigate causes'}</td><td>ILO §4.2</td></tr>
+          <tr><td>Coefficient of Variation</td><td>${cv}${cv !== ',' ? '%' : ''}</td><td>${cv !== ',' ? (parseFloat(cv) < 10 ? '✓ Excellent process stability' : parseFloat(cv) < 20 ? 'Acceptable, monitor' : 'High variation, requires investigation') : ','}</td><td>ILO §4.3</td></tr>
+          ${baselineMs ? `<tr><td>Baseline vs. Observed</td><td>${improvement ? (parseFloat(improvement) > 0 ? '+' + improvement + '%' : improvement + '%') : ','}</td><td>${improvement ? (parseFloat(improvement) > 0 ? '✓ Improvement confirmed' : '⚠ Performance regression') : ','}</td><td>ISO 9001 §9.1</td></tr>` : ''}
         </tbody>
       </table>
 
@@ -235,14 +235,14 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
         <tbody>
           <tr><td>1</td><td>Document ${fmtMs(mean || effectiveMean)} as the official standard cycle time for ${stepName}</td><td><span class="badge badge-high">HIGH</span></td></tr>
           <tr><td>2</td><td>Update VSM data with observed cycle time for lead time accuracy</td><td><span class="badge badge-high">HIGH</span></td></tr>
-          ${parseFloat(cv) > 15 ? `<tr><td>3</td><td>Investigate sources of variation — initiate Fishbone or 5 Why analysis</td><td><span class="badge badge-high">HIGH</span></td></tr>` : ''}
+          ${parseFloat(cv) > 15 ? `<tr><td>3</td><td>Investigate sources of variation, initiate Fishbone or 5 Why analysis</td><td><span class="badge badge-high">HIGH</span></td></tr>` : ''}
           ${validLaps.length < 10 ? `<tr><td>${parseFloat(cv) > 15 ? 4 : 3}</td><td>Collect additional observations (target: 10–30) for statistical confidence</td><td><span class="badge badge-medium">MEDIUM</span></td></tr>` : ''}
           <tr><td>${validLaps.length < 10 || parseFloat(cv) > 15 ? 5 : 3}</td><td>Establish formal process standard with documented cycle time and work sequence</td><td><span class="badge badge-medium">MEDIUM</span></td></tr>
         </tbody>
       </table>
     `
     openISOReport(body, {
-      title: 'Time Study Report — Cycle Time Analysis',
+      title: 'Time Study Report, Cycle Time Analysis',
       toolType: 'TIMESTUDY',
       projectName: stepName,
       stepName: 'Direct Observation Measurement',
@@ -253,7 +253,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
 
   return (
     <Modal
-      title={`Time Study — ${stepName}`}
+      title={`Time Study, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Study'}
@@ -271,7 +271,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
           <div
             style={{
               fontSize: 'clamp(30px, 8vw, 42px)',
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-mono)',
               fontWeight: 700,
               color: running ? '#D4A843' : 'var(--text)',
               lineHeight: 1.1,
@@ -393,7 +393,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                     padding: '6px 10px',
                     borderRadius: 8,
                     fontSize: 12,
-                    fontFamily: 'monospace',
+                    fontFamily: 'var(--font-mono)',
                     background: excluded.has(i) ? 'rgba(192,64,42,0.06)' : 'var(--bg2)',
                     border: `1px solid ${
                       excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'

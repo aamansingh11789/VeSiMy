@@ -1,9 +1,9 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/steps/route.ts ───────────────────────────────────────────────────
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
 
-// POST /api/steps — create a new step
+// POST /api/steps, create a new step
 export async function POST(request: NextRequest) {
   try {
   const supabase = await createServerSupabase()
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   if (!projectId) return NextResponse.json({ error: 'projectId required' }, { status: 400 })
 
   // Security: verify the project belongs to the authenticated user before creating a step.
-  // This is a defence-in-depth check — RLS is the last line, but this prevents
+  // This is a defence-in-depth check, RLS is the last line, but this prevents
   // any server-side trust bypass if RLS policies are misconfigured.
   const { data: projectCheck, error: projectCheckError } = await supabase
     .from('projects')
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       notes:               body.notes,
       va_type:             body.va_type || "va",
       op_steps:            body.op_steps || [],
-      // V2 fields — only written if the column exists (migration applied)
+      // V2 fields, only written if the column exists (migration applied)
       // These are ignored silently by Supabase if the column doesn't exist yet
       ...(body.step_type        && { step_type:        body.step_type }),
       ...(body.cycle_time_unit  && { cycle_time_unit:  body.cycle_time_unit }),

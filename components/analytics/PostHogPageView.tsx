@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/analytics/PostHogPageView.tsx ─────────────────────────────────
-// Fires $pageview on every navigation. Uses window.posthog — no hook imports.
+// Fires $pageview on every navigation. Uses window.posthog, no hook imports.
 
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'

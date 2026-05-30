@@ -25,8 +25,8 @@ export default function StandardWorkPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(108,185,252,0.15)', color: '#6CB9FC', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>6 min read · March 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(108,185,252,0.15)', color: '#6CB9FC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Standard Work: The Foundation of All Lean Improvement
@@ -103,7 +103,7 @@ export default function StandardWorkPost() {
             'New Standard Work becomes baseline for the next cycle → loop continues',
           ].map((step, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 8, fontSize: 13 }}>
-              <span style={{ color: '#6CB9FC', flexShrink: 0, fontFamily: 'monospace' }}>{i + 1}.</span>
+              <span style={{ color: '#6CB9FC', flexShrink: 0, fontFamily: 'var(--font-mono)' }}>{i + 1}.</span>
               <span>{step}</span>
             </div>
           ))}

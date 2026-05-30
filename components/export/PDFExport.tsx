@@ -17,7 +17,7 @@ interface Props {
 }
 
 const fmtS = (s: number) => {
-  if (!s && s !== 0) return '—'
+  if (!s && s !== 0) return ','
   if (s < 60)   return `${s.toFixed(0)}s`
   if (s < 3600) return `${(s / 60).toFixed(1)} min`
   return `${(s / 3600).toFixed(2)} hr`
@@ -27,7 +27,7 @@ const fmtDate = () =>
   new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
 function docNum(projectId: string, reportId?: string): string {
-  // FIX: deterministic — same project always produces same doc number prefix
+  // FIX: deterministic, same project always produces same doc number prefix
   // Uses last 8 chars of project ID (stable, unique per project, no Math.random)
   const seed = ((projectId || '') + (reportId || '')).replace(/-/g, '').slice(-6).toUpperCase()
   return `VSM-${new Date().getFullYear()}-${seed || 'XXXXXX'}`
@@ -46,10 +46,10 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   const totalOps    = mainSteps.reduce((a, s: any) => a + (s.operators || 0), 0)
   const avgUptime   = mainSteps.length
     ? (mainSteps.reduce((a, s: any) => a + (s.uptime || 0), 0) / mainSteps.length).toFixed(1)
-    : '—'
+    : ','
   const avgDefect   = mainSteps.length
     ? (mainSteps.reduce((a, s: any) => a + (s.defect_rate || 0), 0) / mainSteps.length).toFixed(2)
-    : '—'
+    : ','
   const bottleneckStep = primaryBN
 
   // Waste from toolData.waste.selected (array of IDs) + label lookup
@@ -118,21 +118,21 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
     const ct      = s.cycle_time || 0
     const wt      = s.wait_time  || 0
     const isBN    = takt > 0 && ct > takt * 1.05
-    const pctTakt = takt > 0 ? `${((ct / takt) * 100).toFixed(0)}%` : '—'
+    const pctTakt = takt > 0 ? `${((ct / takt) * 100).toFixed(0)}%` : ','
     const rowBg   = i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'
     const wasteList = (s.toolData?.waste?.selected || [])
-      .map((id: string) => WASTE_LABELS[id] || id).join(', ') || '—'
+      .map((id: string) => WASTE_LABELS[id] || id).join(', ') || ','
     return `
     <tr style="background:${rowBg}">
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;color:#64748B;font-family:${MONO};text-align:center;white-space:nowrap">${String(i + 1).padStart(2, '0')}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;font-weight:600;color:#0F172A">${s.name}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;color:#475569;text-align:center">${s.department || '—'}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;color:#475569;text-align:center">${s.department || ','}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;text-align:right;font-weight:700;color:${isBN ? '#DC2626' : '#059669'}">${fmtS(ct)}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:right;color:#64748B">${fmtS(wt)}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.operators ?? '—'}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.uptime ?? 100) < 85 ? '#DC2626' : '#059669'}">${s.uptime != null ? s.uptime + '%' : '—'}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.defect_rate || 0) > 1.5 ? '#DC2626' : '#374151'}">${s.defect_rate != null ? s.defect_rate + '%' : '—'}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.wip ?? '—'}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.operators ?? ','}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.uptime ?? 100) < 85 ? '#DC2626' : '#059669'}">${s.uptime != null ? s.uptime + '%' : ','}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.defect_rate || 0) > 1.5 ? '#DC2626' : '#374151'}">${s.defect_rate != null ? s.defect_rate + '%' : ','}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.wip ?? ','}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#374151">${(s.flow_type || 'PUSH').toUpperCase()}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#374151">${pctTakt}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">
@@ -166,13 +166,13 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
     <tr style="background:${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'}">
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;font-weight:600;color:#0F172A">${k.title || k.description || 'Improvement Event'}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.stepName}</td>
-      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.description || '—'}</td>
+      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.description || ','}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;text-align:center">
         <span style="padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:${kzBg[k.status] || '#F1F5F9'};color:${kzColor[k.status] || '#374151'}">
           ${(k.status || 'OPEN').toUpperCase()}</span>
       </td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:10px;font-weight:700;text-align:center;color:${k.priority === 'critical' ? '#DC2626' : k.priority === 'high' ? '#D97706' : '#374151'}">${(k.priority || 'NORMAL').toUpperCase()}</td>
-      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.owner || '—'}</td>
+      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.owner || ','}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.dueDate || 'TBD'}</td>
     </tr>`).join('')
     : `<tr><td colspan="7" style="padding:12px;border:1px solid #CBD5E1;font-size:11px;color:#94A3B8;text-align:center;font-style:italic">No kaizen events recorded. Use the Kaizen Events tool in each process step.</td></tr>`
@@ -214,12 +214,12 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   const timeStudySection = timeStudies.length
     ? timeStudies.map((ts, i) => {
         const readings: number[] = (ts.laps || []).map((l: any) => typeof l === 'object' ? l.t : l)
-        const avg = readings.length ? (readings.reduce((a: number, b: number) => a + b, 0) / readings.length).toFixed(1) : '—'
-        const min = readings.length ? Math.min(...readings).toFixed(1) : '—'
-        const max = readings.length ? Math.max(...readings).toFixed(1) : '—'
+        const avg = readings.length ? (readings.reduce((a: number, b: number) => a + b, 0) / readings.length).toFixed(1) : ','
+        const min = readings.length ? Math.min(...readings).toFixed(1) : ','
+        const max = readings.length ? Math.max(...readings).toFixed(1) : ','
         const variance = readings.length > 1
           ? Math.sqrt(readings.reduce((a: number, b: number) => a + Math.pow(b - +avg, 2), 0) / readings.length).toFixed(2)
-          : '—'
+          : ','
         return `
         <div style="margin-bottom:14px;border:1px solid #CBD5E1;border-radius:4px;overflow:hidden">
           <div style="background:#F8FAFC;padding:7px 14px;border-bottom:1px solid #CBD5E1">
@@ -267,7 +267,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
                   <div style="font-size:9px;font-weight:700;color:#C2410C;font-family:${MONO};margin-bottom:5px">${cat.toUpperCase()}</div>
                   ${causes.length
                     ? causes.map((c: string) => `<div style="font-size:10px;color:#374151;padding:2px 0;border-bottom:1px solid #F1F5F9">${c}</div>`).join('')
-                    : `<div style="font-size:10px;color:#CBD5E1;font-style:italic">—</div>`}
+                    : `<div style="font-size:10px;color:#CBD5E1;font-style:italic">,</div>`}
                 </td>`
               }).join('')}
             </tr>
@@ -335,7 +335,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   <table style="border:2px solid #1E3A5F;margin-bottom:22px">
     <tr>
       <td style="padding:16px 20px;border-right:1px solid #CBD5E1;width:62%">
-        <div style="font-size:8px;color:#64748B;letter-spacing:2px;font-family:${MONO};margin-bottom:7px">QUALITY MANAGEMENT SYSTEM — VALUE STREAM ANALYSIS</div>
+        <div style="font-size:8px;color:#64748B;letter-spacing:2px;font-family:${MONO};margin-bottom:7px">QUALITY MANAGEMENT SYSTEM, VALUE STREAM ANALYSIS</div>
         <div style="font-family:${SERIF};font-size:21px;font-weight:700;color:#0F172A;margin-bottom:5px">Value Stream Mapping Report</div>
         <div style="font-size:13px;font-weight:700;color:#1E3A5F;margin-bottom:3px">${project.name}</div>
         <div style="font-size:11px;color:#64748B">${[project.industry, project.customer ? 'Customer: ' + project.customer : '', project.product ? 'Product: ' + project.product : ''].filter(Boolean).join(' · ')}</div>
@@ -358,7 +358,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
 
   <!-- ══ 1. EXECUTIVE SUMMARY ═══════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">1. Executive Summary — Key Performance Indicators</div>
+    <div class="section-title">1. Executive Summary, Key Performance Indicators</div>
     <table style="border-collapse:collapse;margin-bottom:2px">
       <tr>
         ${[
@@ -366,7 +366,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
           ['Total Cycle Time',        fmtS(totalCT),             '#15803D'],
           ['Total Queue / Wait Time', fmtS(totalWT),             '#92400E'],
           ['End-to-End Lead Time',    fmtS(totalLT),             '#1E3A5F'],
-          // pce is '—' or '42.5%' (already has % sign from fmtPCE); use pceNum for color
+          // pce is ',' or '42.5%' (already has % sign from fmtPCE); use pceNum for color
           ['Process Cycle Efficiency', pce,                       pceNum == null ? '#64748B' : pceNum >= 30 ? '#15803D' : pceNum >= 15 ? '#92400E' : '#991B1B'],
         ].map(([l, v, c]) => `
         <td style="border:2px solid #E2E8F0;padding:12px 14px;text-align:center;background:#FAFAFA;width:20%">
@@ -396,7 +396,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
 
   <!-- ══ 2. VSM FLOW DIAGRAM ════════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">2. Value Stream Flow — Current State (ISO 9001:2015 §8.5)</div>
+    <div class="section-title">2. Value Stream Flow, Current State (ISO 9001:2015 §8.5)</div>
     <div style="border:1px solid #CBD5E1;border-radius:4px;padding:14px 16px;background:#FAFAFA;overflow:hidden">
       <div style="display:flex;align-items:center;flex-wrap:nowrap;overflow:hidden">
         <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-right:8px">
@@ -427,7 +427,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
 
   <!-- ══ 3. PROCESS STEP DETAIL ═════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">3. Process Step Detail — ISO 13053-1 Data Collection Matrix</div>
+    <div class="section-title">3. Process Step Detail, ISO 13053-1 Data Collection Matrix</div>
     <table>
       <thead>
         <tr>
@@ -471,7 +471,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
     ${steps.filter(s => (s.cycle_time || 0) > 0).sort((a, b) => (b.cycle_time || 0) - (a.cycle_time || 0)).slice(0, 6).map((s, i) => {
       const ct    = ctSeconds(s as any)
       const over  = takt > 0 && ct > takt
-      const pctOfAvg = avgCT > 0 ? ((ct / avgCT) * 100).toFixed(0) : '—'
+      const pctOfAvg = avgCT > 0 ? ((ct / avgCT) * 100).toFixed(0) : ','
       const rankColor = i === 0 ? '#DC2626' : i === 1 ? '#D97706' : i === 2 ? '#F59E0B' : '#059669'
       const rankLabel = i === 0 ? 'CRITICAL' : i === 1 ? 'HIGH' : i === 2 ? 'MEDIUM' : 'LOW'
       return `
@@ -496,7 +496,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
 
   <!-- ══ 5. WASTE ANALYSIS ══════════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">5. Waste Identification — 8 Wastes of Lean (TPS / ISO 13053-1 §5)</div>
+    <div class="section-title">5. Waste Identification, 8 Wastes of Lean (TPS / ISO 13053-1 §5)</div>
     <table>
       <thead>
         <tr>
@@ -532,25 +532,25 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
 
   <!-- ══ 7. ROOT CAUSE ANALYSIS ════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">7. Root Cause Analysis — 5 Why Method (ISO 13053-2 §8)</div>
+    <div class="section-title">7. Root Cause Analysis, 5 Why Method (ISO 13053-2 §8)</div>
     ${rootCauseSection}
   </div>
 
   <!-- ══ 8. FISHBONE / ISHIKAWA ═════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">8. Cause-and-Effect Analysis — Ishikawa Diagrams (6M Framework)</div>
+    <div class="section-title">8. Cause-and-Effect Analysis, Ishikawa Diagrams (6M Framework)</div>
     ${fishboneSection}
   </div>
 
   <!-- ══ 9. TIME STUDY DATA ═════════════════════════════════════════════ -->
   <div class="section">
-    <div class="section-title">9. Time Study — Cycle Time Measurement Data (MTM / MOST)</div>
+    <div class="section-title">9. Time Study, Cycle Time Measurement Data (MTM / MOST)</div>
     ${timeStudySection}
   </div>
 
   <!-- ══ 10. IMPROVEMENT RECOMMENDATIONS ══════════════════════════════ -->
   <div class="section">
-    <div class="section-title">10. Improvement Recommendations — Impact / Effort Priority Matrix</div>
+    <div class="section-title">10. Improvement Recommendations, Impact / Effort Priority Matrix</div>
     <table>
       <thead>
         <tr>
@@ -583,7 +583,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
       <tr>
         <td style="width:50%;vertical-align:top;padding-right:10px">
           <table>
-            ${[['Project Name', project.name], ['Industry Sector', project.industry || '—'], ['Customer', project.customer || '—'], ['Supplier', project.supplier || '—'], ['Product / Part Number', project.product || '—']].map(([l, v], i) => `
+            ${[['Project Name', project.name], ['Industry Sector', project.industry || ','], ['Customer', project.customer || ','], ['Supplier', project.supplier || ','], ['Product / Part Number', project.product || ',']].map(([l, v], i) => `
             <tr style="background:${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'}">
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#64748B;font-weight:600;width:150px">${l}</td>
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#0F172A">${v}</td>
@@ -592,7 +592,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
         </td>
         <td style="width:50%;vertical-align:top;padding-left:10px">
           <table>
-            ${[['Daily Customer Demand', project.demand ? project.demand + ' units/day' : '—'], ['Working Hours / Shift', project.working_hours ? project.working_hours + ' hr' : '—'], ['Shifts per Day', project.shifts || '—'], ['Available Time / Day', project.available_time_sec ? fmtS(Number(project.available_time_sec)) : '—'], ['Takt Time', project.takt_time ? fmtS(Number(project.takt_time)) : '—'], ['Project State', project.state === 'future' ? 'Future State' : 'Current State']].map(([l, v], i) => `
+            ${[['Daily Customer Demand', project.demand ? project.demand + ' units/day' : ','], ['Working Hours / Shift', project.working_hours ? project.working_hours + ' hr' : ','], ['Shifts per Day', project.shifts || ','], ['Available Time / Day', project.available_time_sec ? fmtS(Number(project.available_time_sec)) : ','], ['Takt Time', project.takt_time ? fmtS(Number(project.takt_time)) : ','], ['Project State', project.state === 'future' ? 'Future State' : 'Current State']].map(([l, v], i) => `
             <tr style="background:${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'}">
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#64748B;font-weight:600;width:150px">${l}</td>
               <td style="padding:6px 10px;border:1px solid #CBD5E1;font-size:11px;color:#0F172A;font-weight:600">${v}</td>
@@ -631,7 +631,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
   <div style="border-top:2px solid #1E3A5F;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
     <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">VeSiMy AI Operations Intelligence Platform · vesimy.com</div>
     <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${docRef} · Rev A · ${now} · ISO 9001:2015 / ISO 13053</div>
-    <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${isGold ? 'Gold Standard · ' : ''}CONFIDENTIAL — INTERNAL USE ONLY</div>
+    <div style="font-size:9px;color:#94A3B8;font-family:${MONO}">${isGold ? 'Gold Standard · ' : ''}CONFIDENTIAL, INTERNAL USE ONLY</div>
   </div>
 
 </div>
@@ -684,7 +684,7 @@ export function PDFExportButton({ project, steps, isGold = false }: Props) {
       pdf.save(`VeSiMy_ISO_Report_${project.name.replace(/[/\\?%*:|"<>]/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`)
       setState('done')
       setTimeout(() => setState('idle'), 3000)
-      toast.success('ISO Report exported — white paper, 12 sections')
+      toast.success('ISO Report exported, white paper, 12 sections')
     } catch (err) {
       console.error(err)
       toast.error('Export failed. Try again.')

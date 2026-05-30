@@ -2,13 +2,13 @@
 // ── app/landing/lean-six-sigma-execution/page.tsx ────────────────────────
 // SEO landing page: "Lean Six Sigma for small businesses that actually gets used"
 // Targets: "Lean Six Sigma training not working", "why Lean Six Sigma fails",
-// "how to implement Lean Six Sigma successfully" — high-intent keywords from InsightScout
+// "how to implement Lean Six Sigma successfully", high-intent keywords from InsightScout
 
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Lean Six Sigma for Small Businesses That Actually Gets Used — VeSiMy',
+  title: 'Lean Six Sigma for Small Businesses That Actually Gets Used, VeSiMy',
   description: 'VeSiMy is the execution layer for Lean Six Sigma. Turn training into real projects, repeatable habits, and measurable improvement. AI-powered, structured around Lean and Six Sigma, built for small teams.',
   keywords: [
     'Lean Six Sigma for small businesses',
@@ -98,7 +98,7 @@ export default function LandingLeanSixSigmaExecution() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px,1fr))', gap: 28 }}>
           {[
             { icon: '🗺', title: 'Map it', body: 'Start by mapping one process using the VSM canvas or the free flow at vesimy.com/start. See the full picture: every step, every wait, every handoff.' },
-            { icon: '🔍', title: 'Find it', body: 'AI analysis surfaces the bottleneck, classifies the waste type, and identifies where your process cycle efficiency is being lost — using the same methodology as a certified practitioner.' },
+            { icon: '🔍', title: 'Find it', body: 'AI analysis surfaces the bottleneck, classifies the waste type, and identifies where your process cycle efficiency is being lost, using the same methodology as a certified practitioner.' },
             { icon: '🔄', title: 'Fix it with structure', body: 'Run a PDCA, 8D, DMAIC, or OODA cycle inside VeSiMy with your process data pre-loaded. Every improvement cycle is documented and linked to the VSM.' },
             { icon: '📈', title: 'Prove it', body: 'The before/after comparison is automatic. Lead time reduced. PCE improved. Waste type eliminated. The case for leadership writes itself.' },
           ].map(({ icon, title, body }) => (
@@ -144,7 +144,7 @@ export default function LandingLeanSixSigmaExecution() {
             Map a Process Free
           </Link>
           <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '14px 28px', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.65)', borderRadius: 10, fontSize: 15 }}>
-            Start 14-day trial — no card
+            Start 14-day trial, no card
           </Link>
         </div>
       </section>

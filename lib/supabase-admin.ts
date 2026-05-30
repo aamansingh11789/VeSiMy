@@ -1,6 +1,6 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/supabase-admin.ts ──────────────────────────────────────────────────
-// SERVER ONLY — never import this from client components.
+// SERVER ONLY, never import this from client components.
 // Uses the service role key which bypasses all RLS policies.
 import 'server-only'
 import { createClient as createAdminSupabase } from '@supabase/supabase-js'

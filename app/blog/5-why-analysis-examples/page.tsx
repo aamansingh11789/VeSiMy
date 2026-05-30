@@ -106,8 +106,8 @@ export default function FiveWhyPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>6 min read · March 12, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             5 Why Analysis: 6 Real Examples From the Shop Floor
@@ -135,7 +135,7 @@ export default function FiveWhyPost() {
           {examples.map((ex, idx) => (
             <div key={idx} style={{ marginBottom: 48 }}>
               <div style={{ background: `${ex.color}0d`, border: `1px solid ${ex.color}33`, borderRadius: 14, padding: '20px 22px', marginBottom: 20 }}>
-                <div style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 800, color: ex.color, letterSpacing: 1.5, marginBottom: 8 }}>EXAMPLE {idx + 1}</div>
+                <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, color: ex.color, letterSpacing: 1.5, marginBottom: 8 }}>EXAMPLE {idx + 1}</div>
                 <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 15 }}>Problem: {ex.problem}</div>
               </div>
 
@@ -146,7 +146,7 @@ export default function FiveWhyPost() {
                     background: `${ex.color}22`, border: `1px solid ${ex.color}44`,
                     color: ex.color, fontWeight: 800, fontSize: 12,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0, fontFamily: 'monospace',
+                    flexShrink: 0, fontFamily: 'var(--font-mono)',
                   }}>
                     W{i + 1}
                   </div>
@@ -158,12 +158,12 @@ export default function FiveWhyPost() {
               ))}
 
               <div style={{ marginTop: 16, background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: '#1DD1A1', letterSpacing: 1, marginBottom: 6, fontFamily: 'monospace' }}>ROOT CAUSE</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: '#1DD1A1', letterSpacing: 1, marginBottom: 6, fontFamily: 'var(--font-mono)' }}>ROOT CAUSE</div>
                 <div style={{ fontSize: 14, color: '#B8B5D1' }}>{ex.rootCause}</div>
               </div>
 
               <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '14px 18px' }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: '#0176D3', letterSpacing: 1, marginBottom: 6, fontFamily: 'monospace' }}>CORRECTIVE ACTION</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: '#0176D3', letterSpacing: 1, marginBottom: 6, fontFamily: 'var(--font-mono)' }}>CORRECTIVE ACTION</div>
                 <div style={{ fontSize: 14, color: '#B8B5D1' }}>{ex.action}</div>
               </div>
             </div>

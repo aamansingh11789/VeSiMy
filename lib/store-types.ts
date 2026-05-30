@@ -1,7 +1,7 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/store-types.ts ──────────────────────────────────────────────────────
 // Entity type definitions used throughout the app.
-// These describe data shapes — they do NOT represent store state.
+// These describe data shapes, they do NOT represent store state.
 // Actual data lives in component useState, initialised from server props.
 
 export interface Step {
@@ -100,7 +100,7 @@ export interface Project {
   customer?:   string
   supplier?:   string
 
-  // Takt time inputs — all optional; used by calcProcessMetrics and PDFExport
+  // Takt time inputs, all optional; used by calcProcessMetrics and PDFExport
   demand?:             number | string | null  // units per day
   working_hours?:      number | string | null  // hours per day
   shifts?:             number | string | null  // shifts per day

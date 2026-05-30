@@ -20,14 +20,14 @@ const STATUS_CFG = {
 }
 
 function uid() { return Math.random().toString(36).slice(2, 9) }
-function fmtS(s: number) { if (!s) return '—'; if (s < 60) return `${s}s`; return `${Math.floor(s/60)}m ${s%60}s` }
+function fmtS(s: number) { if (!s) return ','; if (s < 60) return `${s}s`; return `${Math.floor(s/60)}m ${s%60}s` }
 
 export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap }: Props) {
   const mainSteps = steps.filter(s => s.is_main_flow !== false)
 
   // Load saved roadmap from project or init empty
   const [phases, setPhases] = useState<any[]>(project?.kaizen_roadmap?.phases || [
-    { id: uid(), name: 'Phase 1 — Quick Wins', color: PHASE_COLORS[0], target_pce: '', events: [] },
+    { id: uid(), name: 'Phase 1, Quick Wins', color: PHASE_COLORS[0], target_pce: '', events: [] },
   ])
   const [showAddPhase, setShowAddPhase] = useState(false)
   const [newPhaseName, setNewPhaseName] = useState('')
@@ -39,7 +39,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
   // FIX: removed direct supabase write from client component.
   // All saves now go through onSaveRoadmap callback (which calls the authenticated API).
-  // The old pattern used project.user_id from props — potentially stale.
+  // The old pattern used project.user_id from props, potentially stale.
   const saveTimer = useRef<any>(null)
   useEffect(() => {
     if (!project?.id || !onSaveRoadmap) return
@@ -112,13 +112,13 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
       <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', marginBottom: 4 }}>KAIZEN ROADMAP — MISSION CONTROL</div>
+            <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)', marginBottom: 4 }}>KAIZEN ROADMAP, MISSION CONTROL</div>
             <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{project?.name}</div>
             <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>Current State &rarr; Future State Improvement Plan</div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             {[
-              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : '—', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#D4A843' : '#FF6B6B' },
+              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : ',', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#D4A843' : '#FF6B6B' },
               { label: 'Target PCE', value: phases.length > 0 && phases[phases.length-1].target_pce ? `${phases[phases.length-1].target_pce}%` : '95%', color: '#1DD1A1' },
               { label: 'Events', value: `${completeEvents}/${totalEvents}`, color: '#6CB9FC' },
               { label: 'Progress', value: `${progressPct}%`, color: '#D4A843' },
@@ -148,12 +148,12 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
       {/* PCE Journey */}
       {projections.length > 0 && (
         <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 18px' }}>
-          <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace', marginBottom: 10 }}>PCE IMPROVEMENT JOURNEY</div>
+          <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>PCE IMPROVEMENT JOURNEY</div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 0 }}>
             {/* Current state */}
             <div style={{ textAlign: 'center', minWidth: 70 }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: pce !== null && pce >= 80 ? '#1DD1A1' : '#FF6B6B', marginBottom: 4 }}>
-                {pce !== null ? `${pce.toFixed(0)}%` : '—'}
+                {pce !== null ? `${pce.toFixed(0)}%` : ','}
               </div>
               <div style={{ height: pce !== null ? Math.max(8, pce * 0.8) : 8, background: 'var(--text3)', borderRadius: '4px 4px 0 0', width: 40, margin: '0 auto' }} />
               <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4 }}>Current</div>
@@ -167,7 +167,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                   <div style={{ fontSize: 11, fontWeight: 700, color, marginBottom: 4 }}>{proj.projectedPCE.toFixed(0)}%</div>
                   <div style={{ height: Math.max(8, proj.projectedPCE * 0.8), background: color, borderRadius: '4px 4px 0 0', width: 40, margin: '0 auto', opacity: 0.8 }} />
                   <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 70 }}>
-                    {phase?.name?.split('—')[0]?.trim() || `Phase ${i+1}`}
+                    {phase?.name?.split(',')[0]?.trim() || `Phase ${i+1}`}
                   </div>
                 </div>
               )
@@ -272,7 +272,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                       <div>
                         <label style={{ fontSize: 10, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>Linked Step</label>
                         <select className="input" value={newEvent.stepId} onChange={e => setNewEvent(p => ({ ...p, stepId: e.target.value }))} style={{ fontSize: 12 }}>
-                          <option value="">— none —</option>
+                          <option value="">, none ,</option>
                           {steps.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                         </select>
                       </div>
@@ -320,7 +320,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
       {/* Add phase */}
       {showAddPhase ? (
         <div style={{ border: '1px solid rgba(212,168,67,0.3)', borderRadius: 10, padding: '12px 14px', display: 'flex', gap: 8 }}>
-          <input className="input" placeholder="Phase name e.g. Phase 2 — Flow Improvement" value={newPhaseName} onChange={e => setNewPhaseName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addPhase()} style={{ flex: 1, fontSize: 12 }} autoFocus />
+          <input className="input" placeholder="Phase name e.g. Phase 2, Flow Improvement" value={newPhaseName} onChange={e => setNewPhaseName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addPhase()} style={{ flex: 1, fontSize: 12 }} autoFocus />
           <button type="button" onClick={addPhase} className="btn btn-primary">Add</button>
           <button type="button" onClick={() => setShowAddPhase(false)} className="btn btn-ghost">Cancel</button>
         </div>

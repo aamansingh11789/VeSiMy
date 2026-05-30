@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
-  // Protected routes — redirect to login if no session
+  // Protected routes, redirect to login if no session
   const protectedPaths = ['/dashboard', '/project', '/settings', '/onboarding', '/projects', '/kaizen', '/learn', '/guided', '/skill-matrix']
   // Public routes that should never redirect even if they match a protected prefix
   const publicPaths = ['/start']
@@ -37,7 +37,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Logged-in users must never see the auth pages — always send to dashboard.
+  // Logged-in users must never see the auth pages, always send to dashboard.
   // This covers both /auth/login and /auth/signup regardless of how they got there.
   if (user && (pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup'))) {
     const dashUrl = request.nextUrl.clone()

@@ -1,10 +1,10 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/ai/ai-assist.ts ──────────────────────────────────────────────────────
 // Unified AI helper for all tool assist features.
 // Priority: Anthropic (if ANTHROPIC_API_KEY set) → Gemini (if GEMINI_API_KEY set)
 // → rule-based fallback (always free, always works).
 //
-// Gemini Flash free tier: 15 RPM, 1M tokens/day — plenty for in-tool assists.
+// Gemini Flash free tier: 15 RPM, 1M tokens/day, plenty for in-tool assists.
 // Add GEMINI_API_KEY to Vercel env vars (free at ai.google.dev) to enable.
 
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
@@ -12,7 +12,7 @@ const GEMINI_KEY    = process.env.GEMINI_API_KEY
 
 // ── Call whichever AI is available ───────────────────────────────────────────
 export async function callAI(prompt: string, maxTokens = 400): Promise<string | null> {
-  // 1. Try Anthropic (Haiku — cheapest, ~$0.001 per call)
+  // 1. Try Anthropic (Haiku, cheapest, ~$0.001 per call)
   if (ANTHROPIC_KEY) {
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -56,7 +56,7 @@ export async function callAI(prompt: string, maxTokens = 400): Promise<string | 
     } catch { /* fall through */ }
   }
 
-  return null // no AI available — caller uses rule-based fallback
+  return null // no AI available, caller uses rule-based fallback
 }
 
 // ── Check if any AI is configured ────────────────────────────────────────────

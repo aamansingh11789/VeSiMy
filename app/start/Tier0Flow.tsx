@@ -346,16 +346,10 @@ function ReportView({ report, email, processName }: { report: Report; email: str
           The report shows the top layer. A full VSM map shows information flows, WIP queues,
           and the complete improvement path. 14-day free trial, no card required.
         </p>
-        <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-          <button style={{
-            padding: '14px 32px', borderRadius: 10, border: 'none', cursor: 'pointer',
+        <Link href="/auth/signup" style={{ padding: '14px 32px', borderRadius: 10, border: 'none', cursor: 'pointer',
             background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
             color: '#1A0E00', fontSize: 15, fontWeight: 700,
-            fontFamily: 'inherit', boxShadow: btnShadow,
-          }}>
-            Start Free Trial
-          </button>
-        </Link>
+            fontFamily: 'inherit', boxShadow: btnShadow, textDecoration: 'none', display: 'inline-block', textAlign: 'center', boxSizing: 'border-box' }}>Start Free Trial</Link>
       </div>
     </div>
   )
@@ -504,13 +498,9 @@ export default function Tier0Flow() {
           <VLogoMark size={28} />
           <VeSiMyWordmark size={16} onDark={true} />
         </Link>
-        <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-          <button style={{
-            padding: '7px 16px', borderRadius: 8, border: `1px solid ${C.b2}`,
+        <Link href="/auth/signup" style={{ padding: '7px 16px', borderRadius: 8, border: `1px solid ${C.b2}`,
             background: 'transparent', color: C.t2, fontSize: 13, fontWeight: 600,
-            cursor: 'pointer', fontFamily: 'inherit',
-          }}>Sign up free</button>
-        </Link>
+            cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none', display: 'inline-block', textAlign: 'center', boxSizing: 'border-box' }}>Sign up free</Link>
       </nav>
 
       {/* Progress bar */}

@@ -7,7 +7,7 @@ import { LearningCenter }       from '@/components/learn/LearningCenter'
 import { IndustryWatermark }     from '@/components/ui/IndustryWatermark'
 import { getWatermarkGroup }     from '@/lib/industry-reference-map'
 
-export const metadata = { title: 'Learning Center — VeSiMy' }
+export const metadata = { title: 'Learning Center, VeSiMy' }
 
 export default async function LearnPage() {
   const supabase = await createServerSupabase()

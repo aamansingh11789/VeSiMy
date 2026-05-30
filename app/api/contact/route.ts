@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Log to console for Vercel logs (always)
-    console.log(`[contact] ${topic} from ${name} <${email}>`)
+    console.log(`[contact] ${topic} from ${name} (email redacted)`)
 
     return NextResponse.json({ success: true })
   } catch (err) {

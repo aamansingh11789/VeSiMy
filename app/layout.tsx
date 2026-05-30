@@ -17,8 +17,8 @@ import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title:       { default: 'VeSiMy — AI Operations Intelligence Platform', template: '%s — VeSiMy' },
-  description: 'VeSiMy is the AI platform that monitors your manufacturing processes, detects inefficiencies automatically, and tells your team exactly what to fix. Free VSM, Kaizen, 5 Why, Fishbone, SMED and Gemba Walk tools — all in one platform.',
+  title:       { default: 'VeSiMy, AI Operations Intelligence Platform', template: '%s, VeSiMy' },
+  description: 'VeSiMy is the AI platform that monitors your manufacturing processes, detects inefficiencies automatically, and tells your team exactly what to fix. Free VSM, Kaizen, 5 Why, Fishbone, SMED and Gemba Walk tools, all in one platform.',
   keywords:    ['continuous improvement', 'VSM', 'value stream mapping', 'lean manufacturing software', 'kaizen tracking', 'AI process optimization', '5 why analysis', 'fishbone diagram', 'free VSM tool', 'manufacturing AI', 'process improvement software'],
   authors:     [{ name: 'VeSiMy' }],
   creator:     'VeSiMy',
@@ -38,16 +38,16 @@ export const metadata: Metadata = {
   openGraph: {
     type:        'website',
     siteName:    'VeSiMy',
-    title:       'VeSiMy — AI-Powered Process Improvement for Every Industry',
-    description: 'Map your process, find the bottleneck, and fix it. AI-powered lean tools for 68+ industries. Free to start — no account needed.',
+    title:       'VeSiMy, AI-Powered Process Improvement for Every Industry',
+    description: 'Map your process, find the bottleneck, and fix it. AI-powered lean tools for 68+ industries. Free to start, no account needed.',
     url:         'https://www.vesimy.com',
-    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy — AI Process Improvement for Every Industry' }],
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'VeSiMy, AI Process Improvement for Every Industry' }],
   },
 
   // ── Twitter Card ───────────────────────────────────────────────────────────
   twitter: {
     card:        'summary_large_image',
-    title:       'VeSiMy — AI Process Improvement',
+    title:       'VeSiMy, AI Process Improvement',
     description: 'Map your process, identify waste, and take structured action. Lean tools with AI guidance for 68+ industries.',
     images:      ['/api/og'],
   },
@@ -81,7 +81,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* iOS splash screens — tells Safari this is a full-screen app */}
+        {/* iOS splash screens, tells Safari this is a full-screen app */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -95,7 +95,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
             "name": "VeSiMy",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
-            "description": "AI-powered continuous improvement platform for lean and manufacturing teams. VSM, Kaizen, 5 Why, SMED, Fishbone, PDCA — all connected.",
+            "description": "AI-powered continuous improvement platform for lean and manufacturing teams. VSM, Kaizen, 5 Why, SMED, Fishbone, PDCA, all connected.",
             "offers": {
               "@type": "Offer",
               "price": "0",
@@ -113,14 +113,14 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
         {/* MS Tile for Windows pinned sites */}
         <meta name="msapplication-TileColor" content="var(--bg)" />
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
-        {/* Google Fonts — DM Serif Display + IBM Plex Mono for homepage/reports */}
+        {/* Google Fonts, DM Serif Display + IBM Plex Mono for homepage/reports */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
           rel="stylesheet"
         />
-        {/* Satoshi — primary UI font */}
+        {/* Satoshi, primary UI font */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap&font-display=swap"
@@ -133,7 +133,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
         <Suspense><PostHogPageView /></Suspense>
         <ErrorBoundary name="root">{children}</ErrorBoundary>
 
-        {/* PWA components — invisible, run in background */}
+        {/* PWA components, invisible, run in background */}
         <ServiceWorkerRegistration />
         <ProfileRefresh />
         <InstallPrompt />
@@ -156,7 +156,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
         />
         </ThemeProvider>
         </PostHogProvider>
-        {/* Vercel Analytics — traffic + Web Vitals */}
+        {/* Vercel Analytics, traffic + Web Vitals */}
         <Analytics />
         <SpeedInsights />
       </body>

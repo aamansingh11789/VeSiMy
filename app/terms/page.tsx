@@ -23,7 +23,7 @@ export default function TermsPage() {
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>
         <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
+          <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
           <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
           <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>

@@ -1,8 +1,8 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── lib/tool-schemas.ts ───────────────────────────────────────────────────────
 // Single source of truth for every tool's data shape.
 // Import these types in BOTH the tool component AND any reader (PDF, Supe, report).
-// Compiler enforces key consistency — no silent mismatches.
+// Compiler enforces key consistency, no silent mismatches.
 
 export interface StopwatchData {
   laps:     { t: number }[]   // millisecond readings
@@ -98,7 +98,7 @@ export interface SMEDStep {
   type:        'internal' | 'external' | 'waste'
 }
 
-// Tool data map — use this to type toolData[tool]
+// Tool data map, use this to type toolData[tool]
 export interface ToolDataMap {
   stopwatch:   StopwatchData
   ishikawa:    IshikawaData

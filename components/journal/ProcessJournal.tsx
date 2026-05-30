@@ -52,7 +52,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
         .limit(100)
 
       if (dbError) {
-        // Table may not exist yet — show graceful empty state
+        // Table may not exist yet, show graceful empty state
         console.warn('[Journal] DB error:', dbError.message)
         setError('journal_unavailable')
       } else if (data) {
@@ -209,11 +209,11 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
                   <span style={{
                     fontSize: 9, fontWeight: 800, padding: '2px 8px', borderRadius: 999,
                     background: tag.bg, color: tag.color,
-                    fontFamily: 'monospace', letterSpacing: 1.5,
+                    fontFamily: 'var(--font-mono)', letterSpacing: 1.5,
                   }}>
                     {tag.label}
                   </span>
-                  <span style={{ fontSize: 11, color: 'var(--sl-400)', fontFamily: 'monospace', flexShrink: 0 }}>
+                  <span style={{ fontSize: 11, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
                     {formatDate(entry.created_at)}
                   </span>
                 </div>

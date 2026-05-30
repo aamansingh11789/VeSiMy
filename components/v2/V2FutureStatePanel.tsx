@@ -56,7 +56,7 @@ export function V2FutureStatePanel({ project, profile, t, indLabel, currentRepor
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  // ── Start brainstorming — Supe opens with context ────────────────────────
+  // ── Start brainstorming, Supe opens with context ────────────────────────
   const startBrainstorm = async () => {
     if (!targetStatement.trim() || !targetCategory) {
       toast.error('Set your target statement and category first')
@@ -115,7 +115,7 @@ Ask the single most important question to understand what's actually stopping th
 CONVERSATION:
 ${transcript}
 
-Supe: (respond with ONE focused follow-up question or specific lean insight — max 3 sentences, no preamble)`
+Supe: (respond with ONE focused follow-up question or specific lean insight, max 3 sentences, no preamble)`
 
       const res = await fetch('/api/ai/assist', {
         method: 'POST',
@@ -125,7 +125,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
       const data = await res.json()
       setMessages(prev => [...prev, { role: 'supe', text: data.result || 'Can you tell me more about that step?', timestamp: new Date().toISOString() }])
     } catch {
-      setMessages(prev => [...prev, { role: 'supe', text: 'Tell me more about that — what does the data show?', timestamp: new Date().toISOString() }])
+      setMessages(prev => [...prev, { role: 'supe', text: 'Tell me more about that, what does the data show?', timestamp: new Date().toISOString() }])
     } finally {
       setChatLoading(false)
     }
@@ -172,7 +172,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
     return (
       <div style={{ flex: 1, overflowY: 'auto', padding: 32 }}>
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
-          <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>FUTURE STATE — STEP 1 OF 2</div>
+          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>FUTURE STATE, STEP 1 OF 2</div>
           <h2 style={{ fontFamily: SERIF, fontSize: 30, fontWeight: 700, color: 'var(--text)', marginBottom: 10, lineHeight: 1.15 }}>
             What does success look like?
           </h2>
@@ -212,7 +212,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           {/* Target statement */}
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--text2)', display: 'block', marginBottom: 6 }}>
-              Target statement — in your own words *
+              Target statement, in your own words *
             </label>
             <textarea
               value={targetStatement}
@@ -259,7 +259,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
                     Supe AI brainstorming session {!isPaid && '(Pro)'}
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
-                    Supe asks targeted questions about your process, challenges, and constraints — then builds a data-backed future state plan. Like working through it with an experienced lean consultant.
+                    Supe asks targeted questions about your process, challenges, and constraints, then builds a data-backed future state plan. Like working through it with an experienced lean consultant.
                   </div>
                 </div>
               </button>
@@ -304,7 +304,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
         {/* Context bar */}
         <div style={{ padding: '10px 20px', background: 'rgba(3,45,96,.97)', borderBottom: '1px solid rgba(255,255,255,.1)', display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 9, fontFamily: 'monospace', color: 'rgba(255,255,255,.4)', letterSpacing: 2 }}>TARGET</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,.4)', letterSpacing: 2 }}>TARGET</div>
             <div style={{ fontSize: 13, color: 'white', fontWeight: 500 }}>{targetStatement}</div>
           </div>
           <button onClick={generateFutureState} disabled={generating} style={{
@@ -330,7 +330,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
               alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start',
             }}>
               {msg.role === 'supe' && (
-                <div style={{ fontSize: 9, fontFamily: 'monospace', color: 'rgba(255,255,255,.3)', marginBottom: 5, letterSpacing: 1 }}><ZapIcon size={14}/> SUPE</div>
+                <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,.3)', marginBottom: 5, letterSpacing: 1 }}><ZapIcon size={14}/> SUPE</div>
               )}
               <div style={{
                 maxWidth: '82%', padding: '12px 16px', borderRadius: msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
@@ -394,7 +394,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // STAGE: DONE — Show future state report
+  // STAGE: DONE, Show future state report
   // ─────────────────────────────────────────────────────────────────────────
   if (stage === 'done' && futureReport) {
     const ip = futureReport.improvement_potential || {}
@@ -410,17 +410,17 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           <div style={{ background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
             <span style={{ fontSize: 16, flexShrink: 0 }}><AlertIcon size={14} color="#92400E"/></span>
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: 'monospace', letterSpacing: 1 }}>DISCLAIMER</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>DISCLAIMER</div>
               <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{futureReport.disclaimer}</p>
             </div>
           </div>
 
           {/* Header */}
           <div style={{ marginBottom: 24 }}>
-            <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: GREEN, marginBottom: 8 }}>FUTURE STATE · TARGET PLAN</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: GREEN, marginBottom: 8 }}>FUTURE STATE · TARGET PLAN</div>
             <h2 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: 'var(--text)', marginBottom: 10, lineHeight: 1.2 }}>{project.name}</h2>
             <div style={{ padding: '12px 16px', background: 'rgba(46,132,74,.06)', border: '1px solid rgba(46,132,74,.2)', borderRadius: 10, marginBottom: 14 }}>
-              <div style={{ fontSize: 10, fontFamily: 'monospace', color: GREEN, letterSpacing: 1.5, marginBottom: 4 }}>TARGET</div>
+              <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: GREEN, letterSpacing: 1.5, marginBottom: 4 }}>TARGET</div>
               <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', margin: 0 }}>{targetStatement}</p>
               {targetDeadline && <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>Deadline: {targetDeadline}</div>}
             </div>
@@ -429,7 +429,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           {/* Target achievability */}
           {futureReport.target_achievement && (
             <div style={{ marginBottom: 24, padding: '18px 20px', background: 'white', border: '1px solid var(--border)', borderRadius: 12 }}>
-              <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: GREEN, marginBottom: 10 }}>TARGET ASSESSMENT</div>
+              <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: GREEN, marginBottom: 10 }}>TARGET ASSESSMENT</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 10 }}>{futureReport.target_achievement}</p>
               {futureReport.tolerance_range && (
                 <div style={{ fontSize: 13, color: GREEN, fontWeight: 600 }}>
@@ -444,7 +444,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 24 }}>
               {Object.entries(ip).filter(([k]) => !['basis','primary_lever'].includes(k)).map(([key, val]) => (
                 <div key={key} style={{ padding: '14px 16px', background: 'white', border: '1px solid var(--border)', borderRadius: 10, textAlign: 'center' }}>
-                  <div style={{ fontSize: 9, fontFamily: 'monospace', color: 'var(--text3)', letterSpacing: 1, marginBottom: 5 }}>
+                  <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'var(--text3)', letterSpacing: 1, marginBottom: 5 }}>
                     {key.replace(/_/g,' ').toUpperCase()}
                   </div>
                   <div style={{ fontSize: 20, fontWeight: 700, fontFamily: SERIF, color: GREEN }}>{String(val)}</div>
@@ -456,7 +456,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           {/* Future state step changes */}
           {futureSteps.length > 0 && (
             <div style={{ marginBottom: 24 }}>
-              <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: 'var(--text3)', marginBottom: 12 }}>FUTURE STATE — STEP CHANGES</div>
+              <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text3)', marginBottom: 12 }}>FUTURE STATE, STEP CHANGES</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {futureSteps.map((s: any, i: number) => {
                   const colors = { improved: GREEN, eliminated: RED, added: BRAND, merged: AMBER, unchanged: '#aaa' }
@@ -467,7 +467,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                           <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{s.name}</div>
-                          <span style={{ fontSize: 9, padding: '1px 6px', borderRadius: 4, background: color + '18', color, fontFamily: 'monospace', fontWeight: 700 }}>
+                          <span style={{ fontSize: 9, padding: '1px 6px', borderRadius: 4, background: color + '18', color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
                             {(s.change_type || '').toUpperCase()}
                           </span>
                         </div>
@@ -489,7 +489,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight — 
           {/* Action plan */}
           {actionPlan.length > 0 && (
             <div style={{ marginBottom: 28 }}>
-              <div style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>ACTION PLAN TO ACHIEVE TARGET</div>
+              <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>ACTION PLAN TO ACHIEVE TARGET</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {actionPlan.map((a: any, i: number) => (
                   <div key={i} style={{ display: 'flex', gap: 14, padding: '14px 16px', background: 'white', border: '1px solid var(--border)', borderRadius: 10 }}>

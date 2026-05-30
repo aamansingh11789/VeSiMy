@@ -49,10 +49,10 @@ export function Modal({
     // Non-passive so preventDefault() actually works.
     const blockBgScroll = (e: TouchEvent) => {
       if (bodyRef.current && bodyRef.current.contains(e.target as Node)) {
-        // Inside the scroll body — let iOS scroll it naturally, don't prevent
+        // Inside the scroll body, let iOS scroll it naturally, don't prevent
         return
       }
-      // Outside modal body — block background scroll
+      // Outside modal body, block background scroll
       e.preventDefault()
     }
     document.addEventListener('touchmove', blockBgScroll, { passive: false })
@@ -99,7 +99,7 @@ export function Modal({
         zIndex: 2147483647,
         background: 'rgba(1,1,6,0.76)',
         backdropFilter: 'blur(10px)',
-        // NEVER scrollable — iOS would scroll this instead of the modal body
+        // NEVER scrollable, iOS would scroll this instead of the modal body
         overflow: 'hidden',
         // Prevent any touch scroll on the overlay itself
         touchAction: 'none',
@@ -120,7 +120,7 @@ export function Modal({
           bottom: isMobile ? 0 : undefined,
           left:   isMobile ? 0 : undefined,
           right:  isMobile ? 0 : undefined,
-          // Explicit height — not max-height — so iOS knows the exact boundary
+          // Explicit height, not max-height, so iOS knows the exact boundary
           height:    isMobile ? '92svh' : undefined,
           maxHeight: isMobile ? '92svh' : 'calc(100dvh - 60px)',
           width: '100%',
@@ -149,7 +149,7 @@ export function Modal({
           <div style={{ fontFamily: 'var(--font-serif)', fontSize: isMobile ? 15 : 17, fontWeight: 700, color: 'var(--text)' }}>
             {title}
           </div>
-          {/* VeSiMy brand — visible in every tool screenshot */}
+          {/* VeSiMy brand, visible in every tool screenshot */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginLeft: 'auto', marginRight: 10, padding: '3px 9px', borderRadius: 6, background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(212,168,67,0.18)', flexShrink: 0 }}>
             <svg width="11" height="12" viewBox="0 0 100 108" fill="none">
               <defs>
@@ -172,15 +172,15 @@ export function Modal({
 
         {/* ── scrollable body ── */}
         {/* 
-          svh = Small Viewport Height (excludes Safari toolbar) — more reliable than dvh for position calculations.
+          svh = Small Viewport Height (excludes Safari toolbar), more reliable than dvh for position calculations.
           Heights:  handle 25px + header ~52px + footer ~68px = 145px
           Body = 92svh - 145px
-          overflow-y:scroll (not auto) — iOS Safari sometimes ignores auto on non-body elements
+          overflow-y:scroll (not auto), iOS Safari sometimes ignores auto on non-body elements
         */}
         <div
           ref={bodyRef}
           style={{
-            // Explicit calculated height — no flex:1, no min-height tricks
+            // Explicit calculated height, no flex:1, no min-height tricks
             // iOS Safari only reliably scrolls elements with an explicit height
             flex: 1,
             minHeight: 0,

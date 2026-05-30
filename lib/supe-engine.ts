@@ -1,5 +1,5 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
-// lib/supe-engine.ts — rule-based lean analysis engine.
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
+// lib/supe-engine.ts, rule-based lean analysis engine.
 // Uses main-flow steps only and canonical ctSeconds() for all CT values.
 import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 import type { Step } from './store'
@@ -27,7 +27,7 @@ function fmt(s: number) {
 export function analyzeSteps(steps: Step[]): SupeRec[] {
   if (!steps?.length) return []
 
-  // FIX: only analyse main-flow steps — branches must not pollute avg CT
+  // FIX: only analyse main-flow steps, branches must not pollute avg CT
   const mainSteps = steps.filter(s => (s as any).is_main_flow !== false)
   if (!mainSteps.length) return []
 
@@ -62,7 +62,7 @@ export function analyzeSteps(steps: Step[]): SupeRec[] {
       add({ step_id: s.id, step_name: s.name, issue_type: 'waiting',
         severity: wait > ct * 3 ? 'high' : 'medium',
         suggestion: `Wait time (${fmt(wait)}) exceeds cycle time (${fmt(ct)}) at "${s.name}". Check upstream batch sizes or downstream blockage.`,
-        principle: '7 Wastes — Waiting' })
+        principle: '7 Wastes, Waiting' })
 
     if (setup > 600)
       add({ step_id: s.id, step_name: s.name, issue_type: 'smed',

@@ -25,8 +25,8 @@ export default function KaizenEventPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(108,185,252,0.15)', color: '#6CB9FC', fontFamily: 'monospace', letterSpacing: 1.5 }}>TEMPLATE</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>7 min read · March 12, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(108,185,252,0.15)', color: '#6CB9FC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>TEMPLATE</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>7 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             How to Run a Kaizen Event: Template, Checklist, and Examples
@@ -140,7 +140,7 @@ export default function KaizenEventPost() {
           ].map(({ day, label, color, items }) => (
             <div key={day} style={{ marginBottom: 28 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                <div style={{ background: `${color}22`, border: `1px solid ${color}44`, borderRadius: 8, padding: '6px 14px', fontFamily: 'monospace', fontWeight: 800, color, fontSize: 13 }}>
+                <div style={{ background: `${color}22`, border: `1px solid ${color}44`, borderRadius: 8, padding: '6px 14px', fontFamily: 'var(--font-mono)', fontWeight: 800, color, fontSize: 13 }}>
                   {day}
                 </div>
                 <span style={{ fontFamily: serif, fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{label}</span>

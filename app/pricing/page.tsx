@@ -1,6 +1,6 @@
 // TypeScript enabled
 // ── app/pricing/page.tsx ──────────────────────────────────────────────────
-// VeSiMy v4.0 pricing page — 4 tiers: Free Start / Free Trial / Pro / Enterprise
+// VeSiMy v4.0 pricing page, 4 tiers: Free Start / Free Trial / Pro / Enterprise
 // SPRING25 promo code active
 
 'use client'
@@ -120,7 +120,7 @@ const TIERS: Tier[] = [
     features: [
       'Everything in Free Start',
       'VeSiMy Guided (8-step onboarding)',
-      'VSM canvas — up to 3 maps',
+      'VSM canvas, up to 3 maps',
       'PDCA, 8D, DMAIC, OODA tools',
       'AI lean analysis (5 reports/month)',
       'Industry-specific templates',
@@ -136,7 +136,7 @@ const TIERS: Tier[] = [
     priceMonthly: 29,
     priceAnnual:  23,
     priceSub: 'per month, billed monthly',
-    priceSubAnnual: '$23/mo billed annually — save $72/yr',
+    priceSubAnnual: '$23/mo billed annually, save $72/yr',
     tagline: 'The full VeSiMy platform for lean practitioners who need to move fast and prove results.',
     cta: 'Get Pro',
     ctaHref: '/auth/signup?plan=pro',
@@ -175,7 +175,7 @@ const TIERS: Tier[] = [
     features: [
       'Everything in Pro',
       'Team collaboration (live maps)',
-      'Skill matrix — track team capability',
+      'Skill matrix, track team capability',
       'Multi-user seat management',
       'SSO / SAML integration',
       'Dedicated onboarding',
@@ -252,13 +252,9 @@ export default function PricingPage() {
         </Link>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           <Link href="/auth/login" style={{ textDecoration: 'none', color: C.t2, fontSize: 14, fontWeight: 500 }}>Log in</Link>
-          <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-            <button style={{
-              padding: '8px 18px', borderRadius: 8, border: 'none',
+          <Link href="/auth/signup" style={{ padding: '8px 18px', borderRadius: 8, border: 'none',
               background: C.blue, color: '#fff', fontSize: 14, fontWeight: 700,
-              cursor: 'pointer', fontFamily: 'inherit',
-            }}>Start free</button>
-          </Link>
+              cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none', display: 'inline-block', textAlign: 'center', boxSizing: 'border-box' }}>Start free</Link>
         </div>
       </nav>
 
@@ -429,9 +425,7 @@ export default function PricingPage() {
               </p>
 
               {/* CTA */}
-              <Link href={tier.ctaHref} style={{ display: 'block', textDecoration: 'none', marginBottom: 24 }}>
-                <button style={{
-                  width: '100%', padding: '13px 20px', borderRadius: 10, border: 'none',
+              <Link href={tier.ctaHref} style={{ display: 'block', textAlign: 'center', textDecoration: 'none', marginBottom: 24, boxSizing: 'border-box', width: '100%', padding: '13px 20px', borderRadius: 10, border: 'none',
                   cursor: 'pointer', fontSize: 14, fontWeight: 700, fontFamily: 'inherit',
                   transition: 'all 0.2s',
                   ...(tier.ctaStyle === 'primary' ? {
@@ -442,9 +436,7 @@ export default function PricingPage() {
                     background: 'transparent',
                     color: isPro ? C.bg0 : tier.accentColor,
                     border: `2px solid ${isPro ? C.bg2 : tier.accentColor}`,
-                  }),
-                }}>{tier.cta}</button>
-              </Link>
+                  }) }}>{tier.cta}</Link>
 
               {/* Divider */}
               <div style={{ height: 1, background: isPro ? 'rgba(0,0,0,0.1)' : C.b2, marginBottom: 18 }} />
@@ -479,12 +471,12 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Lifetime deal — launch period */}
+      {/* Lifetime deal, launch period */}
       <section style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto 60px', padding: '0 24px' }}>
         <div style={{ background: 'linear-gradient(135deg, #0A1228, #162040)', border: '1px solid rgba(59,124,255,0.3)', borderRadius: 20, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ fontSize: 36 }}>⚡</div>
           <div style={{ flex: 1, minWidth: 200 }}>
-            <div style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: 10, color: '#3B7CFF', letterSpacing: 2, marginBottom: 6 }}>LAUNCH OFFER — LIMITED TIME</div>
+            <div style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: 10, color: '#3B7CFF', letterSpacing: 2, marginBottom: 6 }}>LAUNCH OFFER, LIMITED TIME</div>
             <div style={{ fontSize: 20, fontWeight: 800, color: C.t1, marginBottom: 6 }}>Lifetime access for $99</div>
             <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.65, margin: 0 }}>
               Everything in Pro, up to 30 projects, all future tool releases included, 33% enterprise discount, and a Gold Standard founder badge. One payment, no recurring fees ever.
@@ -496,7 +488,7 @@ export default function PricingPage() {
             fontWeight: 700, fontSize: 14, textDecoration: 'none', display: 'inline-block',
             boxShadow: '0 4px 20px rgba(59,124,255,0.35)',
           }}>
-            Get Lifetime — $99
+            Get Lifetime, $99
           </a>
         </div>
       </section>
@@ -559,21 +551,17 @@ export default function PricingPage() {
           Map a process in under 5 minutes. Get a real AI lean report in your inbox. Free, always.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/start" style={{ textDecoration: 'none' }}>
-            <button style={{
+          <Link href="/start" style={{
+              textDecoration: 'none', display: 'inline-block', textAlign: 'center',
               padding: '14px 32px', borderRadius: 12, border: 'none', cursor: 'pointer',
               background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
               color: '#fff', fontSize: 15, fontWeight: 700,
-              fontFamily: 'inherit', boxShadow: btnShadow,
-            }}>Map a Process Free</button>
-          </Link>
-          <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-            <button style={{
-              padding: '14px 32px', borderRadius: 12, cursor: 'pointer',
+              fontFamily: 'var(--font-sans)', boxShadow: btnShadow,
+              boxSizing: 'border-box',
+            }}>Map a Process Free</Link>
+          <Link href="/auth/signup" style={{ padding: '14px 32px', borderRadius: 12, cursor: 'pointer',
               background: 'transparent', border: `2px solid ${C.b3}`,
-              color: C.t2, fontSize: 15, fontWeight: 600, fontFamily: 'inherit',
-            }}>Start Free Trial</button>
-          </Link>
+              color: C.t2, fontSize: 15, fontWeight: 600, fontFamily: 'inherit', textDecoration: 'none', display: 'inline-block', textAlign: 'center', boxSizing: 'border-box' }}>Start Free Trial</Link>
         </div>
       </section>
     </div>

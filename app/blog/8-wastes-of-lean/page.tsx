@@ -100,8 +100,8 @@ export default function EightWastesPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(192,64,42,0.12)', color: '#C0402A', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>10 min read · March 19, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(192,64,42,0.12)', color: '#C0402A', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>10 min read · March 19, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             The 8 Wastes of Lean Manufacturing: DOWNTIME With Real Examples
@@ -124,12 +124,12 @@ export default function EightWastesPost() {
           {WASTES.map((w, idx) => (
             <div key={w.letter} style={{ marginBottom: 48 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(1,118,211,0.1)', border: '1.5px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontWeight: 800, fontSize: 22, color: '#0176D3', flexShrink: 0 }}>{w.letter}</div>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(1,118,211,0.1)', border: '1.5px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 22, color: '#0176D3', flexShrink: 0 }}>{w.letter}</div>
                 <h2 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>{w.name} {w.icon}</h2>
               </div>
               <p style={{ marginBottom: 14, fontStyle: 'italic', color: 'var(--text)', fontSize: 15 }}>{w.definition}</p>
               <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 8 }}>Examples on the floor</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>Examples on the floor</div>
                 {w.examples.map(ex => (
                   <div key={ex} style={{ display: 'flex', gap: 8, marginBottom: 5, fontSize: 14 }}>
                     <span style={{ color: '#C0402A', flexShrink: 0, marginTop: 2 }}>✗</span>
@@ -138,7 +138,7 @@ export default function EightWastesPost() {
                 ))}
               </div>
               <div style={{ background: 'rgba(248,247,245,0.5)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 16px', marginBottom: 12 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'monospace', marginBottom: 6 }}>Why it matters</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 6 }}>Why it matters</div>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{w.cost}</p>
               </div>
               <div style={{ fontSize: 14, lineHeight: 1.7 }}>

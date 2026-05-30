@@ -2,8 +2,8 @@
 'use client'
 // ── components/simulation/ProcessSimulation.tsx ──────────────────────────────
 // Upgraded simulation with:
-//  1. Stress Scenarios (Leanstorming-inspired) — demand spike, labor shock, etc.
-//  2. Dynamic pressure states per step — STABLE / STRESSED / BOTTLENECK
+//  1. Stress Scenarios (Leanstorming-inspired), demand spike, labor shock, etc.
+//  2. Dynamic pressure states per step, STABLE / STRESSED / BOTTLENECK
 //  3. Queue depth cards with utilization bars
 //  4. Recovery time estimation
 //  5. Mitigation priority matrix (benefit vs effort)
@@ -150,7 +150,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
 
   // ── Canonical base metrics via calcProcessMetrics ────────────────────────
   // takt: project.takt_time → demand÷available_time → demand÷(working_hours×3600)
-  //   NOT avgCT (which was wrong — avgCT changes as you add steps)
+  //   NOT avgCT (which was wrong, avgCT changes as you add steps)
   // PCE: VA-classified steps only (not all-CT / total-LT)
   const baseMetrics = useMemo(() => calcProcessMetrics(steps as any[], project), [steps, project])
 
@@ -158,7 +158,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   const curLT  = baseMetrics.leadTime             // totalCT + totalWait
   const curPCE = baseMetrics.pce ?? 0            // VA-aware; 0 when unclassified
 
-  // avgCT for utilization bar denominator — use real takt if available, else avgCT
+  // avgCT for utilization bar denominator, use real takt if available, else avgCT
   const avgCT = useMemo(() => main.length > 0
     ? main.reduce((a, s) => a + ctSeconds(s), 0) / main.length
     : 0,
@@ -172,7 +172,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   const scenarioSteps = useMemo(() => {
     if (!scenario) return main
     // REVIEW FIX: Use Little's Law and M/D/1 queue theory instead of hardcoded multipliers.
-    // The simulation now uses the actual process data — different processes get different results.
+    // The simulation now uses the actual process data, different processes get different results.
     const newTakt = takt > 0 ? takt / scenario.demandMult : 0
 
     return main.map(s => {
@@ -213,7 +213,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
   }, [main, scenario, takt])
 
   const scenLT  = useMemo(() => (scenarioSteps as any[]).reduce((a, s) => a + (s._scenCT || 0) + (s._scenWait || 0), 0), [scenarioSteps])
-  // Scenario PCE: only VA steps are value-adding — preserve ratio from base
+  // Scenario PCE: only VA steps are value-adding, preserve ratio from base
   const scenPCE = useMemo(() => {
     if (scenLT <= 0) return 0
     const vaCT = scenarioSteps
@@ -247,7 +247,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
     return bnCT > 0 ? Math.round(3600 / bnCT * 10) / 10 : 0
   }, [scenarioSteps, scenario, baseThroughput])
 
-  // Fix Sim-3: don't substitute 10 when WIP=0 — use step count as proxy instead
+  // Fix Sim-3: don't substitute 10 when WIP=0, use step count as proxy instead
   const recoveryWIP = totalWIP > 0 ? totalWIP : Math.max(main.length, 1)
   const recoveryMin = useMemo(() => calcRecoveryMin(worstQueueRisk, recoveryWIP, avgCT * (scenario?.ctMult || 1)), [worstQueueRisk, recoveryWIP, avgCT, scenario])
 
@@ -352,7 +352,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
             </div>
           )}
 
-          {/* Scenario active — results */}
+          {/* Scenario active, results */}
           {activeScenario && scenario && (
             <div>
               {/* Scenario output metrics */}
@@ -373,7 +373,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
               {/* Step pressure map */}
               <div style={{ marginBottom: 16 }}>
                 <div style={{ fontSize: 10, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 10, fontWeight: 700 }}>
-                  PRESSURE MAP — {scenario.label.toUpperCase()}
+                  PRESSURE MAP, {scenario.label.toUpperCase()}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {scenarioSteps.map((s: any) => {
@@ -425,7 +425,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
 
               {/* Mitigation priority matrix */}
               <div style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: 16, marginBottom: 16 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>BENEFIT VS EFFORT — PRIORITY MATRIX</div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>BENEFIT VS EFFORT, PRIORITY MATRIX</div>
                 <div className="sim-matrix-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8, height: 160 }}>
                   {[
                     { label: 'DO NOW', sub: 'High benefit · Low effort', color: '#2E844A', items: ['Address bottleneck CT', 'Redeploy labor'] },
@@ -454,7 +454,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                 </div>
                 {[
                   `Cap release volume into the bottleneck window during ${scenario.label.toLowerCase()} event`,
-                  'Redeploy labor to the active constraint — priority over scheduled tasks',
+                  'Redeploy labor to the active constraint, priority over scheduled tasks',
                   'Delay low-value changeovers for 2+ cycles until queue clears',
                 ].map((r, i) => (
                   <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 6 }}>
@@ -476,7 +476,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(110px,1fr))', gap: 10, marginBottom: 16 }}>
             {[
               ['Future LT',   fmt(futLT),                  '#2E844A'],
-              ['Time Saved',  saved > 0 ? fmt(saved) : '—','var(--brand)'],
+              ['Time Saved',  saved > 0 ? fmt(saved) : ',','var(--brand)'],
               ['PCE',         `${curPCE.toFixed(1)}% → ${futPCE.toFixed(1)}%`, 'var(--brand)'],
             ].map(([l, v, c]) => (
               <div key={l} style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
@@ -553,9 +553,9 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                         {PRESSURE_LABEL[state]}
                       </span>
                     </td>
-                    <td style={{ padding: '8px 10px', color: 'var(--text2)' }}>{oCT ? fmt(oCT) : '—'}</td>
+                    <td style={{ padding: '8px 10px', color: 'var(--text2)' }}>{oCT ? fmt(oCT) : ','}</td>
                     <td style={{ padding: '8px 10px', color: a.fCT < oCT ? '#2E844A' : 'var(--text2)' }}>{fmt(a.fCT)}</td>
-                    <td style={{ padding: '8px 10px', color: 'var(--text2)' }}>{oW ? fmt(oW) : '—'}</td>
+                    <td style={{ padding: '8px 10px', color: 'var(--text2)' }}>{oW ? fmt(oW) : ','}</td>
                     <td style={{ padding: '8px 10px', color: a.fWait < oW ? '#2E844A' : 'var(--text2)' }}>{fmt(a.fWait)}</td>
                     <td style={{ padding: '8px 10px' }}>
                       <div style={{ width: 60, height: 4, background: 'var(--bg4)', borderRadius: 2 }}>
@@ -564,7 +564,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                       <div style={{ fontSize: 9, color: PRESSURE_COLOR[state], marginTop: 2 }}>{util.toFixed(0)}%</div>
                     </td>
                     <td style={{ padding: '8px 10px', fontWeight: 700, color: dLT < 0 ? '#2E844A' : dLT > 0 ? '#C0402A' : 'var(--text3)' }}>
-                      {dLT !== 0 ? `${dLT < 0 ? '' : '+'}${fmt(Math.abs(dLT))}` : '—'}
+                      {dLT !== 0 ? `${dLT < 0 ? '' : '+'}${fmt(Math.abs(dLT))}` : ','}
                     </td>
                   </tr>
                 )

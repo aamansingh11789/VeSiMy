@@ -25,8 +25,8 @@ export default function SMEDCalculatorPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.12)', color: '#0176D3', fontFamily: 'monospace', letterSpacing: 1.5 }}>TOOL GUIDE</span>
-            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>7 min read · March 19, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.12)', color: '#0176D3', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>TOOL GUIDE</span>
+            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>7 min read · March 19, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             SMED Calculator: How to Calculate Changeover Savings Before You Touch a Wrench

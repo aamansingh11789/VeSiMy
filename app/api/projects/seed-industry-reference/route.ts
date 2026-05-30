@@ -1,9 +1,9 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/projects/seed-industry-reference/route.ts ─────────────────────────
 // Seeds ONLY the reference project(s) for the calling user's specific industry.
 // Previously used an internal fetch() to seed-all-references which failed on
 // Vercel because NEXT_PUBLIC_SITE_URL was unset → fell back to localhost:3000.
-// Now calls the POST handler directly as a module import — no HTTP hop.
+// Now calls the POST handler directly as a module import, no HTTP hop.
 
 import { createServerSupabase } from '@/lib/supabase-server'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -44,7 +44,7 @@ export async function POST(_req: NextRequest) {
       })
     }
 
-    // ── Call the seed handler directly — no internal HTTP fetch ──────────────
+    // ── Call the seed handler directly, no internal HTTP fetch ──────────────
     // Build a synthetic Request that carries the session cookie and industryFilter.
     // This avoids the localhost:3000 fetch that breaks on Vercel serverless.
     const syntheticReq = new Request(

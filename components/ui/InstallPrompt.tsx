@@ -101,7 +101,7 @@ export function InstallPrompt() {
             Install Vesimy
           </div>
           <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.4 }}>
-            Add to your home screen for quick access — works offline too
+            Add to your home screen for quick access, works offline too
           </div>
         </div>
 
@@ -179,7 +179,7 @@ export function InstallPrompt() {
         {[
           { icon: '⬆', text: 'Tap the Share button at the bottom of Safari' },
           { icon: '＋', text: 'Scroll down and tap "Add to Home Screen"' },
-          { icon: '✓', text: 'Tap "Add" — Vesimy appears on your home screen' },
+          { icon: '✓', text: 'Tap "Add", Vesimy appears on your home screen' },
         ].map((step, i) => (
           <div key={i} style={{
             display:    'flex',

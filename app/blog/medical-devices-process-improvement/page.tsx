@@ -25,8 +25,8 @@ export default function MedicalDevicesBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'monospace', letterSpacing: 1.5 }}>MEDICAL DEVICES</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>9 min read · March 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>MEDICAL DEVICES</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>9 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             FDA Doesn't Grade on a Curve: CI in Medical Device Manufacturing

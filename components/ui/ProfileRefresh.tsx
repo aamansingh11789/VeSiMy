@@ -17,7 +17,7 @@ export function ProfileRefresh() {
   // router is a new object reference on every render in Next.js 14 App Router,
   // which caused the effect to re-run continuously:
   //   re-render → new router ref → useEffect re-runs → router.refresh() → re-render → loop
-  // The router.refresh() call inside the callback is stable — use a ref instead.
+  // The router.refresh() call inside the callback is stable, use a ref instead.
   const routerRef = useRef(router)
   useEffect(() => { routerRef.current = router }, [router])
 
@@ -51,7 +51,7 @@ export function ProfileRefresh() {
 
       return () => { supabase.removeChannel(channel) }
     })
-  }, [])  // FIX: empty deps — subscribe once, use routerRef.current for refresh calls
+  }, [])  // FIX: empty deps, subscribe once, use routerRef.current for refresh calls
 
   return null
 }

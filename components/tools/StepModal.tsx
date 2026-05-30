@@ -11,7 +11,7 @@ import { useAIAssist } from '@/hooks/useAIAssist'
 const FIELD_HELP = {
   va_type: {
     title: 'Step Classification',
-    body: 'Every step falls into one of three categories. Value-Add (VA): directly transforms the product or service — the customer pays for this. Necessary Non-Value-Add (NNVA): required by regulations or system constraints, but adds no direct customer value (inspections, compliance, mandatory sign-offs). Non-Value-Add (NVA): pure waste — target for elimination.',
+    body: 'Every step falls into one of three categories. Value-Add (VA): directly transforms the product or service, the customer pays for this. Necessary Non-Value-Add (NNVA): required by regulations or system constraints, but adds no direct customer value (inspections, compliance, mandatory sign-offs). Non-Value-Add (NVA): pure waste, target for elimination.',
     example: 'Welding a joint = VA · ISO audit = NNVA · Waiting for email reply = NVA',
   },
   name: {
@@ -25,13 +25,13 @@ const FIELD_HELP = {
     example: '"Assembly" · "Nursing" · "Lender Liaison" · "Cellar"',
   },
   flow_type: {
-    title: 'Flow Type — How Work Moves Forward',
-    body: 'Push: work is produced based on a schedule and pushed to the next step whether it is needed or not. Pull: the downstream step signals when it needs more — nothing is made until requested. FIFO Lane: a controlled first-in, first-out queue with a maximum cap. Supermarket: a controlled inventory buffer that downstream pulls from. Queue: a pure wait step with no work transformation.',
+    title: 'Flow Type, How Work Moves Forward',
+    body: 'Push: work is produced based on a schedule and pushed to the next step whether it is needed or not. Pull: the downstream step signals when it needs more, nothing is made until requested. FIFO Lane: a controlled first-in, first-out queue with a maximum cap. Supermarket: a controlled inventory buffer that downstream pulls from. Queue: a pure wait step with no work transformation.',
     example: 'Assembly line running to schedule = Push · Lean cell responding to demand = Pull',
   },
   operators: {
     title: 'Number of Operators',
-    body: 'How many people are assigned to this step at any one time. This feeds the Yamazumi operator balance chart — comparing each operator\'s workload against Takt Time to identify overloading and imbalance.',
+    body: 'How many people are assigned to this step at any one time. This feeds the Yamazumi operator balance chart, comparing each operator\'s workload against Takt Time to identify overloading and imbalance.',
     example: '1 operator on a solo task · 2 operators on a high-volume assembly step',
   },
   wip: {
@@ -40,59 +40,59 @@ const FIELD_HELP = {
     example: '2 units = healthy flow · 20 units = likely bottleneck upstream',
   },
   cycle_time: {
-    title: 'Cycle Time — ISO 22468 §5.2',
-    body: 'The actual time it takes to complete one unit of work at this step — from when work starts to when it is finished and ready to pass to the next step. Measured in seconds. If your Cycle Time is higher than your Takt Time, this step cannot keep up with demand and is a bottleneck. Use the built-in Time Study tool to measure it accurately rather than estimating.',
+    title: 'Cycle Time, ISO 22468 §5.2',
+    body: 'The actual time it takes to complete one unit of work at this step, from when work starts to when it is finished and ready to pass to the next step. Measured in seconds. If your Cycle Time is higher than your Takt Time, this step cannot keep up with demand and is a bottleneck. Use the built-in Time Study tool to measure it accurately rather than estimating.',
     example: 'Welding a joint = 45 seconds · Filling out a loan application = 7,200 seconds (2 hrs)',
   },
   wait_time: {
-    title: 'Queue Time — ISO 22468 §5.3',
-    body: 'The time work spends waiting before this step begins — sitting in a queue, waiting for an operator, waiting for a machine, waiting for approval, or waiting for the previous step to finish. Wait time is always Non-Value-Add. It is often the biggest contributor to long lead times. This time appears as the "valleys" on the VSM timeline.',
+    title: 'Queue Time, ISO 22468 §5.3',
+    body: 'The time work spends waiting before this step begins, sitting in a queue, waiting for an operator, waiting for a machine, waiting for approval, or waiting for the previous step to finish. Wait time is always Non-Value-Add. It is often the biggest contributor to long lead times. This time appears as the "valleys" on the VSM timeline.',
     example: 'Parts sitting at a bottleneck machine · A patient waiting in the waiting room · A document waiting for review',
   },
   setup_time: {
-    title: 'Changeover Time (C/O) — SMED',
-    body: 'The time required to prepare this step before processing can begin — switching from one product to another, setting up a machine, loading a fixture, or configuring a process. Setup time is typically Necessary NVA. The SMED methodology focuses on reducing this. Enter the total setup time per changeover event.',
+    title: 'Changeover Time (C/O), SMED',
+    body: 'The time required to prepare this step before processing can begin, switching from one product to another, setting up a machine, loading a fixture, or configuring a process. Setup time is typically Necessary NVA. The SMED methodology focuses on reducing this. Enter the total setup time per changeover event.',
     example: 'Tool change between products = 600 seconds (10 min) · Reconfiguring a software environment = 300 seconds',
   },
   trans_time: {
     title: 'Transport Time (seconds)',
-    body: 'The time spent physically moving work to or from this step — carrying parts between stations, transporting a patient between wards, moving files between offices. Transport is Non-Value-Add waste (the T in DOWNTIME). It often signals a layout problem or unnecessary handoffs.',
+    body: 'The time spent physically moving work to or from this step, carrying parts between stations, transporting a patient between wards, moving files between offices. Transport is Non-Value-Add waste (the T in DOWNTIME). It often signals a layout problem or unnecessary handoffs.',
     example: 'Moving pallets between two ends of a warehouse = 120 seconds',
   },
   defect_rate: {
     title: 'Defect Rate (%)',
-    body: 'The percentage of units that come out of this step with a defect — requiring rework, repair, or scrapping before they can continue. Enter a number between 0 and 100. Even a 2% defect rate compounds across a value stream: a 2% defect rate at each of 5 steps means only about 90% of product exits without a defect somewhere.',
+    body: 'The percentage of units that come out of this step with a defect, requiring rework, repair, or scrapping before they can continue. Enter a number between 0 and 100. Even a 2% defect rate compounds across a value stream: a 2% defect rate at each of 5 steps means only about 90% of product exits without a defect somewhere.',
     example: '0% = perfect quality · 2.1% = common in manual assembly · 30%+ = serious quality crisis',
   },
   uptime: {
     title: 'Uptime / Machine Availability (%)',
-    body: 'The percentage of scheduled production time that this step is actually running and available — not stopped for breakdowns, planned maintenance, changeovers, or adjustment. 100% means the step ran every minute it was scheduled. This is the Availability component of OEE (Overall Equipment Effectiveness). A machine cannot run more than 100% of scheduled time — this field is capped at 100.',
+    body: 'The percentage of scheduled production time that this step is actually running and available, not stopped for breakdowns, planned maintenance, changeovers, or adjustment. 100% means the step ran every minute it was scheduled. This is the Availability component of OEE (Overall Equipment Effectiveness). A machine cannot run more than 100% of scheduled time, this field is capped at 100.',
     example: '100% = always available · 92% = 8% of time lost to stoppages · 75% = significant reliability problem',
   },
   completion_accuracy: {
     title: 'Completion Accuracy / First Pass Yield (%)',
-    body: 'The percentage of work items that exit this step correctly and completely the first time — with no rework, re-do, or return needed. Also called First Pass Yield (FPY) or First Time Right. Capped at 100% since no step can produce more correct output than it receives input. Different from Defect Rate: defect rate tracks what goes wrong, completion accuracy tracks what goes right.',
+    body: 'The percentage of work items that exit this step correctly and completely the first time, with no rework, re-do, or return needed. Also called First Pass Yield (FPY) or First Time Right. Capped at 100% since no step can produce more correct output than it receives input. Different from Defect Rate: defect rate tracks what goes wrong, completion accuracy tracks what goes right.',
     example: '95% = 5 out of every 100 items need some form of rework · 100% = every item exits correctly first time',
   },
   notes: {
     title: 'Step Notes',
-    body: 'Free-form observations about this step — bottleneck evidence, known problems, safety concerns, improvement ideas, or anything that helps your team understand what is really happening here. These notes appear in your A3 report and are read by Supe when running gap analysis.',
-    example: '"Operator walks 4m to foam rack each cycle — 16s NVA" · "3% stuck sparge on rye batches — rice hulls needed"',
+    body: 'Free-form observations about this step, bottleneck evidence, known problems, safety concerns, improvement ideas, or anything that helps your team understand what is really happening here. These notes appear in your A3 report and are read by Supe when running gap analysis.',
+    example: '"Operator walks 4m to foam rack each cycle, 16s NVA" · "3% stuck sparge on rye batches, rice hulls needed"',
   },
 }
 
 const FLOW_TYPES = [
-  { value: 'push',        label: 'Push — scheduled production' },
-  { value: 'pull',        label: 'Pull — downstream signal' },
-  { value: 'fifo',        label: 'FIFO Lane — first in, first out' },
-  { value: 'supermarket', label: 'Supermarket — controlled buffer' },
-  { value: 'queue',       label: 'Queue — pure wait step' },
+  { value: 'push',        label: 'Push, scheduled production' },
+  { value: 'pull',        label: 'Pull, downstream signal' },
+  { value: 'fifo',        label: 'FIFO Lane, first in, first out' },
+  { value: 'supermarket', label: 'Supermarket, controlled buffer' },
+  { value: 'queue',       label: 'Queue, pure wait step' },
 ]
 
 const VA_TYPES = [
-  { value: 'va',   label: 'Value-Add (VA)',                color: '#1DD1A1', bg: 'rgba(29,209,161,0.08)',  hint: 'Customer pays for this — directly transforms the product or service' },
-  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#D4A843', bg: 'rgba(212,168,67,0.08)',   hint: 'Required but adds no customer value — inspections, compliance, setup' },
-  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#FF6B6B', bg: 'rgba(255,107,107,0.08)', hint: 'Pure waste — target for elimination first' },
+  { value: 'va',   label: 'Value-Add (VA)',                color: '#1DD1A1', bg: 'rgba(29,209,161,0.08)',  hint: 'Customer pays for this, directly transforms the product or service' },
+  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#D4A843', bg: 'rgba(212,168,67,0.08)',   hint: 'Required but adds no customer value, inspections, compliance, setup' },
+  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#FF6B6B', bg: 'rgba(255,107,107,0.08)', hint: 'Pure waste, target for elimination first' },
 ]
 
 // ── Validation limits ─────────────────────────────────────────────────────────
@@ -104,7 +104,7 @@ const LIMITS = {
   setup_time:          { min: 0,   max: 999999 },
   trans_time:          { min: 0,   max: 999999 },
   defect_rate:         { min: 0,   max: 100, warn: 'Defect rate cannot exceed 100%' },
-  uptime:              { min: 0,   max: 100, warn: 'Uptime cannot exceed 100% — a step cannot run more than its scheduled time' },
+  uptime:              { min: 0,   max: 100, warn: 'Uptime cannot exceed 100%, a step cannot run more than its scheduled time' },
   completion_accuracy: { min: 0,   max: 100, warn: 'Completion accuracy cannot exceed 100%' },
 }
 
@@ -289,7 +289,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
 
   return (
     <Modal
-      title={isEdit ? `Edit Step — ${step?.name || ''}` : 'Add New Step'}
+      title={isEdit ? `Edit Step, ${step?.name || ''}` : 'Add New Step'}
       onClose={onClose} onSave={handleSave}
       saveLabel={saving ? 'Saving…' : isEdit ? 'Save Step' : 'Add Step'}
       disableSave={!canSave}
@@ -329,7 +329,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
         {/* ── Description ── */}
         <div>
           <label className="label">Description</label>
-          <textarea className="input" rows={2} placeholder="Optional — describe what happens at this step" value={form.description} onChange={e => upd('description', e.target.value)} style={{ minHeight: 58 }} />
+          <textarea className="input" rows={2} placeholder="Optional, describe what happens at this step" value={form.description} onChange={e => upd('description', e.target.value)} style={{ minHeight: 58 }} />
         </div>
 
         {/* ── Department + Flow Type ── */}
@@ -368,7 +368,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
             <FieldLabel field="cycle_time">Cycle Time (seconds)</FieldLabel>
             <ValidatedInput field="cycle_time" value={form.cycle_time} onChange={v => upd('cycle_time', v)}
               inputMode="decimal" placeholder="e.g. 120"
-              hint="Time to complete one unit — if higher than Takt Time, this is a bottleneck" />
+              hint="Time to complete one unit, if higher than Takt Time, this is a bottleneck" />
           </div>
           <div>
             <FieldLabel field="wait_time">Queue Time (seconds)</FieldLabel>
@@ -394,7 +394,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
           </div>
         </div>
 
-        {/* ── Defect Rate + Uptime — enforced 0–100 ── */}
+        {/* ── Defect Rate + Uptime, enforced 0–100 ── */}
         <div className="vesimy-mobile-grid">
           <div>
             <FieldLabel field="defect_rate">Defect Rate (%)</FieldLabel>
@@ -422,13 +422,13 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
         <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowOpSteps(v => !v)}
             style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#D4A843', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Operator Steps — Standard Work &amp; Yamazumi ({opSteps.length} tasks)</span>
+            <span>Operator Steps, Standard Work &amp; Yamazumi ({opSteps.length} tasks)</span>
             <span style={{ fontSize: 10 }}>{showOpSteps ? '▲ Hide' : '▼ Expand'}</span>
           </button>
           {showOpSteps && (
             <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.55 }}>
-                Break this step into individual operator tasks, each timed and classified as VA, NNVA, or NVA. This feeds the Yamazumi operator balance chart and Standard Work Combination Sheet — showing exactly where time is spent and where waste can be found.
+                Break this step into individual operator tasks, each timed and classified as VA, NNVA, or NVA. This feeds the Yamazumi operator balance chart and Standard Work Combination Sheet, showing exactly where time is spent and where waste can be found.
               </div>
               {opSteps.length > 0 && (
                 <div>
@@ -448,11 +448,11 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                 const vc = VA_TYPES.find(v => v.value === s.va_type)?.color || 'var(--text3)'
                 return (
                   <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)' }}>
-                    <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'monospace', minWidth: 20 }}>{i+1}</span>
+                    <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 20 }}>{i+1}</span>
                     <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: `${vc}22`, color: vc, fontWeight: 700, minWidth: 36, textAlign: 'center' }}>{s.va_type.toUpperCase()}</span>
-                    <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', fontFamily: 'monospace', minWidth: 40, textAlign: 'center' }}>{(s.step_type||'man').toUpperCase()}</span>
+                    <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 40, textAlign: 'center' }}>{(s.step_type||'man').toUpperCase()}</span>
                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
-                    <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'monospace' }}>{s.time}s</span>
+                    <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{s.time}s</span>
                     <button type="button" onClick={() => setOpSteps(p => p.filter(x => x.id !== s.id))} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14, padding: '0 2px' }}>×</button>
                   </div>
                 )

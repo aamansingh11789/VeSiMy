@@ -2,7 +2,7 @@
 'use client'
 // ── components/ui/ServiceWorkerRegistration.tsx ───────────────────────────────
 // Registers the service worker. Must be a client component.
-// Runs once on app load, silently — no UI.
+// Runs once on app load, silently, no UI.
 
 import { useEffect } from 'react'
 
@@ -27,14 +27,14 @@ export function ServiceWorkerRegistration() {
 
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New version available — could show a toast here in future
+              // New version available, could show a toast here in future
             }
           })
         })
 
-        // SW registered successfully — no logging in production
+        // SW registered successfully, no logging in production
       } catch (err) {
-        // SW registration failed — app still works, just no offline support
+        // SW registration failed, app still works, just no offline support
       }
     }
 
@@ -47,5 +47,5 @@ export function ServiceWorkerRegistration() {
     }
   }, [])
 
-  return null  // No UI — this component is invisible
+  return null  // No UI, this component is invisible
 }

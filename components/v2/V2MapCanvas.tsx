@@ -1,7 +1,7 @@
 // TypeScript enabled
 'use client'
 // ── components/v2/V2MapCanvas.tsx ──────────────────────────────────────────────
-// Pro canvas redesign — REAL sticky note aesthetic per spec §5.2
+// Pro canvas redesign, REAL sticky note aesthetic per spec §5.2
 // Physical paper feel: rotation, warm tones, multi-layer shadow, fold corner
 
 import React, { useState, useRef, useEffect } from 'react'
@@ -12,8 +12,8 @@ import { ctSeconds, fmtSeconds } from '@/lib/v2/cycle-time-utils'
 
 // ── Natural sticky note palette per spec §5.2 ─────────────────────────────────
 // "Color range limited to natural sticky note palette only. No bright digital
-//  colors. Muted, natural tones." — each has paper bg, fold shade, text color
-// ── Step type color palette — clean, enterprise-grade, print-safe ─────────────
+//  colors. Muted, natural tones.", each has paper bg, fold shade, text color
+// ── Step type color palette, clean, enterprise-grade, print-safe ─────────────
 const STICKY: Record<string, { bg: string; fold: string; text: string; stripe: string }> = {
   process:    { bg: '#FFFBEB', fold: '#FEF3C7', text: '#1C1400', stripe: '#D97706' }, // warm amber
   sub_process:{ bg: '#FFFBEB', fold: '#FEF3C7', text: '#0F2A5C', stripe: '#2563EB' }, // clean blue
@@ -27,7 +27,7 @@ const STICKY: Record<string, { bg: string; fold: string; text: string; stripe: s
 }
 
 // ── Sticky note layout constants ──────────────────────────────────────────────
-const NOTE_ROTATIONS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // straight — no rotation
+const NOTE_ROTATIONS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // straight, no rotation
 function noteRotation(_index: number): number { return 0 }
 
 const BOX_W  = 160   // wider for content
@@ -37,7 +37,7 @@ const STRIP_H = 52
 const GAP    = 76
 
 function fmtTime(s: number) {
-  if (!s) return '—'
+  if (!s) return ','
   if (s >= 3600) return `${(s / 3600).toFixed(1)}h`
   if (s >= 60)   return `${(s / 60).toFixed(1)}m`
   return `${Math.round(s)}s`
@@ -83,22 +83,22 @@ function FloatingStopwatch({ stepName, onSave, onClose }: {
       background: '#1A1A2E', border: '1px solid rgba(108,185,252,0.3)', borderRadius: 14,
       padding: 20, width: 240, boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
     }}>
-      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6CB9FC', letterSpacing: 2, marginBottom: 8 }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#6CB9FC', letterSpacing: 2, marginBottom: 8 }}>
         STOPWATCH: {stepName.slice(0, 18)}
       </div>
-      <div style={{ fontFamily: 'monospace', fontSize: 36, fontWeight: 700, color: running ? '#6CB9FC' : '#fff', textAlign: 'center', margin: '8px 0', letterSpacing: '-0.02em' }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 700, color: running ? '#6CB9FC' : '#fff', textAlign: 'center', margin: '8px 0', letterSpacing: '-0.02em' }}>
         {elapsed.toFixed(1)}s
       </div>
       {laps.length > 0 && (
         <div style={{ marginBottom: 10 }}>
           {laps.map((l, i) => (
             <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#8B9CC8', padding: '2px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              <span>Lap {i + 1}</span><span style={{ fontFamily: 'monospace' }}>{l.toFixed(1)}s</span>
+              <span>Lap {i + 1}</span><span style={{ fontFamily: 'var(--font-mono)' }}>{l.toFixed(1)}s</span>
             </div>
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#6CB9FC', marginTop: 4, fontWeight: 700 }}>
             <span>Avg ({laps.length} laps)</span>
-            <span style={{ fontFamily: 'monospace' }}>{avg}s</span>
+            <span style={{ fontFamily: 'var(--font-mono)' }}>{avg}s</span>
           </div>
           {laps.length < 3 && (
             <div style={{ fontSize: 10, color: '#4B5880', marginTop: 4, fontStyle: 'italic' }}>
@@ -155,11 +155,11 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         width: W,
         cursor: 'pointer',
         userSelect: 'none',
-        // No rotation — straight, symmetric, enterprise-grade
+        // No rotation, straight, symmetric, enterprise-grade
       }}
       onClick={() => onClick(step)}
     >
-      {/* ── NOTE CARD — clean, flat, symmetric ── */}
+      {/* ── NOTE CARD, clean, flat, symmetric ── */}
       <div
         style={{
           width: W,
@@ -186,7 +186,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
           borderRadius: '6px 0 0 6px',
         }} />
 
-        {/* Health indicator dot — top right */}
+        {/* Health indicator dot, top right */}
         <div style={{
           position: 'absolute', top: 8, right: 8, width: 8, height: 8,
           borderRadius: '50%', background: healthColor,
@@ -207,21 +207,21 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
           display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, marginBottom: 4,
         }}>
           {[
-            ['CT', ct ? fmtTime(ct) : '—'],
-            ['WIP', step.wip ?? '—'],
+            ['CT', ct ? fmtTime(ct) : ','],
+            ['WIP', step.wip ?? ','],
           ].map(([label, val]) => (
             <div key={String(label)} style={{
               background: 'rgba(0,0,0,0.05)', borderRadius: 3, padding: '2px 5px',
             }}>
-              <div style={{ fontSize: 6.5, fontFamily: 'monospace', color: sc.text, opacity: 0.5, letterSpacing: 0.5 }}>{label}</div>
-              <div style={{ fontSize: 9, fontWeight: 700, fontFamily: 'monospace', color: sc.text }}>{String(val)}</div>
+              <div style={{ fontSize: 6.5, fontFamily: 'var(--font-mono)', color: sc.text, opacity: 0.5, letterSpacing: 0.5 }}>{label}</div>
+              <div style={{ fontSize: 9, fontWeight: 700, fontFamily: 'var(--font-mono)', color: sc.text }}>{String(val)}</div>
             </div>
           ))}
         </div>
 
         {/* Operators + wait time */}
         {(step.operators || step.wait_time) ? (
-          <div style={{ fontSize: 7.5, fontFamily: 'monospace', color: sc.text, opacity: 0.55, marginBottom: 5 }}>
+          <div style={{ fontSize: 7.5, fontFamily: 'var(--font-mono)', color: sc.text, opacity: 0.55, marginBottom: 5 }}>
             {step.operators ? `${step.operators} op` : ''}{step.operators && step.wait_time ? '  ' : ''}{step.wait_time ? `WT: ${fmtTime(step.wait_time)}` : ''}
           </div>
         ) : null}
@@ -229,12 +229,12 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         {/* Bottom row: VA badge + stopwatch + bottleneck */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 }}>
           <div style={{
-            fontSize: 7, fontWeight: 700, fontFamily: 'monospace', color: vaColor,
+            fontSize: 7, fontWeight: 700, fontFamily: 'var(--font-mono)', color: vaColor,
             background: `${vaColor}18`, padding: '1px 5px', borderRadius: 3, letterSpacing: 0.5,
           }}>{vaLabel}</div>
 
           {isBot && (
-            <div style={{ fontSize: 6, fontWeight: 700, fontFamily: 'monospace', color: RED, background: `${RED}12`, padding: '1px 5px', borderRadius: 3, letterSpacing: 0.5 }}>
+            <div style={{ fontSize: 6, fontWeight: 700, fontFamily: 'var(--font-mono)', color: RED, background: `${RED}12`, padding: '1px 5px', borderRadius: 3, letterSpacing: 0.5 }}>
               ▲ BOT
             </div>
           )}
@@ -254,7 +254,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         {/* Activities (expanded) */}
         {expanded && (
           <div style={{ borderTop: `1px solid ${sc.fold}60`, marginTop: 8, paddingTop: 6 }}>
-            <div style={{ fontSize: 6.5, fontFamily: 'monospace', color: sc.text, opacity: 0.4, letterSpacing: 1, marginBottom: 4 }}>ACTIVITIES</div>
+            <div style={{ fontSize: 6.5, fontFamily: 'var(--font-mono)', color: sc.text, opacity: 0.4, letterSpacing: 1, marginBottom: 4 }}>ACTIVITIES</div>
             {activities.length === 0 ? (
               <div style={{ fontSize: 8, color: sc.text, opacity: 0.4, fontStyle: 'italic' }}>No activities added</div>
             ) : (
@@ -266,7 +266,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
               ))
             )}
             {activities.length > maxActivities && (
-              <div style={{ fontSize: 7, color: sc.stripe, fontFamily: 'monospace' }}>+{activities.length - maxActivities} more…</div>
+              <div style={{ fontSize: 7, color: sc.stripe, fontFamily: 'var(--font-mono)' }}>+{activities.length - maxActivities} more…</div>
             )}
           </div>
         )}
@@ -277,19 +277,19 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         <div style={{ background: 'rgba(255,255,255,0.93)', border: `0.5px solid ${sc.fold}`, borderTop: 'none', borderRadius: '0 0 3px 3px', padding: '8px 6px 6px', boxShadow: '0 2px 6px rgba(0,0,0,0.10)' }}>
           <div style={{ display: 'flex', gap: 0 }}>
             {[
-              { label: 'CT',     val: ct ? fmtTime(ct) : '—' },
-              { label: 'WAIT',   val: step.wait_time ? fmtTime(step.wait_time) : '—' },
-              { label: 'UPTIME', val: step.uptime ? `${step.uptime}%` : '—' },
-              { label: 'DEFECT', val: step.defect_rate ? `${step.defect_rate}%` : '—' },
+              { label: 'CT',     val: ct ? fmtTime(ct) : ',' },
+              { label: 'WAIT',   val: step.wait_time ? fmtTime(step.wait_time) : ',' },
+              { label: 'UPTIME', val: step.uptime ? `${step.uptime}%` : ',' },
+              { label: 'DEFECT', val: step.defect_rate ? `${step.defect_rate}%` : ',' },
             ].map(({ label, val }) => (
               <div key={label} style={{ flex: 1 }}>
-                <div style={{ fontSize: 6, fontFamily: 'monospace', color: '#9CA3AF', letterSpacing: 0.5 }}>{label}</div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: '#374151', fontFamily: 'monospace' }}>{val}</div>
+                <div style={{ fontSize: 6, fontFamily: 'var(--font-mono)', color: '#9CA3AF', letterSpacing: 0.5 }}>{label}</div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#374151', fontFamily: 'var(--font-mono)' }}>{val}</div>
               </div>
             ))}
           </div>
-          <div style={{ fontSize: 7, color: '#9CA3AF', fontFamily: 'monospace', marginTop: 4 }}>
-            Ops: {step.operators || '—'}  Dept: {step.department ? step.department.slice(0, 12) : '—'}
+          <div style={{ fontSize: 7, color: '#9CA3AF', fontFamily: 'var(--font-mono)', marginTop: 4 }}>
+            Ops: {step.operators || ','}  Dept: {step.department ? step.department.slice(0, 12) : ','}
           </div>
         </div>
       )}
@@ -361,7 +361,7 @@ function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }:
             autoFocus
             min={0} max={999}
             style={{
-              width: '100%', height: '100%', textAlign: 'center', fontFamily: 'monospace',
+              width: '100%', height: '100%', textAlign: 'center', fontFamily: 'var(--font-mono)',
               fontSize: 11, fontWeight: 700, color: '#3B2F00', background: '#FEF3C7',
               border: '1.5px solid #F59E0B', borderRadius: 12, outline: 'none', padding: 0,
             }}
@@ -534,7 +534,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
           ...(missingCount > 0 ? [{ label: 'Incomplete', value: String(missingCount), color: AMBER }] : []),
         ].map(({ label, value, color }) => (
           <div key={label} style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 6, padding: '4px 10px', textAlign: 'center', backdropFilter: 'blur(4px)', pointerEvents: 'all', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-            <div style={{ fontSize: 7, fontFamily: 'monospace', color: '#9CA3AF', letterSpacing: 1 }}>{label}</div>
+            <div style={{ fontSize: 7, fontFamily: 'var(--font-mono)', color: '#9CA3AF', letterSpacing: 1 }}>{label}</div>
             <div style={{ fontSize: 13, fontWeight: 700, color: color || '#1F2937' }}>{value}</div>
           </div>
         ))}
@@ -546,7 +546,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
           { label: 'EXPAND ALL',  fn: expandAll  },
           { label: 'COLLAPSE',    fn: collapseAll },
         ].map(({ label, fn }) => (
-          <button key={label} onClick={fn} style={{ fontSize: 9, fontFamily: 'monospace', letterSpacing: 1, padding: '3px 8px', border: '1px solid rgba(0,0,0,0.10)', background: 'rgba(255,255,255,0.92)', cursor: 'pointer', color: '#374151', borderRadius: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+          <button key={label} onClick={fn} style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 1, padding: '3px 8px', border: '1px solid rgba(0,0,0,0.10)', background: 'rgba(255,255,255,0.92)', cursor: 'pointer', color: '#374151', borderRadius: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
             {label}
           </button>
         ))}
@@ -570,7 +570,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
       </div>
 
       {/* Zoom % */}
-      <div style={{ position: 'absolute', bottom: 12, left: 12, zIndex: 20, fontSize: 9, fontFamily: 'monospace', color: '#9CA3AF' }}>
+      <div style={{ position: 'absolute', bottom: 12, left: 12, zIndex: 20, fontSize: 9, fontFamily: 'var(--font-mono)', color: '#9CA3AF' }}>
         {Math.round(zoom * 100)}%
       </div>
 
@@ -623,7 +623,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
               </>
             )}
 
-            {/* Sticky notes rendered as HTML divs — see HTML overlay below */}
+            {/* Sticky notes rendered as HTML divs, see HTML overlay below */}
 
             {/* Flow arrows */}
             {steps.slice(0, -1).map((_: any, i: number) => (
@@ -732,7 +732,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
             })()}
           </svg>
 
-          {/* ── HTML STICKY NOTE OVERLAY — renders on top of SVG canvas ── */}
+          {/* ── HTML STICKY NOTE OVERLAY, renders on top of SVG canvas ── */}
           {/* Uses absolute positioning matching the SVG coordinate space    */}
           <div style={{ position: 'absolute', top: 0, left: 0, width: CANVAS_W, height: CANVAS_H, pointerEvents: 'none', overflow: 'visible' }}>
             {steps.map((step: any, i: number) => (

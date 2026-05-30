@@ -27,7 +27,7 @@ function SignupForm() {
         window.location.href = data.url
         return
       }
-      // No checkout URL — either free trial or checkout failed
+      // No checkout URL, either free trial or checkout failed
       try { (window as any)?.posthog?.capture('signup_completed', { plan: planKey || 'trial' }) } catch {}
       window.location.href = '/dashboard'
     } catch (err: any) {
@@ -55,11 +55,11 @@ function SignupForm() {
     if (data?.session) {
       if (planKey && planKey !== 'trial') await redirectToCheckout(planKey)
       else {
-        // New user — always go to onboarding wizard first
+        // New user, always go to onboarding wizard first
         window.location.href = '/onboarding'
       }
     } else {
-      // Email confirmation required — show instructions instead of redirecting
+      // Email confirmation required, show instructions instead of redirecting
       setDone(true)
       setLoading(false)
     }
@@ -77,7 +77,7 @@ function SignupForm() {
     return (
       <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ width:'100%', maxWidth:420, textAlign:'center' }}>
-          <div style={{ fontSize:11, fontWeight:800, fontFamily:'monospace', letterSpacing:1, color:'var(--brand)', marginBottom:16 }}>EMAIL SENT</div>
+          <div style={{ fontSize:11, fontWeight:800, fontFamily:'var(--font-mono)', letterSpacing:1, color:'var(--brand)', marginBottom:16 }}>EMAIL SENT</div>
           <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             Check your email
           </h2>
@@ -117,7 +117,7 @@ function SignupForm() {
           <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'trial' ? (
             <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,168,67,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
-              <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name} — ${plan.price}/mo</span>
+              <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name}, ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>
           ) : (
@@ -146,7 +146,7 @@ function SignupForm() {
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
                 ? (planKey && planKey !== 'trial' ? 'Setting up your account…' : 'Creating your account…')
-                : (planKey && planKey !== 'trial' && plan ? `Start ${plan?.name} — trial period` : 'Create account')}
+                : (planKey && planKey !== 'trial' && plan ? `Start ${plan?.name}, trial period` : 'Create account')}
             </button>
           </form>
         </div>

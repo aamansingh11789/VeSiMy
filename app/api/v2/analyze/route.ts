@@ -1,6 +1,6 @@
 // TypeScript enabled
 // ── app/api/v2/analyze/route.ts ────────────────────────────────────────────────
-// v4.0 — Full 8-section AI Improvement Report
+// v4.0, Full 8-section AI Improvement Report
 // Spec: VeSiMy v4 Section 8
 // Returns structured JSON consumed by V2AnalysisReport.tsx
 
@@ -75,7 +75,7 @@ function calcProjection(pce: number | null, leadTime: number, nvaCount: number, 
   const conservativeTarget = Math.min(currentPCE * 1.5, currentPCE + 20)
   // Realistic: 40–50% lead time reduction from addressing bottleneck + top NVA
   const realisticTarget    = Math.min(currentPCE * 2.2, currentPCE + 40)
-  // Optimistic: 60–70% reduction — world-class target for the industry
+  // Optimistic: 60–70% reduction, world-class target for the industry
   const optimisticTarget   = Math.min(currentPCE * 3,   currentPCE + 60)
 
   const conservativeLT = leadTime * (currentPCE / Math.max(conservativeTarget, 1))
@@ -87,7 +87,7 @@ function calcProjection(pce: number | null, leadTime: number, nvaCount: number, 
     conservative: { pce: conservativeTarget, leadTime: conservativeLT, label: 'Conservative' },
     realistic:    { pce: realisticTarget,    leadTime: realisticLT,    label: 'Realistic' },
     optimistic:   { pce: optimisticTarget,   leadTime: optimisticLT,   label: 'Optimistic' },
-    methodology:  'ISO 22468 — lead time reduction calculated from PCE improvement targets using VA time as fixed denominator',
+    methodology:  'ISO 22468, lead time reduction calculated from PCE improvement targets using VA time as fixed denominator',
   }
 }
 
@@ -137,8 +137,8 @@ export async function POST(request: NextRequest) {
       `  Tasks: ${(s.tasks || []).join('; ') || 'none'}`
     ).join('\n')
 
-    // ── AI prompt — returns structured 8-section data ─────────────────────
-    const prompt = `You are a senior lean VSM analyst with ISO 22468 certification. Return ONLY valid JSON — no markdown, no preamble.
+    // ── AI prompt, returns structured 8-section data ─────────────────────
+    const prompt = `You are a senior lean VSM analyst with ISO 22468 certification. Return ONLY valid JSON, no markdown, no preamble.
 
 LEAN KNOWLEDGE BASE:
 ${getAnalysisKnowledge()}
@@ -214,7 +214,7 @@ Return this JSON exactly:
         aiData = JSON.parse(clean)
       }
     } catch (e) {
-      console.warn('[analyze v4] AI parse failed — using rule-based fallback')
+      console.warn('[analyze v4] AI parse failed, using rule-based fallback')
     }
 
     // ── Rule-based fallback data ───────────────────────────────────────────
@@ -242,7 +242,7 @@ Return this JSON exactly:
       finding: `${s.name} ${i === 0 ? 'is the primary constraint' : 'has elevated waste indicators'}`,
       what: `Apply ${selectTool(s, taktTime ?? 0)} analysis to ${s.name}`,
       why: 'Addressing the root cause at this step removes systemic waste rather than managing its symptoms',
-      how: `Use ${selectTool(s, taktTime ?? 0)} — this tool is appropriate because it is structured for the type of waste pattern present at this step`,
+      how: `Use ${selectTool(s, taktTime ?? 0)}, this tool is appropriate because it is structured for the type of waste pattern present at this step`,
       tool: selectTool(s, taktTime ?? 0),
       priority: i === 0 ? 'immediate' : 'short_term',
       step_name: s.name,
@@ -279,7 +279,7 @@ Return this JSON exactly:
       // Section 1
       executive_summary: aiData.executive_summary || `${project.name} is a ${steps.length}-step ${industryLabel} process with a measured PCE of ${pce !== null ? pce.toFixed(1) + '%' : 'unknown (missing CT data)'}. The primary constraint is ${bottleneckStep?.name || 'not yet identified'}. ${nvaSteps.length} steps are classified as non-value-added, representing the primary opportunity for lead time reduction. The first recommended action is to address the bottleneck step using a structured improvement cycle.`,
 
-      // Section 2 — Current state snapshot data
+      // Section 2, Current state snapshot data
       current_state: {
         total_steps:     steps.length,
         total_ct:        totalCT,
@@ -333,7 +333,7 @@ Return this JSON exactly:
         action: `Run ${selectTool(s, taktTime ?? 0)} on ${s.name}`,
         step_name: s.name,
         tool: selectTool(s, taktTime ?? 0),
-        rationale: i === 0 ? 'This is the primary constraint — fixing it improves total system throughput' : 'High waste indicator at this step',
+        rationale: i === 0 ? 'This is the primary constraint, fixing it improves total system throughput' : 'High waste indicator at this step',
         expected_outcome: 'Lead time reduction and improved flow through this step',
       })),
 
@@ -372,7 +372,7 @@ Return this JSON exactly:
       next_steps:        report.next_steps,
     }
 
-    // ── DB insert — only schema-safe fields ───────────────────────────────
+    // ── DB insert, only schema-safe fields ───────────────────────────────
     // analysis_reports schema: summary, process_description, total_steps, va_ratio,
     // estimated_lead_time, improvement_potential, bottlenecks, missing_information,
     // ci_suggestions, mapping_guidance, action_plan, raw_ai_response, disclaimer

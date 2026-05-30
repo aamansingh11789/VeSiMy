@@ -1,4 +1,4 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 import { NextResponse, type NextRequest } from 'next/server'
 import { analyzeSteps } from '@/lib/supe-engine'
 import { createServerSupabase } from '@/lib/supabase-server'
@@ -6,10 +6,10 @@ import { buildSupeSystemPrompt } from '@/lib/supe-knowledge'
 
 export const maxDuration = 60  // Vercel max execution time (seconds)
 
-// ── DB-backed rate limiter — works across all serverless instances ────────────
+// ── DB-backed rate limiter, works across all serverless instances ────────────
 // Replaces the broken in-memory Map which reset on every cold start and was
 // not shared across concurrent Vercel function instances.
-// In-memory per-process fallback rate limiter — used only when the DB table is absent.
+// In-memory per-process fallback rate limiter, used only when the DB table is absent.
 // Resets on cold start (acceptable degradation); DB table is the production path.
 const fallbackCounts = new Map<string, { count: number; window: number }>()
 
@@ -29,9 +29,9 @@ async function checkRateLimit(supabase: any, userId: string): Promise<boolean> {
     await supabase.from('supe_rate_log').insert({ user_id: userId })
     return true
   } catch {
-    // supe_rate_log table missing — apply in-memory rate limit as fallback.
+    // supe_rate_log table missing, apply in-memory rate limit as fallback.
     // This prevents unlimited access during schema migration gaps.
-    console.warn('[supe] rate limit table not found — using in-memory fallback (run migration)')
+    console.warn('[supe] rate limit table not found, using in-memory fallback (run migration)')
     const now  = Date.now()
     const slot = fallbackCounts.get(userId)
     if (slot && now - slot.window < 60_000) {
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 })
     }
 
-    // Verify paid plan — uses requirePlan for consistent beta_expires_at check
+    // Verify paid plan, uses requirePlan for consistent beta_expires_at check
     const { requirePlan } = await import('@/lib/require-plan')
     const planBlock = await requirePlan(supabase, user, ['pro', 'lifetime', 'enterprise', 'trialing'])
     if (planBlock) {
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
           const waste = (s.toolData?.waste?.selected || []).join(',')
           return `• ${s.name} [${vaLabel}]: CT=${ct.toFixed(1)}s, Wait=${s.wait_time||0}s, Ops=${s.operators||1}, Defect=${s.defect_rate||0}%, Uptime=${s.uptime||100}%, Setup=${(s as any).setup_time||0}s, WIP=${s.wip||0}${tools ? `, tools=[${tools}]` : ''}${waste ? `, wastes=[${waste}]` : ''}`
         }).join('\n')
-      : 'No steps added yet — user is exploring in demo mode.'
+      : 'No steps added yet, user is exploring in demo mode.'
 
     let answer   = ''
     let insights = []
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
       console.error('[supe] ANTHROPIC_API_KEY missing from environment')
       return NextResponse.json({
         recommendations: recs, insights: [], issues_found: recs.length,
-        answer: 'Supe is not configured — ANTHROPIC_API_KEY is missing from Vercel environment variables.',
+        answer: 'Supe is not configured, ANTHROPIC_API_KEY is missing from Vercel environment variables.',
       })
     }
 
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
       const canonPCE  = totalCT + totalWait > 0 && vaCT > 0
         ? ((vaCT / (totalCT + totalWait)) * 100).toFixed(1)
         : vaSteps.length === 0
-          ? `${pce} (unclassified — assign VA/NNVA/NVA types for accuracy)`
+          ? `${pce} (unclassified, assign VA/NNVA/NVA types for accuracy)`
           : '0'
 
       const systemPrompt = buildSupeSystemPrompt({
@@ -139,7 +139,7 @@ ${stepSummary}
 
 Rules: tie advice to actual step data, be specific with numbers, under 150 words unless calculation needed, no filler phrases.`
 
-      // Fix Sec-1: Sanitize chat_history — only allow 'user' and 'assistant' roles.
+      // Fix Sec-1: Sanitize chat_history, only allow 'user' and 'assistant' roles.
       // This prevents prompt injection via crafted system-role messages from the client.
       const SAFE_ROLES = new Set(['user', 'assistant'])
       const safeHistory = (chat_history || [])
@@ -167,7 +167,7 @@ Rules: tie advice to actual step data, be specific with numbers, under 150 words
         try { d = JSON.parse(responseText) } catch { d = {} }
         const text = d.content?.[0]?.text || ''
         if (question) {
-          answer = text.trim() || 'No response — please try again.'
+          answer = text.trim() || 'No response, please try again.'
         } else {
           insights = text.split('\n').filter(l => l.trim()).slice(0, 5)
           answer = text.trim()

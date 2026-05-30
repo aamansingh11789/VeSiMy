@@ -51,7 +51,7 @@ export function calcProcessMetrics(
   const totalWait = mainSteps.reduce((a, s) => a + (Number(s.wait_time) || 0), 0)
   const leadTime  = totalCT + totalWait
 
-  // VA cycle time — requires explicit va_type OR is_value_added classification
+  // VA cycle time, requires explicit va_type OR is_value_added classification
   const vaSteps = mainSteps.filter(s =>
     s.va_type === 'va' || s.is_value_added === 'va'
   )
@@ -105,11 +105,11 @@ export function calcProcessMetrics(
 
 /**
  * Format a PCE value for display.
- * null  → '—'   (classification not done)
+ * null  → ','   (classification not done)
  * 0–100 → 'X.X%'
  */
 export function fmtPCE(pce: number | null): string {
-  if (pce == null) return '—'
+  if (pce == null) return ','
   return `${pce.toFixed(1)}%`
 }
 

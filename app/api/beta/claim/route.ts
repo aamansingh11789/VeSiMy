@@ -1,7 +1,7 @@
-// TypeScript enabled — @ts-nocheck removed as part of quality pass
+// TypeScript enabled, @ts-nocheck removed as part of quality pass
 // ── app/api/beta/claim/route.ts ───────────────────────────────────────────────
 // Early Access Beta: open to everyone while the window is active
-// No seat limits — uses admin client to bypass RLS on launch_window
+// No seat limits, uses admin client to bypass RLS on launch_window
 import { NextResponse }         from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase-admin'
@@ -34,7 +34,7 @@ export async function POST() {
     })
   }
 
-  // Grant beta access — 30-day trial starting now
+  // Grant beta access, 30-day trial starting now
   const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
 
   await Promise.all([

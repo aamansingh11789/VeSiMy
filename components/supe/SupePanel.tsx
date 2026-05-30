@@ -21,7 +21,7 @@ const DEMO_RECS = [
     principle:'SMED' },
   { key:'demo-3', issue_type:'waiting' as const, severity:'medium' as const, step_name:'Incoming Inspection',
     suggestion:'Wait time (12m) exceeds cycle time (8m) at Incoming Inspection. Batch size from receiving is creating upstream queue. Implement pull signal with max WIP of 3 units.',
-    principle:'7 Wastes — Waiting' },
+    principle:'7 Wastes, Waiting' },
 ]
 
 const SUGGESTED_QUESTIONS = [
@@ -113,7 +113,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
         }),
       })
       const d = await res.json()
-      const answer = d.answer || "I couldn't analyze that — make sure your ANTHROPIC_API_KEY is configured in Vercel."
+      const answer = d.answer || "I couldn't analyze that, make sure your ANTHROPIC_API_KEY is configured in Vercel."
       setChat(prev => [...prev, { role:'assistant', content:answer }])
     } catch {
       setChat(prev => [...prev, { role:'assistant', content:"Connection error. Please try again." }])
@@ -144,7 +144,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', borderBottom:'1px solid var(--border)', flexShrink:0 }}>
         {([[open.length, highN>0?'var(--red)':'var(--brand)', 'ISSUES'],
            [resolved.size, '#1DD1A1', 'RESOLVED'],
-           [isDemo ? '—' : steps.length, 'var(--steel)', 'STEPS']] as any[]).map(([v,c,l]) => (
+           [isDemo ? ',' : steps.length, 'var(--steel)', 'STEPS']] as any[]).map(([v,c,l]) => (
           <div key={l} style={{ padding:'10px', textAlign:'center' }}>
             <div style={{ fontSize:20, fontWeight:700, color:c }}>{v}</div>
             <div style={{ fontSize:9, color:'var(--text3)', fontFamily:'var(--font-mono)', letterSpacing:1 }}>{l}</div>
@@ -283,7 +283,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
             <div ref={chatEndRef} />
           </div>
 
-          {/* Suggested questions — only show when chat is empty */}
+          {/* Suggested questions, only show when chat is empty */}
           {chat.length === 0 && (
             <div style={{ padding:'0 14px 10px', display:'flex', flexWrap:'wrap', gap:6 }}>
               {SUGGESTED_QUESTIONS.map(q => (

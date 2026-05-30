@@ -53,7 +53,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
       showToast('Fishbone diagram saved', 'success')
       onClose()
     } catch {
-      showToast('Save failed — please try again', 'error')
+      showToast('Save failed, please try again', 'error')
     } finally {
       setSaving(false)
     }
@@ -63,7 +63,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
 
   return (
     <Modal
-      title={`Fishbone Diagram — ${stepName}`}
+      title={`Fishbone Diagram, ${stepName}`}
       onClose={onClose}
       onSave={handleSave}
       saveLabel={saving ? 'Saving…' : 'Save Diagram'}
@@ -118,7 +118,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
         </div>
         {aiResult && typeof aiResult === 'object' && (
           <AIResultPanel
-            result={`AI suggested causes — click "Apply all" to add them to the diagram, or add individually below.`}
+            result={`AI suggested causes, click "Apply all" to add them to the diagram, or add individually below.`}
             source={aiSource} error={aiError} onClear={aiClear}
             useLabel="Apply all causes"
             onUse={(r) => {

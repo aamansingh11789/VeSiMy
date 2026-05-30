@@ -25,8 +25,8 @@ export default function PDCAPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>9 min read · March 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>9 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act
@@ -73,7 +73,7 @@ export default function PDCAPost() {
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },
           ].map(({ fmt, color, use }) => (
             <div key={fmt} style={{ display: 'flex', gap: 14, marginBottom: 14, background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '14px 16px' }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color, minWidth: 55, fontFamily: 'monospace' }}>{fmt}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color, minWidth: 55, fontFamily: 'var(--font-mono)' }}>{fmt}</span>
               <span style={{ fontSize: 13, lineHeight: 1.6 }}>{use}</span>
             </div>
           ))}

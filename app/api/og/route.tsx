@@ -53,7 +53,7 @@ export async function GET() {
 
         {/* Description */}
         <div style={{ fontSize: '19px', color: '#8888AA', maxWidth: '780px', lineHeight: 1.65, display: 'flex' }}>
-          VSM · Kaizen · PDCA · AI Gap Analysis · Standard Work — unified under one AI mentor, adapted for your industry.
+          VSM · Kaizen · PDCA · AI Gap Analysis · Standard Work, unified under one AI mentor, adapted for your industry.
         </div>
 
         {/* Bottom stats */}

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { createServerSupabase } from '@/lib/supabase-server'
 import { OnboardingClient } from './OnboardingClient'
 
-export const metadata = { title: 'Welcome to VeSiMy — Get Set Up' }
+export const metadata = { title: 'Welcome to VeSiMy, Get Set Up' }
 
 export default async function OnboardingPage() {
   const supabase = await createServerSupabase()

@@ -25,8 +25,8 @@ export default function PCEPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.12)', color: '#1DD1A1', fontFamily: 'monospace', letterSpacing: 1.5 }}>GUIDE</span>
-            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'monospace' }}>6 min read · March 19, 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(29,209,161,0.12)', color: '#1DD1A1', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>6 min read · March 19, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Process Cycle Efficiency: The Number That Tells You How Lean You Really Are
@@ -40,7 +40,7 @@ export default function PCEPost() {
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The PCE formula</h2>
           <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 12, padding: '20px 24px', marginBottom: 24, textAlign: 'center' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>PCE = (Value-Adding Time ÷ Total Lead Time) × 100</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>PCE = (Value-Adding Time ÷ Total Lead Time) × 100</div>
             <div style={{ fontSize: 13, color: 'var(--text2)' }}>Where Total Lead Time = all cycle times + all wait/queue times in the value stream</div>
           </div>
 
@@ -65,7 +65,7 @@ export default function PCEPost() {
           ].map(([type, range, note]) => (
             <div key={type} style={{ display: 'grid', gridTemplateColumns: '180px 80px 1fr', gap: 12, marginBottom: 10, padding: '10px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
               <div style={{ fontWeight: 600, color: 'var(--text)' }}>{type}</div>
-              <div style={{ fontFamily: 'monospace', color: '#0176D3', fontWeight: 700 }}>{range}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', color: '#0176D3', fontWeight: 700 }}>{range}</div>
               <div style={{ color: 'var(--text2)' }}>{note}</div>
             </div>
           ))}

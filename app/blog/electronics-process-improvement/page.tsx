@@ -25,8 +25,8 @@ export default function ElectronicsBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'monospace', letterSpacing: 1.5 }}>ELECTRONICS</span>
-            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'monospace' }}>8 min read · March 2026</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>ELECTRONICS</span>
+            <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>8 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
             Yield Loss Isn't in the Component. It's in the Process.
