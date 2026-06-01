@@ -130,11 +130,11 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
     <div className="card" style={{ overflow:'hidden', display:'flex', flexDirection:'column' }}>
 
       {/* ── Header ── */}
-      <div style={{ padding:'12px 16px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+      <div style={{ padding:'14px 18px', background:'var(--vs-white)', borderBottom:'1px solid var(--vs-slate-200)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:.5 }}>AI</span>
-          <span style={{ fontWeight:700, color:'var(--text)', fontSize:14, fontFamily:'var(--font-serif)' }}>Supe</span>
-          <span style={{ fontSize:9, color:'var(--text3)', fontFamily:'var(--font-mono)', letterSpacing:1.5 }}>AI MENTOR</span>
+          <div style={{ width:24, height:24, borderRadius:6, background:'var(--vs-gold-600)', color:'var(--vs-navy-900)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:800, fontFamily:"'JetBrains Mono',monospace", letterSpacing:0.5 }}>S</div>
+          <span style={{ fontWeight:650, color:'var(--vs-navy-900)', fontSize:15, fontFamily:"'Sora','Inter',sans-serif", letterSpacing:'-0.01em' }}>Supe</span>
+          <span style={{ fontSize:9, color:'var(--vs-slate-600)', fontFamily:"'JetBrains Mono',monospace", letterSpacing:1.5, textTransform:'uppercase' }}>AI Lean Advisor</span>
           {isDemo && <span style={{ fontSize:9, color:'var(--brand)', background:'var(--brand-dim)', border:'1px solid var(--brand-glow)', padding:'1px 7px', borderRadius:100, letterSpacing:1 }}>DEMO</span>}
         </div>
         {highN > 0 && <span style={{ background:'var(--red)', color:'#fff', fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:100 }}>{highN} HIGH</span>}
@@ -157,9 +157,9 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
         {(['findings','chat'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
             flex:1, padding:'9px 0', fontSize:12, fontWeight:600,
-            background: tab===t ? 'rgba(100,38,160,0.08)' : 'transparent',
-            borderBottom: tab===t ? '2px solid #8C44CC' : '2px solid transparent',
-            color: tab===t ? '#8C44CC' : 'var(--text3)',
+            background: tab===t ? 'rgba(201,166,107,0.10)' : 'transparent',
+            borderBottom: tab===t ? '2px solid #A8854F' : '2px solid transparent',
+            color: tab===t ? '#A8854F' : 'var(--text3)',
             border:'none', cursor:'pointer', transition:'all 0.15s',
             fontFamily:'var(--font-mono)', letterSpacing:0.5, textTransform:'uppercase',
           }}>
@@ -172,7 +172,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
       {tab === 'findings' && (
         <div style={{ flex:1, overflowY:'auto', maxHeight:400 }}>
           {isDemo && (
-            <div style={{ padding:'8px 14px', background:'var(--sl-50)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', gap:8 }}>
+            <div style={{ padding:'10px 16px', background:'var(--vs-paper)', borderBottom:'1px solid var(--vs-slate-200)', display:'flex', alignItems:'center', gap:8 }}>
               
               <span style={{ fontSize:11, color:'var(--text2)' }}>Demo data. Add real steps with cycle times for live analysis.</span>
             </div>
@@ -208,7 +208,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
                       <span style={{ fontSize:10, background:'var(--brand-dim)', border:'1px solid var(--brand-glow)', color:'var(--brand)', padding:'2px 8px', borderRadius:100 }}>{rec.principle}</span>
                       <div style={{ display:'flex', gap:8 }}>
                         <button onClick={() => { setTab('chat'); setInput(`Tell me more about the ${rec.principle} issue at ${rec.step_name||'this step'}`); }}
-                          style={{ background:'none', border:'none', color:'#8C44CC', fontSize:11, cursor:'pointer' }}>
+                          style={{ background:'none', border:'none', color:'#A8854F', fontSize:11, cursor:'pointer' }}>
                           Ask Supe
                         </button>
                         {!isDemo && (
@@ -235,7 +235,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
           <div style={{ flex:1, overflowY:'auto', padding:'12px 14px', display:'flex', flexDirection:'column', gap:10, maxHeight:320 }}>
             {chat.length === 0 && (
               <div style={{ color:'var(--text3)', fontSize:12, textAlign:'center', paddingTop:8, paddingBottom:4 }}>
-                <div style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:1, color:"var(--brand)", marginBottom:6 }}>SUPE AI</div>
+                <div style={{ fontSize:10, fontWeight:800, fontFamily:"'JetBrains Mono',monospace", letterSpacing:1, color:"var(--brand)", marginBottom:6 }}>SUPE AI</div>
                 Ask Supe anything about your process
               </div>
             )}
@@ -244,12 +244,12 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
               <div key={i} style={{ display:'flex', flexDirection:'column', alignItems: msg.role==='user' ? 'flex-end' : 'flex-start' }}>
                 <div style={{
                   maxWidth:'88%', padding:'9px 12px', borderRadius: msg.role==='user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
-                  background: msg.role==='user' ? 'rgba(100,38,160,0.10)' : 'var(--sl-100)',
-                  border: msg.role==='user' ? '1px solid rgba(100,38,160,0.3)' : '1px solid var(--border)',
+                  background: msg.role==='user' ? 'rgba(201,166,107,0.12)' : 'var(--sl-100)',
+                  border: msg.role==='user' ? '1px solid rgba(201,166,107,0.32)' : '1px solid var(--border)',
                   fontSize:12, color:'var(--text)', lineHeight:1.65,
                 }}>
                   {msg.role === 'assistant' && (
-                    <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>SUPE</div>
+                    <div style={{ fontSize:9, color:'#A8854F', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:5 }}>SUPE</div>
                   )}
                   <div style={{ whiteSpace:'pre-wrap' }}>{msg.content}</div>
                 </div>
@@ -258,13 +258,13 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
 
             {loading && (
               <div style={{ display:'flex', alignItems:'flex-start' }}>
-                <div style={{ padding:'10px 14px', borderRadius:'12px 12px 12px 2px', background:'rgba(140,68,204,0.08)', border:'1px solid rgba(140,68,204,0.15)', backdropFilter:'blur(8px)' }}>
-                  <div style={{ fontSize:9, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:8 }}><ZapIcon size={10}/> SUPE THINKING</div>
+                <div style={{ padding:'10px 14px', borderRadius:'12px 12px 12px 2px', background:'rgba(201,166,107,0.08)', border:'1px solid rgba(201,166,107,0.20)', backdropFilter:'blur(8px)' }}>
+                  <div style={{ fontSize:9, color:'#A8854F', fontFamily:'var(--font-mono)', letterSpacing:1, marginBottom:8 }}><ZapIcon size={10}/> SUPE THINKING</div>
                   {/* Waveform animation */}
                   <div style={{ display:'flex', gap:3, alignItems:'center', height:20 }}>
                     {[0,1,2,3,4,5,6,7].map(i => (
                       <div key={i} style={{
-                        width: 3, borderRadius: 2, background:'#8C44CC',
+                        width: 3, borderRadius: 2, background:'#A8854F',
                         animation: `supeBar 1.1s ease-in-out ${i * 0.1}s infinite alternate`,
                         opacity: 0.7,
                       }} />
@@ -289,10 +289,10 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
               {SUGGESTED_QUESTIONS.map(q => (
                 <button key={q} onClick={() => sendMessage(q)} style={{
                   padding:'5px 10px', borderRadius:20, fontSize:11, cursor:'pointer',
-                  background:'rgba(100,38,160,0.06)', border:'1px solid rgba(100,38,160,0.2)',
-                  color:'#8C44CC', transition:'all 0.15s',
+                  background:'rgba(201,166,107,0.08)', border:'1px solid rgba(201,166,107,0.20)',
+                  color:'#A8854F', transition:'all 0.15s',
                 }} onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background='rgba(100,38,160,0.12)'}
-                   onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background='rgba(100,38,160,0.06)'}>
+                   onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background='rgba(201,166,107,0.08)'}>
                   {q}
                 </button>
               ))}
@@ -316,8 +316,8 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
               onBlur={e => (e.target as HTMLInputElement).style.borderColor='var(--border)'}
             />
             <button onClick={() => sendMessage()} disabled={loading || !input.trim()} style={{
-              padding:'8px 14px', borderRadius:'var(--radius-sm)', background:'rgba(100,38,160,0.15)',
-              border:'1px solid rgba(100,38,160,0.3)', color:'#8C44CC', fontSize:13, cursor:loading||!input.trim()?'not-allowed':'pointer',
+              padding:'8px 14px', borderRadius:'var(--radius-sm)', background:'rgba(201,166,107,0.15)',
+              border:'1px solid rgba(201,166,107,0.32)', color:'#A8854F', fontSize:13, cursor:loading||!input.trim()?'not-allowed':'pointer',
               fontWeight:700, transition:'all 0.15s', opacity: loading||!input.trim() ? 0.5 : 1,
             }}>
               ↑

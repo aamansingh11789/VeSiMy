@@ -126,7 +126,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
     try {
       const nb = await createBranch(project.id, {
         label: newBranchName.trim(),
-        color: '#D4A843',
+        color: '#C9A66B',
         parent_step_id: null,
         merge_step_id: null,
       })
@@ -402,7 +402,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
         {/* Tab navigation, primary tabs always visible + More dropdown */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 4, minWidth: 0, overflowX: 'auto', scrollbarWidth: 'none' }}>
           {/* Primary tabs, always visible */}
-          <div style={{ display: 'flex', gap: 2, padding: '3px', borderRadius: 10, background: 'rgba(3,45,96,0.08)', border: '1px solid rgba(212,168,67,0.12)', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: 2, padding: '3px', borderRadius: 10, background: 'rgba(3,45,96,0.08)', border: '1px solid rgba(201,166,107,0.12)', flexShrink: 0 }}>
             {PRIMARY_TABS.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)} style={{
                 padding: '5px 11px', borderRadius: 7, border: 'none', cursor: 'pointer',
@@ -488,7 +488,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
           <button onClick={runAnalysis} disabled={analyzing || steps.length === 0} style={{
             display: 'flex', alignItems: 'center', gap: 6, padding: '7px 16px',
             borderRadius: 7, border: 'none', cursor: steps.length === 0 ? 'not-allowed' : 'pointer',
-            background: analyzing ? 'var(--sl-200)' : 'linear-gradient(135deg,#B8912E,#D4A843)',
+            background: analyzing ? 'var(--sl-200)' : 'linear-gradient(135deg,#A8854F,#C9A66B)',
             color: analyzing ? 'var(--text3)' : 'white', fontSize: 12, fontWeight: 700,
             opacity: steps.length === 0 ? .5 : 1, transition: 'all .15s',
           }}>
@@ -716,15 +716,15 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
             <div style={{ maxWidth:760, margin:'0 auto' }}>
               <div style={{ marginBottom:24, display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16 }}>
                 <div>
-                  <div style={{ fontSize:9, fontFamily:'var(--font-mono)', letterSpacing:2, color:'#D4A843', marginBottom:6 }}>SUB-PROCESSES & BRANCHES</div>
-                  <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Alternate paths & sub-processes</h2>
+                  <div style={{ fontSize:9, fontFamily:'var(--font-mono)', letterSpacing:2, color:'#C9A66B', marginBottom:6 }}>SUB-PROCESSES & BRANCHES</div>
+                  <h2 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Alternate paths & sub-processes</h2>
                   <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.7 }}>
                     In TPS and lean VSM, branches represent alternate process paths, rework loops, exception flows, sub-assembly lines, and parallel processes that feed into the main value stream.
                   </p>
                 </div>
                 <button onClick={() => setShowAddBranch(v => !v)} style={{
-                  padding:'8px 16px', borderRadius:0, border:'1px solid #D4A843',
-                  background:'#D4A843', color:'white', fontSize:12, fontWeight:700,
+                  padding:'8px 16px', borderRadius:0, border:'1px solid #C9A66B',
+                  background:'#C9A66B', color:'white', fontSize:12, fontWeight:700,
                   cursor:'pointer', flexShrink:0, fontFamily:'var(--font-mono)', letterSpacing:1,
                 }}>+ ADD BRANCH</button>
               </div>
@@ -736,7 +736,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                       onKeyDown={e => e.key === 'Enter' && handleCreateBranch()}
                       placeholder="e.g. Rework Loop, Sub-assembly, Exception Path…"
                       style={{ flex:1, padding:'8px 12px', border:'1px solid var(--border)', borderRadius:0, fontSize:13, fontFamily:'inherit' }}/>
-                    <button onClick={handleCreateBranch} style={{ padding:'8px 16px', background:'#D4A843', color:'white', border:'none', fontSize:12, fontWeight:700, cursor:'pointer' }}>Create</button>
+                    <button onClick={handleCreateBranch} style={{ padding:'8px 16px', background:'#C9A66B', color:'white', border:'none', fontSize:12, fontWeight:700, cursor:'pointer' }}>Create</button>
                     <button onClick={() => setShowAddBranch(false)} style={{ padding:'8px 12px', background:'var(--sl-100)', color:'var(--text2)', border:'1px solid var(--border)', fontSize:12, cursor:'pointer' }}>Cancel</button>
                   </div>
                 </div>
@@ -751,7 +751,7 @@ export function V2ProjectClient({ project: initialProject, profile, steps: initi
                   {branches.map((b: any) => (
                     <div key={b.id} style={{ background:'white', border:'1px solid var(--border)', borderRadius:0, padding:18 }}>
                       <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-                        <div style={{ width:4, height:32, background:'#D4A843', flexShrink:0 }}/>
+                        <div style={{ width:4, height:32, background:'#C9A66B', flexShrink:0 }}/>
                         <div>
                           <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{b.label || b.name}</div>
                           <div style={{ fontSize:11, color:'var(--text3)' }}>{b.description || 'Sub-process branch'}</div>
@@ -1045,7 +1045,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200, padding: 24 }}>
       <div style={{ background: 'white', borderRadius: 20, padding: 36, maxWidth: 540, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,.2)' }}>
-        <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: '#D4A843', background: 'rgba(1,118,211,.07)', border: '1px solid rgba(1,118,211,.15)', borderRadius: 4, padding: '3px 10px', display: 'inline-block', marginBottom: 16 }}>
+        <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: '#C9A66B', background: 'rgba(1,118,211,.07)', border: '1px solid rgba(1,118,211,.15)', borderRadius: 4, padding: '3px 10px', display: 'inline-block', marginBottom: 16 }}>
           NEW PROJECT, V2 BUILDER
         </div>
         <h2 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 8, lineHeight: 1.2 }}>
@@ -1060,7 +1060,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
             borderRadius: 12, border: '1.5px solid rgba(1,118,211,.3)', background: 'rgba(1,118,211,.04)',
             cursor: 'pointer', textAlign: 'left', transition: 'all .15s',
           }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = '#D4A843'}
+          onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A66B'}
           onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(1,118,211,.3)'}>
             <PDFIcon size={22} color="var(--text2)"/>
             <div>
@@ -1073,7 +1073,7 @@ function StartModal({ project, t, indLabel, onSOP, onManual, onReference, parsin
             borderRadius: 12, border: '1.5px solid var(--border)', background: 'white',
             cursor: 'pointer', textAlign: 'left', transition: 'all .15s',
           }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = '#D4A843'}
+          onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A66B'}
           onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
             <EditIcon size={22} color="var(--text2)"/>
             <div>
@@ -1175,7 +1175,7 @@ function SOPUploadOverlay({ onFile, onManualText, onCancel, t }: any) {
               onClick={() => { manualText.trim().length > 20 ? onManualText(manualText) : toast.error('Add more text, at least a few process steps') }}
               style={{
                 width: '100%', marginTop: 12, padding: '12px 0', borderRadius: 9,
-                border: 'none', background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+                border: 'none', background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
                 color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer',
               }}>
               Extract steps from text →
@@ -1254,7 +1254,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
   const BoardHeader = () => (
     <div style={{ marginBottom: 20 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+        <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
           Kaizen Board
         </h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -1266,7 +1266,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
               onClick={() => setShowAdd(v => !v)}
               style={{
                 fontSize: 12, fontWeight: 700, padding: '7px 14px',
-                background: showAdd ? 'var(--bg3,#f3f3f3)' : 'var(--brand,#D4A843)',
+                background: showAdd ? 'var(--bg3,#f3f3f3)' : 'var(--brand,#C9A66B)',
                 color: showAdd ? 'var(--text3)' : '#fff',
                 border: 'none', borderRadius: 8, cursor: 'pointer', transition: 'all .15s',
               }}
@@ -1284,7 +1284,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
           borderRadius: 10, padding: '16px 18px', marginBottom: 16,
           boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
         }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--brand,#D4A843)', textTransform: 'uppercase' as const, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--brand,#C9A66B)', textTransform: 'uppercase' as const, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>
             New Kaizen Item
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 10 }}>
@@ -1325,7 +1325,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
                 onClick={submitAdd}
                 disabled={addSaving || !addTitle.trim()}
                 style={{
-                  padding: '9px 22px', background: !addTitle.trim() ? 'var(--bg4,#e5e5e5)' : 'var(--brand,#D4A843)',
+                  padding: '9px 22px', background: !addTitle.trim() ? 'var(--bg4,#e5e5e5)' : 'var(--brand,#C9A66B)',
                   color: !addTitle.trim() ? 'var(--text3)' : '#fff',
                   border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 13,
                   cursor: addTitle.trim() ? 'pointer' : 'not-allowed', transition: 'all .15s',
@@ -1397,7 +1397,7 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
                       {item.priority && item.priority !== 'normal' && (
                         <span style={{
                           marginLeft: 8, fontSize: 9, fontWeight: 700, letterSpacing: 0.5,
-                          color: item.priority === 'critical' ? '#FF6B6B' : item.priority === 'high' ? '#F4A623' : '#D4A843',
+                          color: item.priority === 'critical' ? '#FF6B6B' : item.priority === 'high' ? '#F4A623' : '#C9A66B',
                           background: item.priority === 'critical' ? 'rgba(255,107,107,0.1)' : item.priority === 'high' ? 'rgba(244,166,35,0.1)' : 'rgba(1,118,211,0.1)',
                           padding: '1px 5px', borderRadius: 4,
                         }}>
@@ -1496,11 +1496,11 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
                 onKeyDown={e => { if (e.key === 'Enter') saveRename(); if (e.key === 'Escape') setEditing(false) }}
                 style={{
                   fontSize: 26, fontFamily: serif, fontWeight: 700, color: 'var(--text)',
-                  background: 'var(--bg2)', border: '2px solid var(--brand,#D4A843)',
+                  background: 'var(--bg2)', border: '2px solid var(--brand,#C9A66B)',
                   borderRadius: 8, padding: '6px 12px', flex: 1, minWidth: 0, outline: 'none',
                 }}
               />
-              <button onClick={saveRename} disabled={saving} style={{ padding: '8px 18px', background: 'var(--brand,#D4A843)', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
+              <button onClick={saveRename} disabled={saving} style={{ padding: '8px 18px', background: 'var(--brand,#C9A66B)', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
                 {saving ? 'Saving…' : 'Save'}
               </button>
               <button onClick={() => setEditing(false)} style={{ padding: '8px 14px', background: 'transparent', color: 'var(--text3)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', fontSize: 13 }}>
@@ -1523,7 +1523,7 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
           )}
           <div style={{ display: 'flex', gap: 12, marginTop: 8, flexWrap: 'wrap' as const }}>
             {project.industry && (
-              <span style={{ fontSize: 11, background: 'var(--brand-dim,rgba(1,118,211,0.1))', color: 'var(--brand,#D4A843)', padding: '3px 10px', borderRadius: 12, fontWeight: 600 }}>
+              <span style={{ fontSize: 11, background: 'var(--brand-dim,rgba(1,118,211,0.1))', color: 'var(--brand,#C9A66B)', padding: '3px 10px', borderRadius: 12, fontWeight: 600 }}>
                 {project.industry}
               </span>
             )}
@@ -1599,7 +1599,7 @@ function V2ProjectOverview({ project, steps, profile, onRename }: {
 
       {/* Quick links */}
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
-        <a href="/dashboard" style={{ fontSize: 12, color: 'var(--brand,#D4A843)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', border: '1px solid var(--border)', borderRadius: 8, fontWeight: 600, background: 'var(--bg2)' }}>
+        <a href="/dashboard" style={{ fontSize: 12, color: 'var(--brand,#C9A66B)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', border: '1px solid var(--border)', borderRadius: 8, fontWeight: 600, background: 'var(--bg2)' }}>
           ← All Projects
         </a>
         <a href="/pricing" style={{ fontSize: 12, color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', border: '1px solid var(--border)', borderRadius: 8, fontWeight: 600, background: 'var(--bg2)' }}>
@@ -1622,7 +1622,7 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
 
   return (
     <div style={{ maxWidth: 860, margin: '0 auto' }}>
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 20 }}>
+      <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 20 }}>
         CI Report, {project.name}
       </h2>
       {/* Takt not set warning, bottleneck detection is disabled without takt time */}
@@ -1646,7 +1646,7 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
           { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)} min` : ',', color: 'var(--text)' },
           { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : ',', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
           { label: 'Bottleneck', val: bottleneck?.name || ',', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
-          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#D4A843' : '#1DD1A1' },
+          { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#C9A66B' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
@@ -1685,13 +1685,13 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? `${wt}s` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4,
-                          background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)',
-                          color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#D4A843' }}>
+                          background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(201,166,107,0.12)',
+                          color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#C9A66B' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#D4A843' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
-                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#D4A843' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
+                      <td style={{ padding: '7px 10px', color: wastes > 0 ? '#C9A66B' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
+                      <td style={{ padding: '7px 10px', color: openK > 0 ? '#C9A66B' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
@@ -1738,7 +1738,7 @@ function V2ProjectSettingsModal({ project, onSave, onClose, onDelete }: {
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 300 }}>
       <div style={{ background: 'var(--bg2)', borderRadius: 14, padding: 28, width: 520, maxWidth: '95vw', maxHeight: '90vh', overflowY: 'auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <div style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Project Settings</div>
+          <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Project Settings</div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: 'var(--text3)' }}>×</button>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -1758,7 +1758,7 @@ function V2ProjectSettingsModal({ project, onSave, onClose, onDelete }: {
           </button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onClose} style={{ padding: '8px 16px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
-            <button onClick={() => onSave(form)} style={{ padding: '8px 20px', borderRadius: 7, background: '#D4A843', color: 'white', border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Save</button>
+            <button onClick={() => onSave(form)} style={{ padding: '8px 20px', borderRadius: 7, background: '#C9A66B', color: 'white', border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Save</button>
           </div>
         </div>
       </div>

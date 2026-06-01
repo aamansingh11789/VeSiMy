@@ -8,7 +8,7 @@ export const metadata = { title: 'Terms of Service, VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
-    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
+    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: "'Sora','Inter',sans-serif" }}>{title}</h2>
     <div style={{ color: 'var(--text3)', fontSize: 14, lineHeight: 1.8 }}>{children}</div>
   </div>
 )
@@ -24,7 +24,7 @@ export default function TermsPage() {
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
-          <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
+          <h1 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
           <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>
 

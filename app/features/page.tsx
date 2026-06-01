@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 const GRAY  = '#5A6480'
 const BORD  = '#E2E8F0'
@@ -85,7 +85,7 @@ export default function FeaturesPage() {
           <Link href="/pricing" style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>Pricing</Link>
           <Link href="/auth/signup"
             style={{ fontSize: 13, fontWeight: 700,
-              background: 'linear-gradient(135deg,#D4A843,#B8912E)', color: '#1A0E00',
+              background: 'linear-gradient(135deg,#C9A66B,#A8854F)', color: '#0B1D33',
               padding: '7px 16px', borderRadius: 7, textDecoration: 'none' }}>
             Try Free
           </Link>
@@ -95,11 +95,11 @@ export default function FeaturesPage() {
       {/* Hero */}
       <div style={{ background: NAVY, padding: '52px 24px 60px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: -60, top: -60, width: 500, height: 500,
-          background: 'radial-gradient(ellipse at center, rgba(212,168,67,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(201,166,107,0.12) 0%, transparent 70%)',
           pointerEvents: 'none' }} />
         <div style={{ maxWidth: 760, margin: '0 auto', position: 'relative', textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.25)',
+            background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(201,166,107,0.25)',
             borderRadius: 100, padding: '4px 14px', marginBottom: 20 }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: AMBER, letterSpacing: 1.5,
               textTransform: 'uppercase', fontFamily: MONO }}>Platform Features</span>
@@ -115,8 +115,8 @@ export default function FeaturesPage() {
           </p>
           <Link href="/auth/signup"
             style={{ display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '11px 28px', background: 'linear-gradient(135deg,#D4A843,#B8912E)',
-              color: '#1A0E00', fontWeight: 700, fontSize: 14, borderRadius: 10,
+              padding: '11px 28px', background: 'linear-gradient(135deg,#C9A66B,#A8854F)',
+              color: '#0B1D33', fontWeight: 700, fontSize: 14, borderRadius: 10,
               textDecoration: 'none' }}>
             Start free, no account required
           </Link>
@@ -157,9 +157,9 @@ export default function FeaturesPage() {
 
         {/* CTA */}
         <div style={{ textAlign: 'center', padding: '48px 24px', background: NAVY,
-          borderRadius: 16, border: '1px solid rgba(212,168,67,0.18)', position: 'relative', overflow: 'hidden' }}>
+          borderRadius: 16, border: '1px solid rgba(201,166,107,0.18)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: -40, top: -40, width: 300, height: 300,
-            background: 'radial-gradient(ellipse,rgba(212,168,67,0.10) 0%,transparent 70%)', pointerEvents: 'none' }} />
+            background: 'radial-gradient(ellipse,rgba(201,166,107,0.10) 0%,transparent 70%)', pointerEvents: 'none' }} />
           <h3 style={{ fontSize: 28, fontWeight: 800, color: '#F0F2FF',
             letterSpacing: -0.5, marginBottom: 12, fontFamily: SANS, position: 'relative' }}>
             Start with one process
@@ -172,12 +172,12 @@ export default function FeaturesPage() {
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', position: 'relative' }}>
             <Link href="/start"
               style={{ padding: '12px 28px',
-                background: 'linear-gradient(135deg,#D4A843,#B8912E)', color: '#1A0E00',
+                background: 'linear-gradient(135deg,#C9A66B,#A8854F)', color: '#0B1D33',
                 fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Try free now
             </Link>
             <Link href="/pricing"
-              style={{ padding: '12px 28px', border: '1px solid rgba(212,168,67,0.30)',
+              style={{ padding: '12px 28px', border: '1px solid rgba(201,166,107,0.30)',
                 color: AMBER, fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               View pricing
             </Link>

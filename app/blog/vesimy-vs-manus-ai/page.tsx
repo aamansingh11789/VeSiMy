@@ -24,7 +24,7 @@ export default function ComparisonPage() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>COMPARISON</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(100,38,160,0.12)', color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>COMPARISON</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · April 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>

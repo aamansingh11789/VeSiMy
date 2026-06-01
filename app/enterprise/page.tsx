@@ -65,7 +65,7 @@ export default function EnterprisePage() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(215,213,206,0.95)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
         <Link href="/pricing" style={{ fontSize:13, color:'var(--text3)', textDecoration:'none' }}>← All Plans</Link>

@@ -133,7 +133,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
           ) : (
             <div>
               <DimensionBar label="Cycle time data quality" value={skillData?.ct_consistency_score ?? 0} color={BRAND} />
-              <DimensionBar label="WIP capture completeness" value={skillData?.wip_completeness_score ?? 0} color="#8C44CC" />
+              <DimensionBar label="WIP capture completeness" value={skillData?.wip_completeness_score ?? 0} color="#A8854F" />
               <DimensionBar label="Defect format consistency" value={skillData?.defect_format_consistency_score ?? 0} color="#2E844A" />
               <DimensionBar label="AI recommendation acceptance" value={Math.round((skillData?.ai_acceptance_rate ?? 0) * 100)} color="#1DD1A1" />
               <DimensionBar label="Tool usage breadth" value={(tools.length / 7) * 100} color="#F4A623" />

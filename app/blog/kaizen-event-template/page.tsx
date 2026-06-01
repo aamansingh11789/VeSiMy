@@ -127,7 +127,7 @@ export default function KaizenEventPost() {
               ]
             },
             {
-              day: 'Day 5', label: 'Sustain', color: '#8C44CC',
+              day: 'Day 5', label: 'Sustain', color: '#A8854F',
               items: [
                 'Morning: Final measurements and data collection',
                 'Calculate improvement: before vs after on all target metrics',

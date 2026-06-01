@@ -40,7 +40,7 @@ export class ErrorBoundary extends React.Component<EBProps, EBState> {
         <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
           <AlertIcon size={28} color="#92400E" />
         </div>
-        <h3 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 18, fontWeight: 700,
+        <h3 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 18, fontWeight: 700,
           color: '#92400E', marginBottom: 8 }}>Something went wrong</h3>
         <p style={{ fontSize: 13, color: '#78350F', marginBottom: 16,
           maxWidth: 380, margin: '0 auto 16px' }}>

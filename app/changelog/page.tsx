@@ -14,7 +14,7 @@ const entries = [
   {
     date: 'March 12, 2026',
     tag: 'LAUNCH',
-    color: '#D4A843',
+    color: '#C9A66B',
     title: 'VeSiMy goes live',
     items: [
       'All 9 CI tools live: VSM, Time Study, 5 Why, Fishbone, Waste ID, Kaizen, Yamazumi, Standard Work, PDCA',
@@ -45,7 +45,7 @@ const entries = [
   {
     date: 'March 12, 2026',
     tag: 'SEO',
-    color: '#D4A843',
+    color: '#C9A66B',
     title: 'SEO and discoverability upgrades',
     items: [
       'Added robots.txt, Google can now crawl all public pages',
@@ -58,7 +58,7 @@ const entries = [
   {
     date: 'Coming soon',
     tag: 'NEXT',
-    color: '#8C44CC',
+    color: '#A8854F',
     title: 'AI Monitor v1, Anomaly Detection',
     items: [
       'Supe AI will watch your Time Study data continuously',
@@ -82,7 +82,7 @@ const entries = [
   {
     date: 'Coming soon',
     tag: 'NEXT',
-    color: '#8C44CC',
+    color: '#A8854F',
     title: 'Gemba Walk Checklist (Tool 8)',
     items: [
       'Mobile-first checklist for floor inspections',
@@ -103,7 +103,7 @@ export default function ChangelogPage() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#C9A66B', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
           What's New
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
@@ -158,7 +158,7 @@ export default function ChangelogPage() {
         <div style={{ marginTop: 56, padding: '28px 32px', background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 16, textAlign: 'center' }}>
           <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
             Want updates when we ship? Follow{' '}
-            <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#D4A843', textDecoration: 'none' }}>
+            <a href="https://linkedin.com/company/vesimy" target="_blank" rel="noopener noreferrer" style={{ color: '#C9A66B', textDecoration: 'none' }}>
               VeSiMy on LinkedIn
             </a>
             {' '}, we post every release.

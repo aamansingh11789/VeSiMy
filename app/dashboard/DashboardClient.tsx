@@ -714,17 +714,10 @@ export function DashboardClient({ profile, initialProjects }: Props) {
       </Suspense>
 
       <div style={{
-        backgroundImage: 'url(/sensario-texture.jpg), linear-gradient(135deg, rgba(212,168,67,0.08), rgba(3,45,96,0.12))',
-        backgroundSize: '600px auto',
-        backgroundRepeat: 'repeat-y',
-        backgroundPosition: 'right -100px top',
-        backgroundAttachment: 'fixed',
-        backgroundBlendMode: 'luminosity',
-        opacity: 1,
+        background: 'var(--vs-paper)',
         position: 'relative',
+        minHeight: '100vh',
       }}>
-        {/* Overlay to control texture opacity without affecting children */}
-        <div style={{ position: 'absolute', inset: 0, background: 'var(--bg)', opacity: 0.92, pointerEvents: 'none', zIndex: 0 }}/>
         <div style={{ position: 'relative', zIndex: 1 }}>
         <BetaBanner
           userId={profile.id}
@@ -746,50 +739,34 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           }}
         >
           <div style={{ maxWidth: 720 }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                padding: '6px 10px',
-                borderRadius: 999,
-                background: 'var(--brand-dim)',
-                border: '1px solid rgba(212,168,67,0.14)',
-                marginBottom: 14,
-              }}
-            >
-              <CrownIcon size={12} color="#D4A843" />
-              <span
-                style={{
-                  fontSize: 10,
-                  letterSpacing: 1.2,
-                  textTransform: 'uppercase',
-                  color: 'var(--brand)',
-                  fontWeight: 700,
-                }}
-              >
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18,
+            }}>
+              <div style={{ width: 24, height: 1, background: 'var(--vs-navy-900)' }}/>
+              <span style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 11, color: 'var(--vs-slate-700)',
+                letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600,
+              }}>
                 {getIndustryLabel((profile as any).industry)
                   ? `${getIndustryLabel((profile as any).industry)} Workspace`
-                  : 'Operations Intelligence Workspace'}
+                  : 'Operations Workspace'}
               </span>
             </div>
 
-            <h1
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 26,
-                fontWeight: 700,
-                color: 'var(--text)',
-                marginBottom: 8,
-                letterSpacing: 0.2,
-                lineHeight: 1.05,
-              }}
-            >
-              Welcome back
-              {profile.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}
+            <h1 style={{
+              fontFamily: "'Sora', 'Inter', sans-serif",
+              fontSize: 'clamp(28px, 3.5vw, 38px)',
+              fontWeight: 700,
+              color: 'var(--vs-navy-900)',
+              marginBottom: 10,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
+            }}>
+              Welcome back{profile.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}
             </h1>
 
-            <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 620 }}>
+            <p style={{ fontSize: 15, color: 'var(--vs-slate-700)', maxWidth: 620, lineHeight: 1.55 }}>
               {projects.length === 0
                 ? (() => { const t = getIndustryTerms((profile as any).industry); const l = getIndustryLabel((profile as any).industry); return `Map your ${t.process}, find the ${t.waste}, and build a record of every ${t.improvement}${l ? ' in ' + l : ''}. Start with your first project.` })()
                 : (() => { const t = getIndustryTerms((profile as any).industry); const l = getIndustryLabel((profile as any).industry); return `${projects.length} active project${projects.length !== 1 ? 's' : ''} · ${totalSteps} ${t.processSteps} mapped · ${l || 'your'} workspace.` })()}
@@ -818,8 +795,8 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
-                      background: view === v ? 'rgba(212,168,67,0.14)' : 'transparent',
-                      color: view === v ? '#D4A843' : 'var(--text2)',
+                      background: view === v ? 'rgba(201,166,107,0.14)' : 'transparent',
+                      color: view === v ? '#C9A66B' : 'var(--text2)',
                       fontWeight: view === v ? 700 : 500,
                     }}
                   >
@@ -862,14 +839,14 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   width: 34,
                   height: 34,
                   borderRadius: 10,
-                  background: 'rgba(212,168,67,0.14)',
-                  border: '1px solid rgba(212,168,67,0.22)',
+                  background: 'rgba(201,166,107,0.14)',
+                  border: '1px solid rgba(201,166,107,0.22)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <CrownIcon size={16} color="#D4A843" />
+                <CrownIcon size={16} color="#C9A66B" />
               </div>
 
               <div>
@@ -887,7 +864,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               className="btn-primary"
               style={{ padding: '8px 16px', fontSize: 12, whiteSpace: 'nowrap' }}
             >
-              Upgrade, $29/mo
+              Upgrade to Pro
             </Link>
           </div>
         )}
@@ -905,28 +882,28 @@ export function DashboardClient({ profile, initialProjects }: Props) {
             label="Projects"
             value={projects.length}
             icon={BarChartIcon}
-            color="#D4A843"
+            color="#C9A66B"
             hint="Active workspaces"
           />
           <StatCard
             label="Steps Mapped"
             value={totalSteps}
             icon={ActivityIcon}
-            color="#8C44CC"
+            color="#3A5A7D"
             hint="Across all projects"
           />
           <StatCard
             label="Plan"
             value={isPro ? (profile.plan_tier === 'lifetime' ? 'Lifetime' : profile.plan_tier === 'enterprise' ? 'Enterprise' : 'Pro') : (profile.plan_tier === 'trial_expired' ? 'Expired' : 'Trial')}
             icon={CrownIcon}
-            color="#6CB9FC"
+            color="#2F5D8A"
             hint={isPro ? 'Premium access active' : 'Starter tier'}
           />
           <StatCard
             label="Last Active"
             value={`${profile.projects_count} projects`}
             icon={ZapIcon}
-            color="#F4A623"
+            color="#C9A66B"
             hint="Keep the momentum going"
           />
         </div>
@@ -945,7 +922,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           return (
             <div style={{ background: '#FFFFFF', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 14, padding: '18px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>
                     {industryLabel ? `${industryLabel} Reference Project` : 'Reference Project'}
@@ -957,7 +934,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 <button
                   onClick={seedReferenceProject}
                   disabled={seedingRef}
-                  style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#B8912E,#D4A843)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
+                  style={{ padding: '9px 18px', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: seedingRef ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', background: seedingRef ? 'var(--sl-100)' : 'linear-gradient(135deg,#A8854F,#C9A66B)', color: seedingRef ? 'var(--text3)' : '#FFFFFF', border: 'none', flexShrink: 0, opacity: seedingRef ? 0.7 : 1 }}
                 >
                   {seedingRef ? 'Loading…' : `Load ${industryLabel || 'Industry'} Sample Map →`}
                 </button>
@@ -965,7 +942,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
               {refNames.length > 0 && (
                 <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {refNames.map(name => (
-                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 6, padding: '3px 9px' }}>
+                    <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 6, padding: '3px 9px' }}>
                       {name.replace('Reference, ', '')}
                     </div>
                   ))}
@@ -1005,22 +982,27 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 '#FFFFFF',
             }}
           >
-            <div
-              style={{
-                width: 72,
-                height: 72,
-                borderRadius: 22,
-                margin: '0 auto 18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'var(--brand-dim)',
-                border: '1px solid rgba(212,168,67,0.16)',
-                fontSize: 34,
-                color: 'var(--brand)',
-              }}
-            >
-              ⊚
+            <div style={{
+              margin: '0 auto 24px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: 72, height: 72,
+            }}>
+              <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+                <defs>
+                  <linearGradient id="esL" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#2F4670"/><stop offset="100%" stopColor="#1E2E4A"/>
+                  </linearGradient>
+                  <linearGradient id="esR" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1E2E4A"/><stop offset="100%" stopColor="#0B1D33"/>
+                  </linearGradient>
+                  <radialGradient id="esG" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stopColor="#E5D4B0"/><stop offset="55%" stopColor="#C9A66B"/><stop offset="100%" stopColor="#A8854F"/>
+                  </radialGradient>
+                </defs>
+                <path d="M 20 28 Q 20 24 24 24 L 38 24 Q 42 24 44 28 L 50 40 L 50 86 Q 50 92 44 91 L 28 89 Q 22 88 21 82 L 20 28 Z" fill="url(#esL)"/>
+                <path d="M 56 28 Q 58 24 62 24 L 76 24 Q 80 24 80 28 L 79 82 Q 78 88 72 89 L 56 91 Q 50 92 50 86 L 50 40 L 56 28 Z" fill="url(#esR)"/>
+                <circle cx="50" cy="20" r="12" fill="url(#esG)"/>
+              </svg>
             </div>
 
             <h3
@@ -1202,11 +1184,11 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                   padding: '6px 10px',
                   borderRadius: 999,
                   background: 'var(--brand-dim)',
-                  border: '1px solid rgba(212,168,67,0.14)',
+                  border: '1px solid rgba(201,166,107,0.14)',
                   marginBottom: 14,
                 }}
               >
-                <PlusIcon size={11} color="#D4A843" />
+                <PlusIcon size={11} color="#C9A66B" />
                 <span
                   style={{
                     fontSize: 10,

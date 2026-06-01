@@ -75,7 +75,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           </tr>
           ${whys.map((w, i) => `
             <tr style="${i === filledWhys.length - 1 && rootCause ? 'background:#e8f5e9;' : ''}">
-              <td style="font-size:11pt;font-weight:700;text-align:center;color:#8B6A00;">W${i+1}</td>
+              <td style="font-size:11pt;font-weight:700;text-align:center;color:#A8854F;">W${i+1}</td>
               <td style="font-style:italic;">Why does this occur?</td>
               <td style="${!w ? 'color:#aaa;font-style:italic;' : ''}">${w || '(Not documented)'}</td>
               <td>${w ? 'Documented' : ','}</td>
@@ -175,7 +175,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                   </div>
                 )}
                 <div style={{
-                  border: `1.5px solid ${isFilled && hasMinLength ? 'rgba(212,168,67,0.30)' : isShallow ? 'rgba(217,119,6,0.35)' : 'var(--border)'}`,
+                  border: `1.5px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.30)' : isShallow ? 'rgba(217,119,6,0.35)' : 'var(--border)'}`,
                   borderRadius: 10,
                   padding: '10px 12px 10px 10px',
                   background: isFilled && hasMinLength ? 'rgba(22,112,212,0.03)' : '#FFFFFF',
@@ -185,8 +185,8 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                     {/* Step number badge */}
                     <div style={{
                       width: 26, height: 26, borderRadius: 7, flexShrink: 0,
-                      background: isFilled && hasMinLength ? 'rgba(212,168,67,0.12)' : 'var(--bg3)',
-                      border: `1px solid ${isFilled && hasMinLength ? 'rgba(212,168,67,0.25)' : 'var(--border)'}`,
+                      background: isFilled && hasMinLength ? 'rgba(201,166,107,0.12)' : 'var(--bg3)',
+                      border: `1px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.25)' : 'var(--border)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: 11, fontWeight: 700,
                       color: isFilled && hasMinLength ? 'var(--brand)' : 'var(--text3)',

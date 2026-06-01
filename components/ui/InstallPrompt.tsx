@@ -110,7 +110,7 @@ export function InstallPrompt() {
           <button
             onClick={handleInstall}
             style={{
-              background: 'linear-gradient(135deg, #B8912E, #D4A843)',
+              background: 'linear-gradient(135deg, #A8854F, #C9A66B)',
               color:      'var(--bg)',
               border:     'none',
               borderRadius: 7,
@@ -189,10 +189,10 @@ export function InstallPrompt() {
           }}>
             <div style={{
               width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-              background: 'rgba(212,168,67,0.12)',
-              border:     '1px solid rgba(212,168,67,0.25)',
+              background: 'rgba(201,166,107,0.12)',
+              border:     '1px solid rgba(201,166,107,0.25)',
               display:    'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 13, color: '#D4A843', fontWeight: 700,
+              fontSize: 13, color: '#C9A66B', fontWeight: 700,
             }}>{step.icon}</div>
             <div style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.5, paddingTop: 4 }}>
               {step.text}

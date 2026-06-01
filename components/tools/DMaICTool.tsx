@@ -57,11 +57,11 @@ const BLANK: DMaICData = {
 const PHASES = [
   { key: 'define',   label: 'Define',   color: '#6CB9FC', icon: '🎯',
     desc: 'Problem statement, scope, customer impact, business case, team.' },
-  { key: 'measure',  label: 'Measure',  color: '#D4A843', icon: '📏',
+  { key: 'measure',  label: 'Measure',  color: '#C9A66B', icon: '📏',
     desc: 'Current process data, measurement plan, baseline capability.' },
   { key: 'analyze',  label: 'Analyze',  color: '#F4A623', icon: '🔍',
     desc: 'Root cause identification, statistical analysis, validated root cause.' },
-  { key: 'improve',  label: 'Improve',  color: '#8C44CC', icon: '⚡',
+  { key: 'improve',  label: 'Improve',  color: '#A8854F', icon: '⚡',
     desc: 'Solution options, pilot, implementation, risk assessment.' },
   { key: 'control',  label: 'Control',  color: '#2E844A', icon: '🛡',
     desc: 'Control plan, standard work, monitoring, project closure.' },

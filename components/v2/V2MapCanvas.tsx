@@ -387,7 +387,7 @@ function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }:
 function PhaseLane({ phase, startX, endX, canvasH }: { phase: number; startX: number; endX: number; canvasH: number }) {
   const LABELS = ['Wall Session', 'Floor Observation', 'Analysis', 'Improvement']
   const COLORS = ['rgba(1,118,211,0.04)', 'rgba(29,209,161,0.04)', 'rgba(244,166,35,0.04)', 'rgba(140,68,204,0.04)']
-  const TEXT   = [BRAND, '#1DD1A1', AMBER, '#8C44CC']
+  const TEXT   = [BRAND, '#1DD1A1', AMBER, '#A8854F']
   if (phase < 1) return null
   return (
     <g>

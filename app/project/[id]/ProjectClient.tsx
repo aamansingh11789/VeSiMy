@@ -366,10 +366,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             style={{
-              fontFamily: 'Palatino Linotype,Georgia,serif',
-              fontSize: 17,
-              fontWeight: 700,
-              color: 'var(--text)',
+              fontFamily: "'Sora', 'Inter', sans-serif",
+              fontSize: 18,
+              fontWeight: 650,
+              color: 'var(--vs-navy-900)',
+              letterSpacing: '-0.01em',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
@@ -400,7 +401,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 600,
               cursor: 'pointer',
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(212,168,67,0.25)',
+              border: '1px solid rgba(201,166,107,0.25)',
               color: 'var(--brand)',
             }}
           >
@@ -474,7 +475,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
               color: 'var(--bg)',
               border: 'none',
-              boxShadow: '0 2px 12px rgba(212,168,67,0.25)',
+              boxShadow: '0 2px 12px rgba(201,166,107,0.25)',
             }}
           >
             <PlusIcon size={14} color="var(--bg)" />
@@ -702,7 +703,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
-                    const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
+                    const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#A8854F']
                     const descs = [
                       'Plan-Do-Check-Act, standard lean cycle',
                       'Toyota one-page problem-solving report',
@@ -782,7 +783,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           style={{
             width: supeOpen ? 290 : 40,
             flexShrink: 0,
-            borderLeft: '1px solid rgba(100,38,160,0.2)',
+            borderLeft: '1px solid rgba(201,166,107,0.20)',
             overflowY: supeOpen ? 'auto' : 'hidden',
             background: '#FFFFFF',
             display: 'flex',
@@ -820,8 +821,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
               <div
                 style={{
                   padding: '14px 16px 10px 42px',
-                  borderBottom: '1px solid rgba(100,38,160,0.15)',
-                  background: 'linear-gradient(180deg,rgba(100,38,160,0.06),transparent)',
+                  borderBottom: '1px solid rgba(201,166,107,0.15)',
+                  background: 'linear-gradient(180deg,rgba(201,166,107,0.06),transparent)',
                   flexShrink: 0,
                 }}
               >
@@ -831,7 +832,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       width: 28,
                       height: 28,
                       borderRadius: 8,
-                      background: 'linear-gradient(135deg,rgba(100,38,160,0.3),rgba(60,22,120,0.5))',
+                      background: 'linear-gradient(135deg,rgba(201,166,107,0.32),rgba(60,22,120,0.5))',
                       border: '1px solid rgba(100,38,160,0.4)',
                       display: 'flex',
                       alignItems: 'center',
@@ -842,10 +843,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     <ZapIcon size={14} color="#9B5FE0" />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, fontFamily: 'Palatino Linotype,serif', lineHeight: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, fontFamily: "'Sora','Inter',sans-serif", lineHeight: 1 }}>
                       Supe
                     </div>
-                    <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginTop: 2 }}>
+                    <div style={{ fontSize: 9, color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginTop: 2 }}>
                       AI MENTOR {!isPaid && 'PRO'}
                     </div>
                   </div>
@@ -909,14 +910,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
               height: '78vh',
               background: '#0A0518',
               borderRadius: '18px 18px 0 0',
-              border: '1px solid rgba(100,38,160,0.3)',
+              border: '1px solid rgba(201,166,107,0.32)',
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: '0 -8px 40px rgba(100,38,160,0.2)',
+              boxShadow: '0 -8px 40px rgba(201,166,107,0.20)',
             }}
           >
-            <div style={{ padding: '10px 16px 8px', borderBottom: '1px solid rgba(100,38,160,0.15)', flexShrink: 0 }}>
-              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(100,38,160,0.3)', margin: '0 auto 10px' }} />
+            <div style={{ padding: '10px 16px 8px', borderBottom: '1px solid rgba(201,166,107,0.15)', flexShrink: 0 }}>
+              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(201,166,107,0.32)', margin: '0 auto 10px' }} />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div
@@ -924,7 +925,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       width: 26,
                       height: 26,
                       borderRadius: 7,
-                      background: 'linear-gradient(135deg,rgba(100,38,160,0.3),rgba(60,22,120,0.5))',
+                      background: 'linear-gradient(135deg,rgba(201,166,107,0.32),rgba(60,22,120,0.5))',
                       border: '1px solid rgba(100,38,160,0.4)',
                       display: 'flex',
                       alignItems: 'center',
@@ -934,8 +935,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     <ZapIcon size={13} color="#9B5FE0" />
                   </div>
                   <div>
-                    <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: 'Palatino Linotype,serif' }}>Supe</span>
-                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
+                    <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: "'Sora','Inter',sans-serif" }}>Supe</span>
+                    <span style={{ fontSize: 9, color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
                   </div>
                 </div>
                 <button
@@ -1021,9 +1022,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
             borderRadius: '50%',
             border: 'none',
             cursor: 'pointer',
-            background: showSupe ? 'rgba(100,38,160,0.9)' : 'rgba(100,38,160,0.15)',
+            background: showSupe ? 'rgba(100,38,160,0.9)' : 'rgba(201,166,107,0.15)',
             borderColor: 'rgba(100,38,160,0.5)',
-            boxShadow: '0 4px 20px rgba(100,38,160,0.3)',
+            boxShadow: '0 4px 20px rgba(201,166,107,0.32)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -1222,7 +1223,7 @@ function PaywallGate({ feature }: { feature: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 24px', textAlign: 'center' }}>
       
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
+      <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
         {feature}
       </h2>
       <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 360, lineHeight: 1.7, marginBottom: 28 }}>
@@ -1258,7 +1259,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
         <div style={{ marginBottom: 20, opacity: 0.3 }}>
           <VSMIcon size={64} color="var(--brand)" />
         </div>
-        <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
+        <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: "'Sora','Inter',sans-serif", fontWeight: 700 }}>
           No process steps yet
         </div>
         <div style={{ fontSize: 13, color: 'var(--sl-400)', marginBottom: 28, lineHeight: 1.6 }}>
@@ -1412,7 +1413,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
           <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 13, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
             {step.name}
             {isSM && (
-              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(100,38,160,0.15)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.3)', fontWeight: 700, letterSpacing: 1 }}>SM</span>
+              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(201,166,107,0.15)', color: '#A8854F', border: '1px solid rgba(201,166,107,0.32)', fontWeight: 700, letterSpacing: 1 }}>SM</span>
             )}
           </div>
           {step.department && <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 1 }}>{step.department}</div>}
@@ -1458,7 +1459,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
             ))}
           </div>
           {step.notes && (
-            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>NOTES</span>
               {step.notes}
             </div>
@@ -1504,7 +1505,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
   return (
     <div>
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, marginBottom: 20, color: 'var(--text)' }}>
+      <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 20, color: 'var(--text)' }}>
         Kaizen Board
       </h2>
 
@@ -1562,7 +1563,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
   return (
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 4px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
-        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+        <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
           CI Report, {project.name}
         </h2>
         <AIAssistButton
@@ -1637,7 +1638,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? fmtS(wt) : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(201,166,107,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
@@ -1748,7 +1749,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, gap: 16, flexWrap: 'wrap' }}>
         <div>
-          <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+          <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Process Branches
           </h2>
           <p style={{ fontSize: 13, color: 'var(--text3)' }}>Parallel lanes, sub-assemblies, prep flows, quality loops</p>

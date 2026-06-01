@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import { VesimyLogo } from '@/components/ui/Logo'
+import { VsLogo } from '@/components/ui/VsLogo'
 
 function LoginForm() {
   const router       = useRouter()
@@ -96,11 +97,11 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4"
-         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(100,38,160,0.08) 0%, transparent 60%), var(--bg)' }}>
+         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,166,107,0.08) 0%, transparent 60%), var(--bg)' }}>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <VesimyLogo size={56} />
+            <VsLogo size={56} />
           </div>
           <h1 style={{ fontFamily: 'Palatino Linotype,Book Antiqua,Palatino,serif', fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
               className="text-[var(--brand)]">
@@ -169,7 +170,7 @@ function LoginForm() {
                 <Link href="/auth/reset" className="hover:text-[var(--brand)] transition-colors">Forgot password?</Link>
               </p>
               {authErrorMsg?.includes('Email not confirmed') && (
-                <p className="text-xs" style={{ color: 'var(--amber)', background: 'rgba(212,168,67,0.08)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(212,168,67,0.20)' }}>
+                <p className="text-xs" style={{ color: 'var(--amber)', background: 'rgba(201,166,107,0.08)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(201,166,107,0.20)' }}>
                   Check your inbox and click the confirmation link first, then sign in here.
                 </p>
               )}

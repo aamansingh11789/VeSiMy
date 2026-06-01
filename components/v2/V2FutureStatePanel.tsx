@@ -309,7 +309,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
           </div>
           <button onClick={generateFutureState} disabled={generating} style={{
             padding: '8px 18px', borderRadius: 8, border: 'none',
-            background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+            background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
             color: 'white', fontSize: 12, fontWeight: 700, cursor: 'pointer', flexShrink: 0,
           }}>
             Generate future state →

@@ -22,11 +22,11 @@
   --vs-bg5: #1C2850;   /* Active and focus. Highest visible */
 
   /* Accent colors */
-  --vs-blue:       #D4A843;   /* primary brand = amber */
-  --vs-blue-dim:   #B8912E;
+  --vs-blue:       #C9A66B;   /* primary brand = amber */
+  --vs-blue-dim:   #A8854F;
   --vs-blue-glow:  rgba(212, 168, 67, 0.15);
-  --vs-blue-bdr:   rgba(212, 168, 67, 0.25);
-  --vs-blue-light: #E8C466;
+  --vs-blue-bdr:   rgba(201, 166, 107, 0.25);
+  --vs-blue-light: #D9C8A9;
   --vs-cyan:       #22D3EE;
   --vs-purple:     #A78BFA;
 
@@ -65,7 +65,7 @@
     0 2px 0 rgba(139, 106, 0, 0.9),
     0 4px 0 rgba(100, 75, 0, 0.7),
     0 6px 0 rgba(60, 45, 0, 0.5),
-    0 8px 24px rgba(212, 168, 67, 0.25);
+    0 8px 24px rgba(201, 166, 107, 0.25);
 
   --vs-btn-shadow-hover:
     inset 0 1px 0 rgba(255, 255, 255, 0.3),

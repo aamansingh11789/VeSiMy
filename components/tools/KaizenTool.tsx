@@ -15,7 +15,7 @@ const STATUSES = ['open', 'in-progress', 'complete', 'verified'] as const
 
 const STATUS_COLOR: Record<string, string> = {
   open: 'var(--text3)',
-  'in-progress': '#D4A843',
+  'in-progress': '#C9A66B',
   complete: '#1DD1A1',
   verified: '#6CB9FC',
 }
@@ -512,7 +512,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
 
         {items.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text3)' }}>
-            <div style={{ fontSize:11, fontWeight:800, fontFamily:"monospace", letterSpacing:1, color:"var(--brand)", marginBottom:8 }}>KAIZEN</div>
+            <div style={{ fontSize:11, fontWeight:800, fontFamily:"'JetBrains Mono',monospace", letterSpacing:1, color:"var(--brand)", marginBottom:8 }}>KAIZEN</div>
             <p style={{ fontSize: 13 }}>
               No kaizen events yet. Add one to track improvement activities.
             </p>

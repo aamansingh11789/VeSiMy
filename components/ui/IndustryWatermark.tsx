@@ -826,7 +826,7 @@ export function IndustryWatermark({ group, size = 420 }: Props) {
       style={{
         position: 'fixed', bottom: -40, right: -40,
         width: size, height: size,
-        color: 'var(--brand, #D4A843)',
+        color: 'var(--brand, #C9A66B)',
         opacity: 0.038,
         pointerEvents: 'none', userSelect: 'none', zIndex: 0,
       }}

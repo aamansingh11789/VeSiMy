@@ -53,9 +53,9 @@ export function ToastContainer() {
                     border: '1px solid rgba(255,107,107,0.25)',
                   }
                 : {
-                    background: 'rgba(212,168,67,0.12)',
-                    color: '#D4A843',
-                    border: '1px solid rgba(212,168,67,0.25)',
+                    background: 'rgba(201,166,107,0.12)',
+                    color: '#C9A66B',
+                    border: '1px solid rgba(201,166,107,0.25)',
                   }),
           }}
         >
@@ -77,9 +77,9 @@ export function Badge({
   variant?: BadgeVariant
 }) {
   const styles: Record<BadgeVariant, React.CSSProperties> = {
-    gold: { background: 'rgba(212,168,67,0.12)', color: '#D4A843', border: '1px solid rgba(212,168,67,0.22)' },
+    gold: { background: 'rgba(201,166,107,0.12)', color: '#C9A66B', border: '1px solid rgba(201,166,107,0.22)' },
     steel: { background: 'rgba(108,185,252,0.10)', color: '#6CB9FC', border: '1px solid rgba(108,185,252,0.22)' },
-    violet: { background: 'rgba(100,38,160,0.12)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.22)' },
+    violet: { background: 'rgba(100,38,160,0.12)', color: '#A8854F', border: '1px solid rgba(100,38,160,0.22)' },
     green: { background: 'rgba(29,209,161,0.10)', color: '#1DD1A1', border: '1px solid rgba(29,209,161,0.22)' },
     red: { background: 'rgba(255,107,107,0.10)', color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.22)' },
     muted: { background: 'rgba(112,112,160,0.10)', color: 'var(--text3)', border: '1px solid rgba(112,112,160,0.15)' },
@@ -110,7 +110,7 @@ export function Spinner({ size = 20 }: { size?: number }) {
         width: size,
         height: size,
         border: `2px solid rgba(1,118,211,0.15)`,
-        borderTop: `2px solid #D4A843`,
+        borderTop: `2px solid #C9A66B`,
         borderRadius: '50%',
         animation: 'spin 0.7s linear infinite',
       }}

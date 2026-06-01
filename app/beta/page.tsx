@@ -95,7 +95,7 @@ export default function BetaPage() {
           <div style={{ width:80, height:80, borderRadius:'50%', margin:'0 auto 28px', display:'flex', alignItems:'center', justifyContent:'center',
             background: isApproved ? 'rgba(29,209,161,0.12)' : 'rgba(1,118,211,0.1)',
             border:`2px solid ${isApproved?'#1DD1A1':'#0176D3'}` }}>
-            {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{fontSize:11,fontWeight:800,fontFamily:"monospace",letterSpacing:1,color:"#0176D3"}}>BETA</span>}
+            {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{fontSize:11,fontWeight:800,fontFamily:"'JetBrains Mono',monospace",letterSpacing:1,color:"#0176D3"}}>BETA</span>}
           </div>
           <h1 style={{ fontFamily:serif, fontSize:28, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             {isApproved ? "You're In. Welcome to Founding Member." : 'Application Received'}
@@ -143,7 +143,7 @@ export default function BetaPage() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
         <Link href="/auth/signup" style={{ fontSize:13, color:'var(--text3)', textDecoration:'none' }}>Already a user? Sign in →</Link>
@@ -258,7 +258,7 @@ export default function BetaPage() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
         <button onClick={() => setPhase('landing')} style={{ background:'none', border:'none', color:'var(--sl-400)', cursor:'pointer', fontSize:13 }}>

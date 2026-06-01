@@ -25,7 +25,7 @@ export default function PDCAPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(201,166,107,0.15)', color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>9 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -50,7 +50,7 @@ export default function PDCAPost() {
             { phase: 'Plan', color: '#6CB9FC', icon: '', desc: 'Define the problem with data. Describe the current condition. Identify the root cause using 5 Why or Fishbone analysis. Set a specific, measurable target condition. Define what success looks like before you start. Write a hypothesis: "If we do X, we expect Y because Z."' },
             { phase: 'Do', color: '#0176D3', icon: '', desc: 'Implement your countermeasure, but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
             { phase: 'Check', color: '#1DD1A1', icon: '', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip, and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
-            { phase: 'Act', color: '#8C44CC', icon: '', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
+            { phase: 'Act', color: '#A8854F', icon: '', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
           ].map(({ phase, color, icon, desc }) => (
             <div key={phase} style={{ background: `${color}08`, border: `1px solid ${color}33`, borderRadius: 12, padding: '18px 20px', marginBottom: 12 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 10 }}>

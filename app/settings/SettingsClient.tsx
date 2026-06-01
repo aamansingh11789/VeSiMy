@@ -20,7 +20,7 @@ const PLAN_COLOR: Record<string, string> = {
   trialing:     'var(--brand)',
   pro:          'var(--brand)',
   lifetime:     '#C49B2E',
-  enterprise:   '#8C44CC',
+  enterprise:   '#A8854F',
   trial_expired:'#C0402A',
   free:         'var(--text3)',
   // 'free' is legacy, treat same as trial
@@ -73,7 +73,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
     <div>
       {/* Header */}
       <div style={{ marginBottom:40 }}>
-        <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:32, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Settings</h1>
+        <h1 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:32, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Settings</h1>
         <p style={{ color:'var(--text3)', fontSize:14 }}>Manage your account, subscription, and preferences.</p>
       </div>
 
@@ -85,7 +85,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
             <div>
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
                 <CrownIcon size={18} color={PLAN_COLOR[planKey] || 'var(--text3)'} />
-                <span style={{ fontSize:20, fontWeight:700, color:PLAN_COLOR[planKey] || 'var(--text)', fontFamily:'Palatino Linotype,serif' }}>
+                <span style={{ fontSize:20, fontWeight:700, color:PLAN_COLOR[planKey] || 'var(--text)', fontFamily:"'Sora','Inter',sans-serif" }}>
                   {planDisplayName}
                 </span>
                 {isFounder && (
@@ -215,7 +215,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
               ['Status',    isLifetime ? 'Lifetime' : subStatus.charAt(0).toUpperCase() + subStatus.slice(1),     isPaid || isBeta ? '#1DD1A1' : 'var(--text3)'],
             ].map(([label, val, color]) => (
               <div key={label} style={{ textAlign:'center' }}>
-                <div style={{ fontSize:22, fontWeight:700, color, fontFamily:'Palatino Linotype,serif' }}>{val}</div>
+                <div style={{ fontSize:22, fontWeight:700, color, fontFamily:"'Sora','Inter',sans-serif" }}>{val}</div>
                 <div style={{ fontSize:11, color:'var(--sl-400)', fontFamily:'var(--font-mono)', letterSpacing:1, textTransform:'uppercase', marginTop:2 }}>{label}</div>
               </div>
             ))}

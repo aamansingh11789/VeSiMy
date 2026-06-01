@@ -37,7 +37,7 @@ export default function ResetPage() {
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:36 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </div>
         {sent ? (

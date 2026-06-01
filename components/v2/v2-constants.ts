@@ -2,7 +2,7 @@
 // ── components/v2/v2-constants.ts ─────────────────────────────────────────────
 // v4.0, Added OODA, 8D, and DMAIC to CI tools
 
-export const BRAND  = '#D4A843'
+export const BRAND  = '#C9A66B'
 export const NAVY   = '#2A1800'
 export const RED    = '#C0402A'
 export const GREEN  = '#2E844A'

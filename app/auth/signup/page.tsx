@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { VesimyLogo } from '@/components/ui/Logo'
+import { VsLogo } from '@/components/ui/VsLogo'
 import { PLANS } from '@/lib/stripe'
 
 function SignupForm() {
@@ -78,7 +79,7 @@ function SignupForm() {
       <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ width:'100%', maxWidth:420, textAlign:'center' }}>
           <div style={{ fontSize:11, fontWeight:800, fontFamily:'var(--font-mono)', letterSpacing:1, color:'var(--brand)', marginBottom:16 }}>EMAIL SENT</div>
-          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
+          <h2 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             Check your email
           </h2>
           <p style={{ color:'var(--text2)', fontSize:14, lineHeight:1.7, marginBottom:8 }}>
@@ -112,11 +113,11 @@ function SignupForm() {
       <div style={{ width:'100%', maxWidth:420 }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <div style={{ display:'flex', justifyContent:'center', marginBottom:16 }}>
-            <VesimyLogo size={48} showText />
+            <VsLogo size={48} showWordmark />
           </div>
-          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
+          <h1 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'trial' ? (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,168,67,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(201,166,107,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name}, ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>

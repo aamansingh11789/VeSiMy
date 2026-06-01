@@ -68,7 +68,7 @@ const examples = [
     action: 'Implement a visual management standard requiring all critical parameters to be posted at the workstation in laminated format. Audit compliance monthly.',
   },
   {
-    color: '#8C44CC',
+    color: '#A8854F',
     problem: 'Lead time for a key product jumped from 4 days to 11 days',
     whys: [
       'A critical sub-assembly is sitting in a WIP queue for 6 days before final assembly',

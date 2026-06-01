@@ -229,7 +229,7 @@ export function HeroCubePreview() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Ambient glow */}
-      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(212,168,67,0.18) 0%, rgba(43,127,255,0.10) 40%, transparent 70%)', filter:'blur(32px)', pointerEvents:'none', zIndex:0 }}/>
+      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(201,166,107,0.18) 0%, rgba(43,127,255,0.10) 40%, transparent 70%)', filter:'blur(32px)', pointerEvents:'none', zIndex:0 }}/>
 
       {/* The cube */}
       <div style={{

@@ -70,7 +70,7 @@ const industries = [
     slug: 'electronics-process-improvement',
     icon: '',
     name: 'Electronics',
-    color: '#8C44CC',
+    color: '#A8854F',
     tagline: 'Yield loss isn\'t in the component. It\'s in the process.',
     challenge: 'SMT line OEE, solder defect rates, ESD discipline, rework ratios, and the brutal economics of scrapping a $400 PCB because of a $0.02 process step.',
     tools: ['Time Study', 'Fishbone', '5 Why', 'Waste ID'],

@@ -33,7 +33,7 @@ const PRIORITY_DOT: Record<KanbanPriority, string> = {
 }
 
 const COL_COLORS = [
-  'var(--border2)','#1090D4','#D4A843','#6426A0',
+  'var(--border2)','#1090D4','#C9A66B','#6426A0',
   '#1DD1A1','#F4A623','#E84393','#00BCD4','#FF6B6B',
 ]
 
@@ -61,7 +61,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
 
   return (
     <div style={{
-      background: 'var(--sl-50)', border: '1px solid rgba(212,168,67,0.25)',
+      background: 'var(--sl-50)', border: '1px solid rgba(201,166,107,0.25)',
       borderRadius: 8, padding: 12, marginBottom: 8,
     }}>
       <textarea
@@ -109,7 +109,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
           disabled={!title.trim()}
           onClick={() => { if (title.trim()) onSave(title.trim(), priority, assignee) }}
           style={{
-            background: 'linear-gradient(135deg,#B8912E,#D4A843)', border: 'none',
+            background: 'linear-gradient(135deg,#A8854F,#C9A66B)', border: 'none',
             borderRadius: 5, padding: '5px 14px', color: '#FFFFFF',
             fontSize: 12, fontWeight: 700, cursor: 'pointer',
             opacity: title.trim() ? 1 : 0.4,
@@ -190,7 +190,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
             disabled={!title.trim()}
             onClick={() => onSave({ title: title.trim(), color, wip_limit: wipLimit ? parseInt(wipLimit) : null })}
             style={{
-              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+              background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
               opacity: title.trim() ? 1 : 0.4,
@@ -353,8 +353,8 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 6 }}>
           {(form.tags || []).map(t => (
             <span key={t} style={{
-              background: 'rgba(100,38,160,0.15)', border: '1px solid rgba(100,38,160,0.3)',
-              borderRadius: 100, padding: '2px 8px', fontSize: 11, color: '#8C44CC',
+              background: 'rgba(201,166,107,0.15)', border: '1px solid rgba(201,166,107,0.32)',
+              borderRadius: 100, padding: '2px 8px', fontSize: 11, color: '#A8854F',
               display: 'flex', alignItems: 'center', gap: 4,
             }}>
               {t}
@@ -375,8 +375,8 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
             }}
           />
           <button onClick={addTag} style={{
-            background: 'rgba(100,38,160,0.1)', border: '1px solid rgba(100,38,160,0.3)',
-            borderRadius: 6, padding: '6px 12px', color: '#8C44CC',
+            background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(201,166,107,0.32)',
+            borderRadius: 6, padding: '6px 12px', color: '#A8854F',
             fontSize: 12, cursor: 'pointer',
           }}>+</button>
         </div>
@@ -393,7 +393,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               padding: '8px 16px', color: 'var(--text3)', fontSize: 13, cursor: 'pointer',
             }}>Cancel</button>
             <button onClick={() => { onUpdate(card.id, form); onClose() }} style={{
-              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+              background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
             }}>Save Changes</button>
@@ -540,7 +540,7 @@ export function KanbanBoard({
     return (
       <div style={{ textAlign: 'center', padding: '80px 0' }}>
         <div style={{ fontSize: 52, marginBottom: 20 }}>▦</div>
-        <div style={{ fontFamily: 'Palatino Linotype,Georgia,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
+        <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
           Your Kanban board is empty
         </div>
         <div style={{ fontSize: 14, color: 'var(--text3)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>
@@ -553,7 +553,7 @@ export function KanbanBoard({
               onClick={handleSeed}
               disabled={seeding}
               style={{
-                background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+                background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
                 border: 'none', borderRadius: 10, padding: '12px 24px',
                 color: '#FFFFFF', fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -581,7 +581,7 @@ export function KanbanBoard({
       {/* Board header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
         <div>
-          <div style={{ fontFamily: 'Palatino Linotype,Georgia,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+          <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Production Kanban Board
           </div>
           <div style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', gap: 14, flexWrap: 'wrap' }}>
@@ -594,12 +594,12 @@ export function KanbanBoard({
           {steps.length > 0 && columns.length === 0 && (
             <button onClick={handleSeed} disabled={seeding} style={{
               background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)',
-              borderRadius: 7, padding: '7px 14px', color: '#D4A843',
+              borderRadius: 7, padding: '7px 14px', color: '#C9A66B',
               fontSize: 12, fontWeight: 600, cursor: 'pointer',
             }}>⊞ Seed from VSM</button>
           )}
           <button onClick={() => setColForm({ open: true })} style={{
-            background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+            background: 'linear-gradient(135deg,#A8854F,#C9A66B)',
             border: 'none', borderRadius: 7, padding: '7px 14px',
             color: '#FFFFFF', fontSize: 12, fontWeight: 700, cursor: 'pointer',
           }}>+ Add Column</button>
@@ -723,7 +723,7 @@ export function KanbanBoard({
                       <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 5 }}>
                         {card.tags.map(t => (
                           <span key={t} style={{
-                            background: 'rgba(100,38,160,0.15)', color: '#8C44CC',
+                            background: 'rgba(201,166,107,0.15)', color: '#A8854F',
                             fontSize: 9, padding: '1px 5px', borderRadius: 3,
                           }}>{t}</span>
                         ))}
@@ -772,7 +772,7 @@ export function KanbanBoard({
             fontSize: 13, cursor: 'pointer', flexShrink: 0, alignSelf: 'flex-start',
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#D4A843'; e.currentTarget.style.color = '#D4A843' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A66B'; e.currentTarget.style.color = '#C9A66B' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
           + Add Column
         </button>

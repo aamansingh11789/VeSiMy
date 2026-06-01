@@ -104,7 +104,7 @@ export const ISO_STYLES = `
   .iso-standards-bar {
     background: #f9f9f9;
     border: 0.75pt solid #ddd;
-    border-left: 3pt solid #8B6A00;
+    border-left: 3pt solid #A8854F;
     padding: 7pt 10pt;
     font-size: 8.5pt;
     color: #333;
@@ -136,7 +136,7 @@ export const ISO_STYLES = `
   .kpi-value {
     font-size: 17pt;
     font-weight: 700;
-    color: #8B6A00;
+    color: #A8854F;
     line-height: 1;
   }
   .kpi-sub { font-size: 8pt; color: #888; margin-top: 2pt; }

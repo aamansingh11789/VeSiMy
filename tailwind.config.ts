@@ -1,37 +1,44 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        // Vesimy tempered metal palette
-        'oc-bg':      '#03030D',
-        'oc-bg2':     '#080818',
-        'oc-bg3':     '#0D0D22',
-        'oc-border':  '#1A1A40',
-        'oc-gold':    '#0176D3',
-        'oc-gold2':   '#F4A623',
-        'oc-violet':  '#6426A0',
-        'oc-violet2': '#8C44CC',
-        'oc-steel':   '#6CB9FC',
-        'oc-steel2':  '#1090D4',
+        vs: {
+          navy:  { 950:"#071A2F", 900:"#0B1D33", 800:"#0F2747", 700:"#163A5F" },
+          blue:  { 700:"#2F5D8A", 600:"#3A6FA3", 500:"#4A83BC" },
+          slate: { 700:"#4F6174", 600:"#73879C", 400:"#A9B5C2", 200:"#DDE3EA", 100:"#EEF2F6" },
+          gold:  { 600:"#C9A66B", 500:"#D9C08A", 300:"#E8D8B5" },
+          sand:  { 100:"#F7F3EA" },
+          paper:   "#F7F8FA",
+          white:   "#FFFFFF",
+          success: "#2F8F6B",
+          warning: "#D99A3D",
+          danger:  "#C94F4F",
+          info:    "#2F76D2",
+        },
+        // Legacy aliases (so old code still compiles)
+        brand:  "#0B1D33",
+        amber:  "#C9A66B",
       },
       fontFamily: {
-        serif: ['Palatino Linotype', 'Book Antiqua', 'Palatino', 'Georgia', 'serif'],
-        sans:  ['Inter', '-apple-system', 'Arial', 'sans-serif'],
-        mono:  ['JetBrains Mono', 'Courier New', 'monospace'],
+        display: ["Sora", "Inter", "system-ui", "sans-serif"],
+        sans:    ["Inter", "system-ui", "sans-serif"],
+        mono:    ["JetBrains Mono", "Fira Code", "monospace"],
+        serif:   ["Instrument Serif", "Georgia", "serif"],
       },
-      backgroundImage: {
-        'metal-gradient': 'linear-gradient(135deg, #0176D3, #AC3A5A, #6426A0, #1060D4, #6CB9FC)',
+      borderRadius: {
+        vsSm:"8px", vsMd:"12px", vsLg:"16px", vsXl:"22px",
       },
       boxShadow: {
-        'gold-glow': '0 0 24px rgba(1,118,211,0.28)',
-        'violet-glow': '0 0 24px rgba(100,38,160,0.22)',
+        vsCard:  "0 10px 30px rgba(7, 26, 47, 0.06)",
+        vsPanel: "0 18px 50px rgba(7, 26, 47, 0.12)",
+        vsDark:  "0 18px 60px rgba(7, 26, 47, 0.35)",
       },
     },
   },

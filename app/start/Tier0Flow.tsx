@@ -176,7 +176,7 @@ function Stopwatch({ onSave }: { onSave: (seconds: number) => void }) {
         {!running && elapsed === 0 && (
           <button onClick={start} style={{
             flex: 1, padding: '10px', borderRadius: 8, border: 'none',
-            background: C.blue, color: '#1A0E00', fontWeight: 700, cursor: 'pointer',
+            background: C.blue, color: '#0B1D33', fontWeight: 700, cursor: 'pointer',
             fontSize: 14, fontFamily: 'inherit',
           }}>Start</button>
         )}
@@ -348,7 +348,7 @@ function ReportView({ report, email, processName }: { report: Report; email: str
         </p>
         <Link href="/auth/signup" style={{ padding: '14px 32px', borderRadius: 10, border: 'none', cursor: 'pointer',
             background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-            color: '#1A0E00', fontSize: 15, fontWeight: 700,
+            color: '#0B1D33', fontSize: 15, fontWeight: 700,
             fontFamily: 'inherit', boxShadow: btnShadow, textDecoration: 'none', display: 'inline-block', textAlign: 'center', boxSizing: 'border-box' }}>Start Free Trial</Link>
       </div>
     </div>
@@ -813,7 +813,7 @@ export default function Tier0Flow() {
                           />
                           <button onClick={() => applyManualTime(originalIdx)} style={{
                             padding: '0 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                            background: C.blue, color: '#1A0E00', fontWeight: 700, fontFamily: 'inherit',
+                            background: C.blue, color: '#0B1D33', fontWeight: 700, fontFamily: 'inherit',
                           }}>Set</button>
                         </div>
                         <button onClick={() => setActiveStepIdx(null)} style={{
@@ -968,7 +968,7 @@ export default function Tier0Flow() {
             <button onClick={() => setStep(s => s + 1)} style={{
               flex: 2, padding: '14px', borderRadius: 12, border: 'none',
               background: `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-              color: '#1A0E00', fontSize: 15, fontWeight: 700,
+              color: '#0B1D33', fontSize: 15, fontWeight: 700,
               cursor: 'pointer', fontFamily: 'inherit', boxShadow: btnShadow,
             }}>Continue</button>
           </div>

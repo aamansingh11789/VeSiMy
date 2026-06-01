@@ -1,376 +1,453 @@
 'use client'
-// ── app/page.tsx, VeSiMy Homepage v5.0 ──────────────────────────────────────
-// Design: Premium dark SaaS, deep navy, warm amber glow, product mockup hero.
+// ── app/page.tsx — VeSiMy Homepage v6.0 ──────────────────────────────────────
+// Refined Precision / Quiet Industrial Clarity
+// Brand: deep navy + champagne gold, Instrument Serif display + Inter body
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
-import { ManufacturingHeroDashboard } from '@/components/homepage/ManufacturingHeroDashboard'
-import { HeroCubePreview } from '@/components/home/HeroCubePreview'
 
-// ── Design tokens ─────────────────────────────────────────────────────────────
-const BG   = '#08090F'   // page canvas
-const BG2  = '#0D0F1A'   // elevated surfaces
-const NAVY = '#04111F'   // deep navy
-const BLUE = '#1670D4'   // electric blue
-const BLUEL = '#60A5FA'  // light blue
-const AMBER = '#D4A843'  // warm amber (matches reference)
-const AMBERL = '#E8C466' // lighter amber for gradients
-const AMBERD = '#B8912E' // darker amber for depth
-const WHITE = '#F0F2FF'  // near white
-const GRAY  = '#8B95B0'  // body text
-const GRAY2 = '#5A6480'  // muted text
-const BORD  = 'rgba(255,255,255,0.08)'
-const BORD2 = 'rgba(255,255,255,0.04)'
-const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
-const MONO  = "'JetBrains Mono','Fira Code',monospace"
+// ── Brand tokens ─────────────────────────────────────────────────────────────
+const NAVY      = '#0B1D33'  // Deep Navy
+const NAVY_2    = '#1E2E4A'  // Indigo
+const STEEL     = '#3A5A7D'  // Steel Blue
+const SLATE     = '#73879C'  // Soft Slate
+const CHAMPAGNE = '#C9A66B'  // Champagne Gold
+const SAND      = '#D9C8A9'  // Warm Sand
+const BG        = '#F7F8FA'  // Clean canvas
+const PAPER     = '#FFFFFF'  // Pure white
+const SOFT_GRAY = '#E6E8EC'  // Border / divider
+const INK       = '#0B1D33'  // Body text
+const INK_2     = '#3A5A7D'  // Secondary text
+const INK_3     = '#73879C'  // Muted text
 
-// ── Styles injected once ──────────────────────────────────────────────────────
+const SANS  = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+const SERIF = "'Instrument Serif', 'Cormorant Garamond', Georgia, serif"
+const MONO  = "'JetBrains Mono', monospace"
+
+// ── Inline styles ────────────────────────────────────────────────────────────
 const CSS = `
-  @keyframes float-gentle {
-    0%,100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-10px) rotate(0.3deg); }
-  }
-  @keyframes glow-pulse {
-    0%,100% { opacity: 0.5; }
-    50%      { opacity: 1; }
-  }
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes scan {
-    0%   { top:-2px; opacity:0; }
-    5%   { opacity:0.7; }
-    95%  { opacity:0.7; }
-    100% { top:100%; opacity:0; }
-  }
-  .au  { animation: fade-up 0.6s ease both; }
-  .au1 { animation: fade-up 0.6s ease 0.1s both; }
-  .au2 { animation: fade-up 0.6s ease 0.2s both; }
-  .au3 { animation: fade-up 0.6s ease 0.3s both; }
-  .au4 { animation: fade-up 0.6s ease 0.4s both; }
-  .au5 { animation: fade-up 0.6s ease 0.5s both; }
-  .float { animation: float-gentle 7s ease-in-out infinite; will-change: transform; }
-  .amber-btn {
+  .fu  { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+  .fu1 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.08s both; }
+  .fu2 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.16s both; }
+  .fu3 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s both; }
+  .fu4 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.32s both; }
+  .fu5 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.40s both; }
+  
+  .btn-navy {
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:11px 26px; border-radius:8px; font-size:14px; font-weight:700;
-    cursor:pointer; border:none; font-family:${SANS}; text-decoration:none;
-    background:linear-gradient(135deg,${AMBER} 0%,${AMBERD} 100%);
-    color:#0A0800;
-    box-shadow:0 1px 0 rgba(255,255,255,0.18) inset, 0 2px 0 ${AMBERD},
-               0 4px 0 rgba(160,120,20,0.4), 0 8px 24px rgba(212,168,67,0.25);
-    transition:all 0.15s;
-    letter-spacing:0.1px;
+    padding:12px 22px; border-radius:8px;
+    font-size:14px; font-weight:600; cursor:pointer;
+    background:#0B1D33; color:#F7F8FA;
+    border:none; text-decoration:none;
+    font-family:${SANS};
+    transition:all 0.18s;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 2px 8px rgba(11,29,51,0.20);
   }
-  .amber-btn:hover {
-    background:linear-gradient(135deg,${AMBERL} 0%,${AMBER} 100%);
-    box-shadow:0 1px 0 rgba(255,255,255,0.22) inset, 0 2px 0 ${AMBERD},
-               0 4px 0 rgba(160,120,20,0.4), 0 12px 32px rgba(212,168,67,0.35);
-    transform:translateY(-1px);
+  .btn-navy:hover {
+    background:#1E2E4A; transform: translateY(-1px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 6px 18px rgba(11,29,51,0.30);
   }
-  .ghost-btn {
-    display:inline-flex; align-items:center; gap:8px;
-    padding:11px 22px; border-radius:8px; font-size:14px; font-weight:600;
-    cursor:pointer; background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.14); color:${WHITE};
-    font-family:${SANS}; text-decoration:none; transition:all 0.15s;
+  .btn-ghost {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 20px; border-radius:8px;
+    font-size:14px; font-weight:500; cursor:pointer;
+    background:transparent; color:#0B1D33;
+    border:1px solid rgba(11,29,51,0.16);
+    text-decoration:none; font-family:${SANS};
+    transition:all 0.18s;
   }
-  .ghost-btn:hover { background:rgba(255,255,255,0.10); border-color:rgba(255,255,255,0.22); }
+  .btn-ghost:hover {
+    background:#F0F4F9; border-color: rgba(11,29,51,0.28);
+  }
   .nav-link {
-    display:inline-flex; align-items:center; gap:4px;
-    font-size:14px; font-weight:500; color:${GRAY}; cursor:pointer;
-    text-decoration:none; background:none; border:none; padding:4px 2px;
-    font-family:${SANS}; transition:color 0.15s; white-space:nowrap;
+    font-size:13px; font-weight:500; color:#3A5A7D;
+    text-decoration:none; transition: color 0.15s;
+    font-family:${SANS};
   }
-  .nav-link:hover { color:${WHITE}; }
-  .feature-card {
-    display:flex; flex-direction:column; gap:10px; padding:24px;
-    border-radius:12px; border:1px solid rgba(255,255,255,0.07);
-    background:rgba(255,255,255,0.03); transition:all 0.2s;
+  .nav-link:hover { color: #0B1D33; }
+  
+  @media (max-width: 900px) {
+    .nav-links-desktop { display: none !important; }
   }
-  .feature-card:hover { border-color:rgba(212,168,67,0.22); background:rgba(212,168,67,0.03); }
-  .testi-card {
-    background:#FFFFFF; border-radius:12px; padding:28px;
-    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  @media (max-width: 768px) {
+    .hero-headline { font-size: clamp(36px, 11vw, 56px) !important; }
+    .industry-pills { gap: 12px !important; }
+    .industry-pills > * { font-size: 13px !important; }
+    .feature-grid { grid-template-columns: 1fr !important; }
+    .metric-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .vsm-row { grid-template-columns: 1fr !important; }
+    .footer-cols { grid-template-columns: 1fr 1fr !important; }
   }
-  .pricing-card {
-    border-radius:16px; padding:28px; border:1px solid ${BORD};
-    background:rgba(255,255,255,0.03);
-  }
-  .pricing-card.featured {
-    background:linear-gradient(160deg,rgba(212,168,67,0.12) 0%,rgba(212,168,67,0.04) 100%);
-    border-color:rgba(212,168,67,0.35);
-  }
-  .check-item { display:flex; gap:8px; align-items:flex-start; margin-bottom:9px; font-size:13px; color:${GRAY}; }
-  .check-item .check { color:${AMBER}; font-weight:700; margin-top:1px; flex-shrink:0; }
 `
 
 function injectStyles() {
   if (typeof document === 'undefined') return
-  if (document.getElementById('vesimy-v5')) return
+  if (document.getElementById('vesimy-v6')) return
   const s = document.createElement('style')
-  s.id = 'vesimy-v5'
+  s.id = 'vesimy-v6'
   s.textContent = CSS
   document.head.appendChild(s)
 }
 
-// ── Nav ───────────────────────────────────────────────────────────────────────
+// ── Nav ──────────────────────────────────────────────────────────────────────
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
-
   return (
     <nav style={{
-      position:'sticky', top:0, zIndex:200, height:60,
-      display:'flex', alignItems:'center', justifyContent:'space-between',
-      padding:'0 20px',
-      background: scrolled ? 'rgba(8,9,15,0.92)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: scrolled ? `1px solid ${BORD}` : '1px solid transparent',
-      transition:'all 0.3s',
-      WebkitFontSmoothing:'antialiased',
+      position: 'sticky', top: 0, zIndex: 200, height: 64,
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 28px',
+      background: scrolled ? 'rgba(247,248,250,0.92)' : 'transparent',
+      backdropFilter: scrolled ? 'blur(14px)' : 'none',
+      WebkitBackdropFilter: scrolled ? 'blur(14px)' : 'none',
+      borderBottom: scrolled ? `1px solid ${SOFT_GRAY}` : '1px solid transparent',
+      transition: 'all 0.25s',
     }}>
-      {/* Logo */}
-      <Link href="/" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:10}}>
-        <VLogoMark size={30} />
-        <VeSiMyWordmark size={17} onDark />
+      <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <VLogoMark size={32} />
+        <VeSiMyWordmark size={22} />
       </Link>
-
-      {/* Nav links, desktop */}
-      <div style={{display:'flex',alignItems:'center',gap:28}} className="home-nav-links">
-        {[['Product','/#features'],['Solutions','/#solutions'],['Pricing','/#pricing'],['Learn','/learn'],['Blog','/blog']].map(([label,href])=>(
-          <Link key={label} href={href} className="nav-link">{label}</Link>
+      <div className="nav-links-desktop" style={{ display: 'flex', gap: 30, alignItems: 'center' }}>
+        {[['Product','/#features'],['Solutions','/#solutions'],['Pricing','/pricing'],['Resources','/learn']].map(([l,h])=>(
+          <Link key={l} href={h} className="nav-link">{l}</Link>
         ))}
       </div>
-
-      {/* CTA */}
-      <div style={{display:'flex',alignItems:'center',gap:12}} className="home-nav-cta">
-        <Link href="/auth/login" className="nav-link demo-link">Log in</Link>
-        <Link href="/auth/signup" className="amber-btn" style={{padding:'8px 18px',fontSize:13}}>
-          Get Started Free
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <Link href="/auth/login" className="nav-link" style={{ padding: '7px 14px' }}>Sign in</Link>
+        <Link href="/auth/signup" className="btn-navy" style={{ padding: '8px 18px', fontSize: 13 }}>
+          Start free
         </Link>
       </div>
-
-      {/* Mobile hamburger */}
-      <button
-        onClick={()=>setOpen(o=>!o)}
-        style={{display:'none',background:'transparent',border:`1px solid ${BORD}`,
-          borderRadius:7,width:36,height:36,flexDirection:'column',
-          alignItems:'center',justifyContent:'center',gap:4.5,cursor:'pointer',padding:8}}
-        className="n-hamburger"
-      >
-        <span style={{display:'block',width:18,height:1.5,background:GRAY,borderRadius:2,transition:'all 0.2s',transform:open?'rotate(45deg) translate(2px,2px)':'none'}}/>
-        <span style={{display:'block',width:18,height:1.5,background:GRAY,borderRadius:2,transition:'all 0.2s',opacity:open?0:1}}/>
-        <span style={{display:'block',width:18,height:1.5,background:GRAY,borderRadius:2,transition:'all 0.2s',transform:open?'rotate(-45deg) translate(2px,-2px)':'none'}}/>
-      </button>
-
-      {/* Mobile menu */}
-      {open && (
-        <div style={{position:'fixed',top:60,left:0,right:0,zIndex:199,
-          background:'rgba(8,9,15,0.98)',backdropFilter:'blur(12px)',
-          borderBottom:`1px solid ${BORD}`,padding:'16px 0 24px'}}>
-          {[['Product','/#features'],['Pricing','/#pricing'],['Learn','/learn'],['Log in','/auth/login']].map(([l,h])=>(
-            <Link key={l} href={h} onClick={()=>setOpen(false)}
-              style={{display:'block',padding:'12px 32px',fontSize:15,
-                color:GRAY,textDecoration:'none',fontFamily:SANS,fontWeight:500}}>
-              {l}
-            </Link>
-          ))}
-          <div style={{padding:'12px 32px'}}>
-            <Link href="/auth/signup" className="amber-btn" style={{width:'100%',justifyContent:'center'}}>
-              Get Started Free
-            </Link>
-          </div>
-        </div>
-      )}
     </nav>
   )
 }
 
-// ── Product Mockup ─────────────────────────────────────────────────────────────
-function ProductMockup() {
-  const steps = [
-    {name:'Intake',   ct:'12s', va:'VA',   bot:false},
-    {name:'Process',  ct:'45s', va:'VA',   bot:false},
-    {name:'Inspect',  ct:'62s', va:'NNVA', bot:true },
-    {name:'Dispatch', ct:'22s', va:'VA',   bot:false},
-  ]
+// ── Hero ─────────────────────────────────────────────────────────────────────
+function Hero() {
   return (
-    <div className="float hero-mockup" style={{position:'relative',width:580,flexShrink:0,
-      WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale'}}>
+    <section style={{
+      position: 'relative', padding: '64px 28px 80px', overflow: 'hidden',
+    }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', position: 'relative' }}>
 
-      {/* Main browser frame */}
-      <div style={{
-        background:'#FAFBFE', borderRadius:14,
-        boxShadow:'0 0 0 1px rgba(255,255,255,0.12), 0 32px 80px rgba(0,0,0,0.6), 0 4px 8px rgba(0,0,0,0.3)',
-        overflow:'hidden',
-      }}>
-        {/* Browser chrome */}
-        <div style={{
-          background:'#F0F2F8', padding:'10px 16px',
-          borderBottom:'1px solid #E2E6F0',
-          display:'flex', alignItems:'center', gap:10,
+        {/* Top eyebrow */}
+        <div className="fu" style={{
+          display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32,
         }}>
-          <div style={{display:'flex',gap:5}}>
-            {['#FF5F57','#FFBD2E','#28C940'].map(c=>(
-              <div key={c} style={{width:10,height:10,borderRadius:'50%',background:c}}/>
-            ))}
-          </div>
-          <div style={{flex:1,background:'#E4E8F2',borderRadius:5,padding:'4px 12px',
-            fontSize:11,color:'#5A6480',fontFamily:SANS,display:'flex',alignItems:'center',gap:6}}>
-            <span style={{color:'#94A3B8'}}>🔒</span> vesimy.com/project/assembly-line-a
-          </div>
-          <div style={{display:'flex',gap:8,fontSize:11,color:'#94A3B8'}}>
-            <span>v1.2 ↓</span>
-            <button style={{background:BLUE,color:'#fff',border:'none',borderRadius:5,
-              padding:'3px 10px',fontSize:11,fontWeight:600,cursor:'pointer',fontFamily:SANS}}>
-              Share
-            </button>
+          <div style={{
+            width: 32, height: 1, background: NAVY,
+          }}/>
+          <span style={{
+            fontFamily: MONO, fontSize: 11, color: INK_2,
+            letterSpacing: 2.5, textTransform: 'uppercase', fontWeight: 600,
+          }}>
+            BRAND CONCEPT · Refined Precision
+          </span>
+        </div>
+
+        {/* Editorial headline — serif italic + sans */}
+        <h1 className="fu1 hero-headline" style={{
+          fontFamily: SERIF, fontSize: 'clamp(48px, 9vw, 96px)',
+          fontWeight: 400, color: NAVY, lineHeight: 1.0,
+          letterSpacing: '-0.025em', marginBottom: 28,
+          maxWidth: 1000,
+        }}>
+          The execution layer<br/>
+          for <em style={{ fontStyle: 'italic' }}>Lean</em>.
+        </h1>
+
+        {/* Two-column intro */}
+        <div className="fu2" style={{
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60,
+          maxWidth: 1100, marginBottom: 56, alignItems: 'end',
+        }}>
+          <p style={{
+            fontFamily: SANS, fontSize: 18, color: INK_2,
+            lineHeight: 1.6, fontWeight: 400,
+          }}>
+            VeSiMy empowers operations teams to <strong style={{ color: NAVY, fontWeight: 600 }}>visualize work,
+            track performance, and drive continuous improvement</strong> with precision and clarity.
+          </p>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/auth/signup" className="btn-navy">
+              Start free <span style={{ fontSize: 13 }}>→</span>
+            </Link>
+            <Link href="/start" className="btn-ghost">
+              See it in action
+            </Link>
           </div>
         </div>
 
-        {/* App content */}
-        <div style={{padding:'16px 18px', background:'#F5F7FA'}}>
-          {/* Top bar */}
-          <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:14}}>
-            <div style={{fontSize:13,fontWeight:700,color:'#0F172A',fontFamily:SANS}}>
-              Current State · Assembly Line A
-            </div>
-            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:5,
-              background:'rgba(22,112,212,0.10)',border:'1px solid rgba(22,112,212,0.25)',
-              borderRadius:100,padding:'3px 9px'}}>
-              <div style={{width:6,height:6,borderRadius:'50%',background:'#10B981'}}/>
-              <span style={{fontSize:11,fontWeight:700,color:'#10B981',fontFamily:MONO}}>LIVE</span>
-            </div>
-          </div>
+        {/* The product slab - matches reference */}
+        <ProductSlab />
 
-          {/* KPI row */}
-          <div style={{display:'flex',gap:8,marginBottom:14}}>
-            {[['Lead Time','18.2m','#1670D4'],['PCE','26%','#D4A843'],['Takt','32s','#5A6480'],['WIP','31','#EF4444']].map(([l,v,c])=>(
-              <div key={l as string} style={{flex:1,background:'#fff',borderRadius:8,
-                border:'1px solid #E2E8F0',padding:'8px 10px',boxShadow:'0 1px 3px rgba(0,0,0,0.05)'}}>
-                <div style={{fontSize:10,color:'#94A3B8',fontFamily:SANS,letterSpacing:0.4}}>{l}</div>
-                <div style={{fontSize:16,fontWeight:800,color:c as string,fontFamily:MONO,lineHeight:1.1,marginTop:2}}>{v}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* VSM steps */}
-          <div style={{background:'#fff',borderRadius:10,border:'1px solid #E2E8F0',
-            padding:'14px 16px',boxShadow:'0 2px 6px rgba(0,0,0,0.04)'}}>
-            <div style={{fontSize:10,fontWeight:700,color:'#5A6480',letterSpacing:1,
-              textTransform:'uppercase',fontFamily:SANS,marginBottom:10}}>Value Stream</div>
-            <div style={{display:'flex',alignItems:'center',gap:8}}>
-              <div style={{fontSize:10,color:'#94A3B8',flexShrink:0}}>Supplier →</div>
-              {steps.map((s,i)=>(
-                <React.Fragment key={s.name}>
-                  <div style={{
-                    flex:1, borderRadius:8, padding:'10px 10px 8px',
-                    background: s.bot ? 'rgba(239,68,68,0.05)' : '#FAFBFE',
-                    border:`1.5px solid ${s.bot ? '#EF4444' : '#E2E8F0'}`,
-                    position:'relative',
-                  }}>
-                    {s.bot && <div style={{position:'absolute',top:-5,right:-4,
-                      width:14,height:14,background:'#EF4444',borderRadius:'50%',
-                      display:'flex',alignItems:'center',justifyContent:'center'}}>
-                      <span style={{fontSize:8,color:'#fff',fontWeight:800,lineHeight:1}}>!</span>
-                    </div>}
-                    <div style={{fontSize:11,fontWeight:700,color:s.bot?'#EF4444':'#0F172A',
-                      fontFamily:SANS,marginBottom:3}}>{s.name}</div>
-                    <div style={{fontSize:14,fontWeight:800,color:s.bot?'#EF4444':'#1670D4',
-                      fontFamily:MONO,lineHeight:1}}>{s.ct}</div>
-                    <div style={{display:'inline-block',marginTop:4,fontSize:9,fontWeight:700,
-                      padding:'1px 5px',borderRadius:4,
-                      background:s.va==='VA'?'rgba(16,185,129,0.10)':'rgba(245,158,11,0.10)',
-                      color:s.va==='VA'?'#10B981':'#D4A843'}}>{s.va}</div>
-                  </div>
-                  {i < steps.length-1 && (
-                    <div style={{fontSize:14,color:'#CBD5E1',flexShrink:0}}>→</div>
-                  )}
-                </React.Fragment>
-              ))}
-              <div style={{fontSize:10,color:'#94A3B8',flexShrink:0}}>→ Customer</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Process Insights card */}
-      <div style={{
-        position:'absolute', bottom:-20, left:-32,
-        background:'#fff', borderRadius:12,
-        boxShadow:'0 8px 32px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06)',
-        padding:'16px 18px', width:190, zIndex:10,
-      }}>
-        <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:10}}>
-          <div style={{width:18,height:18,borderRadius:5,background:BLUE,
-            display:'flex',alignItems:'center',justifyContent:'center'}}>
-            <span style={{fontSize:9,color:'#fff'}}>◈</span>
-          </div>
-          <span style={{fontSize:11,fontWeight:700,color:'#0F172A',fontFamily:SANS}}>Process Insights</span>
-        </div>
-        <div style={{display:'flex',gap:14,marginBottom:10}}>
-          {[['14','Steps'],['2','Bottlenecks'],['87%','PCE Score']].map(([v,l])=>(
-            <div key={l}>
-              <div style={{fontSize:16,fontWeight:800,color:'#0F172A',fontFamily:MONO,lineHeight:1}}>{v}</div>
-              <div style={{fontSize:9,color:'#94A3B8',fontFamily:SANS,marginTop:2}}>{l}</div>
+        {/* Brand principles row */}
+        <div className="fu5" style={{
+          marginTop: 56, display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: 28, paddingTop: 32, borderTop: `1px solid ${SOFT_GRAY}`,
+        }}>
+          {[
+            { icon: '◇', title: 'Trusted', body: 'Built for enterprise governance and security.' },
+            { icon: '◎', title: 'Focused', body: 'Designed to connect strategy to daily work.' },
+            { icon: '↻', title: 'Adaptive', body: 'Flexible flows that evolve with your business.' },
+            { icon: '↗', title: 'Impactful', body: 'Insights that drive measurable results.' },
+          ].map(p => (
+            <div key={p.title} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{
+                width: 32, height: 32, borderRadius: 6,
+                border: `1px solid ${SOFT_GRAY}`, color: CHAMPAGNE,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 16,
+              }}>{p.icon}</div>
+              <div style={{
+                fontFamily: SANS, fontSize: 13, fontWeight: 600, color: NAVY,
+              }}>{p.title}</div>
+              <div style={{
+                fontFamily: SANS, fontSize: 12, color: INK_3, lineHeight: 1.55, maxWidth: 180,
+              }}>{p.body}</div>
             </div>
           ))}
         </div>
-        {/* Sparkline */}
-        <svg width={154} height={32} style={{display:'block'}}>
-          <polyline points="0,28 20,22 40,18 60,24 80,12 100,8 120,14 154,4"
-            fill="none" stroke="#1670D4" strokeWidth={1.5} strokeLinecap="round"/>
-          <polyline points="0,28 20,22 40,18 60,24 80,12 100,8 120,14 154,4 154,32 0,32"
-            fill="rgba(22,112,212,0.08)" stroke="none"/>
-        </svg>
-        <div style={{fontSize:10,color:BLUE,fontWeight:600,fontFamily:SANS,marginTop:4}}>
-          View full analysis →
+      </div>
+    </section>
+  )
+}
+
+// ── Product Slab (live VSM-style dashboard rendered inline) ──────────────────
+function ProductSlab() {
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setStep(s => (s + 1) % 5), 1400)
+    return () => clearInterval(t)
+  }, [])
+
+  const stepNames = ['Intake','Review','Approve','Execute','Complete']
+
+  return (
+    <div className="fu3" style={{
+      background: NAVY, borderRadius: 18, padding: 28,
+      boxShadow: '0 24px 60px -20px rgba(11,29,51,0.35), 0 1px 0 rgba(255,255,255,0.06) inset',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      {/* Subtle champagne glow upper right */}
+      <div style={{
+        position: 'absolute', top: -80, right: -80, width: 360, height: 360,
+        background: 'radial-gradient(circle, rgba(201,166,107,0.18) 0%, transparent 65%)',
+        pointerEvents: 'none',
+      }}/>
+
+      {/* Header inside the slab */}
+      <div style={{
+        position: 'relative',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        marginBottom: 24, paddingBottom: 16,
+        borderBottom: '1px solid rgba(247,248,250,0.08)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <VLogoMark size={26} onDark />
+          <span style={{
+            fontFamily: SERIF, fontSize: 18, color: '#F7F8FA',
+            letterSpacing: '-0.01em',
+          }}>VeSiMy</span>
+          <span style={{ color: 'rgba(247,248,250,0.20)', fontSize: 18 }}>·</span>
+          <span style={{
+            fontFamily: SANS, fontSize: 13, fontWeight: 500, color: 'rgba(247,248,250,0.65)',
+          }}>Overview</span>
+        </div>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 16,
+          fontFamily: MONO, fontSize: 10,
+          color: 'rgba(247,248,250,0.4)', letterSpacing: 1,
+        }}>
+          <span>This Month</span>
         </div>
       </div>
 
-      {/* Floating Supe AI card */}
-      <div style={{
-        position:'absolute', top:-18, right:-28,
-        background:'#fff', borderRadius:12,
-        boxShadow:'0 8px 32px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06)',
-        padding:'14px 16px', width:200, zIndex:10,
+      {/* KPI row */}
+      <div className="metric-grid" style={{
+        position: 'relative',
+        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 16,
       }}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-          <div style={{display:'flex',alignItems:'center',gap:6}}>
-            <div style={{width:16,height:16,borderRadius:4,background:`linear-gradient(135deg,${AMBER},${AMBERD})`,
-              display:'flex',alignItems:'center',justifyContent:'center'}}>
-              <span style={{fontSize:8,fontWeight:800}}>✦</span>
+        {[
+          { label: 'Process Compliance', value: '92', suffix: '%', delta: '+6% vs last month', deltaPos: true },
+          { label: 'Cycle Time (Avg)',   value: '4.2', suffix: 'h', delta: '–8% vs last month', deltaPos: true },
+          { label: 'Tasks Completed',    value: '128', suffix: '',  delta: '+12% vs last month', deltaPos: true },
+        ].map(k => (
+          <div key={k.label} style={{
+            background: 'rgba(247,248,250,0.04)',
+            border: '1px solid rgba(247,248,250,0.08)',
+            borderRadius: 10, padding: '16px 18px',
+          }}>
+            <div style={{
+              fontFamily: SANS, fontSize: 11, color: 'rgba(247,248,250,0.5)',
+              fontWeight: 500, marginBottom: 8,
+            }}>{k.label}</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 2, marginBottom: 8 }}>
+              <span style={{
+                fontFamily: SERIF, fontSize: 36, color: '#F7F8FA',
+                fontWeight: 400, lineHeight: 1, letterSpacing: '-0.02em',
+              }}>{k.value}</span>
+              <span style={{
+                fontFamily: SERIF, fontSize: 22, color: 'rgba(247,248,250,0.65)',
+                fontWeight: 400,
+              }}>{k.suffix}</span>
             </div>
-            <span style={{fontSize:11,fontWeight:700,color:'#0F172A',fontFamily:SANS}}>VeSiMy AI</span>
-          </div>
-          <span style={{fontSize:11,color:'#CBD5E1'}}>×</span>
-        </div>
-        <div style={{fontSize:11,color:'#64748B',fontFamily:SANS,marginBottom:10}}>How can I help you today?</div>
-        {['Analyze process efficiency','Find bottlenecks','Suggest improvements','Generate documentation'].map(item=>(
-          <div key={item} style={{display:'flex',alignItems:'center',gap:7,padding:'6px 0',
-            borderTop:'1px solid #F1F5F9'}}>
-            <div style={{width:14,height:14,borderRadius:3,background:'#F0F4FF',
-              display:'flex',alignItems:'center',justifyContent:'center'}}>
-              <span style={{fontSize:7,color:BLUE}}>◈</span>
-            </div>
-            <span style={{fontSize:10.5,color:'#334155',fontFamily:SANS}}>{item}</span>
+            {/* Mini sparkline */}
+            <svg width="100%" height="20" viewBox="0 0 120 20" style={{ display: 'block', marginBottom: 6 }}>
+              <polyline
+                points="0,15 15,12 30,14 45,9 60,11 75,7 90,8 105,5 120,3"
+                fill="none" stroke={STEEL} strokeWidth="1.4" strokeLinecap="round"
+              />
+            </svg>
+            <div style={{
+              fontFamily: SANS, fontSize: 10, color: k.deltaPos ? '#7FCAA0' : '#E89B6E',
+            }}>{k.delta}</div>
           </div>
         ))}
-        <div style={{marginTop:8,display:'flex',gap:6,alignItems:'center',
-          background:'#F8FAFB',borderRadius:7,border:'1px solid #E2E8F0',padding:'7px 10px'}}>
-          <span style={{flex:1,fontSize:10,color:'#94A3B8',fontFamily:SANS}}>Ask anything about your process...</span>
-          <div style={{width:20,height:20,borderRadius:5,background:BLUE,
-            display:'flex',alignItems:'center',justifyContent:'center'}}>
-            <span style={{color:'#fff',fontSize:10}}>→</span>
+      </div>
+
+      {/* Process Flow visualization */}
+      <div style={{
+        position: 'relative',
+        background: 'rgba(247,248,250,0.04)',
+        border: '1px solid rgba(247,248,250,0.08)',
+        borderRadius: 10, padding: '18px 20px', marginBottom: 16,
+      }}>
+        <div style={{
+          fontFamily: SANS, fontSize: 11, color: 'rgba(247,248,250,0.5)',
+          marginBottom: 14, fontWeight: 500,
+        }}>Process Flow</div>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 4,
+        }}>
+          {stepNames.map((name, i) => {
+            const active = i === step
+            const complete = i < step
+            return (
+              <React.Fragment key={name}>
+                <div style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+                  flex: '0 0 auto', transition: 'all 0.3s',
+                }}>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    border: `1.5px solid ${active ? CHAMPAGNE : complete ? STEEL : 'rgba(247,248,250,0.18)'}`,
+                    background: active ? 'rgba(201,166,107,0.15)' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.3s',
+                    boxShadow: active ? '0 0 0 4px rgba(201,166,107,0.15)' : 'none',
+                  }}>
+                    <span style={{
+                      fontSize: 12, color: active ? CHAMPAGNE : complete ? STEEL : 'rgba(247,248,250,0.45)',
+                    }}>
+                      {complete ? '✓' : i === 0 ? '◇' : i === 1 ? '☰' : i === 2 ? '◉' : i === 3 ? '⚙' : '✓'}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontFamily: SANS, fontSize: 10, color: 'rgba(247,248,250,0.55)',
+                    fontWeight: 500,
+                  }}>{name}</span>
+                </div>
+                {i < stepNames.length - 1 && (
+                  <div style={{
+                    flex: 1, height: 1,
+                    background: i < step
+                      ? STEEL
+                      : 'rgba(247,248,250,0.12)',
+                    margin: '0 4px',
+                    transition: 'all 0.3s',
+                  }}/>
+                )}
+              </React.Fragment>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Bottom row */}
+      <div className="vsm-row" style={{
+        position: 'relative',
+        display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 12,
+      }}>
+        {/* Performance trend chart */}
+        <div style={{
+          background: 'rgba(247,248,250,0.04)',
+          border: '1px solid rgba(247,248,250,0.08)',
+          borderRadius: 10, padding: '16px 18px',
+        }}>
+          <div style={{
+            fontFamily: SANS, fontSize: 11, color: 'rgba(247,248,250,0.5)',
+            marginBottom: 12, fontWeight: 500,
+          }}>Performance Trend</div>
+          <svg width="100%" height="80" viewBox="0 0 320 80" style={{ display: 'block' }}>
+            {/* Grid lines */}
+            {[20, 40, 60].map(y => (
+              <line key={y} x1="0" y1={y} x2="320" y2={y}
+                stroke="rgba(247,248,250,0.06)" strokeWidth="1"/>
+            ))}
+            {/* Trend line */}
+            <polyline
+              points="0,60 40,52 80,55 120,45 160,40 200,32 240,28 280,18 320,10"
+              fill="none" stroke={CHAMPAGNE} strokeWidth="2" strokeLinecap="round"
+            />
+            {/* Area fill */}
+            <polyline
+              points="0,60 40,52 80,55 120,45 160,40 200,32 240,28 280,18 320,10 320,80 0,80"
+              fill="rgba(201,166,107,0.10)" stroke="none"
+            />
+          </svg>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between',
+            marginTop: 8, fontFamily: MONO, fontSize: 9,
+            color: 'rgba(247,248,250,0.35)',
+          }}>
+            <span>Apr 1</span><span>Apr 15</span><span>Apr 29</span>
+          </div>
+        </div>
+
+        {/* Top improvement donut */}
+        <div style={{
+          background: 'rgba(247,248,250,0.04)',
+          border: '1px solid rgba(247,248,250,0.08)',
+          borderRadius: 10, padding: '16px 18px',
+          display: 'flex', alignItems: 'center', gap: 14,
+        }}>
+          {/* Donut */}
+          <svg width="64" height="64" viewBox="0 0 64 64" style={{ flexShrink: 0 }}>
+            <circle cx="32" cy="32" r="26" fill="none"
+              stroke="rgba(247,248,250,0.08)" strokeWidth="6"/>
+            <circle cx="32" cy="32" r="26" fill="none"
+              stroke={CHAMPAGNE} strokeWidth="6" strokeLinecap="round"
+              strokeDasharray={`${0.68 * 163} 163`}
+              transform="rotate(-90 32 32)"/>
+            <text x="32" y="36" textAnchor="middle"
+              fontFamily={SERIF} fontSize="18" fill="#F7F8FA" letterSpacing="-0.02em">68%</text>
+          </svg>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{
+              fontFamily: SANS, fontSize: 11, color: 'rgba(247,248,250,0.5)',
+              marginBottom: 4,
+            }}>Top Improvement</div>
+            <div style={{
+              fontFamily: SANS, fontSize: 13, color: '#F7F8FA',
+              fontWeight: 600, lineHeight: 1.3, marginBottom: 4,
+            }}>Changeover Reduction</div>
+            <div style={{
+              fontFamily: MONO, fontSize: 10, color: 'rgba(247,248,250,0.45)',
+              letterSpacing: 0.3,
+            }}>● Goal: 75%</div>
           </div>
         </div>
       </div>
@@ -378,244 +455,79 @@ function ProductMockup() {
   )
 }
 
-// ── Hero ──────────────────────────────────────────────────────────────────────
-function Hero() {
+// ── Industries strip ─────────────────────────────────────────────────────────
+function Industries() {
   return (
-    <section style={{
-      position:'relative', overflow:'hidden',
-      minHeight:'92vh', padding:'60px 24px 80px',
-      backgroundImage:"url('/hero-bg.png')",
-      backgroundSize:'cover', backgroundPosition:'center',
-      display:'flex', alignItems:'center',
-    }}>
-      {/* Overlays */}
-      <div style={{position:'absolute',inset:0,background:'linear-gradient(160deg,rgba(5,6,14,0.85) 0%,rgba(6,8,16,0.70) 50%,rgba(5,6,14,0.90) 100%)'}}/>
-      {/* Warm amber glow, upper right, like reference */}
-      <div style={{position:'absolute',top:-80,right:-80,width:600,height:600,
-        background:'radial-gradient(ellipse at center, rgba(212,168,67,0.14) 0%, transparent 70%)',
-        filter:'blur(40px)',pointerEvents:'none'}}/>
-      {/* Blue glow, left */}
-      <div style={{position:'absolute',bottom:0,left:0,width:500,height:400,
-        background:'radial-gradient(ellipse at bottom left, rgba(22,112,212,0.08) 0%, transparent 70%)',
-        pointerEvents:'none'}}/>
-
-      <div style={{position:'relative',maxWidth:1220,margin:'0 auto',width:'100%',
-        display:'flex',alignItems:'center',flexWrap:'wrap',gap:48, WebkitFontSmoothing:'antialiased'}}>
-
-        {/* Left: copy */}
-        <div style={{flex:'1 1 320px',minWidth:0,width:'100%'}}>
-          {/* Badge */}
-          <div className="au" style={{display:'inline-flex',alignItems:'center',gap:8,
-            marginBottom:28,background:'rgba(212,168,67,0.10)',
-            border:'1px solid rgba(212,168,67,0.28)',borderRadius:100,padding:'5px 14px 5px 10px'}}>
-            <div style={{width:6,height:6,borderRadius:'50%',background:AMBER,
-              boxShadow:`0 0 6px ${AMBER}`,animation:'glow-pulse 2.5s ease-in-out infinite'}}/>
-            <span style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
-              textTransform:'uppercase',fontFamily:MONO}}>
-              AI-Powered Process Intelligence
-            </span>
-          </div>
-
-          {/* Headline */}
-          <div className="au1">
-            <h1 className="hero-h1" style={{fontSize:54,fontWeight:800,color:WHITE,lineHeight:1.07,
-              letterSpacing:-1.8,marginBottom:0,fontFamily:SANS}}>
-              From process mapping
-            </h1>
-          </div>
-          <div className="au2" style={{marginBottom:24}}>
-            <h1 className="hero-h1" style={{fontSize:54,fontWeight:800,lineHeight:1.07,
-              letterSpacing:-1.8,marginBottom:0,fontFamily:SANS,
-              background:`linear-gradient(135deg, ${AMBER} 0%, ${AMBERL} 50%, ${AMBER} 100%)`,
-              WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',
-              backgroundClip:'text'}}>
-              to continuous improvement.
-            </h1>
-          </div>
-
-          {/* Sub */}
-          <p className="au3" style={{fontSize:16,color:GRAY,lineHeight:1.75,
-            maxWidth:480,marginBottom:36,fontFamily:SANS}}>
-            VeSiMy helps operations teams map, measure, analyze, and improve how
-            work gets done, with AI that turns process complexity into clarity.
-          </p>
-
-          {/* CTAs */}
-          <div className="au4" style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:48}}
-            id="hero-cta-row">
-            <Link href="/auth/signup" className="amber-btn">
-              Get Started Free
-            </Link>
-            <Link href="/start" className="ghost-btn">
-              <span style={{fontSize:12}}>▶</span> Try Free Demo
-            </Link>
-          </div>
-
-          {/* Trust bar */}
-          <div className="au5">
-            <div style={{fontSize:10,fontWeight:700,color:GRAY2,letterSpacing:1.5,
-              textTransform:'uppercase',fontFamily:MONO,marginBottom:14}}>
-              Used across operations-focused teams
-            </div>
-            <div className="trust-pills" style={{display:'flex',alignItems:'center',gap:12,flexWrap:'wrap'}}>
-              {['Manufacturing','Healthcare','Logistics','Food & Beverage','Financial Services','Construction'].map((label)=>(
-                <div key={label} style={{
-                  display:'flex',alignItems:'center',gap:0,
-                  fontSize:11,color:GRAY2,fontFamily:SANS,fontWeight:500,
-                  padding:'4px 12px',borderRadius:100,
-                  border:'1px solid rgba(255,255,255,0.10)',
-                  background:'rgba(255,255,255,0.04)',
-                }}>
-                  {label}
-                </div>
-              ))}
-            </div>
-          </div>
+    <section style={{ background: PAPER, padding: '40px 28px', borderTop: `1px solid ${SOFT_GRAY}` }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex',
+        alignItems: 'center', gap: 32, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <div style={{
+          fontFamily: MONO, fontSize: 11, color: INK_3,
+          letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600,
+        }}>
+          Built for
         </div>
-
-        {/* Right: rotating 3D cube */}
-        <div className="au5 hero-mockup-wrap" style={{flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',minHeight:340}}>
-          <HeroCubePreview />
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Social proof, honest, no fake metrics ────────────────────────────────────
-// NOTE: No fake testimonials, ratings, or user counts.
-// Replace this section with real customer quotes when available.
-
-function SocialProof() {
-  // Honest proof section, no fake reviews, no fake ratings, no invented quotes
-  // Replace placeholder cards with real customer stories when available
-  const INDUSTRIES = [
-    {icon:'⚙', name:'Manufacturing',       desc:'Assembly, machining, fabrication, production lines'},
-    {icon:'🏥', name:'Healthcare',          desc:'Clinics, hospitals, labs, care pathways'},
-    {icon:'📦', name:'Logistics',           desc:'Warehousing, fulfilment, last-mile delivery'},
-    {icon:'🍺', name:'Food & Beverage',     desc:'Brewing, bottling, food processing, FMCG'},
-    {icon:'✈', name:'Aerospace',           desc:'MRO, assembly, quality systems, traceability'},
-    {icon:'🏗', name:'Construction',        desc:'Site processes, project handoffs, defect tracking'},
-  ]
-  return (
-    <section style={{background:'#F5F7FA',padding:'72px 40px'}}>
-      <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{textAlign:'center',marginBottom:48}}>
-          <div style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
-            textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>
-            BUILT FOR OPERATIONS
-          </div>
-          <h2 style={{fontSize:36,fontWeight:800,color:'#04111F',
-            letterSpacing:-0.6,lineHeight:1.15,fontFamily:SANS,margin:0}}>
-            Works across industries with processes
-          </h2>
-          <p style={{fontSize:15,color:GRAY2,maxWidth:520,margin:'14px auto 0',
-            lineHeight:1.7,fontFamily:SANS}}>
-            Any team that maps, measures, and improves how work gets done
-            can use VeSiMy. The tools adapt to your industry language automatically.
-          </p>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:16}}>
-          {INDUSTRIES.map((ind)=>(
-            <div key={ind.name} style={{display:'flex',gap:14,alignItems:'flex-start',
-              padding:'18px 20px',background:'#fff',borderRadius:12,
-              border:'1px solid #E8ECF2',boxShadow:'0 1px 4px rgba(4,17,31,0.05)'}}>
-              <div style={{width:40,height:40,borderRadius:10,background:'rgba(212,168,67,0.10)',
-                border:'1px solid rgba(212,168,67,0.20)',display:'flex',alignItems:'center',
-                justifyContent:'center',fontSize:18,flexShrink:0}}>
-                {ind.icon}
-              </div>
-              <div>
-                <div style={{fontSize:14,fontWeight:700,color:'#0F172A',fontFamily:SANS,marginBottom:4}}>
-                  {ind.name}
-                </div>
-                <div style={{fontSize:12,color:'#64748B',lineHeight:1.5,fontFamily:SANS}}>
-                  {ind.desc}
-                </div>
-              </div>
-            </div>
+        <div className="industry-pills" style={{
+          display: 'flex', gap: 28, flexWrap: 'wrap',
+          fontFamily: SERIF, fontStyle: 'italic',
+          fontSize: 20, color: INK_2, fontWeight: 400,
+        }}>
+          {['Manufacturing','Healthcare','Logistics','Food & Beverage','Construction','Financial Services'].map(i => (
+            <span key={i}>{i}</span>
           ))}
         </div>
-        <div style={{marginTop:40,padding:'20px 24px',background:'rgba(212,168,67,0.06)',
-          border:'1px solid rgba(212,168,67,0.18)',borderRadius:12,textAlign:'center'}}>
-          <p style={{fontSize:14,color:'#5A4800',fontFamily:SANS,lineHeight:1.7,margin:0}}>
-            <strong>Structured around ISO 22468:2020, Lean, TPS, and Six Sigma principles.</strong>
-            {' '}Not a generic AI chatbot. Not a training platform.
-            A dedicated execution workspace for process improvement teams.
-          </p>
-        </div>
       </div>
     </section>
   )
 }
 
-
-// ── How It Works ─────────────────────────────────────────────────────────────
+// ── How it works section ────────────────────────────────────────────────────
 function HowItWorks() {
   const steps = [
-    {
-      n: '01',
-      title: 'Map your current state',
-      body: 'Add your process steps with cycle time, wait time, operators, and WIP. VeSiMy builds the value stream map automatically as you type.',
-      color: '#1670D4',
-    },
-    {
-      n: '02',
-      title: 'Identify waste with 17 CI tools',
-      body: 'Run a time study, Fishbone analysis, 5 Why, or Waste ID on any step. All findings are linked to the specific process step they came from.',
-      color: '#D4A843',
-    },
-    {
-      n: '03',
-      title: 'Get AI-powered recommendations',
-      body: 'Supe AI reads your actual cycle times, bottlenecks, and tool findings. It gives you specific, Lean-grounded suggestions, not generic advice.',
-      color: '#7C3AED',
-    },
-    {
-      n: '04',
-      title: 'Build your target state and act',
-      body: 'Generate a Future State VSM with projected improvements. Export a professional report your team and management can actually use.',
-      color: '#16803C',
-    },
+    { n:'01', title:'Map', body:'Build a current state map step by step. Capture cycle time, wait time, WIP, defects, and operators.' },
+    { n:'02', title:'Measure', body:'Lead time, takt, PCE, and bottleneck identification update automatically as you work.' },
+    { n:'03', title:'Improve', body:'Run 17 CI tools and let Supe AI surface the highest-leverage actions for your team.' },
+    { n:'04', title:'Verify', body:'Generate a Future State VSM, track Kaizen progress, and export professional reports.' },
   ]
-
-  const SANS = "'Satoshi','Inter',-apple-system,sans-serif"
-  const MONO = "'JetBrains Mono',monospace"
-
   return (
-    <section style={{ background: '#FFFFFF', padding: '72px 24px', borderTop: '1px solid #E8ECF2' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 52 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: '#D4A843', letterSpacing: 1.5,
-            textTransform: 'uppercase', fontFamily: MONO, marginBottom: 12 }}>
-            HOW IT WORKS
-          </div>
-          <h2 style={{ fontSize: 36, fontWeight: 800, color: '#04111F', letterSpacing: -0.6,
-            lineHeight: 1.15, fontFamily: SANS, margin: '0 0 14px' }}>
-            From first map to measurable improvement
+    <section style={{ background: BG, padding: '80px 28px' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <div style={{ marginBottom: 56, maxWidth: 720 }}>
+          <div style={{
+            fontFamily: MONO, fontSize: 11, color: CHAMPAGNE,
+            letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600,
+            marginBottom: 16,
+          }}>How it works</div>
+          <h2 style={{
+            fontFamily: SERIF, fontSize: 'clamp(36px, 5vw, 56px)',
+            color: NAVY, fontWeight: 400, lineHeight: 1.05,
+            letterSpacing: '-0.02em', margin: 0,
+          }}>
+            From process chaos<br/>
+            to <em style={{ fontStyle: 'italic' }}>measurable clarity</em>.
           </h2>
-          <p style={{ fontSize: 15, color: '#5A6480', maxWidth: 500, margin: '0 auto',
-            lineHeight: 1.75, fontFamily: SANS }}>
-            No Lean certification required. No consultant needed on day one.
-            VeSiMy guides you through every step.
-          </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 20 }}>
+        <div className="feature-grid" style={{
+          display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20,
+        }}>
           {steps.map(s => (
-            <div key={s.n} style={{ padding: '24px', borderRadius: 12,
-              background: '#F8FAFD', border: '1px solid #E8ECF2' }}>
-              <div style={{ fontSize: 11, fontWeight: 800, color: s.color,
-                letterSpacing: 2, fontFamily: MONO, marginBottom: 12 }}>
-                {s.n}
-              </div>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#04111F',
-                marginBottom: 10, fontFamily: SANS, lineHeight: 1.3 }}>
-                {s.title}
-              </h3>
-              <p style={{ fontSize: 13, color: '#5A6480', lineHeight: 1.7,
-                margin: 0, fontFamily: SANS }}>
-                {s.body}
-              </p>
+            <div key={s.n} style={{
+              background: PAPER, borderRadius: 14, padding: '28px 24px',
+              border: `1px solid ${SOFT_GRAY}`,
+              boxShadow: '0 1px 2px rgba(11,29,51,0.04)',
+            }}>
+              <div style={{
+                fontFamily: MONO, fontSize: 11, color: CHAMPAGNE,
+                fontWeight: 700, letterSpacing: 1.5, marginBottom: 16,
+              }}>{s.n}</div>
+              <h3 style={{
+                fontFamily: SERIF, fontSize: 24, color: NAVY,
+                fontWeight: 400, marginBottom: 12, letterSpacing: '-0.01em',
+              }}>{s.title}</h3>
+              <p style={{
+                fontFamily: SANS, fontSize: 13, color: INK_2,
+                lineHeight: 1.65, margin: 0,
+              }}>{s.body}</p>
             </div>
           ))}
         </div>
@@ -624,190 +536,147 @@ function HowItWorks() {
   )
 }
 
-
-// ── Features ──────────────────────────────────────────────────────────────────
-const FEATURES = [
-  {icon:'⊕',  title:'Map with ease',         body:'Drag-drop VSM builder. Capture any process in minutes, not hours.'},
-  {icon:'✦',  title:'AI-powered Supe',        body:'Detects bottlenecks, waste, and improvement opportunities automatically.'},
-  {icon:'◎',  title:'17 CI tools',            body:'Stopwatch, Fishbone, 5 Why, SMED, Kaizen, PDCA, all in one platform.'},
-  {icon:'⟳',  title:'Target State',           body:'AI generates a Future State VSM with projected metrics and action plan.'},
-  {icon:'▨',  title:'Multi-industry support',  body:'66 industry verticals. Lean terminology adapts to your sector automatically.'},
-]
-
-function Features() {
-  return (
-    <section id="features" style={{background:BG,padding:'60px 20px',borderTop:`1px solid ${BORD2}`}}>
-      <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{textAlign:'center',marginBottom:52}}>
-          <div style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
-            textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>
-            PLATFORM CAPABILITIES
-          </div>
-          <h2 className="section-h2" style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
-            lineHeight:1.15,fontFamily:SANS,margin:0}}>
-            Everything your CI team needs
-          </h2>
-          <p style={{fontSize:15,color:GRAY,maxWidth:540,margin:'16px auto 0',
-            lineHeight:1.7,fontFamily:SANS}}>
-            Not a training platform. Not a generic AI chatbot. VeSiMy is the
-            execution layer that turns Lean knowledge into measurable improvement.
-          </p>
-        </div>
-        <div className="feature-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:16}}>
-          {FEATURES.map((f,i)=>(
-            <div key={i} className="feature-card">
-              <div style={{width:40,height:40,borderRadius:10,
-                background:`rgba(212,168,67,0.10)`,
-                border:`1px solid rgba(212,168,67,0.20)`,
-                display:'flex',alignItems:'center',justifyContent:'center',
-                fontSize:18}}>
-                <span style={{color:AMBER}}>{f.icon}</span>
-              </div>
-              <div style={{fontSize:14,fontWeight:700,color:WHITE,fontFamily:SANS}}>{f.title}</div>
-              <div style={{fontSize:13,color:GRAY,lineHeight:1.6,fontFamily:SANS}}>{f.body}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Pricing ───────────────────────────────────────────────────────────────────
+// ── Pricing ──────────────────────────────────────────────────────────────────
 function Pricing() {
   const plans = [
-    {
-      name:'Free Start', price:'Free', sub:'No account needed', featured:false,
-      color:GRAY2, cta:'Start mapping now', href:'/start',
-      features:['1 process map','Stopwatch & time study','Plain language report','1 improvement action'],
-    },
-    {
-      name:'Trial', price:'14 days', sub:'No credit card', featured:false,
-      color:'#10B981', cta:'Create free account', href:'/auth/signup',
-      features:['All 17 CI tools','AI-guided workflow','Up to 3 projects','AI report preview'],
-    },
-    {
-      name:'Pro', price:'$29', priceSub:'/month', sub:'or $23/mo billed annually',
-      featured:true, color:AMBER, cta:'Start Pro', href:'/auth/signup',
-      features:['Everything in Trial','Supe AI full analysis','Target State VSM','PDF export','Simulation engine','Kaizen roadmap'],
-    },
-    {
-      name:'Enterprise', price:'Custom', sub:'Volume discounts available',
-      featured:false, color:BLUEL, cta:'Get a quote', href:'/contact',
-      features:['Team collaboration','Leader & member roles','Version comparison','API + SSO + SLA'],
-    },
+    { name: 'Free Start', price: 'Free', sub: 'No account needed', cta: 'Start mapping', href: '/start',
+      features: ['1 process map','Stopwatch & time study','Plain language report','1 improvement action'], featured: false },
+    { name: 'Trial', price: '14 days', sub: 'No credit card', cta: 'Create account', href: '/auth/signup',
+      features: ['All 17 CI tools','AI-guided workflow','Up to 3 projects','AI report preview'], featured: false },
+    { name: 'Pro', price: '$29', priceSub: '/mo', sub: 'Or $23/mo billed annually', cta: 'Start Pro', href: '/auth/signup',
+      features: ['Everything in Trial','Supe AI full analysis','Target State VSM','PDF export','Simulation engine','Kaizen roadmap'], featured: true },
+    { name: 'Enterprise', price: 'Custom', sub: 'Volume discounts', cta: 'Talk to us', href: '/contact',
+      features: ['Team collaboration','Roles & permissions','Version comparison','API + SSO + SLA'], featured: false },
   ]
-
   return (
-    <section id="pricing" style={{background:BG2,padding:'60px 20px',borderTop:`1px solid ${BORD}`}}>
-      <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{textAlign:'center',marginBottom:52}}>
-          <div style={{fontSize:11,fontWeight:700,color:AMBER,letterSpacing:1.5,
-            textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>
-            PRICING
-          </div>
-          <h2 className="section-h2" style={{fontSize:38,fontWeight:800,color:WHITE,letterSpacing:-0.8,
-            lineHeight:1.15,fontFamily:SANS,margin:0}}>
-            Start free. Upgrade when VeSiMy earns it.
+    <section id="pricing" style={{ background: PAPER, padding: '80px 28px', borderTop: `1px solid ${SOFT_GRAY}` }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{
+            fontFamily: MONO, fontSize: 11, color: CHAMPAGNE,
+            letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 14,
+          }}>Pricing</div>
+          <h2 style={{
+            fontFamily: SERIF, fontSize: 'clamp(36px, 5vw, 56px)',
+            color: NAVY, fontWeight: 400, lineHeight: 1.05,
+            letterSpacing: '-0.02em', margin: 0,
+          }}>
+            Start free. Upgrade when <em style={{ fontStyle: 'italic' }}>it earns it</em>.
           </h2>
         </div>
-        <div className="pricing-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:16,alignItems:'start'}}>
-          {plans.map((p,i)=>(
-            <div key={i} className={`pricing-card${p.featured?' featured':''}`}
-              style={{position:'relative',borderColor: p.featured?`rgba(212,168,67,0.40)`:BORD}}>
+        <div className="feature-grid" style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 16, alignItems: 'start',
+        }}>
+          {plans.map(p => (
+            <div key={p.name} style={{
+              position: 'relative',
+              background: p.featured ? NAVY : PAPER,
+              borderRadius: 14, padding: '28px 24px',
+              border: p.featured ? `1px solid ${NAVY_2}` : `1px solid ${SOFT_GRAY}`,
+              boxShadow: p.featured ? '0 16px 40px -16px rgba(11,29,51,0.30)' : '0 1px 2px rgba(11,29,51,0.04)',
+            }}>
               {p.featured && (
-                <div style={{position:'absolute',top:-13,left:'50%',transform:'translateX(-50%)',
-                  background:`linear-gradient(90deg,${AMBER},${AMBERL})`,
-                  borderRadius:100,padding:'4px 16px',whiteSpace:'nowrap'}}>
-                  <span style={{fontSize:10,fontWeight:800,color:'#0A0800',
-                    letterSpacing:1,textTransform:'uppercase',fontFamily:MONO}}>
-                    Most Popular
-                  </span>
+                <div style={{
+                  position: 'absolute', top: -12, left: 24,
+                  background: CHAMPAGNE, padding: '4px 12px', borderRadius: 100,
+                }}>
+                  <span style={{
+                    fontFamily: MONO, fontSize: 10, fontWeight: 700,
+                    color: NAVY, letterSpacing: 1.5, textTransform: 'uppercase',
+                  }}>Most Popular</span>
                 </div>
               )}
-              <div style={{fontSize:10,fontWeight:700,color:p.color,letterSpacing:1.5,
-                textTransform:'uppercase',fontFamily:MONO,marginBottom:12}}>{p.name}</div>
-              <div style={{display:'flex',alignItems:'baseline',gap:4,marginBottom:4}}>
-                <span style={{fontSize:28,fontWeight:800,color:WHITE,fontFamily:SANS,
-                  letterSpacing:-0.5}}>{p.price}</span>
-                {(p as any).priceSub && <span style={{fontSize:13,color:GRAY,fontFamily:SANS}}>{(p as any).priceSub}</span>}
+              <div style={{
+                fontFamily: MONO, fontSize: 11, color: p.featured ? SAND : INK_3,
+                letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12,
+              }}>{p.name}</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
+                <span style={{
+                  fontFamily: SERIF, fontSize: 40, color: p.featured ? PAPER : NAVY,
+                  fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1,
+                }}>{p.price}</span>
+                {(p as any).priceSub && (
+                  <span style={{ fontFamily: SANS, fontSize: 14, color: p.featured ? 'rgba(247,248,250,0.6)' : INK_2 }}>
+                    {(p as any).priceSub}
+                  </span>
+                )}
               </div>
-              <div style={{fontSize:12,color:GRAY2,fontFamily:SANS,marginBottom:20}}>{p.sub}</div>
-              {p.features.map(f=>(
-                <div key={f} className="check-item">
-                  <span className="check">✓</span>
-                  <span style={{fontFamily:SANS}}>{f}</span>
+              <div style={{
+                fontFamily: SANS, fontSize: 12, color: p.featured ? 'rgba(247,248,250,0.55)' : INK_3, marginBottom: 20,
+              }}>{p.sub}</div>
+              {p.features.map(f => (
+                <div key={f} style={{ display: 'flex', gap: 8, marginBottom: 9, alignItems: 'flex-start' }}>
+                  <span style={{ color: CHAMPAGNE, fontSize: 13, lineHeight: 1.4, flexShrink: 0 }}>✓</span>
+                  <span style={{
+                    fontFamily: SANS, fontSize: 13,
+                    color: p.featured ? 'rgba(247,248,250,0.85)' : INK_2, lineHeight: 1.5,
+                  }}>{f}</span>
                 </div>
               ))}
-              <Link href={p.href}
-                style={{
-                  display:'block',textAlign:'center',marginTop:20,padding:'11px',
-                  borderRadius:8,fontSize:13,fontWeight:700,textDecoration:'none',
-                  fontFamily:SANS,transition:'all 0.15s',
-                  ...(p.featured ? {
-                    background:`linear-gradient(135deg,${AMBER},${AMBERD})`,
-                    color:'#0A0800',
-                    boxShadow:`0 4px 12px rgba(212,168,67,0.30)`,
-                  } : {
-                    background:'rgba(255,255,255,0.07)',
-                    color:WHITE,
-                    border:`1px solid ${BORD}`,
-                  }),
-                }}>
-                {p.cta}
-              </Link>
+              <Link href={p.href} style={{
+                display: 'block', marginTop: 22, textAlign: 'center',
+                padding: '11px 18px', borderRadius: 8,
+                background: p.featured ? CHAMPAGNE : NAVY,
+                color: p.featured ? NAVY : PAPER,
+                fontFamily: SANS, fontSize: 13, fontWeight: 600,
+                textDecoration: 'none',
+              }}>{p.cta}</Link>
             </div>
           ))}
         </div>
-        <p style={{textAlign:'center',marginTop:28,fontSize:13,color:GRAY2,fontFamily:SANS}}>
-          Start with one process. No account needed. Upgrade when you see the value.
-        </p>
       </div>
     </section>
   )
 }
 
-// ── Bottom CTA ────────────────────────────────────────────────────────────────
+// ── Bottom CTA ───────────────────────────────────────────────────────────────
 function BottomCTA() {
   return (
-    <section style={{padding:'48px 40px 56px'}}>
+    <section style={{ background: BG, padding: '64px 28px' }}>
       <div style={{
-        maxWidth:1100,margin:'0 auto',borderRadius:20,
-        background:`linear-gradient(160deg,${BG2} 0%,rgba(12,14,24,1) 100%)`,
-        border:`1px solid rgba(212,168,67,0.18)`,
-        padding:'40px 24px',
-        display:'flex',alignItems:'center',justifyContent:'space-between',
-        flexWrap:'wrap',gap:32,
-        position:'relative',overflow:'hidden',
+        maxWidth: 1100, margin: '0 auto', borderRadius: 20, padding: '64px 48px',
+        background: NAVY, position: 'relative', overflow: 'hidden',
+        boxShadow: '0 24px 60px -20px rgba(11,29,51,0.30)',
       }}>
-        {/* Amber glow */}
-        <div style={{position:'absolute',right:-60,top:-60,width:400,height:400,
-          background:'radial-gradient(ellipse at center,rgba(212,168,67,0.10) 0%,transparent 70%)',
-          pointerEvents:'none'}}/>
-        <div style={{position:'relative',flex:'1 1 400px'}}>
-          <h2 className="cta-headline" style={{fontSize:36,fontWeight:800,color:WHITE,letterSpacing:-0.8,
-            lineHeight:1.2,fontFamily:SANS,marginBottom:12}}>
-            Ready to turn complexity<br/>
-            into your{' '}
-            <span style={{background:`linear-gradient(135deg,${AMBER},${AMBERL})`,
-              WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',
-              backgroundClip:'text'}}>
-              competitive advantage?
-            </span>
+        {/* Subtle champagne accent */}
+        <div style={{
+          position: 'absolute', top: -100, right: -100, width: 400, height: 400,
+          background: 'radial-gradient(circle, rgba(201,166,107,0.14) 0%, transparent 65%)',
+          pointerEvents: 'none',
+        }}/>
+        <div style={{ position: 'relative', maxWidth: 720 }}>
+          <div style={{
+            fontFamily: MONO, fontSize: 11, color: CHAMPAGNE,
+            letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 16,
+          }}>Get started</div>
+          <h2 style={{
+            fontFamily: SERIF, fontSize: 'clamp(32px, 4.5vw, 48px)',
+            color: PAPER, fontWeight: 400, lineHeight: 1.1,
+            letterSpacing: '-0.02em', marginBottom: 32,
+          }}>
+            Map your first process<br/>
+            <em style={{ fontStyle: 'italic', color: SAND }}>in under five minutes</em>.
           </h2>
-          <div style={{display:'flex',gap:24,marginTop:16,flexWrap:'wrap'}}>
-            {['✓ Free 14-day trial','✓ No credit card required','✓ Cancel anytime'].map(item=>(
-              <span key={item} style={{fontSize:13,color:GRAY,fontFamily:SANS}}>{item}</span>
-            ))}
-          </div>
-        </div>
-        <div style={{position:'relative',display:'flex',flexDirection:'column',
-          alignItems:'flex-start',gap:14}}>
-          <Link href="/auth/signup" className="amber-btn" style={{fontSize:15,padding:'13px 32px'}}>
-            Get Started Free →
-          </Link>
-          <div style={{fontSize:12,color:GRAY2,fontFamily:SANS,textAlign:'center',width:'100%'}}>
-            Start with one process. No account required.
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+            <Link href="/auth/signup" style={{
+              padding: '14px 28px', borderRadius: 8,
+              background: CHAMPAGNE, color: NAVY,
+              fontFamily: SANS, fontSize: 14, fontWeight: 600,
+              textDecoration: 'none',
+              boxShadow: '0 4px 12px rgba(201,166,107,0.25)',
+            }}>Start free →</Link>
+            <Link href="/start" style={{
+              padding: '14px 24px', borderRadius: 8,
+              background: 'transparent', color: PAPER,
+              border: '1px solid rgba(247,248,250,0.20)',
+              fontFamily: SANS, fontSize: 14, fontWeight: 500,
+              textDecoration: 'none',
+            }}>Watch the demo</Link>
+            <span style={{
+              fontFamily: MONO, fontSize: 11, color: 'rgba(247,248,250,0.40)',
+              letterSpacing: 0.5, marginLeft: 8,
+            }}>No credit card required</span>
           </div>
         </div>
       </div>
@@ -815,72 +684,60 @@ function BottomCTA() {
   )
 }
 
-// ── Footer ────────────────────────────────────────────────────────────────────
+// ── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer style={{background:BG,borderTop:`1px solid ${BORD}`,padding:'40px 20px 32px'}}>
-      <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div className="footer-grid" style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',
-          gap:32,marginBottom:40}}>
-          {/* Brand */}
-          <div style={{flex:'1 1 200px'}}>
-            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
-              <VLogoMark size={26} />
-              <VeSiMyWordmark size={16} onDark />
+    <footer style={{ background: PAPER, borderTop: `1px solid ${SOFT_GRAY}`, padding: '48px 28px 32px' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <div className="footer-cols" style={{
+          display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 32, marginBottom: 32,
+        }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+              <VLogoMark size={28} />
+              <VeSiMyWordmark size={20} />
             </div>
-            <p style={{fontSize:12,color:GRAY2,lineHeight:1.7,maxWidth:220,fontFamily:SANS}}>
+            <p style={{
+              fontFamily: SANS, fontSize: 13, color: INK_3,
+              lineHeight: 1.6, maxWidth: 280, margin: 0,
+            }}>
               The execution layer for Lean. Map it. Measure it. Improve it.
             </p>
           </div>
-          {/* Links */}
           {[
-            ['Product',[
-              ['All Features','/features'],
-              ['VSM Builder','/learn/vsm-fundamentals'],
-              ['CI Tools','/learn/ci-tools'],
-              ['Supe AI','/learn/lean-fundamentals'],
-              ['Pricing','/pricing'],
-            ]],
-            ['Company',[
-              ['About','/about'],
-              ['Blog','/blog'],
-              ['Pricing','/pricing'],
-              ['Contact','/contact'],
-              ['Changelog','/changelog'],
-            ]],
-            ['Resources',[
-              ['Learning Center','/learn'],
-              ['Documentation','/docs'],
-              ['ISO 22468 Guide','/iso-22468'],
-              ['Lean Glossary','/lean-glossary'],
-            ]],
-          ].map(([heading, links])=>(
-            <div key={heading as string} style={{flex:'1 1 140px'}}>
-              <div style={{fontSize:11,fontWeight:700,color:WHITE,letterSpacing:1,
-                textTransform:'uppercase',fontFamily:MONO,marginBottom:14}}>
-                {heading as string}
-              </div>
-              {(links as [string,string][]).map(([l,href])=>(
-                <div key={l} style={{marginBottom:8}}>
-                  <a href={href} style={{fontSize:13,color:GRAY2,fontFamily:SANS,
-                    textDecoration:'none',transition:'color 0.15s'}}
-                    onMouseEnter={e=>(e.currentTarget as HTMLElement).style.color=WHITE}
-                    onMouseLeave={e=>(e.currentTarget as HTMLElement).style.color=GRAY2}>
-                    {l}
-                  </a>
+            ['Product', [['Features','/features'],['Pricing','/pricing'],['Resources','/learn']]],
+            ['Company', [['About','/about'],['Blog','/blog'],['Contact','/contact']]],
+            ['Resources', [['Documentation','/docs'],['ISO 22468','/iso-22468'],['Glossary','/lean-glossary']]],
+          ].map(([h, links]) => (
+            <div key={h as string}>
+              <div style={{
+                fontFamily: MONO, fontSize: 11, color: NAVY,
+                letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 14,
+              }}>{h as string}</div>
+              {(links as [string,string][]).map(([l,href]) => (
+                <div key={l} style={{ marginBottom: 8 }}>
+                  <Link href={href} style={{
+                    fontFamily: SANS, fontSize: 13, color: INK_2,
+                    textDecoration: 'none',
+                  }}>{l}</Link>
                 </div>
               ))}
             </div>
           ))}
         </div>
-        <div style={{borderTop:`1px solid ${BORD}`,paddingTop:20,
-          display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
-          <span style={{fontSize:11,color:GRAY2,fontFamily:MONO}}>
-            © 2026 VeSiMy · Structured around Lean, VSM, and Continuous Improvement principles
-          </span>
-          <div style={{display:'flex',gap:20}}>
-            {['Privacy','Terms','Security'].map(l=>(
-              <a key={l} href="#" style={{fontSize:12,color:GRAY2,fontFamily:SANS,textDecoration:'none'}}>{l}</a>
+        <div style={{
+          borderTop: `1px solid ${SOFT_GRAY}`, paddingTop: 20,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          flexWrap: 'wrap', gap: 12,
+        }}>
+          <span style={{
+            fontFamily: MONO, fontSize: 11, color: INK_3, letterSpacing: 0.3,
+          }}>© 2026 VeSiMy · Structured using ISO 22468:2020 methodology</span>
+          <div style={{ display: 'flex', gap: 20 }}>
+            {['Privacy','Terms','Security'].map(l => (
+              <Link key={l} href={`/${l.toLowerCase()}`} style={{
+                fontFamily: SANS, fontSize: 12, color: INK_3, textDecoration: 'none',
+              }}>{l}</Link>
             ))}
           </div>
         </div>
@@ -889,18 +746,15 @@ function Footer() {
   )
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
-export default function App() {
+// ── Main export ──────────────────────────────────────────────────────────────
+export default function HomePage() {
   useEffect(() => { injectStyles() }, [])
   return (
-    <div style={{background:BG,minHeight:'100vh',fontFamily:SANS,
-      WebkitFontSmoothing:'antialiased',MozOsxFontSmoothing:'grayscale'}}>
+    <div style={{ background: BG, minHeight: '100vh', fontFamily: SANS, color: INK }}>
       <Nav />
       <Hero />
-      <SocialProof />
+      <Industries />
       <HowItWorks />
-      <Features />
-      <ManufacturingHeroDashboard />
       <Pricing />
       <BottomCTA />
       <Footer />

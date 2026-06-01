@@ -21,7 +21,7 @@ interface GapItem {
   action: string
 }
 
-const SEV_COLOR = { critical: '#FF6B6B', warning: '#D4A843', info: '#6CB9FC' }
+const SEV_COLOR = { critical: '#FF6B6B', warning: '#C9A66B', info: '#6CB9FC' }
 const SEV_ICON  = { critical: '', warning: '', info: '' }
 
 function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
@@ -188,10 +188,10 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* Score header */}
-        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(212,168,67,0.08)' : 'rgba(255,107,107,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(212,168,67,0.3)' : 'rgba(255,107,107,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(201,166,107,0.08)' : 'rgba(255,107,107,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(212,168,67,0.3)' : 'rgba(255,107,107,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <div>
             <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 3 }}>PROCESS CYCLE EFFICIENCY</div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#D4A843' : '#FF6B6B' }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#C9A66B' : '#FF6B6B' }}>
               {Math.round(pce)}%
             </div>
             <div style={{ fontSize: 11, color: 'var(--text3)' }}>Target: 95–100%</div>
@@ -202,7 +202,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               <div style={{ fontSize: 9, color: 'var(--text3)' }}>CRITICAL</div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: '#D4A843' }}>{warnCount}</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#C9A66B' }}>{warnCount}</div>
               <div style={{ fontSize: 9, color: 'var(--text3)' }}>WARNINGS</div>
             </div>
             <div style={{ textAlign: 'center' }}>
@@ -237,7 +237,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               key={f}
               type="button"
               onClick={() => setFilter(f)}
-              style={{ flex: 1, padding: '6px 4px', borderRadius: 8, cursor: 'pointer', fontSize: 10, fontWeight: 700, border: `1px solid ${filter === f ? (f === 'all' ? '#D4A843' : SEV_COLOR[f] || '#D4A843') : 'var(--border)'}`, background: filter === f ? 'rgba(212,168,67,0.08)' : 'var(--bg)', color: filter === f ? (f === 'all' ? '#D4A843' : SEV_COLOR[f] || '#D4A843') : 'var(--text3)' }}
+              style={{ flex: 1, padding: '6px 4px', borderRadius: 8, cursor: 'pointer', fontSize: 10, fontWeight: 700, border: `1px solid ${filter === f ? (f === 'all' ? '#C9A66B' : SEV_COLOR[f] || '#C9A66B') : 'var(--border)'}`, background: filter === f ? 'rgba(201,166,107,0.08)' : 'var(--bg)', color: filter === f ? (f === 'all' ? '#C9A66B' : SEV_COLOR[f] || '#C9A66B') : 'var(--text3)' }}
             >
               {f === 'all' ? `All (${gaps.length})` : f === 'critical' ? `${critCount} critical` : f === 'warning' ? `${warnCount} warnings` : `${gaps.filter(g=>g.severity==='info').length}`}
             </button>
@@ -264,7 +264,7 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
               <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.6 }}>{gap.detail}</div>
                 <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 8, padding: '8px 12px', fontSize: 11.5, color: 'var(--text2)', lineHeight: 1.6 }}>
-                  <span style={{ color: '#D4A843', fontWeight: 700 }}>&rarr; Action: </span>{gap.action}
+                  <span style={{ color: '#C9A66B', fontWeight: 700 }}>&rarr; Action: </span>{gap.action}
                 </div>
               </div>
             </div>

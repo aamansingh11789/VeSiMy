@@ -8,7 +8,7 @@ import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 const GRAY  = '#5A6480'
 const BORD  = '#E2E8F0'
@@ -209,8 +209,8 @@ export default function ContactPage() {
               disabled={loading}
               style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 14,
                 fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
-                background: loading ? '#B8912E' : 'linear-gradient(135deg,#D4A843,#B8912E)',
-                color: '#1A0E00', border: 'none', fontFamily: SANS,
+                background: loading ? '#A8854F' : 'linear-gradient(135deg,#C9A66B,#A8854F)',
+                color: '#0B1D33', border: 'none', fontFamily: SANS,
                 opacity: loading ? 0.75 : 1, transition: 'opacity 0.15s' }}>
               {loading ? 'Sending...' : 'Send message'}
             </button>

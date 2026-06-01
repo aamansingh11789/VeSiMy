@@ -590,7 +590,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 <button onClick={finish} disabled={saving} style={{
                   padding: '14px 28px', borderRadius: 10, border: 'none', cursor: saving ? 'default' : 'pointer',
                   background: saving ? C.b2 : `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-                  color: '#1A0E00', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
+                  color: '#0B1D33', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
                 }}>
                   {saving ? 'Saving your map...' : 'Save map and open in VeSiMy Pro →'}
                 </button>

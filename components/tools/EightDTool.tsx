@@ -66,10 +66,10 @@ function uid() { return Math.random().toString(36).slice(2, 9) }
 
 const DISCIPLINES = [
   { d: 'D1', label: 'Team Formation',        color: '#6CB9FC', icon: '👥' },
-  { d: 'D2', label: 'Problem Description',   color: '#D4A843', icon: '📋' },
+  { d: 'D2', label: 'Problem Description',   color: '#C9A66B', icon: '📋' },
   { d: 'D3', label: 'Interim Containment',   color: '#F4A623', icon: '🚧' },
   { d: 'D4', label: 'Root Cause Analysis',   color: '#C0402A', icon: '🔍' },
-  { d: 'D5', label: 'Permanent Corrective Action', color: '#8C44CC', icon: '🔧' },
+  { d: 'D5', label: 'Permanent Corrective Action', color: '#A8854F', icon: '🔧' },
   { d: 'D6', label: 'Verify & Implement',    color: '#2E844A', icon: '✅' },
   { d: 'D7', label: 'Prevent Recurrence',    color: '#1DD1A1', icon: '🛡' },
   { d: 'D8', label: 'Team Recognition',      color: '#F4A623', icon: '🏆' },
@@ -140,10 +140,10 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text3)' }}>COMPLETION</span>
-          <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#D4A843' }}>{completedCount}/8 disciplines</span>
+          <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#C9A66B' }}>{completedCount}/8 disciplines</span>
         </div>
         <div style={{ height: 6, background: 'var(--bg2)', borderRadius: 3, overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: `${(completedCount / 8) * 100}%`, background: 'linear-gradient(90deg,#D4A843,#1DD1A1)', borderRadius: 3, transition: 'width 0.4s ease' }} />
+          <div style={{ height: '100%', width: `${(completedCount / 8) * 100}%`, background: 'linear-gradient(90deg,#C9A66B,#1DD1A1)', borderRadius: 3, transition: 'width 0.4s ease' }} />
         </div>
       </div>
 

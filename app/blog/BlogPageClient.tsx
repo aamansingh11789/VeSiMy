@@ -37,7 +37,7 @@ const posts = [
   {
     slug: 'theory-of-constraints',
     tag: 'Methodology',
-    tagColor: '#8C44CC',
+    tagColor: '#A8854F',
     title: 'The Theory of Constraints in Plain Language: Why You Always Fix the Bottleneck First',
     excerpt: "Eli Goldratt's most important idea, explained without jargon. Why improving anything other than the bottleneck is wasted effort.",
     readTime: '6 min read',
@@ -145,7 +145,7 @@ const posts = [
   {
     slug: 'process-improvement-small-business',
     tag: 'Industry',
-    tagColor: '#8C44CC',
+    tagColor: '#A8854F',
     title: 'Process Improvement in Small Business: Why You Do Not Need a Black Belt to Start',
     excerpt: 'Lean thinking is not a large-company methodology. Small businesses often have the clearest view of their waste and the fastest path to fixing it.',
     readTime: '6 min read',
@@ -163,7 +163,7 @@ const posts = [
   {
     slug: 'vesimy-vs-manus-ai',
     tag: 'Comparison',
-    tagColor: '#8C44CC',
+    tagColor: '#A8854F',
     title: 'VeSiMy vs Manus AI for Small Business Process Improvement',
     excerpt: 'Choose Manus AI for general-purpose task execution. Choose VeSiMy when you need structured Lean Six Sigma improvement with measurable targets and industry-specific guidance.',
     readTime: '6 min read',
@@ -263,7 +263,7 @@ const posts = [
   {
     slug: 'pdca-in-manufacturing',
     tag: 'Guide',
-    tagColor: '#8C44CC',
+    tagColor: '#A8854F',
     title: 'PDCA in Manufacturing: The Complete Guide to Plan-Do-Check-Act',
     excerpt: 'PDCA is the backbone of ISO 9001 and lean manufacturing. Learn how to run it correctly, how it connects to A3, 8D, and DMAIC, and why the Check phase is the one everyone skips.',
     readTime: '9 min read',
@@ -335,7 +335,7 @@ const posts = [
   {
     slug: 'electronics-process-improvement',
     tag: 'Industry',
-    tagColor: '#8C44CC',
+    tagColor: '#A8854F',
     title: "Yield Loss Isn't in the Component. It's in the Process.",
     excerpt: "SMT line OEE, solder defect rates, and the brutal math of scrapping a $400 PCB over a $0.02 process step. How CI tools address electronics manufacturing's most costly failure modes.",
     readTime: '8 min read',

@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
-const BRAND = '#D4A843'
+const BRAND = '#C9A66B'
 const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
 const mono  = '"JetBrains Mono","IBM Plex Mono",monospace'
 
@@ -135,7 +135,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
       </div>
 
       {!isPaid && (
-        <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(212,168,67,0.18)', borderRadius: 12, padding: '16px 20px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
+        <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(201,166,107,0.18)', borderRadius: 12, padding: '16px 20px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 24 }}>🔒</span>
           <div>
             <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 4 }}>Version snapshots require a paid plan</div>

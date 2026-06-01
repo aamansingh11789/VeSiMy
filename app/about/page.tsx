@@ -26,12 +26,12 @@ export default function AboutPage() {
 
         {/* Header */}
         <div style={{ marginBottom: 64 }}>
-          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#C9A66B', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
             Our Story
           </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(36px,5vw,60px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.1 }}>
             Built by practitioners.<br />
-            <span style={{ color: '#D4A843' }}>For practitioners.</span>
+            <span style={{ color: '#C9A66B' }}>For practitioners.</span>
           </h1>
           <p style={{ fontSize: 17, color: 'var(--text2)', lineHeight: 1.8, maxWidth: 640 }}>
             VeSiMy started with a simple observation: operations teams across every industry were still running their continuous improvement programs on Excel spreadsheets, sticky notes, and $500/month desktop software that hadn't changed in a decade.
@@ -39,8 +39,8 @@ export default function AboutPage() {
         </div>
 
         {/* Mission */}
-        <div style={{ background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
-          <p style={{ fontSize: 11, color: '#D4A843', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
+        <div style={{ background: 'rgba(201,166,107,0.06)', border: '1px solid rgba(201,166,107,0.18)', borderRadius: 16, padding: '32px 36px', marginBottom: 56 }}>
+          <p style={{ fontSize: 11, color: '#C9A66B', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 12, textTransform: 'uppercase' }}>Our Mission</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.45 }}>
             "Make every team, manufacturer, clinic, law firm, or warehouse, as sharp as the best process consultant in the world. On demand. At a fraction of the cost."
           </p>
@@ -69,16 +69,16 @@ export default function AboutPage() {
 
           {/* Founder card */}
           <div style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.86)', borderRadius: 16, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(212,168,67,0.4),rgba(184,145,46,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'Palatino Linotype,serif' }}>M</div>
+            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(212,168,67,0.4),rgba(184,145,46,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#C9A66B', fontFamily: "'Sora','Inter',sans-serif" }}>M</div>
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#D4A843', marginBottom: 12, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
+              <div style={{ fontSize: 13, color: '#C9A66B', marginBottom: 12, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
                 Building VeSiMy from the ground up. Product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every operations team in the world.
               </p>
               <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
                 <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 12, color: '#D4A843', textDecoration: 'none', border: '1px solid rgba(108,185,252,0.24)', borderRadius: 8, padding: '5px 12px' }}>
+                  style={{ fontSize: 12, color: '#C9A66B', textDecoration: 'none', border: '1px solid rgba(108,185,252,0.24)', borderRadius: 8, padding: '5px 12px' }}>
                   LinkedIn →
                 </a>
                 <a href="https://github.com/aamansingh11789" target="_blank" rel="noopener noreferrer"
@@ -100,7 +100,7 @@ export default function AboutPage() {
           ].map(({ label, value }) => (
             <div key={label} style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 12, padding: '20px 22px' }}>
               <div style={{ fontSize: 11, color: 'var(--sl-400)', letterSpacing: 2, fontFamily: 'var(--font-mono)', marginBottom: 8, textTransform: 'uppercase' }}>{label}</div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: '#D4A843' }}>{value}</div>
+              <div style={{ fontSize: 17, fontWeight: 700, color: '#C9A66B' }}>{value}</div>
             </div>
           ))}
         </div>
@@ -116,11 +116,11 @@ export default function AboutPage() {
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:founder@vesimy.com"
-              style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#D4A843,#B8912E)', color: '#1A0E00', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+              style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C9A66B,#A8854F)', color: '#0B1D33', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               founder@vesimy.com
             </a>
             <Link href="/enterprise"
-              style={{ padding: '12px 28px', border: '1px solid rgba(1,118,211,0.3)', color: '#D4A843', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+              style={{ padding: '12px 28px', border: '1px solid rgba(1,118,211,0.3)', color: '#C9A66B', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Enterprise Inquiry →
             </Link>
           </div>

@@ -87,7 +87,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
         {/* Explainer */}
         <div
           style={{
-            background: 'rgba(100,38,160,0.08)',
+            background: 'rgba(201,166,107,0.08)',
             border: '1px solid rgba(100,38,160,0.22)',
             borderRadius: 12,
             padding: '12px 14px',

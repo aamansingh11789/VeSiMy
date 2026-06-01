@@ -415,8 +415,8 @@ export function LearningCenter({ userId }: Props) {
     return (
       <>
         {sec.pro && (
-          <div style={{ background:'rgba(100,38,160,0.06)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:10, padding:'12px 16px', marginBottom:16 }}>
-            <p style={{ fontSize:13, color:'#8C44CC', margin:0 }}>
+          <div style={{ background:'rgba(201,166,107,0.06)', border:'1px solid rgba(201,166,107,0.20)', borderRadius:10, padding:'12px 16px', marginBottom:16 }}>
+            <p style={{ fontSize:13, color:'#A8854F', margin:0 }}>
               This feature requires a <strong>Pro or Enterprise plan</strong>.{' '}
               <a href="/pricing" style={{ color:'var(--brand)', textDecoration:'none' }}>View Pricing &rarr;</a>
             </p>
@@ -437,7 +437,7 @@ export function LearningCenter({ userId }: Props) {
                 >
                   <span style={{
                     width:22, height:22, borderRadius:6, flexShrink:0,
-                    background: open ? 'rgba(212,168,67,0.12)' : 'var(--sl-100)',
+                    background: open ? 'rgba(201,166,107,0.12)' : 'var(--sl-100)',
                     border: `1px solid ${open ? 'var(--brand)' : 'var(--border)'}`,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontSize:10, fontWeight:700, color: open ? 'var(--brand)' : 'var(--text3)',
@@ -489,7 +489,7 @@ export function LearningCenter({ userId }: Props) {
             <button key={tab} onClick={() => { setActiveTab(tab); setShowMobilePicker(false) }} style={{
               padding:'7px 14px', borderRadius:8, fontSize:12,
               fontWeight: activeTab === tab ? 700 : 400,
-              background: activeTab === tab ? 'rgba(212,168,67,0.10)' : 'transparent',
+              background: activeTab === tab ? 'rgba(201,166,107,0.10)' : 'transparent',
               border: `1px solid ${activeTab === tab ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
               color: activeTab === tab ? 'var(--brand)' : 'var(--text3)',
               cursor: 'pointer',
@@ -506,7 +506,7 @@ export function LearningCenter({ userId }: Props) {
             {MANUAL.map(s => (
               <button key={s.id} onClick={() => pickSection(s.id)} style={{
                 width:'100%', textAlign:'left', padding:'9px 14px',
-                background: activeSection === s.id ? 'rgba(212,168,67,0.08)' : 'transparent',
+                background: activeSection === s.id ? 'rgba(201,166,107,0.08)' : 'transparent',
                 border:'none', borderLeft:`3px solid ${activeSection === s.id ? 'var(--brand)' : 'transparent'}`,
                 cursor:'pointer', display:'flex', alignItems:'center', gap:8,
               }}>
@@ -518,8 +518,8 @@ export function LearningCenter({ userId }: Props) {
                 }}>{s.title}</span>
                 {s.pro && (
                   <span style={{
-                    fontSize:8, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1,
-                    background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)',
+                    fontSize:8, color:'#A8854F', fontFamily:'var(--font-mono)', letterSpacing:1,
+                    background:'rgba(201,166,107,0.10)', border:'1px solid rgba(100,38,160,0.22)',
                     borderRadius:4, padding:'1px 4px', flexShrink:0,
                   }}>PRO</span>
                 )}
@@ -558,13 +558,13 @@ export function LearningCenter({ userId }: Props) {
                   {MANUAL.map(s => (
                     <button key={s.id} onClick={() => pickSection(s.id)} style={{
                       width:'100%', textAlign:'left', padding:'11px 16px',
-                      background: activeSection === s.id ? 'rgba(212,168,67,0.08)' : 'transparent',
+                      background: activeSection === s.id ? 'rgba(201,166,107,0.08)' : 'transparent',
                       border:'none', borderBottom:'1px solid var(--border)',
                       cursor:'pointer', display:'flex', alignItems:'center', gap:10,
                     }}>
                       <span style={{ fontSize:16 }}>{s.icon}</span>
                       <span style={{ flex:1, fontSize:13, fontWeight: activeSection === s.id ? 700 : 400, color: activeSection === s.id ? 'var(--brand)' : 'var(--text)' }}>{s.title}</span>
-                      {s.pro && <span style={{ fontSize:9, color:'#8C44CC', background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.2)', borderRadius:4, padding:'2px 5px' }}>PRO</span>}
+                      {s.pro && <span style={{ fontSize:9, color:'#A8854F', background:'rgba(201,166,107,0.10)', border:'1px solid rgba(201,166,107,0.20)', borderRadius:4, padding:'2px 5px' }}>PRO</span>}
                       {activeSection === s.id && <span style={{ color:'var(--brand)' }}><CheckIcon size={13} color='var(--brand)'/></span>}
                     </button>
                   ))}
@@ -579,8 +579,8 @@ export function LearningCenter({ userId }: Props) {
                 <h2 style={{ fontFamily:serif, fontSize:19, fontWeight:700, color:'var(--text)', margin:0 }}>{section.title}</h2>
                 {section.pro && (
                   <span style={{
-                    fontSize:10, color:'#8C44CC', fontFamily:'var(--font-mono)', letterSpacing:1.5,
-                    background:'rgba(100,38,160,0.10)', border:'1px solid rgba(100,38,160,0.22)',
+                    fontSize:10, color:'#A8854F', fontFamily:'var(--font-mono)', letterSpacing:1.5,
+                    background:'rgba(201,166,107,0.10)', border:'1px solid rgba(100,38,160,0.22)',
                     borderRadius:6, padding:'3px 8px',
                   }}>PRO</span>
                 )}

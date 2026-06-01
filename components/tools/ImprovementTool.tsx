@@ -62,7 +62,7 @@ const BLANK_GOAL = (): Goal => ({
 
 const STATUS_COL = {
   open: 'var(--text3)',
-  'in-progress': '#D4A843',
+  'in-progress': '#C9A66B',
   achieved: '#1DD1A1',
   'not-achieved': '#FF6B6B',
 }
@@ -168,9 +168,9 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
                 style={{
                   padding: '7px 12px',
                   borderRadius: 10,
-                  border: `1px solid ${editId === goal.id ? '#D4A843' : 'var(--border)'}`,
-                  background: editId === goal.id ? 'rgba(212,168,67,0.10)' : 'var(--bg)',
-                  color: editId === goal.id ? '#D4A843' : 'var(--text2)',
+                  border: `1px solid ${editId === goal.id ? '#C9A66B' : 'var(--border)'}`,
+                  background: editId === goal.id ? 'rgba(201,166,107,0.10)' : 'var(--bg)',
+                  color: editId === goal.id ? '#C9A66B' : 'var(--text2)',
                   cursor: 'pointer',
                   fontSize: 12,
                   fontWeight: editId === goal.id ? 700 : 500,

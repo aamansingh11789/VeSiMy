@@ -58,7 +58,7 @@ const fmtS = (s: number) => {
 const TYPE_META: Record<StepType, { label: string; color: string; bg: string; desc: string; tipKey: string }> = {
   internal: { label: 'Internal',  color: '#C0402A', bg: 'rgba(192,64,42,0.1)',   desc: 'Machine must be stopped to perform this task', tipKey: 'smed_internal' },
   external: { label: 'External',  color: '#1A7A5E', bg: 'rgba(26,122,94,0.1)',   desc: 'Can be done while machine is still running', tipKey: 'smed_external' },
-  waste:    { label: 'Waste/NVA', color: '#8C44CC', bg: 'rgba(140,68,204,0.1)', desc: 'Target for elimination, adds no value', tipKey: 'waste_overprocessing' },
+  waste:    { label: 'Waste/NVA', color: '#A8854F', bg: 'rgba(140,68,204,0.1)', desc: 'Target for elimination, adds no value', tipKey: 'waste_overprocessing' },
 }
 const PHASE_META: Record<Phase, { label: string; color: string }> = {
   pre:    { label: 'Pre-Changeover',    color: '#1A4F8A' },
@@ -344,7 +344,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             { label: 'Total',    val: fmtS(totalTime),    color: 'var(--text)' },
             { label: 'Internal', val: fmtS(internalTime), color: '#C0402A' },
             { label: 'External', val: fmtS(externalTime), color: '#1A7A5E' },
-            { label: 'Waste',    val: fmtS(wasteTime),    color: '#8C44CC' },
+            { label: 'Waste',    val: fmtS(wasteTime),    color: '#A8854F' },
           ].map(k => (
             <div key={k.label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
               <div style={{ fontSize: 15, fontWeight: 700, color: k.color, fontFamily: 'var(--font-mono)' }}>{k.val}</div>
@@ -360,12 +360,12 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
           <div style={{ display: 'flex', height: 10, borderRadius: 5, overflow: 'hidden', gap: 1 }}>
             {internalTime > 0  && <div style={{ width: `${smInternalPct}%`, background: '#C0402A', transition: 'width .4s' }} title={`Internal: ${fmtS(internalTime)}`} />}
             {externalTime > 0  && <div style={{ width: `${smExternalPct}%`, background: '#1A7A5E', transition: 'width .4s' }} title={`External: ${fmtS(externalTime)}`} />}
-            {wasteTime > 0     && <div style={{ width: `${smWastePct}%`,    background: '#8C44CC', transition: 'width .4s' }} title={`Waste: ${fmtS(wasteTime)}`}     />}
+            {wasteTime > 0     && <div style={{ width: `${smWastePct}%`,    background: '#A8854F', transition: 'width .4s' }} title={`Waste: ${fmtS(wasteTime)}`}     />}
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 4, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap' }}>
             <span style={{ color: '#C0402A' }}>■ Internal {smInternalPct}%</span>
             <span style={{ color: '#1A7A5E' }}>■ External {smExternalPct}%</span>
-            <span style={{ color: '#8C44CC' }}>● Waste/NVA {smWastePct}%</span>
+            <span style={{ color: '#A8854F' }}>● Waste/NVA {smWastePct}%</span>
           </div>
         </div>
       )}
@@ -375,9 +375,9 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
         {(['steps', 'analysis', 'targets'] as const).map(tab => (
           <button key={tab} type="button" onClick={() => setActiveTab(tab)} style={{
             padding: '7px 14px', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-            background: activeTab === tab ? 'rgba(212,168,67,0.08)' : 'transparent',
-            borderBottom: activeTab === tab ? '2px solid #D4A843' : '2px solid transparent',
-            color: activeTab === tab ? '#D4A843' : 'var(--text3)',
+            background: activeTab === tab ? 'rgba(201,166,107,0.08)' : 'transparent',
+            borderBottom: activeTab === tab ? '2px solid #C9A66B' : '2px solid transparent',
+            color: activeTab === tab ? '#C9A66B' : 'var(--text3)',
             border: 'none', fontFamily: 'inherit', textTransform: 'capitalize',
             transition: 'all .15s',
           }}>
@@ -392,13 +392,13 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
       {activeTab === 'steps' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.65, marginBottom: 4 }}>
-            Record every changeover step. Classify each as <strong style={{ color: '#C0402A' }}>Internal</strong> (machine must be stopped), <strong style={{ color: '#1A7A5E' }}>External</strong> (can run while machine is running), or <strong style={{ color: '#8C44CC' }}>Waste/NVA</strong> (eliminate entirely). Use the stopwatch to time each step live, or enter times manually.
+            Record every changeover step. Classify each as <strong style={{ color: '#C0402A' }}>Internal</strong> (machine must be stopped), <strong style={{ color: '#1A7A5E' }}>External</strong> (can run while machine is running), or <strong style={{ color: '#A8854F' }}>Waste/NVA</strong> (eliminate entirely). Use the stopwatch to time each step live, or enter times manually.
           </div>
 
           {/* Live timer indicator */}
           {timerActive && (
-            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#D4A843' }}>
-              <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block', fontFamily:"monospace", fontSize:11 }}>REC</span>
+            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#C9A66B' }}>
+              <span style={{ animation: 'pulse 0.8s ease-in-out infinite', display: 'inline-block', fontFamily:"'JetBrains Mono',monospace", fontSize:11 }}>REC</span>
               <span>Timer running: <strong style={{ fontFamily: 'var(--font-mono)' }}>{(timerMs / 1000).toFixed(1)}s</strong></span>
             </div>
           )}
@@ -415,7 +415,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
             const meta = TYPE_META[s.type]
             const isTimingThis = timerStepId === s.id && timerActive
             return (
-              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#D4A843' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
+              <div key={s.id} style={{ border: `1px solid ${isTimingThis ? '#C9A66B' : meta.color + '40'}`, borderRadius: 10, overflow: 'hidden', background: isTimingThis ? 'rgba(1,118,211,0.04)' : meta.bg + '66' }}>
                 {/* Step header row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 20, textAlign: 'center', fontWeight: 700 }}>#{s.seq}</span>
@@ -458,7 +458,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                       disabled={timerActive && !isTimingThis}
                       style={{
                         padding: '5px 7px', borderRadius: 6, border: '1px solid var(--border)',
-                        background: isTimingThis ? '#D4A843' : 'var(--bg)',
+                        background: isTimingThis ? '#C9A66B' : 'var(--bg)',
                         color: isTimingThis ? '#fff' : 'var(--text3)',
                         cursor: timerActive && !isTimingThis ? 'not-allowed' : 'pointer',
                         fontSize: 11, fontWeight: 700,
@@ -492,7 +492,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                     </label>
                   )}
                   {s.type === 'waste' && (
-                    <span style={{ fontSize: 10, color: '#8C44CC', background: 'rgba(140,68,204,0.1)', padding: '2px 7px', borderRadius: 4, fontWeight: 600 }}>Target for elimination</span>
+                    <span style={{ fontSize: 10, color: '#A8854F', background: 'rgba(140,68,204,0.1)', padding: '2px 7px', borderRadius: 4, fontWeight: 600 }}>Target for elimination</span>
                   )}
                   <input
                     style={{ ...inputStyle, flex: 1, minWidth: 120, fontSize: 11 }}
@@ -537,7 +537,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 4 }}>Reduction</div>
-                    <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: 'var(--font-mono)' }}>{smedReductionPct}%</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: '#C9A66B', fontFamily: 'var(--font-mono)' }}>{smedReductionPct}%</div>
                     <div style={{ fontSize: 10, color: 'var(--text3)' }}>save {fmtS(savingPerChange)} per change</div>
                   </div>
                 </div>
