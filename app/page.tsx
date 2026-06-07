@@ -45,13 +45,13 @@ const CSS=`
 .btn-navy:hover{background:#0F2747;transform:translateY(-2px);box-shadow:0 10px 28px rgba(11,29,51,.28)}
 .btn-gold{background:${GOLD};color:${NAVY};padding:14px 28px;font-size:15px;box-shadow:0 4px 16px rgba(201,166,107,.32)}
 .btn-gold:hover{background:${GOLDL};transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,166,107,.42)}
-.btn-ghostL{background:rgba(255,255,255,.06);color:${WHITE};padding:13px 24px;font-size:14px;border:1px solid rgba(255,255,255,.18)}
-.btn-ghostL:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
+.btn-ghostL{background:rgba(255,255,255,.10);color:${WHITE};padding:13px 24px;font-size:14px;border:1.5px solid rgba(255,255,255,.45);font-weight:600}
+.btn-ghostL:hover{background:rgba(255,255,255,.18);border-color:#fff}
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;transition:all .3s}
 .nav.scrolled{background:rgba(7,26,47,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);height:60px}
 .nav-word{font-family:${SERIF};font-size:23px;color:${WHITE};letter-spacing:-.02em}
 .nav-links{display:flex;gap:34px;align-items:center}
-.nav-link{font-size:13.5px;font-weight:500;color:${SLATE400};transition:color .15s;position:relative}
+.nav-link{font-size:13.5px;font-weight:500;color:${SLATE200};transition:color .15s;position:relative}
 .nav-link:hover{color:${WHITE}}
 .nav-signin{font-size:13.5px;font-weight:700;color:${GOLDL};padding:9px 18px;border:1.5px solid ${GOLD};border-radius:8px;transition:all .2s;background:rgba(201,166,107,.10)}
 .nav-signin:hover{background:rgba(201,166,107,.22);color:#fff;border-color:${GOLDL}}
@@ -69,60 +69,46 @@ const CSS=`
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;opacity:0;animation:hpfade 1s ease .9s forwards}
 .hero-trust{margin-top:32px;display:flex;align-items:center;gap:14px;opacity:0;animation:hpfade 1s ease 1.1s forwards}
 .hero-trust-txt{font-family:${MONO};font-size:11px;color:${SLATE600};letter-spacing:.5px;line-height:1.6}
-.scene{position:relative;width:100%;height:360px;perspective:1500px;perspective-origin:50% 40%;display:flex;align-items:flex-start;justify-content:center;margin-top:-18px;opacity:0;animation:hpfade 1.1s ease .4s both;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
-.scene:active{cursor:grabbing}
-.scene *{pointer-events:none}
-.scene-hint{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-family:${MONO};font-size:9px;color:${SLATE600};letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:7px;pointer-events:none;transition:opacity .4s}
-.scene-hint svg{stroke:${GOLD}}
-.cube3d{position:relative;width:300px;height:300px;transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(24deg);will-change:transform}
-.face{position:absolute;width:300px;height:300px;padding:24px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.09);border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.6);box-shadow:inset 0 2px 22px rgba(0,0,0,.4);backface-visibility:hidden;display:flex;flex-direction:column;overflow:hidden}
-.face.front{transform:translateZ(150px);background:linear-gradient(155deg,#163A5F 0%,#0F2747 55%,#0A1F38 100%)}
-.face.back{transform:rotateY(180deg) translateZ(150px);align-items:center;justify-content:center;background:linear-gradient(155deg,#16433F 0%,#0E2E33 55%,#091F26 100%)}
-.face.right{transform:rotateY(90deg) translateZ(150px);background:linear-gradient(155deg,#3A2A3F 0%,#241A30 55%,#161024 100%)}
-.face.left{transform:rotateY(-90deg) translateZ(150px);background:linear-gradient(155deg,#2E2A1C 0%,#221E12 55%,#15120A 100%)}
-.face.top{transform:rotateX(90deg) translateZ(150px);align-items:center;justify-content:center;gap:12px;background:linear-gradient(155deg,#24507E,#143256)}
-.face.bottom{transform:rotateX(-90deg) translateZ(150px);align-items:center;justify-content:center;background:linear-gradient(155deg,#1A3550 0%,#102740 55%,#0A1C30 100%)}
-.face-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;position:relative;z-index:2}
-.face-tag{font-family:${MONO};font-size:9px;color:${GOLD};letter-spacing:1.8px;font-weight:700}
-.face-live{display:inline-flex;align-items:center;gap:5px;font-family:${MONO};font-size:8px;color:${SUCCESS};letter-spacing:1px}
-.face-live i{width:6px;height:6px;border-radius:50%;background:${SUCCESS};box-shadow:0 0 7px ${SUCCESS};animation:hppulse 2s infinite}
-.face-title{font-family:${SERIF};font-size:25px;color:#fff;letter-spacing:-.02em;margin-bottom:20px;position:relative;z-index:2}
-.vsm-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;position:relative;z-index:2}
-.vsm-node{position:relative;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);padding:9px 6px;font-size:11px;font-weight:700;color:#fff;font-family:${DISPLAY};display:flex;flex-direction:column;align-items:center;gap:2px;min-width:48px}
-.vsm-node small{font-family:${MONO};font-size:8px;color:${SLATE400};font-weight:400}
-.vsm-node.bot{border-color:${DANGER};background:rgba(201,79,79,.18)}
-.vsm-node.bot i{position:absolute;top:-8px;right:-8px;width:17px;height:17px;background:${DANGER};color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-style:normal}
-.vsm-arr{flex:1;height:2px;background:linear-gradient(90deg,${GOLD},rgba(201,166,107,.3));margin:0 5px}
-.face-kpis{display:flex;gap:9px;margin-top:auto;position:relative;z-index:2}
-.fk{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:11px}
-.fk span{display:block;font-family:${MONO};font-size:7.5px;color:${SLATE400};letter-spacing:.8px;margin-bottom:6px}
-.fk b{font-family:${SERIF};font-size:26px;color:#fff;font-weight:400;letter-spacing:-.02em}
-.fk b small{font-size:14px;color:${SLATE400}}
-.donut-wrap{display:flex;align-items:center;justify-content:center;margin:6px 0;position:relative;z-index:2}
-.face-legend{display:flex;flex-direction:column;gap:9px;margin-top:16px;position:relative;z-index:2}
-.face-legend span{display:flex;align-items:center;gap:9px;font-size:13px;color:${SLATE200}}
-.face-legend i{width:11px;height:11px}
-.alert-big{font-family:${SERIF};font-size:88px;color:${DANGER};line-height:1;letter-spacing:-.03em;margin-top:6px;position:relative;z-index:2}
-.alert-big small{font-size:36px;color:rgba(201,79,79,.55)}
-.alert-label{font-size:13px;color:${SLATE200};margin-bottom:20px;position:relative;z-index:2}
-.alert-bar{height:9px;background:rgba(255,255,255,.07);overflow:hidden;margin-bottom:18px;position:relative;z-index:2}
-.alert-bar div{height:100%;background:linear-gradient(90deg,#C94F4F,#E59A9A)}
-.alert-note{font-size:13px;color:${SLATE400};line-height:1.65;position:relative;z-index:2}
-.supe-msg{font-size:14.5px;color:#E8EDF3;line-height:1.65;margin-bottom:20px;position:relative;z-index:2}
-.supe-msg b{color:${GOLD}}
-.supe-chips{display:flex;gap:9px;margin-top:auto;position:relative;z-index:2}
-.supe-chips span{font-family:${MONO};font-size:10px;color:${NAVY};background:${GOLD};padding:7px 13px;font-weight:700}
-.face.top img{display:block;position:relative;z-index:2}
-.top-word{font-family:${SERIF};font-size:38px;color:#fff;letter-spacing:-.02em;position:relative;z-index:2}
-.bottom-v{font-family:${SERIF};font-size:28px;color:${GOLD};letter-spacing:-.02em;margin-top:14px;position:relative;z-index:2}
-@media(max-width:1000px){.hero-inner{grid-template-columns:1fr;gap:40px}.scene{height:320px;margin-top:8px}.cube3d{width:248px;height:248px}.face{width:248px;height:248px;padding:18px}.face.front{transform:translateZ(124px)}.face.back{transform:rotateY(180deg) translateZ(124px)}.face.right{transform:rotateY(90deg) translateZ(124px)}.face.left{transform:rotateY(-90deg) translateZ(124px)}.face.top{transform:rotateX(90deg) translateZ(124px)}.face.bottom{transform:rotateX(-90deg) translateZ(124px)}.alert-big{font-size:66px}.hero-h1{font-size:clamp(40px,11vw,64px)}}.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px}
-.scroll-cue-txt{font-family:${MONO};font-size:9px;color:${SLATE600};letter-spacing:2px}
-.scroll-cue-arrow{width:18px;height:18px;border-right:1.5px solid ${GOLD};border-bottom:1.5px solid ${GOLD};transform:rotate(45deg);animation:hpscroll 1.8s infinite}
-.section{padding:120px 32px;position:relative}
-.wrap{max-width:1280px;margin:0 auto}
-.sec-head{max-width:760px;margin-bottom:64px}
-.sec-h2{font-family:${SERIF};font-size:clamp(36px,5.2vw,62px);font-weight:400;color:${NAVY};line-height:1.02;letter-spacing:-.025em}
-.sec-h2 em{font-style:italic;color:${GOLDD}}
+.pview{position:relative;width:100%;perspective:2000px;opacity:0;animation:hpfade 1.1s ease .4s both;margin-top:-2px}
+.pview-win{position:relative;transform:rotateX(8deg) rotateY(-14deg) rotateZ(.5deg);transform-style:preserve-3d;border-radius:16px;padding:9px;background:linear-gradient(150deg,#1B3D63 0%,#0E2747 40%,#091D34 100%);border-top:1px solid rgba(255,255,255,.22);border-left:1px solid rgba(255,255,255,.12);border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.6);box-shadow:2px 3px 0 #0A1D33,4px 6px 0 #081A2E,6px 9px 0 #07172A,8px 12px 0 #061525,10px 16px 1px #050f1d,0 50px 90px -28px rgba(0,0,0,.8),0 90px 130px -60px rgba(58,90,125,.4);transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.pview:hover .pview-win{transform:rotateX(4deg) rotateY(-7deg)}
+.pview-screen{border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#0E2747,#081D34);border:1px solid rgba(0,0,0,.4);position:relative}
+.pview-screen::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.10) 0%,transparent 22%,transparent 100%)}
+.pv-bar{height:38px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;z-index:2}
+.pv-dot{width:10px;height:10px;border-radius:50%}
+.pv-tab{margin-left:10px;display:flex;align-items:center;gap:8px;font-family:${DISPLAY};font-size:12px;color:#fff;font-weight:600}
+.pv-tab .pv-sub{font-family:${MONO};font-size:9px;color:${SLATE400};font-weight:400}
+.pv-actions{margin-left:auto;display:flex;gap:7px}
+.pv-act{font-family:${MONO};font-size:8.5px;color:${SLATE400};border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:4px 9px}
+.pv-body{padding:18px 20px}
+.pv-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.pv-h-l{font-family:${MONO};font-size:8.5px;color:${GOLD};letter-spacing:1.4px;margin-bottom:4px}
+.pv-h-t{font-family:${DISPLAY};font-size:15px;font-weight:600;color:#fff}
+.pv-live{display:inline-flex;align-items:center;gap:5px;font-family:${MONO};font-size:8px;color:${SUCCESS};background:rgba(47,143,107,.12);border:1px solid rgba(47,143,107,.3);border-radius:5px;padding:3px 9px;letter-spacing:1px}
+.pv-flow{display:flex;align-items:flex-start;gap:0;margin:18px 0;overflow-x:auto;padding-bottom:4px}
+.pv-step{flex:0 0 auto;width:104px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:10px;position:relative}
+.pv-step.bot{border-color:${DANGER};background:rgba(201,79,79,.10)}
+.pv-step-n{display:flex;align-items:center;gap:5px;font-family:${DISPLAY};font-size:10.5px;font-weight:700;color:#fff;margin-bottom:8px}
+.pv-step-badge{position:absolute;top:-7px;right:-7px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.pv-step-m{display:flex;justify-content:space-between;font-family:${MONO};font-size:8px;color:${SLATE400};margin-bottom:2px}
+.pv-step-m b{color:#fff}
+.pv-edge{flex:0 0 auto;width:20px;height:2px;background:linear-gradient(90deg,rgba(201,166,107,.6),rgba(201,166,107,.2));margin-top:34px}
+.pv-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.pv-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:9px 10px}
+.pv-metric-l{font-family:${MONO};font-size:7px;color:${SLATE400};letter-spacing:.5px;margin-bottom:5px}
+.pv-metric-v{font-family:${SERIF};font-size:21px;color:#fff;line-height:1;letter-spacing:-.02em}
+.pv-metric-v small{font-size:11px;color:${SLATE400}}
+.pv-float{position:absolute;z-index:6;background:rgba(11,29,51,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(201,166,107,.3);border-radius:14px;padding:15px 16px;box-shadow:0 26px 56px -18px rgba(0,0,0,.65)}
+.pv-float.supe{left:-30px;bottom:-26px;width:230px;animation:hpfloat 5.5s ease-in-out infinite}
+.pv-float.target{right:-26px;bottom:14px;width:180px;animation:hpfloat 6.5s ease-in-out infinite .6s}
+.pv-float-h{display:flex;align-items:center;gap:7px;font-family:${MONO};font-size:8.5px;color:${GOLD};letter-spacing:1.2px;margin-bottom:9px;font-weight:700}
+.pv-float-t{font-size:11.5px;color:#E8EDF3;line-height:1.5}
+.pv-float-t b{color:${GOLD}}
+.pv-ring{display:flex;align-items:center;gap:12px}
+.pv-ring-v{font-family:${SERIF};font-size:26px;color:${GOLD};letter-spacing:-.02em}
+.pv-ring small{display:block;font-size:9px;color:${SLATE400};font-family:${SANS};margin-top:2px}
+@keyframes hpfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media(max-width:1000px){.hero-inner{grid-template-columns:1fr;gap:40px}.pview-win{transform:none}.pview:hover .pview-win{transform:none}.pv-float.supe{left:0;bottom:-18px;width:200px}.pv-float.target{display:none}.hero-h1{font-size:clamp(40px,11vw,64px)}}
 .sec-lead{font-size:18px;color:${SLATE700};line-height:1.65;margin-top:22px;max-width:600px}
 .problem{background:transparent;color:${WHITE};overflow:hidden;position:relative}
 .problem .sec-h2,.problem .sec-h2 em{color:${WHITE}}
@@ -322,22 +308,6 @@ export default function HomePage(){
   const bgRef=useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
-    // ── cube drag to rotate ──
-    const scene=document.getElementById('scene')
-    const cube=document.getElementById('cube3d')
-    let rx=-18, ry=24, dragging=false, px=0, py=0
-    const applyCube=()=>{ if(cube) cube.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)` }
-    const cdown=(x:number,y:number)=>{dragging=true;px=x;py=y;const h=scene?.querySelector('.scene-hint') as HTMLElement|null;if(h)h.style.opacity='0'}
-    const cmove=(x:number,y:number)=>{if(!dragging)return;ry+=(x-px)*0.55;rx-=(y-py)*0.55;rx=Math.max(-85,Math.min(85,rx));px=x;py=y;applyCube()}
-    const cup=()=>{dragging=false}
-    const md=(e:MouseEvent)=>{e.preventDefault();cdown(e.clientX,e.clientY)}
-    const mm=(e:MouseEvent)=>cmove(e.clientX,e.clientY)
-    const ts=(e:TouchEvent)=>{const t=e.touches[0];cdown(t.clientX,t.clientY)}
-    const tm=(e:TouchEvent)=>{const t=e.touches[0];cmove(t.clientX,t.clientY)}
-    if(scene){scene.addEventListener('mousedown',md);scene.addEventListener('touchstart',ts,{passive:true});scene.addEventListener('touchmove',tm,{passive:false});scene.addEventListener('touchend',cup)}
-    document.addEventListener('mousemove',mm);document.addEventListener('mouseup',cup)
-    applyCube()
-
     const onScroll=()=>{
       setScrolled(window.scrollY>40)
     }
@@ -360,7 +330,7 @@ export default function HomePage(){
       }}),{threshold:.4})
       pio.observe(pt)
     }
-    return ()=>{window.removeEventListener('scroll',onScroll);clearInterval(t);io.disconnect();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',cup);if(scene){scene.removeEventListener('mousedown',md);scene.removeEventListener('touchstart',ts);scene.removeEventListener('touchmove',tm);scene.removeEventListener('touchend',cup)}}
+    return ()=>{window.removeEventListener('scroll',onScroll);clearInterval(t);io.disconnect()}
   },[])
 
   const totalLead=DEMO_STEPS.reduce((a,s)=>a+s.ct+s.wt,0)
@@ -419,64 +389,54 @@ export default function HomePage(){
               <span className="hero-trust-txt">Structured on ISO 22468:2020 value stream methodology.<br/>No credit card to start. Free forever tier.</span>
             </div>
           </div>
-          {/* 3D CUBE — drag to rotate */}
-          <div className="scene" id="scene">
-            <div className="cube3d" id="cube3d">
-              <div className="face front">
-                <div className="face-top"><span className="face-tag">CURRENT STATE</span><span className="face-live"><i/>LIVE</span></div>
-                <div className="face-title">Assembly Line A</div>
-                <div className="vsm-row">
-                  <div className="vsm-node">Cut<small>45s</small></div><div className="vsm-arr"/>
-                  <div className="vsm-node">Weld<small>60s</small></div><div className="vsm-arr"/>
-                  <div className="vsm-node bot">Asm<small>75s</small><i>!</i></div><div className="vsm-arr"/>
-                  <div className="vsm-node">Pack<small>20s</small></div>
+          {/* Floating product dashboard (3D tablet) */}
+          <div className="pview">
+            <div className="pview-win">
+              <div className="pview-screen">
+                <div className="pv-bar">
+                  <span className="pv-dot" style={{background:'#E96B6B'}}/>
+                  <span className="pv-dot" style={{background:'#D9C08A'}}/>
+                  <span className="pv-dot" style={{background:'#5AAE8A'}}/>
+                  <div className="pv-tab"><img src={LOGO} width={16} height={16} alt=""/> Current State Map <span className="pv-sub">/ Assembly Line A</span></div>
+                  <div className="pv-actions"><span className="pv-act">Share</span><span className="pv-act">Actions</span></div>
                 </div>
-                <div className="face-kpis">
-                  <div className="fk"><span>LEAD TIME</span><b>12.6<small>d</small></b></div>
-                  <div className="fk"><span>PCE</span><b>27.8<small>%</small></b></div>
-                  <div className="fk"><span>WIP</span><b>49</b></div>
+                <div className="pv-body">
+                  <div className="pv-h">
+                    <div><div className="pv-h-l">CURRENT STATE</div><div className="pv-h-t">Assembly Line A · Owner: A. Nguyen</div></div>
+                    <span className="pv-live"><span className="hp-dot"/> LIVE</span>
+                  </div>
+                  <div className="pv-flow">
+                    <div className="pv-step"><div className="pv-step-n">1 · Staging</div><div className="pv-step-m"><span>CT</span><b>2.3m</b></div><div className="pv-step-m"><span>WT</span><b>10m</b></div><div className="pv-step-m"><span>WIP</span><b>12</b></div></div>
+                    <div className="pv-edge"/>
+                    <div className="pv-step"><div className="pv-step-n">2 · Sub-Asm</div><div className="pv-step-m"><span>CT</span><b>4.0m</b></div><div className="pv-step-m"><span>WT</span><b>18m</b></div><div className="pv-step-m"><span>WIP</span><b>20</b></div></div>
+                    <div className="pv-edge"/>
+                    <div className="pv-step bot"><div className="pv-step-n">3 · Assembly</div><span className="pv-step-badge" style={{background:DANGER}}>!</span><div className="pv-step-m"><span>CT</span><b>6.5m</b></div><div className="pv-step-m"><span>WT</span><b>25m</b></div><div className="pv-step-m"><span>WIP</span><b>28</b></div></div>
+                    <div className="pv-edge"/>
+                    <div className="pv-step"><div className="pv-step-n">4 · Test</div><div className="pv-step-m"><span>CT</span><b>3.0m</b></div><div className="pv-step-m"><span>WT</span><b>8m</b></div><div className="pv-step-m"><span>WIP</span><b>10</b></div></div>
+                    <div className="pv-edge"/>
+                    <div className="pv-step"><div className="pv-step-n">5 · Pack/Ship</div><div className="pv-step-m"><span>CT</span><b>2.0m</b></div><div className="pv-step-m"><span>WT</span><b>6m</b></div><div className="pv-step-m"><span>WIP</span><b>8</b></div></div>
+                  </div>
+                  <div className="pv-metrics">
+                    <div className="pv-metric"><div className="pv-metric-l">TAKT</div><div className="pv-metric-v">5.6<small>m</small></div></div>
+                    <div className="pv-metric"><div className="pv-metric-l">CYCLE TIME</div><div className="pv-metric-v">18<small>m</small></div></div>
+                    <div className="pv-metric"><div className="pv-metric-l">WAIT TIME</div><div className="pv-metric-v">67<small>m</small></div></div>
+                    <div className="pv-metric"><div className="pv-metric-l">WIP</div><div className="pv-metric-v">78</div></div>
+                    <div className="pv-metric"><div className="pv-metric-l">PCE</div><div className="pv-metric-v">21.1<small>%</small></div></div>
+                  </div>
                 </div>
-              </div>
-              <div className="face back">
-                <div className="face-top"><span className="face-tag">WASTE ANALYSIS</span></div>
-                <div className="donut-wrap">
-                  <svg width="120" height="120" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(255,255,255,.06)" strokeWidth="16"/>
-                    <circle cx="60" cy="60" r="46" fill="none" stroke={GOLD} strokeWidth="16" strokeDasharray="101 188" transform="rotate(-90 60 60)"/>
-                    <circle cx="60" cy="60" r="46" fill="none" stroke={STEEL} strokeWidth="16" strokeDasharray="58 231" strokeDashoffset="-101" transform="rotate(-90 60 60)"/>
-                    <circle cx="60" cy="60" r="46" fill="none" stroke="#5AAE8A" strokeWidth="16" strokeDasharray="43 246" strokeDashoffset="-159" transform="rotate(-90 60 60)"/>
-                    <text x="60" y="56" textAnchor="middle" fill="#fff" fontFamily="Instrument Serif" fontSize="22">35%</text>
-                    <text x="60" y="72" textAnchor="middle" fill={SLATE400} fontFamily="JetBrains Mono" fontSize="8">WAITING</text>
-                  </svg>
-                </div>
-                <div className="face-legend"><span><i style={{background:GOLD}}/>Waiting</span><span><i style={{background:STEEL}}/>Motion</span><span><i style={{background:'#5AAE8A'}}/>Defects</span></div>
-              </div>
-              <div className="face right">
-                <div className="face-top"><span className="face-tag" style={{color:'#E59A9A'}}>BOTTLENECK</span></div>
-                <div className="alert-big">75<small>s</small></div>
-                <div className="alert-label">Assembly cycle time</div>
-                <div className="alert-bar"><div style={{width:'100%'}}/></div>
-                <div className="alert-note">2.1× the takt time. This stage sets the pace for the entire line.</div>
-              </div>
-              <div className="face left">
-                <div className="face-top"><span className="face-tag" style={{color:GOLD}}>SUPE · AI ADVISOR</span></div>
-                <div className="supe-msg">Based on the data, the likely constraint is <b>Assembly</b>. Consider a SMED study to cut changeover, then rebalance load to the Weld station.</div>
-                <div className="supe-chips"><span>Run SMED</span><span>Rebalance</span></div>
-              </div>
-              <div className="face top">
-                <img src={LOGO} width={56} height={56} alt=""/>
-                <div className="top-word">VeSiMy</div>
-              </div>
-              <div className="face bottom">
-                <div className="face-tag" style={{marginBottom:14}}>90-DAY TREND</div>
-                <svg width="170" height="70" viewBox="0 0 170 70">
-                  <polyline points="0,58 28,50 56,53 84,38 112,30 140,18 170,8" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round"/>
-                  <polyline points="0,58 28,50 56,53 84,38 112,30 140,18 170,8 170,70 0,70" fill="rgba(201,166,107,.12)"/>
-                </svg>
-                <div className="bottom-v">-34% lead time</div>
               </div>
             </div>
-            <div className="scene-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="1.6"><path d="M9 11V6a2 2 0 014 0v5"/><path d="M13 7a2 2 0 014 0v4"/><path d="M17 9a2 2 0 014 0v5a7 7 0 01-7 7h-2a7 7 0 01-6-4l-2-4a2 2 0 013-2l2 2"/></svg> Drag to rotate</div>
+            <div className="pv-float supe">
+              <div className="pv-float-h">✦ SUPE AI INSIGHT</div>
+              <div className="pv-float-t">Step 3, <b>Assembly</b>, is the constraint. High wait time and WIP are causing flow delays.</div>
+            </div>
+            <div className="pv-float target">
+              <div className="pv-float-h">TARGET PROGRESS</div>
+              <div className="pv-ring">
+                <svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="21" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="6"/><circle cx="26" cy="26" r="21" fill="none" stroke={GOLD} strokeWidth="6" strokeLinecap="round" strokeDasharray="82 132" transform="rotate(-90 26 26)"/></svg>
+                <div><div className="pv-ring-v">62%</div><small>to 30% lead<br/>time target</small></div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="scroll-cue"><span className="scroll-cue-txt">SCROLL</span><span className="scroll-cue-arrow"/></div>
