@@ -25,7 +25,7 @@ const CSS=`
 .hp{position:relative;background:${NAVY950};overflow-x:hidden}
 .hp ::selection{background:rgba(201,166,107,.3);color:${NAVY}}
 .fixed-bg{position:fixed;inset:0;z-index:0;background:${NAVY950}}
-.fixed-bg-img{position:absolute;inset:-6%;background-image:url('${HERO_BG}');background-size:cover;background-position:center right;opacity:.92;transition:transform .1s linear;will-change:transform}
+.fixed-bg-img{position:absolute;inset:0;background-image:url('${HERO_BG}');background-size:cover;background-position:center right;opacity:.92}
 .fixed-bg-veil{position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,26,47,.80) 0%,rgba(7,26,47,.38) 38%,rgba(7,26,47,.08) 60%,transparent 100%)}
 .hp .nav,.hp header.hero,.hp .section,.hp .industries,.hp .final,.hp .footer{position:relative;z-index:2}
 .floatpanel{position:relative;z-index:2;border-radius:28px;max-width:1500px;margin:32px auto;width:calc(100% - 80px);overflow:hidden;box-shadow:0 40px 100px -40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
@@ -53,12 +53,14 @@ const CSS=`
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-link{font-size:13.5px;font-weight:500;color:${SLATE400};transition:color .15s;position:relative}
 .nav-link:hover{color:${WHITE}}
+.nav-signin{font-size:13.5px;font-weight:700;color:${GOLDL};padding:9px 18px;border:1.5px solid ${GOLD};border-radius:8px;transition:all .2s;background:rgba(201,166,107,.10)}
+.nav-signin:hover{background:rgba(201,166,107,.22);color:#fff;border-color:${GOLDL}}
 @media(max-width:900px){.nav-links{display:none}.nav{padding:0 20px}}
 .eyebrow{display:inline-flex;align-items:center;gap:13px;margin-bottom:26px}
 .eyebrow-line{width:30px;height:1px;background:${GOLD}}
 .eyebrow-txt{font-family:${MONO};font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-weight:600}
 .hero{position:relative;min-height:100vh;background:transparent;display:flex;align-items:center;padding:120px 32px 80px}
-.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .9fr;gap:48px;align-items:start;padding-top:8px}
 .hero-h1{font-family:${SERIF};font-size:clamp(46px,6.4vw,86px);font-weight:400;color:${WHITE};line-height:.98;letter-spacing:-.025em;margin-bottom:28px}
 .hero-h1 em{font-style:italic;color:${GOLD}}
 .hero-h1 .word{display:inline-block;opacity:0;transform:translateY(30px) rotate(2deg);animation:hpword .9s cubic-bezier(.16,1,.3,1) forwards}
@@ -67,33 +69,53 @@ const CSS=`
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;opacity:0;animation:hpfade 1s ease .9s forwards}
 .hero-trust{margin-top:32px;display:flex;align-items:center;gap:14px;opacity:0;animation:hpfade 1s ease 1.1s forwards}
 .hero-trust-txt{font-family:${MONO};font-size:11px;color:${SLATE600};letter-spacing:.5px;line-height:1.6}
-.hero-panel{position:relative;background:linear-gradient(160deg,rgba(15,39,71,.86),rgba(7,26,47,.92));border:1px solid rgba(201,166,107,.16);border-radius:20px;padding:22px;box-shadow:0 40px 100px -30px rgba(0,0,0,.6);backdrop-filter:blur(6px);opacity:0;transform:perspective(1400px) rotateY(-8deg) translateY(30px);animation:panelin 1.3s cubic-bezier(.16,1,.3,1) .5s forwards}
-.hero-panel:hover{animation:none;transform:perspective(1400px) rotateY(0) translateY(0);transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.hp-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08)}
-.hp-title{display:flex;align-items:center;gap:9px}
-.hp-title-txt{font-family:${SERIF};font-size:16px;color:${WHITE}}
-.hp-dot{width:7px;height:7px;border-radius:50%;background:${SUCCESS};box-shadow:0 0 8px ${SUCCESS};animation:hppulse 2s infinite}
-.hp-live{font-family:${MONO};font-size:9px;color:${SLATE400};letter-spacing:1.5px}
-.hp-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.hp-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px}
-.hp-kpi-l{font-size:9.5px;color:${SLATE400};font-weight:500;margin-bottom:6px}
-.hp-kpi-v{font-family:${SERIF};font-size:30px;color:${WHITE};line-height:1;letter-spacing:-.02em}
-.hp-kpi-v small{font-size:16px;color:${SLATE400}}
-.hp-flow{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:15px 16px;margin-bottom:14px}
-.hp-flow-l{font-size:9.5px;color:${SLATE400};font-weight:500;margin-bottom:12px}
-.hp-steps{display:flex;align-items:center;justify-content:space-between}
-.hp-step{display:flex;flex-direction:column;align-items:center;gap:5px;flex:0 0 auto}
-.hp-circ{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;color:${SLATE400};font-size:13px;transition:all .4s}
-.hp-circ.on{border-color:${GOLD};background:rgba(201,166,107,.18);color:${GOLD};box-shadow:0 0 0 5px rgba(201,166,107,.14)}
-.hp-circ.done{border-color:${STEEL};color:${STEEL}}
-.hp-sname{font-size:9px;color:${SLATE400}}
-.hp-line{flex:1;height:1px;background:rgba(255,255,255,.12);margin:0 3px;transition:background .4s}
-.hp-line.done{background:${STEEL}}
-.hp-bot{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
-.hp-trend,.hp-donut{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px}
-.hp-donut{display:flex;align-items:center;gap:12px}
-@media(max-width:1000px){.hero-inner{grid-template-columns:1fr;gap:48px}.hero-panel{transform:none;animation:hpfade 1s ease .5s forwards}.hero-h1{font-size:clamp(40px,11vw,64px)}}
-.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scene{position:relative;width:100%;height:360px;perspective:1500px;perspective-origin:50% 40%;display:flex;align-items:flex-start;justify-content:center;margin-top:-18px;opacity:0;animation:hpfade 1.1s ease .4s both;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.scene:active{cursor:grabbing}
+.scene *{pointer-events:none}
+.scene-hint{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-family:${MONO};font-size:9px;color:${SLATE600};letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:7px;pointer-events:none;transition:opacity .4s}
+.scene-hint svg{stroke:${GOLD}}
+.cube3d{position:relative;width:300px;height:300px;transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(24deg);will-change:transform}
+.face{position:absolute;width:300px;height:300px;padding:24px;border-top:1px solid rgba(255,255,255,.14);border-left:1px solid rgba(255,255,255,.09);border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.6);box-shadow:inset 0 2px 22px rgba(0,0,0,.4);backface-visibility:hidden;display:flex;flex-direction:column;overflow:hidden}
+.face.front{transform:translateZ(150px);background:linear-gradient(155deg,#163A5F 0%,#0F2747 55%,#0A1F38 100%)}
+.face.back{transform:rotateY(180deg) translateZ(150px);align-items:center;justify-content:center;background:linear-gradient(155deg,#16433F 0%,#0E2E33 55%,#091F26 100%)}
+.face.right{transform:rotateY(90deg) translateZ(150px);background:linear-gradient(155deg,#3A2A3F 0%,#241A30 55%,#161024 100%)}
+.face.left{transform:rotateY(-90deg) translateZ(150px);background:linear-gradient(155deg,#2E2A1C 0%,#221E12 55%,#15120A 100%)}
+.face.top{transform:rotateX(90deg) translateZ(150px);align-items:center;justify-content:center;gap:12px;background:linear-gradient(155deg,#24507E,#143256)}
+.face.bottom{transform:rotateX(-90deg) translateZ(150px);align-items:center;justify-content:center;background:linear-gradient(155deg,#1A3550 0%,#102740 55%,#0A1C30 100%)}
+.face-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;position:relative;z-index:2}
+.face-tag{font-family:${MONO};font-size:9px;color:${GOLD};letter-spacing:1.8px;font-weight:700}
+.face-live{display:inline-flex;align-items:center;gap:5px;font-family:${MONO};font-size:8px;color:${SUCCESS};letter-spacing:1px}
+.face-live i{width:6px;height:6px;border-radius:50%;background:${SUCCESS};box-shadow:0 0 7px ${SUCCESS};animation:hppulse 2s infinite}
+.face-title{font-family:${SERIF};font-size:25px;color:#fff;letter-spacing:-.02em;margin-bottom:20px;position:relative;z-index:2}
+.vsm-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;position:relative;z-index:2}
+.vsm-node{position:relative;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);padding:9px 6px;font-size:11px;font-weight:700;color:#fff;font-family:${DISPLAY};display:flex;flex-direction:column;align-items:center;gap:2px;min-width:48px}
+.vsm-node small{font-family:${MONO};font-size:8px;color:${SLATE400};font-weight:400}
+.vsm-node.bot{border-color:${DANGER};background:rgba(201,79,79,.18)}
+.vsm-node.bot i{position:absolute;top:-8px;right:-8px;width:17px;height:17px;background:${DANGER};color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-style:normal}
+.vsm-arr{flex:1;height:2px;background:linear-gradient(90deg,${GOLD},rgba(201,166,107,.3));margin:0 5px}
+.face-kpis{display:flex;gap:9px;margin-top:auto;position:relative;z-index:2}
+.fk{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:11px}
+.fk span{display:block;font-family:${MONO};font-size:7.5px;color:${SLATE400};letter-spacing:.8px;margin-bottom:6px}
+.fk b{font-family:${SERIF};font-size:26px;color:#fff;font-weight:400;letter-spacing:-.02em}
+.fk b small{font-size:14px;color:${SLATE400}}
+.donut-wrap{display:flex;align-items:center;justify-content:center;margin:6px 0;position:relative;z-index:2}
+.face-legend{display:flex;flex-direction:column;gap:9px;margin-top:16px;position:relative;z-index:2}
+.face-legend span{display:flex;align-items:center;gap:9px;font-size:13px;color:${SLATE200}}
+.face-legend i{width:11px;height:11px}
+.alert-big{font-family:${SERIF};font-size:88px;color:${DANGER};line-height:1;letter-spacing:-.03em;margin-top:6px;position:relative;z-index:2}
+.alert-big small{font-size:36px;color:rgba(201,79,79,.55)}
+.alert-label{font-size:13px;color:${SLATE200};margin-bottom:20px;position:relative;z-index:2}
+.alert-bar{height:9px;background:rgba(255,255,255,.07);overflow:hidden;margin-bottom:18px;position:relative;z-index:2}
+.alert-bar div{height:100%;background:linear-gradient(90deg,#C94F4F,#E59A9A)}
+.alert-note{font-size:13px;color:${SLATE400};line-height:1.65;position:relative;z-index:2}
+.supe-msg{font-size:14.5px;color:#E8EDF3;line-height:1.65;margin-bottom:20px;position:relative;z-index:2}
+.supe-msg b{color:${GOLD}}
+.supe-chips{display:flex;gap:9px;margin-top:auto;position:relative;z-index:2}
+.supe-chips span{font-family:${MONO};font-size:10px;color:${NAVY};background:${GOLD};padding:7px 13px;font-weight:700}
+.face.top img{display:block;position:relative;z-index:2}
+.top-word{font-family:${SERIF};font-size:38px;color:#fff;letter-spacing:-.02em;position:relative;z-index:2}
+.bottom-v{font-family:${SERIF};font-size:28px;color:${GOLD};letter-spacing:-.02em;margin-top:14px;position:relative;z-index:2}
+@media(max-width:1000px){.hero-inner{grid-template-columns:1fr;gap:40px}.scene{height:320px;margin-top:8px}.cube3d{width:248px;height:248px}.face{width:248px;height:248px;padding:18px}.face.front{transform:translateZ(124px)}.face.back{transform:rotateY(180deg) translateZ(124px)}.face.right{transform:rotateY(90deg) translateZ(124px)}.face.left{transform:rotateY(-90deg) translateZ(124px)}.face.top{transform:rotateX(90deg) translateZ(124px)}.face.bottom{transform:rotateX(-90deg) translateZ(124px)}.alert-big{font-size:66px}.hero-h1{font-size:clamp(40px,11vw,64px)}}.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px}
 .scroll-cue-txt{font-family:${MONO};font-size:9px;color:${SLATE600};letter-spacing:2px}
 .scroll-cue-arrow{width:18px;height:18px;border-right:1.5px solid ${GOLD};border-bottom:1.5px solid ${GOLD};transform:rotate(45deg);animation:hpscroll 1.8s infinite}
 .section{padding:120px 32px;position:relative}
@@ -253,7 +275,7 @@ const CSS=`
 .footer-link{display:block;font-size:13.5px;color:${SLATE400};margin-bottom:10px;transition:color .15s}
 .footer-link:hover{color:${WHITE}}
 .footer-bot{max-width:1280px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-.footer-copy{font-family:${MONO};font-size:11px;color:${SLATE600}}
+.footer-copy{font-family:${MONO};font-size:11px;color:${SLATE400}}
 @media(max-width:800px){.footer-grid{grid-template-columns:1fr 1fr}}
 `
 
@@ -300,9 +322,24 @@ export default function HomePage(){
   const bgRef=useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
+    // ── cube drag to rotate ──
+    const scene=document.getElementById('scene')
+    const cube=document.getElementById('cube3d')
+    let rx=-18, ry=24, dragging=false, px=0, py=0
+    const applyCube=()=>{ if(cube) cube.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)` }
+    const cdown=(x:number,y:number)=>{dragging=true;px=x;py=y;const h=scene?.querySelector('.scene-hint') as HTMLElement|null;if(h)h.style.opacity='0'}
+    const cmove=(x:number,y:number)=>{if(!dragging)return;ry+=(x-px)*0.55;rx-=(y-py)*0.55;rx=Math.max(-85,Math.min(85,rx));px=x;py=y;applyCube()}
+    const cup=()=>{dragging=false}
+    const md=(e:MouseEvent)=>{e.preventDefault();cdown(e.clientX,e.clientY)}
+    const mm=(e:MouseEvent)=>cmove(e.clientX,e.clientY)
+    const ts=(e:TouchEvent)=>{const t=e.touches[0];cdown(t.clientX,t.clientY)}
+    const tm=(e:TouchEvent)=>{const t=e.touches[0];cmove(t.clientX,t.clientY)}
+    if(scene){scene.addEventListener('mousedown',md);scene.addEventListener('touchstart',ts,{passive:true});scene.addEventListener('touchmove',tm,{passive:false});scene.addEventListener('touchend',cup)}
+    document.addEventListener('mousemove',mm);document.addEventListener('mouseup',cup)
+    applyCube()
+
     const onScroll=()=>{
       setScrolled(window.scrollY>40)
-      if(bgRef.current) bgRef.current.style.transform=`scale(1.06) translateY(${window.scrollY*0.04}px)`
     }
     window.addEventListener('scroll',onScroll,{passive:true})
     const t=setInterval(()=>setFlowI(i=>(i+1)%FLOW.length),1400)
@@ -323,7 +360,7 @@ export default function HomePage(){
       }}),{threshold:.4})
       pio.observe(pt)
     }
-    return ()=>{window.removeEventListener('scroll',onScroll);clearInterval(t);io.disconnect()}
+    return ()=>{window.removeEventListener('scroll',onScroll);clearInterval(t);io.disconnect();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',cup);if(scene){scene.removeEventListener('mousedown',md);scene.removeEventListener('touchstart',ts);scene.removeEventListener('touchmove',tm);scene.removeEventListener('touchend',cup)}}
   },[])
 
   const totalLead=DEMO_STEPS.reduce((a,s)=>a+s.ct+s.wt,0)
@@ -354,7 +391,7 @@ export default function HomePage(){
           <a href="#pricing" className="nav-link">Pricing</a>
         </div>
         <div style={{display:'flex',gap:10,alignItems:'center'}}>
-          <Link href="/auth/login" className="nav-link" style={{fontWeight:600}}>Sign in</Link>
+          <Link href="/auth/login" className="nav-signin">Sign in</Link>
           <Link href="/auth/signup" className="btn btn-navy" style={{padding:'8px 16px',fontSize:13}}>Start free</Link>
         </div>
       </nav>
@@ -382,41 +419,64 @@ export default function HomePage(){
               <span className="hero-trust-txt">Structured on ISO 22468:2020 value stream methodology.<br/>No credit card to start. Free forever tier.</span>
             </div>
           </div>
-          <div className="hero-panel">
-            <div className="hp-head">
-              <div className="hp-title"><img src={LOGO} width={22} height={22} alt="" style={{display:'block'}}/><span className="hp-title-txt">Order Fulfillment</span></div>
-              <div style={{display:'flex',alignItems:'center',gap:7}}><span className="hp-dot"/><span className="hp-live">LIVE MAP</span></div>
-            </div>
-            <div className="hp-kpis">
-              <div className="hp-kpi"><div className="hp-kpi-l">Lead Time</div><div className="hp-kpi-v">203<small>m</small></div><Spark pts="0,14 18,11 36,12 54,7 72,8 90,4 100,2" color={STEEL}/></div>
-              <div className="hp-kpi"><div className="hp-kpi-l">Value-Added</div><div className="hp-kpi-v">50<small>%</small></div><Spark pts="0,4 18,6 36,5 54,9 72,8 90,12 100,11" color={GOLD}/></div>
-              <div className="hp-kpi"><div className="hp-kpi-l">Steps</div><div className="hp-kpi-v">5</div><Spark pts="0,14 25,11 50,8 75,5 100,3" color={STEEL}/></div>
-            </div>
-            <div className="hp-flow">
-              <div className="hp-flow-l">Process Flow</div>
-              <div className="hp-steps">
-                {FLOW.map((s,i)=>(
-                  <React.Fragment key={i}>
-                    <div className="hp-step"><div className={`hp-circ${i===flowI?' on':i<flowI?' done':''}`}>{i<flowI?'✓':s[1]}</div><div className="hp-sname">{s[0]}</div></div>
-                    {i<FLOW.length-1&&<div className={`hp-line${i<flowI?' done':''}`}/>}
-                  </React.Fragment>
-                ))}
+          {/* 3D CUBE — drag to rotate */}
+          <div className="scene" id="scene">
+            <div className="cube3d" id="cube3d">
+              <div className="face front">
+                <div className="face-top"><span className="face-tag">CURRENT STATE</span><span className="face-live"><i/>LIVE</span></div>
+                <div className="face-title">Assembly Line A</div>
+                <div className="vsm-row">
+                  <div className="vsm-node">Cut<small>45s</small></div><div className="vsm-arr"/>
+                  <div className="vsm-node">Weld<small>60s</small></div><div className="vsm-arr"/>
+                  <div className="vsm-node bot">Asm<small>75s</small><i>!</i></div><div className="vsm-arr"/>
+                  <div className="vsm-node">Pack<small>20s</small></div>
+                </div>
+                <div className="face-kpis">
+                  <div className="fk"><span>LEAD TIME</span><b>12.6<small>d</small></b></div>
+                  <div className="fk"><span>PCE</span><b>27.8<small>%</small></b></div>
+                  <div className="fk"><span>WIP</span><b>49</b></div>
+                </div>
               </div>
-            </div>
-            <div className="hp-bot">
-              <div className="hp-trend">
-                <div className="hp-flow-l" style={{marginBottom:10}}>Lead Time Trend</div>
-                <svg width="100%" height="56" viewBox="0 0 300 56">
-                  <line x1="0" y1="14" x2="300" y2="14" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="34" x2="300" y2="34" stroke="rgba(255,255,255,.06)"/>
-                  <polyline points="0,46 50,42 100,44 150,34 200,28 250,18 300,8" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round"/>
-                  <polyline points="0,46 50,42 100,44 150,34 200,28 250,18 300,8 300,56 0,56" fill="rgba(201,166,107,.1)"/>
+              <div className="face back">
+                <div className="face-top"><span className="face-tag">WASTE ANALYSIS</span></div>
+                <div className="donut-wrap">
+                  <svg width="120" height="120" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(255,255,255,.06)" strokeWidth="16"/>
+                    <circle cx="60" cy="60" r="46" fill="none" stroke={GOLD} strokeWidth="16" strokeDasharray="101 188" transform="rotate(-90 60 60)"/>
+                    <circle cx="60" cy="60" r="46" fill="none" stroke={STEEL} strokeWidth="16" strokeDasharray="58 231" strokeDashoffset="-101" transform="rotate(-90 60 60)"/>
+                    <circle cx="60" cy="60" r="46" fill="none" stroke="#5AAE8A" strokeWidth="16" strokeDasharray="43 246" strokeDashoffset="-159" transform="rotate(-90 60 60)"/>
+                    <text x="60" y="56" textAnchor="middle" fill="#fff" fontFamily="Instrument Serif" fontSize="22">35%</text>
+                    <text x="60" y="72" textAnchor="middle" fill={SLATE400} fontFamily="JetBrains Mono" fontSize="8">WAITING</text>
+                  </svg>
+                </div>
+                <div className="face-legend"><span><i style={{background:GOLD}}/>Waiting</span><span><i style={{background:STEEL}}/>Motion</span><span><i style={{background:'#5AAE8A'}}/>Defects</span></div>
+              </div>
+              <div className="face right">
+                <div className="face-top"><span className="face-tag" style={{color:'#E59A9A'}}>BOTTLENECK</span></div>
+                <div className="alert-big">75<small>s</small></div>
+                <div className="alert-label">Assembly cycle time</div>
+                <div className="alert-bar"><div style={{width:'100%'}}/></div>
+                <div className="alert-note">2.1× the takt time. This stage sets the pace for the entire line.</div>
+              </div>
+              <div className="face left">
+                <div className="face-top"><span className="face-tag" style={{color:GOLD}}>SUPE · AI ADVISOR</span></div>
+                <div className="supe-msg">Based on the data, the likely constraint is <b>Assembly</b>. Consider a SMED study to cut changeover, then rebalance load to the Weld station.</div>
+                <div className="supe-chips"><span>Run SMED</span><span>Rebalance</span></div>
+              </div>
+              <div className="face top">
+                <img src={LOGO} width={56} height={56} alt=""/>
+                <div className="top-word">VeSiMy</div>
+              </div>
+              <div className="face bottom">
+                <div className="face-tag" style={{marginBottom:14}}>90-DAY TREND</div>
+                <svg width="170" height="70" viewBox="0 0 170 70">
+                  <polyline points="0,58 28,50 56,53 84,38 112,30 140,18 170,8" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round"/>
+                  <polyline points="0,58 28,50 56,53 84,38 112,30 140,18 170,8 170,70 0,70" fill="rgba(201,166,107,.12)"/>
                 </svg>
-              </div>
-              <div className="hp-donut">
-                <svg width="56" height="56" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="6"/><circle cx="32" cy="32" r="26" fill="none" stroke={GOLD} strokeWidth="6" strokeLinecap="round" strokeDasharray="110 163" transform="rotate(-90 32 32)"/><text x="32" y="37" textAnchor="middle" fontFamily="Instrument Serif" fontSize="17" fill="#fff">68%</text></svg>
-                <div><div style={{fontSize:10,color:SLATE400,marginBottom:3}}>Top Improvement</div><div style={{fontSize:12.5,color:'#fff',fontWeight:600,lineHeight:1.3}}>Changeover Cut</div><div style={{fontFamily:MONO,fontSize:9,color:SLATE600,marginTop:3}}>● target 75%</div></div>
+                <div className="bottom-v">-34% lead time</div>
               </div>
             </div>
+            <div className="scene-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="1.6"><path d="M9 11V6a2 2 0 014 0v5"/><path d="M13 7a2 2 0 014 0v4"/><path d="M17 9a2 2 0 014 0v5a7 7 0 01-7 7h-2a7 7 0 01-6-4l-2-4a2 2 0 013-2l2 2"/></svg> Drag to rotate</div>
           </div>
         </div>
         <div className="scroll-cue"><span className="scroll-cue-txt">SCROLL</span><span className="scroll-cue-arrow"/></div>
