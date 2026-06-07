@@ -95,7 +95,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
   return (
     <>
       {/* Tab bar */}
-      <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', padding: '0 22px', background: 'var(--sl-50)', gap: 0 }}>
+      <div style={{ display: 'flex', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', padding: '0 22px', background: 'var(--vs-paper, #F7F8FA)', gap: 0 }}>
         {([['setup', 'Set Target'], ['plan', 'Action Plan'], ['compare', 'Compare']] as const).map(([id, label]) => (
           <button key={id}
             onClick={() => setTab(id)}
@@ -118,7 +118,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
             {/* Current state snapshot */}
-            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'var(--bg3)', border: '1px solid var(--border)' }}>
+            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
               <div className="section-label" style={{ marginBottom: 8 }}>Current State Snapshot</div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 {[
@@ -145,7 +145,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                     style={{
                       padding: '7px 10px', borderRadius: 7, fontSize: 11, fontWeight: 600,
                       cursor: 'pointer', fontFamily: 'var(--font-sans)',
-                      border: `1.5px solid ${category === c.id ? 'var(--amber)' : 'var(--border)'}`,
+                      border: `1.5px solid ${category === c.id ? 'var(--amber)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                       background: category === c.id ? 'var(--amber-dim)' : '#FFFFFF',
                       color: category === c.id ? 'var(--amber2)' : 'var(--text2)',
                     }}
@@ -235,7 +235,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                 <div className="section-label" style={{ marginBottom: 10 }}>Implementation Plan</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {result.action_plan.map((action: any) => (
-                    <div key={action.sequence} style={{ padding: '12px 14px', borderRadius: 9, border: '1px solid var(--border)', background: '#FFFFFF' }}>
+                    <div key={action.sequence} style={{ padding: '12px 14px', borderRadius: 9, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: '#FFFFFF' }}>
                       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                         <div style={{ width: 24, height: 24, borderRadius: 6, background: 'var(--brand-dim)', border: '1px solid rgba(201,166,107,0.20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: 'var(--brand)', flexShrink: 0 }}>
                           {action.sequence}
@@ -244,7 +244,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 3 }}>{action.title}</div>
                           <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.55, marginBottom: 6 }}>{action.description}</div>
                           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                            {action.timeframe && <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', border: '1px solid var(--border)' }}>⏱ {action.timeframe}</span>}
+                            {action.timeframe && <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 4, background: 'var(--vs-paper, #F7F8FA)', color: 'var(--text3)', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>⏱ {action.timeframe}</span>}
                             {action.ci_tool && <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 4, background: 'var(--amber-dim)', color: 'var(--amber2)', border: '1px solid var(--amber-border)' }}>Tool: {action.ci_tool}</span>}
                             {action.expected_outcome && <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 4, background: 'var(--green-dim)', color: 'var(--green)', border: '1px solid rgba(22,128,60,0.18)' }}>→ {action.expected_outcome}</span>}
                           </div>
@@ -257,7 +257,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
             )}
 
             {result.disclaimer && (
-              <div style={{ fontSize: 10, color: 'var(--text3)', borderTop: '1px solid var(--border)', paddingTop: 10, lineHeight: 1.6, fontStyle: 'italic' }}>
+              <div style={{ fontSize: 10, color: 'var(--text3)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', paddingTop: 10, lineHeight: 1.6, fontStyle: 'italic' }}>
                 {result.disclaimer}
               </div>
             )}
@@ -269,7 +269,7 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div className="section-label">Current State vs Target State</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <div style={{ padding: '14px 16px', borderRadius: 10, background: 'var(--bg3)', border: '1px solid var(--border)' }}>
+              <div style={{ padding: '14px 16px', borderRadius: 10, background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.2, color: 'var(--text3)', textTransform: 'uppercase', marginBottom: 12 }}>Current State</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {[
@@ -302,8 +302,8 @@ export function FutureStatePanel({ project, steps, onClose, isPaid }: Props) {
                 <div className="section-label" style={{ marginBottom: 8 }}>Recommended Step Changes</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {result.future_state_steps.map((fs: any) => (
-                    <div key={fs.position} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: '#FFFFFF', border: '1px solid var(--border)' }}>
-                      <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: fs.change_type === 'eliminated' ? 'var(--red-dim)' : fs.change_type === 'improved' ? 'var(--green-dim)' : fs.change_type === 'added' ? 'var(--brand-dim)' : 'var(--bg3)', color: fs.change_type === 'eliminated' ? 'var(--red)' : fs.change_type === 'improved' ? 'var(--green)' : fs.change_type === 'added' ? 'var(--brand)' : 'var(--text3)', fontWeight: 700, textTransform: 'uppercase' }}>
+                    <div key={fs.position} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 8, background: '#FFFFFF', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
+                      <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: fs.change_type === 'eliminated' ? 'var(--red-dim)' : fs.change_type === 'improved' ? 'var(--green-dim)' : fs.change_type === 'added' ? 'var(--brand-dim)' : 'var(--vs-paper, #F7F8FA)', color: fs.change_type === 'eliminated' ? 'var(--red)' : fs.change_type === 'improved' ? 'var(--green)' : fs.change_type === 'added' ? 'var(--brand)' : 'var(--text3)', fontWeight: 700, textTransform: 'uppercase' }}>
                         {fs.change_type}
                       </span>
                       <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{fs.name}</span>

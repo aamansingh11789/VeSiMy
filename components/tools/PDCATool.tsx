@@ -329,7 +329,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
         {/* Phase selector */}
-        <div style={{ display: 'flex', gap: 0, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', gap: 0, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
           {PHASE_CFG.map((p, i) => (
             <button
               key={p.key}
@@ -338,7 +338,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               style={{
                 flex: 1, padding: '8px 4px', border: 'none', cursor: 'pointer',
                 background: phase === p.key ? p.color + '22' : 'var(--bg)',
-                borderRight: i < 3 ? '1px solid var(--border)' : 'none',
+                borderRight: i < 3 ? '1px solid var(--vs-slate-200, #DDE3EA)' : 'none',
                 borderBottom: `3px solid ${phase === p.key ? p.color : 'transparent'}`,
                 transition: 'all 0.15s',
               }}
@@ -411,7 +411,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
               <div style={{ display: 'flex', gap: 6 }}>
                 <input className="input" style={{ flex: 2, fontSize: 12 }} placeholder="Name" value={newMember.name} onChange={e => setNewMember(p => ({ ...p, name: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addTeam()} />
                 <input className="input" style={{ flex: 1, fontSize: 12 }} placeholder="Role" value={newMember.role} onChange={e => setNewMember(p => ({ ...p, role: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addTeam()} />
-                <button type="button" onClick={addTeam} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
+                <button type="button" onClick={addTeam} style={{ background: 'rgba(11,29,51,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
               </div>
             </div>
           </div>
@@ -420,14 +420,14 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {/* ── DO ── */}
         {phase === 'do' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ padding: '8px 12px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 8, fontSize: 11, color: '#C9A66B' }}>
+            <div style={{ padding: '8px 12px', background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 8, fontSize: 11, color: '#C9A66B' }}>
               Implement your countermeasures. Start small, test on one shift or one product before full rollout.
             </div>
 
             <div>
               <label className="label">Countermeasures / Actions ({completedCMs}/{data.countermeasures.length} done)</label>
               {data.countermeasures.map(cm => (
-                <div key={cm.id} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 8, background: cm.status === 'done' ? 'rgba(29,209,161,0.06)' : 'transparent', border: `1px solid ${cm.status === 'done' ? 'rgba(29,209,161,0.2)' : 'var(--border)'}` }}>
+                <div key={cm.id} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 8, background: cm.status === 'done' ? 'rgba(29,209,161,0.06)' : 'transparent', border: `1px solid ${cm.status === 'done' ? 'rgba(29,209,161,0.2)' : 'var(--vs-slate-200, #DDE3EA)'}` }}>
                   <button type="button" onClick={() => toggleCM(cm.id)} style={{ background: 'none', border: `2px solid ${cm.status === 'done' ? '#1DD1A1' : 'var(--text3)'}`, borderRadius: 4, width: 18, height: 18, cursor: 'pointer', flexShrink: 0, marginTop: 1, color: cm.status === 'done' ? '#1DD1A1' : 'transparent', fontSize: 12, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {cm.status === 'done' ? '✓' : ''}
                   </button>
@@ -444,7 +444,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                 <input className="input" style={{ flex: 3, minWidth: 120, fontSize: 12 }} placeholder="Action / countermeasure *" value={newCM.action} onChange={e => setNewCM(p => ({ ...p, action: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addCM()} />
                 <input className="input" style={{ flex: 1, minWidth: 80, fontSize: 12 }} placeholder="Owner" value={newCM.owner} onChange={e => setNewCM(p => ({ ...p, owner: e.target.value }))} />
                 <input className="input" type="date" style={{ flex: 1, minWidth: 100, fontSize: 12 }} value={newCM.dueDate} onChange={e => setNewCM(p => ({ ...p, dueDate: e.target.value }))} />
-                <button type="button" onClick={addCM} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
+                <button type="button" onClick={addCM} style={{ background: 'rgba(11,29,51,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36 }}>+</button>
               </div>
             </div>
 
@@ -504,7 +504,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                   <button key={o.val} type="button" onClick={() => set('achieved', o.val)}
                     style={{ flex: 1, padding: '8px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 700,
                       background: data.achieved === o.val ? o.color + '22' : 'var(--bg)',
-                      border: `1.5px solid ${data.achieved === o.val ? o.color : 'var(--border)'}`,
+                      border: `1.5px solid ${data.achieved === o.val ? o.color : 'var(--vs-slate-200, #DDE3EA)'}`,
                       color: data.achieved === o.val ? o.color : 'var(--text3)' }}>
                     {o.label}
                   </button>
@@ -517,7 +517,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         {/* ── ACT ── */}
         {phase === 'act' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ padding: '8px 12px', background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 8, fontSize: 11, color: '#A8854F' }}>
+            <div style={{ padding: '8px 12px', background: 'rgba(201,166,107,0.06)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 11, color: '#A8854F' }}>
               If the target was met, standardise and prevent reversion. If not, adjust the plan and run the next cycle.
             </div>
 
@@ -537,9 +537,9 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
         )}
 
         {/* Export section */}
-        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowExport(v => !v)}
-            style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#C9A66B', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
+            style={{ width: '100%', padding: '10px 14px', background: 'rgba(11,29,51,0.06)', border: 'none', color: '#C9A66B', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
             <span>Export Report, Choose Format</span>
             <span>{showExport ? '▲' : '▼'}</span>
           </button>
@@ -554,7 +554,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                     onClick={() => setExportFormat(fmt.id)}
                     style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
                       background: exportFormat === fmt.id ? `${fmt.color}15` : 'var(--bg)',
-                      border: `1.5px solid ${exportFormat === fmt.id ? fmt.color : 'var(--border)'}` }}>
+                      border: `1.5px solid ${exportFormat === fmt.id ? fmt.color : 'var(--vs-slate-200, #DDE3EA)'}` }}>
                     <div style={{ width: 10, height: 10, borderRadius: '50%', background: fmt.color, flexShrink: 0 }} />
                     <div>
                       <div style={{ fontSize: 12, fontWeight: 700, color: exportFormat === fmt.id ? fmt.color : 'var(--text)' }}>{fmt.label}</div>

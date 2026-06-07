@@ -109,7 +109,7 @@ export function Spinner({ size = 20 }: { size?: number }) {
       style={{
         width: size,
         height: size,
-        border: `2px solid rgba(1,118,211,0.15)`,
+        border: `2px solid rgba(11,29,51,0.15)`,
         borderTop: `2px solid #C9A66B`,
         borderRadius: '50%',
         animation: 'spin 0.7s linear infinite',

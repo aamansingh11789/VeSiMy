@@ -268,7 +268,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                 <div style={{
                   width: 24, height: 24, borderRadius: 6, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: active ? 'rgba(1,118,211,0.35)' : 'transparent',
+                  background: active ? 'rgba(11,29,51,0.35)' : 'transparent',
                 }}>
                   <Icon size={14} color={active ? WHITE : NAVY[400]} />
                 </div>
@@ -283,8 +283,8 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
       {!collapsed && (
         <div style={{
           margin: '8px 10px', flexShrink: 0,
-          background: 'rgba(1,118,211,0.15)',
-          border: `1px solid rgba(1,118,211,0.30)`,
+          background: 'rgba(11,29,51,0.15)',
+          border: `1px solid rgba(11,29,51,0.30)`,
           borderRadius: 8, padding: '10px 12px',
         }}>
           <div style={{ fontSize: 10, color: BLUE_LT, fontWeight: 700, letterSpacing: 0.5, marginBottom: 4 }}>

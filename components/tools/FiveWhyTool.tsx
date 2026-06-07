@@ -143,7 +143,7 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
           {(problem || whys.some(w => w)) && (
             <button
               onClick={exportFiveWhyISO}
-              style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+              style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text2)', cursor: 'pointer' }}
             >
               ISO Report
             </button>
@@ -170,12 +170,12 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                 {/* Causal connector arrow between entries */}
                 {i > 0 && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 0 4px 14px', color: 'var(--text3)', fontSize: 11, fontFamily: 'var(--font-mono)' }}>
-                    <div style={{ width: 1, height: 20, background: 'var(--border)', flexShrink: 0, marginLeft: 13 }} />
+                    <div style={{ width: 1, height: 20, background: 'var(--vs-slate-200, #DDE3EA)', flexShrink: 0, marginLeft: 13 }} />
                     <span style={{ fontSize: 9, letterSpacing: 0.5, color: 'var(--text4)' }}>BECAUSE ↓</span>
                   </div>
                 )}
                 <div style={{
-                  border: `1.5px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.30)' : isShallow ? 'rgba(217,119,6,0.35)' : 'var(--border)'}`,
+                  border: `1.5px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.30)' : isShallow ? 'rgba(217,119,6,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                   borderRadius: 10,
                   padding: '10px 12px 10px 10px',
                   background: isFilled && hasMinLength ? 'rgba(22,112,212,0.03)' : '#FFFFFF',
@@ -185,8 +185,8 @@ export default function FiveWhyTool({ stepName, data, onSave, onClose }: Props) 
                     {/* Step number badge */}
                     <div style={{
                       width: 26, height: 26, borderRadius: 7, flexShrink: 0,
-                      background: isFilled && hasMinLength ? 'rgba(201,166,107,0.12)' : 'var(--bg3)',
-                      border: `1px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.25)' : 'var(--border)'}`,
+                      background: isFilled && hasMinLength ? 'rgba(201,166,107,0.12)' : 'var(--vs-paper, #F7F8FA)',
+                      border: `1px solid ${isFilled && hasMinLength ? 'rgba(201,166,107,0.25)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: 11, fontWeight: 700,
                       color: isFilled && hasMinLength ? 'var(--brand)' : 'var(--text3)',

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function StandardWorkPost() {
   return (
@@ -64,7 +64,7 @@ export default function StandardWorkPost() {
             },
             {
               title: '2. Standard Work Combination Sheet',
-              color: '#0176D3',
+              color: '#0B1D33',
               desc: 'Shows the relationship between operator time and machine time on a timeline. A horizontal bar for each task, manual tasks in one colour, machine auto-cycle in another, walking in a third. Reveals where operators wait for machines (opportunity for parallel work) and where machines wait for operators (bottleneck).',
               use: 'Identifying hidden wait times, optimising operator-machine interaction, reducing cycle time without adding resources.',
             },

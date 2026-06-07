@@ -131,7 +131,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:right;color:#64748B">${fmtS(wt)}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.operators ?? ','}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.uptime ?? 100) < 85 ? '#DC2626' : '#059669'}">${s.uptime != null ? s.uptime + '%' : ','}</td>
-      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.defect_rate || 0) > 1.5 ? '#DC2626' : '#374151'}">${s.defect_rate != null ? s.defect_rate + '%' : ','}</td>
+      <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:${(s.defect_rate || 0) > 1.5 ? '#DC2626' : '#4F6174'}">${s.defect_rate != null ? s.defect_rate + '%' : ','}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center">${s.wip ?? ','}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#374151">${(s.flow_type || 'PUSH').toUpperCase()}</td>
       <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#374151">${pctTakt}</td>
@@ -168,10 +168,10 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.stepName}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.description || ','}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;text-align:center">
-        <span style="padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:${kzBg[k.status] || '#F1F5F9'};color:${kzColor[k.status] || '#374151'}">
+        <span style="padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:${kzBg[k.status] || '#F1F5F9'};color:${kzColor[k.status] || '#4F6174'}">
           ${(k.status || 'OPEN').toUpperCase()}</span>
       </td>
-      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:10px;font-weight:700;text-align:center;color:${k.priority === 'critical' ? '#DC2626' : k.priority === 'high' ? '#D97706' : '#374151'}">${(k.priority || 'NORMAL').toUpperCase()}</td>
+      <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:10px;font-weight:700;text-align:center;color:${k.priority === 'critical' ? '#DC2626' : k.priority === 'high' ? '#A8854F' : '#4F6174'}">${(k.priority || 'NORMAL').toUpperCase()}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.owner || ','}</td>
       <td style="padding:7px 10px;border:1px solid #CBD5E1;font-size:11px;color:#374151">${k.dueDate || 'TBD'}</td>
     </tr>`).join('')
@@ -376,8 +376,8 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
       </tr>
       <tr>
         ${[
-          ['Total WIP Units',       totalWIP,                    '#374151'],
-          ['Total Operators',       totalOps,                    '#374151'],
+          ['Total WIP Units',       totalWIP,                    '#4F6174'],
+          ['Total Operators',       totalOps,                    '#4F6174'],
           ['Avg Machine Uptime',    avgUptime + '%',             +avgUptime < 85 ? '#991B1B' : '#15803D'],
           ['Avg Defect Rate',       avgDefect + '%',             +avgDefect > 2  ? '#991B1B' : '#15803D'],
           ['Bottleneck Steps',      bottlenecks,                 bottlenecks > 0 ? '#991B1B' : '#15803D'],
@@ -472,7 +472,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
       const ct    = ctSeconds(s as any)
       const over  = takt > 0 && ct > takt
       const pctOfAvg = avgCT > 0 ? ((ct / avgCT) * 100).toFixed(0) : ','
-      const rankColor = i === 0 ? '#DC2626' : i === 1 ? '#D97706' : i === 2 ? '#F59E0B' : '#059669'
+      const rankColor = i === 0 ? '#DC2626' : i === 1 ? '#A8854F' : i === 2 ? '#C9A66B' : '#059669'
       const rankLabel = i === 0 ? 'CRITICAL' : i === 1 ? 'HIGH' : i === 2 ? 'MEDIUM' : 'LOW'
       return `
       <div style="display:flex;align-items:center;gap:14px;padding:9px 14px;border:1px solid #E2E8F0;border-radius:4px;margin-bottom:6px;background:${i === 0 ? '#FEF2F2' : i === 1 ? '#FFFBEB' : '#FFFFFF'}">
@@ -567,7 +567,7 @@ function buildISOReport(project: Project, steps: Step[], isGold = false): string
         <tr style="background:${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'}">
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#64748B;font-family:${MONO}">${i + 1}</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:11px;color:#0F172A">${rec}</td>
-          <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;font-weight:700;color:${impact === 'Very High' ? '#DC2626' : impact === 'High' ? '#D97706' : '#374151'}">${impact}</td>
+          <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;font-weight:700;color:${impact === 'Very High' ? '#DC2626' : impact === 'High' ? '#A8854F' : '#4F6174'}">${impact}</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;text-align:center;color:#374151">${effort}</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;color:#1E3A5F;font-family:${MONO}">${ref}</td>
           <td style="padding:6px 8px;border:1px solid #CBD5E1;font-size:10px;color:#374151">${kpi}</td>

@@ -146,15 +146,29 @@ export function ProjectClient({ initialProject, profile }: Props) {
   }, [project.id, showToast])
 
   const handleAddStep = async (form: Partial<Step>) => {
-    const s = await createStep(project.id, form)
-    setSteps(ss => [...ss, s])
-    showToast('Step added!', 'success')
+    try {
+      const s = await createStep(project.id, form)
+      if (!s) throw new Error('No step returned')
+      setSteps(ss => [...ss, s])
+      showToast('Step added', 'success')
+    } catch (err) {
+      console.warn('[AddStep] failed:', err)
+      showToast('Could not add step. Please try again.', 'error')
+    }
   }
 
   const handleUpdateStep = async (stepId: string, form: Partial<Step>) => {
-    await updateStep(stepId, form)
+    const previousSteps = steps
+    // Optimistic update
     setSteps(ss => ss.map(s => s.id === stepId ? { ...s, ...form } : s))
-    showToast('Step saved', 'success')
+    try {
+      await updateStep(stepId, form)
+      showToast('Step saved', 'success')
+    } catch (err) {
+      console.warn('[UpdateStep] failed, rolling back:', err)
+      setSteps(previousSteps)  // rollback
+      showToast('Could not save step. Your change was reverted.', 'error')
+    }
   }
 
   const handleDeleteStep = async (stepId: string) => {
@@ -327,14 +341,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: 'var(--bg2)',
+        background: 'var(--vs-white, #FFFFFF)',
       }}
     >
       <div
         style={{
           padding: '10px 20px',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           display: 'flex',
           alignItems: 'center',
           gap: 10,
@@ -361,7 +375,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           ← Dashboard
         </button>
 
-        <span style={{ color: 'var(--border2)' }}>|</span>
+        <span style={{ color: 'var(--vs-slate-200, #DDE3EA)' }}>|</span>
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
@@ -415,7 +429,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 steps={steps}
                 isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
               />
-            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'var(--brand-dim)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)' }}>
+            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'var(--brand-dim)', border:'1px solid rgba(11,29,51,0.2)', color:'var(--brand)' }}>
                 PDF ↑ Pro
               </button>
           }
@@ -433,7 +447,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 600,
               cursor: 'pointer',
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(1,118,211,0.2)',
+              border: '1px solid rgba(11,29,51,0.2)',
               color: 'var(--brand)',
             }}
           >
@@ -451,7 +465,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               cursor: 'pointer',
               background: 'none',
-              border: '1px solid var(--border2)',
+              border: '1px solid var(--vs-slate-200, #DDE3EA)',
               color: 'var(--text2)',
             }}
           >
@@ -487,8 +501,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
       <div
         style={{
           display: 'flex',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           overflowX: 'auto',
         }}
       >
@@ -506,7 +520,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             key={m.label}
             style={{
               padding: '8px 14px',
-              borderRight: '1px solid var(--border)',
+              borderRight: '1px solid var(--vs-slate-200, #DDE3EA)',
               minWidth: 68,
               textAlign: 'center',
               flexShrink: 0,
@@ -527,8 +541,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
         style={{
           display: 'flex',
           padding: '0 20px',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           overflowX: 'auto',
           scrollbarWidth: 'none',
         }}
@@ -712,7 +726,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       'Observe-Orient-Decide-Act rapid decision cycle',
                     ]
                     return (
-                      <div key={fmt} style={{ background: 'var(--bg2)', border: `1px solid ${colors[i]}44`, borderRadius: 12, padding: '16px 18px' }}>
+                      <div key={fmt} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${colors[i]}44`, borderRadius: 12, padding: '16px 18px' }}>
                         <div style={{ fontSize: 22, fontWeight: 800, color: colors[i], marginBottom: 6 }}>{fmt}</div>
                         <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5, marginBottom: 12 }}>{descs[i]}</div>
                         <button
@@ -1004,7 +1018,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             border: 'none',
             cursor: 'pointer',
             background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
-            boxShadow: '0 4px 20px rgba(1,118,211,0.4)',
+            boxShadow: '0 4px 20px rgba(11,29,51,0.4)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -1388,8 +1402,8 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
       onDragLeave={() => setOver(false)}
       onDrop={() => { setOver(false); onDrop() }}
       style={{
-        background: over ? 'rgba(1,118,211,0.03)' : 'var(--bg2)',
-        border: `1px solid ${over ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
+        background: over ? 'rgba(11,29,51,0.03)' : 'var(--vs-white, #FFFFFF)',
+        border: `1px solid ${over ? 'rgba(11,29,51,0.4)' : 'var(--vs-slate-200, #DDE3EA)'}`,
         borderRadius: 10,
         overflow: 'hidden',
       }}
@@ -1399,11 +1413,11 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '11px 14px',
-          background: 'var(--bg3)',
-          borderBottom: expanded ? '1px solid var(--border)' : 'none',
+          background: 'var(--vs-paper, #F7F8FA)',
+          borderBottom: expanded ? '1px solid var(--vs-slate-200, #DDE3EA)' : 'none',
         }}
       >
-        <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--border2)' }}>
+        <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--vs-slate-200, #DDE3EA)' }}>
           <DragHandleIcon size={14} color="currentColor" />
         </span>
         <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'var(--font-mono)', minWidth: 22, flexShrink: 0 }}>
@@ -1421,10 +1435,10 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         {/* Quick KPIs */}
         <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap', flexShrink: 0 }}>
           {ct > 0 && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(ct)}</span>}
-          {step.wip > 0 && <span style={{ color: '#D97706' }}>WIP:{step.wip}</span>}
+          {step.wip > 0 && <span style={{ color: '#A8854F' }}>WIP:{step.wip}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
           {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
-          {kzOpen > 0 && <span style={{ color: '#F4A623', fontWeight: 700 }}>{kzOpen}KZ</span>}
+          {kzOpen > 0 && <span style={{ color: '#C9A66B', fontWeight: 700 }}>{kzOpen}KZ</span>}
         </div>
         {/* Expand toggle */}
         <button onClick={onToggle} title={expanded ? 'Collapse' : 'Expand details'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex', fontSize: 12 }}>
@@ -1440,26 +1454,26 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
 
       {/* ── Expanded detail panel ── */}
       {expanded && (
-        <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 8, marginBottom: 12 }}>
             {[
               { label: 'Cycle Time', value: ct ? fmtS(ct) : ',', color: 'var(--brand)' },
               { label: 'Wait Time',  value: step.wait_time ? fmtS(Number(step.wait_time)) : ',' },
-              { label: 'WIP',        value: step.wip ?? ',', color: step.wip > 0 ? '#D97706' : undefined },
+              { label: 'WIP',        value: step.wip ?? ',', color: step.wip > 0 ? '#A8854F' : undefined },
               { label: 'Operators',  value: step.operators ?? ',' },
               { label: 'Uptime',     value: step.uptime != null ? `${step.uptime}%` : ',' },
               { label: 'Defect Rate',value: step.defect_rate != null ? `${step.defect_rate}%` : ',' },
               { label: 'Flow Type',  value: step.flow_type || 'push' },
               { label: 'VA Type',    value: step.va_type || 'VA' },
             ].map(({ label, value, color }) => (
-              <div key={label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 7, padding: '7px 10px' }}>
+              <div key={label} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7, padding: '7px 10px' }}>
                 <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'var(--font-mono)', letterSpacing: 0.8, marginBottom: 3 }}>{label}</div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: color || 'var(--text)' }}>{String(value)}</div>
               </div>
             ))}
           </div>
           {step.notes && (
-            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(11,29,51,0.04)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>NOTES</span>
               {step.notes}
             </div>
@@ -1476,8 +1490,8 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
                   style={{
                     display: 'flex', alignItems: 'center', gap: 4,
                     padding: '6px 10px', fontSize: 11, borderRadius: 6, cursor: 'pointer',
-                    background: has ? 'var(--brand-dim)' : 'var(--bg2)',
-                    border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
+                    background: has ? 'var(--brand-dim)' : 'var(--vs-white, #FFFFFF)',
+                    border: `1px solid ${has ? 'var(--brand)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     color: has ? 'var(--brand)' : 'var(--sl-400)',
                   }}
                 >
@@ -1501,7 +1515,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#FF6B6B', 'in-progress': '#F4A623', complete: '#1DD1A1' }
+  const sColor = { open: '#FF6B6B', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
 
   return (
     <div>
@@ -1524,7 +1538,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {allItems.filter(i => i.status === st).map((item: any, ki: number) => (
-                  <div key={ki} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: '12px 14px' }}>
+                  <div key={ki} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '12px 14px' }}>
                     <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 4 }}>{item.title}</div>
                     <div style={{ fontSize: 11, color: 'var(--text2)' }}>{item.stepName}</div>
                   </div>
@@ -1598,7 +1612,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
           { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
           { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? 'var(--brand)' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
-          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
+          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
             <div style={{ fontSize: 16, fontWeight: 700, color }}>{val}</div>
           </div>
@@ -1607,16 +1621,16 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
 
       {/* Step breakdown table, main-flow steps only (branches excluded from process report) */}
       {reportSteps.length > 0 && (
-        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
-          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
+        <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
+          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--vs-paper, #F7F8FA)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
             Process Step Summary
           </div>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
               <thead>
-                <tr style={{ background: 'var(--bg3)' }}>
+                <tr style={{ background: 'var(--vs-paper, #F7F8FA)' }}>
                   {['Step', 'CT', 'Wait', 'VA Type', 'Wastes', 'Open Kaizens', 'Status'].map(h => (
-                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -1630,7 +1644,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                   const avgCT = totalCT / Math.max(reportSteps.length, 1)
                   const isBN = takt > 0 ? ct > takt : (avgCT > 0 && ct > avgCT * 1.5)
                   return (
-                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--bg3)', borderTop: '1px solid var(--border)' }}>
+                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--vs-paper, #F7F8FA)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                       <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
                         {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
@@ -1659,11 +1673,11 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       )}
 
       {/* PDCA Tool, opens as proper modal with real close handler */}
-      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
         <button
           type="button"
           onClick={() => setShowPDCA(true)}
-          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
+          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
         >
           Open PDCA Report
         </button>
@@ -1786,8 +1800,8 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           {branches.map(branch => {
             const bSteps = steps.filter(s => s.branch_id === branch.branch_id)
             return (
-              <div key={branch.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}33`, borderRadius: 10, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: 'var(--bg3)', borderBottom: `1px solid ${branch.color}22`, flexWrap: 'wrap' }}>
+              <div key={branch.id} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${branch.color}33`, borderRadius: 10, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: 'var(--vs-paper, #F7F8FA)', borderBottom: `1px solid ${branch.color}22`, flexWrap: 'wrap' }}>
                   <div style={{ width: 10, height: 10, borderRadius: 3, background: branch.color, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 120 }}>
                     <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14 }}>{branch.label}</div>
@@ -1805,7 +1819,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
                       No steps in this branch yet.
                     </div>
                   ) : bSteps.map((s, si) => (
-                    <div key={s.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <div key={s.id} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                       <span style={{ color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
                       <div style={{ flex: 1, minWidth: 80 }}>
                         <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 12 }}>{s.name}</div>

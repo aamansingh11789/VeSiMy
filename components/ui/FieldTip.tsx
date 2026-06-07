@@ -242,7 +242,7 @@ export function FieldTip({ termKey }: { termKey: string }) {
           width: 16, height: 16, borderRadius: '50%',
           background: open ? 'var(--brand)' : 'rgba(201,166,107,0.12)',
           border: '1px solid rgba(212,168,67,0.3)',
-          color: open ? '#0D0C0A' : 'rgba(1,118,211,0.7)',
+          color: open ? '#0D0C0A' : 'rgba(11,29,51,0.7)',
           fontSize: 10, fontWeight: 800, cursor: 'pointer', padding: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all .15s', flexShrink: 0,
@@ -253,7 +253,7 @@ export function FieldTip({ termKey }: { termKey: string }) {
           position: 'absolute', top: 22, left: 0, zIndex: 9999,
           width: 300, padding: '12px 14px',
           background: 'var(--bg)',
-          border: '1px solid var(--border)',
+          border: '1px solid var(--vs-slate-200, #DDE3EA)',
           borderLeft: '3px solid var(--brand)',
           borderRadius: '0 10px 10px 10px',
           boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
@@ -307,7 +307,7 @@ export function FieldWarn({ msg }: { msg?: string | null }) {
       fontSize: 11, color: '#C9A66B', marginTop: 4,
       display: 'flex', alignItems: 'flex-start', gap: 5, lineHeight: 1.5,
     }}>
-      <AlertIcon size={13} color="#F4A623"/>
+      <AlertIcon size={13} color="#C9A66B"/>
       {msg}
     </div>
   )

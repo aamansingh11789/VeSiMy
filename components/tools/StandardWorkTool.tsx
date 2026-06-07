@@ -112,7 +112,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
       onClose={onClose}
     >
       {/* View-only notice */}
-      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 12 }}>
+      <div style={{ padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 12, color: '#C9A66B', marginBottom: 12 }}>
         View only, this chart reads from your step data. Edit cycle times and op steps in each step to update it.
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -167,7 +167,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                     { label: 'Takt',      val: takt ? `${takt}s` : ',', color: takt && totalTime > takt ? '#FF6B6B' : '#C9A66B' },
                     { label: 'Tasks',     val: String(opSteps.length), color: 'var(--text)' },
                   ].map(({ label, val, color }) => (
-                    <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px', textAlign: 'center' }}>
+                    <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '8px', textAlign: 'center' }}>
                       <div style={{ fontSize: 15, fontWeight: 700, color }}>{val}</div>
                       <div style={{ fontSize: 9, color: 'var(--text3)' }}>{label}</div>
                     </div>
@@ -191,12 +191,12 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                 )}
 
                 {/* Task table */}
-                <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
+                <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, overflow: 'hidden' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', background: 'transparent', padding: '6px 10px', fontSize: 10, color: 'var(--text3)', fontWeight: 700 }}>
                     <span>#</span><span>Task</span><span style={{ textAlign: 'center' }}>Type</span><span style={{ textAlign: 'right' }}>Time</span>
                   </div>
                   {opSteps.map((s: any, i: number) => (
-                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'transparent', alignItems: 'center' }}>
+                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', background: i % 2 === 0 ? 'transparent' : 'transparent', alignItems: 'center' }}>
                       <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{i + 1}</span>
                       <span style={{ fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                       <span style={{ textAlign: 'center' }}>
@@ -207,7 +207,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                       <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text2)', textAlign: 'right' }}>{s.time}s</span>
                     </div>
                   ))}
-                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: 'rgba(1,118,211,0.06)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'rgba(11,29,51,0.06)' }}>
                     <span />
                     <span style={{ fontSize: 11, fontWeight: 700, color: '#C9A66B' }}>Total</span>
                     <span />

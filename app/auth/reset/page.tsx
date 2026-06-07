@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { ArrowLeftIcon, CheckIcon } from '@/components/ui/Icons'
 
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 const GOLD  = 'var(--brand)'
 
 export default function ResetPage() {
@@ -33,7 +33,7 @@ export default function ResetPage() {
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24,
-      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(1,118,211,0.05) 0%, transparent 60%)' }}>
+      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(11,29,51,0.05) 0%, transparent 60%)' }}>
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:36 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
@@ -55,7 +55,7 @@ export default function ResetPage() {
             </Link>
           </div>
         ) : (
-          <div style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:16, padding:'36px 32px' }}>
+          <div style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:16, padding:'36px 32px' }}>
             <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:8 }}>Reset your password</h2>
             <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.6 }}>
               Enter the email you signed up with and we'll send a reset link.

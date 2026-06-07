@@ -47,7 +47,7 @@ const PHASES = [
 
 const inp: React.CSSProperties = {
   width: '100%', padding: '9px 12px', borderRadius: 7,
-  background: 'var(--bg)', border: '1px solid var(--border)',
+  background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
   color: 'var(--text)', fontSize: 13, fontFamily: 'inherit',
   boxSizing: 'border-box' as const, outline: 'none',
 }
@@ -63,10 +63,10 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
   const [expanded, setExpanded] = useState(isLast)
 
   return (
-    <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 8 }}>
+    <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, overflow: 'hidden', marginBottom: 8 }}>
       <div onClick={() => setExpanded(e => !e)} style={{
         display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
-        background: 'var(--bg2)', cursor: 'pointer', userSelect: 'none' as const,
+        background: 'var(--vs-white, #FFFFFF)', cursor: 'pointer', userSelect: 'none' as const,
       }}>
         <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--brand)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
           {index + 1}
@@ -101,7 +101,7 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
             ))}
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+          <div style={{ borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', paddingTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
             <div style={{ flex: 1 }}>
               <label style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: 4 }}>
                 OUTCOME (fill in after acting)
@@ -114,8 +114,8 @@ function IterationCard({ iter, index, isLast, onUpdate, onDelete }: { key?: any;
                 LOOP AGAIN?
               </label>
               <button onClick={() => onUpdate('loop_again', !iter.loop_again)} style={{
-                padding: '8px 16px', borderRadius: 7, border: `1px solid ${iter.loop_again ? '#C9A66B' : 'var(--border)'}`,
-                background: iter.loop_again ? 'rgba(1,118,211,0.1)' : 'transparent',
+                padding: '8px 16px', borderRadius: 7, border: `1px solid ${iter.loop_again ? '#C9A66B' : 'var(--vs-slate-200, #DDE3EA)'}`,
+                background: iter.loop_again ? 'rgba(11,29,51,0.1)' : 'transparent',
                 color: iter.loop_again ? '#C9A66B' : 'var(--text3)', fontSize: 12, fontWeight: 700, cursor: 'pointer',
                 fontFamily: 'inherit',
               }}>
@@ -173,7 +173,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
   return (
     <Modal title={`OODA Loop, ${stepName}`} onClose={onClose} onSave={handleSave} saveLabel={saving ? 'Saving…' : 'Save OODA'}>
       {/* Header info */}
-      <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 9, padding: '10px 14px', marginBottom: 16 }}>
+      <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.15)', borderRadius: 9, padding: '10px 14px', marginBottom: 16 }}>
         <div style={{ fontSize: 10, fontWeight: 700, fontFamily: 'var(--font-mono)', color: '#C9A66B', letterSpacing: 1, marginBottom: 4 }}>OODA LOOP</div>
         <p style={{ fontSize: 12, color: 'var(--text3)', margin: 0, lineHeight: 1.6 }}>
           Observe → Orient → Decide → Act. For fast-moving operational decisions where speed of iteration matters more than exhaustive analysis. Complete the loop, assess the outcome, then loop again if needed.
@@ -190,7 +190,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               </div>
               <div style={{ fontSize: 9, fontWeight: 700, color: phase.color, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>{phase.label.toUpperCase()}</div>
             </div>
-            {i < PHASES.length - 1 && <div style={{ width: 24, height: 2, background: 'var(--border)', flexShrink: 0 }} />}
+            {i < PHASES.length - 1 && <div style={{ width: 24, height: 2, background: 'var(--vs-slate-200, #DDE3EA)', flexShrink: 0 }} />}
             {i === PHASES.length - 1 && <div style={{ fontSize: 16, color: '#C9A66B', flexShrink: 0 }}>↩</div>}
           </div>
         ))}
@@ -208,7 +208,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 14 }}>
+      <div style={{ display: 'flex', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', marginBottom: 14 }}>
         {[
           { id: 'loop', label: `Loops (${form.iterations.length})` },
           { id: 'log', label: 'Decision Log' },
@@ -236,7 +236,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               onDelete={() => deleteIteration(iter.id)} />
           ))}
           <button onClick={addIteration} style={{
-            width: '100%', padding: '10px', borderRadius: 8, border: '1px dashed var(--border2)',
+            width: '100%', padding: '10px', borderRadius: 8, border: '1px dashed var(--vs-slate-200, #DDE3EA)',
             background: 'transparent', color: 'var(--text3)', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit',
           }}>+ Start {form.iterations.length === 0 ? 'first' : 'new'} OODA loop</button>
         </div>
@@ -250,12 +250,12 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {form.iterations.map((iter, i) => (
-                <div key={iter.id} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: 12 }}>
+                <div key={iter.id} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: 12 }}>
                   <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text3)', marginBottom: 6 }}>LOOP {i + 1}, {iter.timestamp}</div>
                   {iter.observe && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#6CB9FC' }}>Observed:</strong> {iter.observe}</p>}
                   {iter.decide && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#A8854F' }}>Decided:</strong> {iter.decide}</p>}
                   {iter.act    && <p style={{ fontSize: 12, color: 'var(--text2)', margin: '0 0 4px' }}><strong style={{ color: '#2E844A' }}>Action:</strong> {iter.act}</p>}
-                  {iter.outcome && <p style={{ fontSize: 12, color: 'var(--text2)', margin: 0 }}><strong style={{ color: '#F4A623' }}>Outcome:</strong> {iter.outcome}</p>}
+                  {iter.outcome && <p style={{ fontSize: 12, color: 'var(--text2)', margin: 0 }}><strong style={{ color: '#C9A66B' }}>Outcome:</strong> {iter.outcome}</p>}
                 </div>
               ))}
             </div>
@@ -268,8 +268,8 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
               {(['active', 'resolved', 'paused'] as const).map(s => (
                 <button key={s} onClick={() => setForm(f => ({ ...f, status: s }))} style={{
                   padding: '6px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-                  border: `1px solid ${form.status === s ? '#C9A66B' : 'var(--border)'}`,
-                  background: form.status === s ? 'rgba(1,118,211,0.1)' : 'transparent',
+                  border: `1px solid ${form.status === s ? '#C9A66B' : 'var(--vs-slate-200, #DDE3EA)'}`,
+                  background: form.status === s ? 'rgba(11,29,51,0.1)' : 'transparent',
                   color: form.status === s ? '#C9A66B' : 'var(--text3)',
                   textTransform: 'capitalize' as const,
                 }}>{s}</button>
@@ -301,7 +301,7 @@ export default function OODATool({ stepId, stepName, data, onSave, onClose }: Pr
             <li>The problem has reached a customer or crossed a containment boundary</li>
             <li>You need a customer-facing response document</li>
           </ul>
-          <p style={{ marginTop: 12, padding: 12, background: 'rgba(1,118,211,0.06)', borderRadius: 8, fontSize: 12, color: 'var(--text3)' }}>
+          <p style={{ marginTop: 12, padding: 12, background: 'rgba(11,29,51,0.06)', borderRadius: 8, fontSize: 12, color: 'var(--text3)' }}>
             OODA was developed by US Air Force Colonel John Boyd for aerial combat decisions. It has since been applied to business strategy, crisis management, and lean operations. The key insight is that the side with the faster OODA loop wins, not necessarily the one with the best single decision.
           </p>
         </div>

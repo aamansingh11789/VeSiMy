@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function PDCAPost() {
   return (
@@ -48,7 +48,7 @@ export default function PDCAPost() {
 
           {[
             { phase: 'Plan', color: '#6CB9FC', icon: '', desc: 'Define the problem with data. Describe the current condition. Identify the root cause using 5 Why or Fishbone analysis. Set a specific, measurable target condition. Define what success looks like before you start. Write a hypothesis: "If we do X, we expect Y because Z."' },
-            { phase: 'Do', color: '#0176D3', icon: '', desc: 'Implement your countermeasure, but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
+            { phase: 'Do', color: '#0B1D33', icon: '', desc: 'Implement your countermeasure, but start small. Test on one shift, one product, one line before full rollout. Document exactly what was done, what challenges arose, and what was adjusted during implementation. The Do phase is an experiment, not a permanent change.' },
             { phase: 'Check', color: '#1DD1A1', icon: '', desc: 'Measure the result against the target you set in Plan. Use the same metrics. Was the hypothesis proven? By how much? Were there unexpected effects? This is the phase most teams skip, and it is the most important. Without Check, you are not running PDCA, you are just doing things.' },
             { phase: 'Act', color: '#A8854F', icon: '', desc: 'If the target was met: standardise the improvement. Update Standard Work, train all operators, update control plans. If the target was not met: the information you gathered in Check is the input to the next Plan phase. Either way, you move forward.' },
           ].map(({ phase, color, icon, desc }) => (
@@ -67,7 +67,7 @@ export default function PDCAPost() {
           <p style={{ marginBottom: 16 }}>All four frameworks ask the same questions in different orders with different names. Choose based on your audience and problem complexity:</p>
 
           {[
-            { fmt: 'PDCA', color: '#0176D3', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
+            { fmt: 'PDCA', color: '#0B1D33', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
             { fmt: 'A3', color: '#1DD1A1', use: 'When you need to communicate the problem and solution on one page to management or across teams. Toyota\'s standard problem-solving communication format. Essentially PDCA on one sheet of A3 paper.' },
             { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA, different format and language.' },
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },
@@ -96,14 +96,14 @@ export default function PDCAPost() {
           ))}
 
           {/* CTA */}
-          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 16, textAlign: 'center' }}>
+          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(201,166,107,0.06)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 16, textAlign: 'center' }}>
             <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Run your first PDCA cycle free
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's PDCA tool guides you through all four phases and exports your project as PDCA, A3, 8D, DMAIC, or OODA, whichever format your audience requires. Free to start, no credit card.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#6B24A8,#8C44CC)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#6B24A8,#A8854F)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Start your PDCA project free →
             </Link>
           </div>

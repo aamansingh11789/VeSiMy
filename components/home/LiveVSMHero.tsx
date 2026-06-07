@@ -256,7 +256,7 @@ export default function LiveVSMHero() {
                     display: 'inline-block', padding: '1px 6px', borderRadius: 4,
                     fontSize: 9, fontWeight: 700, fontFamily: MONO,
                     background: step.vaType === 'VA' ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.12)',
-                    color: step.vaType === 'VA' ? '#34D399' : '#FBBF24',
+                    color: step.vaType === 'VA' ? '#34D399' : '#D9C08A',
                   }}>
                     {step.vaType}
                   </div>

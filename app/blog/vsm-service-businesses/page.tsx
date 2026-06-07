@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'VSM for Service Businesses: Mapping Processes That Have No Physical Product', type: 'article' },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function Post() {
   return (
@@ -45,9 +45,9 @@ export default function Post() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>Why service businesses benefit most from VSM</h2>
           <p style={{ marginBottom: 18 }}>In manufacturing, waste is often visible. Piles of inventory, idle machines, scrap bins. In service businesses, waste is invisible. The case sitting in someone's inbox does not look like waste, it looks like a normal part of the workflow. Making it visible with a VSM is often the first time a service team has seen their own process clearly.</p>
 
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
+            <Link href="/start" style={{ color: '#0B1D33', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

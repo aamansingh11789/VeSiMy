@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const examples = [
   {
@@ -29,7 +29,7 @@ const examples = [
     action: 'Add a mandatory "Quality Document Review" step to all engineering change orders, with sign-off from the quality manager before changes go live.',
   },
   {
-    color: '#0176D3',
+    color: '#0B1D33',
     problem: 'Machine downtime on Line 3 increased 40% last month',
     whys: [
       'The hydraulic press on Line 3 is breaking down 3× more often than normal',
@@ -81,7 +81,7 @@ const examples = [
     action: 'Integrate leave approval with the production scheduling system. Require supervisor sign-off confirming adequate cross-trained coverage before leave is approved during peak demand periods.',
   },
   {
-    color: '#0176D3',
+    color: '#0B1D33',
     problem: 'A new operator produced 200 scrap parts on their first solo shift',
     whys: [
       'The operator set the press tonnage incorrectly',
@@ -162,8 +162,8 @@ export default function FiveWhyPost() {
                 <div style={{ fontSize: 14, color: '#B8B5D1' }}>{ex.rootCause}</div>
               </div>
 
-              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '14px 18px' }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: '#0176D3', letterSpacing: 1, marginBottom: 6, fontFamily: 'var(--font-mono)' }}>CORRECTIVE ACTION</div>
+              <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 10, padding: '14px 18px' }}>
+                <div style={{ fontSize: 11, fontWeight: 800, color: '#0B1D33', letterSpacing: 1, marginBottom: 6, fontFamily: 'var(--font-mono)' }}>CORRECTIVE ACTION</div>
                 <div style={{ fontSize: 14, color: '#B8B5D1' }}>{ex.action}</div>
               </div>
             </div>

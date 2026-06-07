@@ -108,7 +108,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                     cursor: 'pointer',
                     transition: 'all 0.15s',
                     background: active ? 'rgba(255,107,107,0.07)' : 'var(--bg)',
-                    border: `1px solid ${active ? 'rgba(255,107,107,0.35)' : 'var(--border)'}`,
+                    border: `1px solid ${active ? 'rgba(255,107,107,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: 10,
@@ -128,7 +128,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                           fontSize: 10,
                           fontFamily: 'var(--font-mono)',
                           color: 'var(--text3)',
-                          background: 'var(--bg2)',
+                          background: 'var(--vs-white, #FFFFFF)',
                           padding: '1px 5px',
                           borderRadius: 4,
                         }}

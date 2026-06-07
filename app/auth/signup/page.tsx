@@ -92,7 +92,7 @@ function SignupForm() {
             Click the link in the email to activate your account.
             If you don't see it, check your spam folder.
           </p>
-          <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
+          <div style={{ background:'rgba(11,29,51,0.06)', border:'1px solid rgba(11,29,51,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
             <strong style={{ color:'var(--brand)' }}>On Android?</strong> Open Gmail or your email app,
             find the VeSiMy email, and tap the confirmation link.
             It will open VeSiMy and log you in automatically.
@@ -117,7 +117,7 @@ function SignupForm() {
           </div>
           <h1 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'trial' ? (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(201,166,107,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(201,166,107,0.08)', border:'1px solid rgba(11,29,51,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name}, ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>
@@ -132,9 +132,9 @@ function SignupForm() {
             Continue with Google
           </button>
           <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
-            <div style={{ flex:1, height:1, background:'var(--border)' }} />
+            <div style={{ flex:1, height:1, background:'var(--vs-slate-200, #DDE3EA)' }} />
             <span style={{ fontSize:12, color:'var(--sl-400)' }}>or</span>
-            <div style={{ flex:1, height:1, background:'var(--border)' }} />
+            <div style={{ flex:1, height:1, background:'var(--vs-slate-200, #DDE3EA)' }} />
           </div>
           <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:14 }}>
             <div><label className="label">Full Name</label>

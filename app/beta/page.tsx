@@ -7,8 +7,8 @@ import Link                    from 'next/link'
 import { AlertIcon, ClockIcon, ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
 
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = '#0176D3'
+const serif = "'Sora','Inter',sans-serif"
+const GOLD  = '#0B1D33'
 
 const ROLES      = ['Operations Manager','Lean / CI Engineer','Quality Manager','Plant / Site Manager','Manufacturing Engineer','Lean Consultant','Other']
 const INDUSTRIES = ['Automotive','Electronics / PCB','Aerospace','Industrial Manufacturing','Food & Beverage','Healthcare','Logistics / 3PL','Construction','Other']
@@ -93,9 +93,9 @@ export default function BetaPage() {
       <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ maxWidth:520, width:'100%', textAlign:'center' }}>
           <div style={{ width:80, height:80, borderRadius:'50%', margin:'0 auto 28px', display:'flex', alignItems:'center', justifyContent:'center',
-            background: isApproved ? 'rgba(29,209,161,0.12)' : 'rgba(1,118,211,0.1)',
-            border:`2px solid ${isApproved?'#1DD1A1':'#0176D3'}` }}>
-            {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{fontSize:11,fontWeight:800,fontFamily:"'JetBrains Mono',monospace",letterSpacing:1,color:"#0176D3"}}>BETA</span>}
+            background: isApproved ? 'rgba(29,209,161,0.12)' : 'rgba(11,29,51,0.1)',
+            border:`2px solid ${isApproved?'#1DD1A1':'#0B1D33'}` }}>
+            {isApproved ? <CheckIcon size={40} color='#1DD1A1' /> : <span style={{fontSize:11,fontWeight:800,fontFamily:"'JetBrains Mono',monospace",letterSpacing:1,color:"#0B1D33"}}>BETA</span>}
           </div>
           <h1 style={{ fontFamily:serif, fontSize:28, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             {isApproved ? "You're In. Welcome to Founding Member." : 'Application Received'}
@@ -105,7 +105,7 @@ export default function BetaPage() {
               ? `Your Founding Member access is confirmed. Log in to claim your 30-day Pro trial, and your permanent Founding Member badge.`
               : `Your application is under review. We'll reach out within 48 hours.`}
           </p>
-          <div style={{ background:'#FFFFFF', border:`1px solid rgba(1,118,211,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
+          <div style={{ background:'#FFFFFF', border:`1px solid rgba(11,29,51,0.2)`, borderRadius:12, padding:'18px 24px', marginBottom:28, textAlign:'left' }}>
             <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:12 }}>WHAT HAPPENS NEXT</p>
             {(isApproved ? [
               'Head to the app, your Founding Member badge is waiting',
@@ -122,7 +122,7 @@ export default function BetaPage() {
           </div>
           {isApproved && (
             <Link href='/auth/signup' style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'13px 28px', borderRadius:10, fontSize:15, fontWeight:700, cursor:'pointer',
-              background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'#2A1F00', textDecoration:'none', marginBottom:16 }}>
+              background:'linear-gradient(135deg,#0a5eaa,#0B1D33)', color:'#2A1F00', textDecoration:'none', marginBottom:16 }}>
               Claim Your Access <ArrowRightIcon size={16} />
             </Link>
           )}
@@ -137,7 +137,7 @@ export default function BetaPage() {
   // ── LANDING ──────────────────────────────────────────────────────────────────
   if (phase === 'landing') return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', color:'var(--text)',
-      backgroundImage:'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(1,118,211,0.06) 0%, transparent 60%)' }}>
+      backgroundImage:'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(11,29,51,0.06) 0%, transparent 60%)' }}>
 
       {/* Nav */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
@@ -153,13 +153,13 @@ export default function BetaPage() {
 
         {/* Hero */}
         <div style={{ textAlign:'center', marginBottom:56 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(1,118,211,0.08)', border:'1px solid rgba(1,118,211,0.25)', borderRadius:100, padding:'6px 18px', marginBottom:24 }}>
+          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(11,29,51,0.08)', border:'1px solid rgba(11,29,51,0.25)', borderRadius:100, padding:'6px 18px', marginBottom:24 }}>
             
             <span style={{ fontSize:11, color:GOLD, fontWeight:700, letterSpacing:2, fontFamily:'var(--font-mono)' }}>FOUNDING MEMBER ACCESS</span>
           </div>
           <h1 style={{ fontFamily:serif, fontSize:'clamp(32px,5vw,58px)', fontWeight:700, lineHeight:1.15, marginBottom:20 }}>
             For one week only ,<br />
-            <span style={{ background:'linear-gradient(135deg,#F5D060,#0176D3,#9A7200)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
+            <span style={{ background:'linear-gradient(135deg,#F5D060,#0B1D33,#9A7200)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
               Founding Member
             </span>{' '}is open to everyone.
           </h1>
@@ -169,7 +169,7 @@ export default function BetaPage() {
 
           {/* Countdown */}
           {closeDate && !countdown.expired && (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'#FFFFFF', border:'1px solid rgba(1,118,211,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:6, background:'#FFFFFF', border:'1px solid rgba(11,29,51,0.2)', borderRadius:12, padding:'14px 24px', marginBottom:32 }}>
               <ClockIcon size={14} color={GOLD} />
               <span style={{ fontSize:12, color:'var(--text3)', fontFamily:'var(--font-mono)' }}>CLOSES IN</span>
               {[
@@ -193,7 +193,7 @@ export default function BetaPage() {
 
           <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap' }}>
             <button onClick={() => setPhase('form')} style={{ padding:'14px 36px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
-              background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'#2A1F00', border:'none', display:'flex', alignItems:'center', gap:8 }}>
+              background:'linear-gradient(135deg,#0a5eaa,#0B1D33)', color:'#2A1F00', border:'none', display:'flex', alignItems:'center', gap:8 }}>
               Join Founding Member <ArrowRightIcon size={16} />
             </button>
             <a href="#perks" style={{ padding:'14px 24px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
@@ -204,7 +204,7 @@ export default function BetaPage() {
         </div>
 
         {/* What you get */}
-        <div id="perks" style={{ background:'#FFFFFF', border:'1px solid rgba(1,118,211,0.2)', borderRadius:16, padding:'32px 36px', marginBottom:48 }}>
+        <div id="perks" style={{ background:'#FFFFFF', border:'1px solid rgba(11,29,51,0.2)', borderRadius:16, padding:'32px 36px', marginBottom:48 }}>
           <p style={{ fontSize:11, color:GOLD, letterSpacing:2, fontFamily:'var(--font-mono)', marginBottom:20 }}>WHAT GOLD STANDARD GETS YOU, FOREVER</p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))', gap:24 }}>
             {[
@@ -227,7 +227,7 @@ export default function BetaPage() {
         </div>
 
         {/* Why it's time-limited */}
-        <div style={{ background:'rgba(1,118,211,0.04)', border:'1px solid rgba(1,118,211,0.15)', borderRadius:14, padding:'24px 28px', marginBottom:48, display:'flex', gap:20, alignItems:'flex-start' }}>
+        <div style={{ background:'rgba(11,29,51,0.04)', border:'1px solid rgba(11,29,51,0.15)', borderRadius:14, padding:'24px 28px', marginBottom:48, display:'flex', gap:20, alignItems:'flex-start' }}>
           
           <div>
             <div style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Why early access only?</div>
@@ -242,7 +242,7 @@ export default function BetaPage() {
         {/* Final CTA */}
         <div style={{ textAlign:'center' }}>
           <button onClick={() => setPhase('form')} style={{ padding:'15px 44px', borderRadius:10, fontSize:16, fontWeight:700, cursor:'pointer',
-            background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'#2A1F00', border:'none', display:'inline-flex', alignItems:'center', gap:8 }}>
+            background:'linear-gradient(135deg,#0a5eaa,#0B1D33)', color:'#2A1F00', border:'none', display:'inline-flex', alignItems:'center', gap:8 }}>
             Join Founding Member <ArrowRightIcon size={16} />
           </button>
           <p style={{ fontSize:12, color:'var(--sl-400)', marginTop:12 }}>Takes 3 minutes. No credit card required.</p>
@@ -254,7 +254,7 @@ export default function BetaPage() {
   // ── APPLICATION FORM ──────────────────────────────────────────────────────────
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', color:'var(--text)',
-      backgroundImage:'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(1,118,211,0.05) 0%, transparent 55%)' }}>
+      backgroundImage:'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(11,29,51,0.05) 0%, transparent 55%)' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(26,26,64,0.4)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
@@ -311,8 +311,8 @@ export default function BetaPage() {
               <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
                 {TEAM_SIZES.map(s=>(
                   <button key={s} type="button" onClick={()=>set('team_size',s)} style={{ padding:'7px 16px', borderRadius:8, fontSize:13, cursor:'pointer', border:'1px solid',
-                    background: form.team_size===s?'rgba(1,118,211,0.1)':'#FFFFFF',
-                    borderColor: form.team_size===s?'rgba(1,118,211,0.4)':'rgba(40,40,92,0.5)',
+                    background: form.team_size===s?'rgba(11,29,51,0.1)':'#FFFFFF',
+                    borderColor: form.team_size===s?'rgba(11,29,51,0.4)':'rgba(40,40,92,0.5)',
                     color: form.team_size===s?'var(--text)':'var(--text3)' }}>{s} people</button>
                 ))}
               </div>
@@ -325,10 +325,10 @@ export default function BetaPage() {
               <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
                 {LEAN_EXP.map(opt=>(
                   <button key={opt.id} type="button" onClick={()=>set('lean_experience',opt.id)} style={{ padding:'11px 16px', borderRadius:10, fontSize:13, cursor:'pointer', border:'1px solid', textAlign:'left',
-                    background: form.lean_experience===opt.id?'rgba(1,118,211,0.08)':'#FFFFFF',
-                    borderColor: form.lean_experience===opt.id?'rgba(1,118,211,0.4)':'rgba(40,40,92,0.5)',
+                    background: form.lean_experience===opt.id?'rgba(11,29,51,0.08)':'#FFFFFF',
+                    borderColor: form.lean_experience===opt.id?'rgba(11,29,51,0.4)':'rgba(40,40,92,0.5)',
                     color: form.lean_experience===opt.id?'var(--text)':'var(--text3)' }}>
-                    <span style={{ color: form.lean_experience===opt.id?GOLD:'var(--border2)', marginRight:8 }}>
+                    <span style={{ color: form.lean_experience===opt.id?GOLD:'var(--vs-slate-200, #DDE3EA)', marginRight:8 }}>
                       {form.lean_experience===opt.id?'◉':'○'}
                     </span>
                     {opt.label}
@@ -340,8 +340,8 @@ export default function BetaPage() {
               <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                 {TOOLS.map(t=>(
                   <button key={t} type="button" onClick={()=>toggleTool(t)} style={{ padding:'7px 14px', borderRadius:100, fontSize:12, cursor:'pointer', border:'1px solid',
-                    background: form.current_tools.includes(t)?'rgba(140,68,204,0.1)':'#FFFFFF',
-                    borderColor: form.current_tools.includes(t)?'rgba(140,68,204,0.4)':'rgba(40,40,92,0.5)',
+                    background: form.current_tools.includes(t)?'rgba(201,166,107,0.1)':'#FFFFFF',
+                    borderColor: form.current_tools.includes(t)?'rgba(201,166,107,0.4)':'rgba(40,40,92,0.5)',
                     color: form.current_tools.includes(t)?'var(--text)':'var(--text3)' }}>{t}</button>
                 ))}
               </div>
@@ -382,7 +382,7 @@ export default function BetaPage() {
           )}
 
           <button onClick={submit} disabled={submitting} style={{ padding:'15px 32px', borderRadius:10, fontSize:16, fontWeight:700, cursor:submitting?'wait':'pointer', width:'100%', border:'none',
-            background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'#2A1F00', opacity:submitting?0.8:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+            background:'linear-gradient(135deg,#0a5eaa,#0B1D33)', color:'#2A1F00', opacity:submitting?0.8:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
             {submitting ? '⟳ Submitting…' : 'Claim Founding Member Access'} {!submitting && <ArrowRightIcon size={16} />}
           </button>
           <p style={{ fontSize:12, color:'var(--sl-400)', textAlign:'center' }}>No spam. No cold calls. Cancel the trial anytime.</p>

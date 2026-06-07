@@ -151,7 +151,7 @@ export function AIResultPanel({
               type="button"
               onClick={onClear}
               style={{
-                padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border)',
+                padding: '5px 10px', borderRadius: 6, border: '1px solid var(--vs-slate-200, #DDE3EA)',
                 background: 'transparent', color: 'var(--text3)', fontSize: 11,
                 cursor: 'pointer', fontFamily: 'inherit',
               }}

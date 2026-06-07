@@ -59,7 +59,7 @@ const SECTIONS = [
   },
   {
     title:'Reports & Export',
-    color:'#8B5CF6',
+    color:'#3A5A7D',
     pages:[
       { title:'Generating a report',        desc:'How to create a process improvement report from your project data.', href:'/learn' },
       { title:'PDF export',                 desc:'What is included in the PDF, how to print it, how to share it.', href:'/learn' },

@@ -44,8 +44,8 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
       return h > 0 ? `<rect x="${x}" y="${yOffset}" width="${barW}" height="${h}" fill="${VA_COLORS[type]}" opacity="0.9"/>
         ${h > 14 ? `<text x="${x + barW/2}" y="${yOffset + h/2 + 4}" text-anchor="middle" font-size="9" fill="white" font-weight="700">${val}s</text>` : ''}` : ''
     }).join('')
-    const label = `<text x="${x + barW/2}" y="${barH + 16}" text-anchor="middle" font-size="10" fill="#374151" font-weight="600">${op.name || 'Op ' + (idx+1)}</text>
-      <text x="${x + barW/2}" y="${barH + 28}" text-anchor="middle" font-size="9" fill="${op.total > takt && takt > 0 ? '#EF4444' : '#6B7280'}">${op.total || 0}s ${op.pct !== undefined ? '· ' + op.pct + '% VA' : ''}</text>`
+    const label = `<text x="${x + barW/2}" y="${barH + 16}" text-anchor="middle" font-size="10" fill="#4F6174" font-weight="600">${op.name || 'Op ' + (idx+1)}</text>
+      <text x="${x + barW/2}" y="${barH + 28}" text-anchor="middle" font-size="9" fill="${op.total > takt && takt > 0 ? '#EF4444' : '#73879C'}">${op.total || 0}s ${op.pct !== undefined ? '· ' + op.pct + '% VA' : ''}</text>`
     return segments + label
   }).join('')
 
@@ -57,7 +57,7 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
     const val = Math.round((maxVal / 5) * i)
     const y   = barH - val * scale
     return `<line x1="${padLeft - 6}" y1="${y}" x2="${svgW - 20}" y2="${y}" stroke="#E5E7EB" stroke-width="0.8"/>
-      <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="9" fill="#9CA3AF">${val}s</text>`
+      <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="9" fill="#A9B5C2">${val}s</text>`
   }).join('')
 
   const legend = Object.entries(VA_LABELS).map(([k, label]) =>
@@ -166,7 +166,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
     >
       {/* View-only notice + export */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-        <div style={{ flex: 1, padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623' }}>
+        <div style={{ flex: 1, padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 12, color: '#C9A66B' }}>
           View only, this chart reads from your step data. Edit cycle times and op steps in each step to update it.
         </div>
         <button
@@ -178,7 +178,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             a.href = url; a.download = 'yamazumi-chart.html'; a.click()
             URL.revokeObjectURL(url)
           }}
-          style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)', whiteSpace: 'nowrap', flexShrink: 0 }}
+          style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)', whiteSpace: 'nowrap', flexShrink: 0 }}
         >
           ↓ Export (PDF)
         </button>
@@ -301,7 +301,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                 { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#C9A66B' },
                 { label: 'NVA Waste',   val: `${summary.nva}s`,   color: '#FF6B6B' },
               ].map(({ label, val, color }) => (
-                <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
+                <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color }}>{val}</div>
                   <div style={{ fontSize: 9, color: 'var(--text3)' }}>{label}</div>
                 </div>
@@ -316,7 +316,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             )}
 
             {summary.nva > 0 && (
-              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#C9A66B' }}>
+              <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#C9A66B' }}>
                 <strong style={{color:'#1DD1A1'}}>NVA WASTE:</strong> <strong>{summary.nva}s of NVA waste</strong> identified across all operators. Target these tasks for elimination in your next kaizen event.
               </div>
             )}

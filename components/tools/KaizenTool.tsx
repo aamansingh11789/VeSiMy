@@ -304,7 +304,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
           {items.length > 0 && (
             <button
               onClick={exportKaizenISO}
-              style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+              style={{ fontSize: 11, padding: '5px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text2)', cursor: 'pointer' }}
             >
               ISO Report
             </button>
@@ -314,8 +314,8 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
         {editId && (
           <div
             style={{
-              background: 'rgba(1,118,211,0.04)',
-              border: '1px solid rgba(1,118,211,0.2)',
+              background: 'rgba(11,29,51,0.04)',
+              border: '1px solid rgba(11,29,51,0.2)',
               borderRadius: 12,
               padding: 16,
             }}
@@ -462,7 +462,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                           padding: '8px 10px',
                           borderRadius: 8,
                           background: 'var(--bg)',
-                          border: '1px solid var(--border)',
+                          border: '1px solid var(--vs-slate-200, #DDE3EA)',
                           fontSize: 12,
                           color: 'var(--text2)',
                         }}
@@ -523,8 +523,8 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
               <div
                 key={item.id}
                 style={{
-                  background: 'var(--bg2)',
-                  border: '1px solid var(--border)',
+                  background: 'var(--vs-white, #FFFFFF)',
+                  border: '1px solid var(--vs-slate-200, #DDE3EA)',
                   borderRadius: 10,
                   overflow: 'hidden',
                 }}
@@ -568,7 +568,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                       padding: '3px 7px',
                       borderRadius: 999,
                       background: 'var(--bg)',
-                      border: '1px solid var(--border)',
+                      border: '1px solid var(--vs-slate-200, #DDE3EA)',
                       color: 'var(--text2)',
                       flexShrink: 0,
                       textTransform: 'capitalize',
@@ -599,7 +599,7 @@ export default function KaizenTool({ stepId, stepName, data, onSave, onClose }: 
                 </div>
 
                 {expanded === item.id && (
-                  <div style={{ padding: '0 14px 14px', borderTop: '1px solid var(--border)' }}>
+                  <div style={{ padding: '0 14px 14px', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     {item.description && (
                       <p style={{ fontSize: 12, color: 'var(--text2)', margin: '10px 0', lineHeight: 1.6 }}>
                         {item.description}

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function ComparisonPage() {
   return (
@@ -57,9 +57,9 @@ export default function ComparisonPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: 'left', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>FEATURE</th>
-                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: '#0176D3', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>VESIMY</th>
-                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--border)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>MANUS AI</th>
+                  <th style={{ textAlign: 'left', padding: '10px 16px', borderBottom: '2px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>FEATURE</th>
+                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--vs-slate-200, #DDE3EA)', color: '#0B1D33', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>VESIMY</th>
+                  <th style={{ textAlign: 'center', padding: '10px 16px', borderBottom: '2px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1 }}>MANUS AI</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +75,7 @@ export default function ComparisonPage() {
                   ['PDCA / 8D / DMAIC tools', '✓', ','],
                   ['Free to start (no account)', '✓', ','],
                 ].map(([feature, vesimy, manus], i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--border3)' }}>
+                  <tr key={i} style={{ borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <td style={{ padding: '10px 16px', color: 'var(--text2)' }}>{feature}</td>
                     <td style={{ padding: '10px 16px', textAlign: 'center', color: vesimy === '✓' ? '#2E844A' : vesimy === ',' ? 'var(--text4)' : 'var(--text3)', fontWeight: vesimy === '✓' ? 700 : 400 }}>{vesimy}</td>
                     <td style={{ padding: '10px 16px', textAlign: 'center', color: manus === '✓' ? '#2E844A' : manus === ',' ? 'var(--text4)' : 'var(--text3)', fontWeight: manus === '✓' ? 700 : 400 }}>{manus}</td>
@@ -99,10 +99,10 @@ export default function ComparisonPage() {
           <p style={{ marginBottom: 10 }}>Pick Manus AI if your priority is general-purpose automation and flexible AI execution across tasks.</p>
           <p style={{ marginBottom: 18 }}>Pick VeSiMy if your priority is operational improvement, process discipline, and better business performance. If your team keeps saying "we need a better way to do this," VeSiMy is likely the more relevant choice.</p>
 
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '24px' }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.18)', borderRadius: 12, padding: '24px' }}>
             <p style={{ color: 'var(--text)', fontSize: 16, fontFamily: serif, margin: '0 0 8px', fontWeight: 700 }}>See it for yourself</p>
             <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.7, margin: '0 0 16px' }}>Map one process in under 5 minutes. Get a real AI lean report with bottleneck identification, waste classification, and a first action for this week. No account required.</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none', fontSize: 15 }}>Map a process free, no account needed →</Link>
+            <Link href="/start" style={{ color: '#0B1D33', fontWeight: 700, textDecoration: 'none', fontSize: 15 }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

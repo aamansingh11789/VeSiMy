@@ -9,7 +9,7 @@ const COLORS = [
   { label: 'Violet', value: '#6426A0' },
   { label: 'Steel Blue', value: '#1090D4' },
   { label: 'Teal', value: '#1DD1A1' },
-  { label: 'Amber', value: '#F4A623' },
+  { label: 'Amber', value: '#C9A66B' },
   { label: 'Pink', value: '#E84393' },
   { label: 'Cyan', value: '#00BCD4' },
 ]

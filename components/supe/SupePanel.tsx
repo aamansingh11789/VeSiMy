@@ -141,7 +141,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
       </div>
 
       {/* ── Stats row ── */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', borderBottom:'1px solid var(--border)', flexShrink:0 }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', borderBottom:'1px solid var(--vs-slate-200, #DDE3EA)', flexShrink:0 }}>
         {([[open.length, highN>0?'var(--red)':'var(--brand)', 'ISSUES'],
            [resolved.size, '#1DD1A1', 'RESOLVED'],
            [isDemo ? ',' : steps.length, 'var(--steel)', 'STEPS']] as any[]).map(([v,c,l]) => (
@@ -153,7 +153,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
       </div>
 
       {/* ── Tab switcher ── */}
-      <div style={{ display:'flex', borderBottom:'1px solid var(--border)', flexShrink:0 }}>
+      <div style={{ display:'flex', borderBottom:'1px solid var(--vs-slate-200, #DDE3EA)', flexShrink:0 }}>
         {(['findings','chat'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
             flex:1, padding:'9px 0', fontSize:12, fontWeight:600,
@@ -245,7 +245,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
                 <div style={{
                   maxWidth:'88%', padding:'9px 12px', borderRadius: msg.role==='user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
                   background: msg.role==='user' ? 'rgba(201,166,107,0.12)' : 'var(--sl-100)',
-                  border: msg.role==='user' ? '1px solid rgba(201,166,107,0.32)' : '1px solid var(--border)',
+                  border: msg.role==='user' ? '1px solid rgba(201,166,107,0.32)' : '1px solid var(--vs-slate-200, #DDE3EA)',
                   fontSize:12, color:'var(--text)', lineHeight:1.65,
                 }}>
                   {msg.role === 'assistant' && (
@@ -300,7 +300,7 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
           )}
 
           {/* Input */}
-          <div style={{ padding:'10px 14px', borderTop:'1px solid var(--border)', display:'flex', gap:8, flexShrink:0 }}>
+          <div style={{ padding:'10px 14px', borderTop:'1px solid var(--vs-slate-200, #DDE3EA)', display:'flex', gap:8, flexShrink:0 }}>
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
@@ -308,12 +308,12 @@ export function SupePanel({ steps, projectId, industry, projectName }: Props) {
               placeholder="Ask Supe anything about your process…"
               disabled={loading}
               style={{
-                flex:1, background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)',
+                flex:1, background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:'var(--radius-sm)',
                 padding:'8px 12px', fontSize:12, color:'var(--text)', outline:'none',
                 fontFamily:'inherit', transition:'border 0.15s',
               }}
               onFocus={e => (e.target as HTMLInputElement).style.borderColor='rgba(100,38,160,0.4)'}
-              onBlur={e => (e.target as HTMLInputElement).style.borderColor='var(--border)'}
+              onBlur={e => (e.target as HTMLInputElement).style.borderColor='var(--vs-slate-200, #DDE3EA)'}
             />
             <button onClick={() => sendMessage()} disabled={loading || !input.trim()} style={{
               padding:'8px 14px', borderRadius:'var(--radius-sm)', background:'rgba(201,166,107,0.15)',

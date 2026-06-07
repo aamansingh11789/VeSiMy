@@ -69,7 +69,7 @@ function baseTemplate(docType: string, docId: string, projectName: string, date:
     td.label { font-weight: 600; color: #444; width: 30%; font-size: 12px; border-right: 1px solid #E8E5E0; background: #F8F6F0; }
     td.value { color: #222; font-size: 12px; line-height: 1.6; }
     tr { border-bottom: 1px solid #F0EDE8; }
-    .disclaimer { background: #FFF9EC; border: 1px solid #F4A623; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #7A5200; line-height: 1.6; margin-top: 28px; }
+    .disclaimer { background: #FFF9EC; border: 1px solid #C9A66B; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: var(--vs-navy-900, #0B1D33); line-height: 1.6; margin-top: 28px; }
     .footer { margin-top: 32px; padding-top: 14px; border-top: 1px solid #E8E5E0; font-size: 10px; color: #999; font-family: monospace; display: flex; justify-content: space-between; }
     .action-list { list-style: none; padding: 0; }
     .action-list li { padding: 5px 0; border-bottom: 1px solid #F0EDE8; font-size: 12px; line-height: 1.6; display: flex; gap: 10px; }
@@ -131,7 +131,7 @@ function buildPDCAHTML(report: any, project: any, t?: any, indLabel?: string) {
       ['Primary metrics', 'Lead Time, PCE, Defect Rate, Cycle Time by Step'],
       ['Missing data', (report.missing_information || []).map((m: any) => `${m.step_name}: ${m.field}`).join(' · ') || 'None'],
       ['Review cadence', 'Weekly during kaizen event, monthly thereafter'],
-    ], '#F4A623')}
+    ], '#C9A66B')}
     ${renderSection('ACT, Standardisation', [
       ['Actions', 'Update SOP · Train team members · Schedule 30-day review'],
       ['Standard reference', 'ISO 9001:2015 §10, ISO 9000:2015 §3.3.5'],
@@ -167,7 +167,7 @@ function buildOODAHTML(report: any, project: any, t?: any, indLabel?: string) {
     ${renderSection('DECIDE, Priority Actions', [
       ...(report.action_plan || []).slice(0, 6).map((a: any, i: number) => [`${i+1}. ${a.step || ','}`, a.action || ','] as [string, string]),
       ['CI tools selected', tools || ','],
-    ], '#F4A623')}
+    ], '#C9A66B')}
     ${renderSection('ACT, Next Steps', [
       ...(report.mapping_guidance || ['Complete cycle time data', 'Classify VA/NVA for all steps', 'Verify task descriptions']).map((g: any, i: number) => [`Step ${i+1}`, g] as [string, string])
     ])}
@@ -196,7 +196,7 @@ function build8DHTML(report: any, project: any, t?: any, indLabel?: string) {
     ${renderSection('D3, Interim Containment', [
       ['Containment action', bottlenecks.length > 0 ? `Immediate monitoring of: ${bottlenecks.map((b: any) => b.step_name).join(', ')}` : 'Monitor all steps with missing cycle time data'],
       ['Note', 'Verify with direct observation at the process (gemba)'],
-    ], '#F4A623')}
+    ], '#C9A66B')}
     ${renderSection('D4, Root Cause Analysis', [
       ...bottlenecks.map((b: any) => [b.step_name || ',', `${b.reason || ','} · Tool: ${b.tool || ','}`] as [string, string]),
       ...(bottlenecks.length === 0 ? [['Note', 'Add cycle time data to enable bottleneck identification']] as [string, string][] : [])
@@ -347,7 +347,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
 
     return (
       <div style={{
-        background: 'white', border: `1px solid ${isFuture ? 'rgba(46,132,74,.3)' : 'var(--border)'}`,
+        background: 'white', border: `1px solid ${isFuture ? 'rgba(46,132,74,.3)' : 'var(--vs-slate-200, #DDE3EA)'}`,
         borderRadius: 12, overflow: 'hidden', marginBottom: 12,
       }}>
         {/* Card header */}
@@ -359,7 +359,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
               <span style={{
                 fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, padding: '2px 8px', borderRadius: 4,
-                background: isFuture ? 'rgba(46,132,74,.1)' : 'rgba(1,118,211,.08)',
+                background: isFuture ? 'rgba(46,132,74,.1)' : 'rgba(11,29,51,.08)',
                 color: isFuture ? GREEN : BRAND, fontWeight: 700,
               }}>
                 {isFuture ? 'FUTURE STATE' : 'CURRENT STATE'} v{report.report_version ?? 1}
@@ -376,7 +376,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
           {/* Key metrics chips */}
           <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
             {report.va_ratio && (
-              <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', padding: '3px 8px', borderRadius: 5, background: 'var(--sl-100)', color: 'var(--text2)', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', padding: '3px 8px', borderRadius: 5, background: 'var(--sl-100)', color: 'var(--text2)', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                 PCE {report.va_ratio}
               </span>
             )}
@@ -392,7 +392,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
 
         {/* Expanded body */}
         {isOpen && (
-          <div style={{ borderTop: '1px solid var(--border)', padding: '16px 18px' }}>
+          <div style={{ borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', padding: '16px 18px' }}>
 
             {/* Summary */}
             <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 16 }}>
@@ -400,7 +400,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
             </p>
 
             {/* Disclaimer */}
-            <div style={{ padding: '10px 12px', background: 'rgba(244,166,35,.06)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 7, fontSize: 11, color: '#7A5200', lineHeight: 1.6, marginBottom: 16 }}><AlertIcon size={13} color="#7A5200"/> {report.disclaimer}
+            <div style={{ padding: '10px 12px', background: 'rgba(201,166,107,.06)', border: '1px solid rgba(201,166,107,.25)', borderRadius: 7, fontSize: 11, color: 'var(--vs-navy-900, #0B1D33)', lineHeight: 1.6, marginBottom: 16 }}><AlertIcon size={13} color="var(--vs-navy-900, #0B1D33)"/> {report.disclaimer}
             </div>
 
             {/* Metrics */}
@@ -410,7 +410,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
                 { label: 'Lead Time', value: report.estimated_lead_time },
                 { label: 'PCE', value: report.va_ratio },
               ].filter(m => m.value).map(({ label, value }) => (
-                <div key={label} style={{ textAlign: 'center', padding: '10px 8px', background: 'var(--sl-50)', borderRadius: 7, border: '1px solid var(--border)' }}>
+                <div key={label} style={{ textAlign: 'center', padding: '10px 8px', background: 'var(--vs-paper, #F7F8FA)', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                   <div style={{ fontSize: 8, fontFamily: 'var(--font-mono)', color: 'var(--text3)', letterSpacing: 1 }}>{label}</div>
                   <div style={{ fontSize: 18, fontWeight: 700, fontFamily: SERIF, color: 'var(--text)' }}>{value}</div>
                 </div>
@@ -419,7 +419,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
 
             {/* Improvement potential */}
             {ip.conservative && (
-              <div style={{ padding: '12px 14px', background: 'rgba(1,118,211,.05)', border: '1px solid rgba(1,118,211,.15)', borderRadius: 8, marginBottom: 14 }}>
+              <div style={{ padding: '12px 14px', background: 'rgba(11,29,51,.05)', border: '1px solid rgba(11,29,51,.15)', borderRadius: 8, marginBottom: 14 }}>
                 <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: BRAND, letterSpacing: 1.5, marginBottom: 8 }}>IMPROVEMENT POTENTIAL</div>
                 <div style={{ display: 'flex', gap: 20 }}>
                   <div><div style={{ fontSize: 10, color: 'var(--text3)' }}>Conservative</div><div style={{ fontSize: 20, fontWeight: 700, fontFamily: SERIF, color: GREEN }}>{ip.conservative}</div></div>
@@ -445,7 +445,7 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
               <div style={{ marginBottom: 14 }}>
                 <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'var(--text3)', letterSpacing: 1.5, marginBottom: 8 }}>ACTION PLAN ({report.action_plan.length} items)</div>
                 {(report.action_plan || []).slice(0, 3).map((a: any, i: number) => (
-                  <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 12, color: 'var(--text2)' }}>
+                  <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, color: 'var(--text2)' }}>
                     <span style={{ width: 18, height: 18, borderRadius: '50%', background: BRAND, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, flexShrink: 0 }}>{i+1}</span>
                     <div><strong style={{ color: 'var(--text)' }}>{a.step}</strong>, {a.action}</div>
                   </div>
@@ -457,22 +457,22 @@ export function V2Journal({ reports, project, t, indLabel, onLoadReport }: Props
             )}
 
             {/* Actions bar */}
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--border)' }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
               <button onClick={() => onLoadReport(report)} style={{
                 padding: '7px 14px', borderRadius: 7, border: 'none', background: BRAND,
                 color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer',
               }}>View full report</button>
 
               <button onClick={() => downloadHTML(buildPDCAHTML(report, project, t, indLabel), `${project.name}-PDCA-v${report.report_version}.html`)}
-                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
+                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
                 ↓ PDCA (PDF)
               </button>
               <button onClick={() => downloadHTML(buildOODAHTML(report, project, t, indLabel), `${project.name}-OODA-v${report.report_version}.html`)}
-                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
+                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
                 ↓ OODA (PDF)
               </button>
               <button onClick={() => downloadHTML(build8DHTML(report, project, t, indLabel), `${project.name}-8D-v${report.report_version}.html`)}
-                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
+                style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'white', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text2)' }}>
                 ↓ 8D (PDF)
               </button>
             </div>

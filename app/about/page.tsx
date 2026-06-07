@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'VeSiMy is an AI-powered process improvement platform built for lean practitioners, operators, managers, and consultants across 68+ industries. Learn about our mission and the team behind it.',
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function AboutPage() {
   return (
@@ -68,22 +68,19 @@ export default function AboutPage() {
           </p>
 
           {/* Founder card */}
-          <div style={{ background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.86)', borderRadius: 16, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,rgba(212,168,67,0.4),rgba(184,145,46,0.4))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 22, fontWeight: 700, color: '#C9A66B', fontFamily: "'Sora','Inter',sans-serif" }}>M</div>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 16, padding: '32px', display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap', boxShadow: 'var(--vs-shadow-card, 0 10px 30px rgba(7,26,47,0.06))' }}>
+            <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--vs-navy-900, #0B1D33)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28, fontWeight: 650, color: 'var(--vs-gold-600, #C9A66B)', fontFamily: "'Sora','Inter',sans-serif", letterSpacing: '-0.02em' }}>MS</div>
             <div style={{ flex: 1, minWidth: 200 }}>
-              <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text)', marginBottom: 4 }}>Founder & CEO</div>
-              <div style={{ fontSize: 13, color: '#C9A66B', marginBottom: 12, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>VESIMY · UNITED STATES</div>
-              <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>
-                Building VeSiMy from the ground up. Product, engineering, and growth. On a mission to bring AI-powered continuous improvement to every operations team in the world.
+              <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontWeight: 650, fontSize: 22, color: 'var(--vs-navy-900, #0B1D33)', marginBottom: 4, letterSpacing: '-0.01em' }}>Max Singh</div>
+              <div style={{ fontSize: 14, color: 'var(--vs-slate-700, #4F6174)', marginBottom: 4, fontWeight: 500 }}>Founder & CEO</div>
+              <div style={{ fontSize: 12, color: 'var(--vs-gold-600, #C9A66B)', marginBottom: 16, fontFamily: "'JetBrains Mono', monospace", letterSpacing: 1.5, fontWeight: 600 }}>PLEASANT HILL, CALIFORNIA</div>
+              <p style={{ fontSize: 14, color: 'var(--vs-slate-700, #4F6174)', lineHeight: 1.75 }}>
+                12 years in manufacturing and operations across Tesla and Philips. Lean Six Sigma Green Belt. Building VeSiMy from the ground up to bring practical continuous improvement to every operations team that wants to see their process clearly.
               </p>
-              <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: 12, marginTop: 18, flexWrap: 'wrap' }}>
                 <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 12, color: '#C9A66B', textDecoration: 'none', border: '1px solid rgba(108,185,252,0.24)', borderRadius: 8, padding: '5px 12px' }}>
-                  LinkedIn →
-                </a>
-                <a href="https://github.com/aamansingh11789" target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 12, color: 'var(--text2)', textDecoration: 'none', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 8, padding: '5px 12px' }}>
-                  GitHub →
+                  style={{ fontSize: 13, color: 'var(--vs-navy-900, #0B1D33)', textDecoration: 'none', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '7px 14px', fontWeight: 500, transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  Connect on LinkedIn →
                 </a>
               </div>
             </div>
@@ -93,7 +90,7 @@ export default function AboutPage() {
         {/* Company facts */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, marginBottom: 56 }}>
           {[
-            { label: 'Location', value: 'United States' },
+            { label: 'Location', value: 'Pleasant Hill, CA' },
             { label: 'Founded', value: '2026' },
             { label: 'Stage', value: 'Pre-Seed' },
             { label: 'Users', value: 'Growing daily' },
@@ -120,7 +117,7 @@ export default function AboutPage() {
               founder@vesimy.com
             </a>
             <Link href="/enterprise"
-              style={{ padding: '12px 28px', border: '1px solid rgba(1,118,211,0.3)', color: '#C9A66B', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+              style={{ padding: '12px 28px', border: '1px solid rgba(11,29,51,0.3)', color: '#C9A66B', fontWeight: 600, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Enterprise Inquiry →
             </Link>
           </div>

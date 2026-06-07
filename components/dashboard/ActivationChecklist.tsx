@@ -106,7 +106,7 @@ export function ActivationChecklist({ projects }: Props) {
             <div style={{
               width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
               background: item.done ? 'var(--vs-gold-600)' : 'transparent',
-              border: item.done ? '1.5px solid var(--vs-gold-600)' : '1.5px solid var(--border)',
+              border: item.done ? '1.5px solid var(--vs-gold-600)' : '1.5px solid var(--vs-slate-200, #DDE3EA)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               {item.done && <CheckIcon size={11} color="#0B1D33" />}

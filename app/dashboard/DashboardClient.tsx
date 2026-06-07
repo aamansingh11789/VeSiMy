@@ -76,7 +76,7 @@ function UpgradeToast() {
 
 // Industry options loaded from lib/industry-language.ts via the IndustrySelector component
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 function getOverdueKaizen(project: any): number {
   const steps = (project.steps || []) as any[]
@@ -114,7 +114,7 @@ function getProjectScore(project: any) {
 }
 
 function getScoreColor(score: number) {
-  return score >= 70 ? '#1DD1A1' : score >= 40 ? '#F4A623' : '#FF6B6B'
+  return score >= 70 ? '#1DD1A1' : score >= 40 ? '#C9A66B' : '#FF6B6B'
 }
 
 function getScoreLabel(score: number, count: number) {
@@ -209,17 +209,34 @@ function ProjectHealthCard({ project, onDelete, isDeleting }: { project: Project
               <div style={{ minWidth: 0 }}>
                 <h3
                   style={{
+                    fontFamily: "'Sora','Inter',sans-serif",
                     fontSize: 15,
                     fontWeight: 650,
-                    color: 'var(--text)',
+                    color: project.name?.startsWith('⭐') ? 'var(--vs-navy-900)' : 'var(--text)',
                     margin: 0,
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                    letterSpacing: 0.1,
+                    letterSpacing: '-0.01em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
                   }}
                 >
-                  {project.name}
+                  {project.name?.startsWith('⭐') && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 20, height: 20, borderRadius: 4,
+                      background: 'var(--vs-gold-600, #C9A66B)',
+                      color: 'var(--vs-navy-900, #0B1D33)',
+                      fontSize: 11, fontWeight: 700, flexShrink: 0,
+                    }}>★</span>
+                  )}
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {project.name?.replace(/^⭐\s*/, '') || project.name}
+                  </span>
                 </h3>
 
                 {project.customer && (
@@ -421,7 +438,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
         >
           {([
             ['Healthy', '#1DD1A1', high],
-            ['Building', '#F4A623', mid],
+            ['Building', '#C9A66B', mid],
             ['Needs Work', '#FF6B6B', low],
           ] as const).map(([label, c, n]) => (
             <div
@@ -474,7 +491,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
             }}
           >
             {high > 0 && <div style={{ flex: high, background: '#1DD1A1' }} />}
-            {mid > 0 && <div style={{ flex: mid, background: '#F4A623' }} />}
+            {mid > 0 && <div style={{ flex: mid, background: '#C9A66B' }} />}
             {low > 0 && <div style={{ flex: low, background: '#FF6B6B' }} />}
           </div>
 
@@ -920,7 +937,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
           if (hasRefs) return null
 
           return (
-            <div style={{ background: '#FFFFFF', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 14, padding: '18px 20px' }}>
+            <div style={{ background: '#FFFFFF', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 14, padding: '18px 20px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(212,168,67,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--brand)', letterSpacing: 0.5 }}>REF</div>
                 <div style={{ flex: 1, minWidth: 200 }}>
@@ -940,7 +957,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 </button>
               </div>
               {refNames.length > 0 && (
-                <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {refNames.map(name => (
                     <div key={name} style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--brand-dim)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 6, padding: '3px 9px' }}>
                       {name.replace('Reference, ', '')}
@@ -957,7 +974,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
 
         {/* Spring 2026 promo nudge */}
         {!isPro && new Date() < new Date('2026-04-21T00:00:00') && (
-          <div style={{ background: '#FFFFFF', border: '0.5px solid var(--border)', borderRadius: 10, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ background: '#FFFFFF', border: '0.5px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 16 }}>🌱</span>
             <span style={{ fontSize: 13, color: 'var(--text2)', flex: 1 }}>
               <strong style={{ color: 'var(--text)' }}>Spring offer:</strong>
@@ -1173,7 +1190,7 @@ export function DashboardClient({ profile, initialProjects }: Props) {
                 padding: 30,
                 borderRadius: 20,
                 background:
-                  'linear-gradient(180deg, transparent, rgba(255,255,255,0.008)), var(--sl-50)',
+                  'linear-gradient(180deg, transparent, rgba(255,255,255,0.008)), var(--vs-paper, #F7F8FA)',
               }}
             >
               <div

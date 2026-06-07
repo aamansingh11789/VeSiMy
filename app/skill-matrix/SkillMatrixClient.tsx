@@ -5,21 +5,21 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const BRAND = '#0176D3'
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+const BRAND = '#0B1D33'
+const serif = "'Sora','Inter',sans-serif"
 const mono  = '"JetBrains Mono","IBM Plex Mono",monospace'
 
 const MATURITY_CONFIG = {
   beginner: {
     label: 'Beginner',
-    color: '#F4A623',
+    color: '#C9A66B',
     desc: 'Building foundational mapping habits. AI provides full guidance with detailed explanations.',
     badge: '🌱',
     next: 'Complete 3+ projects with at least 3 CT laps per step to progress to Intermediate.',
   },
   intermediate: {
     label: 'Intermediate',
-    color: '#0176D3',
+    color: '#0B1D33',
     desc: 'Consistent data quality developing. AI provides standard recommendations with lean terminology.',
     badge: '⚡',
     next: 'Use 4+ different CI tools and achieve 80%+ CT consistency to progress to Advanced.',
@@ -41,7 +41,7 @@ function DimensionBar({ label, value, max = 100, color }: { label: string; value
         <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{label}</span>
         <span style={{ fontSize: 12, fontFamily: mono, color }}>{pct}%</span>
       </div>
-      <div style={{ height: 8, background: 'var(--bg4)', borderRadius: 4, overflow: 'hidden' }}>
+      <div style={{ height: 8, background: 'var(--vs-slate-100, #EEF2F6)', borderRadius: 4, overflow: 'hidden' }}>
         <div style={{
           height: '100%', width: `${pct}%`,
           background: `linear-gradient(90deg, ${color}, ${color}99)`,
@@ -96,14 +96,14 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
           <div style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>{mc.label}</div>
           <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.65, margin: 0 }}>{mc.desc}</p>
         </div>
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px', textAlign: 'center', flexShrink: 0 }}>
+        <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '16px 20px', textAlign: 'center', flexShrink: 0 }}>
           <div style={{ fontSize: 36, fontWeight: 700, fontFamily: serif, color: BRAND }}>{projectCount}</div>
           <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: mono }}>PROJECTS</div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 24, gap: 2 }}>
+      <div style={{ display: 'flex', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', marginBottom: 24, gap: 2 }}>
         {(['overview', 'breakdown', 'coaching', 'history'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
             padding: '9px 16px', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
@@ -136,7 +136,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
               <DimensionBar label="WIP capture completeness" value={skillData?.wip_completeness_score ?? 0} color="#A8854F" />
               <DimensionBar label="Defect format consistency" value={skillData?.defect_format_consistency_score ?? 0} color="#2E844A" />
               <DimensionBar label="AI recommendation acceptance" value={Math.round((skillData?.ai_acceptance_rate ?? 0) * 100)} color="#1DD1A1" />
-              <DimensionBar label="Tool usage breadth" value={(tools.length / 7) * 100} color="#F4A623" />
+              <DimensionBar label="Tool usage breadth" value={(tools.length / 7) * 100} color="#C9A66B" />
 
               <div style={{ background: `${mc.color}08`, border: `1px solid ${mc.color}20`, borderRadius: 10, padding: '14px 18px', marginTop: 24 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, fontFamily: mono, color: mc.color, marginBottom: 6 }}>NEXT LEVEL</div>
@@ -157,7 +157,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
               { label: 'Avg efficiency improvement', value: skillData?.avg_efficiency_improvement ? `+${skillData.avg_efficiency_improvement.toFixed(1)}%` : ',', sub: 'PCE gain per project', icon: '📈' },
               { label: 'Lead time reduction',      value: skillData?.avg_lead_time_reduction ? `${skillData.avg_lead_time_reduction.toFixed(0)}%` : ',', sub: 'average across projects', icon: '⚡' },
             ].map(m => (
-              <div key={m.label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '18px 20px', textAlign: 'center' }}>
+              <div key={m.label} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '18px 20px', textAlign: 'center' }}>
                 <div style={{ fontSize: 24, marginBottom: 8 }}>{m.icon}</div>
                 <div style={{ fontFamily: serif, fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{m.value}</div>
                 <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: mono }}>{m.label.toUpperCase()}</div>
@@ -174,8 +174,8 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
                 return (
                   <div key={tool} style={{
                     padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 700,
-                    background: used ? 'rgba(1,118,211,0.1)' : 'var(--bg3)',
-                    border: `1px solid ${used ? 'rgba(1,118,211,0.3)' : 'var(--border)'}`,
+                    background: used ? 'rgba(11,29,51,0.1)' : 'var(--vs-paper, #F7F8FA)',
+                    border: `1px solid ${used ? 'rgba(11,29,51,0.3)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     color: used ? BRAND : 'var(--text4)',
                   }}>{used ? '✓ ' : ''}{tool.toUpperCase()}</div>
                 )
@@ -190,7 +190,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
         <div>
           {skillData?.last_coaching_note ? (
             <div>
-              <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px 28px', marginBottom: 20 }}>
+              <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 14, padding: '24px 28px', marginBottom: 20 }}>
                 <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
                   <span style={{ fontSize: 24 }}>🤖</span>
                   <div>
@@ -204,7 +204,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
                   {skillData.last_coaching_note}
                 </p>
               </div>
-              <div style={{ background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 10, padding: '12px 16px' }}>
+              <div style={{ background: 'rgba(11,29,51,0.05)', border: '1px solid rgba(11,29,51,0.15)', borderRadius: 10, padding: '12px 16px' }}>
                 <p style={{ color: 'var(--text3)', fontSize: 12, lineHeight: 1.65, margin: 0 }}>
                   Coaching notes are generated at project completion. They are based entirely on your project data, mapping speed, data quality, and tool usage. They are constructive prompts, not performance evaluations.
                 </p>
@@ -232,7 +232,7 @@ export default function SkillMatrixClient({ profile, skillData, events, projectC
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {events.map((ev: any) => (
-                <div key={ev.id} style={{ display: 'flex', gap: 14, padding: '10px 14px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8 }}>
+                <div key={ev.id} style={{ display: 'flex', gap: 14, padding: '10px 14px', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8 }}>
                   <div style={{ fontSize: 20, flexShrink: 0 }}>
                     {ev.event_type === 'project_completed' ? '✅' : ev.event_type === 'tool_used' ? '🔧' : ev.event_type === 'analysis_run' ? '📊' : '⚡'}
                   </div>

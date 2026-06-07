@@ -103,7 +103,7 @@ function LoginForm() {
           <div className="flex justify-center mb-4">
             <VsLogo size={56} />
           </div>
-          <h1 style={{ fontFamily: 'Palatino Linotype,Book Antiqua,Palatino,serif', fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
+          <h1 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
               className="text-[var(--brand)]">
             Vesimy
           </h1>
@@ -111,7 +111,7 @@ function LoginForm() {
         </div>
 
         <div className="card p-6">
-          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: 'var(--border)', background: 'var(--bg2)' }}>
+          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: 'var(--vs-slate-200, #DDE3EA)', background: 'var(--vs-white, #FFFFFF)' }}>
             {(['login', 'signup'] as const).map(m => (
               <button key={m} onClick={() => setMode(m)}
                 className="flex-1 py-2 text-sm font-medium transition-all"
@@ -136,9 +136,9 @@ function LoginForm() {
           </button>
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+            <div className="flex-1 h-px" style={{ background: 'var(--vs-slate-200, #DDE3EA)' }} />
             <span className="text-xs" style={{ color: 'var(--sl-400)' }}>or</span>
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+            <div className="flex-1 h-px" style={{ background: 'var(--vs-slate-200, #DDE3EA)' }} />
           </div>
 
           <form onSubmit={handleEmailAuth} className="space-y-4">

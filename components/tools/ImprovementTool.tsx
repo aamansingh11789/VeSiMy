@@ -168,7 +168,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
                 style={{
                   padding: '7px 12px',
                   borderRadius: 10,
-                  border: `1px solid ${editId === goal.id ? '#C9A66B' : 'var(--border)'}`,
+                  border: `1px solid ${editId === goal.id ? '#C9A66B' : 'var(--vs-slate-200, #DDE3EA)'}`,
                   background: editId === goal.id ? 'rgba(201,166,107,0.10)' : 'var(--bg)',
                   color: editId === goal.id ? '#C9A66B' : 'var(--text2)',
                   cursor: 'pointer',
@@ -191,7 +191,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
             style={{
               padding: '7px 12px',
               borderRadius: 10,
-              border: '1px dashed var(--border)',
+              border: '1px dashed var(--vs-slate-200, #DDE3EA)',
               background: 'transparent',
               color: 'var(--text3)',
               cursor: 'pointer',
@@ -206,7 +206,7 @@ export default function ImprovementTool({ stepId, stepName, data, onSave, onClos
           <div
             style={{
               background: 'var(--bg)',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--vs-slate-200, #DDE3EA)',
               borderRadius: 12,
               padding: 16,
             }}

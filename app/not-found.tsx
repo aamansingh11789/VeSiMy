@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 
 export default function NotFound() {
-  const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+  const serif = "'Sora','Inter',sans-serif"
 
   return (
     <div
@@ -23,7 +23,7 @@ export default function NotFound() {
         color: 'var(--text)',
       }}
     >
-      <div style={{ fontSize: 80, fontFamily: serif, fontWeight: 800, color: '#0176D3', lineHeight: 1 }}>
+      <div style={{ fontSize: 80, fontFamily: serif, fontWeight: 800, color: '#0B1D33', lineHeight: 1 }}>
         404
       </div>
       <h1 style={{ fontFamily: serif, fontSize: 28, fontWeight: 700, color: 'var(--text)', margin: '16px 0 12px' }}>
@@ -38,7 +38,7 @@ export default function NotFound() {
           href="/"
           style={{
             padding: '12px 28px',
-            background: 'linear-gradient(135deg,#0a5eaa,#0176D3)',
+            background: 'linear-gradient(135deg,#0a5eaa,#0B1D33)',
             color: '#FFFFFF',
             fontWeight: 700,
             fontSize: 14,
@@ -52,8 +52,8 @@ export default function NotFound() {
           href="/dashboard"
           style={{
             padding: '12px 28px',
-            border: '1px solid rgba(1,118,211,0.3)',
-            color: '#0176D3',
+            border: '1px solid rgba(11,29,51,0.3)',
+            color: '#0B1D33',
             fontWeight: 600,
             fontSize: 14,
             borderRadius: 10,

@@ -407,7 +407,7 @@ export function LearningCenter({ userId }: Props) {
     setExpandedFAQ(null)
   }
 
-  const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+  const serif = "'Sora','Inter',sans-serif"
   const sectorLabel = t.sectorLabel || 'your industry'
 
   // ── Step accordion ──────────────────────────────────────────────────────────
@@ -430,7 +430,7 @@ export function LearningCenter({ userId }: Props) {
             const key = `${sec.id}-${i}`
             const open = expandedStep === key
             return (
-              <div key={key} style={{ background:'#FFFFFF', border:`1px solid ${open ? 'var(--brand)' : 'var(--border)'}`, borderRadius:10, overflow:'hidden' }}>
+              <div key={key} style={{ background:'#FFFFFF', border:`1px solid ${open ? 'var(--brand)' : 'var(--vs-slate-200, #DDE3EA)'}`, borderRadius:10, overflow:'hidden' }}>
                 <button
                   onClick={() => setExpandedStep(open ? null : key)}
                   style={{ width:'100%', textAlign:'left', padding:'13px 16px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:10 }}
@@ -438,7 +438,7 @@ export function LearningCenter({ userId }: Props) {
                   <span style={{
                     width:22, height:22, borderRadius:6, flexShrink:0,
                     background: open ? 'rgba(201,166,107,0.12)' : 'var(--sl-100)',
-                    border: `1px solid ${open ? 'var(--brand)' : 'var(--border)'}`,
+                    border: `1px solid ${open ? 'var(--brand)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontSize:10, fontWeight:700, color: open ? 'var(--brand)' : 'var(--text3)',
                   }}>{i + 1}</span>
@@ -446,7 +446,7 @@ export function LearningCenter({ userId }: Props) {
                   <span style={{ color:'var(--text3)', fontSize:16, transition:'transform 0.2s', transform: open ? 'rotate(90deg)' : 'none', flexShrink:0 }}>›</span>
                 </button>
                 {open && (
-                  <div style={{ padding:'0 16px 14px 48px', borderTop:'1px solid var(--border)' }}>
+                  <div style={{ padding:'0 16px 14px 48px', borderTop:'1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{step.body}</p>
                   </div>
                 )}
@@ -458,10 +458,10 @@ export function LearningCenter({ userId }: Props) {
           const idx = MANUAL.findIndex(s => s.id === sec.id)
           const next = MANUAL[idx + 1]
           return next ? (
-            <div style={{ marginTop:20, paddingTop:16, borderTop:'1px solid var(--border)' }}>
+            <div style={{ marginTop:20, paddingTop:16, borderTop:'1px solid var(--vs-slate-200, #DDE3EA)' }}>
               <button onClick={() => pickSection(next.id)} style={{
                 display:'flex', alignItems:'center', gap:8, padding:'10px 14px', borderRadius:8,
-                background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.2)',
+                background:'rgba(11,29,51,0.06)', border:'1px solid rgba(11,29,51,0.2)',
                 color:'var(--brand)', cursor:'pointer', fontSize:13, fontWeight:600,
               }}>Next: {next.icon} {next.title} →</button>
             </div>
@@ -475,7 +475,7 @@ export function LearningCenter({ userId }: Props) {
     <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:'100vh', background:'var(--bg)' }}>
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div style={{ padding:'18px 20px 14px', borderBottom:'1px solid var(--border)', background:'#FFFFFF', flexShrink:0 }}>
+      <div style={{ padding:'18px 20px 14px', borderBottom:'1px solid var(--vs-slate-200, #DDE3EA)', background:'#FFFFFF', flexShrink:0 }}>
         <h1 style={{ fontFamily:serif, fontSize:22, fontWeight:700, color:'var(--text)', marginBottom:4 }}>
           {industry ? `Learning Center, ${sectorLabel}` : 'Learning Center'}
         </h1>
@@ -490,7 +490,7 @@ export function LearningCenter({ userId }: Props) {
               padding:'7px 14px', borderRadius:8, fontSize:12,
               fontWeight: activeTab === tab ? 700 : 400,
               background: activeTab === tab ? 'rgba(201,166,107,0.10)' : 'transparent',
-              border: `1px solid ${activeTab === tab ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
+              border: `1px solid ${activeTab === tab ? 'rgba(11,29,51,0.4)' : 'var(--vs-slate-200, #DDE3EA)'}`,
               color: activeTab === tab ? 'var(--brand)' : 'var(--text3)',
               cursor: 'pointer',
             }}>{label}</button>
@@ -536,7 +536,7 @@ export function LearningCenter({ userId }: Props) {
                 style={{
                   width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between',
                   padding:'12px 16px', background:'#FFFFFF', border:'none',
-                  borderBottom:'1px solid var(--border)', cursor:'pointer', gap:10,
+                  borderBottom:'1px solid var(--vs-slate-200, #DDE3EA)', cursor:'pointer', gap:10,
                 }}
               >
                 <div style={{ display:'flex', alignItems:'center', gap:10 }}>
@@ -551,7 +551,7 @@ export function LearningCenter({ userId }: Props) {
               {showMobilePicker && (
                 <div style={{
                   position:'absolute', left:0, right:0, zIndex:50,
-                  background:'#FFFFFF', border:'1px solid var(--border)',
+                  background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)',
                   borderTop:'none', boxShadow:'0 8px 24px rgba(0,0,0,0.12)',
                   maxHeight:'60vh', overflowY:'auto',
                 }}>
@@ -559,7 +559,7 @@ export function LearningCenter({ userId }: Props) {
                     <button key={s.id} onClick={() => pickSection(s.id)} style={{
                       width:'100%', textAlign:'left', padding:'11px 16px',
                       background: activeSection === s.id ? 'rgba(201,166,107,0.08)' : 'transparent',
-                      border:'none', borderBottom:'1px solid var(--border)',
+                      border:'none', borderBottom:'1px solid var(--vs-slate-200, #DDE3EA)',
                       cursor:'pointer', display:'flex', alignItems:'center', gap:10,
                     }}>
                       <span style={{ fontSize:16 }}>{s.icon}</span>
@@ -606,7 +606,7 @@ export function LearningCenter({ userId }: Props) {
           />
           <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
             {filteredGlossary.map((g, i) => (
-              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:10, overflow:'hidden' }}>
+              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:10, overflow:'hidden' }}>
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === i ? null : i)}
                   style={{ width:'100%', textAlign:'left', padding:'11px 14px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}
@@ -618,7 +618,7 @@ export function LearningCenter({ userId }: Props) {
                   <span style={{ color:'var(--text3)', fontSize:16, flexShrink:0, transition:'transform 0.2s', transform: expandedFAQ === i ? 'rotate(90deg)' : 'none' }}>›</span>
                 </button>
                 {expandedFAQ === i && (
-                  <div style={{ padding:'0 14px 12px', borderTop:'1px solid var(--border)' }}>
+                  <div style={{ padding:'0 14px 12px', borderTop:'1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{g.def}</p>
                   </div>
                 )}
@@ -636,7 +636,7 @@ export function LearningCenter({ userId }: Props) {
           </p>
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
             {FAQS.map((faq, i) => (
-              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:12, overflow:'hidden' }}>
+              <div key={i} style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:12, overflow:'hidden' }}>
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === i ? null : i)}
                   style={{ width:'100%', textAlign:'left', padding:'13px 14px', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}
@@ -645,7 +645,7 @@ export function LearningCenter({ userId }: Props) {
                   <span style={{ color:'var(--text3)', fontSize:16, flexShrink:0, transition:'transform 0.2s', transform: expandedFAQ === i ? 'rotate(90deg)' : 'none' }}>›</span>
                 </button>
                 {expandedFAQ === i && (
-                  <div style={{ padding:'0 14px 14px', borderTop:'1px solid var(--border)' }}>
+                  <div style={{ padding:'0 14px 14px', borderTop:'1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.85, margin:'10px 0 0' }}>{faq.a}</p>
                   </div>
                 )}

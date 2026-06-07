@@ -67,17 +67,17 @@ function uid() { return Math.random().toString(36).slice(2, 9) }
 const DISCIPLINES = [
   { d: 'D1', label: 'Team Formation',        color: '#6CB9FC', icon: '👥' },
   { d: 'D2', label: 'Problem Description',   color: '#C9A66B', icon: '📋' },
-  { d: 'D3', label: 'Interim Containment',   color: '#F4A623', icon: '🚧' },
+  { d: 'D3', label: 'Interim Containment',   color: '#C9A66B', icon: '🚧' },
   { d: 'D4', label: 'Root Cause Analysis',   color: '#C0402A', icon: '🔍' },
   { d: 'D5', label: 'Permanent Corrective Action', color: '#A8854F', icon: '🔧' },
   { d: 'D6', label: 'Verify & Implement',    color: '#2E844A', icon: '✅' },
   { d: 'D7', label: 'Prevent Recurrence',    color: '#1DD1A1', icon: '🛡' },
-  { d: 'D8', label: 'Team Recognition',      color: '#F4A623', icon: '🏆' },
+  { d: 'D8', label: 'Team Recognition',      color: '#C9A66B', icon: '🏆' },
 ]
 
 const inp: React.CSSProperties = {
   width: '100%', padding: '9px 12px', borderRadius: 7,
-  background: 'var(--bg)', border: '1px solid var(--border)',
+  background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
   color: 'var(--text)', fontSize: 13, fontFamily: 'inherit',
   boxSizing: 'border-box' as const, outline: 'none',
 }
@@ -142,7 +142,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text3)' }}>COMPLETION</span>
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#C9A66B' }}>{completedCount}/8 disciplines</span>
         </div>
-        <div style={{ height: 6, background: 'var(--bg2)', borderRadius: 3, overflow: 'hidden' }}>
+        <div style={{ height: 6, background: 'var(--vs-white, #FFFFFF)', borderRadius: 3, overflow: 'hidden' }}>
           <div style={{ height: '100%', width: `${(completedCount / 8) * 100}%`, background: 'linear-gradient(90deg,#C9A66B,#1DD1A1)', borderRadius: 3, transition: 'width 0.4s ease' }} />
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 6, marginBottom: 16 }}>
         {DISCIPLINES.map((d, i) => (
           <button key={d.d} onClick={() => setActiveD(i)} style={{
-            padding: '8px 6px', borderRadius: 8, border: `1px solid ${activeD === i ? d.color : 'var(--border)'}`,
+            padding: '8px 6px', borderRadius: 8, border: `1px solid ${activeD === i ? d.color : 'var(--vs-slate-200, #DDE3EA)'}`,
             background: activeD === i ? `${d.color}15` : 'transparent', cursor: 'pointer', fontFamily: 'inherit',
           }}>
             <div style={{ fontSize: 14, marginBottom: 2 }}>{d.icon}</div>
@@ -185,7 +185,7 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
                 <button onClick={() => removeMember(m.id)} style={{ padding: '0 10px', borderRadius: 6, border: '1px solid rgba(192,64,42,0.3)', background: 'transparent', color: '#C0402A', cursor: 'pointer' }}>✕</button>
               </div>
             ))}
-            <button onClick={addMember} style={{ padding: '7px 14px', borderRadius: 7, border: '1px dashed var(--border2)', background: 'transparent', color: 'var(--text3)', fontSize: 12, cursor: 'pointer', fontFamily: 'inherit' }}>+ Add team member</button>
+            <button onClick={addMember} style={{ padding: '7px 14px', borderRadius: 7, border: '1px dashed var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: 'var(--text3)', fontSize: 12, cursor: 'pointer', fontFamily: 'inherit' }}>+ Add team member</button>
           </div>
         )}
 
@@ -335,12 +335,12 @@ export default function EightDTool({ stepName, data, onSave, onClose }: Props) {
       {/* Navigation */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14 }}>
         <button onClick={() => setActiveD(d => Math.max(0, d - 1))} disabled={activeD === 0}
-          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: activeD === 0 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 0 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
+          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: activeD === 0 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 0 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
           ← Previous
         </button>
         <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'var(--font-mono)' }}>{activeD + 1} / 8</span>
         <button onClick={() => setActiveD(d => Math.min(7, d + 1))} disabled={activeD === 7}
-          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: activeD === 7 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 7 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
+          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: activeD === 7 ? 'var(--text4)' : 'var(--text2)', cursor: activeD === 7 ? 'default' : 'pointer', fontFamily: 'inherit', fontSize: 13 }}>
           Next →
         </button>
       </div>

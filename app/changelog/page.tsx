@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Every update, fix, and new feature shipped to VeSiMy. Updated every time we ship.',
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const entries = [
   {

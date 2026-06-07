@@ -155,7 +155,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
       {/* ── Plan comparison ── */}
       {!isPaid && !isBeta && (
         <section style={{ marginBottom:32 }}>
-          <div className="card" style={{ padding:24, background:'rgba(1,118,211,0.03)', borderColor:'rgba(1,118,211,0.15)' }}>
+          <div className="card" style={{ padding:24, background:'rgba(11,29,51,0.03)', borderColor:'rgba(11,29,51,0.15)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
               <CrownIcon size={16} color='var(--brand)' />
               <span style={{ fontSize:15, fontWeight:700, color:'var(--brand)' }}>Upgrade to Pro</span>

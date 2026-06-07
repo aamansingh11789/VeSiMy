@@ -63,7 +63,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
   return (
     <div>
       {/* Session-only notice */}
-      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 14 }}>
+      <div style={{ padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 12, color: '#C9A66B', marginBottom: 14 }}>
           metrics are session-only and not saved between sessions.
       </div>
 
@@ -71,7 +71,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
         <h3 style={{ margin:0, fontFamily:'var(--font-serif)', fontSize:18, color:'var(--text)' }}>Live Floor Metrics</h3>
         <button onClick={() => setLive(l=>!l)} style={{ fontSize:10, padding:'3px 10px', borderRadius:100, border:'1px solid', cursor:'pointer',
           background:live?'rgba(29,209,161,0.1)':'transparent',
-          borderColor:live?'#1DD1A1':'var(--border2)', color:live?'#1DD1A1':'var(--text3)' }}>
+          borderColor:live?'#1DD1A1':'var(--vs-slate-200, #DDE3EA)', color:live?'#1DD1A1':'var(--text3)' }}>
           {live ? '⬤ LIVE' : 'Connect Live'}
         </button>
       </div>
@@ -87,7 +87,7 @@ export function LiveFloorPanel({ steps, projectId }: Props) {
           {TYPES.map(t => (
             <button key={t.key} onClick={() => setMType(t.key)} style={{ flex:1, minWidth:90, padding:'6px 8px', borderRadius:6, border:'1px solid', fontSize:11, cursor:'pointer',
               background:mType===t.key?'var(--steel-dim)':'transparent',
-              borderColor:mType===t.key?'var(--steel)':'var(--border2)',
+              borderColor:mType===t.key?'var(--steel)':'var(--vs-slate-200, #DDE3EA)',
               color:mType===t.key?'var(--steel)':'var(--text2)' }}>
               {t.label}
             </button>

@@ -3,14 +3,14 @@
 import React from 'react'
 import Link from 'next/link'
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const posts = [
   // ── v4.0 new posts ──────────────────────────────────────────────────────
   {
     slug: 'vsm-workshop-wall-session',
     tag: 'Methodology',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'How to Run a VSM Workshop: The Wall Session Method',
     excerpt: 'Step by step from empty wall to completed current state map. Everything you need to run your first value stream mapping workshop the right way.',
     readTime: '8 min read',
@@ -19,7 +19,7 @@ const posts = [
   {
     slug: 'value-added-vs-non-value-added',
     tag: 'Methodology',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'Value-Added vs Non-Value-Added: How to Classify Every Task on Your VSM Honestly',
     excerpt: 'The honest guide to classifying every activity in your process. Most teams misclassify NVA work as necessary. Here is how to stop.',
     readTime: '6 min read',
@@ -46,7 +46,7 @@ const posts = [
   {
     slug: 'smed-changeover',
     tag: 'Methodology',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'SMED: How to Cut Changeover Time in Half Before You Buy Any New Equipment',
     excerpt: 'Single-Minute Exchange of Die explained with practical steps. Most changeover time is fixable with observation and organization, not capital.',
     readTime: '7 min read',
@@ -100,7 +100,7 @@ const posts = [
   {
     slug: 'sub-process-mapping',
     tag: 'Methodology',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'Sub-Process Mapping: How to Map Feeding Processes Without Losing the Main Flow',
     excerpt: 'Sub-processes are where the real constraint often lives. Here is how to map them without creating a map that nobody can read.',
     readTime: '5 min read',
@@ -109,7 +109,7 @@ const posts = [
   {
     slug: 'current-state-vs-future-state',
     tag: 'Methodology',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'Current State vs Future State: The Two Maps Every Lean Project Needs',
     excerpt: 'The current state map shows what is. The future state map shows what is possible. The gap between them is where the improvement work lives.',
     readTime: '6 min read',
@@ -173,7 +173,7 @@ const posts = [
   {
     slug: 'smed-calculator',
     tag: 'Tool Guide',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'SMED Calculator: How to Calculate Changeover Savings Before You Touch a Wrench',
     excerpt: "Before you change a single procedure, a SMED calculator shows you exactly where the time goes and what you recover when you apply Shingo's three-stage methodology. Built-in tool included.",
     readTime: '7 min read',
@@ -191,7 +191,7 @@ const posts = [
   {
     slug: 'fishbone-diagram-guide',
     tag: 'Guide',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'Fishbone Diagram: How to Run an Ishikawa Analysis That Actually Finds the Root Cause',
     excerpt: 'A fishbone diagram that just lists "people, process, equipment" is not a root cause analysis. Here is how to run one that works, with a real machining defect example showing how deep to go.',
     readTime: '7 min read',
@@ -218,7 +218,7 @@ const posts = [
   {
     slug: 'what-is-value-stream-mapping',
     tag: 'Guide',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: "What Is Value Stream Mapping? The Complete Guide for 2026",
     excerpt: "Value stream mapping (VSM) is the single most powerful lean tool available to manufacturers. Here's how it works, when to use it, and how to run your first VSM session, with a free digital tool.",
     readTime: '8 min read',
@@ -290,7 +290,7 @@ const posts = [
   {
     slug: 'automotive-process-improvement',
     tag: 'Industry',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: 'Process Improvement in Automotive Manufacturing: Where Every Second Has a Price Tag',
     excerpt: "Takt-driven lines, model-mix complexity, and supplier quality cascades make automotive one of the most process-intensive environments in manufacturing. Here's how structured CI tools address it.",
     readTime: '9 min read',
@@ -353,7 +353,7 @@ const posts = [
   {
     slug: 'industrial-process-improvement',
     tag: 'Industry',
-    tagColor: '#0176D3',
+    tagColor: '#0B1D33',
     title: "The Machine Doesn't Know It's Inefficient. You Have to Tell It.",
     excerpt: "Heavy industrial, job shops, and custom fabrication, the environments that said lean doesn't apply here. They were wrong. Here's how structured CI works in high-mix, low-volume industrial manufacturing.",
     readTime: '8 min read',
@@ -370,7 +370,7 @@ export default function BlogPageClient() {
           ← Back to VeSiMy
         </Link>
 
-        <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, color: '#0B1D33', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
           Resources
         </p>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,4.5vw,52px)', fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.1 }}>
@@ -382,8 +382,8 @@ export default function BlogPageClient() {
 
         <Link href="/industries" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(1,118,211,0.08)', border: '1px solid rgba(1,118,211,0.3)',
-          color: '#0176D3', fontSize: 13, fontWeight: 700, padding: '9px 18px',
+          background: 'rgba(11,29,51,0.08)', border: '1px solid rgba(11,29,51,0.3)',
+          color: '#0B1D33', fontSize: 13, fontWeight: 700, padding: '9px 18px',
           borderRadius: 9, textDecoration: 'none', marginBottom: 48,
         }}>
           Browse by Industry →
@@ -414,8 +414,8 @@ export default function BlogPageClient() {
 
         <Link href="/industries" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(1,118,211,0.08)', border: '1px solid rgba(1,118,211,0.3)',
-          color: '#0176D3', fontSize: 13, fontWeight: 700, padding: '10px 20px',
+          background: 'rgba(11,29,51,0.08)', border: '1px solid rgba(11,29,51,0.3)',
+          color: '#0B1D33', fontSize: 13, fontWeight: 700, padding: '10px 20px',
           borderRadius: 9, textDecoration: 'none',
         }}>
           View all industries on one page →
@@ -459,7 +459,7 @@ function PostCard({ post }: { post: (typeof posts)[0]; key?: string }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 12, color: 'var(--sl-400)' }}>{post.date}</span>
-          <span style={{ fontSize: 13, color: '#0176D3' }}>Read →</span>
+          <span style={{ fontSize: 13, color: '#0B1D33' }}>Read →</span>
         </div>
       </article>
     </Link>

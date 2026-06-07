@@ -104,7 +104,7 @@ export default function ContactPage() {
               marginInline: 'auto', fontFamily: SANS }}>
               Thanks for reaching out. You will hear back within 1 to 2 business days.
               For faster responses, connect on{' '}
-              <a href="https://www.linkedin.com/in/max-singh" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
                 style={{ color: AMBER, fontWeight: 600 }}>LinkedIn</a>.
             </p>
             <button onClick={() => setSent(false)}
@@ -235,7 +235,7 @@ export default function ContactPage() {
                 textDecoration: 'none', fontFamily: SANS }}>
               max@vesimy.com
             </a>
-            <a href="https://www.linkedin.com/in/max-singh"
+            <a href="https://www.linkedin.com/in/aamansingh11789"
               target="_blank" rel="noopener noreferrer"
               style={{ fontSize: 13, color: AMBER, fontWeight: 600,
                 textDecoration: 'none', fontFamily: SANS }}>

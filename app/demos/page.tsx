@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const DEMOS = [
   {
@@ -54,7 +54,7 @@ const DEMOS = [
     icon: '🏡',
     name: 'Real Estate Transaction Flow',
     industry: 'Real Estate',
-    color: '#0176D3',
+    color: '#0B1D33',
     tagBg: '#FDF5E0',
     tagColor: '#8A6300',
     headline: 'Lead to close. 45-day lead time. 28% document kickback rate.',
@@ -109,20 +109,20 @@ export default function DemosPage() {
       {/* Nav */}
       <nav style={{ background: '#242220', padding: '0 clamp(16px,4vw,48px)', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 20, fontWeight: 800, color: '#0176D3', fontFamily: serif }}>VeSiMy</span>
+          <span style={{ fontSize: 20, fontWeight: 800, color: '#0B1D33', fontFamily: serif }}>VeSiMy</span>
           <span style={{ fontSize: 11, color: 'rgba(248,247,245,0.4)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase' }}>Demos</span>
         </Link>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           <Link href="/" style={{ color: 'rgba(248,247,245,0.6)', fontSize: 13, textDecoration: 'none' }}>Home</Link>
-          <Link href="/auth/signup" style={{ background: '#0176D3', color: '#0D0C0A', padding: '7px 16px', borderRadius: 8, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+          <Link href="/auth/signup" style={{ background: '#0B1D33', color: '#0D0C0A', padding: '7px 16px', borderRadius: 8, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
             Start free →
           </Link>
         </div>
       </nav>
 
       {/* Hero */}
-      <div style={{ background: '#242220', padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', textAlign: 'center', borderBottom: '3px solid #0176D3' }}>
-        <div style={{ fontSize: 11, color: '#0176D3', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, marginBottom: 16 }}>Live Demo Projects</div>
+      <div style={{ background: '#242220', padding: 'clamp(48px,6vw,80px) clamp(16px,4vw,48px)', textAlign: 'center', borderBottom: '3px solid #0B1D33' }}>
+        <div style={{ fontSize: 11, color: '#0B1D33', letterSpacing: 2.5, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, marginBottom: 16 }}>Live Demo Projects</div>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,52px)', fontWeight: 700, color: '#F8F7F5', lineHeight: 1.15, marginBottom: 20 }}>
           See VeSiMy working<br />in your world.
         </h1>
@@ -182,8 +182,8 @@ export default function DemosPage() {
                 </div>
 
                 {/* Key insight */}
-                <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 8, borderLeft: `3px solid #0176D3` }}>
-                  <span style={{ fontSize: 10, color: '#0176D3', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>ROOT CAUSE FINDING: </span>
+                <div style={{ padding: '10px 14px', background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 8, borderLeft: `3px solid #0B1D33` }}>
+                  <span style={{ fontSize: 10, color: '#0B1D33', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>ROOT CAUSE FINDING: </span>
                   <span style={{ fontSize: 12, color: '#4E4B45', lineHeight: 1.5 }}>{demo.keyInsight}</span>
                 </div>
               </div>
@@ -202,7 +202,7 @@ export default function DemosPage() {
 
         {/* Bottom CTA */}
         <div style={{ textAlign: 'center', marginTop: 56, padding: '40px 24px', background: '#242220', borderRadius: 16, border: '0.5px solid #353330' }}>
-          <div style={{ fontSize: 11, color: '#0176D3', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 12 }}>Your industry</div>
+          <div style={{ fontSize: 11, color: '#0B1D33', letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 12 }}>Your industry</div>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(20px,3vw,30px)', fontWeight: 700, color: '#F8F7F5', marginBottom: 14 }}>
             Don't see your process here?
           </h2>
@@ -210,7 +210,7 @@ export default function DemosPage() {
             If you have a process, VeSiMy works for it. Start with a blank project and map your own value stream, or tell us what demo you'd like to see next.
           </p>
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#0176D3', color: '#0D0C0A', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 24px', background: '#0B1D33', color: '#0D0C0A', borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start with a blank project →
             </Link>
             <Link href="mailto:hello@vesimy.com?subject=Demo request" style={{ padding: '12px 24px', background: 'rgba(255,255,255,0.08)', color: '#F8F7F5', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10, fontSize: 14, textDecoration: 'none' }}>
@@ -222,7 +222,7 @@ export default function DemosPage() {
 
       {/* Footer */}
       <div style={{ textAlign: 'center', padding: '24px 16px', borderTop: '0.5px solid #D8D5CE', color: '#8E8A82', fontSize: 12 }}>
-        <Link href="/" style={{ color: '#0176D3', textDecoration: 'none', fontWeight: 700 }}>VeSiMy</Link>
+        <Link href="/" style={{ color: '#0B1D33', textDecoration: 'none', fontWeight: 700 }}>VeSiMy</Link>
         {' · '}Map any process. Find the waste. Fix the bottleneck.
         {' · '}
         <Link href="/auth/signup" style={{ color: '#8E8A82', textDecoration: 'none' }}>Start free</Link>

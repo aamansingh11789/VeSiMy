@@ -38,7 +38,7 @@ const FEATURES = [
   },
   {
     group: 'Analyze',
-    color: '#7C3AED',
+    color: '#1E2E4A',
     items: [
       { title: 'Supe AI Advisor', body: 'Supe reads your actual process data, cycle times, and CI tool findings to give specific, Lean-grounded recommendations. Not generic advice.' },
       { title: 'Fishbone Diagram', body: 'Structured root cause analysis using 6M Manufacturing, 4P Service, or 4S Healthcare frameworks. Vote on causes and route to 5 Why automatically.' },

@@ -119,6 +119,6 @@ export function fmtPCE(pce: number | null): string {
 export function pceColor(pce: number | null): string {
   if (pce == null) return '#706E6B'
   if (pce >= 60)   return '#1DD1A1'
-  if (pce >= 30)   return '#F4A623'
+  if (pce >= 30)   return '#C9A66B'
   return '#FF6B6B'
 }

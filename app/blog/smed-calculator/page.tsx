@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function SMEDCalculatorPost() {
   return (
@@ -25,7 +25,7 @@ export default function SMEDCalculatorPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(1,118,211,0.12)', color: '#0176D3', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>TOOL GUIDE</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(11,29,51,0.12)', color: '#0B1D33', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>TOOL GUIDE</span>
             <span style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)' }}>7 min read · March 19, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -65,7 +65,7 @@ export default function SMEDCalculatorPost() {
               desc: 'Take every step marked as convertible and redesign the procedure so it happens outside the machine-stopped window. Pre-stage tooling. Pre-heat fixtures. Complete all paperwork before the last piece. This is where the time savings are realised.',
             },
           ].map(item => (
-            <div key={item.stage} style={{ background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 12, padding: '18px 20px', marginBottom: 16 }}>
+            <div key={item.stage} style={{ background: 'rgba(11,29,51,0.05)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 12, padding: '18px 20px', marginBottom: 16 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', marginBottom: 6, fontFamily: serif, fontSize: 16 }}>{item.stage}</div>
               <p style={{ margin: 0, fontSize: 14, lineHeight: 1.75 }}>{item.desc}</p>
             </div>
@@ -82,7 +82,7 @@ export default function SMEDCalculatorPost() {
             ['Annual $ savings', 'Convert time saved × changeovers per year × labour rate. This is the number you take to management.'],
           ].map(([term, def]) => (
             <div key={term} style={{ display: 'flex', gap: 14, marginBottom: 14 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#0176D3', marginTop: 9, flexShrink: 0 }} />
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#0B1D33', marginTop: 9, flexShrink: 0 }} />
               <div>
                 <span style={{ fontWeight: 700, color: 'var(--text)' }}>{term}: </span>
                 <span>{def}</span>
@@ -119,7 +119,7 @@ export default function SMEDCalculatorPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32, marginBottom: 8 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Try the SMED calculator free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Record your changeover steps, classify them, and see your savings calculation, with ISO export when you're ready to present it.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0B1D33', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free, no credit card →
             </Link>
           </div>

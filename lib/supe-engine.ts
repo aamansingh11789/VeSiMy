@@ -105,4 +105,4 @@ export const ISSUE_LABEL: Record<IssueType, string> = {
   bottleneck: 'Bottleneck', quality: 'Quality Issue',
   smed: 'Setup Reduction (SMED)', waiting: 'Excess Waiting', capacity: 'Capacity / Uptime',
 }
-export const SEV_COLOR: Record<Severity, string> = { high: '#FF6B6B', medium: '#F4A623', low: '#1090D4' }
+export const SEV_COLOR: Record<Severity, string> = { high: '#FF6B6B', medium: '#C9A66B', low: '#1090D4' }

@@ -65,9 +65,9 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
 
   // ── B. Active beta tester ────────────────────────────────────────────────────
   if (isBeta && !isLifetime) {
-    const urgency       = days <= 5  ? 'rgba(255,107,107,0.08)' : days <= 10 ? 'rgba(244,166,35,0.06)' : 'rgba(1,118,211,0.05)'
-    const urgencyBorder = days <= 5  ? 'rgba(255,107,107,0.3)'  : days <= 10 ? 'rgba(244,166,35,0.25)' : 'rgba(201,166,107,0.22)'
-    const urgencyColor  = days <= 5  ? '#FF6B6B'                : days <= 10 ? '#F4A623'               : '#C9A66B'
+    const urgency       = days <= 5  ? 'rgba(255,107,107,0.08)' : days <= 10 ? 'rgba(201,166,107,0.06)' : 'rgba(11,29,51,0.05)'
+    const urgencyBorder = days <= 5  ? 'rgba(255,107,107,0.3)'  : days <= 10 ? 'rgba(201,166,107,0.25)' : 'rgba(201,166,107,0.22)'
+    const urgencyColor  = days <= 5  ? '#FF6B6B'                : days <= 10 ? '#C9A66B'               : '#C9A66B'
     return (
       <div style={{ padding:'14px 18px', marginBottom:24,
         background:urgency, border:`1px solid ${urgencyBorder}`, borderRadius:12,
@@ -102,10 +102,10 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
 
   return (
     <div style={{ position:'relative', padding:'14px 18px', marginBottom:24,
-      background:'rgba(1,118,211,0.05)', border:'1px solid rgba(201,166,107,0.22)', borderRadius:12,
+      background:'rgba(11,29,51,0.05)', border:'1px solid rgba(201,166,107,0.22)', borderRadius:12,
       display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
       <button onClick={() => setDismissed(true)} style={{ position:'absolute', top:8, right:10,
-        background:'none', border:'none', cursor:'pointer', color:'var(--border2)', fontSize:14 }}><XIcon size={13}/></button>
+        background:'none', border:'none', cursor:'pointer', color:'var(--vs-slate-200, #DDE3EA)', fontSize:14 }}><XIcon size={13}/></button>
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
         <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>

@@ -91,8 +91,8 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
         {problem && (
           <div
             style={{
-              background: 'rgba(1,118,211,0.04)',
-              border: '1px solid rgba(1,118,211,0.2)',
+              background: 'rgba(11,29,51,0.04)',
+              border: '1px solid rgba(11,29,51,0.2)',
               borderRadius: 10,
               padding: '10px 12px',
               fontSize: 12,
@@ -138,13 +138,13 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
 
         <div style={{ display: 'grid', gap: 8 }}>
           {categories.map((cat) => (
-            <details key={cat} open style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: 10 }}>
+            <details key={cat} open style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: 10 }}>
               <summary style={{ cursor: 'pointer', fontSize: 12, fontWeight: 700, color: '#C9A66B', marginBottom: 8 }}>
                 {cat}
               </summary>
               <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
                 {(causes[cat] || []).map((cause, index) => (
-                  <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 30px', gap: 8, alignItems: 'start', padding: '8px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--border)' }}>
+                  <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 30px', gap: 8, alignItems: 'start', padding: '8px 10px', borderRadius: 8, background: 'transparent', border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <span style={{ fontSize: 12, color: 'var(--text2)', overflowWrap: 'anywhere', lineHeight: 1.4 }}>{cause}</span>
                     <button onClick={() => removeCause(cat, index)} type="button" style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 16, minWidth: 30, minHeight: 30, lineHeight: 1 }}>×</button>
                   </div>
@@ -154,7 +154,7 @@ export default function IshikawaTool({ stepName, data, onSave, onClose }: Props)
                 )}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gap: 8, marginBottom: 4 }}>
                   <input className="input" style={{ fontSize: 12, minWidth: 0 }} placeholder="Add cause…" value={newCause[cat] || ''} onChange={(e) => setNewCause((prev) => ({ ...prev, [cat]: e.target.value }))} onKeyDown={(e) => e.key === 'Enter' && addCause(cat)} />
-                  <button onClick={() => addCause(cat)} type="button" style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 18, minWidth: 40, minHeight: 40 }}>+</button>
+                  <button onClick={() => addCause(cat)} type="button" style={{ background: 'rgba(11,29,51,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 18, minWidth: 40, minHeight: 40 }}>+</button>
                 </div>
               </div>
             </details>

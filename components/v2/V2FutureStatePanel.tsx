@@ -182,8 +182,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
 
           {/* No current report warning */}
           {!currentReport && (
-            <div style={{ padding: '12px 14px', background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.25)', borderRadius: 9, marginBottom: 24, fontSize: 13, color: '#7A5200' }}>
-              <AlertIcon size={14} color="#7A5200"/> Run the current state analysis first (click Analyze) for a more accurate future state projection.
+            <div style={{ padding: '12px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.28)', borderRadius: 9, marginBottom: 24, fontSize: 13, color: 'var(--vs-navy-900, #0B1D33)' }}>
+              <AlertIcon size={14} color="var(--vs-navy-900, #0B1D33)"/> Run the current state analysis first (click Analyze) for a more accurate future state projection.
             </div>
           )}
 
@@ -196,8 +196,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
               {TARGET_CATEGORIES.map(cat => (
                 <button key={cat.id} onClick={() => setTargetCategory(cat.id)} style={{
                   padding: '10px 12px', borderRadius: 9, border: '1.5px solid',
-                  borderColor: targetCategory === cat.id ? BRAND : 'var(--border)',
-                  background: targetCategory === cat.id ? 'rgba(1,118,211,.06)' : 'white',
+                  borderColor: targetCategory === cat.id ? BRAND : 'var(--vs-slate-200, #DDE3EA)',
+                  background: targetCategory === cat.id ? 'rgba(11,29,51,0.05)' : 'white',
                   cursor: 'pointer', textAlign: 'left',
                 }}>
                   <div style={{ fontSize: 13, fontWeight: targetCategory === cat.id ? 700 : 500, color: targetCategory === cat.id ? BRAND : 'var(--text)', marginBottom: 3 }}>
@@ -218,7 +218,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
               value={targetStatement}
               onChange={e => setTargetStatement(e.target.value)}
               placeholder={`e.g. Reduce ${t?.leadTime || 'lead time'} from 4.2 hours to under 2 hours within 3 months, while maintaining current ${t?.quality || 'quality'} levels…`}
-              style={{ width: '100%', minHeight: 90, padding: '10px 12px', borderRadius: 9, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.65, resize: 'vertical', color: 'var(--text)', background: 'var(--sl-50)' }}
+              style={{ width: '100%', minHeight: 90, padding: '10px 12px', borderRadius: 9, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.65, resize: 'vertical', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}
             />
           </div>
 
@@ -227,17 +227,17 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
             <div>
               <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text2)', display: 'block', marginBottom: 5 }}>Target value</label>
               <input value={targetValue} onChange={e => setTargetValue(e.target.value)} placeholder="e.g. 95, 2, 120"
-                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
             </div>
             <div>
               <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text2)', display: 'block', marginBottom: 5 }}>Unit</label>
               <input value={targetUnit} onChange={e => setTargetUnit(e.target.value)} placeholder="%, hrs, units…"
-                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
             </div>
             <div>
               <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text2)', display: 'block', marginBottom: 5 }}>Target deadline</label>
               <input type="date" value={targetDeadline} onChange={e => setTargetDeadline(e.target.value)}
-                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
             </div>
           </div>
 
@@ -249,8 +249,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <button onClick={() => setSelfMode(false)} style={{
                 display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 16px',
-                borderRadius: 10, border: `1.5px solid ${!selfMode ? BRAND : 'var(--border)'}`,
-                background: !selfMode ? 'rgba(1,118,211,.04)' : 'white', cursor: 'pointer', textAlign: 'left',
+                borderRadius: 10, border: `1.5px solid ${!selfMode ? BRAND : 'var(--vs-slate-200, #DDE3EA)'}`,
+                background: !selfMode ? 'rgba(11,29,51,0.04)' : 'white', cursor: 'pointer', textAlign: 'left',
                 opacity: isPaid ? 1 : .5,
               }}>
                 <ZapIcon size={20} color="var(--brand)"/>
@@ -265,8 +265,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
               </button>
               <button onClick={() => setSelfMode(true)} style={{
                 display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 16px',
-                borderRadius: 10, border: `1.5px solid ${selfMode ? BRAND : 'var(--border)'}`,
-                background: selfMode ? 'rgba(1,118,211,.04)' : 'white', cursor: 'pointer', textAlign: 'left',
+                borderRadius: 10, border: `1.5px solid ${selfMode ? BRAND : 'var(--vs-slate-200, #DDE3EA)'}`,
+                background: selfMode ? 'rgba(11,29,51,0.04)' : 'white', cursor: 'pointer', textAlign: 'left',
               }}>
                 <SearchIcon size={20} color="var(--text2)"/>
                 <div>
@@ -284,7 +284,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
             disabled={!targetStatement.trim() || !targetCategory}
             style={{
               width: '100%', padding: '14px 0', borderRadius: 10, border: 'none',
-              background: (!targetStatement.trim() || !targetCategory) ? 'var(--sl-200)' : `linear-gradient(135deg,#2A1800,${BRAND})`,
+              background: (!targetStatement.trim() || !targetCategory) ? 'var(--vs-slate-200)' : 'var(--vs-navy-900, #0B1D33)',
               color: (!targetStatement.trim() || !targetCategory) ? 'var(--text3)' : 'white',
               fontSize: 15, fontWeight: 700, cursor: (!targetStatement.trim() || !targetCategory) ? 'not-allowed' : 'pointer',
             }}>
@@ -302,7 +302,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
     return (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Context bar */}
-        <div style={{ padding: '10px 20px', background: 'rgba(3,45,96,.97)', borderBottom: '1px solid rgba(255,255,255,.1)', display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+        <div style={{ padding: '10px 20px', background: 'var(--vs-navy-900, #0B1D33)', borderBottom: '1px solid rgba(255,255,255,.1)', display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,.4)', letterSpacing: 2 }}>TARGET</div>
             <div style={{ fontSize: 13, color: 'white', fontWeight: 500 }}>{targetStatement}</div>
@@ -334,8 +334,8 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
               )}
               <div style={{
                 maxWidth: '82%', padding: '12px 16px', borderRadius: msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
-                background: msg.role === 'user' ? 'rgba(255,255,255,.08)' : 'rgba(1,118,211,.18)',
-                border: msg.role === 'user' ? 'none' : '1px solid rgba(1,118,211,.3)',
+                background: msg.role === 'user' ? 'rgba(255,255,255,.08)' : 'rgba(11,29,51,.18)',
+                border: msg.role === 'user' ? 'none' : '1px solid rgba(11,29,51,.3)',
                 fontSize: 14, color: msg.role === 'user' ? 'rgba(255,255,255,.7)' : 'rgba(255,255,255,.9)',
                 lineHeight: 1.7,
               }}>
@@ -365,7 +365,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
           />
           <button onClick={sendMessage} disabled={chatLoading || !chatInput.trim()} style={{
             padding: '11px 18px', borderRadius: 9, border: 'none',
-            background: chatLoading || !chatInput.trim() ? 'rgba(1,118,211,.3)' : BRAND,
+            background: chatLoading || !chatInput.trim() ? 'rgba(11,29,51,.3)' : BRAND,
             color: 'white', fontSize: 14, fontWeight: 700, cursor: chatLoading ? 'wait' : 'pointer',
           }}>Send</button>
         </div>
@@ -381,7 +381,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
   if (stage === 'generating') {
     return (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, padding: 40 }}>
-        <div style={{ width: 56, height: 56, border: `3px solid rgba(1,118,211,.2)`, borderTopColor: BRAND, borderRadius: '50%', animation: 'spin 1s linear infinite' }}/>
+        <div style={{ width: 56, height: 56, border: `3px solid rgba(11,29,51,.2)`, borderTopColor: BRAND, borderRadius: '50%', animation: 'spin 1s linear infinite' }}/>
         <div style={{ textAlign: 'center' }}>
           <h3 style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Building your future state…</h3>
           <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 360, lineHeight: 1.7 }}>
@@ -407,11 +407,11 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
         <div style={{ maxWidth: 820, margin: '0 auto' }}>
 
           {/* Disclaimer */}
-          <div style={{ background: 'rgba(244,166,35,.07)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
+          <div style={{ background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,.3)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
             <span style={{ fontSize: 16, flexShrink: 0 }}><AlertIcon size={14} color="#92400E"/></span>
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>DISCLAIMER</div>
-              <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{futureReport.disclaimer}</p>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--vs-navy-900, #0B1D33)', marginBottom: 4, fontFamily: 'var(--font-mono)', letterSpacing: 1 }}>DISCLAIMER</div>
+              <p style={{ fontSize: 12, color: 'var(--vs-navy-900, #0B1D33)', lineHeight: 1.7, margin: 0 }}>{futureReport.disclaimer}</p>
             </div>
           </div>
 
@@ -428,7 +428,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
 
           {/* Target achievability */}
           {futureReport.target_achievement && (
-            <div style={{ marginBottom: 24, padding: '18px 20px', background: 'white', border: '1px solid var(--border)', borderRadius: 12 }}>
+            <div style={{ marginBottom: 24, padding: '18px 20px', background: 'white', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12 }}>
               <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: GREEN, marginBottom: 10 }}>TARGET ASSESSMENT</div>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.8, marginBottom: 10 }}>{futureReport.target_achievement}</p>
               {futureReport.tolerance_range && (
@@ -443,7 +443,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
           {ip && Object.keys(ip).length > 0 && (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 24 }}>
               {Object.entries(ip).filter(([k]) => !['basis','primary_lever'].includes(k)).map(([key, val]) => (
-                <div key={key} style={{ padding: '14px 16px', background: 'white', border: '1px solid var(--border)', borderRadius: 10, textAlign: 'center' }}>
+                <div key={key} style={{ padding: '14px 16px', background: 'white', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, textAlign: 'center' }}>
                   <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'var(--text3)', letterSpacing: 1, marginBottom: 5 }}>
                     {key.replace(/_/g,' ').toUpperCase()}
                   </div>
@@ -462,7 +462,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
                   const colors = { improved: GREEN, eliminated: RED, added: BRAND, merged: AMBER, unchanged: '#aaa' }
                   const color = colors[s.change_type as keyof typeof colors] || '#aaa'
                   return (
-                    <div key={i} style={{ display: 'flex', gap: 12, padding: '12px 14px', background: 'white', border: '1px solid var(--border)', borderRadius: 9 }}>
+                    <div key={i} style={{ display: 'flex', gap: 12, padding: '12px 14px', background: 'white', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 9 }}>
                       <span style={{ width: 10, height: 10, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 4 }}/>
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
@@ -492,7 +492,7 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
               <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: BRAND, marginBottom: 12 }}>ACTION PLAN TO ACHIEVE TARGET</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {actionPlan.map((a: any, i: number) => (
-                  <div key={i} style={{ display: 'flex', gap: 14, padding: '14px 16px', background: 'white', border: '1px solid var(--border)', borderRadius: 10 }}>
+                  <div key={i} style={{ display: 'flex', gap: 14, padding: '14px 16px', background: 'white', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10 }}>
                     <div style={{ width: 30, height: 30, borderRadius: '50%', background: BRAND, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{a.sequence || i+1}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 5 }}>{a.title}</div>
@@ -517,13 +517,13 @@ Supe: (respond with ONE focused follow-up question or specific lean insight, max
           {/* Regenerate */}
           <div style={{ display: 'flex', gap: 10, paddingTop: 8 }}>
             <button onClick={() => { setStage('target'); setFutureReport(null) }} style={{
-              padding: '10px 20px', borderRadius: 8, border: '1px solid var(--border)',
+              padding: '10px 20px', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)',
               background: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)',
             }}>
               ← Revise target
             </button>
             <button onClick={() => { setStage('brainstorm') }} style={{
-              padding: '10px 20px', borderRadius: 8, border: '1px solid var(--border)',
+              padding: '10px 20px', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)',
               background: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)',
             }}>
               Continue brainstorming

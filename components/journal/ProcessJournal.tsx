@@ -20,7 +20,7 @@ interface ProcessJournalProps {
   onClose: () => void
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps) {
   const [entries, setEntries] = useState<JournalEntry[]>([])
@@ -128,7 +128,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 10001,
         width: 'min(420px, 100vw)',
-        background: 'linear-gradient(180deg, var(--sl-50), rgba(248,247,245,0.97))',
+        background: 'linear-gradient(180deg, var(--vs-paper, #F7F8FA), rgba(248,247,245,0.97))',
         border: '1px solid rgba(44,44,92,0.86)',
         borderRight: 'none',
         display: 'flex', flexDirection: 'column',

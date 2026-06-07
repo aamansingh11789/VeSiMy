@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function KaizenEventPost() {
   return (
@@ -83,7 +83,7 @@ export default function KaizenEventPost() {
 
           {[
             {
-              day: 'Day 1', label: 'Understand', color: '#0176D3',
+              day: 'Day 1', label: 'Understand', color: '#0B1D33',
               items: [
                 'Morning: Team kickoff, review goals, ground rules, and roles',
                 'Review baseline data and go to gemba (the actual work floor)',

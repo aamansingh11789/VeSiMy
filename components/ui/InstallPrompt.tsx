@@ -72,8 +72,8 @@ export function InstallPrompt() {
         left:       '50%',
         transform:  'translateX(-50%)',
         zIndex:     9999,
-        background: 'var(--bg3)',
-        border:     '1px solid rgba(1,118,211,0.35)',
+        background: 'var(--vs-paper, #F7F8FA)',
+        border:     '1px solid rgba(11,29,51,0.35)',
         borderRadius: 14,
         padding:    '14px 20px',
         display:    'flex',
@@ -87,7 +87,7 @@ export function InstallPrompt() {
         {/* Logo mark */}
         <div style={{
           width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-          background: 'linear-gradient(135deg, var(--border), var(--border2))',
+          background: 'linear-gradient(135deg, var(--vs-slate-200, #DDE3EA), var(--vs-slate-200, #DDE3EA))',
           border: '1px solid rgba(212,168,67,0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 22,
@@ -155,7 +155,7 @@ export function InstallPrompt() {
         left:       0,
         right:      0,
         zIndex:     9999,
-        background: 'var(--bg3)',
+        background: 'var(--vs-paper, #F7F8FA)',
         borderTop:  '1px solid rgba(212,168,67,0.3)',
         padding:    '20px 24px 32px',
         animation:  'slideUpFull 0.3s ease',

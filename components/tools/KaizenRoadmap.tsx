@@ -14,7 +14,7 @@ interface Props {
 const PHASE_COLORS = ['#C9A66B', '#1DD1A1', '#6CB9FC', '#FF6B6B', '#A8854F']
 const STATUS_CFG = {
   planned:     { label: 'Planned',     color: 'var(--text3)', bg: 'rgba(112,112,160,0.1)' },
-  active:      { label: 'Active',      color: '#C9A66B', bg: 'rgba(1,118,211,0.1)'   },
+  active:      { label: 'Active',      color: '#C9A66B', bg: 'rgba(11,29,51,0.1)'   },
   complete:    { label: 'Complete',    color: '#1DD1A1', bg: 'rgba(29,209,161,0.1)'  },
   cancelled:   { label: 'Cancelled',  color: '#FF6B6B', bg: 'rgba(255,107,107,0.1)' },
 }
@@ -45,7 +45,11 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
     if (!project?.id || !onSaveRoadmap) return
     if (saveTimer.current) clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(() => {
-      onSaveRoadmap({ phases })
+      try {
+        onSaveRoadmap({ phases })
+      } catch (err) {
+        console.warn('[KaizenRoadmap] autosave failed:', err)
+      }
     }, 1500)
     return () => clearTimeout(saveTimer.current)
   }, [phases, project?.id])
@@ -109,7 +113,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20, padding: '0 0 40px' }}>
 
       {/* Header */}
-      <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}>
+      <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '16px 20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
           <div>
             <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)', marginBottom: 4 }}>KAIZEN ROADMAP, MISSION CONTROL</div>
@@ -123,7 +127,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
               { label: 'Events', value: `${completeEvents}/${totalEvents}`, color: '#6CB9FC' },
               { label: 'Progress', value: `${progressPct}%`, color: '#C9A66B' },
             ].map(({ label, value, color }) => (
-              <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 14px', textAlign: 'center', minWidth: 80 }}>
+              <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '8px 14px', textAlign: 'center', minWidth: 80 }}>
                 <div style={{ fontSize: 15, fontWeight: 700, color }}>{value}</div>
                 <div style={{ fontSize: 9, color: 'var(--text3)' }}>{label}</div>
               </div>
@@ -147,7 +151,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
       {/* PCE Journey */}
       {projections.length > 0 && (
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 18px' }}>
+        <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '14px 18px' }}>
           <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>PCE IMPROVEMENT JOURNEY</div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 0 }}>
             {/* Current state */}
@@ -203,7 +207,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(1,118,211,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#C9A66B' : 'var(--text3)', fontWeight: 700 }}>
+                <span style={{ fontSize: 9, padding: '3px 8px', borderRadius: 999, background: phaseComplete ? 'rgba(29,209,161,0.15)' : phaseActive ? 'rgba(11,29,51,0.15)' : 'rgba(112,112,160,0.15)', color: phaseComplete ? '#1DD1A1' : phaseActive ? '#C9A66B' : 'var(--text3)', fontWeight: 700 }}>
                   {phaseComplete ? 'COMPLETE' : phaseActive ? 'ACTIVE' : 'PLANNED'}
                 </span>
                 <span style={{ color: 'var(--text3)', fontSize: 12 }}>{isExpanded ? '▲' : '▼'}</span>
@@ -265,7 +269,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
 
                 {/* Add event form */}
                 {showAddEvent === phase.id ? (
-                  <div style={{ border: '1px solid rgba(212,168,67,0.3)', borderRadius: 10, padding: '12px 14px', background: 'rgba(1,118,211,0.04)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ border: '1px solid rgba(212,168,67,0.3)', borderRadius: 10, padding: '12px 14px', background: 'rgba(11,29,51,0.04)', display: 'flex', flexDirection: 'column', gap: 10 }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: '#C9A66B' }}>Add Kaizen Event</div>
                     <input className="input" placeholder="Event title *" value={newEvent.title} onChange={e => setNewEvent(p => ({ ...p, title: e.target.value }))} style={{ fontSize: 12 }} />
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -328,7 +332,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
         <button
           type="button"
           onClick={() => setShowAddPhase(true)}
-          style={{ border: '1px dashed rgba(1,118,211,0.4)', background: 'transparent', color: '#C9A66B', borderRadius: 10, padding: '10px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+          style={{ border: '1px dashed rgba(11,29,51,0.4)', background: 'transparent', color: '#C9A66B', borderRadius: 10, padding: '10px', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
         >
           + Add Phase
         </button>

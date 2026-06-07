@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { CheckIcon } from '@/components/ui/Icons'
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 const GOLD  = 'var(--brand)'
 
 export default function UpdatePasswordPage() {
@@ -27,7 +27,7 @@ export default function UpdatePasswordPage() {
       const { error: err } = await supabase.auth.updateUser({ password })
       if (err) { setError(err.message); setLoading(false); return }
       setDone(true)
-      setTimeout(() => router.push('/dashboard'), 2000)
+      setTimeout(() => { window.location.href = '/dashboard' }, 2000)
     } catch { setError('Something went wrong. Please try again.') }
     setLoading(false)
   }
@@ -50,7 +50,7 @@ export default function UpdatePasswordPage() {
             <p style={{ fontSize:14, color:'var(--text3)' }}>Redirecting you to your dashboard…</p>
           </div>
         ) : (
-          <div style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:16, padding:'36px 32px' }}>
+          <div style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:16, padding:'36px 32px' }}>
             <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:8 }}>Set a new password</h2>
             <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28 }}>Choose a strong password for your account.</p>
             <div style={{ marginBottom:14 }}>

@@ -265,7 +265,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
             padding: '12px',
             background: 'var(--bg)',
             borderRadius: 12,
-            border: '1px solid var(--border)',
+            border: '1px solid var(--vs-slate-200, #DDE3EA)',
           }}
         >
           <div
@@ -335,7 +335,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                 key={label}
                 style={{
                   background: 'var(--bg)',
-                  border: '1px solid var(--border)',
+                  border: '1px solid var(--vs-slate-200, #DDE3EA)',
                   borderRadius: 10,
                   padding: '8px',
                   textAlign: 'center',
@@ -376,7 +376,7 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
               {laps.length >= 1 && (
                 <button
                   onClick={exportTimeStudyISO}
-                  style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', cursor: 'pointer' }}
+                  style={{ fontSize: 11, padding: '4px 9px', borderRadius: 7, background: 'transparent', border: '1px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text2)', cursor: 'pointer' }}
                 >
                   ISO Report
                 </button>
@@ -394,9 +394,9 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                     borderRadius: 8,
                     fontSize: 12,
                     fontFamily: 'var(--font-mono)',
-                    background: excluded.has(i) ? 'rgba(192,64,42,0.06)' : 'var(--bg2)',
+                    background: excluded.has(i) ? 'rgba(192,64,42,0.06)' : 'var(--vs-white, #FFFFFF)',
                     border: `1px solid ${
-                      excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--border)'
+                      excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--vs-slate-200, #DDE3EA)'
                     }`,
                     color: excluded.has(i) ? '#FF6B6B' : 'var(--text2)',
                     textDecoration: excluded.has(i) ? 'line-through' : 'none',

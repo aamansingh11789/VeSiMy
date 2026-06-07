@@ -8,7 +8,7 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 
 const BRAND = '#C9A66B'
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+const serif = "'Sora','Inter',sans-serif"
 const mono  = '"JetBrains Mono","IBM Plex Mono",monospace'
 
 interface Snapshot {
@@ -65,14 +65,14 @@ function SaveSnapshotModal({ projectId, onSaved, onClose }: { projectId: string;
 
   const inp: React.CSSProperties = {
     width: '100%', padding: '9px 12px', borderRadius: 7,
-    background: 'var(--bg)', border: '1px solid var(--border)',
+    background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
     color: 'var(--text)', fontSize: 13, fontFamily: 'inherit',
     boxSizing: 'border-box' as const, outline: 'none',
   }
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
-      <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: 28, width: '100%', maxWidth: 440 }}>
+      <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 14, padding: 28, width: '100%', maxWidth: 440 }}>
         <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 16 }}>Save Version Snapshot</div>
         <div style={{ marginBottom: 12 }}>
           <label style={{ fontSize: 12, fontFamily: mono, color: 'var(--text3)', display: 'block', marginBottom: 5 }}>SNAPSHOT LABEL</label>
@@ -84,7 +84,7 @@ function SaveSnapshotModal({ projectId, onSaved, onClose }: { projectId: string;
             placeholder="What is the state of this version?" style={{ ...inp, resize: 'vertical' as const }} />
         </div>
         <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-          <button onClick={onClose} style={{ padding: '9px 18px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+          <button onClick={onClose} style={{ padding: '9px 18px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: 'var(--text2)', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
           <button onClick={save} disabled={saving} style={{ padding: '9px 20px', borderRadius: 7, border: 'none', background: BRAND, color: '#fff', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
             {saving ? 'Saving…' : 'Save snapshot'}
           </button>
@@ -135,7 +135,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
       </div>
 
       {!isPaid && (
-        <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(201,166,107,0.18)', borderRadius: 12, padding: '16px 20px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
+        <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(201,166,107,0.18)', borderRadius: 12, padding: '16px 20px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 24 }}>🔒</span>
           <div>
             <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 4 }}>Version snapshots require a paid plan</div>
@@ -147,11 +147,11 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
 
       {/* Compare section */}
       {snapshots.length >= 2 && isPaid && (
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '20px 24px', marginBottom: 24 }}>
+        <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 14, padding: '20px 24px', marginBottom: 24 }}>
           <div style={{ fontSize: 11, fontFamily: mono, color: 'var(--text3)', marginBottom: 12 }}>COMPARE VERSIONS</div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
             <select value={compareA || ''} onChange={e => setCompareA(e.target.value || null)} style={{
-              padding: '8px 12px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)', fontSize: 13, fontFamily: 'inherit', flex: 1,
+              padding: '8px 12px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--bg)', color: 'var(--text)', fontSize: 13, fontFamily: 'inherit', flex: 1,
             }}>
               <option value="">Select version A...</option>
               {snapshots.map(s => (
@@ -160,7 +160,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
             </select>
             <span style={{ color: 'var(--text3)', fontWeight: 700 }}>vs</span>
             <select value={compareB || ''} onChange={e => setCompareB(e.target.value || null)} style={{
-              padding: '8px 12px', borderRadius: 7, border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)', fontSize: 13, fontFamily: 'inherit', flex: 1,
+              padding: '8px 12px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--bg)', color: 'var(--text)', fontSize: 13, fontFamily: 'inherit', flex: 1,
             }}>
               <option value="">Select version B...</option>
               {snapshots.map(s => (
@@ -180,7 +180,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
                 const improved = bVal !== null && aVal !== null && bVal > aVal
                 const worse    = bVal !== null && aVal !== null && bVal < aVal
                 return (
-                  <div key={m.label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
+                  <div key={m.label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
                     <div style={{ fontSize: 11, fontFamily: mono, color: 'var(--text3)', marginBottom: 8 }}>{m.label.toUpperCase()}</div>
                     <div style={{ display: 'flex', justifyContent: 'space-around', gap: 8 }}>
                       <div>
@@ -220,7 +220,7 @@ export default function VersionHistoryClient({ project, snapshots: initialSnapsh
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {snapshots.map(snap => (
-            <div key={snap.id} style={{ display: 'flex', gap: 16, padding: '16px 20px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div key={snap.id} style={{ display: 'flex', gap: 16, padding: '16px 20px', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, alignItems: 'center', flexWrap: 'wrap' }}>
               <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${BRAND}15`, border: `2px solid ${BRAND}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: mono, fontSize: 12, fontWeight: 700, color: BRAND, flexShrink: 0 }}>
                 v{snap.version_number}
               </div>

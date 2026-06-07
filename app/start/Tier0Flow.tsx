@@ -105,7 +105,7 @@ const INDUSTRY_GROUPS: { label: string; options: string[] }[] = [
 ]
 
 const TARGET_OPTIONS = [
-  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    Icon: Zap,          color: '#FBBF24' },
+  { id: 'speed',      label: 'Speed',      sub: 'Reduce lead time and cycle time',    Icon: Zap,          color: '#D9C08A' },
   { id: 'cost',       label: 'Cost',        sub: 'Eliminate waste and rework costs',   Icon: DollarSign,   color: '#34D399' },
   { id: 'quality',    label: 'Quality',     sub: 'Reduce defects and rework',          Icon: Target,       color: '#F87171' },
   { id: 'compliance', label: 'Compliance',  sub: 'Consistency and audit readiness',    Icon: ShieldCheck,  color: '#60A5FA' },

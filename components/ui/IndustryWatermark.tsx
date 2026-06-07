@@ -818,16 +818,18 @@ const W: Record<WatermarkGroup, React.ReactNode> = {
   ),
 }
 
-export function IndustryWatermark({ group, size = 420 }: Props) {
+export function IndustryWatermark({ group, size = 720 }: Props) {
   const svg = W[group] ?? W.default
   return (
     <div
       aria-hidden="true"
       style={{
-        position: 'fixed', bottom: -40, right: -40,
+        position: 'fixed',
+        top: '50%', left: '50%',
+        transform: 'translate(-50%, -50%)',
         width: size, height: size,
-        color: 'var(--brand, #C9A66B)',
-        opacity: 0.038,
+        color: 'var(--vs-navy-900, #0B1D33)',
+        opacity: 0.025,
         pointerEvents: 'none', userSelect: 'none', zIndex: 0,
       }}
     >

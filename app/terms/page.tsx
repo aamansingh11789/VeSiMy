@@ -29,7 +29,7 @@ export default function TermsPage() {
         </div>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy Ltd, a company registered in England and Wales. These Terms are governed by the laws of England and Wales.</p>
+          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated from Pleasant Hill, California, United States. These Terms are governed by the laws of the State of California.</p>
         </Section>
 
         <Section title="2. Description of Service">
@@ -53,7 +53,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="7. Intellectual Property">
-          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy Ltd and are protected by international copyright and other intellectual property laws. The VeSiMy name, logo, and associated marks are proprietary to VeSiMy Ltd.</p>
+          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy and are protected by international copyright and other intellectual property laws. The VeSiMy name, logo, and associated marks are proprietary to VeSiMy.</p>
         </Section>
 
         <Section title="8. Limitation of Liability">
@@ -69,7 +69,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a></p>
+          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#0B1D33' }}>founder@vesimy.com</a></p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
