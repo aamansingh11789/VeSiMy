@@ -474,7 +474,7 @@ export default function SMEDTool({ stepName, data, onSave, onClose }: Props) {
                   <div style={{ display: 'flex', gap: 2, flexShrink: 0 }}>
                     <button type="button" onClick={() => moveStep(s.id, 'up')} disabled={idx === 0} style={{ padding: '3px 6px', border: 'none', background: 'none', cursor: idx===0?'default':'pointer', color: 'var(--text3)', opacity: idx===0?0.3:1, fontSize: 11 }}>↑</button>
                     <button type="button" onClick={() => moveStep(s.id, 'down')} disabled={idx === steps.length-1} style={{ padding: '3px 6px', border: 'none', background: 'none', cursor: idx===steps.length-1?'default':'pointer', color: 'var(--text3)', opacity: idx===steps.length-1?0.3:1, fontSize: 11 }}>↓</button>
-                    <button type="button" onClick={() => deleteStep(s.id)} style={{ padding: '3px 6px', border: 'none', background: 'none', cursor: 'pointer', color: '#FF6B6B', fontSize: 14 }}>×</button>
+                    <button type="button" onClick={() => deleteStep(s.id)} style={{ padding: '3px 6px', border: 'none', background: 'none', cursor: 'pointer', color: '#C94F4F', fontSize: 14 }}>×</button>
                   </div>
                 </div>
 

@@ -161,7 +161,7 @@ export default function EnterprisePage() {
               </div>
             </Card>
 
-            {error && <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.3)', fontSize:13, color:'#FF6B6B' }}>{error}</div>}
+            {error && <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.3)', fontSize:13, color:'#C94F4F' }}>{error}</div>}
 
             <button onClick={getQuote} disabled={loading} style={{ padding:'14px', borderRadius:10, fontSize:15, fontWeight:700, cursor:'pointer', border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
               background:'linear-gradient(135deg,#1090D4,#6CB9FC)', color:'var(--bg)', opacity:loading?0.8:1 }}>

@@ -11,12 +11,12 @@ interface Props {
   onSaveRoadmap?: (roadmap: any) => void
 }
 
-const PHASE_COLORS = ['#C9A66B', '#1DD1A1', '#6CB9FC', '#FF6B6B', '#A8854F']
+const PHASE_COLORS = ['#C9A66B', '#1DD1A1', '#6CB9FC', '#C94F4F', '#A8854F']
 const STATUS_CFG = {
   planned:     { label: 'Planned',     color: 'var(--text3)', bg: 'rgba(112,112,160,0.1)' },
   active:      { label: 'Active',      color: '#C9A66B', bg: 'rgba(11,29,51,0.1)'   },
   complete:    { label: 'Complete',    color: '#1DD1A1', bg: 'rgba(29,209,161,0.1)'  },
-  cancelled:   { label: 'Cancelled',  color: '#FF6B6B', bg: 'rgba(255,107,107,0.1)' },
+  cancelled:   { label: 'Cancelled',  color: '#C94F4F', bg: 'rgba(201,79,79,0.1)' },
 }
 
 function uid() { return Math.random().toString(36).slice(2, 9) }
@@ -122,7 +122,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             {[
-              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : ',', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#C9A66B' : '#FF6B6B' },
+              { label: 'Current PCE', value: pce !== null ? `${pce.toFixed(0)}%` : ',', color: pce !== null && pce >= 80 ? '#1DD1A1' : pce !== null && pce >= 50 ? '#C9A66B' : '#C94F4F' },
               { label: 'Target PCE', value: phases.length > 0 && phases[phases.length-1].target_pce ? `${phases[phases.length-1].target_pce}%` : '95%', color: '#1DD1A1' },
               { label: 'Events', value: `${completeEvents}/${totalEvents}`, color: '#6CB9FC' },
               { label: 'Progress', value: `${progressPct}%`, color: '#C9A66B' },
@@ -156,7 +156,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 0 }}>
             {/* Current state */}
             <div style={{ textAlign: 'center', minWidth: 70 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: pce !== null && pce >= 80 ? '#1DD1A1' : '#FF6B6B', marginBottom: 4 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: pce !== null && pce >= 80 ? '#1DD1A1' : '#C94F4F', marginBottom: 4 }}>
                 {pce !== null ? `${pce.toFixed(0)}%` : ','}
               </div>
               <div style={{ height: pce !== null ? Math.max(8, pce * 0.8) : 8, background: 'var(--text3)', borderRadius: '4px 4px 0 0', width: 40, margin: '0 auto' }} />
@@ -229,7 +229,7 @@ export default function KaizenRoadmap({ steps, project, takt, pce, onSaveRoadmap
                     style={{ width: 80, fontSize: 12 }}
                   />
                   <span style={{ fontSize: 10, color: 'var(--text3)' }}>%</span>
-                  <button type="button" onClick={() => deletePhase(phase.id)} style={{ marginLeft: 'auto', background: 'none', border: '1px solid rgba(255,107,107,0.3)', color: '#FF6B6B', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontSize: 11 }}>
+                  <button type="button" onClick={() => deletePhase(phase.id)} style={{ marginLeft: 'auto', background: 'none', border: '1px solid rgba(201,79,79,0.3)', color: '#C94F4F', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontSize: 11 }}>
                     Delete Phase
                   </button>
                 </div>

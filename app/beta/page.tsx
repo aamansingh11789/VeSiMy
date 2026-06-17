@@ -186,8 +186,8 @@ export default function BetaPage() {
             </div>
           )}
           {countdown.expired && (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)', borderRadius:12, padding:'12px 20px', marginBottom:32 }}>
-              <span style={{ fontSize:13, color:'#FF6B6B' }}>The launch window has closed. Join the waitlist for the next opening.</span>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.2)', borderRadius:12, padding:'12px 20px', marginBottom:32 }}>
+              <span style={{ fontSize:13, color:'#C94F4F' }}>The launch window has closed. Join the waitlist for the next opening.</span>
             </div>
           )}
 
@@ -375,9 +375,9 @@ export default function BetaPage() {
           </Section>
 
           {error && (
-            <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.3)', display:'flex', gap:10, alignItems:'flex-start' }}>
-              <AlertIcon size={16} color='#FF6B6B' style={{ flexShrink:0, marginTop:1 }} />
-              <span style={{ fontSize:13, color:'#FF6B6B' }}>{error}</span>
+            <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.3)', display:'flex', gap:10, alignItems:'flex-start' }}>
+              <AlertIcon size={16} color='#C94F4F' style={{ flexShrink:0, marginTop:1 }} />
+              <span style={{ fontSize:13, color:'#C94F4F' }}>{error}</span>
             </div>
           )}
 

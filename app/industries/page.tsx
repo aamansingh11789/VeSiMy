@@ -50,7 +50,7 @@ const industries = [
     slug: 'medical-devices-process-improvement',
     icon: '',
     name: 'Medical Devices',
-    color: '#FF6B6B',
+    color: '#C94F4F',
     tagline: 'FDA doesn\'t grade on a curve.',
     challenge: 'Design History Files, Device History Records, CAPA loops, and validation protocols, all while hitting production targets. Traceability is non-negotiable.',
     tools: ['5 Why', 'Fishbone', 'Kaizen', 'Improvement Log'],

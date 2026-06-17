@@ -130,20 +130,20 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
         gap: 8, flexShrink: 0,
       }}>
         {!collapsed && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <VLogoMark size={32} />
             <div>
               <VeSiMyWordmark size={16} onDark />
               <div style={{
-                fontSize: 9, letterSpacing: 1.8, color: '#E8941A',
+                fontSize: 9, letterSpacing: 1.8, color: 'var(--vs-gold-600, #C9A66B)',
                 fontFamily: 'var(--font-mono)', textTransform: 'uppercase', marginTop: 2,
               }}>
                 Process Intelligence
               </div>
             </div>
-          </div>
+          </Link>
         )}
-        {collapsed && <VLogoMark size={30} />}
+        {collapsed && <Link href="/dashboard"><VLogoMark size={30} /></Link>}
 
         {/* Collapse toggle, hidden when forced collapsed */}
         {!forcedCollapsed && (
@@ -247,7 +247,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                   textDecoration: 'none',
                   color: active ? '#D9C8A9' : '#7AAECF',
                   background: active ? 'rgba(201,166,107,0.18)' : 'transparent',
-                  borderLeft: collapsed ? 'none' : `3px solid ${active ? '#E8941A' : 'transparent'}`,
+                  borderLeft: collapsed ? 'none' : `3px solid ${active ? 'var(--vs-gold-600, #C9A66B)' : 'transparent'}`,
                   borderRadius: collapsed ? 8 : '0 6px 6px 0',
                   margin: collapsed ? '0 8px' : undefined,
                   transition: 'all 0.12s',

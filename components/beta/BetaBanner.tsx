@@ -43,11 +43,11 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
   if (isBeta && !isLifetime && betaExpiresAt && days === 0) {
     return (
       <div style={{ position:'relative', padding:'16px 20px', marginBottom:24,
-        background:'rgba(255,107,107,0.06)', border:'1px solid rgba(255,107,107,0.25)', borderRadius:12,
+        background:'rgba(201,79,79,0.06)', border:'1px solid rgba(201,79,79,0.25)', borderRadius:12,
         display:'flex', alignItems:'center', gap:16, flexWrap:'wrap' }}>
         
         <div style={{ flex:1, minWidth:200 }}>
-          <div style={{ fontSize:14, fontWeight:700, color:'#FF6B6B', marginBottom:3 }}>
+          <div style={{ fontSize:14, fontWeight:700, color:'#C94F4F', marginBottom:3 }}>
             Your Founding Member beta trial has ended
           </div>
           <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
@@ -65,9 +65,9 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
 
   // ── B. Active beta tester ────────────────────────────────────────────────────
   if (isBeta && !isLifetime) {
-    const urgency       = days <= 5  ? 'rgba(255,107,107,0.08)' : days <= 10 ? 'rgba(201,166,107,0.06)' : 'rgba(11,29,51,0.05)'
-    const urgencyBorder = days <= 5  ? 'rgba(255,107,107,0.3)'  : days <= 10 ? 'rgba(201,166,107,0.25)' : 'rgba(201,166,107,0.22)'
-    const urgencyColor  = days <= 5  ? '#FF6B6B'                : days <= 10 ? '#C9A66B'               : '#C9A66B'
+    const urgency       = days <= 5  ? 'rgba(201,79,79,0.08)' : days <= 10 ? 'rgba(201,166,107,0.06)' : 'rgba(11,29,51,0.05)'
+    const urgencyBorder = days <= 5  ? 'rgba(201,79,79,0.3)'  : days <= 10 ? 'rgba(201,166,107,0.25)' : 'rgba(201,166,107,0.22)'
+    const urgencyColor  = days <= 5  ? '#C94F4F'                : days <= 10 ? '#C9A66B'               : '#C9A66B'
     return (
       <div style={{ padding:'14px 18px', marginBottom:24,
         background:urgency, border:`1px solid ${urgencyBorder}`, borderRadius:12,

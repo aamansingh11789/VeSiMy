@@ -64,7 +64,7 @@ const STATUS_COL = {
   open: 'var(--text3)',
   'in-progress': '#C9A66B',
   achieved: '#1DD1A1',
-  'not-achieved': '#FF6B6B',
+  'not-achieved': '#C94F4F',
 }
 
 const STATUS_LBL = {

@@ -396,9 +396,9 @@ export default function StopwatchTool({ stepName, data, onSave, onClose }: Props
                     fontFamily: 'var(--font-mono)',
                     background: excluded.has(i) ? 'rgba(192,64,42,0.06)' : 'var(--vs-white, #FFFFFF)',
                     border: `1px solid ${
-                      excluded.has(i) ? 'rgba(255,107,107,0.3)' : 'var(--vs-slate-200, #DDE3EA)'
+                      excluded.has(i) ? 'rgba(201,79,79,0.3)' : 'var(--vs-slate-200, #DDE3EA)'
                     }`,
-                    color: excluded.has(i) ? '#FF6B6B' : 'var(--text2)',
+                    color: excluded.has(i) ? '#C94F4F' : 'var(--text2)',
                     textDecoration: excluded.has(i) ? 'line-through' : 'none',
                   }}
                 >

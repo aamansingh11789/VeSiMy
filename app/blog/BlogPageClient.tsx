@@ -73,7 +73,7 @@ const posts = [
   {
     slug: '5-whys-root-cause-analysis',
     tag: 'Methodology',
-    tagColor: '#FF6B6B',
+    tagColor: '#C94F4F',
     title: 'How to Run a 5 Whys That Actually Finds the Root Cause and Does Not Stop at Symptoms',
     excerpt: '5 Whys is the most misused tool in lean. Here is how to use it correctly so you fix the system, not the symptom.',
     readTime: '6 min read',
@@ -118,7 +118,7 @@ const posts = [
   {
     slug: 'lean-healthcare-er',
     tag: 'Industry',
-    tagColor: '#FF6B6B',
+    tagColor: '#C94F4F',
     title: 'How Lean Applies in Healthcare: The ER Bed Example',
     excerpt: 'Lean is not a manufacturing concept. The ER bed flow problem is one of the clearest illustrations of VSM thinking outside the factory.',
     readTime: '7 min read',
@@ -245,7 +245,7 @@ const posts = [
   {
     slug: '5-why-analysis-examples',
     tag: 'Guide',
-    tagColor: '#FF6B6B',
+    tagColor: '#C94F4F',
     title: '5 Why Analysis: 6 Real Examples From the Shop Floor',
     excerpt: 'The 5 Why technique sounds simple but most teams stop too early or ask the wrong questions. Here are 6 real manufacturing examples that show you exactly how deep to dig.',
     readTime: '6 min read',
@@ -317,7 +317,7 @@ const posts = [
   {
     slug: 'medical-devices-process-improvement',
     tag: 'Industry',
-    tagColor: '#FF6B6B',
+    tagColor: '#C94F4F',
     title: "FDA Doesn't Grade on a Curve: CI in Medical Device Manufacturing",
     excerpt: 'CAPA traceability, first-time quality, and a regulatory environment where the cost of getting it wrong is measured in consent decrees. How VeSiMy supports structured improvement in medical devices.',
     readTime: '9 min read',

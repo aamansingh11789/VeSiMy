@@ -101,7 +101,7 @@ export default function FreeVSMPost() {
                   {tool.pros.map((p, i) => <div key={i} style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 5, lineHeight: 1.5 }}>✓ {p}</div>)}
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: '#FF6B6B', fontWeight: 700, marginBottom: 8, letterSpacing: 1 }}>CONS</div>
+                  <div style={{ fontSize: 11, color: '#C94F4F', fontWeight: 700, marginBottom: 8, letterSpacing: 1 }}>CONS</div>
                   {tool.cons.map((c, i) => <div key={i} style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 5, lineHeight: 1.5 }}>✗ {c}</div>)}
                 </div>
               </div>

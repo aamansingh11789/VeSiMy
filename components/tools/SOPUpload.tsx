@@ -149,7 +149,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                       {s.cycle_time        && <Chip label={`CT ${s.cycle_time>=60?(s.cycle_time/60).toFixed(0)+'min':s.cycle_time+'s'}`} color="#1DD1A1" />}
                       {s.wait_time         && <Chip label={`Wait ${s.wait_time>=60?(s.wait_time/60).toFixed(0)+'min':s.wait_time+'s'}`} color="#C9A66B" />}
                       {s.setup_time        && <Chip label={`Setup ${s.setup_time>=60?(s.setup_time/60).toFixed(0)+'min':s.setup_time+'s'}`} color="#9B5FE0" />}
-                      {s.defect_rate       && <Chip label={`${s.defect_rate}% defect`} color="#FF6B6B" />}
+                      {s.defect_rate       && <Chip label={`${s.defect_rate}% defect`} color="#C94F4F" />}
                       {s.uptime            && <Chip label={`${s.uptime}% uptime`} color="#1DD1A1" />}
                       {s.wip               && <Chip label={`WIP ${s.wip}`} color="var(--text3)" />}
                     </div>

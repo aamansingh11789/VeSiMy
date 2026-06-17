@@ -16,7 +16,7 @@ const serif = "'Sora','Inter',sans-serif"
 
 const examples = [
   {
-    color: '#FF6B6B',
+    color: '#C94F4F',
     problem: 'A customer received 24 defective parts in a shipment',
     whys: [
       'The parts passed final inspection but had a burr on the mating face',
@@ -106,7 +106,7 @@ export default function FiveWhyPost() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(201,79,79,0.15)', color: '#C94F4F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>GUIDE</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · March 12, 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -181,14 +181,14 @@ export default function FiveWhyPost() {
           </p>
 
           {/* CTA */}
-          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 16, textAlign: 'center' }}>
+          <div style={{ marginTop: 48, padding: '32px 36px', background: 'rgba(201,79,79,0.06)', border: '1px solid rgba(201,79,79,0.2)', borderRadius: 16, textAlign: 'center' }}>
             <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
               Run 5 Why analysis on your next problem
             </h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 24, lineHeight: 1.75 }}>
               VeSiMy's 5 Why tool guides your team through the full analysis, generates an ISO-compliant report, and links the corrective action directly to the process step in your value stream map.
             </p>
-            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C43030,#FF6B6B)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ padding: '12px 28px', background: 'linear-gradient(135deg,#C43030,#C94F4F)', color: '#fff', fontWeight: 700, fontSize: 14, borderRadius: 10, textDecoration: 'none' }}>
               Run your first 5 Why free →
             </Link>
           </div>

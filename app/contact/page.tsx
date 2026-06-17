@@ -32,6 +32,7 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [sent,    setSent]    = useState(false)
   const [error,   setError]   = useState('')
+  const [website, setWebsite] = useState('') // honeypot: must stay empty
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -46,7 +47,7 @@ export default function ContactPage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, topic, message }),
+        body: JSON.stringify({ name, email, topic, message, website }),
       })
       if (!res.ok) throw new Error('Failed')
       setSent(true)
@@ -118,6 +119,14 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit}
             style={{ background: '#fff', borderRadius: 12, border: `1px solid ${BORD}`,
               padding: '28px', boxShadow: '0 2px 8px rgba(4,17,31,0.06)' }}>
+
+            {/* Honeypot: hidden from users, bots fill it. Kept out of the tab order. */}
+            <input
+              type="text" name="website" tabIndex={-1} autoComplete="off"
+              value={website} onChange={e => setWebsite(e.target.value)}
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+            />
 
             {/* Name + Email */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>

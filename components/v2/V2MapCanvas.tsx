@@ -425,7 +425,7 @@ function FlowArrow({ fromX, toX, flowType, wip, onWipChange, onFlowTypeChange }:
             style={{
               width: '100%', height: '100%', textAlign: 'center', fontFamily: 'var(--font-mono)',
               fontSize: 11, fontWeight: 700, color: '#3B2F00', background: '#FEF3C7',
-              border: '1.5px solid #F59E0B', borderRadius: 12, outline: 'none', padding: 0,
+              border: '1.5px solid var(--vs-gold-600, #C9A66B)', borderRadius: 12, outline: 'none', padding: 0,
             }}
             onChange={e => setWipVal(Number(e.target.value))}
             onBlur={e => {

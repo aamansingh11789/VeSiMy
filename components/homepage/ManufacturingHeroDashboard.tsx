@@ -211,7 +211,7 @@ export function ManufacturingHeroDashboard() {
           }}>
             {/* Tablet chrome top bar */}
             <div style={{ height: 36, background: '#F8FAFF', borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 6 }}>
-              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF6B6B' }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#C94F4F' }} />
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFD93D' }} />
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#6BCB77' }} />
               <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>

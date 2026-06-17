@@ -114,7 +114,7 @@ function getProjectScore(project: any) {
 }
 
 function getScoreColor(score: number) {
-  return score >= 70 ? '#1DD1A1' : score >= 40 ? '#C9A66B' : '#FF6B6B'
+  return score >= 70 ? '#1DD1A1' : score >= 40 ? '#C9A66B' : '#C94F4F'
 }
 
 function getScoreLabel(score: number, count: number) {
@@ -439,7 +439,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
           {([
             ['Healthy', '#1DD1A1', high],
             ['Building', '#C9A66B', mid],
-            ['Needs Work', '#FF6B6B', low],
+            ['Needs Work', '#C94F4F', low],
           ] as const).map(([label, c, n]) => (
             <div
               key={label}
@@ -492,7 +492,7 @@ function HealthOverview({ projects }: { projects: Project[] }) {
           >
             {high > 0 && <div style={{ flex: high, background: '#1DD1A1' }} />}
             {mid > 0 && <div style={{ flex: mid, background: '#C9A66B' }} />}
-            {low > 0 && <div style={{ flex: low, background: '#FF6B6B' }} />}
+            {low > 0 && <div style={{ flex: low, background: '#C94F4F' }} />}
           </div>
 
           <p style={{ fontSize: 12, color: 'var(--text3)', marginTop: 8 }}>

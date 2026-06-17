@@ -1195,8 +1195,8 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
 }) {
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#FF6B6B', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
-  const sBg    = { open: 'rgba(255,107,107,0.06)', 'in-progress': 'rgba(201,166,107,0.06)', complete: 'rgba(29,209,161,0.06)' }
+  const sColor = { open: '#C94F4F', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
+  const sBg    = { open: 'rgba(201,79,79,0.06)', 'in-progress': 'rgba(201,166,107,0.06)', complete: 'rgba(29,209,161,0.06)' }
   const NEXT   = { open: 'in-progress' as const, 'in-progress': 'complete' as const, complete: 'open' as const }
   const NEXT_LABEL = { open: '→ Start', 'in-progress': '→ Complete', complete: '↺ Reopen' }
 
@@ -1397,8 +1397,8 @@ function V2KaizenBoardView({ steps, onStatusChange, onAddItem }: {
                       {item.priority && item.priority !== 'normal' && (
                         <span style={{
                           marginLeft: 8, fontSize: 9, fontWeight: 700, letterSpacing: 0.5,
-                          color: item.priority === 'critical' ? '#FF6B6B' : item.priority === 'high' ? '#C9A66B' : '#C9A66B',
-                          background: item.priority === 'critical' ? 'rgba(255,107,107,0.1)' : item.priority === 'high' ? 'rgba(201,166,107,0.1)' : 'rgba(11,29,51,0.1)',
+                          color: item.priority === 'critical' ? '#C94F4F' : item.priority === 'high' ? '#C9A66B' : '#C9A66B',
+                          background: item.priority === 'critical' ? 'rgba(201,79,79,0.1)' : item.priority === 'high' ? 'rgba(201,166,107,0.1)' : 'rgba(11,29,51,0.1)',
                           padding: '1px 5px', borderRadius: 4,
                         }}>
                           {item.priority.toUpperCase()}
@@ -1644,8 +1644,8 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
           { label: 'Steps Mapped', val: String(steps.length), color: 'var(--text)' },
           { label: 'Process Cycle Efficiency', val: fmtPCE(pceNum), color: pceColor(pceNum) },
           { label: 'Total Cycle Time', val: totalCT > 0 ? `${(totalCT/60).toFixed(1)} min` : ',', color: 'var(--text)' },
-          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : ',', color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck', val: bottleneck?.name || ',', color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Total Wait Time', val: totalWT > 0 ? `${(totalWT/60).toFixed(1)}min` : ',', color: totalWT > totalCT ? '#C94F4F' : 'var(--text)' },
+          { label: 'Bottleneck', val: bottleneck?.name || ',', color: bottleneck ? '#C94F4F' : '#1DD1A1' },
           { label: 'Open Kaizens', val: String(openKaizens), color: openKaizens > 0 ? '#C9A66B' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 14px' }}>
@@ -1677,23 +1677,23 @@ function V2ReportTab({ steps, project }: { steps: any[]; project: any }) {
                   const isBN = takt != null && takt > 0 && ct > takt
                   return (
                     <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--vs-paper, #F7F8FA)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
-                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
-                        {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
+                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#C94F4F' : 'var(--text)' }}>
+                        {isBN && <span style={{ fontSize: 9, background: 'rgba(201,79,79,0.12)', color: '#C94F4F', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct > 0 ? `${ct < 60 ? ct.toFixed(0)+'s' : ct < 3600 ? (ct/60).toFixed(1)+'m' : (ct/3600).toFixed(2)+'h'}` : ','}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#C94F4F' : 'var(--text2)' }}>{ct > 0 ? `${ct < 60 ? ct.toFixed(0)+'s' : ct < 3600 ? (ct/60).toFixed(1)+'m' : (ct/3600).toFixed(2)+'h'}` : ','}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? `${wt}s` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
                         <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4,
-                          background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(201,166,107,0.12)',
-                          color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : '#C9A66B' }}>
+                          background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(201,79,79,0.12)' : 'rgba(201,166,107,0.12)',
+                          color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#C94F4F' : '#C9A66B' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
                       <td style={{ padding: '7px 10px', color: wastes > 0 ? '#C9A66B' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
                       <td style={{ padding: '7px 10px', color: openK > 0 ? '#C9A66B' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
+                        <span style={{ fontSize: 10, color: isBN ? '#C94F4F' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
                         </span>
                       </td>

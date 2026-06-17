@@ -95,7 +95,7 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
                   <span style={{ fontSize:10, background:'rgba(29,209,161,0.12)', color:'#1DD1A1', border:'1px solid rgba(29,209,161,0.2)', borderRadius:100, padding:'2px 10px' }}>TRIAL</span>
                 )}
                 {(subStatus === 'past_due') && (
-                  <span style={{ fontSize:10, background:'rgba(255,107,107,0.12)', color:'#FF6B6B', border:'1px solid rgba(255,107,107,0.2)', borderRadius:100, padding:'2px 10px' }}>PAYMENT FAILED</span>
+                  <span style={{ fontSize:10, background:'rgba(201,79,79,0.12)', color:'#C94F4F', border:'1px solid rgba(201,79,79,0.2)', borderRadius:100, padding:'2px 10px' }}>PAYMENT FAILED</span>
                 )}
               </div>
 
@@ -141,10 +141,10 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
           </div>
 
           {subStatus === 'past_due' && (
-            <div style={{ marginTop:16, padding:'12px 16px', background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.2)', borderRadius:8 }}>
-              <p style={{ fontSize:13, color:'#FF6B6B', marginBottom:6, fontWeight:600 }}>Payment failed</p>
+            <div style={{ marginTop:16, padding:'12px 16px', background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.2)', borderRadius:8 }}>
+              <p style={{ fontSize:13, color:'#C94F4F', marginBottom:6, fontWeight:600 }}>Payment failed</p>
               <p style={{ fontSize:12, color:'var(--text3)' }}>Your last payment didn't go through. Update your payment method to keep your Pro access.</p>
-              <button onClick={openPortal} style={{ marginTop:10, fontSize:12, color:'#FF6B6B', background:'none', border:'1px solid rgba(255,107,107,0.3)', borderRadius:6, padding:'6px 14px', cursor:'pointer' }}>
+              <button onClick={openPortal} style={{ marginTop:10, fontSize:12, color:'#C94F4F', background:'none', border:'1px solid rgba(201,79,79,0.3)', borderRadius:6, padding:'6px 14px', cursor:'pointer' }}>
                 Update Payment Method
               </button>
             </div>
@@ -225,14 +225,14 @@ export function SettingsClient({ projectCount = 0, profile, user }: Props) {
 
       {/* ── Danger zone ── */}
       <section>
-        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'#FF6B6B', marginBottom:16, textTransform:'uppercase' }}>Danger Zone</h2>
-        <div className="card" style={{ padding:24, borderColor:'rgba(255,107,107,0.15)' }}>
+        <h2 style={{ fontSize:13, fontFamily:'var(--font-mono)', letterSpacing:1.5, color:'#C94F4F', marginBottom:16, textTransform:'uppercase' }}>Danger Zone</h2>
+        <div className="card" style={{ padding:24, borderColor:'rgba(201,79,79,0.15)' }}>
           <p style={{ fontSize:13, color:'var(--text3)', marginBottom:16 }}>
             These actions are permanent and cannot be undone.
           </p>
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
             {isPaid && !isBeta && (
-              <button onClick={openPortal} disabled={portalLoading} className="btn btn-ghost" style={{ fontSize:13, color:'#FF6B6B', borderColor:'rgba(255,107,107,0.2)' }}>
+              <button onClick={openPortal} disabled={portalLoading} className="btn btn-ghost" style={{ fontSize:13, color:'#C94F4F', borderColor:'rgba(201,79,79,0.2)' }}>
                 Cancel Subscription
               </button>
             )}

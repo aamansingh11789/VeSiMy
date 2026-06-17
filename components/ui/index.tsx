@@ -48,9 +48,9 @@ export function ToastContainer() {
                 }
               : t.type === 'error'
                 ? {
-                    background: 'rgba(255,107,107,0.12)',
-                    color: '#FF6B6B',
-                    border: '1px solid rgba(255,107,107,0.25)',
+                    background: 'rgba(201,79,79,0.12)',
+                    color: '#C94F4F',
+                    border: '1px solid rgba(201,79,79,0.25)',
                   }
                 : {
                     background: 'rgba(201,166,107,0.12)',
@@ -81,7 +81,7 @@ export function Badge({
     steel: { background: 'rgba(108,185,252,0.10)', color: '#6CB9FC', border: '1px solid rgba(108,185,252,0.22)' },
     violet: { background: 'rgba(100,38,160,0.12)', color: '#A8854F', border: '1px solid rgba(100,38,160,0.22)' },
     green: { background: 'rgba(29,209,161,0.10)', color: '#1DD1A1', border: '1px solid rgba(29,209,161,0.22)' },
-    red: { background: 'rgba(255,107,107,0.10)', color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.22)' },
+    red: { background: 'rgba(201,79,79,0.10)', color: '#C94F4F', border: '1px solid rgba(201,79,79,0.22)' },
     muted: { background: 'rgba(112,112,160,0.10)', color: 'var(--text3)', border: '1px solid rgba(112,112,160,0.15)' },
   }
 

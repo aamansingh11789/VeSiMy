@@ -69,7 +69,7 @@ export default function PDCAPost() {
           {[
             { fmt: 'PDCA', color: '#0B1D33', use: 'Most shop floor improvement problems. Fast cycles, simple to run, no special training required. Best for: CT reduction, WIP reduction, quality improvements, line balancing.' },
             { fmt: 'A3', color: '#1DD1A1', use: 'When you need to communicate the problem and solution on one page to management or across teams. Toyota\'s standard problem-solving communication format. Essentially PDCA on one sheet of A3 paper.' },
-            { fmt: '8D', color: '#FF6B6B', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA, different format and language.' },
+            { fmt: '8D', color: '#C94F4F', use: 'Required by automotive customers (Ford, GM, Stellantis, IATF 16949) when a quality escape reaches a customer. Formal, structured, customer-facing. Same data as PDCA, different format and language.' },
             { fmt: 'DMAIC', color: '#6CB9FC', use: 'Complex, statistically-driven problems requiring months of data analysis. Six Sigma Black Belt territory. Use when PDCA has been tried and the root cause is not yet understood after multiple cycles.' },
           ].map(({ fmt, color, use }) => (
             <div key={fmt} style={{ display: 'flex', gap: 14, marginBottom: 14, background: 'rgba(248,247,245,0.97)', border: '1px solid rgba(44,44,92,0.6)', borderRadius: 10, padding: '14px 16px' }}>
@@ -89,8 +89,8 @@ export default function PDCAPost() {
             ['No standardisation in Act', 'The improvement works and then reverts within 60 days because Standard Work was never updated and operators gradually drift back to the old method. Act must include updating documentation and retraining.'],
             ['Starting too big', 'Teams try to solve the entire problem in one PDCA cycle. Keep cycles small, one problem, one step, one shift. Fast cycles with clear learning are more valuable than slow comprehensive projects.'],
           ].map(([title, body], i) => (
-            <div key={i} style={{ background: 'rgba(255,107,107,0.04)', border: '1px solid rgba(255,107,107,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
-              <div style={{ fontWeight: 700, color: '#FF6B6B', marginBottom: 6 }}>✕ {title}</div>
+            <div key={i} style={{ background: 'rgba(201,79,79,0.04)', border: '1px solid rgba(201,79,79,0.15)', borderRadius: 10, padding: '14px 18px', marginBottom: 10 }}>
+              <div style={{ fontWeight: 700, color: '#C94F4F', marginBottom: 6 }}>✕ {title}</div>
               <div style={{ fontSize: 13, color: '#B8B5D1', lineHeight: 1.6 }}>{body}</div>
             </div>
           ))}

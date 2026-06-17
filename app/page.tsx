@@ -17,6 +17,7 @@ const MONO="'JetBrains Mono',monospace"
 const HAND="'Caveat',cursive"
 
 const LOGO='/brand/vesimy-logo-mark.webp'
+const LOGO_LIGHT='/brand/vesimy-logo-light.webp'
 const HERO_BG='/brand/hero-bg.webp'
 
 const CSS=`
@@ -28,7 +29,7 @@ const CSS=`
 .fixed-bg-img{position:absolute;inset:0;background-image:url('${HERO_BG}');background-size:cover;background-position:center right;opacity:.92}
 .fixed-bg-veil{position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,26,47,.80) 0%,rgba(7,26,47,.38) 38%,rgba(7,26,47,.08) 60%,transparent 100%)}
 .hp .nav,.hp header.hero,.hp .section,.hp .industries,.hp .final,.hp .footer{position:relative;z-index:2}
-.floatpanel{position:relative;z-index:2;border-radius:28px;max-width:1500px;margin:32px auto;width:calc(100% - 80px);overflow:hidden;box-shadow:0 40px 100px -40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+.floatpanel{position:relative;z-index:2;border-radius:28px;max-width:1460px;margin:0 auto 36px;width:calc(100% - 72px);overflow:hidden;box-shadow:0 40px 100px -40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
 @media(max-width:760px){.floatpanel{width:calc(100% - 20px);margin:14px auto;border-radius:18px}}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
 .reveal.in{opacity:1;transform:none}
@@ -47,9 +48,12 @@ const CSS=`
 .btn-gold:hover{background:${GOLDL};transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,166,107,.42)}
 .btn-ghostL{background:rgba(255,255,255,.10);color:${WHITE};padding:13px 24px;font-size:14px;border:1.5px solid rgba(255,255,255,.45);font-weight:600}
 .btn-ghostL:hover{background:rgba(255,255,255,.18);border-color:#fff}
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;transition:all .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;transition:all .3s;background:linear-gradient(180deg,rgba(7,26,47,.55),transparent)}
 .nav.scrolled{background:rgba(7,26,47,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);height:60px}
 .nav-word{font-family:${SERIF};font-size:23px;color:${WHITE};letter-spacing:-.02em}
+.logo-tile{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,#FFFFFF,#EEF2F6);box-shadow:0 2px 8px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.8);flex-shrink:0}
+.logo-tile.sm{width:30px;height:30px;border-radius:8px}
+.logo-tile.xs{width:22px;height:22px;border-radius:6px}
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-link{font-size:13.5px;font-weight:500;color:${SLATE200};transition:color .15s;position:relative}
 .nav-link:hover{color:${WHITE}}
@@ -60,7 +64,7 @@ const CSS=`
 .eyebrow-line{width:30px;height:1px;background:${GOLD}}
 .eyebrow-txt{font-family:${MONO};font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-weight:600}
 .hero{position:relative;min-height:100vh;background:transparent;display:flex;align-items:center;padding:120px 32px 80px}
-.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .9fr;gap:48px;align-items:start;padding-top:8px}
+.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .92fr;gap:52px;align-items:center;padding-top:20px}
 .hero-h1{font-family:${SERIF};font-size:clamp(46px,6.4vw,86px);font-weight:400;color:${WHITE};line-height:.98;letter-spacing:-.025em;margin-bottom:28px}
 .hero-h1 em{font-style:italic;color:${GOLD}}
 .hero-h1 .word{display:inline-block;opacity:0;transform:translateY(30px) rotate(2deg);animation:hpword .9s cubic-bezier(.16,1,.3,1) forwards}
@@ -69,35 +73,35 @@ const CSS=`
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;opacity:0;animation:hpfade 1s ease .9s forwards}
 .hero-trust{margin-top:32px;display:flex;align-items:center;gap:14px;opacity:0;animation:hpfade 1s ease 1.1s forwards}
 .hero-trust-txt{font-family:${MONO};font-size:11px;color:${SLATE600};letter-spacing:.5px;line-height:1.6}
-.pview{position:relative;width:100%;perspective:2000px;opacity:0;animation:hpfade 1.1s ease .4s both;margin-top:-2px}
-.pview-win{position:relative;transform:rotateX(8deg) rotateY(-14deg) rotateZ(.5deg);transform-style:preserve-3d;border-radius:16px;padding:9px;background:linear-gradient(150deg,#1B3D63 0%,#0E2747 40%,#091D34 100%);border-top:1px solid rgba(255,255,255,.22);border-left:1px solid rgba(255,255,255,.12);border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.6);box-shadow:2px 3px 0 #0A1D33,4px 6px 0 #081A2E,6px 9px 0 #07172A,8px 12px 0 #061525,10px 16px 1px #050f1d,0 50px 90px -28px rgba(0,0,0,.8),0 90px 130px -60px rgba(58,90,125,.4);transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.pview{position:relative;width:100%;perspective:2000px;opacity:0;animation:hpfade 1.1s ease .4s both}
+.pview-win{position:relative;transform:rotateX(8deg) rotateY(-14deg) rotateZ(.5deg);transform-style:preserve-3d;border-radius:16px;padding:9px;background:linear-gradient(150deg,#345D8A 0%,#244E7C 45%,#193C60 100%);border-top:1px solid rgba(255,255,255,.32);border-left:1px solid rgba(255,255,255,.18);border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.6);box-shadow:2px 3px 0 #122F4E,4px 6px 0 #0E2742,6px 9px 0 #0B2038,8px 12px 0 #08182C,10px 16px 1px #061523,0 0 0 1px rgba(201,166,107,.18),0 0 60px rgba(120,150,190,.22),0 50px 90px -28px rgba(0,0,0,.8),0 90px 130px -60px rgba(58,90,125,.45);transition:transform .7s cubic-bezier(.16,1,.3,1)}
 .pview:hover .pview-win{transform:rotateX(4deg) rotateY(-7deg)}
-.pview-screen{border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#0E2747,#081D34);border:1px solid rgba(0,0,0,.4);position:relative}
-.pview-screen::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.10) 0%,transparent 22%,transparent 100%)}
-.pv-bar{height:38px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;z-index:2}
+.pview-screen{border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#FFFFFF,#F2F4F7);border:1px solid rgba(255,255,255,.5);position:relative}
+.pview-screen::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.35) 0%,transparent 18%,transparent 100%)}
+.pv-bar{height:38px;background:#EEF2F6;border-bottom:1px solid #DDE3EA;display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;z-index:2}
 .pv-dot{width:10px;height:10px;border-radius:50%}
-.pv-tab{margin-left:10px;display:flex;align-items:center;gap:8px;font-family:${DISPLAY};font-size:12px;color:#fff;font-weight:600}
-.pv-tab .pv-sub{font-family:${MONO};font-size:9px;color:${SLATE400};font-weight:400}
+.pv-tab{margin-left:10px;display:flex;align-items:center;gap:8px;font-family:${DISPLAY};font-size:12px;color:${NAVY};font-weight:600}
+.pv-tab .pv-sub{font-family:${MONO};font-size:9px;color:${SLATE600};font-weight:400}
 .pv-actions{margin-left:auto;display:flex;gap:7px}
-.pv-act{font-family:${MONO};font-size:8.5px;color:${SLATE400};border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:4px 9px}
+.pv-act{font-family:${MONO};font-size:8.5px;color:${SLATE700};border:1px solid ${SLATE200};border-radius:5px;padding:4px 9px}
 .pv-body{padding:18px 20px}
 .pv-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.pv-h-l{font-family:${MONO};font-size:8.5px;color:${GOLD};letter-spacing:1.4px;margin-bottom:4px}
-.pv-h-t{font-family:${DISPLAY};font-size:15px;font-weight:600;color:#fff}
-.pv-live{display:inline-flex;align-items:center;gap:5px;font-family:${MONO};font-size:8px;color:${SUCCESS};background:rgba(47,143,107,.12);border:1px solid rgba(47,143,107,.3);border-radius:5px;padding:3px 9px;letter-spacing:1px}
+.pv-h-l{font-family:${MONO};font-size:8.5px;color:${GOLDD};letter-spacing:1.4px;margin-bottom:4px}
+.pv-h-t{font-family:${DISPLAY};font-size:15px;font-weight:600;color:${NAVY}}
+.pv-live{display:inline-flex;align-items:center;gap:5px;font-family:${MONO};font-size:8px;color:${SUCCESS};background:rgba(47,143,107,.10);border:1px solid rgba(47,143,107,.35);border-radius:5px;padding:3px 9px;letter-spacing:1px}
 .pv-flow{display:flex;align-items:flex-start;gap:0;margin:18px 0;overflow-x:auto;padding-bottom:4px}
-.pv-step{flex:0 0 auto;width:104px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:10px;position:relative}
-.pv-step.bot{border-color:${DANGER};background:rgba(201,79,79,.10)}
-.pv-step-n{display:flex;align-items:center;gap:5px;font-family:${DISPLAY};font-size:10.5px;font-weight:700;color:#fff;margin-bottom:8px}
+.pv-step{flex:0 0 auto;width:104px;background:#F7F8FA;border:1px solid ${SLATE200};border-radius:9px;padding:10px;position:relative}
+.pv-step.bot{border-color:${DANGER};background:#FCEEEC;background:rgba(201,79,79,.10)}
+.pv-step-n{display:flex;align-items:center;gap:5px;font-family:${DISPLAY};font-size:10.5px;font-weight:700;color:${NAVY};margin-bottom:8px}
 .pv-step-badge{position:absolute;top:-7px;right:-7px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
-.pv-step-m{display:flex;justify-content:space-between;font-family:${MONO};font-size:8px;color:${SLATE400};margin-bottom:2px}
-.pv-step-m b{color:#fff}
+.pv-step-m{display:flex;justify-content:space-between;font-family:${MONO};font-size:8px;color:${SLATE600};margin-bottom:2px}
+.pv-step-m b{color:${NAVY}}
 .pv-edge{flex:0 0 auto;width:20px;height:2px;background:linear-gradient(90deg,rgba(201,166,107,.6),rgba(201,166,107,.2));margin-top:34px}
 .pv-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
-.pv-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:9px 10px}
-.pv-metric-l{font-family:${MONO};font-size:7px;color:${SLATE400};letter-spacing:.5px;margin-bottom:5px}
-.pv-metric-v{font-family:${SERIF};font-size:21px;color:#fff;line-height:1;letter-spacing:-.02em}
-.pv-metric-v small{font-size:11px;color:${SLATE400}}
+.pv-metric{background:#F7F8FA;border:1px solid ${SLATE200};border-radius:8px;padding:9px 10px}
+.pv-metric-l{font-family:${MONO};font-size:7px;color:${SLATE600};letter-spacing:.5px;margin-bottom:5px}
+.pv-metric-v{font-family:${SERIF};font-size:21px;color:${NAVY};line-height:1;letter-spacing:-.02em}
+.pv-metric-v small{font-size:11px;color:${SLATE600}}
 .pv-float{position:absolute;z-index:6;background:rgba(11,29,51,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(201,166,107,.3);border-radius:14px;padding:15px 16px;box-shadow:0 26px 56px -18px rgba(0,0,0,.65)}
 .pv-float.supe{left:-30px;bottom:-26px;width:230px;animation:hpfloat 5.5s ease-in-out infinite}
 .pv-float.target{right:-26px;bottom:14px;width:180px;animation:hpfloat 6.5s ease-in-out infinite .6s}
@@ -187,7 +191,7 @@ const CSS=`
 .ind-item{font-family:${SERIF};font-style:italic;font-size:30px;color:${SLATE700};padding:0 38px;display:flex;align-items:center;gap:38px}
 .ind-item::after{content:'';width:6px;height:6px;border-radius:50%;background:${GOLD}}
 .founder{background:transparent;color:${WHITE}}
-.founder .eyebrow-txt{color:${GOLDD}}
+.founder .eyebrow-txt{color:${GOLD}}
 .founder-card{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;max-width:900px}
 .founder-photo{width:120px;height:120px;border-radius:20px;background:linear-gradient(140deg,${STEEL},#0F2747);display:flex;align-items:center;justify-content:center;font-family:${DISPLAY};font-size:42px;font-weight:700;color:${GOLD};flex-shrink:0;border:1px solid rgba(201,166,107,.2)}
 .founder-quote{font-family:${SERIF};font-size:clamp(24px,3vw,34px);line-height:1.32;color:${WHITE};letter-spacing:-.01em;margin-bottom:24px}
@@ -350,7 +354,7 @@ export default function HomePage(){
 
       <nav className={`nav${scrolled?' scrolled':''}`}>
         <Link href="/" style={{display:'flex',alignItems:'center',gap:11}}>
-          <img src={LOGO} width={34} height={34} alt="VeSiMy" style={{display:'block'}}/>
+          <span className="logo-tile"><img src={LOGO} width={30} height={30} alt="VeSiMy" style={{display:'block'}}/></span>
           <span className="nav-word">VeSiMy</span>
         </Link>
         <div className="nav-links">
@@ -397,7 +401,7 @@ export default function HomePage(){
                   <span className="pv-dot" style={{background:'#E96B6B'}}/>
                   <span className="pv-dot" style={{background:'#D9C08A'}}/>
                   <span className="pv-dot" style={{background:'#5AAE8A'}}/>
-                  <div className="pv-tab"><img src={LOGO} width={16} height={16} alt=""/> Current State Map <span className="pv-sub">/ Assembly Line A</span></div>
+                  <div className="pv-tab"><span className="logo-tile xs"><img src={LOGO} width={15} height={15} alt=""/></span> Current State Map <span className="pv-sub">/ Assembly Line A</span></div>
                   <div className="pv-actions"><span className="pv-act">Share</span><span className="pv-act">Actions</span></div>
                 </div>
                 <div className="pv-body">
@@ -444,7 +448,7 @@ export default function HomePage(){
 
       <section className="section problem" id="problem">
         <div className="wrap" style={{position:'relative',zIndex:2}}>
-          <div className="eyebrow reveal"><span className="eyebrow-line"/><span className="eyebrow-txt" style={{color:GOLDD}}>Why most improvement fails</span></div>
+          <div className="eyebrow reveal"><span className="eyebrow-line"/><span className="eyebrow-txt" style={{color:GOLD}}>Why most improvement fails</span></div>
           <div className="problem-statement" id="hpProblem">
             <span style={{display:'block'}}>{probLine1.map((w,i)=><span key={i} className="w" data-lit="white">{w} </span>)}</span>
             <span style={{display:'block'}}>{probLine2.map((w,i)=><span key={i} className="w" data-lit={w[1]}>{w[0]} </span>)}</span>
@@ -681,7 +685,7 @@ export default function HomePage(){
       <footer className="footer">
         <div className="footer-grid">
           <div>
-            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}><img src={LOGO} width={28} height={28} alt="" style={{display:'block'}}/><span className="footer-word">VeSiMy</span></div>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}><span className="logo-tile sm"><img src={LOGO} width={22} height={22} alt="" style={{display:'block'}}/></span><span className="footer-word">VeSiMy</span></div>
             <p className="footer-tag">The execution layer for Lean. Map it. Measure it. Improve it.</p>
           </div>
           <div><div className="footer-col-h">Product</div><Link href="/features" className="footer-link">Features</Link><Link href="/pricing" className="footer-link">Pricing</Link><a href="#tools" className="footer-link">Toolkit</a><a href="#demo" className="footer-link">Live Demo</a></div>

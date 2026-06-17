@@ -62,7 +62,7 @@ export default function UpdatePasswordPage() {
               <input type="password" value={confirm} onChange={e=>setConfirm(e.target.value)} onKeyDown={e=>e.key==='Enter'&&handleUpdate()} placeholder="Repeat password" className="input" style={{ width:'100%', boxSizing:'border-box' }} />
             </div>
             {error && (
-              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.25)', fontSize:13, color:'#FF6B6B', marginBottom:16 }}>
+              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.25)', fontSize:13, color:'#C94F4F', marginBottom:16 }}>
                 {error}
               </div>
             )}

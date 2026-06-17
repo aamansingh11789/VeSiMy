@@ -151,7 +151,7 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
               fontSize:     '14px',
             },
             success: { iconTheme: { primary: '#0B1D33', secondary: 'var(--bg)' } },
-            error:   { iconTheme: { primary: '#FF6B6B', secondary: 'var(--bg)' } },
+            error:   { iconTheme: { primary: '#C94F4F', secondary: 'var(--bg)' } },
           }}
         />
         </ThemeProvider>

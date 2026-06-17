@@ -92,7 +92,7 @@ const FLOW_TYPES = [
 const VA_TYPES = [
   { value: 'va',   label: 'Value-Add (VA)',                color: '#1DD1A1', bg: 'rgba(29,209,161,0.08)',  hint: 'Customer pays for this, directly transforms the product or service' },
   { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#C9A66B', bg: 'rgba(201,166,107,0.08)',   hint: 'Required but adds no customer value, inspections, compliance, setup' },
-  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#FF6B6B', bg: 'rgba(255,107,107,0.08)', hint: 'Pure waste, target for elimination first' },
+  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#C94F4F', bg: 'rgba(201,79,79,0.08)', hint: 'Pure waste, target for elimination first' },
 ]
 
 // ── Validation limits ─────────────────────────────────────────────────────────
@@ -297,7 +297,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
 
         {error && (
-          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.20)', color: '#FF6B6B', fontSize: 13 }}>
+          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(201,79,79,0.08)', border: '1px solid rgba(201,79,79,0.20)', color: '#C94F4F', fontSize: 13 }}>
             {error}
           </div>
         )}
@@ -435,12 +435,12 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                   <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', gap: 1, marginBottom: 4 }}>
                     {opTotal > 0 && <div style={{ width: `${(vaT/opTotal)*100}%`, background: '#1DD1A1' }} />}
                     {opTotal > 0 && <div style={{ width: `${(nnvT/opTotal)*100}%`, background: '#C9A66B' }} />}
-                    {opTotal > 0 && <div style={{ width: `${(nvT/opTotal)*100}%`, background: '#FF6B6B' }} />}
+                    {opTotal > 0 && <div style={{ width: `${(nvT/opTotal)*100}%`, background: '#C94F4F' }} />}
                   </div>
                   <div style={{ display: 'flex', gap: 12, fontSize: 10, color: 'var(--text3)' }}>
                     <span style={{ color: '#1DD1A1' }}>VA: {vaT}s ({Math.round(vaT/opTotal*100)}%)</span>
                     <span style={{ color: '#C9A66B' }}>NNVA: {nnvT}s</span>
-                    <span style={{ color: '#FF6B6B' }}>NVA: {nvT}s ({Math.round(nvT/opTotal*100)}%)</span>
+                    <span style={{ color: '#C94F4F' }}>NVA: {nvT}s ({Math.round(nvT/opTotal*100)}%)</span>
                   </div>
                 </div>
               )}

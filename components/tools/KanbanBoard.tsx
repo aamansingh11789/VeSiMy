@@ -20,13 +20,13 @@ import {
 
 // ── Colours & labels ──────────────────────────────────────────────────────────
 const PRIORITY_COLOR: Record<KanbanPriority, string> = {
-  critical: '#FF6B6B',
+  critical: '#C94F4F',
   high:     '#C9A66B',
   normal:   '#1090D4',
   low:      'var(--text3)',
 }
 const PRIORITY_DOT: Record<KanbanPriority, string> = {
-  critical: '#FF6B6B',
+  critical: '#C94F4F',
   high:     '#C9A66B',
   normal:   '#1090D4',
   low:      'var(--sl-400)',
@@ -34,7 +34,7 @@ const PRIORITY_DOT: Record<KanbanPriority, string> = {
 
 const COL_COLORS = [
   'var(--vs-slate-200, #DDE3EA)','#1090D4','#C9A66B','#6426A0',
-  '#1DD1A1','#C9A66B','#E84393','#00BCD4','#FF6B6B',
+  '#1DD1A1','#C9A66B','#E84393','#00BCD4','#C94F4F',
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -384,8 +384,8 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
         {/* Footer */}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <button onClick={() => { if (confirm('Delete this card?')) onDelete(card.id) }} style={{
-            background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.3)',
-            borderRadius: 7, padding: '8px 14px', color: '#FF6B6B', fontSize: 13, cursor: 'pointer',
+            background: 'rgba(201,79,79,0.08)', border: '1px solid rgba(201,79,79,0.3)',
+            borderRadius: 7, padding: '8px 14px', color: '#C94F4F', fontSize: 13, cursor: 'pointer',
           }}>Delete</button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onClose} style={{
@@ -586,7 +586,7 @@ export function KanbanBoard({
           </div>
           <div style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <span>{totalCards} cards · {columns.length} columns</span>
-            {blockedCards > 0 && <span style={{ color: '#FF6B6B', fontSize:11, fontWeight:700 }}>{blockedCards} blocked</span>}
+            {blockedCards > 0 && <span style={{ color: '#C94F4F', fontSize:11, fontWeight:700 }}>{blockedCards} blocked</span>}
             {overWIP > 0 && <span style={{ color: '#C9A66B', fontSize:11, fontWeight:700 }}>{overWIP} over WIP limit</span>}
           </div>
         </div>
@@ -699,13 +699,13 @@ export function KanbanBoard({
                     onDragEnd={() => { setDragCard(null); setDragOver(null) }}
                     onClick={() => setDetail(card)}
                     style={{
-                      background: card.blocked_reason ? 'rgba(255,107,107,0.05)' : 'var(--bg)',
-                      border: `1px solid ${card.blocked_reason ? 'rgba(255,107,107,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
+                      background: card.blocked_reason ? 'rgba(201,79,79,0.05)' : 'var(--bg)',
+                      border: `1px solid ${card.blocked_reason ? 'rgba(201,79,79,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                       borderRadius: 7, padding: '9px 10px', marginBottom: 6,
                       cursor: 'pointer', transition: 'all 0.15s', position: 'relative',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = card.blocked_reason ? '#FF6B6B' : col.color)}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = card.blocked_reason ? 'rgba(255,107,107,0.35)' : 'var(--vs-slate-200, #DDE3EA)')}>
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = card.blocked_reason ? '#C94F4F' : col.color)}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = card.blocked_reason ? 'rgba(201,79,79,0.35)' : 'var(--vs-slate-200, #DDE3EA)')}>
 
                     {/* Priority dot */}
                     <div style={{
@@ -733,8 +733,8 @@ export function KanbanBoard({
                     {/* Meta row */}
                     <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--sl-400)', flexWrap: 'wrap' }}>
                       {card.assignee && <span>{card.assignee}</span>}
-                      {card.due_date && <span style={{ color: new Date(card.due_date) < new Date() ? '#FF6B6B' : 'var(--sl-400)' }}>{fmtDate(card.due_date)}</span>}
-                      {card.blocked_reason && <span style={{ color: '#FF6B6B', fontWeight:700 }}>Blocked</span>}
+                      {card.due_date && <span style={{ color: new Date(card.due_date) < new Date() ? '#C94F4F' : 'var(--sl-400)' }}>{fmtDate(card.due_date)}</span>}
+                      {card.blocked_reason && <span style={{ color: '#C94F4F', fontWeight:700 }}>Blocked</span>}
                     </div>
                   </div>
                 ))}

@@ -98,14 +98,21 @@ function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4"
          style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,166,107,0.08) 0%, transparent 60%), var(--bg)' }}>
+      {/* Top-left brand, links home (matches homepage placement) */}
+      <Link href="/" aria-label="VeSiMy home"
+            style={{ position: 'fixed', top: 24, left: 28, zIndex: 50, display: 'flex', alignItems: 'center', gap: 10 }}>
+        <img src="/brand/vesimy-logo-mark.webp" width={32} height={32} alt="VeSiMy" style={{ display: 'block' }} />
+        <span style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: 22, color: 'var(--vs-navy-900, #0B1D33)', letterSpacing: '-0.02em' }}>VeSiMy</span>
+      </Link>
+
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <VsLogo size={56} />
-          </div>
-          <h1 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
-              className="text-[var(--brand)]">
-            Vesimy
+          <Link href="/" className="flex justify-center mb-4" aria-label="VeSiMy home">
+            <img src="/brand/vesimy-logo-mark.webp" width={56} height={56} alt="VeSiMy" style={{ display: 'block' }} />
+          </Link>
+          <h1 style={{ fontFamily: "'Instrument Serif','Sora',serif", fontSize: 30, fontWeight: 400, letterSpacing: '-0.01em' }}
+              className="text-[var(--vs-navy-900,#0B1D33)]">
+            VeSiMy
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text3)', letterSpacing: 3 }}>CONTINUOUS IMPROVEMENT</p>
         </div>

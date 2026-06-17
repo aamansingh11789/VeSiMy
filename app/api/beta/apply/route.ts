@@ -5,6 +5,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerSupabase }           from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase-admin'
+import { validateEmail, rateLimit, clientIp } from '@/lib/api-guard'
 
 function scoreApplication(data: any): { score: number; breakdown: Record<string, number> } {
   const b: Record<string, number> = {}
@@ -44,11 +45,33 @@ function scoreApplication(data: any): { score: number; breakdown: Record<string,
 
 export async function POST(req: NextRequest) {
   try {
-  const data = await req.json()
+  const ip = clientIp(req.headers)
+
+  // Rate limit: 5 applications per IP per minute.
+  const rl = rateLimit(`beta:${ip}`, { limit: 5, windowMs: 60_000 })
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again shortly.' },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } }
+    )
+  }
+
+  const data = await req.json().catch(() => null)
+  if (!data || typeof data !== 'object') {
+    return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+  }
+
+  // Honeypot: bots fill hidden fields. Pretend success, drop silently.
+  if (typeof data.website === 'string' && data.website.trim() !== '') {
+    return NextResponse.json({ success: true, approved: true })
+  }
 
   const required = ['email', 'full_name', 'role', 'industry', 'lean_experience', 'pain_point', 'use_case']
   for (const f of required)
     if (!data[f]?.trim()) return NextResponse.json({ error: `${f} is required` }, { status: 400 })
+
+  const emailErr = validateEmail(data.email)
+  if (emailErr) return NextResponse.json({ error: emailErr }, { status: 400 })
 
   const { score, breakdown } = scoreApplication(data)
 

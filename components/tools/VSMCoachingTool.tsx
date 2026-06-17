@@ -21,7 +21,7 @@ interface GapItem {
   action: string
 }
 
-const SEV_COLOR = { critical: '#FF6B6B', warning: '#C9A66B', info: '#6CB9FC' }
+const SEV_COLOR = { critical: '#C94F4F', warning: '#C9A66B', info: '#6CB9FC' }
 const SEV_ICON  = { critical: '', warning: '', info: '' }
 
 function analyzeGaps(steps: any[], takt: number, pce: number): GapItem[] {
@@ -188,17 +188,17 @@ Give 3-4 specific improvement recommendations focused on moving from ${Math.roun
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* Score header */}
-        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(201,166,107,0.08)' : 'rgba(255,107,107,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(212,168,67,0.3)' : 'rgba(255,107,107,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ background: pce >= 95 ? 'rgba(29,209,161,0.08)' : pce >= 60 ? 'rgba(201,166,107,0.08)' : 'rgba(201,79,79,0.08)', border: `1px solid ${pce >= 95 ? 'rgba(29,209,161,0.3)' : pce >= 60 ? 'rgba(212,168,67,0.3)' : 'rgba(201,79,79,0.3)'}`, borderRadius: 10, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <div>
             <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 3 }}>PROCESS CYCLE EFFICIENCY</div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#C9A66B' : '#FF6B6B' }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: pce >= 95 ? '#1DD1A1' : pce >= 60 ? '#C9A66B' : '#C94F4F' }}>
               {Math.round(pce)}%
             </div>
             <div style={{ fontSize: 11, color: 'var(--text3)' }}>Target: 95–100%</div>
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: '#FF6B6B' }}>{critCount}</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#C94F4F' }}>{critCount}</div>
               <div style={{ fontSize: 9, color: 'var(--text3)' }}>CRITICAL</div>
             </div>
             <div style={{ textAlign: 'center' }}>

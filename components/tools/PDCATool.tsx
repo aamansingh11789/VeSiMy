@@ -58,7 +58,7 @@ const PHASE_CFG = [
 const FORMAT_CFG = [
   { id: 'pdca',  label: 'PDCA',  color: '#C9A66B', desc: 'Plan-Do-Check-Act cycle report' },
   { id: 'a3',   label: 'A3',    color: '#1DD1A1', desc: 'Toyota one-page A3 format' },
-  { id: '8d',   label: '8D',    color: '#FF6B6B', desc: 'Ford 8-Disciplines customer report' },
+  { id: '8d',   label: '8D',    color: '#C94F4F', desc: 'Ford 8-Disciplines customer report' },
   { id: 'dmaic',label: 'DMAIC', color: '#6CB9FC', desc: 'Six Sigma structured project format' },
   { id: 'ooda', label: 'OODA',  color: '#A8854F', desc: 'Observe-Orient-Decide-Act framework' },
 ]
@@ -469,7 +469,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                   <span style={{ fontSize: 12, color: 'var(--text2)', fontWeight: 600 }}>{m.name}</span>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 9, color: 'var(--text3)' }}>Before</div>
-                    <div style={{ fontSize: 13, fontFamily: 'var(--font-mono)', color: '#FF6B6B' }}>{m.before || ','}</div>
+                    <div style={{ fontSize: 13, fontFamily: 'var(--font-mono)', color: '#C94F4F' }}>{m.before || ','}</div>
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 9, color: 'var(--text3)' }}>After</div>
@@ -499,7 +499,7 @@ export default function PDCATool({ steps, project, onClose, initialData, onSave 
                 {[
                   { val: 'yes', label: 'Yes', color: '#1DD1A1' },
                   { val: 'partial', label: 'Partially', color: '#C9A66B' },
-                  { val: 'no', label: 'No, loop back', color: '#FF6B6B' },
+                  { val: 'no', label: 'No, loop back', color: '#C94F4F' },
                 ].map(o => (
                   <button key={o.val} type="button" onClick={() => set('achieved', o.val)}
                     style={{ flex: 1, padding: '8px', borderRadius: 8, cursor: 'pointer', fontSize: 11, fontWeight: 700,

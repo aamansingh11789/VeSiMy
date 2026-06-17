@@ -79,8 +79,8 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
             lineHeight: 1.65,
             padding: '12px 14px',
             borderRadius: 12,
-            background: 'rgba(255,107,107,0.05)',
-            border: '1px solid rgba(255,107,107,0.15)',
+            background: 'rgba(201,79,79,0.05)',
+            border: '1px solid rgba(201,79,79,0.15)',
           }}
         >
           Select all wastes present at this step. This feeds your kaizen prioritization and reporting.
@@ -107,8 +107,8 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                     borderRadius: 12,
                     cursor: 'pointer',
                     transition: 'all 0.15s',
-                    background: active ? 'rgba(255,107,107,0.07)' : 'var(--bg)',
-                    border: `1px solid ${active ? 'rgba(255,107,107,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
+                    background: active ? 'rgba(201,79,79,0.07)' : 'var(--bg)',
+                    border: `1px solid ${active ? 'rgba(201,79,79,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: 10,
@@ -118,7 +118,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                      <span style={{ fontWeight: 700, fontSize: 13, color: active ? '#FF6B6B' : 'var(--text)' }}>
+                      <span style={{ fontWeight: 700, fontSize: 13, color: active ? '#C94F4F' : 'var(--text)' }}>
                         {w.label}
                       </span>
                       <FieldTip termKey={w.tipKey} />
@@ -137,7 +137,7 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
                       </span>
 
                       {active && (
-                        <span style={{ marginLeft: 'auto', fontSize: 14, color: '#FF6B6B' }}>✓</span>
+                        <span style={{ marginLeft: 'auto', fontSize: 14, color: '#C94F4F' }}>✓</span>
                       )}
                     </div>
 
@@ -167,12 +167,12 @@ export default function WasteTool({ stepId, stepName, data, onSave, onClose }: P
           <div
             style={{
               padding: '12px 14px',
-              background: 'rgba(255,107,107,0.05)',
-              border: '1px solid rgba(255,107,107,0.18)',
+              background: 'rgba(201,79,79,0.05)',
+              border: '1px solid rgba(201,79,79,0.18)',
               borderRadius: 12,
             }}
           >
-            <span style={{ fontSize: 12, color: '#FF6B6B', fontWeight: 600, lineHeight: 1.6 }}>
+            <span style={{ fontSize: 12, color: '#C94F4F', fontWeight: 600, lineHeight: 1.6 }}>
               {selected.length} waste{selected.length !== 1 ? 's' : ''} identified: {selectedLabels.join(', ')}
           {selected.length >= 2 && (
             <span style={{ marginLeft: 8 }}>

@@ -10,6 +10,7 @@ import { callAI } from '@/lib/ai/ai-assist'
 import { KNOWLEDGE_CHUNKS } from '@/lib/supe-knowledge'
 import { getIndustryTerms, getIndustryLabel } from '@/lib/industry-language'
 import { requirePlan } from '@/lib/require-plan'
+import { rateLimit } from '@/lib/api-guard'
 import { calcProcessMetrics, fmtPCE } from '@/lib/v2/process-metrics'
 import { ctSeconds } from '@/lib/v2/cycle-time-utils'
 
@@ -97,6 +98,15 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    // Rate limit AI analysis: 10 runs per user per minute.
+    const arl = rateLimit(`v2analyze:${user.id}`, { limit: 10, windowMs: 60_000 })
+    if (!arl.ok) {
+      return NextResponse.json(
+        { error: 'You are running analyses too quickly. Please wait a moment.' },
+        { status: 429, headers: { 'Retry-After': String(arl.retryAfterSec) } }
+      )
+    }
 
     const planBlock = await requirePlan(supabase, user, ['pro', 'lifetime', 'enterprise', 'trialing'])
     if (planBlock) return planBlock

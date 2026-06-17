@@ -510,11 +510,11 @@ export function ProjectClient({ initialProject, profile }: Props) {
           { label: 'STEPS',    value: mainSteps.length,            color: 'var(--brand)' },
           { label: 'BRANCHES', value: branches.length,             color: 'var(--brand)' },
           { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--brand)' },
-          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : 'var(--brand)' },
+          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#C94F4F' : 'var(--brand)' },
           { label: 'TAKT',     value: takt ? fmtS(takt) : ',',    color: 'var(--brand)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
-          { label: 'WIP',      value: totalWIP || ',',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
-          { label: 'OPEN KZ',  value: openKZ || ',',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'WIP',      value: totalWIP || ',',             color: totalWIP > 50 ? '#C94F4F' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || ',',               color: openKZ > 5 ? '#C94F4F' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
         ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
@@ -717,7 +717,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
-                    const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#A8854F']
+                    const colors = ['var(--brand)', '#1DD1A1', '#C94F4F', '#6CB9FC', '#A8854F']
                     const descs = [
                       'Plan-Do-Check-Act, standard lean cycle',
                       'Toyota one-page problem-solving report',
@@ -1437,7 +1437,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
           {ct > 0 && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(ct)}</span>}
           {step.wip > 0 && <span style={{ color: '#A8854F' }}>WIP:{step.wip}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
-          {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
+          {wastes > 0 && <span style={{ color: '#C94F4F' }}>{wastes}W</span>}
           {kzOpen > 0 && <span style={{ color: '#C9A66B', fontWeight: 700 }}>{kzOpen}KZ</span>}
         </div>
         {/* Expand toggle */}
@@ -1515,7 +1515,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#FF6B6B', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
+  const sColor = { open: '#C94F4F', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
 
   return (
     <div>
@@ -1606,10 +1606,10 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 20 }}>
         {[
           { label: 'Steps Mapped',             val: String(reportSteps.length),                                                                  color: 'var(--text)' },
-          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : ',',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#FF6B6B') : 'var(--text3)' },
+          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : ',',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#C94F4F') : 'var(--text3)' },
           { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : ',',                                                          color: 'var(--text)' },
-          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : ',',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : ',',                                                          color: totalWT > totalCT ? '#C94F4F' : 'var(--text)' },
+          { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#C94F4F' : '#1DD1A1' },
           { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? 'var(--brand)' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
           <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 14px' }}>
@@ -1645,21 +1645,21 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                   const isBN = takt > 0 ? ct > takt : (avgCT > 0 && ct > avgCT * 1.5)
                   return (
                     <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--vs-paper, #F7F8FA)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
-                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
-                        {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
+                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#C94F4F' : 'var(--text)' }}>
+                        {isBN && <span style={{ fontSize: 9, background: 'rgba(201,79,79,0.12)', color: '#C94F4F', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#C94F4F' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? fmtS(wt) : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(201,166,107,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(201,79,79,0.12)' : 'rgba(201,166,107,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#C94F4F' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
                       <td style={{ padding: '7px 10px', color: wastes > 0 ? 'var(--brand)' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
                       <td style={{ padding: '7px 10px', color: openK > 0 ? 'var(--brand)' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
+                        <span style={{ fontSize: 10, color: isBN ? '#C94F4F' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
                         </span>
                       </td>
