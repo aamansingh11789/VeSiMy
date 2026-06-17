@@ -62,8 +62,8 @@ export function ActivationChecklist({ projects }: Props) {
   return (
     <div className="card" style={{
       padding: '20px 22px', marginBottom: 20,
-      background: 'linear-gradient(135deg, rgba(212,168,67,0.04) 0%, rgba(212,168,67,0.01) 100%)',
-      border: '1px solid rgba(212,168,67,0.20)', position: 'relative',
+      background: 'linear-gradient(135deg, rgba(201,166,107,0.04) 0%, rgba(212,168,67,0.01) 100%)',
+      border: '1px solid rgba(201,166,107,0.20)', position: 'relative',
     }}>
       <button onClick={dismiss} aria-label="Hide checklist" style={{
         position: 'absolute', top: 14, right: 14, background: 'transparent',
@@ -72,14 +72,14 @@ export function ActivationChecklist({ projects }: Props) {
       }}>×</button>
 
       <div style={{ marginBottom: 14 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--amber)',
+        <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--vs-gold-600)',
           letterSpacing: 1.5, textTransform: 'uppercase',
           fontFamily: 'var(--font-mono)', marginBottom: 6 }}>
           Get Started Checklist
         </div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
           <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)',
-            margin: 0, fontFamily: 'var(--font-sans)' }}>
+            margin: 0, fontFamily: "'Sora','Inter',sans-serif" }}>
             {completed === 0 ? 'Get the most out of VeSiMy in 4 steps'
               : `${completed} of ${total} steps complete`}
           </h3>
@@ -89,9 +89,9 @@ export function ActivationChecklist({ projects }: Props) {
           </span>
         </div>
         <div style={{ height: 4, borderRadius: 2,
-          background: 'rgba(212,168,67,0.10)', overflow: 'hidden', marginTop: 8 }}>
+          background: 'rgba(201,166,107,0.10)', overflow: 'hidden', marginTop: 8 }}>
           <div style={{ height: '100%', width: `${(completed / total) * 100}%`,
-            background: 'linear-gradient(90deg, var(--amber), #E8C466)',
+            background: 'linear-gradient(90deg, var(--vs-gold-600), var(--vs-gold-500))',
             transition: 'width 0.3s ease' }} />
         </div>
       </div>
@@ -105,11 +105,11 @@ export function ActivationChecklist({ projects }: Props) {
           }}>
             <div style={{
               width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
-              background: item.done ? 'var(--amber)' : 'transparent',
-              border: item.done ? '1.5px solid var(--amber)' : '1.5px solid var(--border)',
+              background: item.done ? 'var(--vs-gold-600)' : 'transparent',
+              border: item.done ? '1.5px solid var(--vs-gold-600)' : '1.5px solid var(--vs-slate-200, #DDE3EA)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              {item.done && <CheckIcon size={11} color="#1A0E00" />}
+              {item.done && <CheckIcon size={11} color="#0B1D33" />}
             </div>
             <span style={{
               flex: 1, fontSize: 13,
@@ -122,7 +122,7 @@ export function ActivationChecklist({ projects }: Props) {
         ))}
       </div>
 
-      <style>{`.checklist-item:hover { background: rgba(212,168,67,0.06) !important; }`}</style>
+      <style>{`.checklist-item:hover { background: rgba(201,166,107,0.06) !important; }`}</style>
     </div>
   )
 }

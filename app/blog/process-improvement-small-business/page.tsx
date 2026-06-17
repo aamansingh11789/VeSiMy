@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'Process Improvement in Small Business: Why You Do Not Need a Black Belt to Start', type: 'article' },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function Post() {
   return (
@@ -17,7 +17,7 @@ export default function Post() {
         <Link href="/blog" style={{ fontSize: 13, color: 'var(--text2)', textDecoration: 'none', marginBottom: 48, display: 'inline-block' }}>← Back to Blog</Link>
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: '#8C44CC22', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>INDUSTRY</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: '#A8854F22', color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>INDUSTRY</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>6 min read · April 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -44,9 +44,9 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>The owner of a 20-person business can call the team together this afternoon, map a process on a whiteboard, agree on one change, implement it this week, and measure the result next week. The PDCA cycle that takes six months in a large organisation takes six days in a small one.</p>
           <p style={{ marginBottom: 18 }}>VeSiMy was built to make this accessible, the methodology, the analysis, and the documentation, without requiring a lean department or a consultant to run it.</p>
 
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
+            <Link href="/start" style={{ color: '#0B1D33', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

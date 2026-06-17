@@ -9,7 +9,7 @@ const COLORS = [
   { label: 'Violet', value: '#6426A0' },
   { label: 'Steel Blue', value: '#1090D4' },
   { label: 'Teal', value: '#1DD1A1' },
-  { label: 'Amber', value: '#F4A623' },
+  { label: 'Amber', value: '#C9A66B' },
   { label: 'Pink', value: '#E84393' },
   { label: 'Cyan', value: '#00BCD4' },
 ]
@@ -74,9 +74,9 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
             style={{
               padding: '10px 12px',
               borderRadius: 10,
-              background: 'rgba(255,107,107,0.08)',
-              border: '1px solid rgba(255,107,107,0.20)',
-              color: '#FF6B6B',
+              background: 'rgba(201,79,79,0.08)',
+              border: '1px solid rgba(201,79,79,0.20)',
+              color: '#C94F4F',
               fontSize: 13,
             }}
           >
@@ -87,7 +87,7 @@ export function BranchModal({ mainSteps, branch, onSave, onClose }: Props) {
         {/* Explainer */}
         <div
           style={{
-            background: 'rgba(100,38,160,0.08)',
+            background: 'rgba(201,166,107,0.08)',
             border: '1px solid rgba(100,38,160,0.22)',
             borderRadius: 12,
             padding: '12px 14px',

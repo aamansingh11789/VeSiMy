@@ -49,7 +49,7 @@ export function VersionBanner() {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, minWidth: 200 }}>
         <span style={{ fontSize: 16 }}>✨</span>
-        <span style={{ fontSize: 13, color: '#FDF3D8', fontWeight: 600 }}>
+        <span style={{ fontSize: 13, color: '#F0F4F9', fontWeight: 600 }}>
           VeSiMy v4.0 is ready.
         </span>
         <button
@@ -63,7 +63,7 @@ export function VersionBanner() {
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
         <button
           onClick={switchToV4}
-          style={{ padding: '6px 14px', borderRadius: 7, background: '#D4A843', color: '#fff', border: 'none', fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
+          style={{ padding: '6px 14px', borderRadius: 7, background: '#C9A66B', color: '#fff', border: 'none', fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
         >
           Switch to v4.0
         </button>
@@ -82,7 +82,7 @@ export function VersionBanner() {
       </div>
 
       {detail && (
-        <div style={{ width: '100%', marginTop: 10, padding: '12px 16px', background: 'rgba(0,0,0,0.25)', borderRadius: 8, fontSize: 13, color: '#FDF3D8', lineHeight: 1.6 }}>
+        <div style={{ width: '100%', marginTop: 10, padding: '12px 16px', background: 'rgba(0,0,0,0.25)', borderRadius: 8, fontSize: 13, color: '#F0F4F9', lineHeight: 1.6 }}>
           <div style={{ fontWeight: 700, marginBottom: 8 }}>What changed in v4.0</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 6 }}>
             {[

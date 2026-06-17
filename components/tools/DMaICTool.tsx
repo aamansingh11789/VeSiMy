@@ -57,11 +57,11 @@ const BLANK: DMaICData = {
 const PHASES = [
   { key: 'define',   label: 'Define',   color: '#6CB9FC', icon: '🎯',
     desc: 'Problem statement, scope, customer impact, business case, team.' },
-  { key: 'measure',  label: 'Measure',  color: '#D4A843', icon: '📏',
+  { key: 'measure',  label: 'Measure',  color: '#C9A66B', icon: '📏',
     desc: 'Current process data, measurement plan, baseline capability.' },
-  { key: 'analyze',  label: 'Analyze',  color: '#F4A623', icon: '🔍',
+  { key: 'analyze',  label: 'Analyze',  color: '#C9A66B', icon: '🔍',
     desc: 'Root cause identification, statistical analysis, validated root cause.' },
-  { key: 'improve',  label: 'Improve',  color: '#8C44CC', icon: '⚡',
+  { key: 'improve',  label: 'Improve',  color: '#A8854F', icon: '⚡',
     desc: 'Solution options, pilot, implementation, risk assessment.' },
   { key: 'control',  label: 'Control',  color: '#2E844A', icon: '🛡',
     desc: 'Control plan, standard work, monitoring, project closure.' },
@@ -69,7 +69,7 @@ const PHASES = [
 
 const inp: React.CSSProperties = {
   width: '100%', padding: '9px 12px', borderRadius: 7,
-  background: 'var(--bg)', border: '1px solid var(--border)',
+  background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
   color: 'var(--text)', fontSize: 13, fontFamily: 'inherit',
   boxSizing: 'border-box' as const, outline: 'none',
 }
@@ -120,7 +120,7 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
         {PHASES.map((p, i) => (
           <button key={p.key} onClick={() => setPhase(i)} style={{
             flex: 1, padding: '10px 4px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit',
-            border: `1px solid ${phase === i ? p.color : completion[i] ? `${p.color}60` : 'var(--border)'}`,
+            border: `1px solid ${phase === i ? p.color : completion[i] ? `${p.color}60` : 'var(--vs-slate-200, #DDE3EA)'}`,
             background: phase === i ? `${p.color}15` : completion[i] ? `${p.color}08` : 'transparent',
           }}>
             <div style={{ fontSize: 16, marginBottom: 2 }}>{completion[i] ? '✓' : p.icon}</div>
@@ -259,12 +259,12 @@ export default function DMaICTool({ stepName, data, onSave, onClose }: Props) {
       {/* Phase nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14 }}>
         <button onClick={() => setPhase(p => Math.max(0, p - 1))} disabled={phase === 0}
-          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: phase === 0 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 0 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
+          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: phase === 0 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 0 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
           ← Previous
         </button>
         <span style={{ fontSize: 12, color: 'var(--text3)', alignSelf: 'center', fontFamily: 'var(--font-mono)' }}>{phase + 1} / 5</span>
         <button onClick={() => setPhase(p => Math.min(4, p + 1))} disabled={phase === 4}
-          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'transparent', color: phase === 4 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 4 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
+          style={{ padding: '8px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: phase === 4 ? 'var(--text4)' : 'var(--text2)', cursor: phase === 4 ? 'default' : 'pointer', fontFamily: 'inherit' }}>
           Next →
         </button>
       </div>

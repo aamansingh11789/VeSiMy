@@ -50,7 +50,7 @@ function FaceVSM() {
               </div>}
               <div style={{fontSize:10,fontWeight:700,color:s.bot?T.red:'#0F172A',marginBottom:1}}>{s.name}</div>
               <div style={{fontSize:10,fontWeight:800,color:s.bot?T.red:T.blue,fontFamily:T.mono}}>{s.ct}</div>
-              <div style={{fontSize:9,marginTop:2,display:'inline-block',background:s.va==='VA'?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)',color:s.va==='VA'?'#10B981':'#F59E0B',borderRadius:3,padding:'1px 4px',fontWeight:700}}>{s.va}</div>
+              <div style={{fontSize:9,marginTop:2,display:'inline-block',background:s.va==='VA'?'rgba(16,185,129,0.12)':'rgba(245,158,11,0.12)',color:s.va==='VA'?'#10B981':'#C9A66B',borderRadius:3,padding:'1px 4px',fontWeight:700}}>{s.va}</div>
             </div>
             {i<steps.length-1&&<div style={{fontSize:11,color:'#CBD5E1',flexShrink:0}}>→</div>}
           </React.Fragment>
@@ -113,7 +113,7 @@ function FaceTargetState() {
 function FaceDashboard() {
   const projects=[
     {name:'Assembly Line A', score:72, color:T.blue,  status:'Good',      industry:'Manufacturing'},
-    {name:'QC Inspection',   score:44, color:'#F59E0B',status:'Fair',      industry:'Manufacturing'},
+    {name:'QC Inspection',   score:44, color:'#C9A66B',status:'Fair',      industry:'Manufacturing'},
     {name:'Order Fulfilment',score:88, color:T.green, status:'Excellent',  industry:'Logistics'},
   ]
   return (
@@ -159,7 +159,7 @@ function FaceCITools() {
     {name:'Fishbone',  icon:'🔍',color:T.amber,  status:'6 causes identified'},
     {name:'5 Why',     icon:'❓',color:T.cyan,   status:'4/5 · root cause found'},
     {name:'Kaizen',    icon:'⚡',color:T.green,  status:'3 actions · 1 overdue'},
-    {name:'SMED',      icon:'🔧',color:'#8B5CF6',status:'28s changeover saved'},
+    {name:'SMED',      icon:'🔧',color:'#3A5A7D',status:'28s changeover saved'},
     {name:'Simulation',icon:'📊',color:T.amber,  status:'Demand +25% modelled'},
   ]
   return (
@@ -229,7 +229,7 @@ export function HeroCubePreview() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Ambient glow */}
-      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(212,168,67,0.18) 0%, rgba(43,127,255,0.10) 40%, transparent 70%)', filter:'blur(32px)', pointerEvents:'none', zIndex:0 }}/>
+      <div style={{ position:'absolute', inset:-40, borderRadius:'50%', background:'radial-gradient(ellipse at center, rgba(201,166,107,0.18) 0%, rgba(43,127,255,0.10) 40%, transparent 70%)', filter:'blur(32px)', pointerEvents:'none', zIndex:0 }}/>
 
       {/* The cube */}
       <div style={{

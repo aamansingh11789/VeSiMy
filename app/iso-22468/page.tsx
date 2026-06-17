@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 const GRAY  = '#5A6480'
 const BORD  = '#E2E8F0'
@@ -31,8 +31,8 @@ function IconCard({ icon, title, body }: { icon: string; title: string; body: st
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start',
       padding: '18px 20px', background: '#fff', borderRadius: 10,
       border: `1px solid ${BORD}`, boxShadow: '0 1px 4px rgba(4,17,31,0.04)' }}>
-      <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(212,168,67,0.10)',
-        border: '1px solid rgba(212,168,67,0.22)', display: 'flex', alignItems: 'center',
+      <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(201,166,107,0.10)',
+        border: '1px solid rgba(201,166,107,0.22)', display: 'flex', alignItems: 'center',
         justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>{icon}</div>
       <div>
         <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 4, fontFamily: SANS }}>{title}</div>
@@ -59,7 +59,7 @@ export default function ISO22468Page() {
           <Link href="/learn" style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>Learning Center</Link>
           <Link href="/lean-glossary" style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>Lean Glossary</Link>
           <Link href="/auth/signup" style={{ fontSize: 13, fontWeight: 700,
-            background: `linear-gradient(135deg,${AMBER},#B8912E)`, color: '#1A0E00',
+            background: `linear-gradient(135deg,${AMBER},#A8854F)`, color: '#0B1D33',
             padding: '7px 16px', borderRadius: 7, textDecoration: 'none' }}>
             Try VeSiMy Free
           </Link>
@@ -69,11 +69,11 @@ export default function ISO22468Page() {
       {/* Hero */}
       <div style={{ background: NAVY, padding: '56px 40px 64px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: -80, top: -80, width: 500, height: 500,
-          background: 'radial-gradient(ellipse at center, rgba(212,168,67,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(201,166,107,0.12) 0%, transparent 70%)',
           pointerEvents: 'none' }} />
         <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: 'rgba(212,168,67,0.10)', border: '1px solid rgba(212,168,67,0.25)',
+            background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(201,166,107,0.25)',
             borderRadius: 100, padding: '4px 14px', marginBottom: 20 }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: AMBER, letterSpacing: 1.5,
               textTransform: 'uppercase', fontFamily: MONO }}>Methodology Standard</span>
@@ -81,7 +81,7 @@ export default function ISO22468Page() {
           <h1 style={{ fontSize: 44, fontWeight: 800, color: '#F0F2FF', letterSpacing: -1.2,
             lineHeight: 1.1, margin: '0 0 16px', fontFamily: SANS }}>
             ISO 22468:2020<br />
-            <span style={{ background: `linear-gradient(135deg,${AMBER},#E8C466)`,
+            <span style={{ background: `linear-gradient(135deg,${AMBER},#D9C8A9)`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               backgroundClip: 'text' }}>Value Stream Mapping</span>
           </h1>
@@ -98,8 +98,8 @@ export default function ISO22468Page() {
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '64px 40px' }}>
 
         {/* Disclaimer */}
-        <div style={{ padding: '16px 20px', background: 'rgba(212,168,67,0.06)',
-          border: '1px solid rgba(212,168,67,0.20)', borderRadius: 10, marginBottom: 48 }}>
+        <div style={{ padding: '16px 20px', background: 'rgba(201,166,107,0.06)',
+          border: '1px solid rgba(201,166,107,0.20)', borderRadius: 10, marginBottom: 48 }}>
           <p style={{ fontSize: 13, color: '#6B4E00', lineHeight: 1.6, margin: 0, fontFamily: SANS }}>
             <strong>Note:</strong> This guide explains the VSM methodology that ISO 22468:2020 codifies.
             VeSiMy is structured around these practices. We are not an ISO-accredited certification body
@@ -191,7 +191,7 @@ export default function ISO22468Page() {
                 padding: '18px 20px', background: '#fff', borderRadius: 10, border: `1px solid ${BORD}` }}>
                 <div style={{ width: 32, height: 32, borderRadius: '50%', background: AMBER,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 13, fontWeight: 800, color: '#1A0E00', flexShrink: 0 }}>{step.n}</div>
+                  fontSize: 13, fontWeight: 800, color: '#0B1D33', flexShrink: 0 }}>{step.n}</div>
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 5, fontFamily: SANS }}>{step.title}</div>
                   <p style={{ fontSize: 13, color: GRAY, lineHeight: 1.6, margin: 0, fontFamily: SANS }}>{step.body}</p>
@@ -221,9 +221,9 @@ export default function ISO22468Page() {
 
         {/* CTA */}
         <div style={{ padding: '48px', background: NAVY, borderRadius: 16,
-          border: '1px solid rgba(212,168,67,0.18)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+          border: '1px solid rgba(201,166,107,0.18)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: -40, top: -40, width: 300, height: 300,
-            background: 'radial-gradient(ellipse,rgba(212,168,67,0.10) 0%,transparent 70%)', pointerEvents: 'none' }} />
+            background: 'radial-gradient(ellipse,rgba(201,166,107,0.10) 0%,transparent 70%)', pointerEvents: 'none' }} />
           <h3 style={{ fontSize: 28, fontWeight: 800, color: '#F0F2FF', letterSpacing: -0.5,
             marginBottom: 12, fontFamily: SANS, position: 'relative' }}>
             Apply ISO 22468 in practice
@@ -235,13 +235,13 @@ export default function ISO22468Page() {
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', position: 'relative' }}>
             <Link href="/auth/signup"
-              style={{ padding: '12px 28px', background: `linear-gradient(135deg,${AMBER},#B8912E)`,
-                color: '#1A0E00', fontWeight: 700, fontSize: 14, borderRadius: 10,
+              style={{ padding: '12px 28px', background: `linear-gradient(135deg,${AMBER},#A8854F)`,
+                color: '#0B1D33', fontWeight: 700, fontSize: 14, borderRadius: 10,
                 textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               Start mapping free →
             </Link>
             <Link href="/learn"
-              style={{ padding: '12px 28px', border: '1px solid rgba(212,168,67,0.30)',
+              style={{ padding: '12px 28px', border: '1px solid rgba(201,166,107,0.30)',
                 color: AMBER, fontWeight: 600, fontSize: 14, borderRadius: 10,
                 textDecoration: 'none' }}>
               Learning Center

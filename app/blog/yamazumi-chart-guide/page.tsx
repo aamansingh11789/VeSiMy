@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function YamazumiPost() {
   return (
@@ -49,8 +49,8 @@ export default function YamazumiPost() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The three categories of work</h2>
           {[
             { label: 'Value Add (VA)', color: '#1DD1A1', desc: 'Activities that physically transform the product in a way the customer recognises as valuable and would pay for. Machining, welding, assembly, painting. This is what you are selling. Every second of VA time is justified.' },
-            { label: 'Necessary Non-Value Add (NNVA)', color: '#0176D3', desc: 'Activities required by the current process but that add no value from the customer\'s perspective. Setting up a machine, walking to the next station, inspecting output. Cannot be eliminated immediately but should be reduced over time through process redesign.' },
-            { label: 'Non-Value Add (NVA)', color: '#FF6B6B', desc: 'Pure waste. Activities that consume time and resources but add nothing, waiting for a machine cycle to complete, searching for tools, correcting defects, walking to fetch materials that should be at point of use. Target for immediate elimination.' },
+            { label: 'Necessary Non-Value Add (NNVA)', color: '#0B1D33', desc: 'Activities required by the current process but that add no value from the customer\'s perspective. Setting up a machine, walking to the next station, inspecting output. Cannot be eliminated immediately but should be reduced over time through process redesign.' },
+            { label: 'Non-Value Add (NVA)', color: '#C94F4F', desc: 'Pure waste. Activities that consume time and resources but add nothing, waiting for a machine cycle to complete, searching for tools, correcting defects, walking to fetch materials that should be at point of use. Target for immediate elimination.' },
           ].map(({ label, color, desc }) => (
             <div key={label} style={{ display: 'flex', gap: 12, marginBottom: 16, alignItems: 'flex-start' }}>
               <div style={{ width: 14, height: 14, borderRadius: 3, background: color, flexShrink: 0, marginTop: 3 }} />

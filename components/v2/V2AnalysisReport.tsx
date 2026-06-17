@@ -26,14 +26,14 @@ const PRIORITY_COLORS: Record<string, string> = {
   immediate: RED, short_term: AMBER, medium_term: BRAND,
 }
 const VA_COLORS: Record<string, string> = {
-  va: GREEN, nnva: AMBER, nva: RED, unknown: '#9CA3AF',
+  va: GREEN, nnva: AMBER, nva: RED, unknown: '#A9B5C2',
 }
 
 // ── Section header ────────────────────────────────────────────────────────────
 function SectionHeader({ num, label, icon }: { num: string; label: string; icon: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: BRAND, background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 6, padding: '4px 8px', flexShrink: 0 }}>
+      <div style={{ fontFamily: MONO, fontSize: 10, color: BRAND, background: 'rgba(11,29,51,0.08)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 6, padding: '4px 8px', flexShrink: 0 }}>
         {num}
       </div>
       <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', fontFamily: SERIF }}>{icon} {label}</div>
@@ -42,7 +42,7 @@ function SectionHeader({ num, label, icon }: { num: string; label: string; icon:
 }
 
 function Divider() {
-  return <div style={{ height: 1, background: 'var(--border)', margin: '36px 0' }} />
+  return <div style={{ height: 1, background: 'var(--vs-slate-200, #DDE3EA)', margin: '36px 0' }} />
 }
 
 // ── Waterfall chart, VA time vs wait time breakdown ─────────────────────────
@@ -71,7 +71,7 @@ function WaterfallChart({ totalCT, totalWait, vaCT, steps }: { totalCT: number; 
               <rect x={x} y={0} width={w} height={barH} fill={s.color} rx={i === 0 ? 4 : i === segments.length - 1 ? 4 : 0} />
               {w > 40 && (
                 <text x={x + w / 2} y={barH / 2 + 5} textAnchor="middle" fontSize={10} fontWeight={700}
-                  fill={s.color === '#E5E7EB' ? '#6B7280' : 'white'} fontFamily={MONO}>
+                  fill={s.color === '#E5E7EB' ? '#73879C' : 'white'} fontFamily={MONO}>
                   {s.pct.toFixed(0)}%
                 </text>
               )}
@@ -175,7 +175,7 @@ function WIPHeatmap({ steps }: { steps: any[] }) {
         return (
           <div key={i} style={{ textAlign: 'center' }}>
             <div style={{ width: 52, height: 52, borderRadius: 6, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 4, border: `1px solid ${bg === '#E5E7EB' ? '#D1D5DB' : bg}` }}>
-              <span style={{ fontSize: 16, fontWeight: 700, fontFamily: MONO, color: intensity > 0.4 ? 'white' : '#374151' }}>{wip}</span>
+              <span style={{ fontSize: 16, fontWeight: 700, fontFamily: MONO, color: intensity > 0.4 ? 'white' : '#4F6174' }}>{wip}</span>
             </div>
             <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: MONO, maxWidth: 52, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {s.name.slice(0, 6)}
@@ -208,7 +208,7 @@ function DefectChart({ steps }: { steps: any[] }) {
             <span style={{ fontSize: 13, color: 'var(--text2)' }}>{s.name}</span>
             <span style={{ fontSize: 13, fontFamily: MONO, fontWeight: 700, color: s.rate > 5 ? RED : s.rate > 3 ? AMBER : GREEN }}>{s.rate}%</span>
           </div>
-          <div style={{ height: 8, background: 'var(--bg3)', borderRadius: 4, overflow: 'hidden' }}>
+          <div style={{ height: 8, background: 'var(--vs-paper, #F7F8FA)', borderRadius: 4, overflow: 'hidden' }}>
             <div style={{ height: '100%', width: `${(s.rate / maxRate) * 100}%`, background: s.rate > 5 ? RED : s.rate > 3 ? AMBER : GREEN, borderRadius: 4 }} />
           </div>
         </div>
@@ -237,7 +237,7 @@ function ParetoChart({ wasteTypes }: { wasteTypes: any[] }) {
                 <span style={{ fontFamily: MONO, fontSize: 10, color: cumPct <= 80 ? RED : 'var(--text3)' }}>cum {Math.round(cumPct)}%</span>
               </div>
             </div>
-            <div style={{ height: 10, background: 'var(--bg3)', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ height: 10, background: 'var(--vs-paper, #F7F8FA)', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${barPct}%`, background: i < 3 ? RED : AMBER, borderRadius: 4, transition: 'width 0.6s ease' }} />
             </div>
           </div>
@@ -281,27 +281,27 @@ function PriorityMatrix({ items: initialItems }: { items: any[] }) {
   }
 
   const QColors: Record<string, string> = {
-    'quick-win': GREEN, major: BRAND, easy: AMBER, hard: '#9CA3AF',
+    'quick-win': GREEN, major: BRAND, easy: AMBER, hard: '#A9B5C2',
   }
 
   return (
     <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
       <div style={{ position: 'relative', flexShrink: 0 }}>
-        <svg ref={svgRef} width={MATRIX_SIZE} height={MATRIX_SIZE} onClick={handleSVGClick} style={{ display: 'block', border: '1px solid var(--border)', borderRadius: 8, background: 'var(--bg2)', cursor: selected !== null ? 'crosshair' : 'default' }}>
+        <svg ref={svgRef} width={MATRIX_SIZE} height={MATRIX_SIZE} onClick={handleSVGClick} style={{ display: 'block', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, background: 'var(--vs-white, #FFFFFF)', cursor: selected !== null ? 'crosshair' : 'default' }}>
           {/* Quadrant backgrounds */}
           <rect x={PAD} y={PAD} width={(MATRIX_SIZE - PAD * 2) / 2} height={(MATRIX_SIZE - PAD * 2) / 2} fill={`${GREEN}10`} />
           <rect x={MATRIX_SIZE / 2} y={PAD} width={(MATRIX_SIZE - PAD * 2) / 2} height={(MATRIX_SIZE - PAD * 2) / 2} fill={`${BRAND}08`} />
           <rect x={PAD} y={MATRIX_SIZE / 2} width={(MATRIX_SIZE - PAD * 2) / 2} height={(MATRIX_SIZE - PAD * 2) / 2} fill={`${AMBER}08`} />
           <rect x={MATRIX_SIZE / 2} y={MATRIX_SIZE / 2} width={(MATRIX_SIZE - PAD * 2) / 2} height={(MATRIX_SIZE - PAD * 2) / 2} fill="rgba(156,163,175,0.06)" />
           {/* Axes */}
-          <line x1={MATRIX_SIZE / 2} y1={PAD} x2={MATRIX_SIZE / 2} y2={MATRIX_SIZE - PAD} stroke="var(--border)" strokeWidth={1} strokeDasharray="4 2" />
-          <line x1={PAD} y1={MATRIX_SIZE / 2} x2={MATRIX_SIZE - PAD} y2={MATRIX_SIZE / 2} stroke="var(--border)" strokeWidth={1} strokeDasharray="4 2" />
+          <line x1={MATRIX_SIZE / 2} y1={PAD} x2={MATRIX_SIZE / 2} y2={MATRIX_SIZE - PAD} stroke="var(--vs-slate-200, #DDE3EA)" strokeWidth={1} strokeDasharray="4 2" />
+          <line x1={PAD} y1={MATRIX_SIZE / 2} x2={MATRIX_SIZE - PAD} y2={MATRIX_SIZE / 2} stroke="var(--vs-slate-200, #DDE3EA)" strokeWidth={1} strokeDasharray="4 2" />
           {/* Quadrant labels */}
           {[
             { label: 'Quick Wins', x: PAD + 6, y: PAD + 14, color: GREEN },
             { label: 'Major Projects', x: MATRIX_SIZE / 2 + 6, y: PAD + 14, color: BRAND },
             { label: 'Easy Fills', x: PAD + 6, y: MATRIX_SIZE / 2 + 14, color: AMBER },
-            { label: 'Avoid', x: MATRIX_SIZE / 2 + 6, y: MATRIX_SIZE / 2 + 14, color: '#9CA3AF' },
+            { label: 'Avoid', x: MATRIX_SIZE / 2 + 6, y: MATRIX_SIZE / 2 + 14, color: '#A9B5C2' },
           ].map(q => (
             <text key={q.label} x={q.x} y={q.y} fontSize={8} fill={q.color} fontFamily={MONO} fontWeight={700} opacity={0.7}>{q.label}</text>
           ))}
@@ -321,7 +321,7 @@ function PriorityMatrix({ items: initialItems }: { items: any[] }) {
                 <text x={cx} y={cy + 4} textAnchor="middle" fontSize={9} fontWeight={700} fill="white">{i + 1}</text>
                 {tooltip === i && (
                   <foreignObject x={cx + 12} y={cy - 20} width={110} height={50}>
-                    <div style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 6, padding: '4px 8px', fontSize: 10, color: 'var(--text)', lineHeight: 1.4 }}>
+                    <div style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 6, padding: '4px 8px', fontSize: 10, color: 'var(--text)', lineHeight: 1.4 }}>
                       {item.action}<br /><span style={{ color: 'var(--text3)' }}>Impact: {item.impact} · Effort: {item.effort}</span>
                     </div>
                   </foreignObject>
@@ -361,7 +361,7 @@ function ProjectionChart({ projection }: { projection: any }) {
   const { current, conservative, realistic, optimistic } = projection
   const maxLT  = Math.max(current.leadTime, 1)
   const scenarios = [
-    { label: 'Current', lt: current.leadTime, pce: current.pce, color: '#9CA3AF' },
+    { label: 'Current', lt: current.leadTime, pce: current.pce, color: '#A9B5C2' },
     { label: 'Conservative', lt: conservative.leadTime, pce: conservative.pce, color: AMBER },
     { label: 'Realistic', lt: realistic.leadTime, pce: realistic.pce, color: BRAND },
     { label: 'Optimistic', lt: optimistic.leadTime, pce: optimistic.pce, color: GREEN },
@@ -379,7 +379,7 @@ function ProjectionChart({ projection }: { projection: any }) {
                 <span style={{ fontSize: 12, fontFamily: MONO, fontWeight: 700, color: s.color }}>{s.pce.toFixed(0)}% PCE</span>
               </div>
             </div>
-            <div style={{ height: s.label === 'Current' ? 12 : 18, background: 'var(--bg3)', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ height: s.label === 'Current' ? 12 : 18, background: 'var(--vs-paper, #F7F8FA)', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${(s.lt / maxLT) * 100}%`, background: s.color, borderRadius: 4, opacity: s.label === 'Current' ? 0.5 : 1, transition: 'width 0.8s ease' }} />
             </div>
             {s.label !== 'Current' && (
@@ -390,7 +390,7 @@ function ProjectionChart({ projection }: { projection: any }) {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 8 }}>
+      <div style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(11,29,51,0.05)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 8 }}>
         <div style={{ fontSize: 10, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>METHODOLOGY</div>
         <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>{projection.methodology}. Projections are estimates based on PCE improvement targets, validate with direct observation before committing to timelines.</div>
       </div>
@@ -403,8 +403,8 @@ function TrialTeaser({ section }: { section: string }) {
   return (
     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 10 }}>
       <div style={{ filter: 'blur(6px)', opacity: 0.35, pointerEvents: 'none', userSelect: 'none', padding: 16 }}>
-        <div style={{ height: 80, background: 'linear-gradient(135deg, var(--bg3), var(--bg4))', borderRadius: 6, marginBottom: 8 }} />
-        <div style={{ height: 40, background: 'var(--bg3)', borderRadius: 6, width: '70%' }} />
+        <div style={{ height: 80, background: 'linear-gradient(135deg, var(--vs-paper, #F7F8FA), var(--vs-slate-100, #EEF2F6))', borderRadius: 6, marginBottom: 8 }} />
+        <div style={{ height: 40, background: 'var(--vs-paper, #F7F8FA)', borderRadius: 6, width: '70%' }} />
       </div>
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(2,4,13,0.6)' }}>
         <div style={{ fontSize: 20, marginBottom: 8 }}>🔒</div>
@@ -454,10 +454,10 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
       {/* Staleness warning */}
       {isStale && (
-        <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,0.05)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 9, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#0a4d8f' }}>
+        <div style={{ padding: '10px 14px', background: 'rgba(11,29,51,0.05)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 9, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: '#0a4d8f' }}>
           <span>⏱</span>
           <span>Analysis run {Math.round(ageHours)}h ago. Re-run if you have changed steps since then.</span>
-          {onGoMap && <button onClick={onGoMap} style={{ marginLeft: 'auto', fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid rgba(1,118,211,0.4)', background: 'transparent', color: BRAND, cursor: 'pointer' }}>Re-analyse →</button>}
+          {onGoMap && <button onClick={onGoMap} style={{ marginLeft: 'auto', fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid rgba(11,29,51,0.4)', background: 'transparent', color: BRAND, cursor: 'pointer' }}>Re-analyse →</button>}
         </div>
       )}
 
@@ -470,7 +470,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       )}
 
       {/* ── SECTION 1: Executive Summary ───────────────────────────────────── */}
-      <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px 28px', marginBottom: 28 }}>
+      <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 14, padding: '24px 28px', marginBottom: 28 }}>
         <SectionHeader num="01" label="Executive Summary" icon="📋" />
         <p style={{ fontSize: 16, color: 'var(--text)', lineHeight: 1.85, margin: '0 0 20px', fontFamily: SERIF }}>
           {report.executive_summary}
@@ -483,7 +483,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
             { label: 'PCE',           value: report.va_ratio || ',', color: parseInt(report.va_ratio) > 50 ? GREEN : parseInt(report.va_ratio) > 25 ? AMBER : RED },
             { label: 'Data Complete', value: `${cs.data_completeness || 0}%`, color: (cs.data_completeness || 0) > 75 ? GREEN : (cs.data_completeness || 0) > 50 ? AMBER : RED },
           ].map(({ label, value, color }) => (
-            <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px', textAlign: 'center' }}>
+            <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 14px', textAlign: 'center' }}>
               <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 6 }}>{label.toUpperCase()}</div>
               <div style={{ fontSize: 22, fontWeight: 700, fontFamily: SERIF, color: color || 'var(--text)' }}>{value}</div>
             </div>
@@ -496,14 +496,14 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         <SectionHeader num="02" label="Current State Snapshot" icon="📊" />
 
         {/* Lead time waterfall */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
+        <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
           <div style={{ fontSize: 11, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 14 }}>LEAD TIME BREAKDOWN</div>
           <WaterfallChart
             totalCT={cs.total_ct || 0} totalWait={cs.total_wait || 0}
             vaCT={cs.va_ct || 0} steps={cs.ct_by_step || []} />
           {/* Industry benchmark */}
           {cs.industry_benchmark && (
-            <div style={{ marginTop: 14, padding: '8px 12px', background: 'var(--bg3)', borderRadius: 6, fontSize: 11, color: 'var(--text3)' }}>
+            <div style={{ marginTop: 14, padding: '8px 12px', background: 'var(--vs-paper, #F7F8FA)', borderRadius: 6, fontSize: 11, color: 'var(--text3)' }}>
               <strong style={{ color: 'var(--text2)' }}>Industry benchmark ({indLabel || 'this industry'}):</strong>{' '}
               Typical PCE {cs.industry_benchmark.typical}, world-class {cs.industry_benchmark.worldClass}. {cs.industry_benchmark.note}
             </div>
@@ -512,7 +512,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
         {/* Takt comparison */}
         {(cs.ct_by_step || []).length > 0 && (
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
             <div style={{ fontSize: 11, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 14 }}>TAKT TIME COMPARISON</div>
             <TaktChart steps={cs.ct_by_step || []} taktTime={cs.takt_time || 0} />
           </div>
@@ -520,11 +520,11 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
 
         {/* WIP heatmap + Defect chart side by side */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px' }}>
             <div style={{ fontSize: 11, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 14 }}>WIP HEATMAP</div>
             <WIPHeatmap steps={cs.wip_by_step || []} />
           </div>
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px' }}>
             <div style={{ fontSize: 11, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 14 }}>DEFECT RATES BY STEP</div>
             <DefectChart steps={cs.defect_steps || []} />
           </div>
@@ -546,7 +546,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
               { label: 'CT vs Takt',      value: bottleneck.ct_vs_takt || ',' },
               { label: 'Constraint score', value: bottleneck.constraint_score ? `${bottleneck.constraint_score}/100` : ',', color: RED },
             ].map(({ label, value, color }) => (
-              <div key={label} style={{ textAlign: 'center', padding: '10px', background: 'var(--bg2)', borderRadius: 8, border: '1px solid var(--border)' }}>
+              <div key={label} style={{ textAlign: 'center', padding: '10px', background: 'var(--vs-white, #FFFFFF)', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                 <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>{label.toUpperCase()}</div>
                 <div style={{ fontSize: 18, fontWeight: 700, fontFamily: SERIF, color: color || 'var(--text)' }}>{value}</div>
               </div>
@@ -554,7 +554,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
           </div>
           <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75, margin: '0 0 12px' }}>{bottleneck.plain_explanation}</p>
           {bottleneck.toc_note && (
-            <div style={{ padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.15)', borderRadius: 7, fontSize: 13, color: 'var(--text3)', fontStyle: 'italic' }}>
+            <div style={{ padding: '10px 14px', background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.15)', borderRadius: 7, fontSize: 13, color: 'var(--text3)', fontStyle: 'italic' }}>
               💡 {bottleneck.toc_note}
             </div>
           )}
@@ -568,7 +568,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
           <div>
             {/* Pareto */}
             {(nvaAnalysis.by_waste_type || []).length > 0 && (
-              <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
+              <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
                 <div style={{ fontSize: 11, fontFamily: MONO, color: 'var(--text3)', letterSpacing: 1, marginBottom: 14 }}>WASTE TYPE PARETO</div>
                 <ParetoChart wasteTypes={nvaAnalysis.by_waste_type || []} />
               </div>
@@ -577,7 +577,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
             {(nvaAnalysis.activities || []).length > 0 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {(nvaAnalysis.activities || []).slice(0, 10).map((a: any, i: number) => (
-                  <div key={i} style={{ display: 'flex', gap: 14, padding: '12px 16px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 10, alignItems: 'flex-start' }}>
+                  <div key={i} style={{ display: 'flex', gap: 14, padding: '12px 16px', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, alignItems: 'flex-start' }}>
                     <div style={{ width: 28, height: 28, borderRadius: '50%', background: RED + '20', border: `1px solid ${RED}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: RED, flexShrink: 0 }}>{i + 1}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
@@ -614,7 +614,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {recs.length === 0 && <div style={{ color: 'var(--text3)', fontSize: 13 }}>Run analysis with complete step data to generate recommendations.</div>}
             {recs.map((r: any, i: number) => (
-              <div key={i} style={{ background: 'var(--bg2)', border: `1px solid ${PRIORITY_COLORS[r.priority] || 'var(--border)'}30`, borderLeft: `4px solid ${PRIORITY_COLORS[r.priority] || 'var(--border)'}`, borderRadius: 12, padding: '18px 22px' }}>
+              <div key={i} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${PRIORITY_COLORS[r.priority] || 'var(--vs-slate-200, #DDE3EA)'}30`, borderLeft: `4px solid ${PRIORITY_COLORS[r.priority] || 'var(--vs-slate-200, #DDE3EA)'}`, borderRadius: 12, padding: '18px 22px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
                   <div style={{ fontFamily: SERIF, fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>{r.step_name}</div>
                   <span style={{ fontSize: 9, fontFamily: MONO, padding: '2px 8px', borderRadius: 4, background: `${PRIORITY_COLORS[r.priority] || BRAND}15`, color: PRIORITY_COLORS[r.priority] || BRAND, textTransform: 'uppercase' }}>
@@ -622,11 +622,11 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
                   </span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
-                  <div style={{ padding: '10px 12px', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 7 }}>
+                  <div style={{ padding: '10px 12px', background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7 }}>
                     <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>WHAT</div>
                     <div style={{ fontSize: 13, color: 'var(--text)', fontWeight: 600 }}>{r.what}</div>
                   </div>
-                  <div style={{ padding: '10px 12px', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 7 }}>
+                  <div style={{ padding: '10px 12px', background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7 }}>
                     <div style={{ fontSize: 9, fontFamily: MONO, color: 'var(--text3)', marginBottom: 4 }}>WHY</div>
                     <div style={{ fontSize: 13, color: 'var(--text2)' }}>{r.why}</div>
                   </div>
@@ -645,7 +645,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       <div style={{ marginBottom: 28 }}>
         <SectionHeader num="06" label="Prioritisation Matrix" icon="🗺️" />
         {!isPaid ? <TrialTeaser section="Priority Matrix" /> : (
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px' }}>
             <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 16 }}>
               Items are plotted by AI based on map data. Click any dot to reposition based on your knowledge of the operation.
             </div>
@@ -660,7 +660,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       <div style={{ marginBottom: 28 }}>
         <SectionHeader num="07" label="Lead Time Improvement Projection" icon="📈" />
         {!isPaid ? <TrialTeaser section="Lead Time Projection" /> : (
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '20px 22px' }}>
+          <div style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, padding: '20px 22px' }}>
             <ProjectionChart projection={projection} />
           </div>
         )}
@@ -671,7 +671,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         <SectionHeader num="08" label="Next Steps" icon="🎯" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {nextSteps.map((ns: any, i: number) => (
-            <div key={i} style={{ display: 'flex', gap: 16, padding: '16px 20px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, alignItems: 'flex-start' }}>
+            <div key={i} style={{ display: 'flex', gap: 16, padding: '16px 20px', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12, alignItems: 'flex-start' }}>
               <div style={{ width: 32, height: 32, borderRadius: '50%', background: BRAND, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{ns.sequence}</div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{ns.action}</div>
@@ -681,8 +681,8 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
               <div style={{ flexShrink: 0, textAlign: 'right' }}>
                 <div style={{ fontSize: 11, fontFamily: MONO, color: BRAND, fontWeight: 700, marginBottom: 4 }}>{TOOL_LABELS[ns.tool] || ns.tool}</div>
                 {/* Editable fields */}
-                <input placeholder="Owner" style={{ display: 'block', width: 110, fontSize: 11, padding: '3px 6px', borderRadius: 4, border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)', marginBottom: 4 }} />
-                <input type="date" style={{ display: 'block', width: 110, fontSize: 11, padding: '3px 6px', borderRadius: 4, border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }} />
+                <input placeholder="Owner" style={{ display: 'block', width: 110, fontSize: 11, padding: '3px 6px', borderRadius: 4, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--bg)', color: 'var(--text)', marginBottom: 4 }} />
+                <input type="date" style={{ display: 'block', width: 110, fontSize: 11, padding: '3px 6px', borderRadius: 4, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--bg)', color: 'var(--text)' }} />
               </div>
             </div>
           ))}
@@ -693,11 +693,11 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
       </div>
 
       {/* Disclaimer */}
-      <div style={{ background: 'rgba(244,166,35,0.06)', border: '1px solid rgba(244,166,35,0.25)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
+      <div style={{ background: 'rgba(201,166,107,0.06)', border: '1px solid rgba(201,166,107,0.25)', borderRadius: 10, padding: '12px 16px', marginBottom: 24, display: 'flex', gap: 10 }}>
         <AlertIcon size={14} color="#92400E" />
         <div>
-          <div style={{ fontSize: 10, fontWeight: 700, color: '#7A5200', marginBottom: 4, fontFamily: MONO, letterSpacing: 1 }}>DISCLAIMER</div>
-          <p style={{ fontSize: 12, color: '#7A5200', lineHeight: 1.7, margin: 0 }}>{report.disclaimer}</p>
+          <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--vs-navy-900, #0B1D33)', marginBottom: 4, fontFamily: MONO, letterSpacing: 1 }}>DISCLAIMER</div>
+          <p style={{ fontSize: 12, color: 'var(--vs-navy-900, #0B1D33)', lineHeight: 1.7, margin: 0 }}>{report.disclaimer}</p>
         </div>
       </div>
 
@@ -708,7 +708,7 @@ export function V2AnalysisReport({ report, project, t, indLabel, onGoFuture, onG
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
           Tell Supe what you are trying to achieve. Supe will build a data-backed future state and action plan.
         </p>
-        <button onClick={onGoFuture} style={{ padding: '12px 28px', borderRadius: 9, border: 'none', background: `linear-gradient(135deg, #B8912E, ${BRAND})`, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+        <button onClick={onGoFuture} style={{ padding: '12px 28px', borderRadius: 9, border: 'none', background: `linear-gradient(135deg, #A8854F, ${BRAND})`, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
           Set target → Generate future state
         </button>
       </div>

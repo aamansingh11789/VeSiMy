@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'Takt Time: What It Means, How to Calculate It, and What to Do When CT Exceeds It', type: 'article' },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function Post() {
   return (
@@ -43,9 +43,9 @@ export default function Post() {
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>When cycle time is significantly below takt</h2>
           <p style={{ marginBottom: 18 }}>A step that runs at 30 percent of takt time is not a win. It is either overbuilt, a symptom of earlier problems, or covering for a bottleneck elsewhere. Look at the steps around it. The excess capacity is almost always there because the team knew something upstream or downstream was unreliable.</p>
 
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
+            <Link href="/start" style={{ color: '#0B1D33', fontWeight: 700, textDecoration: 'none' }}>Map a process free, no account needed →</Link>
           </div>
         </div>
       </div>

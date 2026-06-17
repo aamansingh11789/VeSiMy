@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 
 const TERMS = [
@@ -128,9 +128,9 @@ export default function LeanGlossaryPage() {
         justifyContent:'space-between' }}>
         <Link href="/" style={{ textDecoration:'none', display:'flex', alignItems:'center', gap:10 }}>
           <div style={{ width:28, height:28, borderRadius:7,
-            background:`linear-gradient(135deg,${AMBER},#B8912E)`,
+            background:`linear-gradient(135deg,${AMBER},#A8854F)`,
             display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize:14, fontWeight:800, color:'#1A0E00' }}>V</div>
+            fontSize:14, fontWeight:800, color:'#0B1D33' }}>V</div>
           <span style={{ fontSize:15, fontWeight:700, color:'#F0F2FF' }}>VeSiMy</span>
         </Link>
         <div style={{ display:'flex', gap:24 }}>
@@ -176,7 +176,7 @@ export default function LeanGlossaryPage() {
           {TERMS.map(section => (
             <div key={section.letter} id={`letter-${section.letter}`}>
               <div style={{ fontSize:24, fontWeight:800, color:AMBER, fontFamily:SANS,
-                marginBottom:16, paddingBottom:8, borderBottom:`2px solid rgba(212,168,67,0.20)` }}>
+                marginBottom:16, paddingBottom:8, borderBottom:`2px solid rgba(201,166,107,0.20)` }}>
                 {section.letter}
               </div>
               <div style={{ display:'flex', flexDirection:'column', gap:1 }}>
@@ -198,8 +198,8 @@ export default function LeanGlossaryPage() {
         </div>
 
         {/* Footer note */}
-        <div style={{ marginTop:48, padding:'18px 22px', background:'rgba(212,168,67,0.06)',
-          borderRadius:10, border:`1px solid rgba(212,168,67,0.16)` }}>
+        <div style={{ marginTop:48, padding:'18px 22px', background:'rgba(201,166,107,0.06)',
+          borderRadius:10, border:`1px solid rgba(201,166,107,0.16)` }}>
           <p style={{ fontSize:13, color:'#5A4800', margin:0, lineHeight:1.6 }}>
             All definitions are based on published Lean, TPS, and Six Sigma literature.
             Primary sources: Toyota Production System (Ohno), Learning to See (Rother & Shook),

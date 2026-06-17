@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function PCEPost() {
   return (
@@ -39,7 +39,7 @@ export default function PCEPost() {
         <div style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.9 }}>
 
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The PCE formula</h2>
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 12, padding: '20px 24px', marginBottom: 24, textAlign: 'center' }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 12, padding: '20px 24px', marginBottom: 24, textAlign: 'center' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>PCE = (Value-Adding Time ÷ Total Lead Time) × 100</div>
             <div style={{ fontSize: 13, color: 'var(--text2)' }}>Where Total Lead Time = all cycle times + all wait/queue times in the value stream</div>
           </div>
@@ -63,9 +63,9 @@ export default function PCEPost() {
             ['World-class lean', '95%+', 'Near-continuous flow with minimal WIP and queue time'],
             ['Service processes', '5–25%', 'High wait time relative to actual processing steps'],
           ].map(([type, range, note]) => (
-            <div key={type} style={{ display: 'grid', gridTemplateColumns: '180px 80px 1fr', gap: 12, marginBottom: 10, padding: '10px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+            <div key={type} style={{ display: 'grid', gridTemplateColumns: '180px 80px 1fr', gap: 12, marginBottom: 10, padding: '10px 0', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 14 }}>
               <div style={{ fontWeight: 600, color: 'var(--text)' }}>{type}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', color: '#0176D3', fontWeight: 700 }}>{range}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', color: '#0B1D33', fontWeight: 700 }}>{range}</div>
               <div style={{ color: 'var(--text2)' }}>{note}</div>
             </div>
           ))}
@@ -102,7 +102,7 @@ export default function PCEPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Calculate your PCE, free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Map your value stream in VeSiMy and your PCE calculates automatically. See where your lead time is going and what to do about it.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0B1D33', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →
             </Link>
           </div>

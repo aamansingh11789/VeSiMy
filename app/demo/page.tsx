@@ -25,7 +25,7 @@ export default function DemoPage() {
         <div style={{ fontSize: 48, marginBottom: 24 }}>⭐</div>
 
         <h1 style={{
-          fontFamily: 'Palatino Linotype, Georgia, serif',
+          fontFamily: "'Sora','Inter',sans-serif",
           fontSize: 'clamp(24px,4vw,36px)', fontWeight: 700,
           color: '#F8F7F5', lineHeight: 1.2, marginBottom: 16,
         }}>
@@ -35,7 +35,7 @@ export default function DemoPage() {
         <p style={{ fontSize: 15, color: 'rgba(248,247,245,0.6)', lineHeight: 1.8, marginBottom: 12 }}>
           VeSiMy is a web app, there is no separate demo mode.
           The best way to see it is to create a free account and open the
-          fully-built <strong style={{ color: '#0176D3' }}>Automotive Seat Assembly</strong> reference project.
+          fully-built <strong style={{ color: '#0B1D33' }}>Automotive Seat Assembly</strong> reference project.
         </p>
 
         <p style={{ fontSize: 14, color: 'rgba(248,247,245,0.4)', lineHeight: 1.7, marginBottom: 32 }}>
@@ -50,7 +50,7 @@ export default function DemoPage() {
           <Link
             href="/auth/signup?ref=1"
             style={{
-              padding: '14px 36px', background: '#0176D3', color: '#0D0C0A',
+              padding: '14px 36px', background: '#0B1D33', color: '#0D0C0A',
               borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none',
               display: 'inline-block',
             }}

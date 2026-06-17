@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { VesimyLogo } from '@/components/ui/Logo'
+import { VsLogo } from '@/components/ui/VsLogo'
 import { PLANS } from '@/lib/stripe'
 
 function SignupForm() {
@@ -78,7 +79,7 @@ function SignupForm() {
       <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
         <div style={{ width:'100%', maxWidth:420, textAlign:'center' }}>
           <div style={{ fontSize:11, fontWeight:800, fontFamily:'var(--font-mono)', letterSpacing:1, color:'var(--brand)', marginBottom:16 }}>EMAIL SENT</div>
-          <h2 style={{ fontFamily:'Palatino Linotype,serif', fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
+          <h2 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:26, fontWeight:700, color:'var(--text)', marginBottom:12 }}>
             Check your email
           </h2>
           <p style={{ color:'var(--text2)', fontSize:14, lineHeight:1.7, marginBottom:8 }}>
@@ -91,7 +92,7 @@ function SignupForm() {
             Click the link in the email to activate your account.
             If you don't see it, check your spam folder.
           </p>
-          <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
+          <div style={{ background:'rgba(11,29,51,0.06)', border:'1px solid rgba(11,29,51,0.15)', borderRadius:12, padding:'14px 18px', fontSize:13, color:'#B8B5D1', lineHeight:1.6 }}>
             <strong style={{ color:'var(--brand)' }}>On Android?</strong> Open Gmail or your email app,
             find the VeSiMy email, and tap the confirmation link.
             It will open VeSiMy and log you in automatically.
@@ -111,12 +112,12 @@ function SignupForm() {
     <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
       <div style={{ width:'100%', maxWidth:420 }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
-          <div style={{ display:'flex', justifyContent:'center', marginBottom:16 }}>
-            <VesimyLogo size={48} showText />
-          </div>
-          <h1 style={{ fontFamily:'Palatino Linotype,serif', fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
+          <Link href="/" style={{ display:'flex', justifyContent:'center', marginBottom:16 }} aria-label="VeSiMy home">
+            <VsLogo size={48} showWordmark />
+          </Link>
+          <h1 style={{ fontFamily:"'Sora','Inter',sans-serif", fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:6 }}>Create your account</h1>
           {plan && planKey !== 'trial' ? (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(212,168,67,0.08)', border:'1px solid rgba(1,118,211,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(201,166,107,0.08)', border:'1px solid rgba(11,29,51,0.2)', borderRadius:100, padding:'5px 14px', marginTop:4 }}>
               <span style={{ fontSize:13, color:'var(--brand)', fontWeight:600 }}>{plan.name}, ${plan.price}/mo</span>
               <span style={{ fontSize:12, color:'var(--text3)' }}>· Process intelligence · All 9 CI tools</span>
             </div>
@@ -131,9 +132,9 @@ function SignupForm() {
             Continue with Google
           </button>
           <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
-            <div style={{ flex:1, height:1, background:'var(--border)' }} />
+            <div style={{ flex:1, height:1, background:'var(--vs-slate-200, #DDE3EA)' }} />
             <span style={{ fontSize:12, color:'var(--sl-400)' }}>or</span>
-            <div style={{ flex:1, height:1, background:'var(--border)' }} />
+            <div style={{ flex:1, height:1, background:'var(--vs-slate-200, #DDE3EA)' }} />
           </div>
           <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:14 }}>
             <div><label className="label">Full Name</label>
@@ -142,7 +143,7 @@ function SignupForm() {
               <input className="input" type="email" placeholder="you@company.com" required value={form.email} onChange={e => setForm(f=>({...f,email:e.target.value}))} /></div>
             <div><label className="label">Password</label>
               <input className="input" type="password" placeholder="8+ characters" minLength={8} required value={form.password} onChange={e => setForm(f=>({...f,password:e.target.value}))} /></div>
-            {error && <p style={{ color:'#FF6B6B', fontSize:13, background:'rgba(255,107,107,0.08)', padding:'8px 12px', borderRadius:8 }}>{error}</p>}
+            {error && <p style={{ color:'#C94F4F', fontSize:13, background:'rgba(201,79,79,0.08)', padding:'8px 12px', borderRadius:8 }}>{error}</p>}
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ width:'100%', justifyContent:'center', padding:'11px 20px', marginTop:4 }}>
               {loading
                 ? (planKey && planKey !== 'trial' ? 'Setting up your account…' : 'Creating your account…')

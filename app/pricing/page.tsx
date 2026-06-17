@@ -273,16 +273,13 @@ export default function PricingPage() {
         </div>
 
         <h1 style={{
-          fontSize: 'clamp(32px, 6vw, 56px)',
-          fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.08,
-          margin: '0 0 16px',
-          textShadow: '0 2px 0 rgba(0,0,0,0.4), 0 6px 20px rgba(0,0,0,0.5)',
+          fontFamily: "'Instrument Serif', Georgia, serif",
+          fontSize: 'clamp(40px, 6vw, 64px)',
+          fontWeight: 400, letterSpacing: '-0.025em', lineHeight: 1.02,
+          margin: '0 0 18px',
         }}>
           Start free.{' '}
-          <span style={{
-            background: `linear-gradient(135deg, ${C.blue} 0%, ${C.cyan} 100%)`,
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-          }}>Build something real.</span>
+          <em style={{ fontStyle: 'italic', color: '#C9A66B' }}>Build something real.</em>
         </h1>
 
         <p style={{ fontSize: 17, color: C.t2, lineHeight: 1.7, maxWidth: 520, margin: '0 auto 36px' }}>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function ElectronicsBlog() {
   return (
@@ -25,7 +25,7 @@ export default function ElectronicsBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(140,68,204,0.15)', color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>ELECTRONICS</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(201,166,107,0.15)', color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>ELECTRONICS</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>8 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -54,7 +54,7 @@ export default function ElectronicsBlog() {
             ['ESD discipline variation', 'ESD damage is invisible and cumulative. Process variation in ionization equipment maintenance, wrist strap testing compliance, and handling procedures creates a background rate of latent failures that doesn\'t show up in first-pass yield but contributes to field failure rates.'],
             ['Test coverage gaps', 'ICT and functional test programs written at product launch rarely get updated as board revisions occur. Coverage gaps accumulate silently until a field failure reveals a test escape.'],
           ].map(([title, body]) => (
-            <div key={title} style={{ background: 'rgba(140,68,204,0.06)', border: '1px solid rgba(140,68,204,0.2)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
+            <div key={title} style={{ background: 'rgba(201,166,107,0.06)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 6 }}>{title}</div>
               <div style={{ color: 'var(--text2)', fontSize: 14 }}>{body}</div>
             </div>
@@ -73,7 +73,7 @@ export default function ElectronicsBlog() {
             VeSiMy's Fishbone and 5 Why tools structure this investigation and document the outcome, creating a traceable record that informs future events and prevents the same investigation from being re-run when the issue recurs.
           </p>
 
-          <div style={{ borderLeft: '3px solid #8C44CC', paddingLeft: 20, marginBottom: 28 }}>
+          <div style={{ borderLeft: '3px solid #A8854F', paddingLeft: 20, marginBottom: 28 }}>
             <p style={{ fontFamily: serif, fontSize: 18, color: 'var(--text)', fontStyle: 'italic', marginBottom: 8 }}>
               "The process change that fixes this batch might not fix the next one. The root cause analysis that understands why the defect occurred is the one that prevents both."
             </p>
@@ -99,7 +99,7 @@ export default function ElectronicsBlog() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/demo" style={{ display: 'inline-block', background: '#0176D3', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
+            <Link href="/demo" style={{ display: 'inline-block', background: '#0B1D33', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
               Start a free project
             </Link>
             <Link href="/industries" style={{ display: 'inline-block', border: '1px solid rgba(44,44,92,0.3)', color: 'var(--text)', fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>

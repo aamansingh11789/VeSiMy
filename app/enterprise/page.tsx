@@ -6,8 +6,8 @@ import { useState }  from 'react'
 import Link          from 'next/link'
 import { CheckIcon, ArrowRightIcon } from '@/components/ui/Icons'
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
-const GOLD  = '#0176D3'
+const serif = "'Sora','Inter',sans-serif"
+const GOLD  = '#0B1D33'
 
 const COMPANY_SIZES = ['1-10','11-50','51-200','201-500','500+']
 const ADDONS = [
@@ -65,7 +65,7 @@ export default function EnterprisePage() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 40px', borderBottom:'1px solid rgba(215,213,206,0.95)' }}>
         <Link href="/" style={{ textDecoration:'none' }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:22 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </Link>
         <Link href="/pricing" style={{ fontSize:13, color:'var(--text3)', textDecoration:'none' }}>← All Plans</Link>
@@ -112,7 +112,7 @@ export default function EnterprisePage() {
                   <button key={a.id} type="button" onClick={()=>set(a.id, !(form as any)[a.id])} style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 16px', borderRadius:10, cursor:'pointer', textAlign:'left', border:'1px solid', transition:'all 0.15s',
                     background: (form as any)[a.id]?'rgba(108,185,252,0.06)':'rgba(248,247,245,0.97)',
                     borderColor: (form as any)[a.id]?'rgba(108,185,252,0.35)':'rgba(184,180,172,0.6)' }}>
-                    <div style={{ width:20, height:20, borderRadius:5, border:`2px solid ${(form as any)[a.id]?'#6CB9FC':'var(--border2)'}`, background:(form as any)[a.id]?'#6CB9FC':'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                    <div style={{ width:20, height:20, borderRadius:5, border:`2px solid ${(form as any)[a.id]?'#6CB9FC':'var(--vs-slate-200, #DDE3EA)'}`, background:(form as any)[a.id]?'#6CB9FC':'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                       {(form as any)[a.id] && <CheckIcon size={12} color='var(--bg)' strokeWidth={3} />}
                     </div>
                     <div style={{ flex:1 }}>
@@ -161,7 +161,7 @@ export default function EnterprisePage() {
               </div>
             </Card>
 
-            {error && <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.3)', fontSize:13, color:'#FF6B6B' }}>{error}</div>}
+            {error && <div style={{ padding:'12px 16px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.3)', fontSize:13, color:'#C94F4F' }}>{error}</div>}
 
             <button onClick={getQuote} disabled={loading} style={{ padding:'14px', borderRadius:10, fontSize:15, fontWeight:700, cursor:'pointer', border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8,
               background:'linear-gradient(135deg,#1090D4,#6CB9FC)', color:'var(--bg)', opacity:loading?0.8:1 }}>
@@ -213,7 +213,7 @@ export default function EnterprisePage() {
 
               {/* Official quote */}
               {quote && (
-                <div style={{ background:'rgba(1,118,211,0.06)', border:'1px solid rgba(1,118,211,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
+                <div style={{ background:'rgba(11,29,51,0.06)', border:'1px solid rgba(11,29,51,0.25)', borderRadius:10, padding:'14px', marginTop:8 }}>
                   <div style={{ fontSize:10, color:GOLD, letterSpacing:1, fontFamily:'var(--font-mono)', marginBottom:6 }}>OFFICIAL QUOTE</div>
                   <div style={{ fontSize:13, color:'var(--text)', fontWeight:600, marginBottom:4 }}>Ref: {quote.quote_ref}</div>
                   {quote.breakdown.code_discount && (
@@ -252,7 +252,7 @@ export default function EnterprisePage() {
                   <div style={{ marginTop:16, display:'flex', gap:10, flexWrap:'wrap' }}>
                     <a
                       href={`mailto:founder@vesimy.com?subject=Enterprise%20Quote%20${encodeURIComponent(quote.quote_ref)}`}
-                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#0a5eaa,#0176D3)', color:'var(--bg)', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
+                      style={{ padding:'10px 20px', background:'linear-gradient(135deg,#0a5eaa,#0B1D33)', color:'var(--bg)', fontWeight:700, fontSize:13, borderRadius:10, textDecoration:'none', display:'inline-block' }}
                     >
                       Email us directly →
                     </a>
@@ -268,7 +268,7 @@ export default function EnterprisePage() {
                 </div>
               )}
 
-              <p style={{ fontSize:11, color:'var(--border2)', textAlign:'center', marginTop:14 }}>
+              <p style={{ fontSize:11, color:'var(--vs-slate-200, #DDE3EA)', textAlign:'center', marginTop:14 }}>
                 * Estimate. Official quote locks your price for 30 days.
               </p>
             </div>

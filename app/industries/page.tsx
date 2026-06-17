@@ -13,14 +13,14 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const industries = [
   {
     slug: 'automotive-process-improvement',
     icon: '',
     name: 'Automotive',
-    color: '#0176D3',
+    color: '#0B1D33',
     tagline: 'Build quality in. Don\'t inspect it in.',
     challenge: 'Takt-driven lines, model-mix complexity, supplier quality cascades. One second of cycle time deviation can ripple into millions in annual cost.',
     tools: ['Time Study', 'Value Stream Map', 'Waste ID', '5 Why'],
@@ -50,7 +50,7 @@ const industries = [
     slug: 'medical-devices-process-improvement',
     icon: '',
     name: 'Medical Devices',
-    color: '#FF6B6B',
+    color: '#C94F4F',
     tagline: 'FDA doesn\'t grade on a curve.',
     challenge: 'Design History Files, Device History Records, CAPA loops, and validation protocols, all while hitting production targets. Traceability is non-negotiable.',
     tools: ['5 Why', 'Fishbone', 'Kaizen', 'Improvement Log'],
@@ -70,7 +70,7 @@ const industries = [
     slug: 'electronics-process-improvement',
     icon: '',
     name: 'Electronics',
-    color: '#8C44CC',
+    color: '#A8854F',
     tagline: 'Yield loss isn\'t in the component. It\'s in the process.',
     challenge: 'SMT line OEE, solder defect rates, ESD discipline, rework ratios, and the brutal economics of scrapping a $400 PCB because of a $0.02 process step.',
     tools: ['Time Study', 'Fishbone', '5 Why', 'Waste ID'],
@@ -90,7 +90,7 @@ const industries = [
     slug: 'industrial-process-improvement',
     icon: '',
     name: 'Industrial',
-    color: '#0176D3',
+    color: '#0B1D33',
     tagline: 'The machine doesn\'t know it\'s inefficient. You have to tell it.',
     challenge: 'Heavy equipment, custom job shops, made-to-order production, and maintenance-intensive environments where OEE and changeover are the biggest levers left.',
     tools: ['Value Stream Map', 'Time Study', 'Kaizen', 'Waste ID'],
@@ -109,7 +109,7 @@ export default function IndustriesPage() {
 
         {/* Hero */}
         <div style={{ maxWidth: 720, marginBottom: 72 }}>
-          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#0B1D33', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 14, textTransform: 'uppercase' }}>
             Industries
           </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(34px,4.5vw,56px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.1 }}>
@@ -128,13 +128,13 @@ export default function IndustriesPage() {
 
         {/* Philosophy block */}
         <div style={{
-          background: 'rgba(1,118,211,0.06)',
-          border: '1px solid rgba(1,118,211,0.25)',
+          background: 'rgba(11,29,51,0.06)',
+          border: '1px solid rgba(11,29,51,0.25)',
           borderRadius: 20,
           padding: 'clamp(28px,4vw,48px)',
           marginBottom: 72,
         }}>
-          <p style={{ fontSize: 11, color: '#0176D3', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 16, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: 11, color: '#0B1D33', letterSpacing: 3, fontFamily: 'var(--font-mono)', marginBottom: 16, textTransform: 'uppercase' }}>
             The Core Belief
           </p>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 700, color: 'var(--text)', marginBottom: 20, lineHeight: 1.2 }}>
@@ -147,7 +147,7 @@ export default function IndustriesPage() {
               ['Improvement compounds', 'A 5% cycle time reduction today. A defect eliminated next month. A changeover halved next quarter. The math surprises people.'],
             ].map(([title, body]) => (
               <div key={title}>
-                <div style={{ fontWeight: 700, color: '#0176D3', fontSize: 14, marginBottom: 8, fontFamily: serif }}>{title}</div>
+                <div style={{ fontWeight: 700, color: '#0B1D33', fontSize: 14, marginBottom: 8, fontFamily: serif }}>{title}</div>
                 <div style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.75 }}>{body}</div>
               </div>
             ))}
@@ -201,7 +201,7 @@ export default function IndustriesPage() {
                   ))}
                 </div>
 
-                <div style={{ fontSize: 13, color: '#0176D3', textAlign: 'right' }}>
+                <div style={{ fontSize: 13, color: '#0B1D33', textAlign: 'right' }}>
                   Read the guide →
                 </div>
               </article>
@@ -225,7 +225,7 @@ export default function IndustriesPage() {
           </p>
           <Link href="/demo" style={{
             display: 'inline-block',
-            background: '#0176D3',
+            background: '#0B1D33',
             color: '#fff',
             fontWeight: 700,
             fontSize: 14,

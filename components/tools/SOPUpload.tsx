@@ -91,7 +91,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             <div style={{ display:'flex', gap:6, marginBottom:16 }}>
               {(['upload','paste'] as const).map(m => (
                 <button key={m} onClick={() => setMode(m)} style={{ flex:1, padding:'8px', borderRadius:'var(--radius-sm)', border:'1px solid', cursor:'pointer',
-                  background:mode===m?'var(--brand-dim)':'transparent', borderColor:mode===m?'var(--brand-glow)':'var(--border2)',
+                  background:mode===m?'var(--brand-dim)':'transparent', borderColor:mode===m?'var(--brand-glow)':'var(--vs-slate-200, #DDE3EA)',
                   color:mode===m?'var(--brand)':'var(--text2)', fontSize:12, fontWeight:mode===m?700:400 }}>
                   {m==='upload'?'Upload File':'Paste Text'}
                 </button>
@@ -101,7 +101,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             {mode==='upload' ? (
               <div>
                 <div onClick={() => inputRef.current?.click()}
-                  style={{ border:`2px dashed ${file?'var(--brand)':'var(--border2)'}`, borderRadius:'var(--radius)', padding:'32px 24px', textAlign:'center', cursor:'pointer',
+                  style={{ border:`2px dashed ${file?'var(--brand)':'var(--vs-slate-200, #DDE3EA)'}`, borderRadius:'var(--radius)', padding:'32px 24px', textAlign:'center', cursor:'pointer',
                     background:file?'var(--brand-dim)':'transparent', transition:'all 0.2s' }}>
                   <div style={{ fontSize:11, fontWeight:800, fontFamily:'var(--font-mono)', letterSpacing:1, color:'var(--text3)', marginBottom:8 }}>{file?'FILE':'UPLOAD'}</div>
                   <div style={{ fontSize:14, color:'var(--text)', fontWeight:500, marginBottom:4 }}>
@@ -134,7 +134,7 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
             </p>
             <div style={{ maxHeight:320, overflowY:'auto', display:'flex', flexDirection:'column', gap:6 }}>
               {preview.map((s,i) => (
-                <div key={i} style={{ padding:'10px 12px', background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:'var(--radius-sm)' }}>
+                <div key={i} style={{ padding:'10px 12px', background:'var(--vs-paper, #F7F8FA)', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:'var(--radius-sm)' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:11, color:'var(--text3)', fontFamily:'var(--font-mono)', minWidth:22 }}>{i+1}.</span>
                     <input style={{ flex:1, background:'transparent', border:'none', color:'var(--text)', fontSize:13, outline:'none', fontWeight:600 }}
@@ -144,12 +144,12 @@ export function SOPUpload({ projectId, onStepsGenerated, onClose }: Props) {
                   {/* Show extracted fields as chips */}
                   {(s.cycle_time||s.wait_time||s.setup_time||s.operators||s.department||s.defect_rate||s.uptime||s.wip) && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:6, paddingLeft:32 }}>
-                      {s.department        && <Chip label={s.department} color="#D4A843" />}
+                      {s.department        && <Chip label={s.department} color="#C9A66B" />}
                       {s.operators         && <Chip label={`${s.operators} ops`} color="#6CB9FC" />}
                       {s.cycle_time        && <Chip label={`CT ${s.cycle_time>=60?(s.cycle_time/60).toFixed(0)+'min':s.cycle_time+'s'}`} color="#1DD1A1" />}
-                      {s.wait_time         && <Chip label={`Wait ${s.wait_time>=60?(s.wait_time/60).toFixed(0)+'min':s.wait_time+'s'}`} color="#F4A623" />}
+                      {s.wait_time         && <Chip label={`Wait ${s.wait_time>=60?(s.wait_time/60).toFixed(0)+'min':s.wait_time+'s'}`} color="#C9A66B" />}
                       {s.setup_time        && <Chip label={`Setup ${s.setup_time>=60?(s.setup_time/60).toFixed(0)+'min':s.setup_time+'s'}`} color="#9B5FE0" />}
-                      {s.defect_rate       && <Chip label={`${s.defect_rate}% defect`} color="#FF6B6B" />}
+                      {s.defect_rate       && <Chip label={`${s.defect_rate}% defect`} color="#C94F4F" />}
                       {s.uptime            && <Chip label={`${s.uptime}% uptime`} color="#1DD1A1" />}
                       {s.wip               && <Chip label={`WIP ${s.wip}`} color="var(--text3)" />}
                     </div>

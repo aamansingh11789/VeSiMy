@@ -20,21 +20,21 @@ import {
 
 // ── Colours & labels ──────────────────────────────────────────────────────────
 const PRIORITY_COLOR: Record<KanbanPriority, string> = {
-  critical: '#FF6B6B',
-  high:     '#F4A623',
+  critical: '#C94F4F',
+  high:     '#C9A66B',
   normal:   '#1090D4',
   low:      'var(--text3)',
 }
 const PRIORITY_DOT: Record<KanbanPriority, string> = {
-  critical: '#FF6B6B',
-  high:     '#F4A623',
+  critical: '#C94F4F',
+  high:     '#C9A66B',
   normal:   '#1090D4',
   low:      'var(--sl-400)',
 }
 
 const COL_COLORS = [
-  'var(--border2)','#1090D4','#D4A843','#6426A0',
-  '#1DD1A1','#F4A623','#E84393','#00BCD4','#FF6B6B',
+  'var(--vs-slate-200, #DDE3EA)','#1090D4','#C9A66B','#6426A0',
+  '#1DD1A1','#C9A66B','#E84393','#00BCD4','#C94F4F',
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -61,7 +61,7 @@ function CardForm({ onSave, onCancel, initialTitle }: {
 
   return (
     <div style={{
-      background: 'var(--sl-50)', border: '1px solid rgba(212,168,67,0.25)',
+      background: 'var(--vs-paper, #F7F8FA)', border: '1px solid rgba(201,166,107,0.25)',
       borderRadius: 8, padding: 12, marginBottom: 8,
     }}>
       <textarea
@@ -95,21 +95,21 @@ function CardForm({ onSave, onCancel, initialTitle }: {
         onChange={e => setAssignee(e.target.value)}
         placeholder="Assignee (optional)"
         style={{
-          width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+          width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
           borderRadius: 5, padding: '5px 8px', color: 'var(--text3)', fontSize: 12,
           fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 8,
         }}
       />
       <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
         <button onClick={onCancel} style={{
-          background: 'none', border: '1px solid var(--border)', borderRadius: 5,
+          background: 'none', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 5,
           padding: '5px 12px', color: 'var(--text3)', fontSize: 12, cursor: 'pointer',
         }}>Cancel</button>
         <button
           disabled={!title.trim()}
           onClick={() => { if (title.trim()) onSave(title.trim(), priority, assignee) }}
           style={{
-            background: 'linear-gradient(135deg,#B8912E,#D4A843)', border: 'none',
+            background: 'var(--vs-gold-600, #C9A66B)', border: 'none',
             borderRadius: 5, padding: '5px 14px', color: '#FFFFFF',
             fontSize: 12, fontWeight: 700, cursor: 'pointer',
             opacity: title.trim() ? 1 : 0.4,
@@ -126,16 +126,16 @@ function ColumnForm({ initial, onSave, onCancel }: {
   onCancel:  () => void
 }) {
   const [title,    setTitle]    = useState(initial?.title    || '')
-  const [color,    setColor]    = useState(initial?.color    || 'var(--border2)')
+  const [color,    setColor]    = useState(initial?.color    || 'var(--vs-slate-200, #DDE3EA)')
   const [wipLimit, setWipLimit] = useState<string>(initial?.wip_limit?.toString() || '')
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, background: 'rgba(248,247,245,0.97)',
+      position: 'fixed', inset: 0, background: 'rgba(11,29,51,0.45)',
       zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center',
     }} onClick={onCancel}>
       <div style={{
-        background: 'var(--bg2)', border: '1px solid var(--border2)', borderRadius: 12,
+        background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12,
         padding: 24, width: 380, maxWidth: 'calc(100vw - 48px)',
       }} onClick={e => e.stopPropagation()}>
         <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 16 }}>
@@ -148,7 +148,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           value={title}
           onChange={e => setTitle(e.target.value)}
           style={{
-            width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
             fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 14,
           }}
@@ -175,7 +175,7 @@ function ColumnForm({ initial, onSave, onCancel }: {
           onChange={e => setWipLimit(e.target.value)}
           placeholder="e.g. 5"
           style={{
-            width: '100%', background: 'var(--sl-50)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
             fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 20,
           }}
@@ -183,14 +183,14 @@ function ColumnForm({ initial, onSave, onCancel }: {
 
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
           <button onClick={onCancel} style={{
-            background: 'none', border: '1px solid var(--border)', borderRadius: 7,
+            background: 'none', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7,
             padding: '8px 16px', color: 'var(--text3)', fontSize: 13, cursor: 'pointer',
           }}>Cancel</button>
           <button
             disabled={!title.trim()}
             onClick={() => onSave({ title: title.trim(), color, wip_limit: wipLimit ? parseInt(wipLimit) : null })}
             style={{
-              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+              background: 'var(--vs-gold-600, #C9A66B)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
               opacity: title.trim() ? 1 : 0.4,
@@ -225,12 +225,12 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, background: 'rgba(248,247,245,0.97)',
+      position: 'fixed', inset: 0, background: 'rgba(11,29,51,0.45)',
       zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: 24,
     }} onClick={onClose}>
       <div style={{
-        background: 'var(--sl-50)', border: '1px solid var(--border2)', borderRadius: 12,
+        background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12,
         padding: 24, width: 540, maxWidth: '100%', maxHeight: '90vh',
         overflowY: 'auto',
       }} onClick={e => e.stopPropagation()}>
@@ -248,7 +248,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
           rows={2}
           style={{
-            width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 14,
             fontFamily: 'var(--font-sans)', resize: 'none', outline: 'none', marginBottom: 14,
           }}
@@ -262,7 +262,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           rows={3}
           placeholder="Add details, context, or acceptance criteria…"
           style={{
-            width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
             borderRadius: 7, padding: '8px 10px', color: 'var(--text)', fontSize: 13,
             fontFamily: 'var(--font-sans)', resize: 'none', outline: 'none', marginBottom: 14,
           }}
@@ -276,7 +276,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               value={form.priority}
               onChange={e => setForm(f => ({ ...f, priority: e.target.value as KanbanPriority }))}
               style={{
-                width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+                width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
                 borderRadius: 6, padding: '7px 8px', color: PRIORITY_COLOR[form.priority],
                 fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}>
@@ -291,7 +291,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               value={form.assignee || ''}
               onChange={e => setForm(f => ({ ...f, assignee: e.target.value }))}
               style={{
-                width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+                width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
                 borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
                 fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}
@@ -304,7 +304,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               value={form.due_date || ''}
               onChange={e => setForm(f => ({ ...f, due_date: e.target.value }))}
               style={{
-                width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+                width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
                 borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
                 fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
               }}
@@ -323,7 +323,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
               onMove(card.id, newCol)
             }}
             style={{
-              width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+              width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
               borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
               fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
             }}>
@@ -342,7 +342,7 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
           onChange={e => setForm(f => ({ ...f, blocked_reason: e.target.value }))}
           placeholder="What is blocking this card?"
           style={{
-            width: '100%', background: 'var(--bg2)', border: '1px solid var(--border)',
+            width: '100%', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
             borderRadius: 6, padding: '7px 8px', color: 'var(--text)',
             fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none', marginBottom: 14,
           }}
@@ -353,8 +353,8 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 6 }}>
           {(form.tags || []).map(t => (
             <span key={t} style={{
-              background: 'rgba(100,38,160,0.15)', border: '1px solid rgba(100,38,160,0.3)',
-              borderRadius: 100, padding: '2px 8px', fontSize: 11, color: '#8C44CC',
+              background: 'rgba(201,166,107,0.15)', border: '1px solid rgba(201,166,107,0.32)',
+              borderRadius: 100, padding: '2px 8px', fontSize: 11, color: '#A8854F',
               display: 'flex', alignItems: 'center', gap: 4,
             }}>
               {t}
@@ -369,14 +369,14 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag() } }}
             placeholder="Add tag…"
             style={{
-              flex: 1, background: 'var(--bg2)', border: '1px solid var(--border)',
+              flex: 1, background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
               borderRadius: 6, padding: '6px 8px', color: 'var(--text)',
               fontSize: 12, fontFamily: 'var(--font-sans)', outline: 'none',
             }}
           />
           <button onClick={addTag} style={{
-            background: 'rgba(100,38,160,0.1)', border: '1px solid rgba(100,38,160,0.3)',
-            borderRadius: 6, padding: '6px 12px', color: '#8C44CC',
+            background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(201,166,107,0.32)',
+            borderRadius: 6, padding: '6px 12px', color: '#A8854F',
             fontSize: 12, cursor: 'pointer',
           }}>+</button>
         </div>
@@ -384,16 +384,16 @@ function CardDetail({ card, columns, onUpdate, onMove, onDelete, onClose }: {
         {/* Footer */}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <button onClick={() => { if (confirm('Delete this card?')) onDelete(card.id) }} style={{
-            background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.3)',
-            borderRadius: 7, padding: '8px 14px', color: '#FF6B6B', fontSize: 13, cursor: 'pointer',
+            background: 'rgba(201,79,79,0.08)', border: '1px solid rgba(201,79,79,0.3)',
+            borderRadius: 7, padding: '8px 14px', color: '#C94F4F', fontSize: 13, cursor: 'pointer',
           }}>Delete</button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={onClose} style={{
-              background: 'none', border: '1px solid var(--border)', borderRadius: 7,
+              background: 'none', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7,
               padding: '8px 16px', color: 'var(--text3)', fontSize: 13, cursor: 'pointer',
             }}>Cancel</button>
             <button onClick={() => { onUpdate(card.id, form); onClose() }} style={{
-              background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+              background: 'var(--vs-gold-600, #C9A66B)',
               border: 'none', borderRadius: 7, padding: '8px 18px',
               color: '#FFFFFF', fontSize: 13, fontWeight: 700, cursor: 'pointer',
             }}>Save Changes</button>
@@ -540,7 +540,7 @@ export function KanbanBoard({
     return (
       <div style={{ textAlign: 'center', padding: '80px 0' }}>
         <div style={{ fontSize: 52, marginBottom: 20 }}>▦</div>
-        <div style={{ fontFamily: 'Palatino Linotype,Georgia,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
+        <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
           Your Kanban board is empty
         </div>
         <div style={{ fontSize: 14, color: 'var(--text3)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>
@@ -553,7 +553,7 @@ export function KanbanBoard({
               onClick={handleSeed}
               disabled={seeding}
               style={{
-                background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+                background: 'var(--vs-gold-600, #C9A66B)',
                 border: 'none', borderRadius: 10, padding: '12px 24px',
                 color: '#FFFFFF', fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -564,7 +564,7 @@ export function KanbanBoard({
           <button
             onClick={() => setColForm({ open: true })}
             style={{
-              background: 'rgba(248,247,245,0.97)', border: '1px solid var(--border2)',
+              background: 'rgba(11,29,51,0.45)', border: '1px solid var(--vs-slate-200, #DDE3EA)',
               borderRadius: 10, padding: '12px 24px', color: 'var(--text)',
               fontSize: 14, cursor: 'pointer',
             }}>
@@ -581,25 +581,25 @@ export function KanbanBoard({
       {/* Board header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
         <div>
-          <div style={{ fontFamily: 'Palatino Linotype,Georgia,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+          <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Production Kanban Board
           </div>
           <div style={{ fontSize: 11, color: 'var(--text3)', display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <span>{totalCards} cards · {columns.length} columns</span>
-            {blockedCards > 0 && <span style={{ color: '#FF6B6B', fontSize:11, fontWeight:700 }}>{blockedCards} blocked</span>}
-            {overWIP > 0 && <span style={{ color: '#F4A623', fontSize:11, fontWeight:700 }}>{overWIP} over WIP limit</span>}
+            {blockedCards > 0 && <span style={{ color: '#C94F4F', fontSize:11, fontWeight:700 }}>{blockedCards} blocked</span>}
+            {overWIP > 0 && <span style={{ color: '#C9A66B', fontSize:11, fontWeight:700 }}>{overWIP} over WIP limit</span>}
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {steps.length > 0 && columns.length === 0 && (
             <button onClick={handleSeed} disabled={seeding} style={{
-              background: 'rgba(1,118,211,0.1)', border: '1px solid rgba(212,168,67,0.3)',
-              borderRadius: 7, padding: '7px 14px', color: '#D4A843',
+              background: 'rgba(11,29,51,0.1)', border: '1px solid rgba(212,168,67,0.3)',
+              borderRadius: 7, padding: '7px 14px', color: '#C9A66B',
               fontSize: 12, fontWeight: 600, cursor: 'pointer',
             }}>⊞ Seed from VSM</button>
           )}
           <button onClick={() => setColForm({ open: true })} style={{
-            background: 'linear-gradient(135deg,#B8912E,#D4A843)',
+            background: 'var(--vs-gold-600, #C9A66B)',
             border: 'none', borderRadius: 7, padding: '7px 14px',
             color: '#FFFFFF', fontSize: 12, fontWeight: 700, cursor: 'pointer',
           }}>+ Add Column</button>
@@ -609,8 +609,8 @@ export function KanbanBoard({
       {/* Legend */}
       <div style={{
         display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16,
-        padding: '8px 12px', background: 'rgba(248,247,245,0.97)',
-        border: '1px solid var(--border)', borderRadius: 8, fontSize: 11,
+        padding: '8px 12px', background: 'rgba(11,29,51,0.45)',
+        border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, fontSize: 11,
       }}>
         {(['critical','high','normal','low'] as KanbanPriority[]).map(p => (
           <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 5, color: PRIORITY_COLOR[p] }}>
@@ -641,8 +641,8 @@ export function KanbanBoard({
 
               {/* Column header */}
               <div style={{
-                background: isDrop ? `${col.color}12` : 'var(--sl-50)',
-                border: `1px solid ${isDrop ? col.color : over ? '#F4A623' : 'var(--border)'}`,
+                background: isDrop ? `${col.color}12` : 'var(--vs-paper, #F7F8FA)',
+                border: `1px solid ${isDrop ? col.color : over ? '#C9A66B' : 'var(--vs-slate-200, #DDE3EA)'}`,
                 borderRadius: '10px 10px 0 0',
                 padding: '10px 12px',
                 transition: 'all 0.15s',
@@ -662,7 +662,7 @@ export function KanbanBoard({
 
                 {/* WIP indicator */}
                 <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', display: 'flex', gap: 8 }}>
-                  <span style={{ color: over ? '#F4A623' : 'var(--sl-400)' }}>
+                  <span style={{ color: over ? '#C9A66B' : 'var(--sl-400)' }}>
                     {cards.length}{col.wip_limit ? `/${col.wip_limit}` : ''}{over ? ' OVER' : ''}
                   </span>
                   {col.step_id && <span style={{ color: 'var(--sl-400)' }}>· Linked</span>}
@@ -670,11 +670,11 @@ export function KanbanBoard({
 
                 {/* WIP bar */}
                 {col.wip_limit && (
-                  <div style={{ height: 3, background: 'var(--border)', borderRadius: 2, marginTop: 6 }}>
+                  <div style={{ height: 3, background: 'var(--vs-slate-200, #DDE3EA)', borderRadius: 2, marginTop: 6 }}>
                     <div style={{
                       height: 3, borderRadius: 2,
                       width: `${Math.min(100, (cards.length / col.wip_limit) * 100)}%`,
-                      background: over ? '#F4A623' : col.color,
+                      background: over ? '#C9A66B' : col.color,
                       transition: 'width 0.3s',
                     }} />
                   </div>
@@ -683,8 +683,8 @@ export function KanbanBoard({
 
               {/* Cards */}
               <div style={{
-                background: 'var(--bg2)',
-                border: `1px solid ${isDrop ? col.color : 'var(--border)'}`,
+                background: 'var(--vs-white, #FFFFFF)',
+                border: `1px solid ${isDrop ? col.color : 'var(--vs-slate-200, #DDE3EA)'}`,
                 borderTop: 'none',
                 borderRadius: '0 0 10px 10px',
                 padding: 8,
@@ -699,13 +699,13 @@ export function KanbanBoard({
                     onDragEnd={() => { setDragCard(null); setDragOver(null) }}
                     onClick={() => setDetail(card)}
                     style={{
-                      background: card.blocked_reason ? 'rgba(255,107,107,0.05)' : 'var(--bg)',
-                      border: `1px solid ${card.blocked_reason ? 'rgba(255,107,107,0.35)' : 'var(--border)'}`,
+                      background: card.blocked_reason ? 'rgba(201,79,79,0.05)' : 'var(--bg)',
+                      border: `1px solid ${card.blocked_reason ? 'rgba(201,79,79,0.35)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                       borderRadius: 7, padding: '9px 10px', marginBottom: 6,
                       cursor: 'pointer', transition: 'all 0.15s', position: 'relative',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = card.blocked_reason ? '#FF6B6B' : col.color)}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = card.blocked_reason ? 'rgba(255,107,107,0.35)' : 'var(--border)')}>
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = card.blocked_reason ? '#C94F4F' : col.color)}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = card.blocked_reason ? 'rgba(201,79,79,0.35)' : 'var(--vs-slate-200, #DDE3EA)')}>
 
                     {/* Priority dot */}
                     <div style={{
@@ -723,7 +723,7 @@ export function KanbanBoard({
                       <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 5 }}>
                         {card.tags.map(t => (
                           <span key={t} style={{
-                            background: 'rgba(100,38,160,0.15)', color: '#8C44CC',
+                            background: 'rgba(201,166,107,0.15)', color: '#A8854F',
                             fontSize: 9, padding: '1px 5px', borderRadius: 3,
                           }}>{t}</span>
                         ))}
@@ -733,8 +733,8 @@ export function KanbanBoard({
                     {/* Meta row */}
                     <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--sl-400)', flexWrap: 'wrap' }}>
                       {card.assignee && <span>{card.assignee}</span>}
-                      {card.due_date && <span style={{ color: new Date(card.due_date) < new Date() ? '#FF6B6B' : 'var(--sl-400)' }}>{fmtDate(card.due_date)}</span>}
-                      {card.blocked_reason && <span style={{ color: '#FF6B6B', fontWeight:700 }}>Blocked</span>}
+                      {card.due_date && <span style={{ color: new Date(card.due_date) < new Date() ? '#C94F4F' : 'var(--sl-400)' }}>{fmtDate(card.due_date)}</span>}
+                      {card.blocked_reason && <span style={{ color: '#C94F4F', fontWeight:700 }}>Blocked</span>}
                     </div>
                   </div>
                 ))}
@@ -749,12 +749,12 @@ export function KanbanBoard({
                   <button
                     onClick={() => setAddingCard(col.id)}
                     style={{
-                      width: '100%', background: 'none', border: '1px dashed var(--border)',
+                      width: '100%', background: 'none', border: '1px dashed var(--vs-slate-200, #DDE3EA)',
                       borderRadius: 6, padding: '7px 0', color: 'var(--sl-400)',
                       fontSize: 12, cursor: 'pointer', marginTop: 2, transition: 'all 0.15s',
                     }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = col.color; e.currentTarget.style.color = col.color }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--vs-slate-200, #DDE3EA)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
                     + Add card
                   </button>
                 )}
@@ -767,13 +767,13 @@ export function KanbanBoard({
         <button
           onClick={() => setColForm({ open: true })}
           style={{
-            minWidth: 180, height: 48, background: 'rgba(248,247,245,0.97)',
-            border: '1px dashed var(--border)', borderRadius: 10, color: 'var(--sl-400)',
+            minWidth: 180, height: 48, background: 'rgba(11,29,51,0.45)',
+            border: '1px dashed var(--vs-slate-200, #DDE3EA)', borderRadius: 10, color: 'var(--sl-400)',
             fontSize: 13, cursor: 'pointer', flexShrink: 0, alignSelf: 'flex-start',
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#D4A843'; e.currentTarget.style.color = '#D4A843' }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A66B'; e.currentTarget.style.color = '#C9A66B' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--vs-slate-200, #DDE3EA)'; e.currentTarget.style.color = 'var(--sl-400)' }}>
           + Add Column
         </button>
       </div>

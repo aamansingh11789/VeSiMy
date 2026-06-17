@@ -36,9 +36,9 @@ export function AIAssistButton({
         gap: 5,
         padding: small ? '4px 10px' : '6px 14px',
         borderRadius: 8,
-        border: '1px solid rgba(100,38,160,0.3)',
-        background: loading ? 'rgba(100,38,160,0.05)' : 'rgba(100,38,160,0.08)',
-        color: '#8C44CC',
+        border: '1px solid rgba(201,166,107,0.32)',
+        background: loading ? 'rgba(100,38,160,0.05)' : 'rgba(201,166,107,0.08)',
+        color: '#A8854F',
         fontSize: small ? 11 : 12,
         fontWeight: 600,
         cursor: loading || disabled ? 'not-allowed' : 'pointer',
@@ -48,7 +48,7 @@ export function AIAssistButton({
         whiteSpace: 'nowrap',
       }}
       onMouseEnter={e => { if (!loading && !disabled) e.currentTarget.style.background = 'rgba(100,38,160,0.14)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = loading ? 'rgba(100,38,160,0.05)' : 'rgba(100,38,160,0.08)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = loading ? 'rgba(100,38,160,0.05)' : 'rgba(201,166,107,0.08)' }}
     >
       {loading ? (
         <>
@@ -57,7 +57,7 @@ export function AIAssistButton({
         </>
       ) : (
         <>
-          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:"monospace" }}>AI</span>
+          <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:"'JetBrains Mono',monospace" }}>AI</span>
           {label}
         </>
       )}
@@ -93,7 +93,7 @@ export function AIResultPanel({
     <div style={{
       marginTop: 10,
       borderRadius: 10,
-      border: `1px solid ${isError ? 'rgba(192,64,42,0.25)' : 'rgba(100,38,160,0.2)'}`,
+      border: `1px solid ${isError ? 'rgba(192,64,42,0.25)' : 'rgba(201,166,107,0.20)'}`,
       background: isError ? 'rgba(192,64,42,0.04)' : 'rgba(100,38,160,0.04)',
       overflow: 'hidden',
     }}>
@@ -104,11 +104,11 @@ export function AIResultPanel({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: isError ? 'rgba(192,64,42,0.06)' : 'rgba(100,38,160,0.06)',
+        background: isError ? 'rgba(192,64,42,0.06)' : 'rgba(201,166,107,0.06)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize:9, fontWeight:800, letterSpacing:.5, fontFamily:'var(--font-mono)' }}>{isError ? '!' : 'AI'}</span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: isError ? '#C0402A' : '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 0.8 }}>
+          <span style={{ fontSize: 10, fontWeight: 700, color: isError ? '#C0402A' : '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 0.8 }}>
             {isError ? 'ERROR' : source === 'ai' ? (title || 'AI ASSIST') : (title || 'SMART ASSIST')}
           </span>
           {source === 'rule' && !isError && (
@@ -140,8 +140,8 @@ export function AIResultPanel({
               type="button"
               onClick={() => onUse(result)}
               style={{
-                padding: '5px 12px', borderRadius: 6, border: '1px solid rgba(100,38,160,0.3)',
-                background: 'rgba(100,38,160,0.1)', color: '#8C44CC', fontSize: 11, fontWeight: 700,
+                padding: '5px 12px', borderRadius: 6, border: '1px solid rgba(201,166,107,0.32)',
+                background: 'rgba(201,166,107,0.10)', color: '#A8854F', fontSize: 11, fontWeight: 700,
                 cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
@@ -151,7 +151,7 @@ export function AIResultPanel({
               type="button"
               onClick={onClear}
               style={{
-                padding: '5px 10px', borderRadius: 6, border: '1px solid var(--border)',
+                padding: '5px 10px', borderRadius: 6, border: '1px solid var(--vs-slate-200, #DDE3EA)',
                 background: 'transparent', color: 'var(--text3)', fontSize: 11,
                 cursor: 'pointer', fontFamily: 'inherit',
               }}
@@ -172,11 +172,11 @@ export function AIBadge({ small }: { small?: boolean }) {
       display: 'inline-flex', alignItems: 'center', gap: 3,
       padding: small ? '1px 5px' : '2px 7px',
       borderRadius: 100,
-      background: 'rgba(100,38,160,0.1)',
+      background: 'rgba(201,166,107,0.10)',
       border: '1px solid rgba(100,38,160,0.25)',
       fontSize: small ? 8 : 9,
       fontWeight: 700,
-      color: '#8C44CC',
+      color: '#A8854F',
       fontFamily: 'var(--font-mono)',
       letterSpacing: 0.5,
     }}>

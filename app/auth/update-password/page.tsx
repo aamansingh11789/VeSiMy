@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { CheckIcon } from '@/components/ui/Icons'
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 const GOLD  = 'var(--brand)'
 
 export default function UpdatePasswordPage() {
@@ -27,7 +27,7 @@ export default function UpdatePasswordPage() {
       const { error: err } = await supabase.auth.updateUser({ password })
       if (err) { setError(err.message); setLoading(false); return }
       setDone(true)
-      setTimeout(() => router.push('/dashboard'), 2000)
+      setTimeout(() => { window.location.href = '/dashboard' }, 2000)
     } catch { setError('Something went wrong. Please try again.') }
     setLoading(false)
   }
@@ -37,7 +37,7 @@ export default function UpdatePasswordPage() {
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </div>
         {done ? (
@@ -50,7 +50,7 @@ export default function UpdatePasswordPage() {
             <p style={{ fontSize:14, color:'var(--text3)' }}>Redirecting you to your dashboard…</p>
           </div>
         ) : (
-          <div style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:16, padding:'36px 32px' }}>
+          <div style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:16, padding:'36px 32px' }}>
             <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:8 }}>Set a new password</h2>
             <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28 }}>Choose a strong password for your account.</p>
             <div style={{ marginBottom:14 }}>
@@ -62,7 +62,7 @@ export default function UpdatePasswordPage() {
               <input type="password" value={confirm} onChange={e=>setConfirm(e.target.value)} onKeyDown={e=>e.key==='Enter'&&handleUpdate()} placeholder="Repeat password" className="input" style={{ width:'100%', boxSizing:'border-box' }} />
             </div>
             {error && (
-              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.25)', fontSize:13, color:'#FF6B6B', marginBottom:16 }}>
+              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.25)', fontSize:13, color:'#C94F4F', marginBottom:16 }}>
                 {error}
               </div>
             )}

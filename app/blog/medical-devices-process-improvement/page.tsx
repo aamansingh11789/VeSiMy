@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function MedicalDevicesBlog() {
   return (
@@ -25,7 +25,7 @@ export default function MedicalDevicesBlog() {
 
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 18 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(255,107,107,0.15)', color: '#FF6B6B', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>MEDICAL DEVICES</span>
+            <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 999, background: 'rgba(201,79,79,0.15)', color: '#C94F4F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5 }}>MEDICAL DEVICES</span>
             <span style={{ fontSize: 12, color: '#52507A', fontFamily: 'var(--font-mono)' }}>9 min read · March 2026</span>
           </div>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: 20 }}>
@@ -56,7 +56,7 @@ export default function MedicalDevicesBlog() {
             ['Supplier non-conformances that propagate forward', 'Medical device supply chains are tightly controlled, but incoming material non-conformances still occur. How quickly those are detected, investigated, and dispositioned is a process problem that structured CI tools directly address.'],
             ['Validation burden for process changes', 'Every process change in a medical device environment requires change control, and significant changes require re-validation. This reality means that improvement initiatives face a high administrative hurdle, making it even more important to ensure the root cause analysis is complete before committing to a corrective action.'],
           ].map(([title, body]) => (
-            <div key={title} style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
+            <div key={title} style={{ background: 'rgba(201,79,79,0.06)', border: '1px solid rgba(201,79,79,0.2)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, marginBottom: 6 }}>{title}</div>
               <div style={{ color: 'var(--text2)', fontSize: 14 }}>{body}</div>
             </div>
@@ -72,7 +72,7 @@ export default function MedicalDevicesBlog() {
             The output is a structured, exportable record that can be attached to the CAPA file, not a reconstructed narrative written after the fact.
           </p>
 
-          <div style={{ borderLeft: '3px solid #FF6B6B', paddingLeft: 20, marginBottom: 28 }}>
+          <div style={{ borderLeft: '3px solid #C94F4F', paddingLeft: 20, marginBottom: 28 }}>
             <p style={{ fontFamily: serif, fontSize: 18, color: 'var(--text)', fontStyle: 'italic', marginBottom: 8 }}>
               "The best root cause analysis is the one where the team asks 'why' until they reach a cause they can actually control, not a cause they can document."
             </p>
@@ -98,7 +98,7 @@ export default function MedicalDevicesBlog() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/demo" style={{ display: 'inline-block', background: '#0176D3', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
+            <Link href="/demo" style={{ display: 'inline-block', background: '#0B1D33', color: '#fff', fontWeight: 700, fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>
               Start a free project
             </Link>
             <Link href="/industries" style={{ display: 'inline-block', border: '1px solid rgba(44,44,92,0.3)', color: 'var(--text)', fontSize: 14, padding: '11px 24px', borderRadius: 9, textDecoration: 'none' }}>

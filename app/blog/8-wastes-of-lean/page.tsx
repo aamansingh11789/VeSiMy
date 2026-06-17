@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 const WASTES = [
   {
@@ -124,7 +124,7 @@ export default function EightWastesPost() {
           {WASTES.map((w, idx) => (
             <div key={w.letter} style={{ marginBottom: 48 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(1,118,211,0.1)', border: '1.5px solid rgba(1,118,211,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 22, color: '#0176D3', flexShrink: 0 }}>{w.letter}</div>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: 'rgba(11,29,51,0.1)', border: '1.5px solid rgba(11,29,51,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 22, color: '#0B1D33', flexShrink: 0 }}>{w.letter}</div>
                 <h2 style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>{w.name} {w.icon}</h2>
               </div>
               <p style={{ marginBottom: 14, fontStyle: 'italic', color: 'var(--text)', fontSize: 15 }}>{w.definition}</p>
@@ -137,7 +137,7 @@ export default function EightWastesPost() {
                   </div>
                 ))}
               </div>
-              <div style={{ background: 'rgba(248,247,245,0.5)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 16px', marginBottom: 12 }}>
+              <div style={{ background: 'rgba(248,247,245,0.5)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 16px', marginBottom: 12 }}>
                 <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 6 }}>Why it matters</div>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{w.cost}</p>
               </div>
@@ -158,7 +158,7 @@ export default function EightWastesPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Identify waste on your floor, free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>VeSiMy's Waste ID tool covers all 8 wastes per step and builds your improvement backlog automatically.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0B1D33', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →
             </Link>
           </div>

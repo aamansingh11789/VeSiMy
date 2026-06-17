@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 
 const SECTIONS = [
@@ -59,7 +59,7 @@ const SECTIONS = [
   },
   {
     title:'Reports & Export',
-    color:'#8B5CF6',
+    color:'#3A5A7D',
     pages:[
       { title:'Generating a report',        desc:'How to create a process improvement report from your project data.', href:'/learn' },
       { title:'PDF export',                 desc:'What is included in the PDF, how to print it, how to share it.', href:'/learn' },
@@ -87,9 +87,9 @@ export default function DocsPage() {
         justifyContent:'space-between' }}>
         <Link href="/" style={{ textDecoration:'none', display:'flex', alignItems:'center', gap:10 }}>
           <div style={{ width:28, height:28, borderRadius:7,
-            background:`linear-gradient(135deg,${AMBER},#B8912E)`,
+            background:`linear-gradient(135deg,${AMBER},#A8854F)`,
             display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize:14, fontWeight:800, color:'#1A0E00' }}>V</div>
+            fontSize:14, fontWeight:800, color:'#0B1D33' }}>V</div>
           <span style={{ fontSize:15, fontWeight:700, color:'#F0F2FF' }}>VeSiMy</span>
         </Link>
         <div style={{ display:'flex', gap:24 }}>
@@ -118,7 +118,7 @@ export default function DocsPage() {
 
         {/* Quick start banner */}
         <div style={{ padding:'20px 24px', background:NAVY, borderRadius:12,
-          border:`1px solid rgba(212,168,67,0.20)`, marginBottom:40,
+          border:`1px solid rgba(201,166,107,0.20)`, marginBottom:40,
           display:'flex', alignItems:'center', justifyContent:'space-between', gap:20, flexWrap:'wrap' }}>
           <div>
             <div style={{ fontSize:14, fontWeight:700, color:'#F0F2FF', marginBottom:4 }}>
@@ -129,8 +129,8 @@ export default function DocsPage() {
             </div>
           </div>
           <Link href="/learn" style={{ display:'inline-flex', alignItems:'center', gap:6,
-            padding:'9px 20px', borderRadius:8, background:`linear-gradient(135deg,${AMBER},#B8912E)`,
-            color:'#1A0E00', fontSize:13, fontWeight:700, textDecoration:'none', whiteSpace:'nowrap' }}>
+            padding:'9px 20px', borderRadius:8, background:`linear-gradient(135deg,${AMBER},#A8854F)`,
+            color:'#0B1D33', fontSize:13, fontWeight:700, textDecoration:'none', whiteSpace:'nowrap' }}>
             Open Learning Center →
           </Link>
         </div>
@@ -166,8 +166,8 @@ export default function DocsPage() {
         </div>
 
         {/* Footer note */}
-        <div style={{ marginTop:48, padding:'20px 24px', background:'rgba(212,168,67,0.06)',
-          borderRadius:10, border:`1px solid rgba(212,168,67,0.16)`, textAlign:'center' }}>
+        <div style={{ marginTop:48, padding:'20px 24px', background:'rgba(201,166,107,0.06)',
+          borderRadius:10, border:`1px solid rgba(201,166,107,0.16)`, textAlign:'center' }}>
           <p style={{ fontSize:13, color:'#5A4800', margin:0, lineHeight:1.6 }}>
             Documentation is written by the same person who built VeSiMy, Max Singh, Lean Six Sigma Green Belt,
             12+ years in manufacturing and operations.{' '}
@@ -181,7 +181,7 @@ export default function DocsPage() {
       <style>{`
         .doc-link:hover { background: #FAFBFE !important; }
         .footer-link:hover { color: #F0F2FF !important; }
-        .inner-nav-link:hover { color: #D4A843 !important; }
+        .inner-nav-link:hover { color: #C9A66B !important; }
       `}</style>
     </div>
   )

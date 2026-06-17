@@ -125,10 +125,10 @@ export function Modal({
           maxHeight: isMobile ? '92svh' : 'calc(100dvh - 60px)',
           width: '100%',
           maxWidth: isMobile ? '100%' : 640,
-          background: 'linear-gradient(180deg,transparent,rgba(255,255,255,0.008)),var(--sl-50)',
-          border: '1px solid rgba(44,44,92,0.86)',
+          background: 'var(--vs-white)',
+          border: '1px solid var(--vs-slate-200)',
           borderRadius: isMobile ? '20px 20px 0 0' : 20,
-          boxShadow: '0 32px 100px rgba(0,0,0,0.62)',
+          boxShadow: 'var(--vs-shadow-panel)',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -136,32 +136,38 @@ export function Modal({
       >
         {/* drag handle */}
         {isMobile && (
-          <div style={{ width: 42, height: 5, background: 'rgba(255,255,255,0.2)', borderRadius: 999, margin: '10px auto 0', flexShrink: 0 }} />
+          <div style={{ width: 42, height: 5, background: 'var(--vs-slate-200)', borderRadius: 999, margin: '10px auto 0', flexShrink: 0 }} />
         )}
 
         {/* header */}
         <div style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           padding: isMobile ? '12px 16px 10px' : '18px 22px 14px',
-          borderBottom: '1px solid rgba(42,42,90,0.72)',
+          borderBottom: '1px solid var(--vs-slate-200)',
           flexShrink: 0,
         }}>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: isMobile ? 15 : 17, fontWeight: 700, color: 'var(--text)' }}>
+          <div style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: isMobile ? 15 : 17, fontWeight: 650, color: 'var(--vs-navy-900)', letterSpacing: '-0.01em' }}>
             {title}
           </div>
-          {/* VeSiMy brand, visible in every tool screenshot */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginLeft: 'auto', marginRight: 10, padding: '3px 9px', borderRadius: 6, background: 'rgba(1,118,211,0.07)', border: '1px solid rgba(212,168,67,0.18)', flexShrink: 0 }}>
-            <svg width="11" height="12" viewBox="0 0 100 108" fill="none">
+          {/* VeSiMy brand watermark */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto', marginRight: 12, flexShrink: 0, opacity: 0.6 }}>
+            <svg width="14" height="14" viewBox="0 0 100 100" fill="none">
               <defs>
-                <linearGradient id="vm-hdr" x1="8" y1="0" x2="92" y2="108" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#FFD56C"/>
-                  <stop offset="50%" stopColor="#D4A843"/>
-                  <stop offset="100%" stopColor="#6426A0"/>
+                <linearGradient id="vm-mh-l" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#2F4670"/><stop offset="100%" stopColor="#1E2E4A"/>
                 </linearGradient>
+                <linearGradient id="vm-mh-r" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#1E2E4A"/><stop offset="100%" stopColor="#0B1D33"/>
+                </linearGradient>
+                <radialGradient id="vm-mh-c" cx="35%" cy="30%" r="70%">
+                  <stop offset="0%" stopColor="#E5D4B0"/><stop offset="55%" stopColor="#C9A66B"/><stop offset="100%" stopColor="#A8854F"/>
+                </radialGradient>
               </defs>
-              <path d="M8 8L38 88L50 64L62 88L92 8H72L50 60L28 8Z" fill="url(#vm-hdr)"/>
+              <path d="M 20 28 Q 20 24 24 24 L 38 24 Q 42 24 44 28 L 50 40 L 50 86 Q 50 92 44 91 L 28 89 Q 22 88 21 82 L 20 28 Z" fill="url(#vm-mh-l)"/>
+              <path d="M 56 28 Q 58 24 62 24 L 76 24 Q 80 24 80 28 L 79 82 Q 78 88 72 89 L 56 91 Q 50 92 50 86 L 50 40 L 56 28 Z" fill="url(#vm-mh-r)"/>
+              <circle cx="50" cy="20" r="12" fill="url(#vm-mh-c)"/>
             </svg>
-            <span style={{ fontSize: 10, fontWeight: 700, color: '#7070A0', letterSpacing: 0.5, fontFamily: 'Palatino Linotype,serif' }}>VeSiMy</span>
+            <span style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: 12, color: 'var(--vs-slate-700)', letterSpacing: '-0.01em' }}>VeSiMy</span>
           </div>
           <button
             style={{ background: 'none', border: 'none', color: 'var(--text2)', fontSize: 18, cursor: 'pointer', padding: '4px 6px', flexShrink: 0 }}
@@ -202,8 +208,8 @@ export function Modal({
           justifyContent: isMobile ? undefined : 'flex-end',
           gap: 10,
           padding: isMobile ? `12px 16px max(16px, env(safe-area-inset-bottom, 0px))` : '15px 22px 18px',
-          borderTop: '1px solid rgba(42,42,90,0.72)',
-          background: 'rgba(248,247,245,0.97)',
+          borderTop: '1px solid var(--vs-slate-200)',
+          background: 'var(--vs-paper)',
           flexShrink: 0,
         }}>
           <button className="btn btn-ghost" onClick={() => onCloseRef.current()} type="button">

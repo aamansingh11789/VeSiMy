@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { ArrowLeftIcon, CheckIcon } from '@/components/ui/Icons'
 
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 const GOLD  = 'var(--brand)'
 
 export default function ResetPage() {
@@ -33,11 +33,11 @@ export default function ResetPage() {
 
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', padding:24,
-      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(1,118,211,0.05) 0%, transparent 60%)' }}>
+      backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(11,29,51,0.05) 0%, transparent 60%)' }}>
       <div style={{ maxWidth:420, width:'100%' }}>
         <div style={{ textAlign:'center', marginBottom:36 }}>
           <span style={{ fontFamily:serif, fontWeight:700, fontSize:28 }}>
-            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#8C44CC' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
+            <span style={{ color:GOLD }}>V</span>e<span style={{ color:'#A8854F' }}>S</span>i<span style={{ color:'#6CB9FC' }}>M</span>y
           </span>
         </div>
         {sent ? (
@@ -55,7 +55,7 @@ export default function ResetPage() {
             </Link>
           </div>
         ) : (
-          <div style={{ background:'#FFFFFF', border:'1px solid var(--border)', borderRadius:16, padding:'36px 32px' }}>
+          <div style={{ background:'#FFFFFF', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:16, padding:'36px 32px' }}>
             <h2 style={{ fontFamily:serif, fontSize:24, fontWeight:700, color:'var(--text)', marginBottom:8 }}>Reset your password</h2>
             <p style={{ fontSize:14, color:'var(--text3)', marginBottom:28, lineHeight:1.6 }}>
               Enter the email you signed up with and we'll send a reset link.
@@ -66,7 +66,7 @@ export default function ResetPage() {
                 placeholder="you@company.com" className="input" style={{ width:'100%', boxSizing:'border-box' }} />
             </div>
             {error && (
-              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(255,107,107,0.08)', border:'1px solid rgba(255,107,107,0.25)', fontSize:13, color:'#FF6B6B', marginBottom:16 }}>
+              <div style={{ padding:'10px 14px', borderRadius:8, background:'rgba(201,79,79,0.08)', border:'1px solid rgba(201,79,79,0.25)', fontSize:13, color:'#C94F4F', marginBottom:16 }}>
                 {error}
               </div>
             )}

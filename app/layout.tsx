@@ -143,15 +143,15 @@ export default function RootLayout({ children }: { children?: React.ReactNode })
           position="top-right"
           toastOptions={{
             style: {
-              background:   'var(--bg3)',
+              background:   'var(--vs-paper, #F7F8FA)',
               color:        'var(--text)',
-              border:       '1px solid rgba(1,118,211,0.25)',
+              border:       '1px solid rgba(11,29,51,0.25)',
               borderRadius: '10px',
               fontFamily:   "'Satoshi', 'Inter', -apple-system, sans-serif",
               fontSize:     '14px',
             },
-            success: { iconTheme: { primary: '#0176D3', secondary: 'var(--bg)' } },
-            error:   { iconTheme: { primary: '#FF6B6B', secondary: 'var(--bg)' } },
+            success: { iconTheme: { primary: '#0B1D33', secondary: 'var(--bg)' } },
+            error:   { iconTheme: { primary: '#C94F4F', secondary: 'var(--bg)' } },
           }}
         />
         </ThemeProvider>

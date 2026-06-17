@@ -41,7 +41,7 @@ export function PromoCodeInput({ onApply }: Props) {
     toast.success(`Promo code applied, ${data.discount_percent}% off!`)
   }
 
-  const borderColor = status==='valid' ? '#1DD1A1' : status==='invalid' ? 'var(--red)' : 'var(--border2)'
+  const borderColor = status==='valid' ? '#1DD1A1' : status==='invalid' ? 'var(--red)' : 'var(--vs-slate-200, #DDE3EA)'
   const msgColor    = status==='valid' ? '#1DD1A1' : 'var(--red)'
 
   return (

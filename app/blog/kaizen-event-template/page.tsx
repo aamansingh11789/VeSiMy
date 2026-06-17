@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function KaizenEventPost() {
   return (
@@ -83,7 +83,7 @@ export default function KaizenEventPost() {
 
           {[
             {
-              day: 'Day 1', label: 'Understand', color: '#0176D3',
+              day: 'Day 1', label: 'Understand', color: '#0B1D33',
               items: [
                 'Morning: Team kickoff, review goals, ground rules, and roles',
                 'Review baseline data and go to gemba (the actual work floor)',
@@ -116,7 +116,7 @@ export default function KaizenEventPost() {
               ]
             },
             {
-              day: 'Day 4', label: 'Refine', color: '#FF6B6B',
+              day: 'Day 4', label: 'Refine', color: '#C94F4F',
               items: [
                 'Run the new process at full production speed',
                 'Measure actual cycle times, count errors, track downtime',
@@ -127,7 +127,7 @@ export default function KaizenEventPost() {
               ]
             },
             {
-              day: 'Day 5', label: 'Sustain', color: '#8C44CC',
+              day: 'Day 5', label: 'Sustain', color: '#A8854F',
               items: [
                 'Morning: Final measurements and data collection',
                 'Calculate improvement: before vs after on all target metrics',
@@ -178,8 +178,8 @@ export default function KaizenEventPost() {
             ['Not sustaining the gains', 'Results slip back within 60 days because nobody owns the new standard. Every change needs an SOP, visual control, and a named owner.'],
             ['Too big a scope', 'Trying to fix 10 things in a week means fixing none of them properly. Pick the biggest lever and go deep on it.'],
           ].map(([title, body], i) => (
-            <div key={i} style={{ background: 'rgba(255,107,107,0.04)', border: '1px solid rgba(255,107,107,0.15)', borderRadius: 10, padding: '16px 18px', marginBottom: 12 }}>
-              <div style={{ fontWeight: 700, color: '#FF6B6B', marginBottom: 6 }}>✕ {title}</div>
+            <div key={i} style={{ background: 'rgba(201,79,79,0.04)', border: '1px solid rgba(201,79,79,0.15)', borderRadius: 10, padding: '16px 18px', marginBottom: 12 }}>
+              <div style={{ fontWeight: 700, color: '#C94F4F', marginBottom: 6 }}>✕ {title}</div>
               <div style={{ fontSize: 13, color: '#B8B5D1' }}>{body}</div>
             </div>
           ))}

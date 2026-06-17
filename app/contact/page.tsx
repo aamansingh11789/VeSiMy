@@ -8,7 +8,7 @@ import { VLogoMark, VeSiMyWordmark } from '@/components/ui/Logo'
 
 const SANS  = "'Satoshi','Inter',-apple-system,sans-serif"
 const MONO  = "'JetBrains Mono',monospace"
-const AMBER = '#D4A843'
+const AMBER = '#C9A66B'
 const NAVY  = '#04111F'
 const GRAY  = '#5A6480'
 const BORD  = '#E2E8F0'
@@ -32,6 +32,7 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [sent,    setSent]    = useState(false)
   const [error,   setError]   = useState('')
+  const [website, setWebsite] = useState('') // honeypot: must stay empty
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -46,7 +47,7 @@ export default function ContactPage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, topic, message }),
+        body: JSON.stringify({ name, email, topic, message, website }),
       })
       if (!res.ok) throw new Error('Failed')
       setSent(true)
@@ -104,7 +105,7 @@ export default function ContactPage() {
               marginInline: 'auto', fontFamily: SANS }}>
               Thanks for reaching out. You will hear back within 1 to 2 business days.
               For faster responses, connect on{' '}
-              <a href="https://www.linkedin.com/in/max-singh" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.linkedin.com/in/aamansingh11789" target="_blank" rel="noopener noreferrer"
                 style={{ color: AMBER, fontWeight: 600 }}>LinkedIn</a>.
             </p>
             <button onClick={() => setSent(false)}
@@ -118,6 +119,14 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit}
             style={{ background: '#fff', borderRadius: 12, border: `1px solid ${BORD}`,
               padding: '28px', boxShadow: '0 2px 8px rgba(4,17,31,0.06)' }}>
+
+            {/* Honeypot: hidden from users, bots fill it. Kept out of the tab order. */}
+            <input
+              type="text" name="website" tabIndex={-1} autoComplete="off"
+              value={website} onChange={e => setWebsite(e.target.value)}
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+            />
 
             {/* Name + Email */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
@@ -209,8 +218,8 @@ export default function ContactPage() {
               disabled={loading}
               style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 14,
                 fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
-                background: loading ? '#B8912E' : 'linear-gradient(135deg,#D4A843,#B8912E)',
-                color: '#1A0E00', border: 'none', fontFamily: SANS,
+                background: loading ? '#A8854F' : 'linear-gradient(135deg,#C9A66B,#A8854F)',
+                color: '#0B1D33', border: 'none', fontFamily: SANS,
                 opacity: loading ? 0.75 : 1, transition: 'opacity 0.15s' }}>
               {loading ? 'Sending...' : 'Send message'}
             </button>
@@ -235,7 +244,7 @@ export default function ContactPage() {
                 textDecoration: 'none', fontFamily: SANS }}>
               max@vesimy.com
             </a>
-            <a href="https://www.linkedin.com/in/max-singh"
+            <a href="https://www.linkedin.com/in/aamansingh11789"
               target="_blank" rel="noopener noreferrer"
               style={{ fontSize: 13, color: AMBER, fontWeight: 600,
                 textDecoration: 'none', fontFamily: SANS }}>

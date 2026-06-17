@@ -22,7 +22,7 @@ const C = {
   t1: '#EEF2FF', t2: '#8B9CC8', t3: '#4B5880', t4: '#2A3455',
   b1: 'rgba(255,255,255,0.04)', b2: 'rgba(255,255,255,0.07)', b3: 'rgba(255,255,255,0.12)',
 }
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+const serif = "'Sora','Inter',sans-serif"
 const mono  = '"JetBrains Mono","IBM Plex Mono",monospace'
 const cardShadow = `inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.5), 3px 3px 0 rgba(4,8,20,0.9), 6px 6px 0 rgba(3,6,15,0.7), 0 16px 40px rgba(0,0,0,0.7)`
 const btnShadow  = `inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.3), 0 2px 0 rgba(20,50,140,0.9), 0 4px 0 rgba(15,38,105,0.7), 0 8px 24px rgba(59,124,255,0.25)`
@@ -590,7 +590,7 @@ export default function GuidedFlow({ userId, profile }: Props) {
                 <button onClick={finish} disabled={saving} style={{
                   padding: '14px 28px', borderRadius: 10, border: 'none', cursor: saving ? 'default' : 'pointer',
                   background: saving ? C.b2 : `linear-gradient(135deg, ${C.blue}, ${C.blueDim})`,
-                  color: '#1A0E00', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
+                  color: '#0B1D33', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', boxShadow: saving ? 'none' : btnShadow,
                 }}>
                   {saving ? 'Saving your map...' : 'Save map and open in VeSiMy Pro →'}
                 </button>

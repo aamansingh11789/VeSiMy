@@ -43,20 +43,20 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
   if (isBeta && !isLifetime && betaExpiresAt && days === 0) {
     return (
       <div style={{ position:'relative', padding:'16px 20px', marginBottom:24,
-        background:'rgba(255,107,107,0.06)', border:'1px solid rgba(255,107,107,0.25)', borderRadius:12,
+        background:'rgba(201,79,79,0.06)', border:'1px solid rgba(201,79,79,0.25)', borderRadius:12,
         display:'flex', alignItems:'center', gap:16, flexWrap:'wrap' }}>
         
         <div style={{ flex:1, minWidth:200 }}>
-          <div style={{ fontSize:14, fontWeight:700, color:'#FF6B6B', marginBottom:3 }}>
+          <div style={{ fontSize:14, fontWeight:700, color:'#C94F4F', marginBottom:3 }}>
             Your Founding Member beta trial has ended
           </div>
           <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
-            Upgrade to <strong style={{ color:'#D4A843' }}>Lifetime access</strong> for a one-time $99 ,
+            Upgrade to <strong style={{ color:'#C9A66B' }}>Lifetime access</strong> for a one-time $99 ,
             99 projects, no monthly fees. Your Founding Member badge stays permanently.
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'9px 18px', borderRadius:8, fontWeight:700, fontSize:13, cursor:'pointer',
-          background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', border:'none', whiteSpace:'nowrap' }}>
+          background:'linear-gradient(135deg,#A8854F,#C9A66B)', color:'var(--bg)', border:'none', whiteSpace:'nowrap' }}>
           Upgrade, $99 Lifetime
         </button>
       </div>
@@ -65,9 +65,9 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
 
   // ── B. Active beta tester ────────────────────────────────────────────────────
   if (isBeta && !isLifetime) {
-    const urgency       = days <= 5  ? 'rgba(255,107,107,0.08)' : days <= 10 ? 'rgba(244,166,35,0.06)' : 'rgba(1,118,211,0.05)'
-    const urgencyBorder = days <= 5  ? 'rgba(255,107,107,0.3)'  : days <= 10 ? 'rgba(244,166,35,0.25)' : 'rgba(212,168,67,0.22)'
-    const urgencyColor  = days <= 5  ? '#FF6B6B'                : days <= 10 ? '#F4A623'               : '#D4A843'
+    const urgency       = days <= 5  ? 'rgba(201,79,79,0.08)' : days <= 10 ? 'rgba(201,166,107,0.06)' : 'rgba(11,29,51,0.05)'
+    const urgencyBorder = days <= 5  ? 'rgba(201,79,79,0.3)'  : days <= 10 ? 'rgba(201,166,107,0.25)' : 'rgba(201,166,107,0.22)'
+    const urgencyColor  = days <= 5  ? '#C94F4F'                : days <= 10 ? '#C9A66B'               : '#C9A66B'
     return (
       <div style={{ padding:'14px 18px', marginBottom:24,
         background:urgency, border:`1px solid ${urgencyBorder}`, borderRadius:12,
@@ -76,7 +76,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         <div style={{ flex:1, minWidth:200 }}>
           <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:3 }}>
             <span style={{ fontSize:13, fontWeight:700, color:'var(--text)' }}>Founding Member Beta</span>
-            <span style={{ fontSize:10, fontWeight:700, background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', padding:'2px 8px', borderRadius:100 }}>
+            <span style={{ fontSize:10, fontWeight:700, background:'linear-gradient(135deg,#A8854F,#C9A66B)', color:'var(--bg)', padding:'2px 8px', borderRadius:100 }}>
               GOLD STANDARD
             </span>
           </div>
@@ -86,7 +86,7 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
           </p>
         </div>
         <button onClick={() => router.push('/pricing#lifetime')} style={{ padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer', whiteSpace:'nowrap',
-          background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', border:'none' }}>
+          background:'linear-gradient(135deg,#A8854F,#C9A66B)', color:'var(--bg)', border:'none' }}>
           Upgrade, $99 Lifetime
         </button>
       </div>
@@ -102,10 +102,10 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
 
   return (
     <div style={{ position:'relative', padding:'14px 18px', marginBottom:24,
-      background:'rgba(1,118,211,0.05)', border:'1px solid rgba(212,168,67,0.22)', borderRadius:12,
+      background:'rgba(11,29,51,0.05)', border:'1px solid rgba(201,166,107,0.22)', borderRadius:12,
       display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
       <button onClick={() => setDismissed(true)} style={{ position:'absolute', top:8, right:10,
-        background:'none', border:'none', cursor:'pointer', color:'var(--border2)', fontSize:14 }}><XIcon size={13}/></button>
+        background:'none', border:'none', cursor:'pointer', color:'var(--vs-slate-200, #DDE3EA)', fontSize:14 }}><XIcon size={13}/></button>
       <GoldCrown size={36} />
       <div style={{ flex:1, minWidth:200 }}>
         <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:2 }}>
@@ -113,11 +113,11 @@ export function BetaBanner({ userId, isBeta, isLifetime, betaExpiresAt, onClaime
         </div>
         <p style={{ fontSize:12, color:'var(--text3)', margin:0 }}>
           Join during early access and get your permanent Founding Member badge. 30-day Pro trial,
-          then $99 Lifetime. Your company gets a <strong style={{ color:'#D4A843' }}>33% enterprise discount</strong> forever.
+          then $99 Lifetime. Your company gets a <strong style={{ color:'#C9A66B' }}>33% enterprise discount</strong> forever.
         </p>
       </div>
       <Link href="/beta" style={{ textDecoration:'none', padding:'8px 16px', borderRadius:8, fontWeight:700, fontSize:12,
-        background:'linear-gradient(135deg,#B8912E,#D4A843)', color:'var(--bg)', whiteSpace:'nowrap' }}>
+        background:'linear-gradient(135deg,#A8854F,#C9A66B)', color:'var(--bg)', whiteSpace:'nowrap' }}>
         Join Early Access →
       </Link>
     </div>
@@ -131,13 +131,13 @@ export function GoldCrown({ size = 36 }: { size?: number }) {
       <defs>
         <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stopColor="#F5D060" />
-          <stop offset="50%"  stopColor="#D4A843" />
+          <stop offset="50%"  stopColor="#C9A66B" />
           <stop offset="100%" stopColor="#9A7200" />
         </linearGradient>
       </defs>
       <path d="M4 26 L8 12 L14 20 L18 8 L22 20 L28 12 L32 26 Z"
-        fill="url(#goldGrad)" stroke="#B8912E" strokeWidth="0.5" strokeLinejoin="round" />
-      <rect x="4" y="26" width="28" height="4" rx="2" fill="url(#goldGrad)" stroke="#B8912E" strokeWidth="0.5" />
+        fill="url(#goldGrad)" stroke="#A8854F" strokeWidth="0.5" strokeLinejoin="round" />
+      <rect x="4" y="26" width="28" height="4" rx="2" fill="url(#goldGrad)" stroke="#A8854F" strokeWidth="0.5" />
       <circle cx="18" cy="8"  r="2.5" fill="#F5D060" />
       <circle cx="8"  cy="12" r="2"   fill="#F5D060" />
       <circle cx="28" cy="12" r="2"   fill="#F5D060" />

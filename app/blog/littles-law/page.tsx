@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: { title: "Little Law: The Formula That Validates WIP and Lead Time", type: 'article' },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function Post() {
   return (
@@ -36,9 +36,9 @@ export default function Post() {
           <p style={{ marginBottom: 18 }}>If your throughput is 30 units per day and your target lead time is 3 days, your maximum WIP should be 90 units. More than 90 units in the system and your lead time guarantee is broken by the math. This is how you design supermarkets and kanban quantities: by arithmetic, not by feel.</p>
           <h2 style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: 'var(--text)', margin: '40px 0 14px' }}>The leverage</h2>
           <p style={{ marginBottom: 18 }}>Lead time can be reduced by reducing WIP, increasing throughput, or both. In most operations, reducing WIP is faster and cheaper than increasing throughput. The WIP lever is often available immediately. The throughput lever requires a project.</p>
-          <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
+          <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.18)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <p style={{ color: 'var(--text)', fontSize: 15, margin: '0 0 12px' }}>Ready to map your first process?</p>
-            <Link href="/start" style={{ color: '#0176D3', fontWeight: 700, textDecoration: 'none' }}>Map a process free - no account needed</Link>
+            <Link href="/start" style={{ color: '#0B1D33', fontWeight: 700, textDecoration: 'none' }}>Map a process free - no account needed</Link>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export function ProcessHealthScore({ steps, compact=false }: Props) {
 
   if (compact) {
     if (!h.hasData) return (
-      <div style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 11px', background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:100 }}>
+      <div style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 11px', background:'var(--vs-paper, #F7F8FA)', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:100 }}>
         <div style={{ width:6, height:6, borderRadius:'50%', background:'var(--text4)' }} />
         <span style={{ fontSize:11, color:'var(--text3)' }}>Add step data</span>
       </div>
@@ -40,7 +40,7 @@ export function ProcessHealthScore({ steps, compact=false }: Props) {
           </div>
         ) : (<>
         <svg width={110} height={66} viewBox="0 0 110 66" shapeRendering="geometricPrecision">
-          <path d="M8 58 A47 47 0 0 1 102 58" fill="none" stroke="var(--border2)" strokeWidth="9" strokeLinecap="round"/>
+          <path d="M8 58 A47 47 0 0 1 102 58" fill="none" stroke="var(--vs-slate-200, #DDE3EA)" strokeWidth="9" strokeLinecap="round"/>
           <path d="M8 58 A47 47 0 0 1 102 58" fill="none" stroke={h.color} strokeWidth="9" strokeLinecap="round"
             strokeDasharray={`${(displayScore/100)*ARC} ${ARC}`}
             style={{ transition:'stroke-dasharray 0.7s ease' }}/>
@@ -60,7 +60,7 @@ export function ProcessHealthScore({ steps, compact=false }: Props) {
             <span style={{ color:'var(--text3)', fontFamily:'var(--font-mono)' }}>{l}</span>
             <span style={{ color:c, fontWeight:700 }}>{v}</span>
           </div>
-          <div style={{ height:3, background:'var(--border2)', borderRadius:2, overflow:'hidden' }}>
+          <div style={{ height:3, background:'var(--vs-slate-200, #DDE3EA)', borderRadius:2, overflow:'hidden' }}>
             <div style={{ height:'100%', width:`${v}%`, background:c, borderRadius:2, transition:'width 0.7s ease' }}/>
           </div>
         </div>

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 const mono  = '"IBM Plex Mono",ui-monospace,monospace'
 
 export default function LandingAIProcessImprovement() {
@@ -26,14 +26,14 @@ export default function LandingAIProcessImprovement() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)', color: 'var(--text)' }}>
 
       {/* ── Nav ── */}
-      <nav style={{ padding: '0 clamp(16px,4vw,48px)', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border3)' }}>
+      <nav style={{ padding: '0 clamp(16px,4vw,48px)', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
         <Link href="/" style={{ textDecoration: 'none', fontWeight: 800, fontSize: 16, color: 'var(--text)' }}>VeSiMy</Link>
-        <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '8px 18px', background: '#0176D3', color: '#fff', borderRadius: 8, fontSize: 14, fontWeight: 700 }}>Start free</Link>
+        <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '8px 18px', background: '#0B1D33', color: '#fff', borderRadius: 8, fontSize: 14, fontWeight: 700 }}>Start free</Link>
       </nav>
 
       {/* ── Hero ── */}
       <section style={{ maxWidth: 800, margin: '0 auto', padding: 'clamp(60px,10vh,120px) clamp(20px,5vw,48px) 60px', textAlign: 'center' }}>
-        <div style={{ display: 'inline-block', fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 999, background: 'rgba(1,118,211,0.1)', color: '#0176D3', fontFamily: mono, letterSpacing: 2, marginBottom: 24 }}>
+        <div style={{ display: 'inline-block', fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 999, background: 'rgba(11,29,51,0.1)', color: '#0B1D33', fontFamily: mono, letterSpacing: 2, marginBottom: 24 }}>
           LEAN SIX SIGMA + AI FOR REAL-WORLD OPERATIONS
         </div>
         <h1 style={{ fontFamily: serif, fontSize: 'clamp(32px,5vw,60px)', fontWeight: 700, lineHeight: 1.1, marginBottom: 24, color: 'var(--text)' }}>
@@ -43,10 +43,10 @@ export default function LandingAIProcessImprovement() {
           VeSiMy helps small businesses find bottlenecks, reduce waste, and hit targets with AI-guided Lean and Six Sigma tools. Built on an Lean and VSM-structured knowledge base so your improvement workflow is practical, structured, and easy to act on.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700, boxShadow: '0 4px 14px rgba(1,118,211,0.3)' }}>
+          <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0B1D33', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700, boxShadow: '0 4px 14px rgba(11,29,51,0.3)' }}>
             Map a Process Free
           </Link>
-          <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '14px 28px', border: '1px solid var(--border)', color: 'var(--text2)', borderRadius: 10, fontSize: 15 }}>
+          <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '14px 28px', border: '1px solid var(--vs-slate-200, #DDE3EA)', color: 'var(--text2)', borderRadius: 10, fontSize: 15 }}>
             Start 14-day trial
           </Link>
         </div>
@@ -60,7 +60,7 @@ export default function LandingAIProcessImprovement() {
             { icon: '🤖', title: 'Generic AI is not enough', body: 'General AI tools can answer questions but they do not guide a real improvement workflow from root cause to action plan. You end up doing the thinking yourself.' },
             { icon: '📋', title: 'Lean feels too complex', body: 'Lean Six Sigma sounds useful but for small businesses it often feels too consultant-heavy or too disconnected from day-to-day operations.' },
           ].map(({ icon, title, body }) => (
-            <div key={title} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 14, padding: '24px' }}>
+            <div key={title} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 14, padding: '24px' }}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>{icon}</div>
               <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, color: 'var(--text)' }}>{title}</div>
               <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.65, margin: 0 }}>{body}</p>
@@ -70,7 +70,7 @@ export default function LandingAIProcessImprovement() {
       </section>
 
       {/* ── Solution ── */}
-      <section style={{ background: 'var(--bg2)', borderTop: '1px solid var(--border3)', borderBottom: '1px solid var(--border3)', padding: 'clamp(60px,8vh,100px) clamp(20px,5vw,48px)' }}>
+      <section style={{ background: 'var(--vs-white, #FFFFFF)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', padding: 'clamp(60px,8vh,100px) clamp(20px,5vw,48px)' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <h2 style={{ fontFamily: serif, fontSize: 'clamp(26px,4vw,42px)', fontWeight: 700, marginBottom: 12, color: 'var(--text)' }}>How VeSiMy is different</h2>
@@ -83,7 +83,7 @@ export default function LandingAIProcessImprovement() {
               { step: '03', title: 'Take a structured action', body: 'Follow a guided improvement cycle, PDCA, 8D, DMAIC, or OODA, with AI support based on an Lean and VSM-structured knowledge base. From problem to root cause to fix.' },
             ].map(({ step, title, body }) => (
               <div key={step} style={{ display: 'flex', gap: 20 }}>
-                <div style={{ fontFamily: mono, fontSize: 11, color: '#0176D3', fontWeight: 700, paddingTop: 4, flexShrink: 0 }}>{step}</div>
+                <div style={{ fontFamily: mono, fontSize: 11, color: '#0B1D33', fontWeight: 700, paddingTop: 4, flexShrink: 0 }}>{step}</div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, color: 'var(--text)' }}>{title}</div>
                   <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.65, margin: 0 }}>{body}</p>
@@ -103,8 +103,8 @@ export default function LandingAIProcessImprovement() {
             { stat: 'ISO', label: '22468 VSM standard aligned' },
             { stat: '14d', label: 'Free trial, no card' },
           ].map(({ stat, label }) => (
-            <div key={label} style={{ textAlign: 'center', padding: '24px 16px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12 }}>
-              <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 700, color: '#0176D3', marginBottom: 6 }}>{stat}</div>
+            <div key={label} style={{ textAlign: 'center', padding: '24px 16px', background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 12 }}>
+              <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 700, color: '#0B1D33', marginBottom: 6 }}>{stat}</div>
               <div style={{ color: 'var(--text3)', fontSize: 13 }}>{label}</div>
             </div>
           ))}
@@ -119,7 +119,7 @@ export default function LandingAIProcessImprovement() {
             { q: 'Will this replace our current tools?', a: 'No. VeSiMy improves the way your team works, not forces a rip-and-replace. It helps you make better decisions and fix the process you already have.' },
             { q: 'How is this different from ChatGPT or Claude?', a: 'General AI tools know language. VeSiMy knows Lean methodology. It gives you operationally correct guidance, takt time calculations, waste classification, PDCA cycles, not polished-sounding generic advice.' },
           ].map(({ q, a }) => (
-            <div key={q} style={{ borderLeft: '3px solid rgba(1,118,211,0.3)', paddingLeft: 20 }}>
+            <div key={q} style={{ borderLeft: '3px solid rgba(11,29,51,0.3)', paddingLeft: 20 }}>
               <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{q}</div>
               <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.65, margin: 0 }}>{a}</p>
             </div>
@@ -128,7 +128,7 @@ export default function LandingAIProcessImprovement() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ background: '#032D60', padding: 'clamp(60px,8vh,100px) clamp(20px,5vw,48px)', textAlign: 'center' }}>
+      <section style={{ background: '#0B1D33', padding: 'clamp(60px,8vh,100px) clamp(20px,5vw,48px)', textAlign: 'center' }}>
         <h2 style={{ fontFamily: serif, fontSize: 'clamp(26px,4vw,44px)', fontWeight: 700, color: '#F1F5F9', marginBottom: 16 }}>
           If your team keeps saying "we need a better way to do this"
         </h2>
@@ -136,7 +136,7 @@ export default function LandingAIProcessImprovement() {
           Map a process in under 5 minutes. Get a real AI lean report with bottleneck identification, waste classification, and a first action for this week. No account required.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0176D3', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700 }}>
+          <Link href="/start" style={{ textDecoration: 'none', padding: '14px 32px', background: '#0B1D33', color: '#fff', borderRadius: 10, fontSize: 16, fontWeight: 700 }}>
             Map a Process Free
           </Link>
           <Link href="/auth/signup" style={{ textDecoration: 'none', padding: '14px 28px', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.65)', borderRadius: 10, fontSize: 15 }}>

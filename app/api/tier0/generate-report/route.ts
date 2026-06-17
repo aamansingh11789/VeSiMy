@@ -177,10 +177,10 @@ async function sendReportEmail(
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="background:#F3F3F3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;margin:0;padding:40px 20px">
-  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E5E5E5">
+<body style="background:#F7F8FA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;margin:0;padding:40px 20px">
+  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #DDE3EA">
 
-    <div style="background:#032D60;padding:28px 32px">
+    <div style="background:#0B1D33;padding:28px 32px">
       <div style="color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.3px">VeSiMy</div>
       <div style="color:#8ec5e8;font-size:13px;margin-top:4px">Lean Analysis Report</div>
     </div>
@@ -191,36 +191,36 @@ async function sendReportEmail(
         Here is the lean analysis for your <strong>${processName}</strong> process.
       </p>
 
-      <div style="background:#F8F8F8;border-radius:8px;padding:20px;margin-bottom:24px">
+      <div style="background:#F7F8FA;border-radius:8px;padding:20px;margin-bottom:24px">
         <p style="color:#181818;font-size:14px;font-weight:600;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.06em">Summary</p>
         <p style="color:#3E3E3C;font-size:15px;line-height:1.6;margin:0">${report.summary}</p>
       </div>
 
       <div style="display:grid;gap:12px;margin-bottom:24px">
-        <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
+        <div style="background:#F7F8FA;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Process Cycle Efficiency</span>
-          <span style="color:#0176D3;font-size:18px;font-weight:700">${report.pcePct}%</span>
+          <span style="color:#0B1D33;font-size:18px;font-weight:700">${report.pcePct}%</span>
         </div>
-        <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
+        <div style="background:#F7F8FA;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Value-added time</span>
           <span style="color:#2E844A;font-size:16px;font-weight:600">${vaMins} min of ${minutes} min</span>
         </div>
-        <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
+        <div style="background:#F7F8FA;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Primary waste type</span>
           <span style="color:#BA0517;font-size:15px;font-weight:600">${report.wasteType}</span>
         </div>
-        <div style="background:#F3F3F3;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
+        <div style="background:#F7F8FA;border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center">
           <span style="color:#706E6B;font-size:14px">Bottleneck step</span>
           <span style="color:#181818;font-size:15px;font-weight:600">${report.bottleneckStep}</span>
         </div>
       </div>
 
-      <div style="background:#EFF6FF;border-left:3px solid #0176D3;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:24px">
+      <div style="background:rgba(11,29,51,0.05);border-left:3px solid #C9A66B;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:24px">
         <p style="color:#0a3d78;font-size:13px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:0.06em">First Action This Week</p>
         <p style="color:#181818;font-size:15px;line-height:1.6;margin:0">${report.firstAction}</p>
       </div>
 
-      <div style="background:#F8F4FF;border-radius:8px;padding:16px 20px;margin-bottom:32px">
+      <div style="background:rgba(201,166,107,0.08);border-radius:8px;padding:16px 20px;margin-bottom:32px">
         <p style="color:#6426A0;font-size:13px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:0.06em">${report.leanConcept}</p>
         <p style="color:#3E3E3C;font-size:14px;line-height:1.6;margin:0">${report.leanConceptExplanation}</p>
       </div>
@@ -231,17 +231,17 @@ async function sendReportEmail(
           Build a full VSM map and run a complete improvement cycle. 14-day free trial, no card required.
         </p>
         <a href="https://vesimy.com/auth/signup?utm_source=tier0&utm_medium=email&utm_campaign=report_delivery"
-           style="display:inline-block;background:#0176D3;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600">
+           style="display:inline-block;background:#0B1D33;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600">
           Start Free Trial
         </a>
       </div>
     </div>
 
-    <div style="background:#F8F8F8;border-top:1px solid #E5E5E5;padding:20px 32px">
+    <div style="background:#F7F8FA;border-top:1px solid #E5E5E5;padding:20px 32px">
       <p style="color:#706E6B;font-size:13px;line-height:1.6;margin:0">
         Max Singh, Founder, VeSiMy<br>
         LSS Green Belt · 12+ years manufacturing operations · ex-Tesla<br>
-        <a href="mailto:founder@vesimy.com" style="color:#0176D3">founder@vesimy.com</a>
+        <a href="mailto:founder@vesimy.com" style="color:#0B1D33">founder@vesimy.com</a>
       </p>
       <p style="color:#A8A8A8;font-size:12px;margin:12px 0 0">
         You received this because you mapped a process at vesimy.com/start.

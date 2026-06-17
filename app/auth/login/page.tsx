@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import { VesimyLogo } from '@/components/ui/Logo'
+import { VsLogo } from '@/components/ui/VsLogo'
 
 function LoginForm() {
   const router       = useRouter()
@@ -96,21 +97,28 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4"
-         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(100,38,160,0.08) 0%, transparent 60%), var(--bg)' }}>
+         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,166,107,0.08) 0%, transparent 60%), var(--bg)' }}>
+      {/* Top-left brand, links home (matches homepage placement) */}
+      <Link href="/" aria-label="VeSiMy home"
+            style={{ position: 'fixed', top: 24, left: 28, zIndex: 50, display: 'flex', alignItems: 'center', gap: 10 }}>
+        <img src="/brand/vesimy-logo-mark.webp" width={32} height={32} alt="VeSiMy" style={{ display: 'block' }} />
+        <span style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: 22, color: 'var(--vs-navy-900, #0B1D33)', letterSpacing: '-0.02em' }}>VeSiMy</span>
+      </Link>
+
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <VesimyLogo size={56} />
-          </div>
-          <h1 style={{ fontFamily: 'Palatino Linotype,Book Antiqua,Palatino,serif', fontSize: 28, fontWeight: 700, letterSpacing: 1 }}
-              className="text-[var(--brand)]">
-            Vesimy
+          <Link href="/" className="flex justify-center mb-4" aria-label="VeSiMy home">
+            <img src="/brand/vesimy-logo-mark.webp" width={56} height={56} alt="VeSiMy" style={{ display: 'block' }} />
+          </Link>
+          <h1 style={{ fontFamily: "'Instrument Serif','Sora',serif", fontSize: 30, fontWeight: 400, letterSpacing: '-0.01em' }}
+              className="text-[var(--vs-navy-900,#0B1D33)]">
+            VeSiMy
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text3)', letterSpacing: 3 }}>CONTINUOUS IMPROVEMENT</p>
         </div>
 
         <div className="card p-6">
-          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: 'var(--border)', background: 'var(--bg2)' }}>
+          <div className="flex mb-6 rounded-[8px] overflow-hidden border" style={{ borderColor: 'var(--vs-slate-200, #DDE3EA)', background: 'var(--vs-white, #FFFFFF)' }}>
             {(['login', 'signup'] as const).map(m => (
               <button key={m} onClick={() => setMode(m)}
                 className="flex-1 py-2 text-sm font-medium transition-all"
@@ -135,9 +143,9 @@ function LoginForm() {
           </button>
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+            <div className="flex-1 h-px" style={{ background: 'var(--vs-slate-200, #DDE3EA)' }} />
             <span className="text-xs" style={{ color: 'var(--sl-400)' }}>or</span>
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+            <div className="flex-1 h-px" style={{ background: 'var(--vs-slate-200, #DDE3EA)' }} />
           </div>
 
           <form onSubmit={handleEmailAuth} className="space-y-4">
@@ -169,7 +177,7 @@ function LoginForm() {
                 <Link href="/auth/reset" className="hover:text-[var(--brand)] transition-colors">Forgot password?</Link>
               </p>
               {authErrorMsg?.includes('Email not confirmed') && (
-                <p className="text-xs" style={{ color: 'var(--amber)', background: 'rgba(212,168,67,0.08)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(212,168,67,0.20)' }}>
+                <p className="text-xs" style={{ color: 'var(--amber)', background: 'rgba(201,166,107,0.08)', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(201,166,107,0.20)' }}>
                   Check your inbox and click the confirmation link first, then sign in here.
                 </p>
               )}

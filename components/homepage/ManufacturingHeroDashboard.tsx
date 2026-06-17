@@ -33,7 +33,7 @@ const ANALYTICS_KPIS = [
   { label: 'Lead Time',        value: '12.6d', color: '#60A5FA' },
   { label: 'Cycle Time',       value: '210s',  color: '#34D399' },
   { label: 'Value Added Time', value: '3.2d',  color: '#A78BFA' },
-  { label: 'PCE',              value: '27.8%', color: '#FBBF24' },
+  { label: 'PCE',              value: '27.8%', color: '#D9C08A' },
   { label: 'WIP',              value: '49',    color: '#F87171' },
 ]
 
@@ -50,7 +50,7 @@ const WASTE = [
   { label: 'Waiting',         pct: 35, color: '#60A5FA' },
   { label: 'Motion',          pct: 22, color: '#34D399' },
   { label: 'Overprocess',     pct: 18, color: '#A78BFA' },
-  { label: 'Overproduction',  pct: 15, color: '#FBBF24' },
+  { label: 'Overproduction',  pct: 15, color: '#D9C08A' },
   { label: 'Defects',         pct: 10, color: '#F87171' },
 ]
 
@@ -173,16 +173,16 @@ export function ManufacturingHeroDashboard() {
             background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)',
             borderRadius: 999, padding: '5px 16px', marginBottom: 20,
           }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3B82F6', display: 'inline-block', boxShadow: '0 0 6px #3B82F6' }} />
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#3B82F6', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Manufacturing Intelligence</span>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3A5A7D', display: 'inline-block', boxShadow: '0 0 6px #3A5A7D' }} />
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#3A5A7D', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Manufacturing Intelligence</span>
           </div>
           <h2 style={{
             fontSize: 'clamp(26px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.1,
             color: '#0F172A', letterSpacing: -1, marginBottom: 16,
-            fontFamily: '"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif',
+            fontFamily: '"Sora","Book Antiqua",Sora,Inter,sans-serif',
           }}>
             See every bottleneck<br />
-            <span style={{ color: '#3B82F6' }}>before it slows production.</span>
+            <span style={{ color: '#3A5A7D' }}>before it slows production.</span>
           </h2>
           <p style={{ fontSize: 15, color: '#64748B', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
             Track cycle time, WIP, value-added time, and process efficiency across your line in one visual command center.
@@ -211,7 +211,7 @@ export function ManufacturingHeroDashboard() {
           }}>
             {/* Tablet chrome top bar */}
             <div style={{ height: 36, background: '#F8FAFF', borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 6 }}>
-              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF6B6B' }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#C94F4F' }} />
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFD93D' }} />
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#6BCB77' }} />
               <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
@@ -231,7 +231,7 @@ export function ManufacturingHeroDashboard() {
                 padding: '12px 0', gap: 4,
               }}>
                 {/* Logo mark */}
-                <div style={{ width: 28, height: 28, borderRadius: 7, background: 'linear-gradient(135deg,#3B82F6,#6366F1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
+                <div style={{ width: 28, height: 28, borderRadius: 7, background: 'linear-gradient(135deg,#3A5A7D,#1E2E4A)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
                   <span style={{ fontSize: 11, color: 'white', fontWeight: 900, fontFamily: 'var(--font-mono)' }}>V</span>
                 </div>
                 {RAIL_ICONS.map((icon, i) => (
@@ -239,7 +239,7 @@ export function ManufacturingHeroDashboard() {
                     width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     background: i === 0 ? 'white' : 'transparent',
                     boxShadow: i === 0 ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
-                    cursor: 'pointer', fontSize: 13, color: i === 0 ? '#3B82F6' : '#94A3B8',
+                    cursor: 'pointer', fontSize: 13, color: i === 0 ? '#3A5A7D' : '#94A3B8',
                   }}>{icon}</div>
                 ))}
               </div>
@@ -252,7 +252,7 @@ export function ManufacturingHeroDashboard() {
                     <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#94A3B8', letterSpacing: 1, marginBottom: 2 }}>ACME MANUFACTURING</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Current State, Assembly Line A</span>
-                      <span style={{ fontSize: 10, color: '#3B82F6', cursor: 'pointer' }}>✎</span>
+                      <span style={{ fontSize: 10, color: '#3A5A7D', cursor: 'pointer' }}>✎</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -281,7 +281,7 @@ export function ManufacturingHeroDashboard() {
                           style={{
                             position: 'relative', cursor: 'pointer',
                             background: step.id === activeStep ? '#EFF6FF' : 'white',
-                            border: `1.5px solid ${step.bot ? '#EF4444' : step.id === activeStep ? '#3B82F6' : '#E2E8F0'}`,
+                            border: `1.5px solid ${step.bot ? '#EF4444' : step.id === activeStep ? '#3A5A7D' : '#E2E8F0'}`,
                             borderRadius: 8, padding: '6px 10px', minWidth: 72,
                             boxShadow: step.id === activeStep ? '0 0 0 3px rgba(59,130,246,0.12)' : '0 1px 3px rgba(0,0,0,0.06)',
                             transition: 'all 0.15s',
@@ -291,7 +291,7 @@ export function ManufacturingHeroDashboard() {
                           {(step.bot || step.warn) && (
                             <div style={{
                               position: 'absolute', top: -5, right: -5, width: 14, height: 14,
-                              borderRadius: '50%', background: step.bot ? '#EF4444' : '#F59E0B',
+                              borderRadius: '50%', background: step.bot ? '#EF4444' : '#C9A66B',
                               display: 'flex', alignItems: 'center', justifyContent: 'center',
                               fontSize: 7, color: 'white', fontWeight: 700, zIndex: 1,
                             }}>!</div>
@@ -315,7 +315,7 @@ export function ManufacturingHeroDashboard() {
                 {/* Mini process cards */}
                 <div style={{ display: 'flex', gap: 6 }}>
                   {MINI_CARDS.map(card => {
-                    const vaColor = card.va === 'VA' ? '#10B981' : card.va === 'NVA' ? '#EF4444' : '#F59E0B'
+                    const vaColor = card.va === 'VA' ? '#10B981' : card.va === 'NVA' ? '#EF4444' : '#C9A66B'
                     return (
                       <div key={card.step} style={{
                         flex: 1, background: card.hot ? 'rgba(239,68,68,0.03)' : '#FAFBFF',
@@ -339,7 +339,7 @@ export function ManufacturingHeroDashboard() {
 
                 {/* Legend + KPI strip */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  {[['On Track', '#10B981'], ['At Risk', '#F59E0B'], ['Bottleneck', '#EF4444']].map(([label, color]) => (
+                  {[['On Track', '#10B981'], ['At Risk', '#C9A66B'], ['Bottleneck', '#EF4444']].map(([label, color]) => (
                     <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                       <div style={{ width: 7, height: 7, borderRadius: '50%', background: color }} />
                       <span style={{ fontSize: 8.5, color: '#64748B' }}>{label}</span>
@@ -363,7 +363,7 @@ export function ManufacturingHeroDashboard() {
                   ))}
                   <a href="/start" style={{ textDecoration: 'none' }}>
                     <button style={{
-                      background: 'linear-gradient(135deg, #3B82F6, #6366F1)',
+                      background: 'linear-gradient(135deg, #3A5A7D, #1E2E4A)',
                       border: 'none', borderRadius: 10, color: 'white',
                       padding: '10px 16px', fontSize: 11, fontWeight: 700, cursor: 'pointer',
                       boxShadow: '0 4px 12px rgba(59,130,246,0.35)',

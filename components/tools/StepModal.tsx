@@ -91,8 +91,8 @@ const FLOW_TYPES = [
 
 const VA_TYPES = [
   { value: 'va',   label: 'Value-Add (VA)',                color: '#1DD1A1', bg: 'rgba(29,209,161,0.08)',  hint: 'Customer pays for this, directly transforms the product or service' },
-  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#D4A843', bg: 'rgba(212,168,67,0.08)',   hint: 'Required but adds no customer value, inspections, compliance, setup' },
-  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#FF6B6B', bg: 'rgba(255,107,107,0.08)', hint: 'Pure waste, target for elimination first' },
+  { value: 'nnva', label: 'Necessary Non-Value-Add',       color: '#C9A66B', bg: 'rgba(201,166,107,0.08)',   hint: 'Required but adds no customer value, inspections, compliance, setup' },
+  { value: 'nva',  label: 'Non-Value-Add (Waste)',         color: '#C94F4F', bg: 'rgba(201,79,79,0.08)', hint: 'Pure waste, target for elimination first' },
 ]
 
 // ── Validation limits ─────────────────────────────────────────────────────────
@@ -133,8 +133,8 @@ function FieldLabel({ field, children }: { field: any; children?: any }) {
             onClick={() => setOpen(v => !v)}
             style={{
               width: 16, height: 16, borderRadius: '50%', cursor: 'pointer',
-              background: open ? 'var(--brand)' : 'rgba(212,168,67,0.14)',
-              border: '1px solid rgba(1,118,211,0.35)',
+              background: open ? 'var(--brand)' : 'rgba(201,166,107,0.14)',
+              border: '1px solid rgba(11,29,51,0.35)',
               color: open ? '#0D0C0A' : 'var(--brand)',
               fontSize: 9, fontWeight: 800,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -146,18 +146,18 @@ function FieldLabel({ field, children }: { field: any; children?: any }) {
               position: 'absolute', bottom: 'calc(100% + 6px)', right: 0,
               width: 290, zIndex: 9999,
               background: 'var(--bg)',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--vs-slate-200, #DDE3EA)',
               borderRadius: 10, padding: '12px 14px',
               boxShadow: '0 8px 32px rgba(0,0,0,0.22)',
             }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand)', marginBottom: 7 }}>{help.title}</div>
               <div style={{ fontSize: 11, color: 'var(--text2)', lineHeight: 1.65, marginBottom: help.example ? 8 : 0 }}>{help.body}</div>
               {help.example && (
-                <div style={{ fontSize: 10, color: 'var(--text3)', fontStyle: 'italic', lineHeight: 1.5, paddingTop: 7, borderTop: '1px solid var(--border)' }}>
+                <div style={{ fontSize: 10, color: 'var(--text3)', fontStyle: 'italic', lineHeight: 1.5, paddingTop: 7, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                   {help.example}
                 </div>
               )}
-              <div style={{ position: 'absolute', bottom: -5, right: 5, width: 9, height: 9, background: 'var(--bg)', border: '1px solid var(--border)', transform: 'rotate(45deg)', borderTop: 'none', borderLeft: 'none' }} />
+              <div style={{ position: 'absolute', bottom: -5, right: 5, width: 9, height: 9, background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', transform: 'rotate(45deg)', borderTop: 'none', borderLeft: 'none' }} />
             </div>
           )}
         </div>
@@ -198,8 +198,8 @@ function ValidatedInput({ field, value, onChange, hint, ...rest }) {
         <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 3, lineHeight: 1.4 }}>{hint}</div>
       )}
       {warn && (
-        <div style={{ fontSize: 10, color: '#D4A843', marginTop: 3, display: 'flex', alignItems: 'flex-start', gap: 4, lineHeight: 1.4 }}>
-          <AlertIcon size={13} color="#F4A623"/><span>{warn}</span>
+        <div style={{ fontSize: 10, color: '#C9A66B', marginTop: 3, display: 'flex', alignItems: 'flex-start', gap: 4, lineHeight: 1.4 }}>
+          <AlertIcon size={13} color="#C9A66B"/><span>{warn}</span>
         </div>
       )}
     </div>
@@ -297,7 +297,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
 
         {error && (
-          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(255,107,107,0.08)', border: '1px solid rgba(255,107,107,0.20)', color: '#FF6B6B', fontSize: 13 }}>
+          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(201,79,79,0.08)', border: '1px solid rgba(201,79,79,0.20)', color: '#C94F4F', fontSize: 13 }}>
             {error}
           </div>
         )}
@@ -308,7 +308,7 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {VA_TYPES.map(vt => (
               <button key={vt.value} type="button" onClick={() => upd('va_type', vt.value)}
-                style={{ flex: 1, minWidth: 80, padding: '8px 6px', borderRadius: 8, cursor: 'pointer', transition: 'all .15s', fontSize: 10, fontWeight: 700, background: form.va_type === vt.value ? vt.bg : 'var(--bg)', border: `1.5px solid ${form.va_type === vt.value ? vt.color : 'var(--border)'}`, color: form.va_type === vt.value ? vt.color : 'var(--text2)' }}>
+                style={{ flex: 1, minWidth: 80, padding: '8px 6px', borderRadius: 8, cursor: 'pointer', transition: 'all .15s', fontSize: 10, fontWeight: 700, background: form.va_type === vt.value ? vt.bg : 'var(--bg)', border: `1.5px solid ${form.va_type === vt.value ? vt.color : 'var(--vs-slate-200, #DDE3EA)'}`, color: form.va_type === vt.value ? vt.color : 'var(--text2)' }}>
                 {vt.label}
               </button>
             ))}
@@ -419,9 +419,9 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
         </div>
 
         {/* ── Operator Steps (Standard Work & Yamazumi) ── */}
-        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, overflow: 'hidden' }}>
           <button type="button" onClick={() => setShowOpSteps(v => !v)}
-            style={{ width: '100%', padding: '10px 14px', background: 'rgba(1,118,211,0.06)', border: 'none', color: '#D4A843', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            style={{ width: '100%', padding: '10px 14px', background: 'rgba(11,29,51,0.06)', border: 'none', color: '#C9A66B', fontWeight: 700, fontSize: 12, cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Operator Steps, Standard Work &amp; Yamazumi ({opSteps.length} tasks)</span>
             <span style={{ fontSize: 10 }}>{showOpSteps ? '▲ Hide' : '▼ Expand'}</span>
           </button>
@@ -434,23 +434,23 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                 <div>
                   <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', gap: 1, marginBottom: 4 }}>
                     {opTotal > 0 && <div style={{ width: `${(vaT/opTotal)*100}%`, background: '#1DD1A1' }} />}
-                    {opTotal > 0 && <div style={{ width: `${(nnvT/opTotal)*100}%`, background: '#D4A843' }} />}
-                    {opTotal > 0 && <div style={{ width: `${(nvT/opTotal)*100}%`, background: '#FF6B6B' }} />}
+                    {opTotal > 0 && <div style={{ width: `${(nnvT/opTotal)*100}%`, background: '#C9A66B' }} />}
+                    {opTotal > 0 && <div style={{ width: `${(nvT/opTotal)*100}%`, background: '#C94F4F' }} />}
                   </div>
                   <div style={{ display: 'flex', gap: 12, fontSize: 10, color: 'var(--text3)' }}>
                     <span style={{ color: '#1DD1A1' }}>VA: {vaT}s ({Math.round(vaT/opTotal*100)}%)</span>
-                    <span style={{ color: '#D4A843' }}>NNVA: {nnvT}s</span>
-                    <span style={{ color: '#FF6B6B' }}>NVA: {nvT}s ({Math.round(nvT/opTotal*100)}%)</span>
+                    <span style={{ color: '#C9A66B' }}>NNVA: {nnvT}s</span>
+                    <span style={{ color: '#C94F4F' }}>NVA: {nvT}s ({Math.round(nvT/opTotal*100)}%)</span>
                   </div>
                 </div>
               )}
               {opSteps.map((s, i) => {
                 const vc = VA_TYPES.find(v => v.value === s.va_type)?.color || 'var(--text3)'
                 return (
-                  <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)' }}>
+                  <div key={s.id} style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 20 }}>{i+1}</span>
                     <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: `${vc}22`, color: vc, fontWeight: 700, minWidth: 36, textAlign: 'center' }}>{s.va_type.toUpperCase()}</span>
-                    <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 40, textAlign: 'center' }}>{(s.step_type||'man').toUpperCase()}</span>
+                    <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: 'var(--vs-paper, #F7F8FA)', color: 'var(--text3)', fontFamily: 'var(--font-mono)', minWidth: 40, textAlign: 'center' }}>{(s.step_type||'man').toUpperCase()}</span>
                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                     <span style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{s.time}s</span>
                     <button type="button" onClick={() => setOpSteps(p => p.filter(x => x.id !== s.id))} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', fontSize: 14, padding: '0 2px' }}>×</button>
@@ -458,15 +458,15 @@ export function StepModal({ step, onSave, onClose }: { step?: any; onSave: any; 
                 )
               })}
               <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-                <select value={newStep.va_type} onChange={e => setNewStep(p => ({ ...p, va_type: e.target.value }))} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 11, padding: '6px 4px' }}>
+                <select value={newStep.va_type} onChange={e => setNewStep(p => ({ ...p, va_type: e.target.value }))} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 6, color: 'var(--text2)', fontSize: 11, padding: '6px 4px' }}>
                   <option value="va">VA</option><option value="nnva">NNVA</option><option value="nva">NVA</option>
                 </select>
-                <select value={newStep.step_type} onChange={e => setNewStep(p => ({ ...p, step_type: e.target.value }))} title="Man = operator work · Machine = waiting for machine · Walk = movement between locations" style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--text2)', fontSize: 11, padding: '6px 4px' }}>
+                <select value={newStep.step_type} onChange={e => setNewStep(p => ({ ...p, step_type: e.target.value }))} title="Man = operator work · Machine = waiting for machine · Walk = movement between locations" style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 6, color: 'var(--text2)', fontSize: 11, padding: '6px 4px' }}>
                   <option value="man">Man</option><option value="machine">Machine</option><option value="walk">Walk</option>
                 </select>
                 <input className="input" style={{ flex: 3, minWidth: 100, fontSize: 12 }} placeholder="Task name…" value={newStep.name} onChange={e => setNewStep(p => ({ ...p, name: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addOpStep()} />
                 <input className="input" type="number" style={{ flex: 1, minWidth: 60, fontSize: 12 }} placeholder="sec" value={newStep.time} onChange={e => setNewStep(p => ({ ...p, time: e.target.value }))} onKeyDown={e => e.key === 'Enter' && addOpStep()} />
-                <button type="button" onClick={addOpStep} style={{ background: 'rgba(1,118,211,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#D4A843', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36, minHeight: 36 }}>+</button>
+                <button type="button" onClick={addOpStep} style={{ background: 'rgba(11,29,51,0.15)', border: '1px solid rgba(212,168,67,0.3)', color: '#C9A66B', borderRadius: 8, cursor: 'pointer', fontSize: 16, minWidth: 36, minHeight: 36 }}>+</button>
               </div>
             </div>
           )}

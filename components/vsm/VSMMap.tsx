@@ -32,7 +32,7 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
   const dr  = step.defect_rate != null ? `${step.defect_rate}%` : ','
   const ops = step.operators || 1
   const isBN = takt > 0 && ct > 0 && ct > takt * 1.05
-  const BOX_STROKE = isBN ? '#DC2626' : '#374151'
+  const BOX_STROKE = isBN ? '#DC2626' : '#4F6174'
   const CT_COLOR   = isBN ? '#DC2626' : '#059669'
   const vaLabel = step.va_type === 'nnva' ? 'NNVA' : step.va_type === 'nva' ? 'NVA' : ''
 
@@ -46,7 +46,7 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
         {step.name.length > 16 ? step.name.slice(0,15)+'…' : step.name}
       </text>
       {step.department && (
-        <text x={x+PW/2} y={y+30} textAnchor="middle" fill="#6B7280" fontSize={7.5} fontFamily="sans-serif">{step.department}</text>
+        <text x={x+PW/2} y={y+30} textAnchor="middle" fill="#73879C" fontSize={7.5} fontFamily="sans-serif">{step.department}</text>
       )}
 
       {/* Operator icons (ISO lean: stick figures) */}
@@ -56,7 +56,7 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
           <circle cx={x + 8 + o*13} cy={y+PH-18} r={3} fill={BOX_STROKE} />
         </g>
       ))}
-      {ops > 4 && <text x={x+10+4*13} y={y+PH-7} fill="#374151" fontSize={8} fontFamily="sans-serif">+{ops-4}</text>}
+      {ops > 4 && <text x={x+10+4*13} y={y+PH-7} fill="#4F6174" fontSize={8} fontFamily="sans-serif">+{ops-4}</text>}
 
       {/* VA type tag */}
       {vaLabel && (
@@ -71,14 +71,14 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
       <line x1={x} y1={y+PH+DH*0.33} x2={x+PW} y2={y+PH+DH*0.33} stroke="#D1D5DB" strokeWidth={0.7} />
       <line x1={x} y1={y+PH+DH*0.66} x2={x+PW} y2={y+PH+DH*0.66} stroke="#D1D5DB" strokeWidth={0.7} />
       {/* C/T row */}
-      <text x={x+4}  y={y+PH+14}          fill="#6B7280" fontSize={7.5} fontFamily="monospace">C/T =</text>
+      <text x={x+4}  y={y+PH+14}          fill="#73879C" fontSize={7.5} fontFamily="monospace">C/T =</text>
       <text x={x+32} y={y+PH+14}          fill={CT_COLOR} fontSize={9}   fontWeight={700} fontFamily="monospace">{ct ? fmtS(ct) : ','}</text>
       {/* C/O row */}
-      <text x={x+4}  y={y+PH+DH*0.33+14} fill="#6B7280" fontSize={7.5} fontFamily="monospace">C/O =</text>
-      <text x={x+32} y={y+PH+DH*0.33+14} fill="#374151" fontSize={9}   fontFamily="monospace">{co ? fmtS(co) : '0s'}</text>
+      <text x={x+4}  y={y+PH+DH*0.33+14} fill="#73879C" fontSize={7.5} fontFamily="monospace">C/O =</text>
+      <text x={x+32} y={y+PH+DH*0.33+14} fill="#4F6174" fontSize={9}   fontFamily="monospace">{co ? fmtS(co) : '0s'}</text>
       {/* Uptime + defect row */}
-      <text x={x+4}  y={y+PH+DH*0.66+14} fill="#6B7280" fontSize={7.5} fontFamily="monospace">Up/Dr</text>
-      <text x={x+30} y={y+PH+DH*0.66+14} fill="#374151" fontSize={8}   fontFamily="monospace">{up}/{dr}</text>
+      <text x={x+4}  y={y+PH+DH*0.66+14} fill="#73879C" fontSize={7.5} fontFamily="monospace">Up/Dr</text>
+      <text x={x+30} y={y+PH+DH*0.66+14} fill="#4F6174" fontSize={8}   fontFamily="monospace">{up}/{dr}</text>
     </g>
   )
 }
@@ -86,7 +86,7 @@ const ProcessBox = ({ x, y, step, takt, highlight = false }: any) => {
 // ── ISO WIP inventory triangle ─────────────────────────────────────────────
 const WIPTriangle = ({ x, y, wip, label = '' }: any) => (
   <g>
-    <polygon points={`${x},${y+22} ${x+16},${y} ${x+32},${y+22}`} fill="#FEF3C7" stroke="#D97706" strokeWidth={1.5} />
+    <polygon points={`${x},${y+22} ${x+16},${y} ${x+32},${y+22}`} fill="#FEF3C7" stroke="#A8854F" strokeWidth={1.5} />
     <text x={x+16} y={y+17} textAnchor="middle" fill="#92400E" fontSize={9} fontWeight={700} fontFamily="sans-serif">{wip}</text>
     {label && <text x={x+16} y={y+33} textAnchor="middle" fill="#92400E" fontSize={7} fontFamily="sans-serif">{label}</text>}
   </g>
@@ -95,9 +95,9 @@ const WIPTriangle = ({ x, y, wip, label = '' }: any) => (
 // ── ISO supermarket shelf symbol ───────────────────────────────────────────
 const Supermarket = ({ x, y, w = 44, h = 32, qty = '' }: any) => (
   <g>
-    <rect x={x} y={y} width={w} height={h} fill="#EDE9FE" stroke="#7C3AED" strokeWidth={1.5} />
+    <rect x={x} y={y} width={w} height={h} fill="#EDE9FE" stroke="#1E2E4A" strokeWidth={1.5} />
     {[1,2,3].map(i => (
-      <line key={i} x1={x} y1={y+i*(h/4)} x2={x+w} y2={y+i*(h/4)} stroke="#7C3AED" strokeWidth={0.5} opacity={0.6} />
+      <line key={i} x1={x} y1={y+i*(h/4)} x2={x+w} y2={y+i*(h/4)} stroke="#1E2E4A" strokeWidth={0.5} opacity={0.6} />
     ))}
     <text x={x+w/2} y={y+h/2+4} textAnchor="middle" fill="#5B21B6" fontSize={8} fontWeight={700} fontFamily="sans-serif">
       {qty ? `S/M ${qty}` : 'S/M'}
@@ -155,7 +155,7 @@ export function VSMMap({ steps, branches, project }: Props) {
   })
   Object.values(branchGroups).forEach(g => g.sort((a,b)=>(a.branch_position||0)-(b.branch_position||0)))
   const branchIds = Object.keys(branchGroups)
-  const BRANCH_COLORS = ['#7C3AED','#0EA5E9','#10B981','#F59E0B','#EC4899','#06B6D4']
+  const BRANCH_COLORS = ['#1E2E4A','#0EA5E9','#10B981','#C9A66B','#EC4899','#06B6D4']
 
   const takt = project.takt_time ? Number(project.takt_time)
     : project.demand && project.available_time_sec ? Number(project.available_time_sec)/Number(project.demand)
@@ -210,7 +210,7 @@ export function VSMMap({ steps, branches, project }: Props) {
         <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.10" />
       </filter>
       <marker id="matArr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0,7 2.5,0 5" fill="#374151" />
+        <polygon points="0 0,7 2.5,0 5" fill="#4F6174" />
       </marker>
       <marker id="infoArr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
         <polygon points="0 0,7 2.5,0 5" fill="#0EA5E9" />
@@ -228,7 +228,7 @@ export function VSMMap({ steps, branches, project }: Props) {
     <text x={TOTAL_W/2} y={18} textAnchor="middle" fill="#1F2937" fontSize={13} fontWeight={700} fontFamily="sans-serif">
       Current-State Value Stream Map
     </text>
-    <text x={TOTAL_W/2} y={32} textAnchor="middle" fill="#6B7280" fontSize={9} fontFamily="sans-serif">
+    <text x={TOTAL_W/2} y={32} textAnchor="middle" fill="#73879C" fontSize={9} fontFamily="sans-serif">
       {project.name} · ISO 22468:2020
     </text>
 
@@ -250,16 +250,16 @@ export function VSMMap({ steps, branches, project }: Props) {
     <FactoryIcon x={supX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.supplier||'Supplier'} />
     <FactoryIcon x={custX} y={SUPPLIER_Y} w={FACT_W} h={FACT_H} label={project.customer||'Customer'} />
     {project.demand && (
-      <text x={custX+FACT_W/2} y={SUPPLIER_Y+FACT_H+22} textAnchor="middle" fill="#6B7280" fontSize={8} fontFamily="sans-serif">
+      <text x={custX+FACT_W/2} y={SUPPLIER_Y+FACT_H+22} textAnchor="middle" fill="#73879C" fontSize={8} fontFamily="sans-serif">
         {project.demand}/day
       </text>
     )}
 
     {/* Push arrows supplier→step1 and lastStep→customer */}
     <line x1={supX+FACT_W+20} y1={SUPPLIER_Y+FACT_H/2+30} x2={sx(0)} y2={PROC_Y+PH/2}
-      stroke="#374151" strokeWidth={2} markerEnd="url(#matArr)" />
+      stroke="#4F6174" strokeWidth={2} markerEnd="url(#matArr)" />
     <line x1={sx(n-1)+PW+4} y1={PROC_Y+PH/2} x2={custX-4} y2={SUPPLIER_Y+FACT_H/2+30}
-      stroke="#374151" strokeWidth={2} markerEnd="url(#matArr)" />
+      stroke="#4F6174" strokeWidth={2} markerEnd="url(#matArr)" />
 
     {/* ── Main flow steps ── */}
     {mainSteps.map((step, i) => {
@@ -277,11 +277,11 @@ export function VSMMap({ steps, branches, project }: Props) {
             <g>
               {/* Push arrow */}
               <line x1={sx(i-1)+PW+4} y1={PROC_Y+PH/2} x2={x-10} y2={PROC_Y+PH/2}
-                stroke="#374151" strokeWidth={2} />
+                stroke="#4F6174" strokeWidth={2} />
               <polygon points={`${x-10},${PROC_Y+PH/2-5} ${x},${PROC_Y+PH/2} ${x-10},${PROC_Y+PH/2+5}`}
-                fill="#374151" />
+                fill="#4F6174" />
               <text x={sx(i-1)+PW+GAP/2} y={PROC_Y+PH/2-8}
-                textAnchor="middle" fill="#9CA3AF" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
+                textAnchor="middle" fill="#A9B5C2" fontSize={7.5} fontFamily="sans-serif">PUSH</text>
 
               {/* WIP inventory triangle, always shown when wip > 0 */}
               {wip > 0 && (
@@ -314,7 +314,7 @@ export function VSMMap({ steps, branches, project }: Props) {
 
     {/* ── Timeline Bar, ISO 22468 style ── */}
     {/* Section label */}
-    <text x={flowX} y={TL_BASE-42} fill="#374151" fontSize={9} fontFamily="monospace" fontWeight={700} letterSpacing={1}>
+    <text x={flowX} y={TL_BASE-42} fill="#4F6174" fontSize={9} fontFamily="monospace" fontWeight={700} letterSpacing={1}>
       PROCESS TIMELINE
     </text>
     {/* VA row label */}
@@ -366,7 +366,7 @@ export function VSMMap({ steps, branches, project }: Props) {
           {wt>0 && i>0 && (
             <g>
               <rect x={sx(i-1)+PW+4} y={TL_BASE} width={GAP-8} height={vh} fill="#FCA5A5" opacity={0.8} />
-              <text x={sx(i-1)+PW+GAP/2} y={TL_BASE+vh+9} textAnchor="middle" fill="#9CA3AF" fontSize={7} fontFamily="monospace">{fmtS(wt)}</text>
+              <text x={sx(i-1)+PW+GAP/2} y={TL_BASE+vh+9} textAnchor="middle" fill="#A9B5C2" fontSize={7} fontFamily="monospace">{fmtS(wt)}</text>
             </g>
           )}
           <rect x={bx+4} y={TL_BASE-ph} width={PW-8} height={ph} fill={isBN?'#FCA5A5':'#6EE7B7'} opacity={0.9} />
@@ -426,7 +426,7 @@ export function VSMMap({ steps, branches, project }: Props) {
     })}
 
     {/* ── Footer KPIs ── */}
-    <text x={flowX} y={TOTAL_H-10} fill="#6B7280" fontSize={9} fontFamily="monospace">
+    <text x={flowX} y={TOTAL_H-10} fill="#73879C" fontSize={9} fontFamily="monospace">
       {`Lead Time: ${fmtS(lt)}  ·  VA: ${fmtS(mainCT)}  ·  PCE: ${pce?pce.toFixed(1)+'%':','}  ·  Takt: ${takt?fmtS(takt):','}  ·  WIP: ${totalWIP||','}`}
     </text>
   </>)
@@ -436,20 +436,20 @@ export function VSMMap({ steps, branches, project }: Props) {
       {/* KPI strip */}
       <div style={{ display:'flex', gap:8, flexWrap:'wrap', marginBottom:14, alignItems:'stretch' }}>
         {[
-          { l:'Lead Time',   v:fmtS(lt),                        c:'#0176D3' },
+          { l:'Lead Time',   v:fmtS(lt),                        c:'#0B1D33' },
           { l:'Value Added', v:fmtS(mainCT),                    c:'#059669' },
-          { l:'NVA / Wait',  v:fmtS(mainWT),                    c:'#6B7280' },
+          { l:'NVA / Wait',  v:fmtS(mainWT),                    c:'#73879C' },
           { l:'Takt Time',   v:takt?fmtS(takt):',',             c:'#0EA5E9' },
           { l:'PCE',         v:fmtPCE(pce),                     c:pceColor(pce) },
-          { l:'Total WIP',   v:totalWIP||',',                   c:totalWIP>0?'#D97706':'#6B7280' },
+          { l:'Total WIP',   v:totalWIP||',',                   c:totalWIP>0?'#A8854F':'#73879C' },
         ].map(m => (
-          <div key={m.l} style={{ flex:'1 1 100px', border:'1px solid var(--border)', borderRadius:8, padding:'8px 12px' }}>
+          <div key={m.l} style={{ flex:'1 1 100px', border:'1px solid var(--vs-slate-200, #DDE3EA)', borderRadius:8, padding:'8px 12px' }}>
             <div style={{ fontSize:8, color:'var(--text3)', letterSpacing:1.2, fontFamily:'var(--font-mono)', marginBottom:4 }}>{m.l}</div>
             <div style={{ fontSize:16, fontWeight:700, color:m.c }}>{m.v}</div>
           </div>
         ))}
         <button onClick={() => setFullscreen(true)}
-          style={{ padding:'8px 14px', borderRadius:8, fontSize:14, cursor:'pointer', background:'transparent', border:'1px solid var(--border)', color:'var(--text2)', alignSelf:'stretch' }}
+          style={{ padding:'8px 14px', borderRadius:8, fontSize:14, cursor:'pointer', background:'transparent', border:'1px solid var(--vs-slate-200, #DDE3EA)', color:'var(--text2)', alignSelf:'stretch' }}
           title="Fullscreen"><ExternalLinkIcon size={14}/></button>
       </div>
 
@@ -481,10 +481,10 @@ export function VSMMap({ steps, branches, project }: Props) {
       {/* ISO Legend */}
       <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginTop:10, fontSize:11, color:'var(--text2)' }}>
         {[
-          { c:'#FFFFFF', s:'#374151', l:'Process (VA)' },
+          { c:'#FFFFFF', s:'#4F6174', l:'Process (VA)' },
           { c:'#FFFFFF', s:'#DC2626', l:'Bottleneck ▲TAKT' },
-          { c:'#FEF3C7', s:'#D97706', l:'WIP Inventory ▲' },
-          { c:'#EDE9FE', s:'#7C3AED', l:'Supermarket S/M' },
+          { c:'#FEF3C7', s:'#A8854F', l:'WIP Inventory ▲' },
+          { c:'#EDE9FE', s:'#1E2E4A', l:'Supermarket S/M' },
           { c:'#FEF9C3', s:'#EAB308', l:'Kaizen 改善' },
           { c:'#D1FAE5', s:'#059669', l:'Production Control' },
           { c:'#DBEAFE', s:'#0EA5E9', l:'Info Flow ----' },

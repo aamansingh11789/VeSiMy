@@ -72,8 +72,8 @@ export function InstallPrompt() {
         left:       '50%',
         transform:  'translateX(-50%)',
         zIndex:     9999,
-        background: 'var(--bg3)',
-        border:     '1px solid rgba(1,118,211,0.35)',
+        background: 'var(--vs-paper, #F7F8FA)',
+        border:     '1px solid rgba(11,29,51,0.35)',
         borderRadius: 14,
         padding:    '14px 20px',
         display:    'flex',
@@ -87,7 +87,7 @@ export function InstallPrompt() {
         {/* Logo mark */}
         <div style={{
           width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-          background: 'linear-gradient(135deg, var(--border), var(--border2))',
+          background: 'linear-gradient(135deg, var(--vs-slate-200, #DDE3EA), var(--vs-slate-200, #DDE3EA))',
           border: '1px solid rgba(212,168,67,0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 22,
@@ -110,7 +110,7 @@ export function InstallPrompt() {
           <button
             onClick={handleInstall}
             style={{
-              background: 'linear-gradient(135deg, #B8912E, #D4A843)',
+              background: 'linear-gradient(135deg, #A8854F, #C9A66B)',
               color:      'var(--bg)',
               border:     'none',
               borderRadius: 7,
@@ -155,7 +155,7 @@ export function InstallPrompt() {
         left:       0,
         right:      0,
         zIndex:     9999,
-        background: 'var(--bg3)',
+        background: 'var(--vs-paper, #F7F8FA)',
         borderTop:  '1px solid rgba(212,168,67,0.3)',
         padding:    '20px 24px 32px',
         animation:  'slideUpFull 0.3s ease',
@@ -189,10 +189,10 @@ export function InstallPrompt() {
           }}>
             <div style={{
               width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-              background: 'rgba(212,168,67,0.12)',
-              border:     '1px solid rgba(212,168,67,0.25)',
+              background: 'rgba(201,166,107,0.12)',
+              border:     '1px solid rgba(201,166,107,0.25)',
               display:    'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 13, color: '#D4A843', fontWeight: 700,
+              fontSize: 13, color: '#C9A66B', fontWeight: 700,
             }}>{step.icon}</div>
             <div style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.5, paddingTop: 4 }}>
               {step.text}

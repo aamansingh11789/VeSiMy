@@ -15,7 +15,7 @@ interface Props {
 }
 
 const VA_LABELS: Record<string, string> = { va: 'VA', nnva: 'NNVA', nva: 'NVA' }
-const VA_COLORS: Record<string, string> = { va: '#1DD1A1', nnva: '#D4A843', nva: '#FF6B6B' }
+const VA_COLORS: Record<string, string> = { va: '#1DD1A1', nnva: '#C9A66B', nva: '#C94F4F' }
 
 export default function StandardWorkTool({ steps, takt, projectName, onClose }: Props) {
   const { result: aiResult, source: aiSource, loading: aiLoading, error: aiError, assist: aiAssist, clear: aiClear } = useAIAssist()
@@ -112,7 +112,7 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
       onClose={onClose}
     >
       {/* View-only notice */}
-      <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623', marginBottom: 12 }}>
+      <div style={{ padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 12, color: '#C9A66B', marginBottom: 12 }}>
         View only, this chart reads from your step data. Edit cycle times and op steps in each step to update it.
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -164,10 +164,10 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                   {[
                     { label: 'Total CT',  val: `${totalTime}s`, color: 'var(--text)' },
                     { label: '% VA',      val: `${pct}%`,       color: '#1DD1A1' },
-                    { label: 'Takt',      val: takt ? `${takt}s` : ',', color: takt && totalTime > takt ? '#FF6B6B' : '#D4A843' },
+                    { label: 'Takt',      val: takt ? `${takt}s` : ',', color: takt && totalTime > takt ? '#C94F4F' : '#C9A66B' },
                     { label: 'Tasks',     val: String(opSteps.length), color: 'var(--text)' },
                   ].map(({ label, val, color }) => (
-                    <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px', textAlign: 'center' }}>
+                    <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '8px', textAlign: 'center' }}>
                       <div style={{ fontSize: 15, fontWeight: 700, color }}>{val}</div>
                       <div style={{ fontSize: 9, color: 'var(--text3)' }}>{label}</div>
                     </div>
@@ -179,24 +179,24 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                   <div>
                     <div style={{ display: 'flex', height: 10, borderRadius: 5, overflow: 'hidden', gap: 1 }}>
                       <div style={{ width: `${vaTime/totalTime*100}%`, background: '#1DD1A1' }} />
-                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#D4A843' }} />
-                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#FF6B6B' }} />
+                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#C9A66B' }} />
+                      <div style={{ width: `${opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)/totalTime*100}%`, background: '#C94F4F' }} />
                     </div>
                     <div style={{ display: 'flex', gap: 10, fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>
                       <span style={{ color: '#1DD1A1' }}>VA: {vaTime}s</span>
-                      <span style={{ color: '#D4A843' }}>NNVA: {opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
-                      <span style={{ color: '#FF6B6B' }}>NVA: {opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
+                      <span style={{ color: '#C9A66B' }}>NNVA: {opSteps.filter((s:any)=>s.va_type==='nnva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
+                      <span style={{ color: '#C94F4F' }}>NVA: {opSteps.filter((s:any)=>s.va_type==='nva').reduce((a:number,s:any)=>a+s.time,0)}s</span>
                     </div>
                   </div>
                 )}
 
                 {/* Task table */}
-                <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
+                <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, overflow: 'hidden' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', background: 'transparent', padding: '6px 10px', fontSize: 10, color: 'var(--text3)', fontWeight: 700 }}>
                     <span>#</span><span>Task</span><span style={{ textAlign: 'center' }}>Type</span><span style={{ textAlign: 'right' }}>Time</span>
                   </div>
                   {opSteps.map((s: any, i: number) => (
-                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'transparent', alignItems: 'center' }}>
+                    <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', background: i % 2 === 0 ? 'transparent' : 'transparent', alignItems: 'center' }}>
                       <span style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'var(--font-mono)' }}>{i + 1}</span>
                       <span style={{ fontSize: 12, color: 'var(--text2)' }}>{s.name}</span>
                       <span style={{ textAlign: 'center' }}>
@@ -207,18 +207,18 @@ export default function StandardWorkTool({ steps, takt, projectName, onClose }: 
                       <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text2)', textAlign: 'right' }}>{s.time}s</span>
                     </div>
                   ))}
-                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--border)', background: 'rgba(1,118,211,0.06)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 52px 52px', padding: '7px 10px', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'rgba(11,29,51,0.06)' }}>
                     <span />
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#D4A843' }}>Total</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#C9A66B' }}>Total</span>
                     <span />
-                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#D4A843', textAlign: 'right' }}>{totalTime}s</span>
+                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#C9A66B', textAlign: 'right' }}>{totalTime}s</span>
                   </div>
                 </div>
 
                 {/* Takt warning */}
                 {takt > 0 && totalTime > takt && (
-                  <div style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#FF6B6B' }}>
-                    <span style={{color:"#D4A843",fontWeight:700}}>OVER TAKT:</span> Cycle time <strong>{totalTime}s</strong> exceeds takt time <strong>{takt}s</strong> by {totalTime - takt}s. This step is a bottleneck, load-balance tasks to another operator or kaizen the NVA elements.
+                  <div style={{ background: 'rgba(201,79,79,0.06)', border: '1px solid rgba(201,79,79,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#C94F4F' }}>
+                    <span style={{color:"#C9A66B",fontWeight:700}}>OVER TAKT:</span> Cycle time <strong>{totalTime}s</strong> exceeds takt time <strong>{takt}s</strong> by {totalTime - takt}s. This step is a bottleneck, load-balance tasks to another operator or kaizen the NVA elements.
                   </div>
                 )}
 

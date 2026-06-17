@@ -18,20 +18,21 @@ import {
 import type { Profile } from '@/lib/store'
 
 const NAVY = {
-  900: '#04111F',
-  800: '#071828',
-  700: '#0A2035',
-  600: '#0E2A46',
-  500: '#1A4270',
-  400: '#4A7BAA',
-  300: '#7AAECF',
-  200: '#A8CDE6',
-  100: '#FDF3D8',
+  950: '#071A2F',
+  900: '#0B1D33',  // sidebar bg
+  800: '#0F2747',
+  700: '#163A5F',  // active item bg
+  600: '#2F5D8A',  // hover blue
+  500: '#3A6FA3',
+  400: '#A9B5C2',
+  300: '#DDE3EA',
+  200: '#EEF2F6',
+  100: '#F7F8FA',
 }
-const BLUE    = '#D4A843'
-const BLUE_LT = '#A8CDE6'
+const BLUE    = '#C9A66B'  // champagne gold accent
+const BLUE_LT = '#D9C08A'  // sand
 const WHITE   = '#FFFFFF'
-const VIOLET  = '#8C44CC'
+const VIOLET  = '#C9A66B'  // gold for premium/upgrade
 
 const W_OPEN     = 240
 const W_COLLAPSED = 56
@@ -129,20 +130,20 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
         gap: 8, flexShrink: 0,
       }}>
         {!collapsed && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <VLogoMark size={32} />
             <div>
               <VeSiMyWordmark size={16} onDark />
               <div style={{
-                fontSize: 9, letterSpacing: 1.8, color: '#E8941A',
+                fontSize: 9, letterSpacing: 1.8, color: 'var(--vs-gold-600, #C9A66B)',
                 fontFamily: 'var(--font-mono)', textTransform: 'uppercase', marginTop: 2,
               }}>
                 Process Intelligence
               </div>
             </div>
-          </div>
+          </Link>
         )}
-        {collapsed && <VLogoMark size={30} />}
+        {collapsed && <Link href="/dashboard"><VLogoMark size={30} /></Link>}
 
         {/* Collapse toggle, hidden when forced collapsed */}
         {!forcedCollapsed && (
@@ -156,7 +157,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               color: NAVY[300], flexShrink: 0,
               transition: 'all .15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212,168,67,0.08)'; e.currentTarget.style.color = '#F5E6A8' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(201,166,107,0.06)'; e.currentTarget.style.color = '#D9C8A9' }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = NAVY[400] }}
           >
             {/* Chevron icon, points left when open, right when collapsed */}
@@ -182,7 +183,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
               <Link href="/pricing" style={{
                 fontSize: 11, fontWeight: 700,
                 textDecoration: 'none',
-                background: 'linear-gradient(135deg,#D4A843,#B8912E)', color: '#1A0E00', padding: '3px 10px', borderRadius: 4,
+                background: '#C9A66B', color: '#0B1D33', padding: '3px 10px', borderRadius: 4,
               }}>
                 Upgrade
               </Link>
@@ -195,7 +196,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             }}>
               <div style={{
                 width: 20, height: 20, borderRadius: 5,
-                background: isGold ? 'rgba(212,168,67,0.3)' : 'rgba(140,68,204,0.3)',
+                background: isGold ? 'rgba(212,168,67,0.3)' : 'rgba(201,166,107,0.32)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <CrownIcon size={11} color={isGold ? BLUE_LT : VIOLET} />
@@ -244,9 +245,9 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                   justifyContent: collapsed ? 'center' : 'flex-start',
                   fontSize: 13, fontWeight: active ? 700 : 500,
                   textDecoration: 'none',
-                  color: active ? '#F5E6A8' : '#7AAECF',
-                  background: active ? 'rgba(212,168,67,0.18)' : 'transparent',
-                  borderLeft: collapsed ? 'none' : `3px solid ${active ? '#E8941A' : 'transparent'}`,
+                  color: active ? '#D9C8A9' : '#7AAECF',
+                  background: active ? 'rgba(201,166,107,0.18)' : 'transparent',
+                  borderLeft: collapsed ? 'none' : `3px solid ${active ? 'var(--vs-gold-600, #C9A66B)' : 'transparent'}`,
                   borderRadius: collapsed ? 8 : '0 6px 6px 0',
                   margin: collapsed ? '0 8px' : undefined,
                   transition: 'all 0.12s',
@@ -267,7 +268,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
                 <div style={{
                   width: 24, height: 24, borderRadius: 6, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: active ? 'rgba(1,118,211,0.35)' : 'transparent',
+                  background: active ? 'rgba(11,29,51,0.35)' : 'transparent',
                 }}>
                   <Icon size={14} color={active ? WHITE : NAVY[400]} />
                 </div>
@@ -282,8 +283,8 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
       {!collapsed && (
         <div style={{
           margin: '8px 10px', flexShrink: 0,
-          background: 'rgba(1,118,211,0.15)',
-          border: `1px solid rgba(1,118,211,0.30)`,
+          background: 'rgba(11,29,51,0.15)',
+          border: `1px solid rgba(11,29,51,0.30)`,
           borderRadius: 8, padding: '10px 12px',
         }}>
           <div style={{ fontSize: 10, color: BLUE_LT, fontWeight: 700, letterSpacing: 0.5, marginBottom: 4 }}>

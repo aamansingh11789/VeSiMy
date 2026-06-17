@@ -104,7 +104,7 @@ export const ISO_STYLES = `
   .iso-standards-bar {
     background: #f9f9f9;
     border: 0.75pt solid #ddd;
-    border-left: 3pt solid #8B6A00;
+    border-left: 3pt solid #A8854F;
     padding: 7pt 10pt;
     font-size: 8.5pt;
     color: #333;
@@ -136,7 +136,7 @@ export const ISO_STYLES = `
   .kpi-value {
     font-size: 17pt;
     font-weight: 700;
-    color: #8B6A00;
+    color: #A8854F;
     line-height: 1;
   }
   .kpi-sub { font-size: 8pt; color: #888; margin-top: 2pt; }
@@ -205,7 +205,7 @@ export const ISO_STYLES = `
     font-size: 9.5pt;
     background: #fefefe;
   }
-  .obs-box.finding { border-left-color: #0176D3; }
+  .obs-box.finding { border-left-color: #0B1D33; }
   .obs-box.waste   { border-left-color: #cc3300; }
   .obs-box.ok      { border-left-color: #0a5; }
   .obs-label { font-weight: 700; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3pt; color: #444; font-family: Arial, sans-serif; }

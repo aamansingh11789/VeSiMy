@@ -8,7 +8,7 @@ export const metadata = { title: 'Terms of Service, VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
-    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
+    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: "'Sora','Inter',sans-serif" }}>{title}</h2>
     <div style={{ color: 'var(--text3)', fontSize: 14, lineHeight: 1.8 }}>{children}</div>
   </div>
 )
@@ -24,12 +24,12 @@ export default function TermsPage() {
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
-          <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
+          <h1 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Terms of Service</h1>
           <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated by VeSiMy Ltd, a company registered in England and Wales. These Terms are governed by the laws of England and Wales.</p>
+          <p>By accessing or using VeSiMy ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service. VeSiMy is operated from Pleasant Hill, California, United States. These Terms are governed by the laws of the State of California.</p>
         </Section>
 
         <Section title="2. Description of Service">
@@ -53,7 +53,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="7. Intellectual Property">
-          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy Ltd and are protected by international copyright and other intellectual property laws. The VeSiMy name, logo, and associated marks are proprietary to VeSiMy Ltd.</p>
+          <p>VeSiMy and its original content, features, and functionality are owned by VeSiMy and are protected by international copyright and other intellectual property laws. The VeSiMy name, logo, and associated marks are proprietary to VeSiMy.</p>
         </Section>
 
         <Section title="8. Limitation of Liability">
@@ -69,7 +69,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a></p>
+          <p>For questions about these Terms, contact us at: <a href="mailto:founder@vesimy.com" style={{ color: '#0B1D33' }}>founder@vesimy.com</a></p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>

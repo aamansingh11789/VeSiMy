@@ -92,9 +92,9 @@ export function calcHealth(steps: Step[]): HealthScore {
   )
 
   let label: string, color: string
-  if      (total >= 85) { label = 'Excellent'; color = '#D4A843' }
-  else if (total >= 70) { label = 'Good';      color = '#D4A843' }
-  else if (total >= 50) { label = 'Fair';      color = '#D97706' }
+  if      (total >= 85) { label = 'Excellent'; color = '#3A5A7D' }
+  else if (total >= 70) { label = 'Good';      color = '#3A5A7D' }
+  else if (total >= 50) { label = 'Fair';      color = '#A8854F' }
   else if (total >= 30) { label = 'Poor';      color = '#C05621' }
   else                  { label = 'Critical';  color = '#C0180C' }
 

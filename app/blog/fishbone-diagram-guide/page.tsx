@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export default function FishboneDiagramPost() {
   return (
@@ -57,7 +57,7 @@ export default function FishboneDiagramPost() {
             ['Measurement', 'Gauge R&R, calibration status, measurement system consistency. A significant fraction of quality escapes turn out to be measurement problems rather than process problems.'],
             ['Mother Nature (Environment)', 'Temperature, humidity, contamination, shift timing, seasonal variation. Often overlooked, sometimes decisive, particularly in electronics, food, and pharmaceutical environments.'],
           ].map(([cat, desc]) => (
-            <div key={cat} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 16, marginBottom: 14, borderBottom: '1px solid var(--border)', paddingBottom: 14 }}>
+            <div key={cat} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 16, marginBottom: 14, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', paddingBottom: 14 }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14 }}>{cat}</div>
               <div style={{ fontSize: 14, lineHeight: 1.7 }}>{desc}</div>
             </div>
@@ -84,11 +84,11 @@ export default function FishboneDiagramPost() {
             { cat: 'Measurement', causes: ['Gauge last calibrated 14 months ago, 12-month interval', 'Two gauges in use, no study on inter-gauge correlation'] },
             { cat: 'Environment', causes: ['Machine located near dock door, temperature swing of 8°C over shift', 'Coolant concentration not checked since maintenance window'] },
           ].map(item => (
-            <div key={item.cat} style={{ marginBottom: 12, background: 'rgba(248,247,245,0.5)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 16px' }}>
+            <div key={item.cat} style={{ marginBottom: 12, background: 'rgba(248,247,245,0.5)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 16px' }}>
               <div style={{ fontWeight: 700, color: 'var(--text)', marginBottom: 6, fontSize: 14 }}>{item.cat}</div>
               {item.causes.map(c => (
                 <div key={c} style={{ display: 'flex', gap: 8, marginBottom: 4, fontSize: 13 }}>
-                  <span style={{ color: '#0176D3', flexShrink: 0 }}>→</span>
+                  <span style={{ color: '#0B1D33', flexShrink: 0 }}>→</span>
                   <span>{c}</span>
                 </div>
               ))}
@@ -107,7 +107,7 @@ export default function FishboneDiagramPost() {
           <div style={{ background: 'rgba(29,209,161,0.06)', border: '1px solid rgba(29,209,161,0.2)', borderRadius: 12, padding: '20px 24px', marginTop: 32 }}>
             <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Run a Fishbone analysis free</div>
             <p style={{ margin: '0 0 16px', fontSize: 14, lineHeight: 1.7 }}>Connected to 5 Why and your VSM. AI-assisted cause generation. ISO export when you need it.</p>
-            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0176D3', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/auth/signup" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0B1D33', color: '#0D0C0A', padding: '10px 22px', borderRadius: 9, fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               Start free →
             </Link>
           </div>

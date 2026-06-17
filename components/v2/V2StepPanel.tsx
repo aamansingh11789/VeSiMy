@@ -79,7 +79,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       placeholder={placeholder}
       value={form[field] ?? ''}
       onChange={e => update({ [field]: type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value })}
-      style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)', ...style }}
+      style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)', ...style }}
     />
   )
 
@@ -91,7 +91,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
 
   const section = (title: string, children: React.ReactNode) => (
     <div style={{ marginBottom: 20 }}>
-      <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, color: BRAND, marginBottom: 10, paddingBottom: 6, borderBottom: '1px solid var(--border)' }}>
+      <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, color: BRAND, marginBottom: 10, paddingBottom: 6, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
         {title}
       </div>
       {children}
@@ -101,7 +101,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
   return (
     <div className="v2-step-panel" style={{
       position: 'absolute', top: 0, right: 0, bottom: 0, width: 380,
-      background: 'white', borderLeft: '1px solid var(--border)',
+      background: 'white', borderLeft: '1px solid var(--vs-slate-200, #DDE3EA)',
       display: 'flex', flexDirection: 'column', zIndex: 20,
       boxShadow: '-8px 0 32px rgba(0,0,0,.08)',
       animation: 'slideIn .2s ease',
@@ -110,12 +110,12 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       {/* Mobile drag handle, only visible on small screens via CSS */}
       <div style={{
         display: 'none', // shown via CSS on mobile
-        width: 40, height: 4, background: 'var(--sl-300)',
+        width: 40, height: 4, background: 'var(--vs-slate-200, #DDE3EA)',
         borderRadius: 999, margin: '10px auto 4px', flexShrink: 0,
       }} className="step-panel-handle" />
 
       {/* Header */}
-      <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
+      <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: BRAND, letterSpacing: 1.5, marginBottom: 4 }}>
@@ -124,7 +124,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
             <input
               value={form.name}
               onChange={e => update({ name: e.target.value })}
-              style={{ width: '100%', fontFamily: SERIF, fontSize: 17, fontWeight: 700, border: 'none', outline: 'none', padding: 0, color: 'var(--text)', background: 'transparent' }}
+              style={{ width: '100%', fontFamily: "'Sora','Inter',sans-serif", fontSize: 17, fontWeight: 650, letterSpacing: '-0.01em', border: 'none', outline: 'none', padding: 0, color: 'var(--text)', background: 'transparent' }}
               placeholder="Step name…"
             />
           </div>
@@ -133,9 +133,9 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
 
         {/* SOP change prompt */}
         {form.from_sop && sopChanged && !sopDismissed && (
-          <div style={{ marginTop: 10, padding: '8px 10px', background: 'rgba(244,166,35,.08)', border: '1px solid rgba(244,166,35,.3)', borderRadius: 7, fontSize: 11, color: '#7A5200', lineHeight: 1.6 }}>
+          <div style={{ marginTop: 10, padding: '8px 10px', background: 'rgba(201,166,107,0.10)', border: '1px solid rgba(201,166,107,0.30)', borderRadius: 7, fontSize: 11, color: 'var(--vs-navy-900, #0B1D33)', lineHeight: 1.6 }}>
             ℹ️ This step came from your uploaded SOP. Your changes differ from the original. If this improvement is not yet in your action plan, <strong>consider reporting this change to your process control department</strong> for future SOP updates.
-            <button onClick={() => setSopDismissed(true)} style={{ display: 'block', marginTop: 5, fontSize: 10, color: '#7A5200', background: 'none', border: '1px solid rgba(244,166,35,.4)', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Understood, dismiss</button>
+            <button onClick={() => setSopDismissed(true)} style={{ display: 'block', marginTop: 5, fontSize: 10, color: 'var(--vs-navy-900, #0B1D33)', background: 'none', border: '1px solid rgba(201,166,107,0.40)', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Understood, dismiss</button>
           </div>
         )}
       </div>
@@ -148,14 +148,14 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
             <div>
               {iLabel('Step Type')}
               <select value={form.step_type} onChange={e => update({ step_type: e.target.value })}
-                style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, background: 'var(--sl-50)', color: 'var(--text)' }}>
+                style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, background: 'var(--vs-paper, #F7F8FA)', color: 'var(--text)' }}>
                 {STEP_TYPES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
               </select>
             </div>
             <div>
               {iLabel('VA Classification')}
               <select value={form.is_value_added || 'unclassified'} onChange={e => update({ is_value_added: e.target.value })}
-                style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, background: 'var(--sl-50)', color: 'var(--text)' }}>
+                style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, background: 'var(--vs-paper, #F7F8FA)', color: 'var(--text)' }}>
                 {VA_OPTIONS.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
               </select>
               {form.is_value_added && form.is_value_added !== 'unclassified' && (
@@ -171,7 +171,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
           <>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 8 }}>
               {(form.tasks || []).map((task: string, i: number) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, padding: '6px 9px', background: 'var(--sl-50)', borderRadius: 6, border: '1px solid var(--border)' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, padding: '6px 9px', background: 'var(--vs-paper, #F7F8FA)', borderRadius: 6, border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                   <span style={{ fontSize: 10, color: BRAND, fontFamily: 'var(--font-mono)', flexShrink: 0, marginTop: 2 }}>{i+1}.</span>
                   <span style={{ flex: 1, fontSize: 12, color: 'var(--text)', lineHeight: 1.5 }}>{task}</span>
                   <button onClick={() => removeTask(i)} style={{ background: 'none', border: 'none', color: '#ccc', cursor: 'pointer', fontSize: 14, padding: 0, flexShrink: 0 }}>×</button>
@@ -184,7 +184,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
                 onChange={e => setNewTask(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') addTask() }}
                 placeholder={`e.g. Pick ${t?.product || 'product'} from shelf…`}
-                style={{ flex: 1, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}
+                style={{ flex: 1, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}
               />
               <button onClick={addTask} style={{ padding: '7px 14px', borderRadius: 7, border: 'none', background: BRAND, color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Add</button>
             </div>
@@ -203,12 +203,12 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
                   value={form.cycle_time ?? ''}
                   onChange={e => update({ cycle_time: e.target.value === '' ? null : Number(e.target.value) })}
                   placeholder="0"
-                  style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+                  style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 13, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
               </div>
               <div>
                 {iLabel('Unit')}
                 <select value={form.cycle_time_unit || 'seconds'} onChange={e => update({ cycle_time_unit: e.target.value })}
-                  style={{ width: '100%', padding: '7px 8px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, background: 'var(--sl-50)', color: 'var(--text)' }}>
+                  style={{ width: '100%', padding: '7px 8px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, background: 'var(--vs-paper, #F7F8FA)', color: 'var(--text)' }}>
                   {CT_UNITS.map(u => <option key={u} value={u}>{u}</option>)}
                 </select>
               </div>
@@ -218,7 +218,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               <div style={{ display: 'flex', gap: 6 }}>
                 {[{ id: 'measured', label: 'Measured (real data)' }, { id: 'assumed', label: 'Estimated / Assumed' }].map(opt => (
                   <button key={opt.id} onClick={() => update({ cycle_time_type: opt.id })}
-                    style={{ flex: 1, padding: '7px 10px', borderRadius: 7, border: '1.5px solid', borderColor: form.cycle_time_type === opt.id ? BRAND : 'var(--border)', background: form.cycle_time_type === opt.id ? 'rgba(1,118,211,.06)' : 'white', fontSize: 11, fontWeight: form.cycle_time_type === opt.id ? 700 : 400, color: form.cycle_time_type === opt.id ? BRAND : 'var(--text2)', cursor: 'pointer' }}>
+                    style={{ flex: 1, padding: '7px 10px', borderRadius: 7, border: '1.5px solid', borderColor: form.cycle_time_type === opt.id ? BRAND : 'var(--vs-slate-200, #DDE3EA)', background: form.cycle_time_type === opt.id ? 'rgba(11,29,51,.06)' : 'white', fontSize: 11, fontWeight: form.cycle_time_type === opt.id ? 700 : 400, color: form.cycle_time_type === opt.id ? BRAND : 'var(--text2)', cursor: 'pointer' }}>
                     {opt.label}
                   </button>
                 ))}
@@ -226,7 +226,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               {form.cycle_time_type === 'assumed' && (
                 <input value={form.cycle_time_notes || ''} onChange={e => update({ cycle_time_notes: e.target.value })}
                   placeholder="Reason for estimate (e.g. based on similar process, industry benchmark)…"
-                  style={{ width: '100%', marginTop: 6, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 11, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+                  style={{ width: '100%', marginTop: 6, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 11, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
               )}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -246,7 +246,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
             {[{ id: 'push', label: '→ Push', desc: 'Upstream pushes regardless of demand' },
               { id: 'supermarket', label: '⟵ Pull/Supermarket', desc: 'Downstream pulls when ready' }].map(opt => (
               <button key={opt.id} onClick={() => update({ flow_type: opt.id })}
-                style={{ flex: 1, padding: '8px 10px', borderRadius: 7, border: '1.5px solid', borderColor: form.flow_type === opt.id ? BRAND : 'var(--border)', background: form.flow_type === opt.id ? 'rgba(1,118,211,.06)' : 'white', fontSize: 11, fontWeight: form.flow_type === opt.id ? 700 : 400, color: form.flow_type === opt.id ? BRAND : 'var(--text2)', cursor: 'pointer', textAlign: 'center' }}>
+                style={{ flex: 1, padding: '8px 10px', borderRadius: 7, border: '1.5px solid', borderColor: form.flow_type === opt.id ? BRAND : 'var(--vs-slate-200, #DDE3EA)', background: form.flow_type === opt.id ? 'rgba(11,29,51,.06)' : 'white', fontSize: 11, fontWeight: form.flow_type === opt.id ? 700 : 400, color: form.flow_type === opt.id ? BRAND : 'var(--text2)', cursor: 'pointer', textAlign: 'center' }}>
                 <div>{opt.label}</div>
                 <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 2 }}>{opt.desc}</div>
               </button>
@@ -260,7 +260,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               value={form.governing_entity || ''}
               onChange={e => update({ governing_entity: e.target.value })}
               placeholder="e.g. FDA, Hospital Board, CQC, Food Standards Agency, CRM System…"
-              style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--sl-50)' }}
+              style={{ width: '100%', padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}
             />
             <p style={{ fontSize: 10, color: 'var(--text3)', marginTop: 5, lineHeight: 1.6 }}>
               The regulatory body, department, or system that controls or monitors this step. Appears on the map as a process control box (ISO convention).
@@ -275,14 +275,14 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
         {section('OBSERVATIONS & NOTES', (
           <textarea value={form.notes || ''} onChange={e => update({ notes: e.target.value })}
             placeholder="Observations, constraints, issues, context…"
-            style={{ width: '100%', minHeight: 70, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--border)', fontSize: 12, fontFamily: 'inherit', resize: 'vertical', color: 'var(--text)', background: 'var(--sl-50)' }}/>
+            style={{ width: '100%', minHeight: 70, padding: '7px 10px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', fontSize: 12, fontFamily: 'inherit', resize: 'vertical', color: 'var(--text)', background: 'var(--vs-paper, #F7F8FA)' }}/>
         ))}
 
         {/* CI Tools dropdown */}
         {section('CI TOOLS', (
           <div style={{ position: 'relative' }}>
             <button onClick={() => setShowCIMenu(v => !v)} style={{
-              width: '100%', padding: '9px 14px', borderRadius: 8, border: '1.5px solid var(--border)',
+              width: '100%', padding: '9px 14px', borderRadius: 8, border: '1.5px solid var(--vs-slate-200, #DDE3EA)',
               background: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text2)',
             }}>
@@ -290,14 +290,14 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               <span style={{ fontSize: 11, color: 'var(--text3)' }}>{showCIMenu ? <ChevronDownIcon size={11} style={{transform:'rotate(180deg)'}}/> : <ChevronDownIcon size={11}/>}</span>
             </button>
             {showCIMenu && (
-              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 30, background: 'white', border: '1px solid var(--border)', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,.12)', marginTop: 4, overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 30, background: 'white', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,.12)', marginTop: 4, overflow: 'hidden' }}>
                 {CI_TOOLS.map(tool => (
                   <button key={tool.id} onClick={() => {
                     setActiveCITool(tool.id)
                     setShowCIMenu(false)
                     if (onTool) onTool(tool.id)
                   }}
-                    style={{ width: '100%', padding: '10px 14px', background: activeCITool === tool.id ? 'rgba(1,118,211,.06)' : 'white', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid var(--border)' }}>
+                    style={{ width: '100%', padding: '10px 14px', background: activeCITool === tool.id ? 'rgba(11,29,51,.06)' : 'white', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <span style={{ fontSize: 18 }}>{tool.icon}</span>
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{tool.label}</div>
@@ -308,7 +308,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
               </div>
             )}
             {activeCITool && (
-              <div style={{ marginTop: 6, padding: '6px 10px', background: 'rgba(1,118,211,.05)', borderRadius: 6, fontSize: 11, color: BRAND, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <div style={{ marginTop: 6, padding: '6px 10px', background: 'rgba(11,29,51,.05)', borderRadius: 6, fontSize: 11, color: BRAND, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <span><strong>{CI_TOOLS.find(c => c.id === activeCITool)?.icon} {CI_TOOLS.find(c => c.id === activeCITool)?.label}</strong> selected</span>
                 {onTool && (
                   <button onClick={() => onTool(activeCITool)} style={{ fontSize: 10, padding: '2px 8px', background: BRAND, color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600 }}>Open &rarr;</button>
@@ -320,7 +320,7 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
         ))}
 
         {/* Delete */}
-        <div style={{ paddingTop: 8, borderTop: '1px solid var(--border)' }}>
+        <div style={{ paddingTop: 8, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
           <button onClick={() => { if (confirm('Delete this step? This cannot be undone.')) onDelete() }}
             style={{ width: '100%', padding: '9px 0', borderRadius: 8, border: '1px solid rgba(192,64,42,.3)', background: 'rgba(192,64,42,.05)', color: '#C0402A', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
             Delete step
@@ -329,10 +329,10 @@ export function V2StepPanel({ step, project, profile, t, onUpdate, onDelete, onC
       </div>
 
       {/* Save footer */}
-      <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid var(--border)', flexShrink: 0, background: 'white' }}>
+      <div style={{ padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)', flexShrink: 0, background: 'white' }}>
         <button onClick={save} disabled={saving} style={{
           width: '100%', padding: '11px 0', borderRadius: 9, border: 'none',
-          background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#B8912E,#D4A843)',
+          background: saving ? 'var(--sl-200)' : 'linear-gradient(135deg,#A8854F,#C9A66B)',
           color: saving ? 'var(--text3)' : 'white', fontSize: 14, fontWeight: 700, cursor: saving ? 'wait' : 'pointer',
         }}>
           {saving ? 'Saving…' : 'Save step'}

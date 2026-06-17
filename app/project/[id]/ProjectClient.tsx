@@ -146,15 +146,29 @@ export function ProjectClient({ initialProject, profile }: Props) {
   }, [project.id, showToast])
 
   const handleAddStep = async (form: Partial<Step>) => {
-    const s = await createStep(project.id, form)
-    setSteps(ss => [...ss, s])
-    showToast('Step added!', 'success')
+    try {
+      const s = await createStep(project.id, form)
+      if (!s) throw new Error('No step returned')
+      setSteps(ss => [...ss, s])
+      showToast('Step added', 'success')
+    } catch (err) {
+      console.warn('[AddStep] failed:', err)
+      showToast('Could not add step. Please try again.', 'error')
+    }
   }
 
   const handleUpdateStep = async (stepId: string, form: Partial<Step>) => {
-    await updateStep(stepId, form)
+    const previousSteps = steps
+    // Optimistic update
     setSteps(ss => ss.map(s => s.id === stepId ? { ...s, ...form } : s))
-    showToast('Step saved', 'success')
+    try {
+      await updateStep(stepId, form)
+      showToast('Step saved', 'success')
+    } catch (err) {
+      console.warn('[UpdateStep] failed, rolling back:', err)
+      setSteps(previousSteps)  // rollback
+      showToast('Could not save step. Your change was reverted.', 'error')
+    }
   }
 
   const handleDeleteStep = async (stepId: string) => {
@@ -327,14 +341,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: 'var(--bg2)',
+        background: 'var(--vs-white, #FFFFFF)',
       }}
     >
       <div
         style={{
           padding: '10px 20px',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           display: 'flex',
           alignItems: 'center',
           gap: 10,
@@ -361,15 +375,16 @@ export function ProjectClient({ initialProject, profile }: Props) {
           ← Dashboard
         </button>
 
-        <span style={{ color: 'var(--border2)' }}>|</span>
+        <span style={{ color: 'var(--vs-slate-200, #DDE3EA)' }}>|</span>
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             style={{
-              fontFamily: 'Palatino Linotype,Georgia,serif',
-              fontSize: 17,
-              fontWeight: 700,
-              color: 'var(--text)',
+              fontFamily: "'Sora', 'Inter', sans-serif",
+              fontSize: 18,
+              fontWeight: 650,
+              color: 'var(--vs-navy-900)',
+              letterSpacing: '-0.01em',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
@@ -400,7 +415,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 600,
               cursor: 'pointer',
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(212,168,67,0.25)',
+              border: '1px solid rgba(201,166,107,0.25)',
               color: 'var(--brand)',
             }}
           >
@@ -414,7 +429,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 steps={steps}
                 isGold={(profile as any).beta_tier === 'gold_standard' || (profile as any).lifetime_access}
               />
-            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'var(--brand-dim)', border:'1px solid rgba(1,118,211,0.2)', color:'var(--brand)' }}>
+            : <button onClick={() => router.push('/pricing')} style={{ display:'flex', alignItems:'center', gap:5, padding:'6px 10px', borderRadius:7, fontSize:12, fontWeight:600, cursor:'pointer', background:'var(--brand-dim)', border:'1px solid rgba(11,29,51,0.2)', color:'var(--brand)' }}>
                 PDF ↑ Pro
               </button>
           }
@@ -432,7 +447,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontWeight: 600,
               cursor: 'pointer',
               background: 'var(--brand-dim)',
-              border: '1px solid rgba(1,118,211,0.2)',
+              border: '1px solid rgba(11,29,51,0.2)',
               color: 'var(--brand)',
             }}
           >
@@ -450,7 +465,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               fontSize: 12,
               cursor: 'pointer',
               background: 'none',
-              border: '1px solid var(--border2)',
+              border: '1px solid var(--vs-slate-200, #DDE3EA)',
               color: 'var(--text2)',
             }}
           >
@@ -474,7 +489,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
               background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
               color: 'var(--bg)',
               border: 'none',
-              boxShadow: '0 2px 12px rgba(212,168,67,0.25)',
+              boxShadow: '0 2px 12px rgba(201,166,107,0.25)',
             }}
           >
             <PlusIcon size={14} color="var(--bg)" />
@@ -486,8 +501,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
       <div
         style={{
           display: 'flex',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           overflowX: 'auto',
         }}
       >
@@ -495,17 +510,17 @@ export function ProjectClient({ initialProject, profile }: Props) {
           { label: 'STEPS',    value: mainSteps.length,            color: 'var(--brand)' },
           { label: 'BRANCHES', value: branches.length,             color: 'var(--brand)' },
           { label: 'TOTAL CT', value: fmtS(totalCT),               color: 'var(--brand)' },
-          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#FF6B6B' : 'var(--brand)' },
+          { label: 'WAIT',     value: fmtS(totalWait),             color: totalWait > totalCT ? '#C94F4F' : 'var(--brand)' },
           { label: 'TAKT',     value: takt ? fmtS(takt) : ',',    color: 'var(--brand)' },
           { label: 'PCE',      value: pce,                          color: pceColor },
-          { label: 'WIP',      value: totalWIP || ',',             color: totalWIP > 50 ? '#FF6B6B' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
-          { label: 'OPEN KZ',  value: openKZ || ',',               color: openKZ > 5 ? '#FF6B6B' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'WIP',      value: totalWIP || ',',             color: totalWIP > 50 ? '#C94F4F' : totalWIP > 20 ? 'var(--brand)' : '#1DD1A1' },
+          { label: 'OPEN KZ',  value: openKZ || ',',               color: openKZ > 5 ? '#C94F4F' : openKZ > 0 ? 'var(--brand)' : '#1DD1A1' },
         ] as { label: string; value: any; color: string }[]).map(m => (
           <div
             key={m.label}
             style={{
               padding: '8px 14px',
-              borderRight: '1px solid var(--border)',
+              borderRight: '1px solid var(--vs-slate-200, #DDE3EA)',
               minWidth: 68,
               textAlign: 'center',
               flexShrink: 0,
@@ -526,8 +541,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
         style={{
           display: 'flex',
           padding: '0 20px',
-          background: 'var(--bg2)',
-          borderBottom: '1px solid var(--border)',
+          background: 'var(--vs-white, #FFFFFF)',
+          borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)',
           overflowX: 'auto',
           scrollbarWidth: 'none',
         }}
@@ -702,7 +717,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
                   {['PDCA', 'A3', '8D', 'DMAIC', 'OODA'].map((fmt, i) => {
-                    const colors = ['var(--brand)', '#1DD1A1', '#FF6B6B', '#6CB9FC', '#8C44CC']
+                    const colors = ['var(--brand)', '#1DD1A1', '#C94F4F', '#6CB9FC', '#A8854F']
                     const descs = [
                       'Plan-Do-Check-Act, standard lean cycle',
                       'Toyota one-page problem-solving report',
@@ -711,7 +726,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       'Observe-Orient-Decide-Act rapid decision cycle',
                     ]
                     return (
-                      <div key={fmt} style={{ background: 'var(--bg2)', border: `1px solid ${colors[i]}44`, borderRadius: 12, padding: '16px 18px' }}>
+                      <div key={fmt} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${colors[i]}44`, borderRadius: 12, padding: '16px 18px' }}>
                         <div style={{ fontSize: 22, fontWeight: 800, color: colors[i], marginBottom: 6 }}>{fmt}</div>
                         <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.5, marginBottom: 12 }}>{descs[i]}</div>
                         <button
@@ -782,7 +797,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
           style={{
             width: supeOpen ? 290 : 40,
             flexShrink: 0,
-            borderLeft: '1px solid rgba(100,38,160,0.2)',
+            borderLeft: '1px solid rgba(201,166,107,0.20)',
             overflowY: supeOpen ? 'auto' : 'hidden',
             background: '#FFFFFF',
             display: 'flex',
@@ -820,8 +835,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
               <div
                 style={{
                   padding: '14px 16px 10px 42px',
-                  borderBottom: '1px solid rgba(100,38,160,0.15)',
-                  background: 'linear-gradient(180deg,rgba(100,38,160,0.06),transparent)',
+                  borderBottom: '1px solid rgba(201,166,107,0.15)',
+                  background: 'linear-gradient(180deg,rgba(201,166,107,0.06),transparent)',
                   flexShrink: 0,
                 }}
               >
@@ -831,7 +846,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       width: 28,
                       height: 28,
                       borderRadius: 8,
-                      background: 'linear-gradient(135deg,rgba(100,38,160,0.3),rgba(60,22,120,0.5))',
+                      background: 'linear-gradient(135deg,rgba(201,166,107,0.32),rgba(60,22,120,0.5))',
                       border: '1px solid rgba(100,38,160,0.4)',
                       display: 'flex',
                       alignItems: 'center',
@@ -842,10 +857,10 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     <ZapIcon size={14} color="#9B5FE0" />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, fontFamily: 'Palatino Linotype,serif', lineHeight: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 13, fontFamily: "'Sora','Inter',sans-serif", lineHeight: 1 }}>
                       Supe
                     </div>
-                    <div style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginTop: 2 }}>
+                    <div style={{ fontSize: 9, color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginTop: 2 }}>
                       AI MENTOR {!isPaid && 'PRO'}
                     </div>
                   </div>
@@ -909,14 +924,14 @@ export function ProjectClient({ initialProject, profile }: Props) {
               height: '78vh',
               background: '#0A0518',
               borderRadius: '18px 18px 0 0',
-              border: '1px solid rgba(100,38,160,0.3)',
+              border: '1px solid rgba(201,166,107,0.32)',
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: '0 -8px 40px rgba(100,38,160,0.2)',
+              boxShadow: '0 -8px 40px rgba(201,166,107,0.20)',
             }}
           >
-            <div style={{ padding: '10px 16px 8px', borderBottom: '1px solid rgba(100,38,160,0.15)', flexShrink: 0 }}>
-              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(100,38,160,0.3)', margin: '0 auto 10px' }} />
+            <div style={{ padding: '10px 16px 8px', borderBottom: '1px solid rgba(201,166,107,0.15)', flexShrink: 0 }}>
+              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(201,166,107,0.32)', margin: '0 auto 10px' }} />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div
@@ -924,7 +939,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
                       width: 26,
                       height: 26,
                       borderRadius: 7,
-                      background: 'linear-gradient(135deg,rgba(100,38,160,0.3),rgba(60,22,120,0.5))',
+                      background: 'linear-gradient(135deg,rgba(201,166,107,0.32),rgba(60,22,120,0.5))',
                       border: '1px solid rgba(100,38,160,0.4)',
                       display: 'flex',
                       alignItems: 'center',
@@ -934,8 +949,8 @@ export function ProjectClient({ initialProject, profile }: Props) {
                     <ZapIcon size={13} color="#9B5FE0" />
                   </div>
                   <div>
-                    <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: 'Palatino Linotype,serif' }}>Supe</span>
-                    <span style={{ fontSize: 9, color: '#8C44CC', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
+                    <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, fontFamily: "'Sora','Inter',sans-serif" }}>Supe</span>
+                    <span style={{ fontSize: 9, color: '#A8854F', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginLeft: 6 }}>AI MENTOR</span>
                   </div>
                 </div>
                 <button
@@ -1003,7 +1018,7 @@ export function ProjectClient({ initialProject, profile }: Props) {
             border: 'none',
             cursor: 'pointer',
             background: 'linear-gradient(135deg,var(--brand2),var(--brand))',
-            boxShadow: '0 4px 20px rgba(1,118,211,0.4)',
+            boxShadow: '0 4px 20px rgba(11,29,51,0.4)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -1021,9 +1036,9 @@ export function ProjectClient({ initialProject, profile }: Props) {
             borderRadius: '50%',
             border: 'none',
             cursor: 'pointer',
-            background: showSupe ? 'rgba(100,38,160,0.9)' : 'rgba(100,38,160,0.15)',
+            background: showSupe ? 'rgba(100,38,160,0.9)' : 'rgba(201,166,107,0.15)',
             borderColor: 'rgba(100,38,160,0.5)',
-            boxShadow: '0 4px 20px rgba(100,38,160,0.3)',
+            boxShadow: '0 4px 20px rgba(201,166,107,0.32)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -1222,7 +1237,7 @@ function PaywallGate({ feature }: { feature: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 24px', textAlign: 'center' }}>
       
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
+      <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>
         {feature}
       </h2>
       <p style={{ fontSize: 14, color: 'var(--text2)', maxWidth: 360, lineHeight: 1.7, marginBottom: 28 }}>
@@ -1258,7 +1273,7 @@ function BuilderTab({ steps, takt, dragIdx, onAddStep, onEdit, onDelete, onTool,
         <div style={{ marginBottom: 20, opacity: 0.3 }}>
           <VSMIcon size={64} color="var(--brand)" />
         </div>
-        <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: 'Palatino Linotype,serif', fontWeight: 700 }}>
+        <div style={{ fontSize: 18, color: 'var(--text3)', marginBottom: 8, fontFamily: "'Sora','Inter',sans-serif", fontWeight: 700 }}>
           No process steps yet
         </div>
         <div style={{ fontSize: 13, color: 'var(--sl-400)', marginBottom: 28, lineHeight: 1.6 }}>
@@ -1387,8 +1402,8 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
       onDragLeave={() => setOver(false)}
       onDrop={() => { setOver(false); onDrop() }}
       style={{
-        background: over ? 'rgba(1,118,211,0.03)' : 'var(--bg2)',
-        border: `1px solid ${over ? 'rgba(1,118,211,0.4)' : 'var(--border)'}`,
+        background: over ? 'rgba(11,29,51,0.03)' : 'var(--vs-white, #FFFFFF)',
+        border: `1px solid ${over ? 'rgba(11,29,51,0.4)' : 'var(--vs-slate-200, #DDE3EA)'}`,
         borderRadius: 10,
         overflow: 'hidden',
       }}
@@ -1398,11 +1413,11 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '11px 14px',
-          background: 'var(--bg3)',
-          borderBottom: expanded ? '1px solid var(--border)' : 'none',
+          background: 'var(--vs-paper, #F7F8FA)',
+          borderBottom: expanded ? '1px solid var(--vs-slate-200, #DDE3EA)' : 'none',
         }}
       >
-        <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--border2)' }}>
+        <span style={{ cursor: 'grab', flexShrink: 0, color: 'var(--vs-slate-200, #DDE3EA)' }}>
           <DragHandleIcon size={14} color="currentColor" />
         </span>
         <span style={{ color: 'var(--sl-400)', fontSize: 10, fontFamily: 'var(--font-mono)', minWidth: 22, flexShrink: 0 }}>
@@ -1412,7 +1427,7 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
           <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 13, display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap' }}>
             {step.name}
             {isSM && (
-              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(100,38,160,0.15)', color: '#8C44CC', border: '1px solid rgba(100,38,160,0.3)', fontWeight: 700, letterSpacing: 1 }}>SM</span>
+              <span style={{ fontSize: 8, padding: '2px 5px', borderRadius: 3, background: 'rgba(201,166,107,0.15)', color: '#A8854F', border: '1px solid rgba(201,166,107,0.32)', fontWeight: 700, letterSpacing: 1 }}>SM</span>
             )}
           </div>
           {step.department && <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 1 }}>{step.department}</div>}
@@ -1420,10 +1435,10 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
         {/* Quick KPIs */}
         <div style={{ display: 'flex', gap: 8, fontSize: 10, color: 'var(--text3)', flexWrap: 'wrap', flexShrink: 0 }}>
           {ct > 0 && <span style={{ color: 'var(--brand)' }}>CT:{fmtS(ct)}</span>}
-          {step.wip > 0 && <span style={{ color: '#D97706' }}>WIP:{step.wip}</span>}
+          {step.wip > 0 && <span style={{ color: '#A8854F' }}>WIP:{step.wip}</span>}
           {step.uptime && <span>↑{step.uptime}%</span>}
-          {wastes > 0 && <span style={{ color: '#FF6B6B' }}>{wastes}W</span>}
-          {kzOpen > 0 && <span style={{ color: '#F4A623', fontWeight: 700 }}>{kzOpen}KZ</span>}
+          {wastes > 0 && <span style={{ color: '#C94F4F' }}>{wastes}W</span>}
+          {kzOpen > 0 && <span style={{ color: '#C9A66B', fontWeight: 700 }}>{kzOpen}KZ</span>}
         </div>
         {/* Expand toggle */}
         <button onClick={onToggle} title={expanded ? 'Collapse' : 'Expand details'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text3)', padding: '3px 5px', borderRadius: 4, display: 'flex', fontSize: 12 }}>
@@ -1439,26 +1454,26 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
 
       {/* ── Expanded detail panel ── */}
       {expanded && (
-        <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ padding: '12px 14px', background: 'var(--bg)', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 8, marginBottom: 12 }}>
             {[
               { label: 'Cycle Time', value: ct ? fmtS(ct) : ',', color: 'var(--brand)' },
               { label: 'Wait Time',  value: step.wait_time ? fmtS(Number(step.wait_time)) : ',' },
-              { label: 'WIP',        value: step.wip ?? ',', color: step.wip > 0 ? '#D97706' : undefined },
+              { label: 'WIP',        value: step.wip ?? ',', color: step.wip > 0 ? '#A8854F' : undefined },
               { label: 'Operators',  value: step.operators ?? ',' },
               { label: 'Uptime',     value: step.uptime != null ? `${step.uptime}%` : ',' },
               { label: 'Defect Rate',value: step.defect_rate != null ? `${step.defect_rate}%` : ',' },
               { label: 'Flow Type',  value: step.flow_type || 'push' },
               { label: 'VA Type',    value: step.va_type || 'VA' },
             ].map(({ label, value, color }) => (
-              <div key={label} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 7, padding: '7px 10px' }}>
+              <div key={label} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 7, padding: '7px 10px' }}>
                 <div style={{ fontSize: 9, color: 'var(--text3)', fontFamily: 'var(--font-mono)', letterSpacing: 0.8, marginBottom: 3 }}>{label}</div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: color || 'var(--text)' }}>{String(value)}</div>
               </div>
             ))}
           </div>
           {step.notes && (
-            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(1,118,211,0.04)', border: '1px solid rgba(212,168,67,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, color: 'var(--text2)', background: 'rgba(11,29,51,0.04)', border: '1px solid rgba(201,166,107,0.12)', borderRadius: 7, padding: '8px 10px', marginBottom: 10, lineHeight: 1.6 }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', display: 'block', marginBottom: 3 }}>NOTES</span>
               {step.notes}
             </div>
@@ -1475,8 +1490,8 @@ function StepCard({ step, index, takt, onEdit, onDelete, onTool, onDragStart, on
                   style={{
                     display: 'flex', alignItems: 'center', gap: 4,
                     padding: '6px 10px', fontSize: 11, borderRadius: 6, cursor: 'pointer',
-                    background: has ? 'var(--brand-dim)' : 'var(--bg2)',
-                    border: `1px solid ${has ? 'var(--brand)' : 'var(--border)'}`,
+                    background: has ? 'var(--brand-dim)' : 'var(--vs-white, #FFFFFF)',
+                    border: `1px solid ${has ? 'var(--brand)' : 'var(--vs-slate-200, #DDE3EA)'}`,
                     color: has ? 'var(--brand)' : 'var(--sl-400)',
                   }}
                 >
@@ -1500,11 +1515,11 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
   const statuses = ['open', 'in-progress', 'complete'] as const
   const sLabel = { open: 'Open', 'in-progress': 'In Progress', complete: 'Complete' }
-  const sColor = { open: '#FF6B6B', 'in-progress': '#F4A623', complete: '#1DD1A1' }
+  const sColor = { open: '#C94F4F', 'in-progress': '#C9A66B', complete: '#1DD1A1' }
 
   return (
     <div>
-      <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, marginBottom: 20, color: 'var(--text)' }}>
+      <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 20, color: 'var(--text)' }}>
         Kaizen Board
       </h2>
 
@@ -1523,7 +1538,7 @@ function KaizenBoardView({ steps }: { steps: Step[] }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {allItems.filter(i => i.status === st).map((item: any, ki: number) => (
-                  <div key={ki} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: '12px 14px' }}>
+                  <div key={ki} style={{ background: 'var(--vs-white, #FFFFFF)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '12px 14px' }}>
                     <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text)', marginBottom: 4 }}>{item.title}</div>
                     <div style={{ fontSize: 11, color: 'var(--text2)' }}>{item.stepName}</div>
                   </div>
@@ -1562,7 +1577,7 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
   return (
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 4px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
-        <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+        <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
           CI Report, {project.name}
         </h2>
         <AIAssistButton
@@ -1591,13 +1606,13 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 20 }}>
         {[
           { label: 'Steps Mapped',             val: String(reportSteps.length),                                                                  color: 'var(--text)' },
-          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : ',',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#FF6B6B') : 'var(--text3)' },
+          { label: 'Process Cycle Efficiency', val: pceNum !== null ? `${pceDisplay}%` : ',',                                                   color: pceNum !== null ? (pceDisplay >= 60 ? '#1DD1A1' : '#C94F4F') : 'var(--text3)' },
           { label: 'Total Cycle Time',         val: totalCT > 0 ? fmtS(totalCT) : ',',                                                          color: 'var(--text)' },
-          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : ',',                                                          color: totalWT > totalCT ? '#FF6B6B' : 'var(--text)' },
-          { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#FF6B6B' : '#1DD1A1' },
+          { label: 'Total Wait Time',          val: totalWT > 0 ? fmtS(totalWT) : ',',                                                          color: totalWT > totalCT ? '#C94F4F' : 'var(--text)' },
+          { label: 'Bottleneck',               val: bottleneck?.name || ',',                                                                     color: bottleneck ? '#C94F4F' : '#1DD1A1' },
           { label: 'Open Kaizens',             val: String(openKaizens),                                                                         color: openKaizens > 0 ? 'var(--brand)' : '#1DD1A1' },
         ].map(({ label, val, color }) => (
-          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px' }}>
+          <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: '12px 14px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
             <div style={{ fontSize: 16, fontWeight: 700, color }}>{val}</div>
           </div>
@@ -1606,16 +1621,16 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
 
       {/* Step breakdown table, main-flow steps only (branches excluded from process report) */}
       {reportSteps.length > 0 && (
-        <div style={{ border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
-          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: 'var(--bg3)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
+        <div style={{ border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, overflow: 'hidden', marginBottom: 20 }}>
+          <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'var(--vs-paper, #F7F8FA)', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>
             Process Step Summary
           </div>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
               <thead>
-                <tr style={{ background: 'var(--bg3)' }}>
+                <tr style={{ background: 'var(--vs-paper, #F7F8FA)' }}>
                   {['Step', 'CT', 'Wait', 'VA Type', 'Wastes', 'Open Kaizens', 'Status'].map(h => (
-                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap' }}>{h}</th>
+                    <th key={h} style={{ padding: '7px 10px', textAlign: 'left', color: 'var(--text3)', fontWeight: 600, fontSize: 10, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -1629,22 +1644,22 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
                   const avgCT = totalCT / Math.max(reportSteps.length, 1)
                   const isBN = takt > 0 ? ct > takt : (avgCT > 0 && ct > avgCT * 1.5)
                   return (
-                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--bg3)', borderTop: '1px solid var(--border)' }}>
-                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#FF6B6B' : 'var(--text)' }}>
-                        {isBN && <span style={{ fontSize: 9, background: 'rgba(255,107,107,0.12)', color: '#FF6B6B', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
+                    <tr key={s.id} style={{ background: i % 2 === 0 ? 'transparent' : 'var(--vs-paper, #F7F8FA)', borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
+                      <td style={{ padding: '7px 10px', fontWeight: 600, color: isBN ? '#C94F4F' : 'var(--text)' }}>
+                        {isBN && <span style={{ fontSize: 9, background: 'rgba(201,79,79,0.12)', color: '#C94F4F', padding: '1px 5px', borderRadius: 4, marginRight: 5 }}>BN</span>}
                         {s.name}
                       </td>
-                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#FF6B6B' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
+                      <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: isBN ? '#C94F4F' : 'var(--text2)' }}>{ct ? fmtS(ct) : ','}</td>
                       <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)', color: 'var(--text2)' }}>{wt ? fmtS(wt) : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(255,107,107,0.12)' : 'rgba(212,168,67,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#FF6B6B' : 'var(--brand)' }}>
+                        <span style={{ fontSize: 10, padding: '2px 6px', borderRadius: 4, background: s.va_type === 'va' ? 'rgba(29,209,161,0.12)' : s.va_type === 'nva' ? 'rgba(201,79,79,0.12)' : 'rgba(201,166,107,0.12)', color: s.va_type === 'va' ? '#1DD1A1' : s.va_type === 'nva' ? '#C94F4F' : 'var(--brand)' }}>
                           {(s.va_type || 'VA').toUpperCase()}
                         </span>
                       </td>
                       <td style={{ padding: '7px 10px', color: wastes > 0 ? 'var(--brand)' : 'var(--text3)' }}>{wastes > 0 ? `${wastes} waste${wastes > 1 ? 's' : ''}` : ','}</td>
                       <td style={{ padding: '7px 10px', color: openK > 0 ? 'var(--brand)' : 'var(--text3)' }}>{openK > 0 ? `${openK} open` : ','}</td>
                       <td style={{ padding: '7px 10px' }}>
-                        <span style={{ fontSize: 10, color: isBN ? '#FF6B6B' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
+                        <span style={{ fontSize: 10, color: isBN ? '#C94F4F' : ct === 0 ? 'var(--text3)' : '#1DD1A1' }}>
                           {isBN ? 'Over Takt' : ct === 0 ? 'No data' : 'OK'}
                         </span>
                       </td>
@@ -1658,11 +1673,11 @@ function ReportTab({ steps, branches, project }: { steps: Step[]; branches: Bran
       )}
 
       {/* PDCA Tool, opens as proper modal with real close handler */}
-      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+      <div style={{ marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
         <button
           type="button"
           onClick={() => setShowPDCA(true)}
-          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
+          style={{ padding: '9px 18px', borderRadius: 8, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', color: 'var(--text2)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, fontFamily: 'inherit' }}
         >
           Open PDCA Report
         </button>
@@ -1748,7 +1763,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, gap: 16, flexWrap: 'wrap' }}>
         <div>
-          <h2 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+          <h2 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
             Process Branches
           </h2>
           <p style={{ fontSize: 13, color: 'var(--text3)' }}>Parallel lanes, sub-assemblies, prep flows, quality loops</p>
@@ -1785,8 +1800,8 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
           {branches.map(branch => {
             const bSteps = steps.filter(s => s.branch_id === branch.branch_id)
             return (
-              <div key={branch.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}33`, borderRadius: 10, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: 'var(--bg3)', borderBottom: `1px solid ${branch.color}22`, flexWrap: 'wrap' }}>
+              <div key={branch.id} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${branch.color}33`, borderRadius: 10, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: 'var(--vs-paper, #F7F8FA)', borderBottom: `1px solid ${branch.color}22`, flexWrap: 'wrap' }}>
                   <div style={{ width: 10, height: 10, borderRadius: 3, background: branch.color, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 120 }}>
                     <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14 }}>{branch.label}</div>
@@ -1804,7 +1819,7 @@ function BranchesTab({ steps, branches, onNewBranch, onEditBranch, onDeleteBranc
                       No steps in this branch yet.
                     </div>
                   ) : bSteps.map((s, si) => (
-                    <div key={s.id} style={{ background: 'var(--bg2)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <div key={s.id} style={{ background: 'var(--vs-white, #FFFFFF)', border: `1px solid ${branch.color}22`, borderRadius: 6, padding: '8px 10px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                       <span style={{ color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', fontSize: 10, minWidth: 16 }}>{si + 1}.</span>
                       <div style={{ flex: 1, minWidth: 80 }}>
                         <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: 12 }}>{s.name}</div>

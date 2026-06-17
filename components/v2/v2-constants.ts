@@ -2,12 +2,12 @@
 // ── components/v2/v2-constants.ts ─────────────────────────────────────────────
 // v4.0, Added OODA, 8D, and DMAIC to CI tools
 
-export const BRAND  = '#D4A843'
+export const BRAND  = '#C9A66B'
 export const NAVY   = '#2A1800'
 export const RED    = '#C0402A'
 export const GREEN  = '#2E844A'
-export const AMBER  = '#F4A623'
-export const SERIF  = 'Palatino Linotype,Book Antiqua,Palatino,serif'
+export const AMBER  = '#C9A66B'
+export const SERIF  = "'Sora','Inter',sans-serif"
 export const MONO   = 'IBM Plex Mono,monospace'
 
 export const CI_LABELS: Record<string, string> = {

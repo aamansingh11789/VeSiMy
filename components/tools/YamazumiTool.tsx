@@ -15,8 +15,8 @@ interface Props {
 
 const VA_COLORS = {
   va:   { bar: '#1DD1A1', label: 'Value Add',                text: '#1DD1A1' },
-  nnva: { bar: '#D4A843', label: 'Necessary Non-Value Add',  text: '#D4A843' },
-  nva:  { bar: '#FF6B6B', label: 'Non-Value Add',            text: '#FF6B6B' },
+  nnva: { bar: '#C9A66B', label: 'Necessary Non-Value Add',  text: '#C9A66B' },
+  nva:  { bar: '#C94F4F', label: 'Non-Value Add',            text: '#C94F4F' },
 }
 
 function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summary: any) {
@@ -44,8 +44,8 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
       return h > 0 ? `<rect x="${x}" y="${yOffset}" width="${barW}" height="${h}" fill="${VA_COLORS[type]}" opacity="0.9"/>
         ${h > 14 ? `<text x="${x + barW/2}" y="${yOffset + h/2 + 4}" text-anchor="middle" font-size="9" fill="white" font-weight="700">${val}s</text>` : ''}` : ''
     }).join('')
-    const label = `<text x="${x + barW/2}" y="${barH + 16}" text-anchor="middle" font-size="10" fill="#374151" font-weight="600">${op.name || 'Op ' + (idx+1)}</text>
-      <text x="${x + barW/2}" y="${barH + 28}" text-anchor="middle" font-size="9" fill="${op.total > takt && takt > 0 ? '#EF4444' : '#6B7280'}">${op.total || 0}s ${op.pct !== undefined ? '· ' + op.pct + '% VA' : ''}</text>`
+    const label = `<text x="${x + barW/2}" y="${barH + 16}" text-anchor="middle" font-size="10" fill="#4F6174" font-weight="600">${op.name || 'Op ' + (idx+1)}</text>
+      <text x="${x + barW/2}" y="${barH + 28}" text-anchor="middle" font-size="9" fill="${op.total > takt && takt > 0 ? '#EF4444' : '#73879C'}">${op.total || 0}s ${op.pct !== undefined ? '· ' + op.pct + '% VA' : ''}</text>`
     return segments + label
   }).join('')
 
@@ -57,7 +57,7 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
     const val = Math.round((maxVal / 5) * i)
     const y   = barH - val * scale
     return `<line x1="${padLeft - 6}" y1="${y}" x2="${svgW - 20}" y2="${y}" stroke="#E5E7EB" stroke-width="0.8"/>
-      <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="9" fill="#9CA3AF">${val}s</text>`
+      <text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="9" fill="#A9B5C2">${val}s</text>`
   }).join('')
 
   const legend = Object.entries(VA_LABELS).map(([k, label]) =>
@@ -74,15 +74,15 @@ function exportYamazumiHTML(operators: any[], steps: any[], takt: number, summar
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system,'Segoe UI',sans-serif; padding: 36px 44px; max-width: 900px; margin: 0 auto; color: #1A1A1A; }
-    .header { border-bottom: 3px solid #D4A843; padding-bottom: 16px; margin-bottom: 24px; }
-    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #D4A843; font-weight: 700; margin-bottom: 6px; }
+    .header { border-bottom: 3px solid #C9A66B; padding-bottom: 16px; margin-bottom: 24px; }
+    .doc-type { font-size: 10px; letter-spacing: 2.5px; font-family: monospace; color: #C9A66B; font-weight: 700; margin-bottom: 6px; }
     .doc-title { font-size: 22px; font-weight: 700; color: #111; }
     .metrics { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
     .metric { background: #F8F6F0; border: 1px solid #E8E5E0; border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 100px; }
     .metric-label { font-size: 9px; font-family: monospace; letter-spacing: 1px; color: #999; margin-bottom: 3px; }
     .metric-val { font-size: 20px; font-weight: 700; }
     .legend { margin: 16px 0; }
-    .no-print { background:#EEF4FB;border:1px solid #D4A843;border-radius:6px;padding:8px 14px;font-size:11px;color:#D4A843;margin-bottom:18px; }
+    .no-print { background:#EEF4FB;border:1px solid #C9A66B;border-radius:6px;padding:8px 14px;font-size:11px;color:#C9A66B;margin-bottom:18px; }
     .footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #E8E5E0; font-size: 10px; color: #999; font-family: monospace; }
     @media print { .no-print { display: none; } body { padding: 20px; } }
   </style>
@@ -166,7 +166,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
     >
       {/* View-only notice + export */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-        <div style={{ flex: 1, padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, fontSize: 12, color: '#F4A623' }}>
+        <div style={{ flex: 1, padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, fontSize: 12, color: '#C9A66B' }}>
           View only, this chart reads from your step data. Edit cycle times and op steps in each step to update it.
         </div>
         <button
@@ -178,7 +178,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
             a.href = url; a.download = 'yamazumi-chart.html'; a.click()
             URL.revokeObjectURL(url)
           }}
-          style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--border)', background: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)', whiteSpace: 'nowrap', flexShrink: 0 }}
+          style={{ padding: '7px 14px', borderRadius: 7, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text2)', whiteSpace: 'nowrap', flexShrink: 0 }}
         >
           ↓ Export (PDF)
         </button>
@@ -195,8 +195,8 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
           ))}
           {takt > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11 }}>
-              <div style={{ width: 16, height: 2, background: '#FF6B6B', borderTop: '2px dashed #FF6B6B' }} />
-              <span style={{ color: '#FF6B6B', display:'flex', alignItems:'center', gap:4 }}>Takt Time ({takt}s)<FieldTip termKey="takt_time" /></span>
+              <div style={{ width: 16, height: 2, background: '#C94F4F', borderTop: '2px dashed #C94F4F' }} />
+              <span style={{ color: '#C94F4F', display:'flex', alignItems:'center', gap:4 }}>Takt Time ({takt}s)<FieldTip termKey="takt_time" /></span>
             </div>
           )}
         </div>
@@ -219,11 +219,11 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                     position: 'absolute',
                     left: 0, right: 0,
                     bottom: 42 + (takt / maxTime) * CHART_H,
-                    borderTop: '2px dashed #FF6B6B',
+                    borderTop: '2px dashed #C94F4F',
                     zIndex: 2,
                     pointerEvents: 'none',
                   }}>
-                    <span style={{ position: 'absolute', right: 4, top: -14, fontSize: 9, color: '#FF6B6B', fontFamily: 'var(--font-mono)', background: 'var(--bg)', padding: '0 3px' }}>
+                    <span style={{ position: 'absolute', right: 4, top: -14, fontSize: 9, color: '#C94F4F', fontFamily: 'var(--font-mono)', background: 'var(--bg)', padding: '0 3px' }}>
                       TAKT {takt}s
                     </span>
                   </div>
@@ -261,7 +261,7 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                       </div>
 
                       {/* Total time label */}
-                      <div style={{ marginTop: 4, fontSize: 10, fontFamily: 'var(--font-mono)', color: op.totalTime > (takt || 9999) ? '#FF6B6B' : '#1DD1A1', fontWeight: 700 }}>
+                      <div style={{ marginTop: 4, fontSize: 10, fontFamily: 'var(--font-mono)', color: op.totalTime > (takt || 9999) ? '#C94F4F' : '#1DD1A1', fontWeight: 700 }}>
                         {op.totalTime}s
                       </div>
 
@@ -298,10 +298,10 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
                 { label: 'Total CT',    val: `${summary.total}s`, color: 'var(--text)' },
                 { label: '% VA',        val: `${summary.pct}%`,   color: '#1DD1A1' },
                 { label: 'VA Time',     val: `${summary.va}s`,    color: '#1DD1A1' },
-                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#D4A843' },
-                { label: 'NVA Waste',   val: `${summary.nva}s`,   color: '#FF6B6B' },
+                { label: 'NNVA Time',   val: `${summary.nnva}s`,  color: '#C9A66B' },
+                { label: 'NVA Waste',   val: `${summary.nva}s`,   color: '#C94F4F' },
               ].map(({ label, val, color }) => (
-                <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
+                <div key={label} style={{ background: 'var(--bg)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color }}>{val}</div>
                   <div style={{ fontSize: 9, color: 'var(--text3)' }}>{label}</div>
                 </div>
@@ -310,13 +310,13 @@ export default function YamazumiTool({ steps, takt, onClose }: Props) {
 
             {/* Imbalance warnings */}
             {takt > 0 && operators.some(o => o.totalTime > takt) && (
-              <div style={{ background: 'rgba(255,107,107,0.06)', border: '1px solid rgba(255,107,107,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#FF6B6B' }}>
-                <strong style={{color:'#D4A843'}}>OVER TAKT:</strong> <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time, these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
+              <div style={{ background: 'rgba(201,79,79,0.06)', border: '1px solid rgba(201,79,79,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#C94F4F' }}>
+                <strong style={{color:'#C9A66B'}}>OVER TAKT:</strong> <strong>{operators.filter(o => o.totalTime > takt).map(o => o.stepName).join(', ')}</strong> exceed takt time, these are your bottlenecks. Balance work content by moving tasks to under-loaded operators.
               </div>
             )}
 
             {summary.nva > 0 && (
-              <div style={{ background: 'rgba(1,118,211,0.06)', border: '1px solid rgba(1,118,211,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#D4A843' }}>
+              <div style={{ background: 'rgba(11,29,51,0.06)', border: '1px solid rgba(11,29,51,0.2)', borderRadius: 10, padding: '10px 14px', fontSize: 12, color: '#C9A66B' }}>
                 <strong style={{color:'#1DD1A1'}}>NVA WASTE:</strong> <strong>{summary.nva}s of NVA waste</strong> identified across all operators. Target these tasks for elimination in your next kaizen event.
               </div>
             )}

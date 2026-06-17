@@ -293,7 +293,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
           ['Steps',       String(main.length),                'var(--text2)'],
           ['Takt Time',   takt > 0 ? fmt(takt) : `~${fmt(avgCT)} (avg)`,    takt > 0 ? 'var(--text2)' : 'var(--text3)'],
         ].map(([l, v, c]) => (
-          <div key={l} style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
+          <div key={l} style={{ background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
             <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 3 }}>{l}</div>
             <div style={{ fontSize: 16, fontWeight: 700, color: c }}>{v}</div>
           </div>
@@ -301,12 +301,12 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
       </div>
 
       {/* ── Tabs ─────────────────────────────────────────────────────────── */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 18, borderBottom: '1px solid var(--border)', paddingBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 4, marginBottom: 18, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)', paddingBottom: 8 }}>
         {tabs.map(t => (
           <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
             padding: '6px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid',
             background: activeTab === t.id ? 'var(--brand-dim)' : 'transparent',
-            borderColor: activeTab === t.id ? 'var(--brand-glow)' : 'var(--border2)',
+            borderColor: activeTab === t.id ? 'var(--brand-glow)' : 'var(--vs-slate-200, #DDE3EA)',
             color: activeTab === t.id ? 'var(--brand)' : 'var(--text2)',
             fontSize: 12, fontWeight: activeTab === t.id ? 700 : 400, cursor: 'pointer',
           }}>{t.label}</button>
@@ -331,8 +331,8 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
               {SCENARIOS.map(sc => (
                 <button key={sc.id} onClick={() => setActiveScenario(activeScenario === sc.id ? null : sc.id)} style={{
                   padding: '10px 12px', borderRadius: 8,
-                  border: `2px solid ${activeScenario === sc.id ? 'var(--brand)' : 'var(--border)'}`,
-                  background: activeScenario === sc.id ? 'var(--brand-dim)' : 'var(--bg3)',
+                  border: `2px solid ${activeScenario === sc.id ? 'var(--brand)' : 'var(--vs-slate-200, #DDE3EA)'}`,
+                  background: activeScenario === sc.id ? 'var(--brand-dim)' : 'var(--vs-paper, #F7F8FA)',
                   color: activeScenario === sc.id ? 'var(--brand)' : 'var(--text2)',
                   cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s',
                 }}>
@@ -345,7 +345,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
 
           {/* No scenario selected */}
           {!activeScenario && (
-            <div style={{ textAlign: 'center', padding: '32px 20px', background: 'var(--bg3)', borderRadius: 10, border: '1px solid var(--border)' }}>
+            <div style={{ textAlign: 'center', padding: '32px 20px', background: 'var(--vs-paper, #F7F8FA)', borderRadius: 10, border: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
               <ActivityIcon size={28} color="var(--text3)" />
               <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginTop: 10, marginBottom: 4 }}>Select a scenario above</div>
               <div style={{ fontSize: 12, color: 'var(--text3)' }}>Stress-test your process before the disruption hits. See where queues build and which steps fail first.</div>
@@ -363,7 +363,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                   ['Recovery Time',     `${recoveryMin} min`,          recoveryMin > 30 ? '#C0402A' : '#C49B2E'],
                   ['PCE Impact',        `${curPCE.toFixed(1)}% → ${scenPCE.toFixed(1)}%`, '#C0402A'],
                 ].map(([l, v, c]) => (
-                  <div key={l} style={{ background: 'var(--bg3)', border: `1px solid ${c}33`, borderRadius: 8, padding: '10px 12px' }}>
+                  <div key={l} style={{ background: 'var(--vs-paper, #F7F8FA)', border: `1px solid ${c}33`, borderRadius: 8, padding: '10px 12px' }}>
                     <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.2, fontFamily: 'var(--font-mono)', marginBottom: 3 }}>{l}</div>
                     <div style={{ fontSize: 18, fontWeight: 900, color: c }}>{v}</div>
                   </div>
@@ -402,7 +402,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                             <div style={{ fontSize: 10, fontWeight: 800, color, marginTop: 4 }}>{util.toFixed(0)}%</div>
                           </div>
                         </div>
-                        <div style={{ height: 5, background: 'var(--bg4)', borderRadius: 3, overflow: 'hidden' }}>
+                        <div style={{ height: 5, background: 'var(--vs-slate-100, #EEF2F6)', borderRadius: 3, overflow: 'hidden' }}>
                           <div style={{ height: '100%', width: `${util}%`, background: color, borderRadius: 3, transition: 'width 0.3s ease' }} />
                         </div>
                       </div>
@@ -424,12 +424,12 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
               </div>
 
               {/* Mitigation priority matrix */}
-              <div style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: 16, marginBottom: 16 }}>
+              <div style={{ background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 10, padding: 16, marginBottom: 16 }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 12 }}>BENEFIT VS EFFORT, PRIORITY MATRIX</div>
                 <div className="sim-matrix-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8, height: 160 }}>
                   {[
                     { label: 'DO NOW', sub: 'High benefit · Low effort', color: '#2E844A', items: ['Address bottleneck CT', 'Redeploy labor'] },
-                    { label: 'PLAN NEXT', sub: 'High benefit · High effort', color: '#D4A843', items: ['Buffer policy reset', 'Release sequencing'] },
+                    { label: 'PLAN NEXT', sub: 'High benefit · High effort', color: '#C9A66B', items: ['Buffer policy reset', 'Release sequencing'] },
                     { label: 'WATCH', sub: 'Low benefit · Low effort', color: '#C49B2E', items: ['Monitor signals', 'Log cycle variance'] },
                     { label: 'DEFER', sub: 'Low benefit · High effort', color: '#706E6B', items: ['Automation capex', 'Layout redesign'] },
                   ].map(q => (
@@ -479,16 +479,16 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
               ['Time Saved',  saved > 0 ? fmt(saved) : ',','var(--brand)'],
               ['PCE',         `${curPCE.toFixed(1)}% → ${futPCE.toFixed(1)}%`, 'var(--brand)'],
             ].map(([l, v, c]) => (
-              <div key={l} style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
+              <div key={l} style={{ background: 'var(--vs-paper, #F7F8FA)', border: '1px solid var(--vs-slate-200, #DDE3EA)', borderRadius: 'var(--radius-sm)', padding: '10px 12px' }}>
                 <div style={{ fontSize: 9, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 3 }}>{l}</div>
                 <div style={{ fontSize: 16, fontWeight: 700, color: c }}>{v}</div>
               </div>
             ))}
           </div>
-          <div style={{ padding: '6px 14px', background: 'rgba(244,166,35,0.08)', border: '1px solid rgba(244,166,35,0.2)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, fontSize: 12, color: '#F4A623' }}>
-            <AlertIcon size={13} color="#F4A623" /> Adjust individual step times to model future state improvements manually.
+          <div style={{ padding: '6px 14px', background: 'rgba(201,166,107,0.08)', border: '1px solid rgba(201,166,107,0.2)', borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, fontSize: 12, color: '#C9A66B' }}>
+            <AlertIcon size={13} color="#C9A66B" /> Adjust individual step times to model future state improvements manually.
           </div>
-          <button onClick={() => setAdj({})} style={{ padding: '5px 12px', borderRadius: 6, border: '1px solid var(--border2)', background: 'transparent', cursor: 'pointer', color: 'var(--text3)', fontSize: 11, marginBottom: 12 }}>
+          <button onClick={() => setAdj({})} style={{ padding: '5px 12px', borderRadius: 6, border: '1px solid var(--vs-slate-200, #DDE3EA)', background: 'transparent', cursor: 'pointer', color: 'var(--text3)', fontSize: 11, marginBottom: 12 }}>
             <RefreshIcon size={10} /> Reset all
           </button>
           {main.map(s => {
@@ -533,7 +533,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
             <thead>
               <tr>
                 {['Step', 'State', 'Cur CT', 'Fut CT', 'Cur Wait', 'Fut Wait', 'Utilization', 'Δ LT'].map(h => (
-                  <th key={h} style={{ padding: '8px 10px', textAlign: 'left', color: 'var(--text3)', fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: 1, borderBottom: '1px solid var(--border)' }}>{h}</th>
+                  <th key={h} style={{ padding: '8px 10px', textAlign: 'left', color: 'var(--text3)', fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: 1, borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -546,7 +546,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                 const util = Math.min((oCT / displayTakt) * 100, 100)
                 const state = getPressureState(util)
                 return (
-                  <tr key={s.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <tr key={s.id} style={{ borderBottom: '1px solid var(--vs-slate-200, #DDE3EA)' }}>
                     <td style={{ padding: '8px 10px', color: 'var(--text)', fontWeight: 500 }}>{s.name}</td>
                     <td style={{ padding: '8px 10px' }}>
                       <span style={{ fontSize: 9, fontWeight: 700, color: PRESSURE_COLOR[state], padding: '1px 6px', borderRadius: 3, background: `${PRESSURE_COLOR[state]}12` }}>
@@ -558,7 +558,7 @@ export function ProcessSimulation({ steps, projectId, isPaid = false, project }:
                     <td style={{ padding: '8px 10px', color: 'var(--text2)' }}>{oW ? fmt(oW) : ','}</td>
                     <td style={{ padding: '8px 10px', color: a.fWait < oW ? '#2E844A' : 'var(--text2)' }}>{fmt(a.fWait)}</td>
                     <td style={{ padding: '8px 10px' }}>
-                      <div style={{ width: 60, height: 4, background: 'var(--bg4)', borderRadius: 2 }}>
+                      <div style={{ width: 60, height: 4, background: 'var(--vs-slate-100, #EEF2F6)', borderRadius: 2 }}>
                         <div style={{ width: `${util}%`, height: '100%', background: PRESSURE_COLOR[state], borderRadius: 2 }} />
                       </div>
                       <div style={{ fontSize: 9, color: PRESSURE_COLOR[state], marginTop: 2 }}>{util.toFixed(0)}%</div>

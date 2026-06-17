@@ -331,6 +331,110 @@ export async function POST(_request: NextRequest) {
       notes: 'NNVA. Cut fabric to pattern, place in supermarket (min 4, max 10 units). Replenish on kanban signal.',
     })
 
+    // ── 11. SMED (single-minute exchange of die) ─────────────────────────────
+    await tool(s3.id, 'smed', {
+      changeover: 'Foam type changeover (LH to RH seat variant)',
+      currentTime: 480,
+      targetTime: 300,
+      internal: [
+        { id:'i1', step:'Stop machine and unbolt current foam fixture', duration:60, type:'internal' },
+        { id:'i2', step:'Remove current foam from station', duration:45, type:'internal' },
+        { id:'i3', step:'Retrieve replacement foam from rack', duration:120, type:'internal',
+          note:'CONVERT to external, stage in advance' },
+        { id:'i4', step:'Install replacement foam fixture', duration:90, type:'internal' },
+        { id:'i5', step:'Test alignment with first piece', duration:120, type:'internal',
+          note:'Reduce via poka-yoke alignment guides' },
+        { id:'i6', step:'Update operator standard work card', duration:45, type:'internal',
+          note:'CONVERT to external, prep card in advance' },
+      ],
+      external: [
+        { id:'e1', step:'Stage replacement foam at point of use', duration:120, type:'external' },
+        { id:'e2', step:'Pre-print new standard work card', duration:45, type:'external' },
+      ],
+      improvements: [
+        'Convert foam staging from internal (120s) to external = save 120s',
+        'Pre-print work card external = save 45s',
+        'Add poka-yoke alignment guides = reduce test from 120s to 60s, save 60s',
+        'Estimated new internal time: 300s (target met)',
+      ],
+      notes: 'Demonstration SMED. Real changeover happens 4x per shift. Saving 180s × 4 = 12 min/shift recovered.',
+    })
+
+    // ── 12. Yamazumi (operator balance chart) ────────────────────────────────
+    await tool(s2.id, 'yamazumi', {
+      taktTime: 120,
+      operators: [
+        { id:'op1', name:'Op 1 (LH side)', tasks: [
+          { id:'t1', name:'Pick frame', duration:8, type:'NNVA' },
+          { id:'t2', name:'Position in jig', duration:12, type:'NNVA' },
+          { id:'t3', name:'Bolt 4 fasteners LH', duration:42, type:'VA' },
+          { id:'t4', name:'Mutual check', duration:13, type:'NVA' },
+        ]},
+        { id:'op2', name:'Op 2 (RH side)', tasks: [
+          { id:'t5', name:'Pick frame', duration:8, type:'NNVA' },
+          { id:'t6', name:'Position in jig', duration:12, type:'NNVA' },
+          { id:'t7', name:'Bolt 4 fasteners RH', duration:38, type:'VA' },
+          { id:'t8', name:'Walk to torque wrench', duration:18, type:'NVA',
+            note:'Wrench not at point of use, motion waste' },
+          { id:'t9', name:'Mutual check', duration:13, type:'NVA' },
+        ]},
+      ],
+      notes: 'Op 2 overloaded by 18s due to torque wrench location. Rebalance: move wrench to Op 2 zone, eliminate mutual check (replace with poka-yoke).',
+    })
+
+    // ── 13. Standard Work Sheet ──────────────────────────────────────────────
+    await tool(s3.id, 'standardwork', {
+      partNumber: 'SEAT-COMPLETE-A',
+      takt: 120,
+      sequence: [
+        { id:'sw1', step:1, task:'Pick foam from rack (within 0.5m POU)', va:'NNVA', time:5,
+          quality:'Visual inspection for surface defects' },
+        { id:'sw2', step:2, task:'Place foam in jig, align with locating pins', va:'NNVA', time:8,
+          quality:'Pins fully engaged in foam holes' },
+        { id:'sw3', step:3, task:'Pick fabric cover from supermarket', va:'NNVA', time:6 },
+        { id:'sw4', step:4, task:'Stretch fabric over foam, engage clips', va:'VA', time:65,
+          quality:'All 8 clips fully seated, no wrinkles in A-surface',
+          safety:'Cut-resistant gloves required' },
+        { id:'sw5', step:5, task:'Verify clip engagement with poka-yoke gauge', va:'NNVA', time:12,
+          quality:'All 8 clips must trigger green light on gauge' },
+        { id:'sw6', step:6, task:'Apply trim ring', va:'VA', time:14 },
+      ],
+      totalTime: 110,
+      notes: 'Target CT 110s within takt 120s. Trained by Team Leader. Updated 2026-04-01.',
+    })
+
+    // ── 14. PDCA cycle ────────────────────────────────────────────────────────
+    await tool(s3.id, 'pdca', {
+      plan: 'Reduce Foam & Fabric Install CT from 145s to 110s by eliminating 16s motion waste (foam rack relocation) and 13s NVA (mutual check via poka-yoke).',
+      do: '1. Foam rack relocated 2026-03-15. 2. Poka-yoke clip gauge installed 2026-03-22. 3. Standard work updated and operators retrained.',
+      check: 'Time study post-implementation: mean CT 112s (target 110s achieved within 2%). Defect rate dropped 2.1% → 0.4%. Operator satisfaction up.',
+      act: 'Standardise. Apply same poka-yoke approach to LH/RH frame assembly at s2. Schedule monthly verification audits. Open KZ-006 for cross-line replication.',
+      status: 'check',
+      cycleNumber: 1,
+      notes: 'First PDCA cycle on this bottleneck. Result close to target. Initiating cycle 2 to push CT below 100s.',
+    })
+
+    // ── 15. Kanban board ─────────────────────────────────────────────────────
+    await tool(s3.id, 'kanban', {
+      columns: [
+        { id:'col1', title:'Identified', cards: [
+          { id:'kc1', title:'Mutual check waste investigation', priority:'medium', owner:'Quality' },
+        ]},
+        { id:'col2', title:'In Progress', cards: [
+          { id:'kc2', title:'Foam rack relocation (KZ-001)', priority:'critical', owner:'J. Patel', dueDate:'2026-04-01' },
+          { id:'kc3', title:'Poka-yoke clip gauge prototype', priority:'high', owner:'S. Ahmed', dueDate:'2026-05-01' },
+        ]},
+        { id:'col3', title:'Verifying', cards: [
+          { id:'kc4', title:'Standard work sheet rollout', priority:'medium', owner:'Team Leader' },
+        ]},
+        { id:'col4', title:'Complete', cards: [
+          { id:'kc5', title:'Initial fishbone session', priority:'low', owner:'CI Team' },
+          { id:'kc6', title:'Baseline time study (10 cycles)', priority:'low', owner:'CI Team' },
+        ]},
+      ],
+      notes: 'Project board for Foam & Fabric Install improvement. Visualises all WIP, prevents overcommitment, tracks flow.',
+    })
+
     // ── Done ──────────────────────────────────────────────────────────────────
     return NextResponse.json({ id: pid, already_exists: false })
 

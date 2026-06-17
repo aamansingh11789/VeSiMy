@@ -20,7 +20,7 @@ interface ProcessJournalProps {
   onClose: () => void
 }
 
-const serif = 'Palatino Linotype,Book Antiqua,Palatino,Georgia,serif'
+const serif = "'Sora','Inter',sans-serif"
 
 export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps) {
   const [entries, setEntries] = useState<JournalEntry[]>([])
@@ -106,7 +106,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
 
   function tagStyle(type: string) {
     if (type === 'auto') return { bg: 'rgba(108,185,252,0.12)', color: '#6CB9FC', label: 'AUTO' }
-    if (type === 'milestone') return { bg: 'rgba(212,168,67,0.12)', color: '#D4A843', label: 'MILESTONE' }
+    if (type === 'milestone') return { bg: 'rgba(201,166,107,0.12)', color: '#C9A66B', label: 'MILESTONE' }
     return { bg: 'rgba(139,136,179,0.12)', color: 'var(--text2)', label: 'NOTE' }
   }
 
@@ -128,7 +128,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 10001,
         width: 'min(420px, 100vw)',
-        background: 'linear-gradient(180deg, var(--sl-50), rgba(248,247,245,0.97))',
+        background: 'linear-gradient(180deg, var(--vs-paper, #F7F8FA), rgba(248,247,245,0.97))',
         border: '1px solid rgba(44,44,92,0.86)',
         borderRight: 'none',
         display: 'flex', flexDirection: 'column',
@@ -143,7 +143,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize:10, fontWeight:800, fontFamily:"monospace", letterSpacing:.5 }}>LOG</span>
+              <span style={{ fontSize:10, fontWeight:800, fontFamily:"'JetBrains Mono',monospace", letterSpacing:.5 }}>LOG</span>
               <span style={{ fontFamily: serif, fontSize: 17, fontWeight: 700, color: 'var(--text)' }}>
                 Process Journal
               </span>
@@ -263,7 +263,7 @@ export function ProcessJournal({ projectId, open, onClose }: ProcessJournalProps
               disabled={saving || !note.trim()}
               style={{
                 padding: '0 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                background: note.trim() ? 'linear-gradient(135deg,#B8912E,#D4A843)' : 'transparent',
+                background: note.trim() ? 'linear-gradient(135deg,#A8854F,#C9A66B)' : 'transparent',
                 color: note.trim() ? 'var(--bg)' : 'var(--sl-400)',
                 fontWeight: 700, fontSize: 18, transition: 'all 0.2s',
                 flexShrink: 0,

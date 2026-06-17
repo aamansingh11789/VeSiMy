@@ -8,7 +8,7 @@ export const metadata = { title: 'Privacy Policy, VeSiMy' }
 
 const Section = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div style={{ marginBottom: 36 }}>
-    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: 'Palatino Linotype,serif' }}>{title}</h2>
+    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 12, fontFamily: "'Sora','Inter',sans-serif" }}>{title}</h2>
     <div style={{ color: 'var(--text3)', fontSize: 14, lineHeight: 1.8 }}>{children}</div>
   </div>
 )
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '60px 24px 80px' }}>
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 12, color: 'var(--sl-400)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, marginBottom: 12 }}>LEGAL</p>
-          <h1 style={{ fontFamily: 'Palatino Linotype,serif', fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Privacy Policy</h1>
+          <h1 style={{ fontFamily: "'Sora','Inter',sans-serif", fontSize: 40, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Privacy Policy</h1>
           <p style={{ fontSize: 14, color: 'var(--sl-400)' }}>Last updated: March 1, 2026</p>
         </div>
 
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="6. Your Rights">
-          <p>You have the right to: access all data we hold about you; export your process data at any time from the dashboard; correct inaccurate personal information; delete your account and associated data; opt out of marketing emails (unsubscribe link in every email). To exercise any of these rights, email <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a>.</p>
+          <p>You have the right to: access all data we hold about you; export your process data at any time from the dashboard; correct inaccurate personal information; delete your account and associated data; opt out of marketing emails (unsubscribe link in every email). To exercise any of these rights, email <a href="mailto:founder@vesimy.com" style={{ color: '#0B1D33' }}>founder@vesimy.com</a>.</p>
         </Section>
 
         <Section title="7. Data Retention">
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="8. GDPR (EU Users)">
-          <p>If you are in the European Union, you have additional rights under GDPR including the right to data portability and the right to lodge a complaint with a supervisory authority. Our legal basis for processing your data is contract performance (to provide the service you signed up for). Contact <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a> for GDPR requests.</p>
+          <p>If you are in the European Union, you have additional rights under GDPR including the right to data portability and the right to lodge a complaint with a supervisory authority. Our legal basis for processing your data is contract performance (to provide the service you signed up for). Contact <a href="mailto:founder@vesimy.com" style={{ color: '#0B1D33' }}>founder@vesimy.com</a> for GDPR requests.</p>
         </Section>
 
         <Section title="9. Children's Privacy">
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="11. Contact">
-          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#0176D3' }}>founder@vesimy.com</a><br />VeSiMy Ltd, United Kingdom.</p>
+          <p>For privacy questions or requests: <a href="mailto:founder@vesimy.com" style={{ color: '#0B1D33' }}>founder@vesimy.com</a><br />VeSiMy, Pleasant Hill, California, United States.</p>
         </Section>
 
         <div style={{ borderTop: '1px solid rgba(26,26,64,0.5)', paddingTop: 24, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
