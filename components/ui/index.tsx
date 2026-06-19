@@ -17,7 +17,7 @@ export function ToastContainer() {
     <div
       style={{
         position: 'fixed',
-        bottom: 24,
+        bottom: 'max(28px, env(safe-area-inset-bottom, 28px))',
         right: 24,
         zIndex: 9999,
         display: 'flex',

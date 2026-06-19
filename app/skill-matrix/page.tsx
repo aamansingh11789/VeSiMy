@@ -24,10 +24,13 @@ export default async function SkillMatrixPage() {
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('skill_matrix').select('*').eq('user_id', user.id).single(),
     supabase.from('skill_matrix_events').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(20),
-    supabase.from('projects').select('id, name, created_at, updated_at').eq('user_id', user.id).eq('status', 'active').order('updated_at', { ascending: false }),
+    supabase.from('projects').select('id, name, status, created_at, updated_at').eq('user_id', user.id).order('updated_at', { ascending: false }),
   ])
 
   if (!profile) redirect('/auth/login')
+
+  // Keep legacy NULL-status projects; only hide archived/template.
+  const visibleProjects = (projects || []).filter((p: any) => p.status !== 'archived' && p.status !== 'template')
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg)' }}>
@@ -37,7 +40,7 @@ export default async function SkillMatrixPage() {
           profile={profile}
           skillData={skillData}
           events={events || []}
-          projectCount={projects?.length || 0}
+          projectCount={visibleProjects.length}
         />
       </main>
       <BottomNav />

@@ -32,8 +32,11 @@ export default async function ProjectPage({ params }: Props) {
 
   const [{ data: profile }, { data: project, error }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
+    // Do NOT nest tool_data(*) here: that embed trips Supabase RLS in real user
+    // sessions and can make the query return empty/error, which blocks users from
+    // opening their own projects. Fetch project + steps, then tool_data separately.
     supabase.from('projects')
-      .select(`*, steps(*, tool_data(*))`)
+      .select(`*, steps(*)`)
       .eq('id', params.id)
       .eq('user_id', user.id)
       .single(),
@@ -42,14 +45,26 @@ export default async function ProjectPage({ params }: Props) {
   if (!profile) redirect('/auth/login')
   if (error || !project) notFound()
 
+  // Fetch tool_data directly (RLS-safe: policy is auth.uid() = user_id), group by step.
+  const { data: toolRows } = await supabase
+    .from('tool_data')
+    .select('*')
+    .eq('project_id', params.id)
+    .eq('user_id', user.id)
+
+  const toolByStep: Record<string, Record<string, any>> = {}
+  for (const td of (toolRows || []) as any[]) {
+    if (!toolByStep[td.step_id]) toolByStep[td.step_id] = {}
+    toolByStep[td.step_id][td.tool] = td.data
+  }
+
   const steps = (project.steps || [])
     .sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0))
     .map((step: any) => ({
       ...step,
       tasks: Array.isArray(step.tasks) ? step.tasks : [],
       missing_info_flags: Array.isArray(step.missing_info_flags) ? step.missing_info_flags : [],
-      toolData: Object.fromEntries((step.tool_data || []).map((td: any) => [td.tool, td.data])),
-      tool_data: undefined,
+      toolData: toolByStep[step.id] || {},
     }))
 
   // Strip steps from project object, steps are managed separately in useState.

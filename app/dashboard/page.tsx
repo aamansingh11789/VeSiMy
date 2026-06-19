@@ -18,34 +18,37 @@ export default async function DashboardPage() {
 
   const [{ data: profile }, { data: rawProjects }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
+    // NOTE: do NOT nest tool_data(...) here. A nested join through
+    // steps -> tool_data trips Supabase RLS in real user sessions and makes the
+    // entire query return empty, which blanks the dashboard (projects appear to
+    // vanish). Fetch steps without tool_data; the dashboard score degrades
+    // gracefully without stopwatch data. Status is filtered in JS so legacy
+    // projects with a NULL status are not excluded.
     supabase.from('projects')
       .select(`
         *,
         steps(
           id, cycle_time, cycle_time_unit, wait_time,
-          is_main_flow, va_type, defect_rate,
-          tool_data(tool, data)
+          is_main_flow, va_type, defect_rate
         )
       `)
       .eq('user_id', user.id)
-      .eq('status', 'active')
       .order('updated_at', { ascending: false })
       .limit(20),
   ])
 
   if (!profile) redirect('/auth/login')
 
-  // Hydrate toolData on each step so getProjectScore can read stopwatch.mean
-  const projects = (rawProjects || []).map((p: any) => ({
-    ...p,
-    steps: (p.steps || []).map((s: any) => ({
-      ...s,
-      toolData: Object.fromEntries(
-        (s.tool_data || []).map((td: any) => [td.tool, td.data])
-      ),
-      tool_data: undefined,
-    })),
-  }))
+  // Hydrate toolData (empty here; nested join intentionally omitted, see above)
+  const projects = (rawProjects || [])
+    .filter((p: any) => p.status !== 'archived' && p.status !== 'template')
+    .map((p: any) => ({
+      ...p,
+      steps: (p.steps || []).map((s: any) => ({
+        ...s,
+        toolData: {},
+      })),
+    }))
 
   // Gate: only send genuinely new users to onboarding.
   // Existing users who already have an industry set are considered onboarded

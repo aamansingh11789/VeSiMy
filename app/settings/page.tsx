@@ -13,10 +13,12 @@ export default async function SettingsPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
 
-  const [{ data: profile }, { count: projectCount }] = await Promise.all([
+  const [{ data: profile }, { data: projRows }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
-    supabase.from('projects').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'active'),
+    supabase.from('projects').select('id, status').eq('user_id', user.id),
   ])
+  // Count visible projects in JS so legacy NULL-status projects are included.
+  const projectCount = (projRows || []).filter((p: any) => p.status !== 'archived' && p.status !== 'template').length
 
   return (
     <div style={{ display:'flex', minHeight:'100vh', background:'var(--bg)' }}>

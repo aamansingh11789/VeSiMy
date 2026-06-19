@@ -48,16 +48,16 @@ const CSS=`
 .btn-gold:hover{background:${GOLDL};transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,166,107,.42)}
 .btn-ghostL{background:rgba(255,255,255,.10);color:${WHITE};padding:13px 24px;font-size:14px;border:1.5px solid rgba(255,255,255,.45);font-weight:600}
 .btn-ghostL:hover{background:rgba(255,255,255,.18);border-color:#fff}
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;transition:all .3s;background:linear-gradient(180deg,rgba(7,26,47,.55),transparent)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;transition:all .3s;background:linear-gradient(180deg,rgba(7,26,47,.78),rgba(7,26,47,.28) 70%,transparent)}
 .nav.scrolled{background:rgba(7,26,47,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);height:60px}
 .nav-word{font-family:${SERIF};font-size:23px;color:${WHITE};letter-spacing:-.02em}
 .logo-tile{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,#FFFFFF,#EEF2F6);box-shadow:0 2px 8px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.8);flex-shrink:0}
 .logo-tile.sm{width:30px;height:30px;border-radius:8px}
 .logo-tile.xs{width:22px;height:22px;border-radius:6px}
 .nav-links{display:flex;gap:34px;align-items:center}
-.nav-link{font-size:13.5px;font-weight:500;color:${SLATE200};transition:color .15s;position:relative}
+.nav-link{font-size:13.5px;font-weight:600;color:#EEF2F6;transition:color .15s;position:relative;text-shadow:0 1px 2px rgba(7,26,47,.5)}
 .nav-link:hover{color:${WHITE}}
-.nav-signin{font-size:13.5px;font-weight:700;color:${GOLDL};padding:9px 18px;border:1.5px solid ${GOLD};border-radius:8px;transition:all .2s;background:rgba(201,166,107,.10)}
+.nav-signin{font-size:13.5px;font-weight:700;color:${GOLDL};padding:8px 16px;border:1.5px solid rgba(217,192,138,.55);border-radius:8px;background:rgba(7,26,47,.35);padding:9px 18px;border:1.5px solid ${GOLD};border-radius:8px;transition:all .2s;background:rgba(201,166,107,.10)}
 .nav-signin:hover{background:rgba(201,166,107,.22);color:#fff;border-color:${GOLDL}}
 @media(max-width:900px){.nav-links{display:none}.nav{padding:0 20px}}
 .eyebrow{display:inline-flex;align-items:center;gap:13px;margin-bottom:26px}
@@ -366,7 +366,7 @@ export default function HomePage(){
         </div>
         <div style={{display:'flex',gap:10,alignItems:'center'}}>
           <Link href="/auth/login" className="nav-signin">Sign in</Link>
-          <Link href="/auth/signup" className="btn btn-navy" style={{padding:'8px 16px',fontSize:13}}>Start free</Link>
+          <Link href="/auth/signup" className="btn btn-gold" style={{padding:'9px 18px',fontSize:13}}>Start free</Link>
         </div>
       </nav>
 

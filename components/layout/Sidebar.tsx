@@ -131,7 +131,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
       }}>
         {!collapsed && (
           <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <VLogoMark size={32} />
+            <VLogoMark size={32} onDark />
             <div>
               <VeSiMyWordmark size={16} onDark />
               <div style={{
@@ -143,7 +143,7 @@ export function Sidebar({ profile, collapsed: forcedCollapsed = false }: Sidebar
             </div>
           </Link>
         )}
-        {collapsed && <Link href="/dashboard"><VLogoMark size={30} /></Link>}
+        {collapsed && <Link href="/dashboard"><VLogoMark size={30} onDark /></Link>}
 
         {/* Collapse toggle, hidden when forced collapsed */}
         {!forcedCollapsed && (

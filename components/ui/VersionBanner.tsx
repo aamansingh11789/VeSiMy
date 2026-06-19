@@ -41,7 +41,7 @@ export function VersionBanner() {
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg,#2A1800,#0a3d78)',
+      background: 'linear-gradient(135deg,#0B1D33,#163A5F)',
       borderBottom: '1px solid rgba(108,185,252,0.25)',
       padding: '10px 20px',
       display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',

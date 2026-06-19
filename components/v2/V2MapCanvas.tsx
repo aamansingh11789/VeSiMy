@@ -146,7 +146,7 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
   const left = 80 + index * (BOX_W + GAP)
   const top  = 110  // moved down to make room for pushpin
 
-  const rotation = NOTE_ROTATIONS[index % NOTE_ROTATIONS.length] || 0
+  const rotation = 0  // no tilt: notes sit straight (user preference)
 
   return (
     <div
@@ -157,13 +157,13 @@ function StickyStepBox({ step, index, isSelected, onClick, t, expanded, onToggle
         width: W,
         cursor: 'pointer',
         userSelect: 'none',
-        transform: `rotate(${rotation}deg)`,
+        transform: 'none',
         transformOrigin: 'top center',
         transition: 'transform 0.2s ease',
       }}
       onClick={() => onClick(step)}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = `rotate(${rotation}deg) translateY(-3px)` }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = `rotate(${rotation}deg)` }}
+      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)' }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'none' }}
     >
       {/* ── PUSHPIN, sits above the note ── */}
       <div style={{
@@ -517,7 +517,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
   const onMouseMove = (e: React.MouseEvent) => {
     if (!dragging.current) return
     const dx = e.clientX - lastPos.current.x; const dy = e.clientY - lastPos.current.y
-    if (Math.abs(e.clientX - dragStart.current.x) > 4 || Math.abs(e.clientY - dragStart.current.y) > 4) didDrag.current = true
+    if (Math.abs(e.clientX - dragStart.current.x) > 8 || Math.abs(e.clientY - dragStart.current.y) > 8) didDrag.current = true
     setPan(p => ({ x: p.x + dx, y: p.y + dy }))
     lastPos.current = { x: e.clientX, y: e.clientY }
   }
@@ -535,7 +535,7 @@ export function V2MapCanvas({ steps, project, selectedStepId, onStepClick, onAdd
     e.preventDefault()
     const tt = e.touches[0]
     const dx = tt.clientX - lastPos.current.x; const dy = tt.clientY - lastPos.current.y
-    if (Math.abs(tt.clientX - dragStart.current.x) > 4 || Math.abs(tt.clientY - dragStart.current.y) > 4) didDrag.current = true
+    if (Math.abs(tt.clientX - dragStart.current.x) > 12 || Math.abs(tt.clientY - dragStart.current.y) > 12) didDrag.current = true
     setPan(p => ({ x: p.x + dx, y: p.y + dy }))
     lastPos.current = { x: tt.clientX, y: tt.clientY }
   }

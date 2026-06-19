@@ -14,11 +14,12 @@ export async function GET() {
     .from('projects')
     .select('*')
     .eq('user_id', user.id)
-    .eq('status', 'active')
     .order('updated_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: 'Failed to load projects. Please refresh.' }, { status: 500 })
-  return NextResponse.json({ projects: data })
+  // Filter status in JS so legacy NULL-status projects are not hidden.
+  const projects = (data || []).filter((p: any) => p.status !== 'archived' && p.status !== 'template')
+  return NextResponse.json({ projects })
 
   } catch (err: any) {
     console.error("[projects]", err)
@@ -33,10 +34,12 @@ export async function POST(request: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   // Check plan limits, count live from DB, not stale profile.projects_count
-  const [{ data: profile }, { count: liveCount }] = await Promise.all([
+  const [{ data: profile }, { data: projRows }] = await Promise.all([
     supabase.from('profiles').select('projects_limit, plan_tier, lifetime_access, is_beta').eq('id', user.id).single(),
-    supabase.from('projects').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'active'),
+    supabase.from('projects').select('id, status').eq('user_id', user.id),
   ])
+  // Count visible projects (active + legacy NULL), excluding archived/template.
+  const liveCount = (projRows || []).filter((p: any) => p.status !== 'archived' && p.status !== 'template').length
 
   const tier        = profile?.plan_tier || 'trial'
   const limit       = profile?.projects_limit ?? 3

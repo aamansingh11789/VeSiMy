@@ -84,41 +84,55 @@ export async function fetchProjects(): Promise<Project[]> {
     .from('projects')
     .select('*')
     .eq('user_id', user.id)
-    .eq('status', 'active')
     .order('updated_at', { ascending: false })
 
   if (error) throw error
-  return (data || []) as Project[]
+  // Filter status in JS so legacy projects with a NULL status (created before the
+  // status column existed) are NOT excluded. Only hide archived/template.
+  return ((data || []) as Project[])
+    .filter((p: any) => p.status !== 'archived' && p.status !== 'template')
 }
 
 export async function fetchProject(id: string): Promise<Project> {
   const db = getClient()
   const user = await getCurrentUser(db)
 
+  // Do NOT nest tool_data(*) inside steps: that embed trips Supabase RLS in real
+  // user sessions and can make the whole query return empty or error, which is
+  // how older users "lost" their projects. Fetch the project + steps first, then
+  // fetch tool_data in a separate, top-level query (its RLS policy is a simple
+  // auth.uid() = user_id, so a direct query is safe) and stitch it back together.
   const { data, error } = await db
     .from('projects')
     .select(`
       *,
-      steps (
-        *,
-        tool_data (*)
-      )
+      steps (*)
     `)
     .eq('id', id)
     .eq('user_id', user.id)
     .single()
 
   if (error) throw error
-
   const project = data as any
+
+  // Fetch tool_data for this project directly (RLS-safe), then group by step.
+  const { data: toolRows } = await db
+    .from('tool_data')
+    .select('*')
+    .eq('project_id', id)
+    .eq('user_id', user.id)
+
+  const byStep: Record<string, Record<string, any>> = {}
+  for (const td of (toolRows || []) as any[]) {
+    if (!byStep[td.step_id]) byStep[td.step_id] = {}
+    byStep[td.step_id][td.tool] = td.data
+  }
+
   project.steps = (project.steps || [])
     .sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0))
     .map((step: any) => ({
       ...step,
-      toolData: Object.fromEntries(
-        (step.tool_data || []).map((td: any) => [td.tool, td.data])
-      ),
-      tool_data: undefined,
+      toolData: byStep[step.id] || {},
     }))
 
   return project as Project

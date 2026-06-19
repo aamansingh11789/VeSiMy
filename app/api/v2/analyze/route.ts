@@ -114,15 +114,29 @@ export async function POST(request: NextRequest) {
     const { project_id } = await request.json()
 
     // ── Fetch project + steps + tool_data ────────────────────────────────
-    const [{ data: project }, { data: stepsRaw }, { data: profile }] = await Promise.all([
+    // tool_data is fetched separately (not nested inside steps) because the
+    // nested embed trips Supabase RLS in real user sessions and can return
+    // empty, which would skew or break the analysis for older users.
+    const [{ data: project }, { data: stepsRaw }, { data: profile }, { data: toolRows }] = await Promise.all([
       supabase.from('projects').select('*').eq('id', project_id).eq('user_id', user.id).single(),
-      supabase.from('steps').select('*, tool_data(*)').eq('project_id', project_id).order('position'),
+      supabase.from('steps').select('*').eq('project_id', project_id).order('position'),
       supabase.from('profiles').select('industry, plan_tier').eq('id', user.id).single(),
+      supabase.from('tool_data').select('*').eq('project_id', project_id).eq('user_id', user.id),
     ])
 
     if (!project) return NextResponse.json({ error: 'Project not found' }, { status: 404 })
 
-    const steps = stepsRaw || []
+    // Stitch tool_data onto each step (both the nested array shape and the
+    // keyed toolData map, so downstream code that expected either still works).
+    const toolByStepArr: Record<string, any[]> = {}
+    for (const td of (toolRows || []) as any[]) {
+      ;(toolByStepArr[td.step_id] ||= []).push(td)
+    }
+    const steps = (stepsRaw || []).map((s: any) => ({
+      ...s,
+      tool_data: toolByStepArr[s.id] || [],
+      toolData: Object.fromEntries((toolByStepArr[s.id] || []).map((td: any) => [td.tool, td.data])),
+    }))
     const industry = project.industry || profile?.industry || 'manufacturing'
     const t = getIndustryTerms(industry)
     const industryLabel = getIndustryLabel(industry)
